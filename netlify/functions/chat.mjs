@@ -30,21 +30,26 @@ export async function handler(event) {
       content: m.content
     }));
 
-    // 1) A modell eldöntheti, hogy hívja-e a searchWeb függvényt
+    // 1) Modell eldönti, hív‑e függvényt
     const response = await openai.chat.completions.create({
       model:         'gpt-4o-mini',
       messages:      chatMessages,
       functions,
       function_call: 'auto'
     });
-
     const msg0 = response.choices[0].message;
+    console.log('🧠 openai response:', JSON.stringify(msg0, null, 2));
+
     let reply;
 
     if (msg0.function_call?.name === 'searchWeb') {
-      // 2) Ha a modell keresést kért – futtassuk le
-      const args    = JSON.parse(msg0.function_call.arguments);
-      const results = await searchWeb(args.query);
+      // 2) Ha kérte, futtassuk a keresést
+      console.log('🔔 model asked for function_call:', msg0.function_call);
+      const { query } = JSON.parse(msg0.function_call.arguments);
+      console.log('🕵️ parsed args:', query);
+
+      const results = await searchWeb(query);
+      console.log('🔎 searchWeb results:', results);
 
       // 3) Visszaküldjük a találatokat a modellnek
       const followUp = await openai.chat.completions.create({
@@ -62,6 +67,7 @@ export async function handler(event) {
       reply = followUp.choices[0].message.content;
     } else {
       // 4) Ha nem kért keresést, marad a sima válasz
+      console.log('🚫 model did NOT call searchWeb.');
       reply = msg0.content;
     }
 
