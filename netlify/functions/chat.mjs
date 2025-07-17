@@ -1,15 +1,19 @@
 import OpenAI from 'openai';
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-exports.handler = async function(event) {
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+export async function handler(event) {
   try {
     const { messages: rawMessages } = JSON.parse(event.body);
     if (!rawMessages) throw new Error('Missing messages payload');
 
-    // OpenAI kompatibilis üzenet lista
-    const chatMessages = rawMessages.map(m => ({ role: m.role, content: m.content }));
+    const chatMessages = rawMessages.map(m => ({
+      role: m.role,
+      content: m.content
+    }));
 
-    // OpenAI chat completion
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: chatMessages
@@ -29,4 +33,4 @@ exports.handler = async function(event) {
       body: JSON.stringify({ error: err.message })
     };
   }
-};
+}
