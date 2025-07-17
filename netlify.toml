@@ -5,6 +5,7 @@
 
 [functions]
   included_files = ["public/data/*.json"]
+  external_node_modules = ["google-it"]
 
 [[redirects]]
   from   = "/data/*"
