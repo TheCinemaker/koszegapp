@@ -6,76 +6,44 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-const functions = [
-  {
-    name: 'searchWeb',
-    description: 'Keresés a weben releváns információkért',
-    parameters: {
-      type: 'object',
-      properties: {
-        query: { type: 'string', description: 'A keresési lekérdezés' }
-      },
-      required: ['query']
-    }
-  }
-];
-
 export async function handler(event) {
   try {
     const { messages: rawMessages } = JSON.parse(event.body);
     if (!rawMessages) throw new Error('Missing messages payload');
 
+    // Alakítsd át a bejövő üzeneteket
     const chatMessages = rawMessages.map(m => ({
       role:    m.role,
       content: m.content
     }));
 
-    // 1) A modell eldönti, hívja‐e a searchWeb függvényt
-    const response = await openai.chat.completions.create({
-      model:         'gpt-4o-mini',
-      messages:      chatMessages,
-      functions,
-      function_call: 'auto'
+    // Vedd ki a legutóbbi user-üzenetet
+    const lastUser = chatMessages.filter(m => m.role === 'user').pop().content;
+
+    // --- 0) MINDIG először lefuttatjuk a webes keresést ---
+    console.log('[chat] forced searchWeb with query:', lastUser);
+    const forcedResults = await searchWeb(lastUser);
+    console.log('[chat] forcedResults:', forcedResults);
+
+    // --- 1) Injectáljuk a találatokat function message-ként ---
+    chatMessages.push({
+      role:    'function',
+      name:    'searchWeb',
+      content: JSON.stringify(forcedResults)
     });
 
-    const msg0 = response.choices[0].message;
-    console.log('🧠 openai response:', JSON.stringify(msg0, null, 2));
+    // --- 2) Ezután kérdezzük meg a modellt a teljes kontextussal ---
+    const response = await openai.chat.completions.create({
+      model:    'gpt-4o-mini',
+      messages: chatMessages
+    });
 
-    let reply;
-
-    if (msg0.function_call?.name === 'searchWeb') {
-      // 2) Ha a modell keresést kért – futtassuk le
-      console.log('🔔 model asked for function_call:', msg0.function_call);
-      const { query } = JSON.parse(msg0.function_call.arguments);
-      console.log('🕵️ parsed args:', query);
-
-      const results = await searchWeb(query);
-      console.log('🔎 searchWeb results:', results);
-
-      // 3) Visszaküldjük a találatokat a modellnek
-      const followUp = await openai.chat.completions.create({
-        model:    'gpt-4o-mini',
-        messages: [
-          ...chatMessages,
-          msg0,
-          {
-            role:    'function',
-            name:    'searchWeb',
-            content: JSON.stringify(results)
-          }
-        ]
-      });
-      console.log('🤖 followUp response:', followUp.choices[0].message);
-      reply = followUp.choices[0].message.content;
-    } else {
-      // 4) Ha nem kért keresést, marad a sima válasz
-      console.log('🚫 model did NOT call searchWeb.');
-      reply = msg0.content;
-    }
+    const reply = response.choices?.[0]?.message?.content?.trim();
+    if (!reply) throw new Error('No reply from OpenAI');
 
     return {
       statusCode: 200,
-      body:       JSON.stringify({ reply: reply.trim() })
+      body:       JSON.stringify({ reply })
     };
   } catch (err) {
     console.error('Chat function error:', err);
