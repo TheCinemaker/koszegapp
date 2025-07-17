@@ -1,4 +1,4 @@
-// functions/chat.mjs
+// netlify/functions/chat.mjs
 import OpenAI from 'openai';
 import { searchWeb } from './search.js';
 
@@ -30,20 +30,21 @@ export async function handler(event) {
       content: m.content
     }));
 
-    // 1) Modell eldönti, hív‑e függvényt
+    // 1) A modell eldönti, hívja‐e a searchWeb függvényt
     const response = await openai.chat.completions.create({
       model:         'gpt-4o-mini',
       messages:      chatMessages,
       functions,
       function_call: 'auto'
     });
+
     const msg0 = response.choices[0].message;
     console.log('🧠 openai response:', JSON.stringify(msg0, null, 2));
 
     let reply;
 
     if (msg0.function_call?.name === 'searchWeb') {
-      // 2) Ha kérte, futtassuk a keresést
+      // 2) Ha a modell keresést kért – futtassuk le
       console.log('🔔 model asked for function_call:', msg0.function_call);
       const { query } = JSON.parse(msg0.function_call.arguments);
       console.log('🕵️ parsed args:', query);
@@ -64,6 +65,7 @@ export async function handler(event) {
           }
         ]
       });
+      console.log('🤖 followUp response:', followUp.choices[0].message);
       reply = followUp.choices[0].message.content;
     } else {
       // 4) Ha nem kért keresést, marad a sima válasz
