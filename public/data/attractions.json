@@ -1,0 +1,611 @@
+[
+  {
+    "id": 1,
+    "name": "Jurisics‑vár",
+    "category": "Történelem & építészet",
+    "description": "A város szíve, későgótikus és korareneszánsz folyosóival a hazai várépítészet egyik ékköve.",
+    "details": "A 13. századi alapokkal rendelkező Jurisics-vár a 16. században nyerte el reneszánsz formáját, és a hős várkapitány, Jurisics Miklós nevét viseli. A várban ma a Jurisics Miklós Múzeum kiállításai láthatók, amelyek az 1532-es ostromnak, a város és a vár történetének állítanak emléket. Udvara a nyári Kőszegi Várszínház szabadtéri előadásainak helyszíne, tornyából pedig páratlan panoráma nyílik a belvárosra.",
+    "tags": [
+      "vár",
+      "erőd",
+      "Jurisics Miklós",
+      "reneszánsz",
+      "múzeum",
+      "kiállítás",
+      "panoráma",
+      "várszínház"
+    ],
+    "coordinates": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "image": "/images/jurisics_var.jpg",
+    "imageDark": "/images/attractions/dark/var_dark.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Öregtorony (Zwinger)",
+    "category": "Történelem & építészet",
+    "description": "A kilencszögletű bástya a városfal legkorábbi, 13. századi maradványa.",
+    "details": "A 13. századi Zwinger bástya kilencszögletű alaprajzával és eredeti lőréseivel maradt fenn. A városfalrendszer legépebben megmaradt része, ma kiállító- és rendezvénytérként funkcionál.",
+    "tags": [
+      "bástya",
+      "középkor",
+      "kiállítás",
+      "városfal",
+      "műemlék"
+    ],
+    "coordinates": {
+      "lat": 47.3881338,
+      "lng": 16.5395646
+    },
+    "image": "/images/zwinger_oregtorony.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Hősök Tornya (Hősök kapuja)",
+    "category": "Történelem & építészet",
+    "description": "1932-ben emelt kaputorony a török ostrom 400. évfordulójára.",
+    "details": "A déli városkapu helyén, 1932-ben épült eklektikus stílusú kaputorony, amely az 1532-es ostrom hőseinek állít emléket. A Jurisics tér jellegzetes épülete, tetején panorámafolyosó található, ahonnan remek kilátás nyílik a térre és a várra.",
+    "tags": [
+      "torony",
+      "emlékmű",
+      "kaputorony",
+      "panoráma",
+      "történelem"
+    ],
+    "coordinates": {
+      "lat": 47.3886545,
+      "lng": 16.5411174
+    },
+    "image": "/images/hosok_tornya.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Városháza",
+    "category": "Történelem & építészet",
+    "description": "Magyarország egyetlen folyamatosan eredeti funkciójában működő városházája.",
+    "details": "A 14-15. századi gótikus alapokon álló épületet a történelem során barokk és klasszicista stílusban is bővítették. Díszes homlokzata a Jurisics tér egyik meghatározó eleme.",
+    "tags": [
+      "gótika",
+      "barokk",
+      "közigazgatás",
+      "műemlék"
+    ],
+    "coordinates": {
+      "lat": 47.3888005,
+      "lng": 16.5407038
+    },
+    "image": "/images/varoshaza.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Tábornokház",
+    "category": "Történelem & építészet",
+    "description": "Egykor a katonai parancsnokok szálláshelyéül szolgáló épület a Jurisics téren.",
+    "details": "A 17. századi, barokk stílusú épület a katonai igazgatás központja volt. Ma a Városi Múzeum részeként időszaki kiállításoknak ad otthont, és betekintést nyújt a város polgári és katonai múltjába.",
+    "tags": [
+      "múzeum",
+      "katonai",
+      "helytörténet",
+      "kiállítás",
+      "barokk"
+    ],
+    "coordinates": {
+      "lat": 47.388606,
+      "lng": 16.5409641
+    },
+    "image": "/images/tabornokhaz.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Lábasház (Levéltár)",
+    "category": "Történelem & építészet",
+    "description": "Az ország egyetlen dupla árkádos, barokk stílusú levéltára.",
+    "details": "A 18. században épült barokk épület jellegzetes dupla árkádsora alatt ma is zajlik a városi élet. Az épületben a Magyar Nemzeti Levéltár Vas Vármegyei Levéltárának kőszegi részlege működik.",
+    "tags": [
+      "levéltár",
+      "barokk",
+      "árkád",
+      "archívum"
+    ],
+    "coordinates": {
+      "lat": 47.388719,
+      "lng": 16.5412358
+    },
+    "image": "/images/labashaz.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Sgraffitós‑ház",
+    "category": "Történelem & építészet",
+    "description": "Díszes sgrafitto‑technikával díszített reneszánsz polgárház a belvárosban.",
+    "details": "A Jurisics téren álló, 16. századi polgárház homlokzatát a reneszánsz korában népszerű sgrafitto technikával (a vakolat több rétegének visszakaparásával) díszítették. Magyarország egyik legszebb sgraffitós épülete.",
+    "tags": [
+      "sgrafitto",
+      "homlokzat",
+      "műemlék",
+      "reneszánsz"
+    ],
+    "coordinates": {
+      "lat": 47.3890864,
+      "lng": 16.5411947
+    },
+    "image": "/images/sgraffito_haz.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Arany Egyszarvú Patikamúzeum",
+    "category": "Múzeum & kiállítás",
+    "description": "Az ország egyik legrégebbi, eredeti berendezésű gyógyszertára.",
+    "details": "A Jurisics téren található múzeum a 18. századi jezsuita patika lenyűgöző barokk berendezését és eszközeit mutatja be, visszarepítve a látogatót a gyógyszerészet múltjába.",
+    "tags": [
+      "múzeum",
+      "patika",
+      "barokk",
+      "gyógyszerészet",
+      "történelem"
+    ],
+    "coordinates": {
+      "lat": 47.3893146,
+      "lng": 16.5410987
+    },
+    "image": "/images/attractions/patikamuz.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Postamúzeum",
+    "category": "Múzeum & kiállítás",
+    "description": "A posta és hírközlés történetét bemutató szakmúzeum.",
+    "details": "A Hősök Tornya melletti épületben található kiállítás a helyi és regionális postatörténet emlékeit, eszközeit és egyenruháit mutatja be, különös tekintettel a híres futárszolgálatokra.",
+    "tags": [
+      "múzeum",
+      "posta",
+      "hírközlés",
+      "történelem"
+    ],
+    "coordinates": {
+      "lat": 47.3895355,
+      "lng": 16.5399001
+    },
+    "image": "/images/attractions/postamuz.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Jézus Szíve-templom",
+    "category": "Templomok & vallás",
+    "description": "A Fő téren álló monumentális, neogótikus csarnoktemplom.",
+    "details": "Az 1894-ben felszentelt templom Ludwig Schöne bécsi építész tervei alapján épült. 57 méter magas tornyaival uralja a városképet. Belső tere tágas és világos, színes üvegablakai figyelemre méltóak.",
+    "tags": [
+      "templom",
+      "neogótika",
+      "torony",
+      "Fő tér"
+    ],
+    "coordinates": {
+      "lat": 47.3877617,
+      "lng": 16.5407471
+    },
+    "image": "/images/jezus_szive_templom.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Szent Jakab-templom",
+    "category": "Templomok & vallás",
+    "description": "Kőszeg legrégebbi, gótikus temploma értékes középkori freskókkal.",
+    "details": "A 15. század elején épült gótikus templomot a 18. században barokk stílusban átépítették. Falai között 15. századi freskótöredékek maradtak fenn, köztük a Köpenyes Mária és a Szent Kristóf ábrázolás.",
+    "tags": [
+      "templom",
+      "gótika",
+      "barokk",
+      "freskó",
+      "középkor"
+    ],
+    "coordinates": {
+      "lat": 47.3894462,
+      "lng": 16.5405413
+    },
+    "image": "/images/attractions/Jakab2.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Szent Imre-templom",
+    "category": "Templomok & vallás",
+    "description": "A Szent Jakab-templom szomszédságában álló, egykori magyar plébániatemplom.",
+    "details": "A 17. század elején épült, eredetileg protestáns templom. Később a katolikusoké lett, és barokk stílusban átépítették. A két templom egymás mellett szimbolizálja a város egykori német és magyar lakosságát.",
+    "tags": [
+      "templom",
+      "barokk",
+      "protestáns",
+      "katolikus"
+    ],
+    "coordinates": {
+      "lat": 47.3892183,
+      "lng": 16.5406828
+    },
+    "image": "/images/attractions/imretemplom.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Evangélikus templom",
+    "category": "Templomok & vallás",
+    "description": "1783-as copf stílusú templom a Gyöngyös-patak partján.",
+    "details": "A türelmi rendelet után épült templom a korabeli előírásoknak megfelelően torony nélkül és az utcafronttól beljebb kapott helyet. Letisztult, elegáns copf-stílusú belső tér jellemzi.",
+    "tags": [
+      "templom",
+      "copf",
+      "evangélikus",
+      "műemlék"
+    ],
+    "coordinates": {
+      "lat": 47.3918111,
+      "lng": 16.5404791
+    },
+    "image": "/images/attractions/evangelikus.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Református templom",
+    "category": "Templomok & vallás",
+    "description": "1996-ban épült modern templom, ószövetségi sátort idéző formával.",
+    "details": "A Várkör mentén álló, modern építészeti alkotás központi tere az ószövetségi sátorra emlékeztet. Minimalista belső tere és a közösségi terek teszik a városrész fontos szakrális és közösségi helyszínévé.",
+    "tags": [
+      "templom",
+      "református",
+      "modern",
+      "építészet"
+    ],
+    "coordinates": {
+      "lat": 47.39045,
+      "lng": 16.544199
+    },
+    "image": "/images/attractions/reformatus.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Zsinagóga",
+    "category": "Templomok & vallás",
+    "description": "1859-ben épült romantikus stílusú imaház, 2022-ben felújítva.",
+    "details": "A Várkörön álló, gyönyörűen felújított zsinagóga romantikus stílusban épült. A felújítás után kulturális és rendezvényközpontként született újjá, kiállítóterekkel és kiváló akusztikájú koncertteremmel.",
+    "tags": [
+      "zsinagóga",
+      "romantikus",
+      "felújított",
+      "kultúra"
+    ],
+    "coordinates": {
+      "lat": 47.3910882,
+      "lng": 16.5417318
+    },
+    "image": "/images/attractions/zsinagoga.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Szent Kereszt felmagasztalása kálváriatemplom",
+    "category": "Templomok & vallás",
+    "description": "A Kálvária-hegy tetején álló barokk templom, stációkkal.",
+    "details": "A város fölé emelkedő dombon kanyargó keresztút vezet fel az 1729-ben épült barokk templomhoz. A stációk mentén tett séta végén a templomtól szép kilátás nyílik Kőszegre.",
+    "tags": [
+      "kálvária",
+      "templom",
+      "stáció",
+      "barokk",
+      "kilátás"
+    ],
+    "coordinates": {
+      "lat": 47.3982929,
+      "lng": 16.5296732
+    },
+    "image": "/images/attractions/kalvaria.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Városkút",
+    "category": "Városi terek & emlékhelyek",
+    "description": "1766-ból származó díszkút a Jurisics téren.",
+    "details": "A Mária-szoborral és a város címerével díszített copf stílusú kút a Jurisics tér központi eleme, a Városháza előtt található. Népszerű találkozó- és pihenőhely.",
+    "tags": [
+      "kút",
+      "copf",
+      "díszkút",
+      "Jurisics tér"
+    ],
+    "coordinates": {
+      "lat": 47.3890546,
+      "lng": 16.5407924
+    },
+    "image": "/images/attractions/varoskut.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Szentháromság-szobor",
+    "category": "Városi terek & emlékhelyek",
+    "description": "Barokk pestisoszlop a Jurisics téren, 1713‑ból.",
+    "details": "A nagy pestisjárvány után hálából emelt barokk szoborcsoport a Szentháromságot, valamint pestis ellen védő szenteket (Szent Sebestyén, Szent Rókus, Szent Flórián) ábrázol.",
+    "tags": [
+      "pestisoszlop",
+      "barokk",
+      "szobor",
+      "Jurisics tér"
+    ],
+    "coordinates": {
+      "lat": 47.3880254,
+      "lng": 16.5415153
+    },
+    "image": "/images/attractions/szentharomsag_szobor.jpg"
+  },
+  {
+    "id": 20,
+    "name": "11 órai harangszó",
+    "category": "Élmény & hagyomány",
+    "description": "Kőszeg egyedülálló hagyománya az 1532-es ostrom emlékére.",
+    "details": "A legenda szerint Jurisics kapitány a törökök elvonulásakor, délelőtt 11 órakor húzatta meg a harangokat. Ennek emlékére Kőszegen a Szent Jakab-templom tornyában azóta sem délben, hanem 11 órakor szól a harang, ami egyedülálló az országban.",
+    "tags": [
+      "hagyomány",
+      "harangszó",
+      "ostrom",
+      "Jurisics",
+      "élmény"
+    ],
+    "coordinates": {
+      "lat": 47.3881106,
+      "lng": 16.5416179
+    },
+    "image": "/images/attractions/11harang.jpeg"
+  },
+  {
+    "id": 21,
+    "name": "Fő tér",
+    "category": "Városi terek & emlékhelyek",
+    "description": "Kőszeg városias tere a Jézus Szíve-templommal és a szökőkúttal.",
+    "details": "A történelmi Jurisics térrel ellentétben ez a 19. század végén kialakult tér a város polgári központja. Itt áll a monumentális Jézus Szíve-templom, a Postapalota, és nyáron a teraszos kávézók kedvelt helyszíne.",
+    "tags": [
+      "tér",
+      "szökőkút",
+      "kávézó",
+      "neogótika"
+    ],
+    "coordinates": {
+      "lat": 47.3883538,
+      "lng": 16.5421414
+    },
+    "image": "/images/fo_ter.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Várkör",
+    "category": "Városi terek & emlékhelyek",
+    "description": "A városfalakat körülölelő hangulatos sétálóutca és park.",
+    "details": "A Várkör a középkori városfalak külső vonalát követi. Ma egy kellemes sétány padokkal, parkos részekkel, gesztenyefasorral, amely összeköti a belváros számos látnivalóját, mint a Zsinagógát vagy a Református templomot.",
+    "tags": [
+      "sétaút",
+      "városfal",
+      "park",
+      "belváros"
+    ],
+    "coordinates": {
+      "lat": 47.3874,
+      "lng": 16.5418
+    },
+    "image": "/images/attractions/varkor.jpeg"
+  },
+  {
+    "id": 24,
+    "name": "Cáki Pincesor",
+    "category": "Természet & néprajz",
+    "description": "Egyedülálló népi műemlékegyüttes a Kőszeg melletti Cák községben.",
+    "details": "A Kőszegi-hegység oldalában, egy gesztenyeligetben megbúvó, 18-19. századi zsúpfedeles, talpgerendás, boronafalú pincék a környék bor- és gyümölcstermesztésének állítanak emléket. Páratlan hangulatú, kihagyhatatlan látnivaló.",
+    "tags": [
+      "pince",
+      "néprajz",
+      "műemlék",
+      "Cák",
+      "kirándulás"
+    ],
+    "coordinates": {
+      "lat": 47.3556863,
+      "lng": 16.5114414
+    },
+    "image": "/images/attractions/cak.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Bozsoki Sibrik-várkastély",
+    "category": "Történelem & építészet",
+    "description": "Vizesárokkal körülvett reneszánsz eredetű várkastély Bozsokon.",
+    "details": "A Kőszeghez közeli Bozsok településen, egy gyönyörű ősparkban áll a Sibrik család egykori kastélya. Az épület ma kastélyszállóként működik, de a parkja szabadon látogatható, és a vizesárok feletti hídon átsétálva megcsodálható a romantikus épület.",
+    "tags": [
+      "kastély",
+      "reneszánsz",
+      "park",
+      "Bozsok",
+      "romantikus"
+    ],
+    "coordinates": {
+      "lat": 47.31976,
+      "lng": 16.48628
+    },
+    "image": "/images/attractions/sibrik.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Szent Vid-kápolna",
+    "category": "Templomok & vallás",
+    "description": "A Velem feletti Szent Vid-hegyen álló, 18. századi búcsújáró kápolna.",
+    "details": "A 589 méter magas Szent Vid-hegyen, egy őskori vár helyén épült a barokk kápolna. Népszerű zarándok- és kirándulóhely, ahonnan csodálatos panoráma nyílik a környékre.",
+    "tags": [
+      "kápolna",
+      "zarándoklat",
+      "kilátás",
+      "kirándulás",
+      "Velem"
+    ],
+    "coordinates": {
+      "lat": 47.3507656,
+      "lng": 16.4785146
+    },
+    "image": "/images/attractions/vid.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Chernel-kert Arborétum",
+    "category": "Természet & kirándulás",
+    "description": "Védett gyűjteményes kert Chernel István ornitológus egykori birtokán.",
+    "details": "A híres madártudós, Chernel István által alapított arborétum ma az Őrségi Nemzeti Park Igazgatóság kezelésében áll. A parkban több száz fa- és cserjefaj, madárvédelmi tanösvény és emlékkiállítás várja a látogatókat.",
+    "tags": [
+      "arborétum",
+      "botanika",
+      "madármegfigyelés",
+      "tanösvény"
+    ],
+    "coordinates": {
+      "lat": 47.3862784,
+      "lng": 16.5318467
+    },
+    "image": "/images/attractions/kert.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Bechtold István Természetvédelmi Látogatóközpont",
+    "category": "Természet & kirándulás",
+    "description": "Az Írottkő Natúrpark kapujaként működő interaktív központ.",
+    "details": "A Kálvária-hegy szomszédságában található modern látogatóközpont interaktív kiállításokon keresztül mutatja be a Kőszegi-hegység élővilágát, geológiai értékeit. A túrák ideális kiindulópontja.",
+    "tags": [
+      "látogatóközpont",
+      "természetvédelem",
+      "interaktív",
+      "kiállítás"
+    ],
+    "coordinates": {
+      "lat": 47.3859145,
+      "lng": 16.5305044
+    },
+    "image": "/images/attractions/latogatokp_1.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Hétforrás",
+    "category": "Természet & kirándulás",
+    "description": "A honfoglaló hét vezérről elnevezett bővizű forrás a hegyekben.",
+    "details": "A Kőszegi-hegység egyik legkedveltebb kirándulóhelye. A forrás vizét hét kifolyón keresztül gyűjtötték egybe, melyeket a hét vezérről neveztek el. Az Országos Kéktúra útvonala is érinti. Pihenőhelyekkel kiépített, kellemes célpont.",
+    "tags": [
+      "forrás",
+      "Kéktúra",
+      "kirándulás",
+      "túra"
+    ],
+    "coordinates": {
+      "lat": 47.3873834,
+      "lng": 16.500261
+    },
+    "image": "/images/attractions/hetforr.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Hörmann-forrás",
+    "category": "Természet & kirándulás",
+    "description": "A Kőszegi-hegység legmagasabban fekvő természetes forrása, 713 m-en.",
+    "details": "Az Írott-kőre vezető túraútvonal mentén található, kristálytiszta vizű forrás. Nevét a közeli Hörmann-tisztásról kapta. Esőbeállóval és pihenőhellyel ellátott, népszerű megálló a túrázók körében.",
+    "tags": [
+      "forrás",
+      "túra",
+      "Kőszegi-hegység",
+      "kirándulás"
+    ],
+    "coordinates": {
+      "lat": 47.3586462,
+      "lng": 16.459957
+    },
+    "image": "/images/attractions/hormann.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Óház-kilátó",
+    "category": "Kilátók & természet",
+    "description": "Kilátó a Kőszegi-hegységben, az egykori felsővár helyén.",
+    "details": "A 609 méter magas Óház-tetőn álló kilátó helyén állt egykor Kőszeg első, Árpád-kori vára. A toronyból csodálatos körpanoráma nyílik Kőszeg városára, a Kőszegi-hegységre és az Alpokalja vidékére.",
+    "tags": [
+      "kilátó",
+      "túra",
+      "panoráma",
+      "várrom"
+    ],
+    "coordinates": {
+      "lat": 47.3816805,
+      "lng": 16.5032043
+    },
+    "image": "/images/attractions/ohaz.jpg"
+  },
+  {
+    "id": 32,
+    "name": "Írottkő-kilátó",
+    "category": "Kilátók & természet",
+    "description": "A Dunántúl legmagasabb pontján, 883 méteren álló kilátó.",
+    "details": "A magyar-osztrák határon álló kilátó pontosan a határon fekszik, bejárata a magyar oldalon van. Az Országos Kéktúra nyugati végpontja. Tiszta időben a Fertő-tóig és a Balatonig is ellátni.",
+    "tags": [
+      "kilátó",
+      "Kéktúra",
+      "csúcskilátó",
+      "határ"
+    ],
+    "coordinates": {
+      "lat": 47.352762,
+      "lng": 16.4333524
+    },
+    "image": "/images/attractions/irottko.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Szulejmán-kilátó",
+    "category": "Kilátók & természet",
+    "description": "Kilátópont a Kálvária-hegyen, a történelmi legenda helyszínén.",
+    "details": "A Kálvária-hegyen álló, fából épült kilátó arról a dombról nyújt szép panorámát Kőszegre, ahonnan a legenda szerint Szulejmán szultán figyelte a vár 1532-es, sikertelen ostromát.",
+    "tags": [
+      "kilátó",
+      "legendás",
+      "panoráma",
+      "történelem"
+    ],
+    "coordinates": {
+      "lat": 47.3925459,
+      "lng": 16.5319567
+    },
+    "image": "/images/attractions/szul.jpg"
+  },
+  {
+    "id": 34,
+    "name": "Stájer-házak Erdei Iskola",
+    "category": "Természet & kirándulás",
+    "description": "Hangulatos, 18. századi erdészház-együttes a Kőszegi-hegységben.",
+    "details": "Az eredetileg Stájerországból érkezett favágók számára épült házak ma erdészeti és néprajzi gyűjteménynek, valamint erdei iskolának adnak otthont. Népszerű túracélpont, bemutatja a hegyvidéki erdőgazdálkodás múltját.",
+    "tags": [
+      "erdei iskola",
+      "erdészet",
+      "ipartörténet",
+      "túra"
+    ],
+    "coordinates": {
+      "lat": 47.370709,
+      "lng": 16.467458
+    },
+    "image": "/images/attractions/staj.jpg"
+  },
+  {
+    "id": 35,
+    "name": "Kőszegi Csónakázó-tó",
+    "category": "Természet & kirándulás",
+    "description": "Mesterséges tó a város északi szélén, csónakázási és horgászati lehetőséggel.",
+    "details": "A Gyöngyös-patak felduzzasztásával létrehozott tó kellemes kikapcsolódást nyújt. A tó körül sétány, játszótér található, nyáron pedig vízibicikli és csónak kölcsönzésére is van lehetőség.",
+    "tags": [
+      "tó",
+      "csónakázás",
+      "horgászat",
+      "pihenés"
+    ],
+    "coordinates": {
+      "lat": 47.3984757,
+      "lng": 16.5374214
+    },
+    "image": "/images/attractions/csoto.jpg"
+  }
+]

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kőszeg APP</title>
+    <style>
+        title {
+            text-align: center;
+        } 
+        body {
+            background-color: #1E1E1E;
+            color: #F1F1F1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        select {
+            width: 70%;
+            margin-top: 4px;
+            background-color: #404040;
+            color: #F1F1F1;
+        }
+        
+        .note {
+            font-size: 0.9em;
+            text-align: center; /* Szöveg középre igazítása */
+        }
+        
+        .image {
+            width: 85px;
+            height: auto;
+            display: block;
+            margin: auto;
+            margin-bottom: 1%; /* Kicsit nagyobb helyet hagyunk az ikon alatt */
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .column {
+            width: 120px;
+            height: 120px;
+            margin: 10px; /* Külső margó a dobozok körül */
+            border: 1px solid magenta;
+            box-shadow: 0 0 7px rgb(244, 173, 244);
+            display: flex;
+            flex-direction: column; /* A tartalom elrendezése oszloposan */
+            justify-content: center; /* Tartalom középre igazítása */
+            align-items: center; /* Tartalom középre igazítása */
+            transition: transform 3s ease; /* 2 másodperc alatt teljes fordulás */
+        }
+
+        .column.flip {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Kőszeg APP</h2>
+    </div>
+    <div class="container">
+        <div class="buttons">
+            <div class="row">
+                <div class="column">
+                    <div>
+                        <img src="/Users/thecinemaker/koszegAPP/static/images/people.png" alt="emberek" class="image">
+                    </div>
+                    <p class="note">Programok</p>
+                </div>
+                <div class="column">
+                    <div>
+                        <img src="/Users/thecinemaker/koszegAPP/static/images/museum.png" alt="Program ikon" class="image">
+                    </div>
+                    <p class="note">Kultúra</p>
+                </div>
+                <div class="column">
+                    <div>
+                        <img src="/Users/thecinemaker/koszegAPP/static/images/park.png" alt="fast-food" class="image">
+                    </div>
+                    <p class="note">Szabadidő</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="buttons">
+                    <div class="row">
+                        <div class="column">
+                            <div>
+                                <img src="/Users/thecinemaker/koszegAPP/static/images/ramen.png" alt="Kuka ikon" class="image">
+                            </div>
+                            <p class="note">Étel</p>
+                        </div>
+                        <div class="column">
+                            <div>
+                                <img src="/Users/thecinemaker/koszegAPP/static/images/toth_2.png" alt="Program ikon" class="image">
+                            </div>
+                            <p class="note">Ital</p>
+                        </div>
+                        <div class="column">
+                            <div>
+                                <img src="/Users/thecinemaker/koszegAPP/static/images/truck.png" alt="Program ikon" class="image">
+                            </div>
+                            <p class="note">Menü</p>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="row">
+                            <div class="column">
+                                <div>
+                                    <img src="/Users/thecinemaker/koszegAPP/static/images/trash.png" alt="Kuka ikon" class="image">
+                                </div>
+                                <p class="note">SzemetesApp</p>
+                            </div>
+                            <div class="column">
+                                <div>
+                                    <img src="/Users/thecinemaker/koszegAPP/static/images/medical.png" alt="Program ikon" class="image">
+                                </div>
+                                <p class="note">Orvosok</p>
+                            </div>
+                            <div class="column">
+                                <div>
+                                    <img src="/Users/thecinemaker/koszegAPP/static/images/tipper.png" alt="Program ikon" class="image">
+                                </div>
+                                <p class="note">Vállalkozók</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var columns = document.querySelectorAll('.column'); // Kártyák kiválasztása
+
+        function rotateRandomly(column) {
+            setTimeout(function() {
+                column.classList.toggle('flip'); // Kártya forgatása
+                setTimeout(function() {
+                    column.classList.toggle('flip'); // Visszaforgatás
+                    rotateRandomly(getRandomColumn()); // Következő kártya kiválasztása és forgatása
+                }, getRandomTime()); // Várakozás random időtartamig (2-3 másodperc)
+            }, getRandomTime()); // Várakozás random időtartamig (3-5 másodperc)
+        }
+
+        function getRandomColumn() {
+            var randomIndex = Math.floor(Math.random() * columns.length); // Véletlenszerű index generálása
+            return columns[randomIndex]; // Visszaadja a véletlenszerűen kiválasztott kártyát
+        }
+
+        function getRandomTime() {
+            return Math.floor(Math.random() * 1501) + 2000; // Véletlenszerű időtartam generálása (2000-5000 ms)
+        }
+
+        // Az oldal betöltésekor elindul a forgatás
+        window.onload = function() {
+            rotateRandomly(getRandomColumn());
+        };
+    </script>
+    <footer>
+        <div class="sponsored-by" style="text-align: center; line-height: 1;">
+                <p style="font-size: small;">The main sponsors of the project are:</p>
+                    <div class="sponsor-logos">
+                    <a href="https://tothpinceszet.hu" target="_blank">
+                    <img src="C:/Users/Szilveszter/Documents/koszegapp/static/images/toth_2.png" alt="Sponsor 1 logo" style="width: 40px; height: auto; margin: 5px;">
+                </a>
+                    <a href="https://kinabolveddmeg.hu" target="_blank">
+                    <img src="C:/Users/Szilveszter/Documents/koszegapp/static/images/kinabollogo.png" alt="Sponsor 2 logo" style="width: 40px; height: auto; margin: 5px;">
+                </a>
+        <!-- Add more sponsor logos here -->
+        </div>
+    </div>
+        <div class="footer-content" style="text-align: center; line-height: 1;">
+            <p style="font-size: 12px;">Made with <span id="heart" style="cursor: pointer; color: red;" onclick="changeHeartColor()">❤️</span> by TheCinemaker</p>
+            <p style="font-size: 10px;">Python webapp by TheCinemaker</p>
+            <p style="font-size: 12px;">&copy; 2024 SzemetesApp 2.1.3. All rights reserved.</p>
+        </div>
+    </footer>
+        </div>
+        <script>
+            var clickCount = 0;
+            var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+    
+            function changeHeartColor() {
+                var heart = document.getElementById('heart');
+                heart.style.color = colors[clickCount % colors.length];
+                clickCount++;
+    
+                if (clickCount === 5) {
+                    heart.style.fontSize = '20px';
+                }
+            }
+        </script>
+</body>
+</html>

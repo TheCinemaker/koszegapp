@@ -1,0 +1,26 @@
+{
+  "app": { "title": "KőszegAPP" },
+  "menu": {
+    "home": "Home",
+    "attractions": "Attractions",
+    "events": "Events",
+    "gastronomy": "Gastronomy",
+    "parking": "Parking",
+    "info": "Info",
+    "menu.hotels": "Hotels"
+  },
+  "pages": {
+    "home": "Welcome to the KőszegAPP homepage!",
+    "attractions": "Here you’ll find the list of attractions",
+    "events": "Here you’ll find the upcoming events",
+    "gastronomy": "Discover local restaurants and accommodations here",
+    "parking": "Parking information is here",
+    "info": "General information"
+  },
+  "home": {
+    "welcomeTitle": "Welcome to KőszegAPP!",
+    "introText": "Discover attractions, events, restaurants and parking all in one place!",
+    "currentWeather": "Current Weather",
+    "featuredEvent": "Featured Event: {{event}}"
+  }
+}

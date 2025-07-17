@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "name": "I. övezet (piros)",
+    "address": "Kőszeg belváros",
+    "coords": { "lat": 47.4155, "lng": 16.4398 },
+    "capacity": null,
+    "price": "440 Ft/óra, min. 110 Ft",
+    "hours": "H-P 8-17, hétvégén ingyenes",
+    "payment": ["Automata", "Mobilparkolás", "App"],
+    "zones": [
+      "Rákóczi F. utca Temető utcától Fő térig",
+      "Várkör 57-67.",
+      "Rajnis József utca",
+      "Táblaház utca",
+      "Schneller István utca",
+      "Chernel utca",
+      "Kelcz-Adelffy utca",
+      "Várkör Kossuth L. és Országzászló köz"
+    ],
+    "image": "parking/zone1_1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "II. övezet (zöld)",
+    "address": "Kőszeg környéki utcák",
+    "coords": { "lat": 47.4155, "lng": 16.4398 },
+    "capacity": null,
+    "price": "320 Ft/óra, min. 80 Ft",
+    "hours": "H-P 8-17, hétvégén ingyenes",
+    "payment": ["Automata", "Mobilparkolás", "App"],
+    "zones": [
+      "Győry János utca",
+      "Ady Endre utca",
+      "Temető utca",
+      "Rákóczi F. utca Fekete kertig",
+      "Munkácsy M. utca",
+      "Kossuth L. utca",
+      "Várkör Országzászlótól Károly R. térig",
+      "Károly R. tér",
+      "Gyöngyös utca",
+      "Pék utca",
+      "Liszt F. utca",
+      "Táncsics M. utca",
+      "Petőfi tér és töltőállomás környéke"
+    ],
+    "image": "parking/zone2_2.jpg"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "app": {
+    "title": "KőszegAPP"
+  },
+  "menu": {
+    "home": "Főoldal",
+    "attractions": "Látnivalók",
+    "events": "Események",
+    "gastronomy": "Vendéglátás",
+    "parking": "Parkolás",
+    "info": "Info",
+    "hotels": "Szállások"
+  },
+  "pages": {
+    "home": "Üdvözlünk a KőszegAPP főoldalán!",
+    "attractions": "Itt lesznek a látnivalók listája",
+    "events": "Itt lesznek az események",
+    "gastronomy": "Itt találod a helyi éttermeket és szállásokat",
+    "parking": "Parkolási információk itt",
+    "info": "Általános információk"
+  },
+  "home": {
+    "welcomeTitle": "Üdvözlünk a KőszegAPP-ban!",
+    "introText": "Fedezd fel Kőszeg látnivalóit, eseményeit, éttermeit és parkolási lehetőségeit egy helyen!",
+    "currentWeather": "Aktuális időjárás",
+    "featuredEvent": "Kiemelt esemény: {{event}}"
+  }
+}
