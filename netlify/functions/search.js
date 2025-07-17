@@ -10,7 +10,7 @@ import googleIt from 'google-it';
 export async function searchWeb(query) {
   console.log('[searchWeb] called with query:', query);
   try {
-    // limit: 3 találat, de átírhatod többre is
+    // limit: 3 találat
     const rawResults = await googleIt({ query, limit: 3 });
     console.log('[searchWeb] rawResults:', rawResults);
 
