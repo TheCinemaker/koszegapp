@@ -5,41 +5,78 @@ export default function OstromDrawerFullAnimated() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const closeTimerRef = useRef(null);
 
-  // 1) Minden full unload esetén állítsuk be, hogy a következő mountkor auto‑nyíljon
+  // --- kép slideshow állapotok, modal etc. ---
+  const [highlightImages] = useState([
+    "/images/highlights/IMG_1722.jpeg",
+    "/images/highlights/IMG_1723.jpeg",
+    "/images/highlights/IMG_1724.jpeg",
+    "/images/highlights/IMG_1725.jpeg",
+    "/images/highlights/tothaug1.jpeg"
+  ]);
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 1) beforeunload EVENT: csak FULL‑unload (F5, külső link, címsorból enter)
+  //    töröljük ilyenkor a 'drawerShown'-t, hogy a következő mountkor újra kinyíljon.
   useEffect(() => {
     const onBeforeUnload = () => {
-      sessionStorage.setItem("drawerShouldOpen", "true");
+      sessionStorage.removeItem("drawerShown");
     };
     window.addEventListener("beforeunload", onBeforeUnload);
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
   }, []);
 
-  // 2) Komponens mountkor: ha drawerShouldOpen flag van, akkor 2mp múlva nyitjuk, majd kitöröljük
+  // 2) mountkor: ha még nincs 'drawerShown', akkor 2mp múlva kinyitjuk és beállítjuk
   useEffect(() => {
-    const shouldOpen = sessionStorage.getItem("drawerShouldOpen");
-    if (shouldOpen) {
-      // töröljük, hogy SPA visszanavigálásnál ne nyíljon
-      sessionStorage.removeItem("drawerShouldOpen");
-
-      const openTimer = setTimeout(() => {
+    const alreadyShown = sessionStorage.getItem("drawerShown");
+    if (!alreadyShown) {
+      const t = setTimeout(() => {
         setOpenDrawer("ostrom");
-        // megjegyezzük, hogy már megnyílt egyszer ebben a sessionben
         sessionStorage.setItem("drawerShown", "true");
       }, 2000);
-
-      return () => clearTimeout(openTimer);
+      return () => clearTimeout(t);
     }
   }, []);
 
-  // 3) A megszokott auto‑close és egyéb useEffectek következnek:
+  // 3) ha nincs interakció, 5mp után bezárjuk
   useEffect(() => {
     if (openDrawer !== null && !hasInteracted) {
-      closeTimerRef.current = setTimeout(() => {
-        setOpenDrawer(null);
-      }, 5000);
+      closeTimerRef.current = setTimeout(() => setOpenDrawer(null), 5000);
       return () => clearTimeout(closeTimerRef.current);
     }
   }, [openDrawer, hasInteracted]);
+
+  // 4) slideshow a “kiemelt” fülre
+  useEffect(() => {
+    if (openDrawer === 'kiemelt' && !modalOpen) {
+      const iv = setInterval(() => {
+        setCurrentImageIdx(i => (i + 1) % highlightImages.length);
+      }, 2000);
+      return () => clearInterval(iv);
+    }
+  }, [openDrawer, modalOpen, highlightImages.length]);
+
+  // SEGÉDFUNKCIÓK
+  const handleUserInteraction = () => {
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      clearTimeout(closeTimerRef.current);
+    }
+  };
+  const handleDrawerClick = type => {
+    setOpenDrawer(type);
+    setHasInteracted(true);
+    clearTimeout(closeTimerRef.current);
+  };
+  const touchStartX = useRef(null);
+  const handleTouchStart = e => touchStartX.current = e.touches[0].clientX;
+  const handleTouchMove = e => {
+    if (!touchStartX.current) return;
+    const diff = touchStartX.current - e.touches[0].clientX;
+    if (diff > 50 && !openDrawer) { handleDrawerClick('ostrom'); touchStartX.current = null; }
+    if (diff < -50 && openDrawer) { handleDrawerClick(null); touchStartX.current = null; }
+  };
+  const handleTouchEnd = () => { touchStartX.current = null; };
 
   // ✅ Slide show a kiemelt képeknél
   useEffect(() => {
