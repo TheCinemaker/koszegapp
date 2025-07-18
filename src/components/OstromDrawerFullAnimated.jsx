@@ -15,18 +15,18 @@ export default function OstromDrawerFullAnimated() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // ✅ Minden oldalbetöltéskor újranyitás engedélyezése
-    useEffect(() => {
-      sessionStorage.removeItem('drawerShown');
-}, []);
+useEffect(() => {
+  const navEntries = performance.getEntriesByType("navigation");
+  const navType = navEntries.length > 0
+    ? navEntries[0].type
+    : "navigate"; // ha nincs entry, feltételezzük, hogy újratöltés
+  const isHardReload = navType === "navigate" || navType === "reload";
+  const alreadyOpened = sessionStorage.getItem("drawerShown");
 
-  // ✅ Nyitás oldalbetöltés után, ha még nem történt meg
-    useEffect(() => {
-  const alreadyOpened = sessionStorage.getItem('drawerShown');
-  if (!alreadyOpened) {
+  if (isHardReload && !alreadyOpened) {
     const openTimer = setTimeout(() => {
-      setOpenDrawer('ostrom');
-      sessionStorage.setItem('drawerShown', 'true');
+      setOpenDrawer("ostrom");
+      sessionStorage.setItem("drawerShown", "true");
     }, 2000);
     return () => clearTimeout(openTimer);
   }
