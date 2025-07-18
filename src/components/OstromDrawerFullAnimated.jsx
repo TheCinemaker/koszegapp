@@ -16,22 +16,26 @@ export default function OstromDrawerFullAnimated() {
   const [modalOpen, setModalOpen] = useState(false);
 
   // ✅ Csak valódi oldalbetöltéskor (hard reload/navigate), egyszer nyissa meg
-  useEffect(() => {
-    const navEntries = performance.getEntriesByType("navigation");
-    const navType = navEntries.length > 0
-      ? navEntries[0].type
-      : "navigate"; // ha nincs entry, feltételezzük navigate-típusú load-ot
-    const isHardReload = navType === "navigate" || navType === "reload";
-    const alreadyOpened = sessionStorage.getItem("drawerShown");
+useEffect(() => {
+  const navEntries = performance.getEntriesByType("navigation");
+  const navType = navEntries.length > 0
+    ? navEntries[0].type
+    : "navigate"; // ha nincs entry, feltételezzük navigate-típusú load-ot
+  const isHardReload = navType === "navigate" || navType === "reload";
 
-    if (isHardReload && !alreadyOpened) {
-      const openTimer = setTimeout(() => {
-        setOpenDrawer("ostrom");
-        sessionStorage.setItem("drawerShown", "true");
-      }, 2000);
-      return () => clearTimeout(openTimer);
-    }
-  }, []);
+  if (isHardReload) {
+    // töröljük a korábbi flag-et, hogy F5-re újra kinyíljon
+    sessionStorage.removeItem("drawerShown");
+
+    // ha még nincs beállítva, 2 mp múlva kinyitjuk és beállítjuk
+    const openTimer = setTimeout(() => {
+      setOpenDrawer("ostrom");
+      sessionStorage.setItem("drawerShown", "true");
+    }, 2000);
+
+    return () => clearTimeout(openTimer);
+  }
+}, []);
 
   // ✅ Ha nincs interakció, 5 mp után záródjon
   useEffect(() => {
