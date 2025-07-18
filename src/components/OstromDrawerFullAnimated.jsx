@@ -95,33 +95,7 @@ export default function OstromDrawerFullAnimated() {
   const handleTouchEnd = () => {
     touchStartX.current = null;
   };
-  // ✅ Swipe-hoz (érintőkijelzőn)
-  const touchStartX = useRef(null);
 
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    if (!touchStartX.current) return;
-    const currentX = e.touches[0].clientX;
-    const diffX = touchStartX.current - currentX;
-
-    if (diffX > 50 && !openDrawer) {
-      setOpenDrawer('ostrom'); // balra suhintás nyitás
-      setHasInteracted(true);
-      touchStartX.current = null;
-    }
-    if (diffX < -50 && openDrawer) {
-      setOpenDrawer(null); // jobbra suhintás zárás
-      setHasInteracted(true);
-      touchStartX.current = null;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    touchStartX.current = null;
-  };
   const ostromProgram = [
   {
     day: "Felvezető programok",
