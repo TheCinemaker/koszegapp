@@ -15,23 +15,23 @@ export default function OstromDrawerFullAnimated() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
-useEffect(() => {
-  const navEntries = performance.getEntriesByType("navigation");
-  const navType = navEntries.length > 0
-    ? navEntries[0].type
-    : "navigate"; // ha nincs entry, feltételezzük, hogy újratöltés
-  const isHardReload = navType === "navigate" || navType === "reload";
-  const alreadyOpened = sessionStorage.getItem("drawerShown");
+  // ✅ Csak valódi oldalbetöltéskor (hard reload/navigate), egyszer nyissa meg
+  useEffect(() => {
+    const navEntries = performance.getEntriesByType("navigation");
+    const navType = navEntries.length > 0
+      ? navEntries[0].type
+      : "navigate"; // ha nincs entry, feltételezzük navigate-típusú load-ot
+    const isHardReload = navType === "navigate" || navType === "reload";
+    const alreadyOpened = sessionStorage.getItem("drawerShown");
 
-  if (isHardReload && !alreadyOpened) {
-    const openTimer = setTimeout(() => {
-      setOpenDrawer("ostrom");
-      sessionStorage.setItem("drawerShown", "true");
-    }, 2000);
-    return () => clearTimeout(openTimer);
-  }
-}, []);
-
+    if (isHardReload && !alreadyOpened) {
+      const openTimer = setTimeout(() => {
+        setOpenDrawer("ostrom");
+        sessionStorage.setItem("drawerShown", "true");
+      }, 2000);
+      return () => clearTimeout(openTimer);
+    }
+  }, []);
 
   // ✅ Ha nincs interakció, 5 mp után záródjon
   useEffect(() => {
@@ -53,7 +53,7 @@ useEffect(() => {
     }
   }, [openDrawer, modalOpen, highlightImages.length]);
 
-  // ✅ Ha bármilyen interakció történik, ne záródjon magától
+  // ✅ Ha bármilyen görgetés történik, töröljük a timeoutot
   const handleUserInteraction = () => {
     if (!hasInteracted) {
       setHasInteracted(true);
@@ -63,7 +63,7 @@ useEffect(() => {
     }
   };
 
-  // ✅ Drawer nyitása manuálisan
+  // ✅ Drawer manuális nyitása
   const handleDrawerClick = (drawerType) => {
     setOpenDrawer(drawerType);
     setHasInteracted(true);
@@ -72,6 +72,29 @@ useEffect(() => {
     }
   };
 
+  // 🔥 Swipe-hoz (érintőkijelzőn)
+  const touchStartX = useRef(null);
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchMove = (e) => {
+    if (!touchStartX.current) return;
+    const currentX = e.touches[0].clientX;
+    const diffX = touchStartX.current - currentX;
+    if (diffX > 50 && !openDrawer) {
+      setOpenDrawer('ostrom');
+      setHasInteracted(true);
+      touchStartX.current = null;
+    }
+    if (diffX < -50 && openDrawer) {
+      setOpenDrawer(null);
+      setHasInteracted(true);
+      touchStartX.current = null;
+    }
+  };
+  const handleTouchEnd = () => {
+    touchStartX.current = null;
+  };
   // ✅ Swipe-hoz (érintőkijelzőn)
   const touchStartX = useRef(null);
 
