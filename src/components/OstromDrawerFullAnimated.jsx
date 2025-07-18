@@ -16,9 +16,17 @@ export default function OstromDrawerFullAnimated() {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    const openTimer = setTimeout(() => setOpenDrawer('ostrom'), 2000);
+  const alreadyOpened = sessionStorage.getItem('drawerShown');
+
+  if (!alreadyOpened) {
+    const openTimer = setTimeout(() => {
+      setOpenDrawer('ostrom');
+      sessionStorage.setItem('drawerShown', 'true');
+    }, 2000);
+
     return () => clearTimeout(openTimer);
-  }, []);
+  }
+}, []);
 
   useEffect(() => {
     if (openDrawer !== null && !hasInteracted) {
