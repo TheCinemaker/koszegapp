@@ -15,17 +15,23 @@ export default function OstromDrawerFullAnimated() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // ✅ Nyitás oldalbetöltéskor egyszer, ha még nem történt meg
-  useEffect(() => {
-    const alreadyOpened = sessionStorage.getItem('drawerShown');
-    if (!alreadyOpened) {
-      const openTimer = setTimeout(() => {
-        setOpenDrawer('ostrom');
-        sessionStorage.setItem('drawerShown', 'true');
-      }, 2000);
-      return () => clearTimeout(openTimer);
-    }
-  }, []);
+  // ✅ Minden oldalbetöltéskor újranyitás engedélyezése
+    useEffect(() => {
+      sessionStorage.removeItem('drawerShown');
+}, []);
+
+  // ✅ Nyitás oldalbetöltés után, ha még nem történt meg
+    useEffect(() => {
+  const alreadyOpened = sessionStorage.getItem('drawerShown');
+  if (!alreadyOpened) {
+    const openTimer = setTimeout(() => {
+      setOpenDrawer('ostrom');
+      sessionStorage.setItem('drawerShown', 'true');
+    }, 2000);
+    return () => clearTimeout(openTimer);
+  }
+}, []);
+
 
   // ✅ Ha nincs interakció, 5 mp után záródjon
   useEffect(() => {
