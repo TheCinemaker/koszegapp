@@ -15,26 +15,29 @@ export default function OstromDrawerFullAnimated() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // ✅ Nyitás oldalbetöltéskor egyszer, ha még nem történt meg
   useEffect(() => {
-  const alreadyOpened = sessionStorage.getItem('drawerShown');
+    const alreadyOpened = sessionStorage.getItem('drawerShown');
+    if (!alreadyOpened) {
+      const openTimer = setTimeout(() => {
+        setOpenDrawer('ostrom');
+        sessionStorage.setItem('drawerShown', 'true');
+      }, 2000);
+      return () => clearTimeout(openTimer);
+    }
+  }, []);
 
-  if (!alreadyOpened) {
-    const openTimer = setTimeout(() => {
-      setOpenDrawer('ostrom');
-      sessionStorage.setItem('drawerShown', 'true');
-    }, 2000);
-
-    return () => clearTimeout(openTimer);
-  }
-}, []);
-
+  // ✅ Ha nincs interakció, 5 mp után záródjon
   useEffect(() => {
     if (openDrawer !== null && !hasInteracted) {
-      closeTimerRef.current = setTimeout(() => setOpenDrawer(null), 5000);
+      closeTimerRef.current = setTimeout(() => {
+        setOpenDrawer(null);
+      }, 5000);
       return () => clearTimeout(closeTimerRef.current);
     }
   }, [openDrawer, hasInteracted]);
 
+  // ✅ Slide show a kiemelt képeknél
   useEffect(() => {
     if (openDrawer === 'kiemelt' && !modalOpen) {
       const interval = setInterval(() => {
@@ -44,6 +47,7 @@ export default function OstromDrawerFullAnimated() {
     }
   }, [openDrawer, modalOpen, highlightImages.length]);
 
+  // ✅ Ha bármilyen interakció történik, ne záródjon magától
   const handleUserInteraction = () => {
     if (!hasInteracted) {
       setHasInteracted(true);
@@ -53,6 +57,7 @@ export default function OstromDrawerFullAnimated() {
     }
   };
 
+  // ✅ Drawer nyitása manuálisan
   const handleDrawerClick = (drawerType) => {
     setOpenDrawer(drawerType);
     setHasInteracted(true);
@@ -61,7 +66,7 @@ export default function OstromDrawerFullAnimated() {
     }
   };
 
-  // 🔥 Itt van hozzáadva a swipe funkció
+  // ✅ Swipe-hoz (érintőkijelzőn)
   const touchStartX = useRef(null);
 
   const handleTouchStart = (e) => {
@@ -74,14 +79,12 @@ export default function OstromDrawerFullAnimated() {
     const diffX = touchStartX.current - currentX;
 
     if (diffX > 50 && !openDrawer) {
-      // balra suhintás → drawer nyílik ostromra
-      setOpenDrawer('ostrom');
+      setOpenDrawer('ostrom'); // balra suhintás nyitás
       setHasInteracted(true);
       touchStartX.current = null;
     }
     if (diffX < -50 && openDrawer) {
-      // jobbra suhintás → drawer bezár
-      setOpenDrawer(null);
+      setOpenDrawer(null); // jobbra suhintás zárás
       setHasInteracted(true);
       touchStartX.current = null;
     }
@@ -90,7 +93,6 @@ export default function OstromDrawerFullAnimated() {
   const handleTouchEnd = () => {
     touchStartX.current = null;
   };
-
   const ostromProgram = [
   {
     day: "Felvezető programok",
