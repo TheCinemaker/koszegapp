@@ -236,7 +236,7 @@ export default function OstromDrawerFullAnimated() {
       >
         <div
           onScroll={handleUserInteraction}
-          onMouseDown={handleUserInteraction}
+          onTouchMove={handleUserInteraction}
           className={`w-72 h-[75vh] shadow-xl border-l-4 rounded-l-2xl overflow-y-auto font-sans flex flex-col
             ${openDrawer === 'ostrom'
               ? 'bg-amber-100 text-amber-900 border-amber-500'
