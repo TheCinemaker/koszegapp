@@ -17,21 +17,26 @@ export default function OstromDrawerFullAnimated() {
 
   // ✅ Csak valódi oldalbetöltéskor (hard reload/navigate), egyszer nyissa meg
 useEffect(() => {
-  const effectAlreadyRan = sessionStorage.getItem("drawerEffectRan");
-  if (!effectAlreadyRan) {
-    sessionStorage.setItem("drawerEffectRan", "true");
+  const navEntries = performance.getEntriesByType("navigation");
+  const navType = navEntries.length > 0
+    ? navEntries[0].type
+    : "navigate";
+  
+  // csak reload esetén töröljük, hogy újranyíljon
+  if (navType === "reload") {
+    sessionStorage.removeItem("drawerShown");
+  }
 
-    const drawerAlreadyShown = sessionStorage.getItem("drawerShown");
-    if (!drawerAlreadyShown) {
-      const openTimer = setTimeout(() => {
-        setOpenDrawer("ostrom");
-        sessionStorage.setItem("drawerShown", "true");
-      }, 2000);
-      return () => clearTimeout(openTimer);
-    }
+  const alreadyOpened = sessionStorage.getItem("drawerShown");
+  if (!alreadyOpened) {
+    const openTimer = setTimeout(() => {
+      setOpenDrawer("ostrom");
+      sessionStorage.setItem("drawerShown", "true");
+    }, 2000);
+    return () => clearTimeout(openTimer);
   }
 }, []);
-
+  
   // ✅ Ha nincs interakció, 5 mp után záródjon
   useEffect(() => {
     if (openDrawer !== null && !hasInteracted) {
