@@ -5,39 +5,33 @@ export default function OstromDrawerFullAnimated() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const closeTimerRef = useRef(null);
 
-  const [highlightImages] = useState([
-    "/images/highlights/IMG_1722.jpeg",
-    "/images/highlights/IMG_1723.jpeg",
-    "/images/highlights/IMG_1724.jpeg",
-    "/images/highlights/IMG_1725.jpeg",
-    "/images/highlights/tothaug1.jpeg"
-  ]);
-  const [currentImageIdx, setCurrentImageIdx] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
+  // 1) Minden full unload esetén állítsuk be, hogy a következő mountkor auto‑nyíljon
+  useEffect(() => {
+    const onBeforeUnload = () => {
+      sessionStorage.setItem("drawerShouldOpen", "true");
+    };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
 
-  // ✅ Csak valódi oldalbetöltéskor (hard reload/navigate), egyszer nyissa meg
-useEffect(() => {
-  const navEntries = performance.getEntriesByType("navigation");
-  const navType = navEntries.length > 0
-    ? navEntries[0].type
-    : "navigate";
-  
-  // csak reload esetén töröljük, hogy újranyíljon
-  if (navType === "reload") {
-    sessionStorage.removeItem("drawerShown");
-  }
+  // 2) Komponens mountkor: ha drawerShouldOpen flag van, akkor 2mp múlva nyitjuk, majd kitöröljük
+  useEffect(() => {
+    const shouldOpen = sessionStorage.getItem("drawerShouldOpen");
+    if (shouldOpen) {
+      // töröljük, hogy SPA visszanavigálásnál ne nyíljon
+      sessionStorage.removeItem("drawerShouldOpen");
 
-  const alreadyOpened = sessionStorage.getItem("drawerShown");
-  if (!alreadyOpened) {
-    const openTimer = setTimeout(() => {
-      setOpenDrawer("ostrom");
-      sessionStorage.setItem("drawerShown", "true");
-    }, 2000);
-    return () => clearTimeout(openTimer);
-  }
-}, []);
-  
-  // ✅ Ha nincs interakció, 5 mp után záródjon
+      const openTimer = setTimeout(() => {
+        setOpenDrawer("ostrom");
+        // megjegyezzük, hogy már megnyílt egyszer ebben a sessionben
+        sessionStorage.setItem("drawerShown", "true");
+      }, 2000);
+
+      return () => clearTimeout(openTimer);
+    }
+  }, []);
+
+  // 3) A megszokott auto‑close és egyéb useEffectek következnek:
   useEffect(() => {
     if (openDrawer !== null && !hasInteracted) {
       closeTimerRef.current = setTimeout(() => {
