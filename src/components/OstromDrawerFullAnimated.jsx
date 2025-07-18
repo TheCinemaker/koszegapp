@@ -5,7 +5,7 @@ export default function OstromDrawerFullAnimated() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const closeTimerRef = useRef(null);
 
-  // --- kép slideshow állapotok, modal etc. ---
+  // Image slideshow states
   const [highlightImages] = useState([
     "/images/highlights/IMG_1722.jpeg",
     "/images/highlights/IMG_1723.jpeg",
@@ -16,8 +16,7 @@ export default function OstromDrawerFullAnimated() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 1) beforeunload EVENT: csak FULL‑unload (F5, külső link, címsorból enter)
-  //    töröljük ilyenkor a 'drawerShown'-t, hogy a következő mountkor újra kinyíljon.
+  // 1) beforeunload EVENT - clear sessionStorage on full unload
   useEffect(() => {
     const onBeforeUnload = () => {
       sessionStorage.removeItem("drawerShown");
@@ -26,7 +25,7 @@ export default function OstromDrawerFullAnimated() {
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
   }, []);
 
-  // 2) mountkor: ha még nincs 'drawerShown', akkor 2mp múlva kinyitjuk és beállítjuk
+  // 2) On mount: open drawer after 2s if not shown before
   useEffect(() => {
     const alreadyShown = sessionStorage.getItem("drawerShown");
     if (!alreadyShown) {
@@ -38,7 +37,7 @@ export default function OstromDrawerFullAnimated() {
     }
   }, []);
 
-  // 3) ha nincs interakció, 5mp után bezárjuk
+  // 3) Auto-close after 5s if no interaction
   useEffect(() => {
     if (openDrawer !== null && !hasInteracted) {
       closeTimerRef.current = setTimeout(() => setOpenDrawer(null), 5000);
@@ -46,7 +45,7 @@ export default function OstromDrawerFullAnimated() {
     }
   }, [openDrawer, hasInteracted]);
 
-  // 4) slideshow a “kiemelt” fülre
+  // 4) Slideshow for highlighted images
   useEffect(() => {
     if (openDrawer === 'kiemelt' && !modalOpen) {
       const iv = setInterval(() => {
@@ -56,74 +55,34 @@ export default function OstromDrawerFullAnimated() {
     }
   }, [openDrawer, modalOpen, highlightImages.length]);
 
-  // SEGÉDFUNKCIÓK
+  // Helper functions
   const handleUserInteraction = () => {
     if (!hasInteracted) {
       setHasInteracted(true);
       clearTimeout(closeTimerRef.current);
     }
   };
-  const handleDrawerClick = type => {
+
+  const handleDrawerClick = (type) => {
     setOpenDrawer(type);
     setHasInteracted(true);
     clearTimeout(closeTimerRef.current);
   };
-  const touchStartX = useRef(null);
-  const handleTouchStart = e => touchStartX.current = e.touches[0].clientX;
-  const handleTouchMove = e => {
-    if (!touchStartX.current) return;
-    const diff = touchStartX.current - e.touches[0].clientX;
-    if (diff > 50 && !openDrawer) { handleDrawerClick('ostrom'); touchStartX.current = null; }
-    if (diff < -50 && openDrawer) { handleDrawerClick(null); touchStartX.current = null; }
-  };
-  const handleTouchEnd = () => { touchStartX.current = null; };
 
-  // ✅ Slide show a kiemelt képeknél
-  useEffect(() => {
-    if (openDrawer === 'kiemelt' && !modalOpen) {
-      const interval = setInterval(() => {
-        setCurrentImageIdx(prev => (prev + 1) % highlightImages.length);
-      }, 2000);
-      return () => clearInterval(interval);
-    }
-  }, [openDrawer, modalOpen, highlightImages.length]);
-
-  // ✅ Ha bármilyen görgetés történik, töröljük a timeoutot
-  const handleUserInteraction = () => {
-    if (!hasInteracted) {
-      setHasInteracted(true);
-      if (closeTimerRef.current) {
-        clearTimeout(closeTimerRef.current);
-      }
-    }
-  };
-
-  // ✅ Drawer manuális nyitása
-  const handleDrawerClick = (drawerType) => {
-    setOpenDrawer(drawerType);
-    setHasInteracted(true);
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-    }
-  };
-
-  // 🔥 Swipe-hoz (érintőkijelzőn)
+  // Swipe handlers
   const touchStartX = useRef(null);
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
   const handleTouchMove = (e) => {
     if (!touchStartX.current) return;
-    const currentX = e.touches[0].clientX;
-    const diffX = touchStartX.current - currentX;
-    if (diffX > 50 && !openDrawer) {
-      setOpenDrawer('ostrom');
-      setHasInteracted(true);
+    const diff = touchStartX.current - e.touches[0].clientX;
+    if (diff > 50 && !openDrawer) {
+      handleDrawerClick('ostrom');
       touchStartX.current = null;
     }
-    if (diffX < -50 && openDrawer) {
-      setOpenDrawer(null);
-      setHasInteracted(true);
+    if (diff < -50 && openDrawer) {
+      handleDrawerClick(null);
       touchStartX.current = null;
     }
   };
@@ -131,125 +90,126 @@ export default function OstromDrawerFullAnimated() {
     touchStartX.current = null;
   };
 
+  // Event data
   const ostromProgram = [
-  {
-    day: "Felvezető programok",
-    date: "Július 30.–augusztus 1.",
-    events: [
-      {
-        time: "",
-        title: "18. Ostrom Kupa Nemzetközi ökölvívó verseny",
-        location: "Főtér (rossz idő esetén: Balogh Iskola tornacsarnok)",
-        details: [
-          "július 30. 15 órától",
-          "július 31. 14 órától",
-          "augusztus 1. 11 órától"
-        ]
-      },
-      {
-        time: "",
-        title: "4. Ostrom Várvédő jótékonysági Futóverseny",
-        location: "Fő tér / Mirtill Alapítvány",
-        details: [
-          "augusztus 2. Fő tér tömegfutás",
-          "1,5 km, 7 km, 14 km, 21 km a váron és a török táboron át",
-          "Nevezés: helyszínen 7.30–8.30 vagy online",
-          "8.45-kor bemelegítés Hámori Lucával",
-          "Rajt 9 órakor",
-          "Ataru Taiko és hagyományőrzők színesítik",
-          "Teljes bevétel jótékony cél"
-        ]
-      },
-      {
-        time: "",
-        title: "Honvédelmi Sportnap",
-        location: "",
-        details: [
-          "augusztus 1. péntek",
-          "10:00 Ökölvívó bemutató a Fő téren",
-          "10:30 Hagyományőrző bemutató – Fő tér",
-          "11:00 Íjászat – Diáksétány",
-          "11:30 Lézer lövészet és akadálypálya",
-          "12:00 Jurisics Miklós szobrának meglátogatása",
-          "augusztus 2. szombat 9:00 Tömegfutás a történelmi óváros és a váron át"
-        ]
-      },
-      {
-        time: "",
-        title: "Csütörtöktől: Birta Roland képzőművész tollrajzai",
-        location: "Jurisics vár"
-      }
-    ]
-  },
-  {
-    day: "Ostromhétvége - Augusztus 1. péntek",
-    events: [
-      { time: "15:32", title: "XVIII. Kőszegi Ostromnapokat megnyitó puskálövések", location: "Hősök tornya" },
-      { time: "16:00", title: "Ostrom kupa „megtámadása”", location: "Fő tér" },
-      { time: "16:30–17:20", title: "Kőszegi Vonósok", location: "Jurisics tér – Tábornokház loggia" },
-      { time: "17:20–17:50", title: "BE-JÓ Történelmi Táncegyüttes", location: "Jurisics tér" },
-      { time: "17:50", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
-      { time: "18:00", title: "Ostromállapot kihirdetése", location: "Jurisics tér – Tábornokház loggia" },
-      { time: "19:00", title: "Horvát Táncház – Zsidányi Csillagocskák", location: "Jurisics tér" },
-      { time: "20:00", title: "„Ég a város, ég a vár is” tűzes török támadás", location: "Lépcsős várárok" },
-      { time: "21:05", title: "Fáklyás vonulás", location: "Várárkoktól a Jurisics térre" },
-      { time: "21:30–22:00", title: "BE-JÓ Történelmi Táncegyüttes tűztánca", location: "Jurisics tér" },
-      { time: "21:30", title: "„Török lesen” Jelmezes túra", location: "Találkozó: Tourinform iroda, Fő tér 2." },
-      { time: "21:30", title: "OCHO MACHO koncert", location: "Fő tér" }
-    ]
-  },
-  {
-    day: "Augusztus 2. szombat",
-    events: [
-      { time: "9:00", title: "Éjszakai patronok kilövése", location: "Hősök tornya, Fő tér" },
-      { time: "9:00", title: "IV. Ostrom Várvédő futás rajt", location: "Fő tér (9:00, 9:15, 9:30)" },
-      { time: "9:15", title: "Kőszeg védművei séta", location: "Hősök tornya, Révész József vezetésével" },
-      { time: "10:00", title: "A török sereg sétája a belvárosban" },
-      { time: "11:00", title: "Vadászkutya bemutató", location: "Várárok" },
-      { time: "11:00", title: "Várvédő mustra", location: "Jurisics tér" },
-      { time: "11:30", title: "Szablyatánc – „Czenki” Hársfa Néptáncegyüttes", location: "Jurisics tér" },
-      { time: "13:00", title: "Vásártér", location: "Fő tér" },
-      { time: "13:00", title: "Tárlatvezetés a Jurisics vár állandó kiállításában", note: "Várbelépő vagy Múzeumostrom bérlet szükséges" },
-      { time: "13:30", title: "Pattantyús Martalócok Tüzérségi bemutató", location: "Fő tér" },
-      { time: "14:00", title: "Dr. Bilkei Irén előadása", location: "Jurisics vár", note: "16. századi várélet" },
-      { time: "14:30", title: "Batthyány Lovas Bandérium bemutatója", location: "Lépcsős várárok" },
-      { time: "15:00", title: "Nyugati Vármegye Vitézlő Rendje lovasbemutatója", location: "Lépcsős várárok" },
-      { time: "15:30", title: "SilverBirds Bellydance Egyesület hastánc", location: "Fő tér" },
-      { time: "16:30", title: "Ostrom felvonulás", location: "Jurisics vár – Diáksétány" },
-      { time: "18:00", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
-      { time: "18:30", title: "Várostrom", location: "Várfal, Diáksétány" },
-      { time: "20:00", title: "Kőszeg Város Koncert Fúvószenekara", location: "Jurisics tér" },
-      { time: "21:00", title: "Régi Világzene-Szelindek koncert", location: "Fő tér" },
-      { time: "22:00", title: "Retro Disco", location: "Fő tér" },
-      { time: "10:00–16:00", title: "Ifjú Vitéz Próba", note: "12-13 között szünet / Jurisics vár katonai táborok" },
-      { time: "10:30; 15:30", title: "Gyermek ostrom", note: "5-14 év közötti gyerekeknek" }
-    ]
-  },
-  {
-    day: "Augusztus 3. vasárnap",
-    events: [
-      { time: "9:00", title: "Ostromtúra a Szulejmán-kilátóhoz", note: "8 km, indulás: Tourinform Fő tér 2." },
-      { time: "10:30", title: "„Harangszóig” csatajelenetes megemlékezés", location: "Diáksétány" },
-      { time: "11:00", title: "ESŐNAP", note: "szombati rossz idő esetén várostrom" },
-      { time: "11:30", title: "Tárlatvezetés a Tábornokházban és Hősök tornyában", note: "Múzeum belépő vagy Múzeumostrom bérlet szükséges" },
-      { time: "13:00", title: "Kőszegi Borkereskedelem – Jurisics Bandérium bemutató", location: "Fő tér" },
-      { time: "14:00", title: "Gyulaffy Bandérium viselet & fegyverzet bemutató", location: "Fő tér" },
-      { time: "15:00", title: "SilverBirds Bellydance hastánc", location: "Fő tér" },
-      { time: "15:00", title: "Barátkozás Marton-Szállás lovaival", location: "Várárok" },
-      { time: "15:32", title: "Hagyományőrző csapatok koszorúzása" },
-      { time: "16:00", title: "Gyermek-felnőtt ostrom", location: "Lépcsős várárok" },
-      { time: "16:00–17:30", title: "Bogyla Zenekar & Hajnalcsillag Néptáncegyüttes koncert & táncház", location: "Fő tér" },
-      { time: "17:30–18:30", title: "„A magyarok nyilaitól…” – Marton-Szállás lovas íjászbemutató", location: "Várárok" },
-      { time: "19:00", title: "Ataru Taiko koncert", location: "Jurisics vár" },
-      { time: "11:30; 14:30", title: "Gyermek Ostrom", note: "5-14 év közötti gyerekeknek" },
-      { time: "10:00–17:00", title: "Kézműves foglalkozások", location: "Csók István Művészkör, Jurisics vár elővár" }
-    ],
-    footer: "*MÚZEUMOSTROM – közös kedvezményes belépő a Jurisics vár és Kőszegi Városi Múzeum helyszínekre augusztus 10-ig ingyenes visszatérésre jogosít.",
-    disclaimer: "A programváltozás jogát fenntartjuk!"
-  }
-];
+    {
+      day: "Felvezető programok",
+      date: "Július 30.–augusztus 1.",
+      events: [
+        {
+          time: "",
+          title: "18. Ostrom Kupa Nemzetközi ökölvívó verseny",
+          location: "Főtér (rossz idő esetén: Balogh Iskola tornacsarnok)",
+          details: [
+            "július 30. 15 órától",
+            "július 31. 14 órától",
+            "augusztus 1. 11 órától"
+          ]
+        },
+        {
+          time: "",
+          title: "4. Ostrom Várvédő jótékonysági Futóverseny",
+          location: "Fő tér / Mirtill Alapítvány",
+          details: [
+            "augusztus 2. Fő tér tömegfutás",
+            "1,5 km, 7 km, 14 km, 21 km a váron és a török táboron át",
+            "Nevezés: helyszínen 7.30–8.30 vagy online",
+            "8.45-kor bemelegítés Hámori Lucával",
+            "Rajt 9 órakor",
+            "Ataru Taiko és hagyományőrzők színesítik",
+            "Teljes bevétel jótékony cél"
+          ]
+        },
+        {
+          time: "",
+          title: "Honvédelmi Sportnap",
+          location: "",
+          details: [
+            "augusztus 1. péntek",
+            "10:00 Ökölvívó bemutató a Fő téren",
+            "10:30 Hagyományőrző bemutató – Fő tér",
+            "11:00 Íjászat – Diáksétány",
+            "11:30 Lézer lövészet és akadálypálya",
+            "12:00 Jurisics Miklós szobrának meglátogatása",
+            "augusztus 2. szombat 9:00 Tömegfutás a történelmi óváros és a váron át"
+          ]
+        },
+        {
+          time: "",
+          title: "Csütörtöktől: Birta Roland képzőművész tollrajzai",
+          location: "Jurisics vár"
+        }
+      ]
+    },
+    {
+      day: "Ostromhétvége - Augusztus 1. péntek",
+      events: [
+        { time: "15:32", title: "XVIII. Kőszegi Ostromnapokat megnyitó puskálövések", location: "Hősök tornya" },
+        { time: "16:00", title: "Ostrom kupa „megtámadása”", location: "Fő tér" },
+        { time: "16:30–17:20", title: "Kőszegi Vonósok", location: "Jurisics tér – Tábornokház loggia" },
+        { time: "17:20–17:50", title: "BE-JÓ Történelmi Táncegyüttes", location: "Jurisics tér" },
+        { time: "17:50", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
+        { time: "18:00", title: "Ostromállapot kihirdetése", location: "Jurisics tér – Tábornokház loggia" },
+        { time: "19:00", title: "Horvát Táncház – Zsidányi Csillagocskák", location: "Jurisics tér" },
+        { time: "20:00", title: "„Ég a város, ég a vár is” tűzes török támadás", location: "Lépcsős várárok" },
+        { time: "21:05", title: "Fáklyás vonulás", location: "Várárkoktól a Jurisics térre" },
+        { time: "21:30–22:00", title: "BE-JÓ Történelmi Táncegyüttes tűztánca", location: "Jurisics tér" },
+        { time: "21:30", title: "„Török lesen” Jelmezes túra", location: "Találkozó: Tourinform iroda, Fő tér 2." },
+        { time: "21:30", title: "OCHO MACHO koncert", location: "Fő tér" }
+      ]
+    },
+    {
+      day: "Augusztus 2. szombat",
+      events: [
+        { time: "9:00", title: "Éjszakai patronok kilövése", location: "Hősök tornya, Fő tér" },
+        { time: "9:00", title: "IV. Ostrom Várvédő futás rajt", location: "Fő tér (9:00, 9:15, 9:30)" },
+        { time: "9:15", title: "Kőszeg védművei séta", location: "Hősök tornya, Révész József vezetésével" },
+        { time: "10:00", title: "A török sereg sétája a belvárosban" },
+        { time: "11:00", title: "Vadászkutya bemutató", location: "Várárok" },
+        { time: "11:00", title: "Várvédő mustra", location: "Jurisics tér" },
+        { time: "11:30", title: "Szablyatánc – „Czenki” Hársfa Néptáncegyüttes", location: "Jurisics tér" },
+        { time: "13:00", title: "Vásártér", location: "Fő tér" },
+        { time: "13:00", title: "Tárlatvezetés a Jurisics vár állandó kiállításában", note: "Várbelépő vagy Múzeumostrom bérlet szükséges" },
+        { time: "13:30", title: "Pattantyús Martalócok Tüzérségi bemutató", location: "Fő tér" },
+        { time: "14:00", title: "Dr. Bilkei Irén előadása", location: "Jurisics vár", note: "16. századi várélet" },
+        { time: "14:30", title: "Batthyány Lovas Bandérium bemutatója", location: "Lépcsős várárok" },
+        { time: "15:00", title: "Nyugati Vármegye Vitézlő Rendje lovasbemutatója", location: "Lépcsős várárok" },
+        { time: "15:30", title: "SilverBirds Bellydance Egyesület hastánc", location: "Fő tér" },
+        { time: "16:30", title: "Ostrom felvonulás", location: "Jurisics vár – Diáksétány" },
+        { time: "18:00", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
+        { time: "18:30", title: "Várostrom", location: "Várfal, Diáksétány" },
+        { time: "20:00", title: "Kőszeg Város Koncert Fúvószenekara", location: "Jurisics tér" },
+        { time: "21:00", title: "Régi Világzene-Szelindek koncert", location: "Fő tér" },
+        { time: "22:00", title: "Retro Disco", location: "Fő tér" },
+        { time: "10:00–16:00", title: "Ifjú Vitéz Próba", note: "12-13 között szünet / Jurisics vár katonai táborok" },
+        { time: "10:30; 15:30", title: "Gyermek ostrom", note: "5-14 év közötti gyerekeknek" }
+      ]
+    },
+    {
+      day: "Augusztus 3. vasárnap",
+      events: [
+        { time: "9:00", title: "Ostromtúra a Szulejmán-kilátóhoz", note: "8 km, indulás: Tourinform Fő tér 2." },
+        { time: "10:30", title: "„Harangszóig” csatajelenetes megemlékezés", location: "Diáksétány" },
+        { time: "11:00", title: "ESŐNAP", note: "szombati rossz idő esetén várostrom" },
+        { time: "11:30", title: "Tárlatvezetés a Tábornokházban és Hősök tornyában", note: "Múzeum belépő vagy Múzeumostrom bérlet szükséges" },
+        { time: "13:00", title: "Kőszegi Borkereskedelem – Jurisics Bandérium bemutató", location: "Fő tér" },
+        { time: "14:00", title: "Gyulaffy Bandérium viselet & fegyverzet bemutató", location: "Fő tér" },
+        { time: "15:00", title: "SilverBirds Bellydance hastánc", location: "Fő tér" },
+        { time: "15:00", title: "Barátkozás Marton-Szállás lovaival", location: "Várárok" },
+        { time: "15:32", title: "Hagyományőrző csapatok koszorúzása" },
+        { time: "16:00", title: "Gyermek-felnőtt ostrom", location: "Lépcsős várárok" },
+        { time: "16:00–17:30", title: "Bogyla Zenekar & Hajnalcsillag Néptáncegyüttes koncert & táncház", location: "Fő tér" },
+        { time: "17:30–18:30", title: "„A magyarok nyilaitól…” – Marton-Szállás lovas íjászbemutató", location: "Várárok" },
+        { time: "19:00", title: "Ataru Taiko koncert", location: "Jurisics vár" },
+        { time: "11:30; 14:30", title: "Gyermek Ostrom", note: "5-14 év közötti gyerekeknek" },
+        { time: "10:00–17:00", title: "Kézműves foglalkozások", location: "Csók István Művészkör, Jurisics vár elővár" }
+      ],
+      footer: "*MÚZEUMOSTROM – közös kedvezményes belépő a Jurisics vár és Kőszegi Városi Múzeum helyszínekre augusztus 10-ig ingyenes visszatérésre jogosít.",
+      disclaimer: "A programváltozás jogát fenntartjuk!"
+    }
+  ];
 
-    return (
+  return (
     <>
       {modalOpen && (
         <div 
@@ -337,17 +297,22 @@ export default function OstromDrawerFullAnimated() {
                             {evt.location}
                           </div>
                         )}
+                        {evt.note && (
+                          <div className="text-xs mt-1 text-amber-600">
+                            {evt.note}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
-                  {section.note && (
-                    <div className="mt-3 p-3 bg-yellow-100 border-l-4 border-yellow-400 rounded text-amber-800 text-xs">
-                      {section.note}
-                    </div>
-                  )}
                   {section.footer && (
                     <div className="mt-4 p-3 bg-amber-100 border-l-4 border-amber-400 rounded text-amber-900 text-sm">
                       {section.footer}
+                    </div>
+                  )}
+                  {section.disclaimer && (
+                    <div className="mt-2 p-2 bg-yellow-100 rounded text-xs text-amber-800">
+                      {section.disclaimer}
                     </div>
                   )}
                 </div>
@@ -387,6 +352,7 @@ export default function OstromDrawerFullAnimated() {
           </div>
         </div>
 
+        {/* Drawer toggle buttons */}
         <div
           onClick={() => handleDrawerClick('ostrom')}
           className={`absolute top-[11%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center
@@ -415,18 +381,17 @@ export default function OstromDrawerFullAnimated() {
 
         <div
           onClick={() => handleDrawerClick('kiemelt')}
-            className={`absolute top-[55%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center
-              border rounded-br-2xl rounded-bl-2xl shadow transform rotate-90 origin-left
-              cursor-pointer transition
+          className={`absolute top-[55%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center
+            border rounded-br-2xl rounded-bl-2xl shadow transform rotate-90 origin-left
+            cursor-pointer transition
             ${openDrawer === 'kiemelt'
               ? 'bg-purple-400 text-white border-purple-600'
               : 'bg-purple-200 text-purple-700 border-purple-400 opacity-70'}
-                hover:bg-purple-300`}
+            hover:bg-purple-300`}
         >
-            <span className="text-xs font-bold">KIEMELT FELÜLET</span>
+          <span className="text-xs font-bold">KIEMELT FELÜLET</span>
         </div>
       </div>
     </>
   );
 }
-
