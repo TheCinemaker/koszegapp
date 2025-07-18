@@ -17,27 +17,12 @@ export default function OstromDrawerFullAnimated() {
 
   // ✅ Csak valódi oldalbetöltéskor (hard reload/navigate), egyszer nyissa meg
 useEffect(() => {
-  // 1) Hard reload detektálása
-  const navEntries = performance.getEntriesByType("navigation");
-  const navType = navEntries.length > 0
-    ? navEntries[0].type
-    : "navigate";
-  const isHardReload = navType === "navigate" || navType === "reload";
-
-  if (isHardReload) {
-    // ürítjük a sessionStorage-t, hogy hard reloadkor újranyíljon
-    sessionStorage.removeItem("drawerEffectRan");
-    sessionStorage.removeItem("drawerShown");
-  }
-
-  // 2) Megnézzük, futott-e már az effekt
-  const effectRan = sessionStorage.getItem("drawerEffectRan");
-  if (!effectRan) {
+  const effectAlreadyRan = sessionStorage.getItem("drawerEffectRan");
+  if (!effectAlreadyRan) {
     sessionStorage.setItem("drawerEffectRan", "true");
 
-    // 3) Ha még nem mutattuk meg a drawer-t, 2 mp múlva kinyitjuk
-    const alreadyOpened = sessionStorage.getItem("drawerShown");
-    if (!alreadyOpened) {
+    const drawerAlreadyShown = sessionStorage.getItem("drawerShown");
+    if (!drawerAlreadyShown) {
       const openTimer = setTimeout(() => {
         setOpenDrawer("ostrom");
         sessionStorage.setItem("drawerShown", "true");
@@ -46,7 +31,6 @@ useEffect(() => {
     }
   }
 }, []);
-
 
   // ✅ Ha nincs interakció, 5 mp után záródjon
   useEffect(() => {
