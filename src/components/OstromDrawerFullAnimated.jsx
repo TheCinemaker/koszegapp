@@ -4,6 +4,7 @@ export default function OstromDrawerFullAnimated() {
   const [openDrawer, setOpenDrawer] = useState(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const closeTimerRef = useRef(null);
+  const initializedRef = useRef(false); // Új ref a inicializálás követésére
 
   // Image slideshow states
   const [highlightImages] = useState([
@@ -27,6 +28,9 @@ export default function OstromDrawerFullAnimated() {
 
   // 2) On mount: open drawer after 2s if not shown before
   useEffect(() => {
+    if (initializedRef.current) return; // Már inicializáltuk
+    initializedRef.current = true;
+
     const alreadyShown = sessionStorage.getItem("drawerShown");
     if (!alreadyShown) {
       const t = setTimeout(() => {
