@@ -1,0 +1,17 @@
+1. slideshow a restaurant detailsben 
+  - külön mappa minden vendéglátóhoz, ahonnan a képeket betöltjük
+  - lapozható söpréssel is
+  - kattintásra nagyítható 
+  - kattintásra visszaugrik a detailsbe
+
+2. slideshow a nevezetességek detailsben 
+  - külön mappa minden hotelhez, ahonnan a képeket betöltjük
+  - lapozható söpréssel is
+  - kattintásra nagyítható 
+  - kattintásra visszaugrik a detailsbe
+
+3. chatAI motor fejlesztése, webkereséssel
+4. Fordítás minden oldalra (angol prioritás!!)
+5. bugfix - képek optimalizálása WEBP-re!!
+6. bugfix - képek méretezése a kártyához
+
