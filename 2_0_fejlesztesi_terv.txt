@@ -14,4 +14,16 @@
 4. Fordítás minden oldalra (angol prioritás!!)
 5. bugfix - képek optimalizálása WEBP-re!!
 6. bugfix - képek méretezése a kártyához
+7. miserend a templomokhoz
+8. slideshow söpréssel a kiemeltben
+9. modal csak egyszer nyiljon meg, back ugrásra ne csináljon semmit
+10. chatben mindig lehessen gépelni, ne kelljen belekattintani a beviteli mezőbe
+11. ikonképek nagyítása
+12. qr kód generálás az oldalnak
+13. esemény bevitele külső feltöltéssel (magas priritás!!)
+14. SEO javitása
+15. metatag javítása
+16. szűrők beépitése minden oldalra
+17. utvonaltervező beépitése (csak városi séta!)
+18. menük beépitése bal oldalon besöpörhető modalon, feltöltési lehetőséggel
 
