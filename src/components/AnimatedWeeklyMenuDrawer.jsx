@@ -75,7 +75,7 @@ const getTodayMenus = (menus, selectedRestaurant) => {
     return valid.filter(m => m.etterem === selectedRestaurant);
   }
   return valid.map(m => {
-    const todayMenus = [m[`menu_${today}_a`], m[`menu_${today}_b`], m[`menu_${today}_c`]]
+    const todayMenus = [m[menu_${today}_a], m[menu_${today}_b], m[menu_${today}_c]]
       .filter(x => x && x.trim());
     return {...m, todayMenus};
   }).filter(m => m.todayMenus.length);
@@ -132,16 +132,16 @@ return (
     )}
 
     {/* Drawer + fül container */}
-    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none relative">
+    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none">
 
       {/* Drawer panel */}
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`w-2/3 max-w-sm h-full bg-blue-100 shadow-lg transform transition-transform duration-300 ease-in-out
+        className={w-2/3 max-w-sm h-full bg-blue-100 shadow-lg transform transition-transform duration-300 ease-in-out
           ${open ? 'translate-x-0' : '-translate-x-full'}
-          border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto relative`}
+          border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto relative}
       >
         {/* Header */}
         <div className="flex justify-between items-center border-b p-4 bg-blue-200">
@@ -193,7 +193,7 @@ return (
             </div>
           ) : todayMenus.length ? (
             todayMenus.map((menu, idx) => (
-              <div key={`${menu.etterem}-${idx}`} className="bg-white p-3 rounded shadow">
+              <div key={${menu.etterem}-${idx}} className="bg-white p-3 rounded shadow">
                 <div className="text-sm font-semibold text-blue-700">
                   {menu.etterem}
                   <div className="text-xs text-blue-700 italic">
@@ -202,10 +202,10 @@ return (
                     {(menu.price_a || menu.price_b || menu.price_c || menu.price_allando) && (
                       <div>
                         Árak:
-                        {menu.price_a && ` A: ${menu.price_a} Ft`}
-                        {menu.price_b && ` B: ${menu.price_b} Ft`}
-                        {menu.price_c && ` C: ${menu.price_c} Ft`}
-                        {menu.price_allando && ` Állandó: ${menu.price_allando} Ft`}
+                        {menu.price_a &&  A: ${menu.price_a} Ft}
+                        {menu.price_b &&  B: ${menu.price_b} Ft}
+                        {menu.price_c &&  C: ${menu.price_c} Ft}
+                        {menu.price_allando &&  Állandó: ${menu.price_allando} Ft}
                       </div>
                     )}
                   </div>
