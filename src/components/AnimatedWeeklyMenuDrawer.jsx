@@ -235,7 +235,7 @@ return (
         © KőszegAPP – {new Date().getFullYear()}
       </div>
 
-      {/* Fül – pontosan a panel jobb szélén, mindig látható */}
+      {/* Fül – mindig a panel jobb szélén, kívül kilógva */}
       <div
         className="absolute top-1/2 -right-8 z-50 transform -translate-y-1/2 cursor-pointer"
         onClick={() => setOpen(o => !o)}
@@ -249,4 +249,5 @@ return (
     </div>
   </>
 );
+
 }
