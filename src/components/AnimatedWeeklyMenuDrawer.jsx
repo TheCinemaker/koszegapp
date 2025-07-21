@@ -38,281 +38,109 @@ const transformEntry = (raw) => ({
 
 const parseDate = (str) => {
   if (!str) return null;
-  
-  // Ha Date objektum stringként érkezik (pl. "Date(2025,6,21)")
   if (typeof str === 'string' && str.startsWith('Date(')) {
-    try {
-      const dateParts = str.match(/Date\((\d+),(\d+),(\d+)\)/);
-      if (dateParts) {
-        const year = parseInt(dateParts[1], 10);
-        const month = parseInt(dateParts[2], 10);
-        const day = parseInt(dateParts[3], 10);
-        return new Date(year, month, day);
-      }
-    } catch (e) {
-      console.warn('Dátum feldolgozási hiba:', e);
-    }
+    const parts = str.match(/Date\((\d+),(\d+),(\d+)\)/);
+    if (parts) return new Date(parts[1], parts[2], parts[3]);
   }
-  
-  // Ha klasszikus "2025.07.21." formátumban érkezik
   if (typeof str === 'string' && str.includes('.')) {
-    const cleaned = str.trim().replace(/\.+$/, '');
-    if (/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(cleaned)) {
-      const [yearStr, monthStr, dayStr] = cleaned.split('.');
-      const year = parseInt(yearStr, 10);
-      const month = parseInt(monthStr, 10) - 1;
-      const day = parseInt(dayStr, 10);
-      return new Date(year, month, day);
-    }
+    const [y, m, d] = str.replace(/\.+$/, '').split('.');
+    return new Date(y, m - 1, d);
   }
-  
-  console.warn('Ismeretlen dátumformátum:', str);
   return null;
 };
+
 const isMenuValidToday = (menu) => {
-  try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const start = parseDate(menu.validFrom);
-    const end = parseDate(menu.validTo);
-    
-    if (!start || !end) {
-      console.warn('Hiányzó vagy érvénytelen dátum:', menu.etterem, menu.validFrom, menu.validTo);
-      return false;
-    }
-    
-    // Másolatot készítünk, hogy ne módosítsuk az eredeti dátumokat
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(0, 0, 0, 0);
-    
-    const isValid = today >= startDate && today <= endDate;
-    
-    if (!isValid) {
-      console.log('Nem érvényes menü:', menu.etterem, 
-        'Kezdő dátum:', startDate, 
-        'Befejező dátum:', endDate, 
-        'Ma:', today);
-    }
-    
-    return isValid;
-  } catch (e) {
-    console.error('Hiba a dátum ellenőrzésében:', e);
-    return false;
-  }
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const start = parseDate(menu.validFrom);
+  const end = parseDate(menu.validTo);
+  return start && end && today >= start && today <= end;
 };
 
-const getTodayMenus = (menus, selectedRestaurant) => {
-  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-  const dayIndex = new Date().getDay();
-  const todayIdx = dayIndex === 0 ? 6 : dayIndex - 1;
-  const today = days[todayIdx];
-  const validMenus = menus.filter(isMenuValidToday);
-
-  if (selectedRestaurant) {
-    return validMenus.filter(m => m.etterem === selectedRestaurant);
-  }
-
-  return validMenus.map(m => ({
-    ...m,
-    menu_mon_a: '', menu_mon_b: '', menu_mon_c: '',
-    menu_tue_a: '', menu_tue_b: '', menu_tue_c: '',
-    menu_wed_a: '', menu_wed_b: '', menu_wed_c: '',
-    menu_thu_a: '', menu_thu_b: '', menu_thu_c: '',
-    menu_fri_a: '', menu_fri_b: '', menu_fri_c: '',
-    menu_sat_a: '', menu_sat_b: '', menu_sat_c: '',
-    [`menu_${today}_a`]: m[`menu_${today}_a`],
-    [`menu_${today}_b`]: m[`menu_${today}_b`],
-    [`menu_${today}_c`]: m[`menu_${today}_c`],
-    todayMenus: [
-      m[`menu_${today}_a`],
-      m[`menu_${today}_b`],
-      m[`menu_${today}_c`]
-    ].filter(menu => menu && menu.trim() !== '')
-  })).filter(m => m.todayMenus.length > 0);
+const getTodayMenus = (menus, selected) => {
+  const dayMap = ['mon','tue','wed','thu','fri','sat'];
+  const day = dayMap[(new Date().getDay() + 6) % 7];
+  return menus.filter(isMenuValidToday).filter(m => !selected || m.etterem === selected).map(m => {
+    const todayMenus = [m[`menu_${day}_a`], m[`menu_${day}_b`], m[`menu_${day}_c`]].filter(Boolean);
+    return todayMenus.length ? {...m, todayMenus} : null;
+  }).filter(Boolean);
 };
 
-
-export default function AnimatedWeeklyMenuDrawer() {
+export default function StyledWeeklyMenuDrawer() {
   const [open, setOpen] = useState(false);
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedRestaurant, setSelectedRestaurant] = useState('');
-  const touchStartX = useRef(null);
-  const closeTimer = useRef(null);
+  const [selected, setSelected] = useState('');
+  const touchX = useRef(null);
 
   useEffect(() => {
-    let isMounted = true;
-    
-    async function load() {
-      try {
-        const rawData = await fetchMenus(sheetId, sheetName);
-        if (!isMounted) return;
-        
-        const transformed = rawData.map(transformEntry);
-        console.log('Betöltött menük:', transformed.map(m => ({
-          etterem: m.etterem,
-          validFrom: m.validFrom,
-          validTo: m.validTo,
-          parsedFrom: parseDate(m.validFrom),
-          parsedTo: parseDate(m.validTo)
-        })));
-        
-        setMenus(transformed);
-      } catch (err) {
-        console.error('Error fetching menus:', err);
-        if (isMounted) {
-          setError('Hiba a menük betöltésekor. Próbáld újra később.');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    }
-    
-    load();
-    
-    return () => {
-      isMounted = false;
-    };
+    fetchMenus(sheetId, sheetName).then(r => setMenus(r.map(transformEntry))).catch(e => setError(e.message)).finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (open) {
-      closeTimer.current = setTimeout(() => setOpen(false), 12000);
-      return () => clearTimeout(closeTimer.current);
-    }
-  }, [open]);
-
-  const onTouchStart = (e) => { 
-    touchStartX.current = e.touches[0].clientX; 
-  };
-  
-  const onTouchMove = (e) => {
-    if (touchStartX.current == null) return;
-    const diff = e.touches[0].clientX - touchStartX.current;
-    if (!open && diff > 50) setOpen(true);
-    if (open && diff < -50) setOpen(false);
-    touchStartX.current = null;
-  };
-
-  const restaurants = [...new Set(menus.map(m => m.etterem))].filter(Boolean).sort();
-  const todayMenus = getTodayMenus(menus, selectedRestaurant);
-  const todayDate = new Date().toLocaleDateString('hu-HU', { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
+  const todayStr = new Date().toLocaleDateString('hu-HU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const restaurantList = [...new Set(menus.map(m => m.etterem))].filter(Boolean).sort();
+  const todayMenus = getTodayMenus(menus, selected);
 
   return (
     <>
-      {open && (
-        <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
-      )}
+      {open && <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setOpen(false)} />}
       <div
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={() => (touchStartX.current = null)}
-        className={`fixed top-0 left-0 h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'} border-r-4 border-blue-400 rounded-r-xl overflow-hidden`}
+        onTouchStart={e => touchX.current = e.touches[0].clientX}
+        onTouchMove={e => {
+          const diff = e.touches[0].clientX - touchX.current;
+          if (!open && diff > 50) setOpen(true);
+          if (open && diff < -50) setOpen(false);
+          touchX.current = null;
+        }}
+        onTouchEnd={() => touchX.current = null}
+        className={`fixed top-[50px] left-0 z-50 transform transition-transform duration-700 ease-in-out
+          ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex justify-between items-center border-b p-4 bg-blue-200">
-          <h2 className="text-sm font-bold text-blue-800">{todayDate}</h2>
-          <button 
-            onClick={() => setOpen(false)} 
-            className="text-blue-800 hover:text-blue-900"
-            aria-label="Bezárás"
-          >
-            ✕
-          </button>
-        </div>
-        <div className="text-center text-lg font-bold text-blue-900 px-4 pb-2">
-          Éttermek napi menüi
-        </div>
-
-        <div className="px-4 pb-3">
-          <select
-            className="w-full border p-2 rounded text-sm"
-            value={selectedRestaurant}
-            onChange={(e) => setSelectedRestaurant(e.target.value)}
-            aria-label="Válassz éttermet"
-          >
-            <option value="">Összes étterem</option>
-            {restaurants.map((r, idx) => (
-              <option key={idx} value={r}>{r}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="px-4 pb-4 overflow-y-auto h-[calc(100%-180px)] space-y-4">
-          {loading && (
-            <div className="flex justify-center items-center h-32">
-              <div className="animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
-            </div>
-          )}
-          
-          {error && (
-            <div className="text-center p-4 text-red-500">
-              {error}
-              <button 
-                onClick={() => window.location.reload()} 
-                className="mt-2 px-4 py-1 bg-blue-500 text-white rounded"
-              >
-                Újrapróbálom
-              </button>
-            </div>
-          )}
-          
-          {!loading && !error && (
-            todayMenus.length ? (
-              todayMenus.map((menu, idx) => (
-                <div key={`${menu.etterem}-${idx}`} className="bg-white p-3 rounded shadow">
-                  <div className="text-sm font-semibold text-blue-700">
-                    {menu.etterem}
-                    <div className="text-xs text-blue-700 italic">
-                      {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
-                      {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
-                      {(menu.price_a || menu.price_b || menu.price_c || menu.price_allando) && (
-                        <div>
-                          Árak: 
-                          {menu.price_a && ` A: ${menu.price_a} Ft`}
-                          {menu.price_b && ` B: ${menu.price_b} Ft`}
-                          {menu.price_c && ` C: ${menu.price_c} Ft`}
-                          {menu.price_allando && ` Állandó: ${menu.price_allando} Ft`}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <MenuCard data={menu} showTodayOnly={!selectedRestaurant} />
-                </div>
-              ))
-            ) : (
-              <div className="text-center text-blue-500 py-8">
-                <p>Nincs elérhető napi menü.</p>
-                {menus.length > 0 && (
-                  <p className="text-xs mt-2">
-                    ({menus.length} étterem van a rendszerben, de nincs ma érvényes menü)
-                  </p>
-                )}
+        <div className="w-72 h-[75vh] bg-blue-100 text-blue-900 border-r-4 border-blue-500 rounded-r-2xl shadow-xl flex flex-col overflow-hidden">
+          <div className="sticky top-0 px-4 py-3 flex justify-between items-center border-b bg-blue-200 border-blue-400 z-10">
+            <h3 className="text-lg font-extrabold">{todayStr}</h3>
+            <button onClick={() => setOpen(false)} className="text-2xl font-bold hover:scale-125 transition">✖</button>
+          </div>
+          <div className="text-center font-bold px-4 pt-1 pb-2">Éttermek napi menüi</div>
+          <div className="px-4 pb-3">
+            <select className="w-full border p-2 rounded text-sm" value={selected} onChange={e => setSelected(e.target.value)}>
+              <option value="">Összes étterem</option>
+              {restaurantList.map((r, i) => <option key={i} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="px-4 pb-4 overflow-y-auto h-full space-y-4">
+            {loading ? (
+              <div className="flex justify-center items-center h-32">
+                <div className="animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
               </div>
-            )
-          )}
+            ) : error ? (
+              <div className="text-center text-red-500">{error}</div>
+            ) : todayMenus.length ? todayMenus.map((m, i) => (
+              <div key={i} className="bg-white p-3 rounded-xl shadow hover:shadow-lg transition">
+                <div className="text-sm font-semibold text-blue-800">{m.etterem}</div>
+                <div className="text-xs text-blue-700 italic">
+                  {m.kapcsolat && <div>Kapcsolat: {m.kapcsolat}</div>}
+                  {m.hazhozszallitas && <div>Házhozszállítás: {m.hazhozszallitas}</div>}
+                  {(m.price_a || m.price_b || m.price_c || m.price_allando) && (
+                    <div>Árak: {m.price_a && ` A: ${m.price_a} Ft`} {m.price_b && ` B: ${m.price_b} Ft`} {m.price_c && ` C: ${m.price_c} Ft`} {m.price_allando && ` Állandó: ${m.price_allando} Ft`}</div>
+                  )}
+                </div>
+                <MenuCard data={m} showTodayOnly={!selected} />
+              </div>
+            )) : (
+              <div className="text-center text-blue-500 py-4">Nincs elérhető napi menü.</div>
+            )}
+          </div>
+          <div className="sticky bottom-0 text-center py-2 text-xs font-bold border-t bg-blue-200 border-blue-400">© KőszegAPP – {new Date().getFullYear()}</div>
         </div>
-        <div className="text-xs text-center text-blue-800 py-2 border-t bg-blue-200">
-          © KőszegAPP – {new Date().getFullYear()}
+        <div
+          onClick={() => setOpen(o => !o)}
+          className={`absolute top-[25%] px-3 py-1.5 -right-4 w-36 h-10 flex items-center justify-center
+            border rounded-bl-2xl rounded-br-2xl shadow transform rotate-90 origin-right
+            cursor-pointer transition bg-blue-400 text-white border-blue-600 hover:bg-blue-500`}
+        >
+          <span className="text-xs font-bold">NAPI MENÜK</span>
         </div>
-      </div>
-      <div
-        className="fixed top-1/2 -left-4 w-32 h-10 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-br-2xl rounded-bl-2xl shadow transform -rotate-90 origin-top-left cursor-pointer select-none z-50 hover:bg-blue-500 transition-colors"
-        onClick={() => setOpen(o => !o)}
-        aria-label="Napi menük megnyitása"
-      >
-        <span className="text-xs font-bold">NAPI MENÜK</span>
       </div>
     </>
   );
