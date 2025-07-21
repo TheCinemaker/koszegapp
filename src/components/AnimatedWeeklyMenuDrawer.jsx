@@ -24,7 +24,11 @@ const transformEntry = (raw) => ({
   menu_thu_c: raw['Csütörtök C menü'] || '',
   menu_fri_a: raw['Péntek A menü'] || '',
   menu_fri_b: raw['Péntek B menü'] || '',
-  menu_fri_c: raw['Péntek C menü'] || ''
+  menu_fri_c: raw['Péntek C menü'] || '',
+  price_a: raw['"A" menü ára'] || '',
+  price_b: raw['"B" menü ára'] || '',
+  price_c: raw['"C" menü ára'] || '',
+  price_allando: raw['Állandó menü ára'] || ''
 });
 
 const getTodayMenus = (menus, selectedRestaurant) => {
@@ -144,7 +148,19 @@ export default function AnimatedWeeklyMenuDrawer() {
           {!loading && !error && (
             todayMenus.length ? (
               todayMenus.map((menu, idx) => (
-                <MenuCard key={idx} data={menu} showTodayOnly={!selectedRestaurant} />
+                <div key={idx}>
+                  <div className="text-sm font-semibold text-blue-700">
+                    {menu.etterem}
+                    <div className="text-xs text-blue-700 italic">
+                      {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
+                      {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
+                      {(menu.price_a || menu.price_b || menu.price_c) && (
+                        <div>Árak: A: {menu.price_a} Ft, B: {menu.price_b} Ft, C: {menu.price_c} Ft</div>
+                      )}
+                    </div>
+                  </div>
+                  <MenuCard data={menu} showTodayOnly={!selectedRestaurant} />
+                </div>
               ))
             ) : (
               <div className="text-center text-blue-500 py-8">
