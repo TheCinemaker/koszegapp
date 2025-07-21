@@ -38,25 +38,43 @@ const transformEntry = (raw) => ({
 
 const parseDate = (str) => {
   if (!str) return null;
-  const cleaned = str.trim().replace(/\.$/, '');
-  const parts = cleaned.split('.').map(p => p.trim()).filter(Boolean);
-  if (parts.length !== 3) return null;
-  const [yearStr, monthStr, dayStr] = parts;
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10) - 1; // 0-indexelt hónap
-  const day = parseInt(dayStr, 10);
-  return new Date(year, month, day);
+  
+  // Eltávolítjuk a felesleges pontot a végéről és felesleges szóközöket
+  const cleaned = str.toString().trim().replace(/\.$/, '');
+  
+  // Hibakezelés, ha nem dátum formátum
+  if (!/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(cleaned)) return null;
+  
+  const parts = cleaned.split('.');
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1; // 0-indexelt hónap
+  const day = parseInt(parts[2], 10);
+  
+  // Létrehozzuk a dátumot és ellenőrizzük, hogy érvényes-e
+  const date = new Date(year, month, day);
+  if (isNaN(date.getTime())) return null;
+  
+  return date;
 };
 
 const isMenuValidToday = (menu) => {
   const today = new Date();
   today.setHours(0,0,0,0);
+  
   const start = parseDate(menu.validFrom);
   const end = parseDate(menu.validTo);
+  
+  // Ha valamelyik dátum érvénytelen, akkor nem érvényes a menü
   if (!start || !end) return false;
-  start.setHours(0,0,0,0);
-  end.setHours(0,0,0,0);
-  return today >= start && today <= end;
+  
+  // Másolatot készítünk, hogy ne módosítsuk az eredeti dátumokat
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  
+  startDate.setHours(0,0,0,0);
+  endDate.setHours(0,0,0,0);
+  
+  return today >= startDate && today <= endDate;
 };
 
 const getTodayMenus = (menus, selectedRestaurant) => {
