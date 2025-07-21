@@ -132,16 +132,18 @@ return (
     )}
 
     {/* Drawer + fül container */}
-    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none">
-
+    <div
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={() => (touchStartX.current = null)}
+      className={`fixed top-0 left-0 h-[85%] mt-6 z-50 transform transition-transform duration-300 ease-in-out
+        pointer-events-none
+        ${open ? 'translate-x-0' : '-translate-x-full'}`}
+    >
       {/* Drawer panel */}
       <div
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={() => (touchStartX.current = null)}
-        className={w-2/3 max-w-sm h-full bg-blue-100 shadow-lg transform transition-transform duration-300 ease-in-out
-          ${open ? 'translate-x-0' : '-translate-x-full'}
-          border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto relative}
+        className="w-2/3 max-w-sm h-full bg-blue-100 shadow-lg border-r-4 border-blue-400
+                   rounded-r-xl overflow-hidden pointer-events-auto relative"
       >
         {/* Header */}
         <div className="flex justify-between items-center border-b p-4 bg-blue-200">
@@ -193,7 +195,7 @@ return (
             </div>
           ) : todayMenus.length ? (
             todayMenus.map((menu, idx) => (
-              <div key={${menu.etterem}-${idx}} className="bg-white p-3 rounded shadow">
+              <div key={`${menu.etterem}-${idx}`} className="bg-white p-3 rounded shadow">
                 <div className="text-sm font-semibold text-blue-700">
                   {menu.etterem}
                   <div className="text-xs text-blue-700 italic">
@@ -202,10 +204,10 @@ return (
                     {(menu.price_a || menu.price_b || menu.price_c || menu.price_allando) && (
                       <div>
                         Árak:
-                        {menu.price_a &&  A: ${menu.price_a} Ft}
-                        {menu.price_b &&  B: ${menu.price_b} Ft}
-                        {menu.price_c &&  C: ${menu.price_c} Ft}
-                        {menu.price_allando &&  Állandó: ${menu.price_allando} Ft}
+                        {menu.price_a && ` A: ${menu.price_a} Ft`}
+                        {menu.price_b && ` B: ${menu.price_b} Ft`}
+                        {menu.price_c && ` C: ${menu.price_c} Ft`}
+                        {menu.price_allando && ` Állandó: ${menu.price_allando} Ft`}
                       </div>
                     )}
                   </div>
@@ -233,14 +235,19 @@ return (
 
       {/* Fül – a drawer jobb széléhez ragasztva */}
       <div
-        className="absolute top-1/2 -right-8 z-50 transform -translate-y-1/2 pointer-events-auto cursor-pointer"
         onClick={() => setOpen(o => !o)}
+        className={`absolute top-1/2 -right-4 transform -translate-y-1/2 pointer-events-auto cursor-pointer
+                    px-3 py-1.5 w-8 h-24 flex items-center justify-center
+                    border rounded-tr-2xl rounded-br-2xl shadow
+                    rotate-90 origin-right transition
+                    ${open
+                      ? 'bg-blue-400 text-white border-blue-600'
+                      : 'bg-blue-200 text-blue-700 border-blue-400 opacity-70'}
+                    hover:bg-blue-300`}
       >
-        <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
-          <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
-            NAPI MENÜK
-          </span>
-        </div>
+        <span className="text-xs font-bold whitespace-nowrap">
+          NAPI MENÜK
+        </span>
       </div>
     </div>
   </>
