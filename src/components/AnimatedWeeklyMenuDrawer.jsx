@@ -40,7 +40,7 @@ export default function AnimatedWeeklyMenuDrawer() {
       try {
         const raw = await fetchMenus(sheetId, sheetName);
         setMenus(raw.map(transformEntry));
-      } catch (e) {
+      } catch {
         setError('Nem sikerült betölteni a menüket.');
       } finally {
         setLoading(false);
@@ -66,7 +66,6 @@ export default function AnimatedWeeklyMenuDrawer() {
 
   return (
     <>
-      {/* Overlay */}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
@@ -74,30 +73,32 @@ export default function AnimatedWeeklyMenuDrawer() {
         />
       )}
 
-      {/* Drawer panel - LEFT side */}
       <div
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`fixed top-0 left-0 h-[75vh] w-72 bg-blue-100 text-blue-900 border-r-4 border-blue-500 shadow-xl rounded-r-2xl transform z-50 transition-transform duration-700 ease-in-out
+        className={`fixed top-0 left-0 h-full w-80 bg-blue-100 text-blue-900 border-r-4 border-blue-500 shadow-xl transform z-50 transition-transform duration-300 ease-in-out
           ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        {/* Header */}
-        <div className="sticky top-0 flex justify-between items-center bg-blue-200 border-b border-blue-400 p-3 z-10 rounded-tr-2xl">
-          <h3 className="flex items-center space-x-2 text-lg font-extrabold">
-            <span>📋</span><span>Heti menük</span>
+        <div className="sticky top-0 flex justify-between items-center bg-blue-200 border-b border-blue-400 p-4 z-10 rounded-tr-2xl">
+          <h3 className="flex items-center space-x-2 text-lg font-bold">
+            <span>📋</span>
+            <span>Heti menük</span>
           </h3>
           <button onClick={() => setOpen(false)} className="text-2xl hover:scale-125 transition">
             ✖
           </button>
         </div>
-        {/* Content */}
-        <div className="p-4 overflow-y-auto space-y-4 h-full" onScroll={() => clearTimeout(closeTimer.current)}>
-          {loading && <div className="flex justify-center my-8"><div className="loader animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" /></div>}
+        <div className="p-4 overflow-y-auto h-[calc(100%-64px)] space-y-4">
+          {loading && (
+            <div className="flex justify-center my-8">
+              <div className="loader animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
+            </div>
+          )}
           {error && <p className="text-center text-red-500">{error}</p>}
           {!loading && !error && (
             menus.length ? (
-              menus.map((m,i) => <MenuCard key={i} data={m} />)
+              menus.map((menu, idx) => <MenuCard key={idx} data={menu} />)
             ) : (
               <div className="text-center text-gray-500 py-8">Jelenleg nincs elérhető menü.</div>
             )
@@ -105,12 +106,13 @@ export default function AnimatedWeeklyMenuDrawer() {
         </div>
       </div>
 
-      {/* Toggle handle - LEFT side */}
-      <div
-        className="fixed top-[50px] left-0 transform -translate-x-full hover:translate-x-0 transition-transform duration-500 ease-in-out z-50"
-        onClick={() => setOpen(o => !o)}
-      >
-        <div className="bg-blue-500 text-white px-4 py-2 rounded-r-lg cursor-pointer">Heti menük</div>
+      <div className="fixed top-1/2 left-0 transform -translate-y-1/2 z-50">
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="bg-blue-500 text-white px-4 py-2 rounded-tr-lg rounded-br-lg shadow-md focus:outline-none"
+        >
+          Heti menük
+        </button>
       </div>
     </>
   );
