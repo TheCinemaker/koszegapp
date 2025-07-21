@@ -132,7 +132,7 @@ return (
     )}
 
     {/* Drawer + fül container */}
-    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none">
+    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none relative">
 
       {/* Drawer panel */}
       <div
@@ -229,17 +229,17 @@ return (
         <div className="text-xs text-center text-blue-800 py-2 border-t bg-blue-200">
           © KőszegAPP – {new Date().getFullYear()}
         </div>
-      </div>
 
-      {/* Fül – a drawer jobb széléhez ragasztva */}
-      <div
-        className="absolute top-1/2 -right-8 z-50 transform -translate-y-1/2 pointer-events-auto cursor-pointer"
-        onClick={() => setOpen(o => !o)}
-      >
-        <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
-          <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
-            NAPI MENÜK
-          </span>
+        {/* Fül – a drawer jobb széléhez ragasztva */}
+        <div
+          className="absolute top-1/2 left-full z-50 transform -translate-y-1/2 pointer-events-auto cursor-pointer"
+          onClick={() => setOpen(o => !o)}
+        >
+          <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
+            <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
+              NAPI MENÜK
+            </span>
+          </div>
         </div>
       </div>
     </div>
