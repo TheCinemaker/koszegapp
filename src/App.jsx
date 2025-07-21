@@ -243,10 +243,6 @@ export default function App() {
         
       </footer>
       <FloatingButtons />
-      {/* WeeklyMenuDrawer behúzható doboz */}
-     <AnimatedWeeklyMenuDrawer
-      isOpen={menuOpen}
-      onClose={() => setMenuOpen(false)}
       />
     </div>
   );
