@@ -37,33 +37,38 @@ const transformEntry = (raw) => ({
 });
 
 const parseDate = (str) => {
-  if (!str || typeof str !== 'string') return null;
+  if (!str) return null;
   
-  // Tisztítás: eltávolítjuk a felesleges pontot a végéről és szóközöket
-  const cleaned = str.trim().replace(/\.+$/, '');
-  
-  // Ellenőrizzük, hogy a formátum megfelelő-e (éééé.hh.nn)
-  if (!/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(cleaned)) {
-    console.warn('Érvénytelen dátumformátum:', str);
-    return null;
+  // Ha Date objektum stringként érkezik (pl. "Date(2025,6,21)")
+  if (typeof str === 'string' && str.startsWith('Date(')) {
+    try {
+      const dateParts = str.match(/Date\((\d+),(\d+),(\d+)\)/);
+      if (dateParts) {
+        const year = parseInt(dateParts[1], 10);
+        const month = parseInt(dateParts[2], 10);
+        const day = parseInt(dateParts[3], 10);
+        return new Date(year, month, day);
+      }
+    } catch (e) {
+      console.warn('Dátum feldolgozási hiba:', e);
+    }
   }
   
-  // Szétválasztás és számokká konvertálás
-  const [yearStr, monthStr, dayStr] = cleaned.split('.');
-  const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10) - 1; // 0-indexelt hónap
-  const day = parseInt(dayStr, 10);
-  
-  // Dátum létrehozása és érvényesség ellenőrzése
-  const date = new Date(year, month, day);
-  if (isNaN(date.getTime())) {
-    console.warn('Érvénytelen dátum:', str);
-    return null;
+  // Ha klasszikus "2025.07.21." formátumban érkezik
+  if (typeof str === 'string' && str.includes('.')) {
+    const cleaned = str.trim().replace(/\.+$/, '');
+    if (/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(cleaned)) {
+      const [yearStr, monthStr, dayStr] = cleaned.split('.');
+      const year = parseInt(yearStr, 10);
+      const month = parseInt(monthStr, 10) - 1;
+      const day = parseInt(dayStr, 10);
+      return new Date(year, month, day);
+    }
   }
   
-  return date;
+  console.warn('Ismeretlen dátumformátum:', str);
+  return null;
 };
-
 const isMenuValidToday = (menu) => {
   try {
     const today = new Date();
