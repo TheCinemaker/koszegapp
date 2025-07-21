@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MenuCard from './MenuCard';
-import { fetchMenus } from '../api/sheets.js';
+import { fetchMenus } from '../api/sheet.js';
 
 const sheetId = '1I-f8S2RtPaQS8Pn30HibSQFkuByyfvxJdNMuedy0bhg';
 const sheetName = 'Form Responses 1';
 
-export default function WeeklyMenuDrawerAnimated() {
+export default function WeeklyMenuDrawer() {
   const [open, setOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [menus, setMenus] = useState([]);
