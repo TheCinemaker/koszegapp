@@ -123,39 +123,43 @@ export default function AnimatedWeeklyMenuDrawer() {
 
 return (
   <>
+    {/* Overlay when drawer is open */}
     {open && (
-      <div
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
-        onClick={() => setOpen(false)}
+      <div 
+        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" 
+        onClick={() => setOpen(false)} 
       />
     )}
 
-    {/* Drawer + Fül együtt */}
-    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none">
-      {/* Drawer */}
+    {/* Main drawer container */}
+    <div className="fixed top-0 left-0 h-full w-full pointer-events-none">
+      {/* Drawer element */}
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`relative w-2/3 max-w-sm bg-blue-100 shadow-lg transform transition-transform duration-300 ease-in-out
-          ${open ? 'translate-x-0' : '-translate-x-full'}
-          border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto`}
+        className={`relative h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out ${
+          open ? 'translate-x-0' : '-translate-x-full'
+        } border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto`}
       >
+        {/* Drawer header */}
         <div className="flex justify-between items-center border-b p-4 bg-blue-200">
           <h2 className="text-sm font-bold text-blue-800">{todayDate}</h2>
-          <button
-            onClick={() => setOpen(false)}
+          <button 
+            onClick={() => setOpen(false)} 
             className="text-blue-800 hover:text-blue-900"
             aria-label="Bezárás"
           >
             ✕
           </button>
         </div>
-
+        
+        {/* Drawer title */}
         <div className="text-center text-lg font-bold text-blue-900 px-4 pb-2">
           Éttermek napi menüi
         </div>
 
+        {/* Restaurant selector */}
         <div className="px-4 pb-3">
           <select
             className="w-full border p-2 rounded text-sm"
@@ -170,6 +174,7 @@ return (
           </select>
         </div>
 
+        {/* Menu content area */}
         <div className="px-4 pb-4 overflow-y-auto h-[calc(100%-180px)] space-y-4">
           {loading ? (
             <div className="flex justify-center items-center h-32">
@@ -178,8 +183,8 @@ return (
           ) : error ? (
             <div className="text-center p-4 text-red-500">
               {error}
-              <button
-                onClick={() => window.location.reload()}
+              <button 
+                onClick={() => window.location.reload()} 
                 className="mt-2 px-4 py-1 bg-blue-500 text-white rounded"
               >
                 Újrapróbálom
@@ -195,7 +200,7 @@ return (
                     {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
                     {(menu.price_a || menu.price_b || menu.price_c || menu.price_allando) && (
                       <div>
-                        Árak:
+                        Árak: 
                         {menu.price_a && ` A: ${menu.price_a} Ft`}
                         {menu.price_b && ` B: ${menu.price_b} Ft`}
                         {menu.price_c && ` C: ${menu.price_c} Ft`}
@@ -219,24 +224,24 @@ return (
           )}
         </div>
 
+        {/* Footer */}
         <div className="text-xs text-center text-blue-800 py-2 border-t bg-blue-200">
           © KőszegAPP – {new Date().getFullYear()}
         </div>
-      </div>
 
-      {/* Fül – a drawer jobb szélén belül */}
-      <div
-        className="sticky top-1/2 -ml-2 z-50 transform -translate-y-1/2 pointer-events-auto"
-        onClick={() => setOpen(o => !o)}
-      >
-        <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
-          <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
-            NAPI MENÜK
-          </span>
+        {/* Drawer handle - attached to right side */}
+        <div
+          className="absolute top-1/2 -right-8 z-50 transform -translate-y-1/2 cursor-pointer"
+          onClick={() => setOpen(o => !o)}
+        >
+          <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500 transition-colors">
+            <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
+              NAPI MENÜK
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </>
 );
-
 }
