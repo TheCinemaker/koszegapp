@@ -197,7 +197,7 @@ export default function AnimatedWeeklyMenuDrawer() {
     touchStartX.current = null;
   };
 
-  const restaurants = [...new Set(menus.map(m => m.etterem).filter(Boolean)].sort();
+  const restaurants = [...new Set(menus.map(m => m.etterem))].filter(Boolean).sort();
   const todayMenus = getTodayMenus(menus, selectedRestaurant);
   const todayDate = new Date().toLocaleDateString('hu-HU', { 
     weekday: 'long', 
