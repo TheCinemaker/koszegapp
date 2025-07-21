@@ -224,7 +224,7 @@ return (
 
     {/* Fogantyú - jobb oldalon, vízszintes szöveggel */}
     <div
-      className={fixed top-1/2 left-0 z-50 transform -translate-y-1/2 transition-all duration-300 ease-in-out ${
+      className={fixed top-1/2 right-0 z-50 transform -translate-y-1/2 transition-all duration-300 ease-in-out ${
         open ? "translate-x-[calc(33.333%-1rem)]" : "translate-x-0"
       }}
       onClick={() => setOpen(o => !o)}
