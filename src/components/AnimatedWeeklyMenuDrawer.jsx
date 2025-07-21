@@ -154,7 +154,10 @@ export default function AnimatedWeeklyMenuDrawer() {
   return (
   <>
     {open && (
-      <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
+      <div 
+        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" 
+        onClick={() => setOpen(false)} 
+      />
     )}
 
     {/* Drawer */}
@@ -162,27 +165,37 @@ export default function AnimatedWeeklyMenuDrawer() {
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={() => (touchStartX.current = null)}
-      className={`fixed top-0 left-0 h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'} border-r-4 border-blue-400 rounded-r-xl overflow-hidden`}
+      className={`fixed top-0 left-0 h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out ${
+        open ? 'translate-x-0' : '-translate-x-full'
+      } border-r-4 border-blue-400 rounded-r-xl overflow-hidden`}
     >
-      <div className="sticky top-0 bg-blue-200 z-10 border-b p-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-sm font-bold text-blue-800">{todayDate}</h2>
-          <button onClick={() => setOpen(false)} className="text-blue-800 hover:text-blue-900">✕</button>
-        </div>
-        <div className="text-center text-lg font-bold text-blue-900 mt-2">Éttermek napi menüi</div>
-        <div className="mt-2">
-          <select
-            className="w-full border p-2 rounded text-sm"
-            value={selectedRestaurant}
-            onChange={(e) => setSelectedRestaurant(e.target.value)}
-            aria-label="Válassz éttermet"
-          >
-            <option value="">Összes étterem</option>
-            {restaurants.map((r, idx) => (
-              <option key={idx} value={r}>{r}</option>
-            ))}
-          </select>
-        </div>
+      <div className="flex justify-between items-center border-b p-4 bg-blue-200">
+        <h2 className="text-sm font-bold text-blue-800">{todayDate}</h2>
+        <button 
+          onClick={() => setOpen(false)} 
+          className="text-blue-800 hover:text-blue-900"
+          aria-label="Bezárás"
+        >
+          ✕
+        </button>
+      </div>
+      
+      <div className="text-center text-lg font-bold text-blue-900 px-4 pb-2">
+        Éttermek napi menüi
+      </div>
+
+      <div className="px-4 pb-3">
+        <select
+          className="w-full border p-2 rounded text-sm"
+          value={selectedRestaurant}
+          onChange={(e) => setSelectedRestaurant(e.target.value)}
+          aria-label="Válassz éttermet"
+        >
+          <option value="">Összes étterem</option>
+          {restaurants.map((r, idx) => (
+            <option key={idx} value={r}>{r}</option>
+          ))}
+        </select>
       </div>
 
       <div className="px-4 pb-4 overflow-y-auto h-[calc(100%-180px)] space-y-4">
@@ -191,7 +204,15 @@ export default function AnimatedWeeklyMenuDrawer() {
             <div className="animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
           </div>
         ) : error ? (
-          <div className="text-center p-4 text-red-500">{error}</div>
+          <div className="text-center p-4 text-red-500">
+            {error}
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-2 px-4 py-1 bg-blue-500 text-white rounded"
+            >
+              Újrapróbálom
+            </button>
+          </div>
         ) : todayMenus.length ? (
           todayMenus.map((menu, idx) => (
             <div key={`${menu.etterem}-${idx}`} className="bg-white p-3 rounded shadow">
@@ -202,7 +223,7 @@ export default function AnimatedWeeklyMenuDrawer() {
                   {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
                   {(menu.price_a || menu.price_b || menu.price_c || menu.price_allando) && (
                     <div>
-                      Árak:
+                      Árak: 
                       {menu.price_a && ` A: ${menu.price_a} Ft`}
                       {menu.price_b && ` B: ${menu.price_b} Ft`}
                       {menu.price_c && ` C: ${menu.price_c} Ft`}
@@ -218,7 +239,9 @@ export default function AnimatedWeeklyMenuDrawer() {
           <div className="text-center text-blue-500 py-8">
             <p>Nincs elérhető napi menü.</p>
             {menus.length > 0 && (
-              <p className="text-xs mt-2">({menus.length} étterem van a rendszerben, de nincs ma érvényes menü)</p>
+              <p className="text-xs mt-2">
+                ({menus.length} étterem van a rendszerben, de nincs ma érvényes menü)
+              </p>
             )}
           </div>
         )}
@@ -229,16 +252,16 @@ export default function AnimatedWeeklyMenuDrawer() {
       </div>
     </div>
 
-    {/* Sticky fül a modal széléhez (drawer-hez!) */}
+    {/* Fogantyú - jobb oldalon, vízszintes szöveggel */}
     <div
-      className={`fixed top-1/2 left-0 z-50 transform -translate-y-1/2 ${open ? 'translate-x-full' : ''}`}
-      style={{ width: '2rem' }}
+      className={`fixed top-1/2 right-0 z-50 transform -translate-y-1/2 transition-all duration-300 ease-in-out ${
+        open ? "translate-x-[calc(33.333%-1rem)]" : "translate-x-0"
+      }`}
       onClick={() => setOpen(o => !o)}
     >
-      <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-r-2xl shadow cursor-pointer select-none hover:bg-blue-500 transition-colors">
-        <span className="text-xs font-bold rotate-90">NAPI MENÜK</span>
+      <div className="w-32 h-10 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-2xl shadow cursor-pointer select-none hover:bg-blue-500">
+        <span className="text-xs font-bold whitespace-nowrap rotate-90">NAPI MENÜK</span>
       </div>
     </div>
   </>
-  );
-}
+);
