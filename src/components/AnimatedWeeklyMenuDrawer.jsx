@@ -35,6 +35,7 @@ export default function AnimatedWeeklyMenuDrawer() {
   const touchStartX = useRef(null);
   const closeTimer = useRef(null);
 
+  // Fetch and transform menus
   useEffect(() => {
     async function load() {
       try {
@@ -49,12 +50,14 @@ export default function AnimatedWeeklyMenuDrawer() {
     load();
   }, []);
 
+  // Auto-close drawer after inactivity
   useEffect(() => {
     if (!open) return;
     closeTimer.current = setTimeout(() => setOpen(false), 8000);
     return () => clearTimeout(closeTimer.current);
   }, [open]);
 
+  // Swipe handlers to open/close
   const handleTouchStart = e => { touchStartX.current = e.touches[0].clientX; };
   const handleTouchMove = e => {
     if (touchStartX.current == null) return;
@@ -66,6 +69,7 @@ export default function AnimatedWeeklyMenuDrawer() {
 
   return (
     <>
+      {/* Overlay when open */}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
@@ -73,46 +77,55 @@ export default function AnimatedWeeklyMenuDrawer() {
         />
       )}
 
+      {/* Container wraps panel + handle to move together */}
       <div
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`fixed top-0 left-0 h-full w-80 bg-blue-100 text-blue-900 border-r-4 border-blue-500 shadow-xl transform z-50 transition-transform duration-300 ease-in-out
-          ${open ? 'translate-x-0' : '-translate-x-full'}`}
+        className={
+          `fixed top-0 left-0 z-50 flex h-full transform transition-transform duration-300 ease-in-out ` +
+          (open ? 'translate-x-0' : '-translate-x-full')
+        }
       >
-        <div className="sticky top-0 flex justify-between items-center bg-blue-200 border-b border-blue-400 p-4 z-10 rounded-tr-2xl">
-          <h3 className="flex items-center space-x-2 text-lg font-bold">
-            <span>📋</span>
-            <span>Heti menük</span>
-          </h3>
-          <button onClick={() => setOpen(false)} className="text-2xl hover:scale-125 transition">
-            ✖
-          </button>
+        {/* Drawer panel */}
+        <div className="h-full w-80 bg-blue-100 text-blue-900 border-r-4 border-blue-500 shadow-xl">
+          <div className="sticky top-0 flex justify-between items-center bg-blue-200 border-b border-blue-400 p-4 z-10">
+            <h3 className="flex items-center space-x-2 text-lg font-bold">
+              <span>📋</span>
+              <span>Heti menük</span>
+            </h3>
+            <button onClick={() => setOpen(false)} className="text-2xl hover:scale-125 transition">
+              ✖
+            </button>
+          </div>
+          <div className="p-4 overflow-y-auto h-[calc(100%-64px)] space-y-4">
+            {loading && (
+              <div className="flex justify-center my-8">
+                <div className="loader animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
+              </div>
+            )}
+            {error && <p className="text-center text-red-500">{error}</p>}
+            {!loading && !error && (
+              menus.length > 0 ? (
+                menus.map((menu, idx) => <MenuCard key={idx} data={menu} />)
+              ) : (
+                <div className="text-center text-gray-500 py-8">Jelenleg nincs elérhető menü.</div>
+              )
+            )}
+          </div>
         </div>
-        <div className="p-4 overflow-y-auto h-[calc(100%-64px)] space-y-4">
-          {loading && (
-            <div className="flex justify-center my-8">
-              <div className="loader animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
-            </div>
-          )}
-          {error && <p className="text-center text-red-500">{error}</p>}
-          {!loading && !error && (
-            menus.length ? (
-              menus.map((menu, idx) => <MenuCard key={idx} data={menu} />)
-            ) : (
-              <div className="text-center text-gray-500 py-8">Jelenleg nincs elérhető menü.</div>
-            )
-          )}
-        </div>
-      </div>
 
-      <div
-        onClick={() => setOpen(o => !o)}
-        className={`absolute top-1/2 -left-4 z-50 flex items-center justify-center w-32 h-10 cursor-pointer select-none transform rotate-90 origin-left transition
-          ${open ? 'bg-blue-600 text-white border-blue-700' : 'bg-blue-500 text-white border-blue-600 opacity-80'}
-          border rounded-br-2xl rounded-bl-2xl hover:bg-blue-700 hover:opacity-100`
-      >
-        <span className="text-sm font-bold">Heti menük</span>
+        {/* Handle attached to panel edge */}
+        <button
+          onClick={() => setOpen(o => !o)}
+          className={
+            `bg-blue-500 text-white px-4 py-2 border border-blue-600 shadow ` +
+            ` rounded-bl-lg rounded-tl-lg cursor-pointer transform rotate-90 origin-top-left ` +
+            ` focus:outline-none hover:bg-blue-600`
+          }
+        >
+          Heti menük
+        </button>
       </div>
     </>
   );
