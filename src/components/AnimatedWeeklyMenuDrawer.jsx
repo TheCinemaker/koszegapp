@@ -260,8 +260,9 @@ export default function AnimatedWeeklyMenuDrawer() {
       onClick={() => setOpen(o => !o)}
     >
       <div className="w-32 h-10 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-2xl shadow cursor-pointer select-none hover:bg-blue-500">
-        <span className="text-xs font-bold whitespace-nowrap rotate-90">NAPI MENÜK</span>
+        <span className="text-xs font-bold whitespace-nowrap transform rotate-90">NAPI MENÜK</span>
       </div>
     </div>
   </>
 );
+)
