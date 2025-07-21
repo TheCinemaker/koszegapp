@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Drawer from './Drawer';
 import MenuCard from './MenuCard';
-import { fetchMenus } from '../api/sheets';
+import { fetchMenus } from '../api/sheets.js';
 
 const sheetId = '1I-f8S2RtPaQS8Pn30HibSQFkuByyfvxJdNMuedy0bhg';
 const sheetName = 'Form Responses 1';
