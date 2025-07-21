@@ -227,11 +227,11 @@ export default function AnimatedWeeklyMenuDrawer() {
       </div>
 
       <div
-        className="fixed top-1/2 -left-4 w-28 h-8 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-tr-2xl rounded-br-2xl shadow transform -rotate-90 origin-top-left cursor-pointer select-none z-50 hover:bg-blue-500 transition-colors"
+        className="fixed top-1/2 left-0 -translate-y-1/2 w-24 h-8 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-r-2xl shadow cursor-pointer select-none z-50 hover:bg-blue-500 transition-colors"
         onClick={() => setOpen(o => !o)}
         aria-label="Napi menük megnyitása"
       >
-        <span className="text-xs font-bold">NAPI MENÜK</span>
+        <span className="text-xs font-bold rotate-90">NAPI MENÜK</span>
       </div>
     </>
   );
