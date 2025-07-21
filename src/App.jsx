@@ -236,7 +236,7 @@ export default function App() {
         
       </footer>
       <FloatingButtons />
-      />
+      <WeeklyMenuDrawer />
     </div>
   );
 }
