@@ -138,9 +138,13 @@ return (
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`relative h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out ${
-          open ? 'translate-x-0' : '-translate-x-full'
-        } border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto`}
+        className={`
+          relative h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg
+          transform z-50 transition-transform duration-300 ease-in-out
+          ${open ? 'translate-x-0' : '-translate-x-full'}
+          border-r-4 border-blue-400 rounded-r-xl overflow-hidden
+          pointer-events-auto
+        `}
       >
         {/* Drawer header */}
         <div className="flex justify-between items-center border-b p-4 bg-blue-200">
@@ -229,13 +233,15 @@ return (
           © KőszegAPP – {new Date().getFullYear()}
         </div>
 
-        {/* Drawer handle - positioned on the right edge */}
+        {/* Drawer handle - positioned on the left edge of the drawer */}
         <div
-          className="absolute top-1/2 -right-8 z-50 transform -translate-y-1/2 cursor-pointer"
+          className="absolute top-1/2 -left-8 z-50 transform -translate-y-1/2 cursor-pointer"
           onClick={() => setOpen(o => !o)}
         >
-          <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
-            <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">NAPI MENÜK</span>
+          <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-r-lg shadow hover:bg-blue-500">
+            <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
+              NAPI MENÜK
+            </span>
           </div>
         </div>
       </div>
