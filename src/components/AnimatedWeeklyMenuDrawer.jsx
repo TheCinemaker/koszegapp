@@ -116,28 +116,25 @@ const getTodayMenus = (menus, selectedRestaurant) => {
     return validMenus.filter(m => m.etterem === selectedRestaurant);
   }
 
-  return validMenus
-    .map(m => ({
-      ...m,
-      todayMenus: [
-        m[`menu_${today}_a`],
-        m[`menu_${today}_b`],
-        m[`menu_${today}_c`]
-      ].filter(menu => menu && menu.trim() !== '')
-    }))
-    .filter(m => m.todayMenus.length > 0);
+  return validMenus.map(m => ({
+    ...m,
+    menu_mon_a: '', menu_mon_b: '', menu_mon_c: '',
+    menu_tue_a: '', menu_tue_b: '', menu_tue_c: '',
+    menu_wed_a: '', menu_wed_b: '', menu_wed_c: '',
+    menu_thu_a: '', menu_thu_b: '', menu_thu_c: '',
+    menu_fri_a: '', menu_fri_b: '', menu_fri_c: '',
+    menu_sat_a: '', menu_sat_b: '', menu_sat_c: '',
+    [`menu_${today}_a`]: m[`menu_${today}_a`],
+    [`menu_${today}_b`]: m[`menu_${today}_b`],
+    [`menu_${today}_c`]: m[`menu_${today}_c`],
+    todayMenus: [
+      m[`menu_${today}_a`],
+      m[`menu_${today}_b`],
+      m[`menu_${today}_c`]
+    ].filter(menu => menu && menu.trim() !== '')
+  })).filter(m => m.todayMenus.length > 0);
 };
-  return validMenus
-    .map(m => ({
-      ...m,
-      todayMenus: [
-        m[`menu_${today}_a`],
-        m[`menu_${today}_b`],
-        m[`menu_${today}_c`]
-      ].filter(menu => menu && menu.trim() !== '')
-    }))
-    .filter(m => m.todayMenus.length > 0);
-};
+
 
 export default function AnimatedWeeklyMenuDrawer() {
   const [open, setOpen] = useState(false);
