@@ -235,10 +235,10 @@ return (
 
         {/* Drawer handle - positioned on the left edge of the drawer */}
         <div
-          className="absolute top-1/2 -left-8 z-50 transform -translate-y-1/2 cursor-pointer"
+          className="absolute top-1/2 -right-8 z-50 transform -translate-y-1/2 cursor-pointer"
           onClick={() => setOpen(o => !o)}
         >
-          <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-r-lg shadow hover:bg-blue-500">
+          <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
             <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
               NAPI MENÜK
             </span>
