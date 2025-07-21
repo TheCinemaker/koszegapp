@@ -126,7 +126,7 @@ return (
     {/* Overlay háttér ha drawer nyitva van */}
     {open && (
       <div
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+        className="fixed inset-0 z-100 bg-black/20 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
     )}
