@@ -42,7 +42,7 @@ const isMenuValidToday = (menu) => {
 };
 
 const getTodayMenus = (menus, selectedRestaurant) => {
-  const days = ['mon', 'tue', 'wed', 'thu', 'fri'];
+  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const todayIdx = Math.min(new Date().getDay() - 1, 4);
   const today = days[todayIdx];
 
