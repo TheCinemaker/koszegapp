@@ -36,12 +36,18 @@ const transformEntry = (raw) => ({
   validTo: raw['Utolsó nap dátum'] || ''
 });
 
+const parseDate = (str) => {
+  const parts = str.trim().split('.');
+  if (parts.length !== 3) return null;
+  return new Date(`${parts[0]}-${parts[1]}-${parts[2]}`);
+};
+
 const isMenuValidToday = (menu) => {
-  if (!menu.validFrom || !menu.validTo) return false;
   const today = new Date();
-  const startDate = new Date(menu.validFrom.replaceAll('.', '-'));
-  const endDate = new Date(menu.validTo.replaceAll('.', '-'));
-  return today >= startDate && today <= endDate;
+  const start = parseDate(menu.validFrom);
+  const end = parseDate(menu.validTo);
+  if (!start || !end) return false;
+  return today >= start && today <= end;
 };
 
 const getTodayMenus = (menus, selectedRestaurant) => {
@@ -53,7 +59,11 @@ const getTodayMenus = (menus, selectedRestaurant) => {
   const validMenus = menus.filter(isMenuValidToday);
 
   if (selectedRestaurant) {
-    return validMenus.filter(m => m.etterem === selectedRestaurant);
+    return validMenus.filter(m => m.etterem === selectedRestaurant && [
+      m[`menu_${today}_a`],
+      m[`menu_${today}_b`],
+      m[`menu_${today}_c`]
+    ].some(Boolean));
   }
 
   return validMenus.map(m => ({
