@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function MenuCard({ data }) {
+export default function MenuCard({ data, showTodayOnly = false }) {
   const {
     etterem,
     kapcsolat,
@@ -21,9 +21,23 @@ export default function MenuCard({ data }) {
     menu_fri_a,
     menu_fri_b,
     menu_fri_c,
+    menu_sat_a,
+    menu_sat_b,
+    menu_sat_c,
   } = data;
 
-  // Helper to render a day block if any menu exists
+  const dayMap = {
+    0: 'vasarnap',
+    1: 'hetfo',
+    2: 'kedd',
+    3: 'szerda',
+    4: 'csutortok',
+    5: 'pentek',
+    6: 'szombat'
+  };
+
+  const today = new Date().getDay();
+
   const renderDay = (label, a, b, c) => {
     if (!a && !b && !c) return null;
     return (
@@ -35,6 +49,28 @@ export default function MenuCard({ data }) {
       </div>
     );
   };
+
+  const rendered = showTodayOnly
+    ? (() => {
+        const map = {
+          1: ['Hétfő', menu_mon_a, menu_mon_b, menu_mon_c],
+          2: ['Kedd', menu_tue_a, menu_tue_b, menu_tue_c],
+          3: ['Szerda', menu_wed_a, menu_wed_b, menu_wed_c],
+          4: ['Csütörtök', menu_thu_a, menu_thu_b, menu_thu_c],
+          5: ['Péntek', menu_fri_a, menu_fri_b, menu_fri_c],
+          6: ['Szombat', menu_sat_a, menu_sat_b, menu_sat_c]
+        };
+        const [label, a, b, c] = map[today] || ['Nincs menü', '', '', ''];
+        return renderDay(label, a, b, c);
+      })()
+    : <>
+        {renderDay('Hétfő', menu_mon_a, menu_mon_b, menu_mon_c)}
+        {renderDay('Kedd', menu_tue_a, menu_tue_b, menu_tue_c)}
+        {renderDay('Szerda', menu_wed_a, menu_wed_b, menu_wed_c)}
+        {renderDay('Csütörtök', menu_thu_a, menu_thu_b, menu_thu_c)}
+        {renderDay('Péntek', menu_fri_a, menu_fri_b, menu_fri_c)}
+        {renderDay('Szombat', menu_sat_a, menu_sat_b, menu_sat_c)}
+      </>;
 
   return (
     <div className="p-4 border rounded-2xl shadow-sm mb-4 bg-white">
@@ -49,11 +85,7 @@ export default function MenuCard({ data }) {
         </div>
       )}
 
-      {renderDay('Hétfő', menu_mon_a, menu_mon_b, menu_mon_c)}
-      {renderDay('Kedd',  menu_tue_a, menu_tue_b, menu_tue_c)}
-      {renderDay('Szerda', menu_wed_a, menu_wed_b, menu_wed_c)}
-      {renderDay('Csütörtök', menu_thu_a, menu_thu_b, menu_thu_c)}
-      {renderDay('Péntek', menu_fri_a, menu_fri_b, menu_fri_c)}
+      {rendered}
     </div>
   );
 }
