@@ -240,4 +240,5 @@ export default function AnimatedWeeklyMenuDrawer() {
       </div>
     </div>
   </>
-);
+  );
+}
