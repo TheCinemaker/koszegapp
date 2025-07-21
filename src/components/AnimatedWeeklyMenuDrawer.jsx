@@ -132,7 +132,7 @@ return (
     )}
 
     {/* Drawer + Fül container */}
-    <div className="relative overflow-visible fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none">
+    <div className="fixed top-0 left-0 h-[85%] mt-6 z-50 flex items-start pointer-events-none">
 
       {/* Drawer panel */}
       <div
