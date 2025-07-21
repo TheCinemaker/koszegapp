@@ -106,13 +106,13 @@ export default function AnimatedWeeklyMenuDrawer() {
         </div>
       </div>
 
-      <div className="fixed top-1/2 left-0 transform -translate-y-1/2 z-50">
-        <button
-          onClick={() => setOpen(o => !o)}
-          className="bg-blue-500 text-white px-4 py-2 rounded-tr-lg rounded-br-lg shadow-md focus:outline-none"
-        >
-          Heti menük
-        </button>
+      <div
+        onClick={() => setOpen(o => !o)}
+        className={`absolute top-1/2 -left-4 z-50 flex items-center justify-center w-32 h-10 cursor-pointer select-none transform rotate-90 origin-left transition
+          ${open ? 'bg-blue-600 text-white border-blue-700' : 'bg-blue-500 text-white border-blue-600 opacity-80'}
+          border rounded-br-2xl rounded-bl-2xl hover:bg-blue-700 hover:opacity-100`
+      >
+        <span className="text-sm font-bold">Heti menük</span>
       </div>
     </>
   );
