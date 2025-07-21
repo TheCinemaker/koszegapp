@@ -67,17 +67,19 @@ const isMenuValidToday = (menu) => {
 };
 
 const getTodayMenus = (menus, selectedRestaurant) => {
-  const days = ['mon','tue','wed','thu','fri','sat'];
+  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const idx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
   const today = days[idx];
   const valid = menus.filter(isMenuValidToday);
+
   if (selectedRestaurant) {
     return valid.filter(m => m.etterem === selectedRestaurant);
   }
+
   return valid.map(m => {
-    const todayMenus = [m[menu_${today}_a], m[menu_${today}_b], m[menu_${today}_c]]
+    const todayMenus = [m[`menu_${today}_a`], m[`menu_${today}_b`], m[`menu_${today}_c`]]
       .filter(x => x && x.trim());
-    return {...m, todayMenus};
+    return { ...m, todayMenus };
   }).filter(m => m.todayMenus.length);
 };
 
