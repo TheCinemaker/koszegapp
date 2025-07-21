@@ -156,6 +156,8 @@ export default function AnimatedWeeklyMenuDrawer() {
     {open && (
       <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
     )}
+
+    {/* Drawer */}
     <div
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
@@ -221,17 +223,21 @@ export default function AnimatedWeeklyMenuDrawer() {
           </div>
         )}
       </div>
+
       <div className="text-xs text-center text-blue-800 py-2 border-t bg-blue-200">
         © KőszegAPP – {new Date().getFullYear()}
       </div>
     </div>
 
+    {/* Sticky fül a modal széléhez (drawer-hez!) */}
     <div
-      className="absolute top-1/2 left-[calc(100%-1px)] -translate-y-1/2 w-24 h-8 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-r-2xl shadow cursor-pointer select-none z-50 hover:bg-blue-500 transition-colors"
+      className={`fixed top-1/2 left-0 z-50 transform -translate-y-1/2 ${open ? 'translate-x-full' : ''}`}
+      style={{ width: '2rem' }}
       onClick={() => setOpen(o => !o)}
-      aria-label="Napi menük megnyitása"
     >
-      <span className="text-xs font-bold rotate-90">NAPI MENÜK</span>
+      <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-r-2xl shadow cursor-pointer select-none hover:bg-blue-500 transition-colors">
+        <span className="text-xs font-bold rotate-90">NAPI MENÜK</span>
+      </div>
     </div>
   </>
 );
