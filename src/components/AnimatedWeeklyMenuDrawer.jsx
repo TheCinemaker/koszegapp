@@ -139,9 +139,9 @@ return (
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`w-2/3 max-w-sm h-full bg-blue-100 shadow-lg transform transition-transform duration-300 ease-in-out
-          ${open ? 'translate-x-0' : '-translate-x-full'}
-          border-r-4 border-blue-400 rounded-r-xl overflow-hidden pointer-events-auto relative`}
+          className={`w-2/3 max-w-sm h-full bg-blue-100 shadow-lg transform transition-transform duration-300 ease-in-out
+            ${open ? 'translate-x-0' : '-translate-x-full'}
+              border-r-4 border-blue-400 rounded-r-xl pointer-events-auto relative overflow-visible`}
       >
         {/* Header */}
         <div className="flex justify-between items-center border-b p-4 bg-blue-200">
@@ -234,10 +234,10 @@ return (
       {/* Fül – mindig a képernyő bal szélén, drawer része, de kívül marad */}
      <div
         className="absolute top-1/2 right-[-32px] z-50 transform -translate-y-1/2 pointer-events-auto"
-        onClick={() => setOpen(o => !o)}
-    >
-      <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
-          <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
+          onClick={() => setOpen(o => !o)}
+      >
+    <div className="w-8 h-24 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-lg shadow hover:bg-blue-500">
+      <span className="text-xs font-bold transform rotate-90 whitespace-nowrap">
             NAPI MENÜK
           </span>
         </div>
