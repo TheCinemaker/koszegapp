@@ -25,6 +25,9 @@ const transformEntry = (raw) => ({
   menu_fri_a: raw['Péntek A menü'] || '',
   menu_fri_b: raw['Péntek B menü'] || '',
   menu_fri_c: raw['Péntek C menü'] || '',
+  menu_sat_a: raw['Szombat A menü'] || '',
+  menu_sat_b: raw['Szombat B menü'] || '',
+  menu_sat_c: raw['Szombat C menü'] || '',
   price_a: raw['"A" menü ára'] || '',
   price_b: raw['"B" menü ára'] || '',
   price_c: raw['"C" menü ára'] || '',
@@ -43,7 +46,7 @@ const isMenuValidToday = (menu) => {
 
 const getTodayMenus = (menus, selectedRestaurant) => {
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-  const todayIdx = Math.min(new Date().getDay() - 1, 4);
+  const todayIdx = Math.min(new Date().getDay() - 1, 5);
   const today = days[todayIdx];
 
   const validMenus = menus.filter(isMenuValidToday);
