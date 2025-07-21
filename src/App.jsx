@@ -29,7 +29,7 @@ import LeisureDetail from './pages/LeisureDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 import FloatingButtons from './components/FloatingButtons';
-import WeeklyMenuDrawer from './components/WeeklyMenuDrawer';
+import WeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 
 export default function App() {
   const { t, i18n } = useTranslation();
