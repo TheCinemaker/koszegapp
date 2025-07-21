@@ -41,20 +41,21 @@ const parseDate = (str) => {
   const cleaned = str.trim().replace(/\.$/, '');
   const parts = cleaned.split('.').map(p => p.trim()).filter(Boolean);
   if (parts.length !== 3) return null;
-
   const [yearStr, monthStr, dayStr] = parts;
   const year = parseInt(yearStr, 10);
-  const month = parseInt(monthStr, 10) - 1; // hónap: 0-indexelt
+  const month = parseInt(monthStr, 10) - 1; // 0-indexelt hónap
   const day = parseInt(dayStr, 10);
-  
-  return new Date(year, month, day); // helyes JS dátum
+  return new Date(year, month, day);
 };
 
 const isMenuValidToday = (menu) => {
   const today = new Date();
+  today.setHours(0,0,0,0);
   const start = parseDate(menu.validFrom);
   const end = parseDate(menu.validTo);
   if (!start || !end) return false;
+  start.setHours(0,0,0,0);
+  end.setHours(0,0,0,0);
   return today >= start && today <= end;
 };
 
