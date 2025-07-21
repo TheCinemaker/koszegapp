@@ -252,17 +252,15 @@ export default function AnimatedWeeklyMenuDrawer() {
       </div>
     </div>
 
-    {/* Fogantyú - jobb oldalon, vízszintes szöveggel */}
-    <div
-      className={`fixed top-1/2 right-0 z-50 transform -translate-y-1/2 transition-all duration-300 ease-in-out ${
-        open ? "translate-x-[calc(33.333%-1rem)]" : "translate-x-0"
-      }`}
-      onClick={() => setOpen(o => !o)}
-    >
-      <div className="w-32 h-10 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-2xl shadow cursor-pointer select-none hover:bg-blue-500">
-        <span className="text-xs font-bold whitespace-nowrap transform rotate-90">NAPI MENÜK</span>
-      </div>
+{/* Fogantyú a DRAWER jobb szélén belül, abszolút pozícióval */}
+{!open && (
+  <div
+    className="absolute top-1/2 right-[-2rem] z-50 transform -translate-y-1/2 transition-all duration-300 ease-in-out"
+    onClick={() => setOpen(true)}
+  >
+    <div className="w-8 h-45 flex items-center justify-center bg-blue-400 text-white border border-blue-600 rounded-l-2xl shadow cursor-pointer select-none hover:bg-blue-500">
+      <span className="text-xs font-bold whitespace-nowrap transform rotate-90">NAPI MENÜK</span>
     </div>
-  </>
-);
+  </div>
+)}
 }
