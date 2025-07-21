@@ -28,19 +28,31 @@ const transformEntry = (raw) => ({
   price_a: raw['"A" menü ára'] || '',
   price_b: raw['"B" menü ára'] || '',
   price_c: raw['"C" menü ára'] || '',
-  price_allando: raw['Állandó menü ára'] || ''
+  price_allando: raw['Állandó menü ára'] || '',
+  validFrom: raw['Kezdő dátum'] || '',
+  validTo: raw['Utolsó nap dátum'] || ''
 });
+
+const isMenuValidToday = (menu) => {
+  if (!menu.validFrom || !menu.validTo) return false;
+  const today = new Date();
+  const startDate = new Date(menu.validFrom.replaceAll('.', '-'));
+  const endDate = new Date(menu.validTo.replaceAll('.', '-'));
+  return today >= startDate && today <= endDate;
+};
 
 const getTodayMenus = (menus, selectedRestaurant) => {
   const days = ['mon', 'tue', 'wed', 'thu', 'fri'];
   const todayIdx = Math.min(new Date().getDay() - 1, 4);
   const today = days[todayIdx];
 
+  const validMenus = menus.filter(isMenuValidToday);
+
   if (selectedRestaurant) {
-    return menus.filter(m => m.etterem === selectedRestaurant);
+    return validMenus.filter(m => m.etterem === selectedRestaurant);
   }
 
-  return menus.map(m => ({
+  return validMenus.map(m => ({
     ...m,
     todayMenus: [m[`menu_${today}_a`], m[`menu_${today}_b`], m[`menu_${today}_c`]].filter(Boolean)
   })).filter(m => m.todayMenus.length > 0);
