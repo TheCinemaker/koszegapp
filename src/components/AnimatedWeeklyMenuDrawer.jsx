@@ -36,14 +36,18 @@ const transformEntry = (raw) => ({
   validTo: raw['Utolsó nap dátum'] || ''
 });
 
-// parseDate now strips trailing dots and filters empty segments
 const parseDate = (str) => {
   if (!str) return null;
   const cleaned = str.trim().replace(/\.$/, '');
   const parts = cleaned.split('.').map(p => p.trim()).filter(Boolean);
   if (parts.length !== 3) return null;
-  const [year, month, day] = parts;
-  return new Date(`${year}-${month}-${day}`);
+
+  const [yearStr, monthStr, dayStr] = parts;
+  const year = parseInt(yearStr, 10);
+  const month = parseInt(monthStr, 10) - 1; // hónap: 0-indexelt
+  const day = parseInt(dayStr, 10);
+  
+  return new Date(year, month, day); // helyes JS dátum
 };
 
 const isMenuValidToday = (menu) => {
@@ -51,10 +55,6 @@ const isMenuValidToday = (menu) => {
   const start = parseDate(menu.validFrom);
   const end = parseDate(menu.validTo);
   if (!start || !end) return false;
-  // zero time portion for comparison
-  today.setHours(0,0,0,0);
-  start.setHours(0,0,0,0);
-  end.setHours(0,0,0,0);
   return today >= start && today <= end;
 };
 
@@ -67,18 +67,17 @@ const getTodayMenus = (menus, selectedRestaurant) => {
   const validMenus = menus.filter(isMenuValidToday);
 
   if (selectedRestaurant) {
-    return validMenus.filter(m =>
-      m.etterem === selectedRestaurant &&
-      [m[`menu_${today}_a`], m[`menu_${today}_b`], m[`menu_${today}_c`]].some(Boolean)
-    );
+    return validMenus.filter(m => m.etterem === selectedRestaurant && [
+      m[`menu_${today}_a`],
+      m[`menu_${today}_b`],
+      m[`menu_${today}_c`]
+    ].some(Boolean));
   }
 
-  return validMenus
-    .map(m => ({
-      ...m,
-      todayMenus: [m[`menu_${today}_a`], m[`menu_${today}_b`], m[`menu_${today}_c`]].filter(Boolean)
-    }))
-    .filter(m => m.todayMenus.length > 0);
+  return validMenus.map(m => ({
+    ...m,
+    todayMenus: [m[`menu_${today}_a`], m[`menu_${today}_b`], m[`menu_${today}_c`]].filter(Boolean)
+  })).filter(m => m.todayMenus.length > 0);
 };
 
 export default function AnimatedWeeklyMenuDrawer() {
@@ -135,7 +134,7 @@ export default function AnimatedWeeklyMenuDrawer() {
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`fixed top-0 left-0 h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out \${open ? 'translate-x-0' : '-translate-x-full'} border-r-4 border-blue-400 rounded-r-xl overflow-hidden`}
+        className={`fixed top-0 left-0 h-[85%] mt-6 w-2/3 max-w-sm bg-blue-100 shadow-lg transform z-50 transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'} border-r-4 border-blue-400 rounded-r-xl overflow-hidden`}
       >
         <div className="flex justify-between items-center border-b p-4 bg-blue-200">
           <h2 className="text-sm font-bold text-blue-800">{todayDate}</h2>
