@@ -85,54 +85,58 @@ export default function AnimatedWeeklyMenuDrawer() {
   return (
     <>
       {open && (
-        <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
+        <div className="fixed inset-0 z-40 transition-all duration-700 ease-in-out bg-black/20" style={{ backdropFilter: 'blur(4px) grayscale(100%)' }} onClick={() => setOpen(false)} />
       )}
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`fixed top-0 left-0 h-full w-2/3 max-w-sm bg-white shadow-lg backdrop-blur-sm transform z-50 transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-[50px] left-0 z-50 transform transition-transform duration-700 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex justify-between items-center border-b p-4">
-          <h2 className="text-sm font-bold text-gray-600">{todayDate}</h2>
-          <button onClick={() => setOpen(false)} className="text-gray-600 hover:text-gray-900">✕</button>
-        </div>
-        <div className="text-center text-lg font-bold text-purple-700 px-4 pb-2">Éttermek napi menüi</div>
+        <div className="w-72 h-[75vh] shadow-xl border-r-4 rounded-r-2xl overflow-y-auto bg-blue-100 text-blue-900 border-blue-500 font-sans flex flex-col">
+          <div className="sticky top-0 px-4 py-3 flex justify-between items-center border-b bg-blue-200 border-blue-400 z-10">
+            <h2 className="text-sm font-bold text-blue-900">{todayDate}</h2>
+            <button onClick={() => setOpen(false)} className="text-xl font-bold hover:scale-125 transition" aria-label="Bezárás">✖</button>
+          </div>
 
-        <div className="px-4 pb-3">
-          <select
-            className="w-full border p-2 rounded text-sm"
-            value={selectedRestaurant}
-            onChange={(e) => setSelectedRestaurant(e.target.value)}
-          >
-            <option value="">Összes étterem</option>
-            {restaurants.map((r, idx) => (
-              <option key={idx} value={r}>{r}</option>
-            ))}
-          </select>
-        </div>
+          <div className="text-center text-lg font-extrabold text-blue-800 px-4 pb-2 border-b border-blue-300">Éttermek napi menüi</div>
 
-        <div className="p-4 overflow-y-auto h-full space-y-4">
-          {loading && <div className="loader animate-spin mx-auto my-8 h-8 w-8 border-4 border-gray-300 border-t-gray-600 rounded-full" />}
-          {error && <p className="text-red-500 text-center">{error}</p>}
-          {!loading && !error && (
-            todayMenus.length ? (
-              todayMenus.map((menu, idx) => (
-                <MenuCard key={idx} data={menu} showTodayOnly />
-              ))
-            ) : (
-              <div className="text-center text-gray-500 py-8">
-                <p>Nincs elérhető napi menü.</p>
-              </div>
-            )
-          )}
+          <div className="px-4 py-3">
+            <select className="w-full border p-2 rounded text-sm" value={selectedRestaurant} onChange={(e) => setSelectedRestaurant(e.target.value)}>
+              <option value="">Összes étterem</option>
+              {restaurants.map((r, idx) => (
+                <option key={idx} value={r}>{r}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="p-4 flex-1 space-y-4 text-sm leading-relaxed">
+            {loading && <div className="loader animate-spin mx-auto my-8 h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />}
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {!loading && !error && (
+              todayMenus.length ? (
+                todayMenus.map((menu, idx) => (
+                  <MenuCard key={idx} data={menu} showTodayOnly />
+                ))
+              ) : (
+                <div className="text-center text-blue-500 py-8">
+                  <p>Nincs elérhető napi menü.</p>
+                </div>
+              )
+            )}
+          </div>
+
+          <div className="sticky bottom-0 text-center py-2 text-xs font-bold border-t bg-blue-200 border-blue-400">
+            © KőszegAPP – 2025
+          </div>
         </div>
       </div>
+
       <div
-        className="fixed top-1/2 left-0 transform -translate-y-1/2 bg-purple-600 text-white px-3 py-2 rounded-r-lg cursor-pointer select-none z-50"
+        className={`fixed top-[40%] px-3 py-1.5 left-0 w-35 h-10 flex items-center justify-center border rounded-tr-2xl rounded-br-2xl shadow transform -rotate-90 origin-top-left cursor-pointer z-50 transition bg-blue-200 text-blue-700 border-blue-400 hover:bg-blue-300`}
         onClick={() => setOpen(o => !o)}
       >
-        Heti menük
+        <span className="text-xs font-bold">NAPI MENÜK</span>
       </div>
     </>
   );
