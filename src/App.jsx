@@ -83,13 +83,6 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
 
-      {/* --- KIHÚZHATÓ FOGANTYÚ --- */}
-    <div
-      className="fixed left-0 top-1/2 transform -translate-y-1/2 z-50 bg-purple-600 text-white p-2 rounded-r-lg cursor-pointer select-none"
-       onClick={() => setMenuOpen(o => !o)}
-     >
-      📋 Heti menük
-    </div>
 
       {/* Header */}
       <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
