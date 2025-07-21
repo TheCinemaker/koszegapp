@@ -46,7 +46,8 @@ const isMenuValidToday = (menu) => {
 
 const getTodayMenus = (menus, selectedRestaurant) => {
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-  const todayIdx = Math.min(new Date().getDay() - 1, 5);
+  const dayIndex = new Date().getDay();
+  const todayIdx = dayIndex === 0 ? 6 : dayIndex - 1;
   const today = days[todayIdx];
 
   const validMenus = menus.filter(isMenuValidToday);
@@ -148,8 +149,14 @@ export default function AnimatedWeeklyMenuDrawer() {
                     <div className="text-xs text-blue-700 italic">
                       {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
                       {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
-                      {(menu.price_a || menu.price_b || menu.price_c) && (
-                        <div>Árak: A: {menu.price_a} Ft, B: {menu.price_b} Ft, C: {menu.price_c} Ft</div>
+                      {(menu.price_a || menu.price_b || menu.price_c || menu.price_allando) && (
+                        <div>
+                          Árak: 
+                          {menu.price_a && ` A: ${menu.price_a} Ft`}
+                          {menu.price_b && ` B: ${menu.price_b} Ft`}
+                          {menu.price_c && ` C: ${menu.price_c} Ft`}
+                          {menu.price_allando && ` Állandó: ${menu.price_allando} Ft`}
+                        </div>
                       )}
                     </div>
                   </div>
