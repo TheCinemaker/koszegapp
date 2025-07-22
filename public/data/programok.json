@@ -42,7 +42,7 @@
     "idopont": "2025-07-22T15:00:00",
     "veg_idopont": "2025-07-22T16:00:00",
     "helyszin": {
-      "lat": 47.3900,
+      "lat": 47.39,
       "lng": 16.5417,
       "nev": "Jurisics tér"
     }
@@ -55,7 +55,7 @@
     "veg_idopont": "2025-07-22T18:00:00",
     "helyszin": {
       "lat": 47.3887,
-      "lng": 16.5430,
+      "lng": 16.543,
       "nev": "Vár udvara"
     }
   },
@@ -66,9 +66,33 @@
     "idopont": "2025-07-22T21:00:00",
     "veg_idopont": "2025-07-22T22:00:00",
     "helyszin": {
-      "lat": 47.3890,
-      "lng": 16.5400,
+      "lat": 47.389,
+      "lng": 16.54,
       "nev": "Főtér"
+    }
+  },
+  {
+    "id": 7,
+    "nev": "Zenés ébresztő",
+    "leiras": "Fúvószenekar koncertje a belváros utcáin.",
+    "idopont": "2025-07-23T08:00:00",
+    "veg_idopont": "2025-07-23T08:30:00",
+    "helyszin": {
+      "lat": 47.3898,
+      "lng": 16.5405,
+      "nev": "Főtér"
+    }
+  },
+  {
+    "id": 8,
+    "nev": "Gyermekprogramok",
+    "leiras": "Kézműves foglalkozások és játszóház.",
+    "idopont": "2025-07-23T10:00:00",
+    "veg_idopont": "2025-07-23T12:00:00",
+    "helyszin": {
+      "lat": 47.3901,
+      "lng": 16.5423,
+      "nev": "Gyermekudvar"
     }
   }
 ]
