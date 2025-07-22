@@ -123,7 +123,16 @@ export default function ProgramModal() {
             </p>
           </div>
         )}
-
+        {userLocation && nextEvent?.helyszin && (
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${nextEvent.helyszin.lat},${nextEvent.helyszin.lng}&travelmode=walking`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-2 text-sm font-semibold text-blue-600 dark:text-blue-300 underline hover:text-blue-800"
+          >
+            🧭 Vigyél oda
+          </a>
+        )}
         <div className="h-[400px] rounded-md overflow-hidden mt-6 border">
           <MapContainer
             center={userLocation || [47.389, 16.540]}
