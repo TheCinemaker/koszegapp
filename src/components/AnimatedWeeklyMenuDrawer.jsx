@@ -133,14 +133,13 @@ return (
       />
     )}
 
-    {/* Drawer + fül container */}
+    {/* Drawer */}
     <div
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={() => (touchStartX.current = null)}
       className={`fixed top-0 left-0 h-[85%] mt-6 z-50 transform transition-transform duration-300 ease-in-out
-        pointer-events-none
-        ${open ? 'translate-x-0' : '-translate-x-full'}`}
+        pointer-events-none ${open ? 'translate-x-0' : '-translate-x-full'}`}
     >
       {/* Drawer panel */}
       <div
@@ -234,23 +233,23 @@ return (
           © KőszegAPP – {new Date().getFullYear()}
         </div>
       </div>
+    </div>
 
-      {/* Fül – a drawer jobb széléhez ragasztva */}
-      <div
-        onClick={() => setOpen(o => !o)}
-        className={`absolute top-1/2 -right-0 transform -translate-y-1/2 pointer-events-auto cursor-pointer
-                    px-3 py-1.5 w-24 h-8 flex items-center justify-center
-                    rounded-tl-2xl rounded-bl-2xl shadow
-                    rotate-90 origin-right transition
-                    ${open
-                      ? 'bg-blue-400 text-white border-blue-600'
-                      : 'bg-blue-200 text-blue-700 border-blue-400 opacity-70'}
-                    hover:bg-blue-300`}
-      >
-        <span className="text-xs font-bold whitespace-nowrap">
-          NAPI MENÜK
-        </span>
-      </div>
+    {/* Fül – mindig a bal képernyőszélen */}
+    <div
+      onClick={() => setOpen(o => !o)}
+      className={`fixed top-1/2 left-0 z-50 transform -translate-y-1/2
+                  px-3 py-1.5 w-24 h-8 flex items-center justify-center
+                  border rounded-tl-2xl rounded-bl-2xl shadow
+                  rotate-90 origin-left cursor-pointer transition
+                  ${open
+                    ? 'bg-blue-400 text-white border-blue-600'
+                    : 'bg-blue-200 text-blue-700 border-blue-400 opacity-70'}
+                  hover:bg-blue-300`}
+    >
+      <span className="text-xs font-bold whitespace-nowrap">
+        NAPI MENÜK
+      </span>
     </div>
   </>
 );
