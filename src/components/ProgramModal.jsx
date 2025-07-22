@@ -1,5 +1,3 @@
-/* --- FÁJL: ProgramModal.jsx --- */
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { parseISO, isSameDay, isBefore, isAfter, format } from 'date-fns';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -16,9 +14,11 @@ function EventCard({ event, onSelect, isNext = false }) {
       <div className="flex items-start justify-between">
         <div>
           <p className="font-bold text-gray-900 dark:text-gray-100">{event.nev}</p>
-          <p className="text-sm mt-1 text-gray-700 dark:text-gray-300">
-            📍 {event.helyszin.nev}
-          </p>
+          {/* MÓDOSÍTÁS: Időpontok hozzáadva a kártyához */}
+          <div className="text-sm mt-1 text-gray-700 dark:text-gray-300 space-y-1">
+            <p>📍 {event.helyszin.nev}</p>
+            <p>🕘 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}</p>
+          </div>
         </div>
         {event.kiemelt && (
           <span className="ml-2 flex-shrink-0 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
@@ -36,7 +36,7 @@ export default function ProgramModal({ onClose }) {
   const [userLocation, setUserLocation] = useState(null);
   const [events, setEvents] = useState([]);
   const [currentEvents, setCurrentEvents] = useState([]);
-  const [nextEvents, setNextEvents] = useState([]); // Kezeli a párhuzamosan induló eseményeket
+  const [nextEvents, setNextEvents] = useState([]); 
   const [selectedProgram, setSelectedProgram] = useState(null);
   
   // --- VISSZASZÁMLÁLÓ LOGIKA ---
@@ -123,7 +123,7 @@ export default function ProgramModal({ onClose }) {
           {/* VISSZASZÁMLÁLÓ SÁV */}
           {!timeLeft.isOver && (
             <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner">
-              <span className="font-mono text-sm">Kezdésig még: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s van hátra</span>
+              <span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span>
             </div>
           )}
 
