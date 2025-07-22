@@ -110,7 +110,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
 
     const calculateTimeLeft = useCallback(() => {
         const now = new Date();
-        const ostromStart = new Date('2025-08-01T08:00:00');
+        const ostromStart = new Date('2025-08-01T15:32:00');
         const diff = ostromStart - now;
         return {
             days: Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))),
