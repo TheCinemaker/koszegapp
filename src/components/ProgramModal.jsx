@@ -108,18 +108,9 @@ export default function ProgramModal({ onClose, openDrawer }) {
             🛡️ Ostromnapok 2025 – Mai programok
           </h2>
 
-          {/* Teljes program drawer link */}
-          <p className="text-xs text-center text-amber-700 dark:text-amber-300 mb-4">
-            A teljes programért{' '}
-              <button
-                onClick={() => {
-                onClose();
-                openDrawer();
-            }}
-          className="underline hover:text-amber-900 dark:hover:text-white transition"
-          >
-              kattints ide
-            </button>
+          {/* Drawer infó szöveg */}
+          <p className="text-sm text-center font-semibold text-amber-700 dark:text-amber-300 mb-4">
+            📜 A teljes program a bal oldali menüből (drawer) érhető el!
           </p>
 
           {/* Nincs esemény üzenet */}
