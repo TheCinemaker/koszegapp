@@ -114,8 +114,8 @@ export default function ProgramModal({ onClose, openDrawer }) {
               <button
                 onClick={() => {
                 onClose();
-                  setTimeout(() => openDrawer(), 300); // késleltetés, hogy ne ütközzenek
-          }}
+                openDrawer();
+            }}
           className="underline hover:text-amber-900 dark:hover:text-white transition"
           >
               kattints ide
