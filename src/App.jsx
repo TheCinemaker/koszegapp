@@ -212,7 +212,7 @@ export default function App() {
       {isHome && !showProgramModal && (
         <button
           onClick={() => setShowProgramModal(true)}
-          className="fixed bottom-6 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition"
+          className="w-12 h-12 fixed bottom-5 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition"
           aria-label="Ostromprogramok megnyitása"
         >
           📅
