@@ -181,15 +181,23 @@ export default function ProgramModal({ onClose }) {
     return (
         <>
             <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
-                <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
-                    {/* FEJLÉC */}
-                    <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
-                        <div className="flex items-center gap-3">
-                            <h2 className="text-xl font-bold">🏰 Programfüzet</h2>
-                            {weatherData && <div className="hidden sm:flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg"><img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" /><span className="text-sm font-bold">{weatherData.temp}°C</span></div>}
-                        </div>
-                        <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
+            <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
+                {/* FEJLÉC - Itt vannak a módosítások */}
+                <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        {/* JAVÍTÁS 1: A szöveg átírása */}
+                        <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
+                        
+                        {weatherData && (
+                            // JAVÍTÁS 2: A "hidden" class eltávolítása, hogy mobilon is látszódjon
+                            <div className="flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg">
+                                <img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" />
+                                <span className="text-sm font-bold">{weatherData.temp}°C</span>
+                            </div>
+                        )}
                     </div>
+                    <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
+                </div>
 
                     {/* VISSZASZÁMLÁLÓ */}
                     {!timeLeft.isOver && <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner"><span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span></div>}
