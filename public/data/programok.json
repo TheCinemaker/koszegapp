@@ -2,6 +2,7 @@
   {
     "id": 1,
     "nev": "Történelmi megnyitó",
+    "leiras": "Ünnepélyes megnyitó a főtéren, díszbeszéddel és zenével.",
     "idopont": "2025-07-22T09:00:00",
     "veg_idopont": "2025-07-22T10:00:00",
     "helyszin": {
@@ -13,6 +14,7 @@
   {
     "id": 2,
     "nev": "Lovagi bemutató",
+    "leiras": "Középkori fegyver- és lovasbemutató a várudvarban.",
     "idopont": "2025-07-22T11:00:00",
     "veg_idopont": "2025-07-22T12:00:00",
     "helyszin": {
@@ -24,6 +26,7 @@
   {
     "id": 3,
     "nev": "Városi séta idegenvezetővel",
+    "leiras": "Fedezd fel Kőszeg történelmi belvárosát egy vezetett túra során.",
     "idopont": "2025-07-22T13:00:00",
     "veg_idopont": "2025-07-22T14:00:00",
     "helyszin": {
@@ -35,6 +38,7 @@
   {
     "id": 4,
     "nev": "Kézműves vásár",
+    "leiras": "Helyi kézművesek termékeinek bemutatója és vására.",
     "idopont": "2025-07-22T15:00:00",
     "veg_idopont": "2025-07-22T16:00:00",
     "helyszin": {
@@ -46,6 +50,7 @@
   {
     "id": 5,
     "nev": "Szabadtéri színház",
+    "leiras": "Zenés-táncos előadás a Várudvar színpadán.",
     "idopont": "2025-07-22T17:00:00",
     "veg_idopont": "2025-07-22T18:00:00",
     "helyszin": {
@@ -57,6 +62,7 @@
   {
     "id": 6,
     "nev": "Tűzijáték",
+    "leiras": "A nap záróeseménye: látványos tűzijáték a főtéren.",
     "idopont": "2025-07-22T21:00:00",
     "veg_idopont": "2025-07-22T22:00:00",
     "helyszin": {
