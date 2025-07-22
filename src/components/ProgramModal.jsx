@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { parseISO, isSameDay, isBefore, isAfter, format, formatISO } from 'date-fns';
-import { hu } from 'date-fns/locale'; // Magyar lokalizáció a dátumokhoz
+import { hu } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
@@ -80,14 +80,74 @@ export default function ProgramModal({ onClose }) {
     const [timeLeft, setTimeLeft] = useState(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true }));
 
     // --- LOGIKA (Callback és Memo hook-okkal optimalizálva) ---
-    const calculateTimeLeft = useCallback(() => { /* ... változatlan ... */ });
-    const evaluateEvents = useCallback(() => { /* ... változatlan ... */ }, [events]);
+    const calculateTimeLeft = useCallback(() => {
+        const now = new Date();
+        const ostromStart = new Date('2025-08-01T08:00:00');
+        const diff = ostromStart - now;
+        return {
+            days: Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))),
+            hours: Math.max(0, Math.floor((diff / (1000 * 60 * 60)) % 24)),
+            minutes: Math.max(0, Math.floor((diff / 1000 / 60) % 60)),
+            seconds: Math.max(0, Math.floor((diff / 1000) % 60)),
+            isOver: diff < 0,
+        };
+    }, []);
+
+    const evaluateEvents = useCallback(() => {
+        if (events.length === 0) return;
+        const now = new Date();
+        const today = events.filter(e => isSameDay(e.start, now));
+
+        const curr = today.filter(e => isBefore(e.start, now) && isAfter(e.end, now));
+        const upcoming = today.filter(e => isAfter(e.start, now)).sort((a, b) => a.start - b.start);
+        const nextGroup = upcoming.length > 0
+            ? upcoming.filter(e => e.start.getTime() === upcoming[0].start.getTime())
+            : [];
+        
+        setCurrentEvents(curr);
+        setNextEvents(nextGroup);
+    }, [events]);
     
     useEffect(() => {
-        // Minden adatot itt, egy helyen kérünk le betöltődéskor
-        fetch('/data/programok.json').then(res => res.json()).then(arr => { /* ... változatlan ... */ });
-        if (navigator.geolocation) { /* ... változatlan ... */ }
-        fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045').then(res => res.json()).then(data => { /* ... változatlan ... */ });
+        // 1. Események betöltése
+        fetch('/data/programok.json')
+            .then(res => res.json())
+            .then(arr => {
+                const parsed = arr.map(p => {
+                    try {
+                        const start = parseISO(p.idopont);
+                        const end = p.veg_idopont ? parseISO(p.veg_idopont) : new Date(start.getTime() + 60 * 60000); // 1 óra alapértelmezett
+                        return { ...p, id: p.id || `${p.nev}-${p.idopont}`, start, end, kiemelt: !!p.kiemelt };
+                    } catch (error) { 
+                        console.error("Hibás dátumformátum a JSON-ban:", p, error);
+                        return null; 
+                    }
+                }).filter(Boolean);
+                setEvents(parsed);
+            })
+            .catch(error => console.error("Hiba a programok betöltésekor:", error));
+
+        // 2. Geolokáció
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                err => console.warn('Helymeghatározás hiba:', err.message)
+            );
+        }
+        
+        // 3. Időjárás
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
+            .then(res => res.json())
+            .then(data => {
+                if(data.cod === 200) {
+                    setWeatherData({
+                        temp: Math.round(data.main.temp),
+                        description: data.weather[0].description,
+                        icon: data.weather[0].icon,
+                    });
+                }
+            })
+            .catch(err => console.error("Időjárás API hiba:", err));
     }, []);
 
     useEffect(() => {
@@ -111,6 +171,11 @@ export default function ProgramModal({ onClose }) {
         }, {});
     }, [events]);
 
+    const blueIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+    });
 
     // --- RENDERELÉS ---
     return (
@@ -142,6 +207,7 @@ export default function ProgramModal({ onClose }) {
                                 {currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">🎉 Nincs több esemény mára!</p>}
                                 {currentEvents.length > 0 && <div className="mb-6 animate-fadein"><h3 className="section-title border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}</div>}
                                 {nextEvents.length > 0 && <div className="mb-4 animate-fadein"><h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200">⏭️ Következő ({format(nextEvents[0].start, 'HH:mm')}-kor)</h3>{nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}</div>}
+                                {userLocation && (currentEvents.length > 0 || nextEvents.length > 0) && <div className="h-[250px] rounded-xl overflow-hidden mt-6 border border-amber-300 dark:border-amber-700"><MapContainer center={[ (currentEvents[0] || nextEvents[0]).helyszin.lat, (currentEvents[0] || nextEvents[0]).helyszin.lng ]} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}><TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /><Marker position={[userLocation.lat, userLocation.lng]}><Popup>📍 Itt vagy</Popup></Marker>{currentEvents.map(e => <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}><Popup><strong>{e.nev}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup></Marker>)}{nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}><Popup><strong>{e.nev}</strong><br/>Kezdés: {format(e.start, 'HH:mm')}</Popup></Marker>)}</MapContainer></div>}
                             </>
                         )}
                         
