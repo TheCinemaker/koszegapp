@@ -238,9 +238,9 @@ return (
       {/* Fül – a drawer jobb széléhez ragasztva */}
       <div
         onClick={() => setOpen(o => !o)}
-        className={`absolute top-1/2 transform -translate-y-1/2 pointer-events-auto cursor-pointer
+        className={`absolute top-1/2 -right-0 transform -translate-y-1/2 pointer-events-auto cursor-pointer
                     px-3 py-1.5 w-24 h-8 flex items-center justify-center
-                    border rounded-tr-2xr rounded-br-2xr shadow
+                    rounded-tl-2xl rounded-bl-2xl shadow
                     rotate-90 origin-right transition
                     ${open
                       ? 'bg-blue-400 text-white border-blue-600'
