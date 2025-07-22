@@ -239,7 +239,7 @@ return (
       <div
         onClick={() => setOpen(o => !o)}
         className={`absolute top-1/2 -right-4 transform -translate-y-1/2 pointer-events-auto cursor-pointer
-                    px-3 py-1.5 w-8 h-24 flex items-center justify-center
+                    px-3 py-1.5 w-24 h-8 flex items-center justify-center
                     border rounded-tr-2xl rounded-br-2xl shadow
                     rotate-90 origin-right transition
                     ${open
