@@ -111,10 +111,13 @@ export default function ProgramModal({ onClose, openDrawer }) {
           {/* Teljes program drawer link */}
           <p className="text-xs text-center text-amber-700 dark:text-amber-300 mb-4">
             A teljes programért{' '}
-            <button
-              onClick={() => { onClose(); openDrawer(); }}
-              className="underline hover:text-amber-900 dark:hover:text-white transition"
-            >
+              <button
+                onClick={() => {
+                onClose();
+                  setTimeout(() => openDrawer(), 300); // késleltetés, hogy ne ütközzenek
+          }}
+          className="underline hover:text-amber-900 dark:hover:text-white transition"
+          >
               kattints ide
             </button>
           </p>
