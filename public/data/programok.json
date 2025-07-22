@@ -1,10 +1,22 @@
 [
   {
     "id": 1,
-    "nev": "Történelmi megnyitó",
-    "leiras": "Ünnepélyes megnyitó a főtéren, díszbeszéddel és zenével.",
-    "idopont": "2025-07-22T09:00:00",
-    "veg_idopont": "2025-07-22T10:00:00",
+    "nev": "Megnyitó beszéd",
+    "leiras": "Ünnepélyes megnyitó a főtéren.",
+    "idopont": "2025-07-22T11:37:00",
+    "veg_idopont": "2025-07-22T11:39:00",
+    "helyszin": {
+      "lat": 47.3895,
+      "lng": 16.5401,
+      "nev": "Főtér"
+    }
+  },
+  {
+    "id": 1,
+    "nev": "táncház",
+    "leiras": "tánc főtéren.",
+    "idopont": "2025-07-22T11:37:00",
+    "veg_idopont": "2025-07-22T11:39:00",
     "helyszin": {
       "lat": 47.3895,
       "lng": 16.5401,
@@ -13,86 +25,26 @@
   },
   {
     "id": 2,
-    "nev": "Lovagi bemutató",
-    "leiras": "Középkori fegyver- és lovasbemutató a várudvarban.",
-    "idopont": "2025-07-22T11:00:00",
-    "veg_idopont": "2025-07-22T12:00:00",
+    "nev": "Táncbemutató",
+    "leiras": "Néptáncegyüttes fellépése a Jurisics téren.",
+    "idopont": "2025-07-22T11:38:00",
+    "veg_idopont": "2025-07-22T11:40:00",
     "helyszin": {
-      "lat": 47.3902,
-      "lng": 16.5389,
-      "nev": "Várparkoló"
-    }
-  },
-  {
-    "id": 3,
-    "nev": "Városi séta idegenvezetővel",
-    "leiras": "Fedezd fel Kőszeg történelmi belvárosát egy vezetett túra során.",
-    "idopont": "2025-07-22T13:00:00",
-    "veg_idopont": "2025-07-22T14:00:00",
-    "helyszin": {
-      "lat": 47.3911,
-      "lng": 16.5395,
-      "nev": "Tourinform iroda"
-    }
-  },
-  {
-    "id": 4,
-    "nev": "Kézműves vásár",
-    "leiras": "Helyi kézművesek termékeinek bemutatója és vására.",
-    "idopont": "2025-07-22T15:00:00",
-    "veg_idopont": "2025-07-22T16:00:00",
-    "helyszin": {
-      "lat": 47.39,
-      "lng": 16.5417,
+      "lat": 47.3900,
+      "lng": 16.5410,
       "nev": "Jurisics tér"
     }
   },
   {
-    "id": 5,
-    "nev": "Szabadtéri színház",
-    "leiras": "Zenés-táncos előadás a Várudvar színpadán.",
-    "idopont": "2025-07-22T17:00:00",
-    "veg_idopont": "2025-07-22T18:00:00",
+    "id": 3,
+    "nev": "Fúvószenekar koncert",
+    "leiras": "Kőszegi fúvósok koncertje.",
+    "idopont": "2025-07-22T11:41:00",
+    "veg_idopont": "2025-07-22T11:43:00",
     "helyszin": {
-      "lat": 47.3887,
-      "lng": 16.543,
-      "nev": "Vár udvara"
-    }
-  },
-  {
-    "id": 6,
-    "nev": "Tűzijáték",
-    "leiras": "A nap záróeseménye: látványos tűzijáték a főtéren.",
-    "idopont": "2025-07-22T21:00:00",
-    "veg_idopont": "2025-07-22T22:00:00",
-    "helyszin": {
-      "lat": 47.389,
-      "lng": 16.54,
-      "nev": "Főtér"
-    }
-  },
-  {
-    "id": 7,
-    "nev": "Zenés ébresztő",
-    "leiras": "Fúvószenekar koncertje a belváros utcáin.",
-    "idopont": "2025-07-23T08:00:00",
-    "veg_idopont": "2025-07-23T08:30:00",
-    "helyszin": {
-      "lat": 47.3898,
-      "lng": 16.5405,
-      "nev": "Főtér"
-    }
-  },
-  {
-    "id": 8,
-    "nev": "Gyermekprogramok",
-    "leiras": "Kézműves foglalkozások és játszóház.",
-    "idopont": "2025-07-23T10:00:00",
-    "veg_idopont": "2025-07-23T12:00:00",
-    "helyszin": {
-      "lat": 47.3901,
-      "lng": 16.5423,
-      "nev": "Gyermekudvar"
+      "lat": 47.3880,
+      "lng": 16.5420,
+      "nev": "Várárok"
     }
   }
 ]
