@@ -51,12 +51,17 @@ export default function ProgramModal({ onClose }) {
 
   const evaluateEvents = () => {
     const now = new Date();
+    
+    // Szűrjük a mai eseményeket
     const today = events.filter(e => isSameDay(e.start, now));
 
-    const curr = today.filter(e =>
-      isBefore(e.start, now) &&
-      (!e.end || isAfter(e.end, now) === false)
+    // Jelenleg zajló események: már elkezdődött és még nem ért véget
+    const curr = today.filter(e => 
+      isBefore(e.start, now) && 
+      (e.end ? isAfter(e.end, now) : true)
     );
+    
+    // Következő esemény: még nem kezdődött el, időrendben első
     const nxt = today
       .filter(e => isAfter(e.start, now))
       .sort((a, b) => a.start - b.start)[0];
@@ -69,12 +74,20 @@ export default function ProgramModal({ onClose }) {
     fetch('/data/programok.json')
       .then(res => res.json())
       .then(arr => {
-        const parsed = arr.map(p => ({
-          ...p,
-          start: parseISO(p.idopont),
-          end: p.veg_idopont ? parseISO(p.veg_idopont) : new Date(parseISO(p.idopont).getTime() + 60 * 60000),
-          kiemelt: !!p.kiemelt
-        }));
+        const parsed = arr.map(p => {
+          try {
+            return {
+              ...p,
+              start: parseISO(p.idopont),
+              end: p.veg_idopont ? parseISO(p.veg_idopont) : 
+                new Date(parseISO(p.idopont).getTime() + 60 * 60000),
+              kiemelt: !!p.kiemelt
+            };
+          } catch (error) {
+            console.error('Hibás dátumformátum:', p.idopont, error);
+            return null;
+          }
+        }).filter(Boolean); // Szűrjük ki a null értékeket
         setEvents(parsed);
       });
 
@@ -114,27 +127,46 @@ export default function ProgramModal({ onClose }) {
           )}
 
           {/* Jelenleg zajló események */}
-          {currentEvents.map(event => (
-            <div
-              key={event.id}
-              className="mb-4 p-4 rounded-xl bg-amber-200 dark:bg-amber-800/50 border-l-4 border-amber-500 cursor-pointer hover:shadow transition"
-              onClick={() => setSelectedProgram(event)}
-            >
-              <h3 className="flex items-center text-lg font-semibold mb-1">
-                🎬 Épp most zajlik:
-                {event.kiemelt && (
-                  <span className="ml-2 bg-yellow-300 text-yellow-800 text-xs font-bold px-2 py-0.5 rounded-full">
-                    ⭐ Kiemelt
-                  </span>
-                )}
+          {currentEvents.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2 text-amber-800 dark:text-amber-200">
+                🎬 Jelenleg zajló események ({currentEvents.length})
               </h3>
-              <p className="text-base font-bold">{event.nev}</p>
-              <p className="text-sm mt-1">
-                📍 {event.helyszin.nev}<br />
-                🕘 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}
-              </p>
+              {currentEvents.map(event => (
+                <div
+                  key={event.id}
+                  className="mb-3 p-4 rounded-xl bg-amber-200 dark:bg-amber-800/50 border-l-4 border-amber-500 cursor-pointer hover:shadow transition"
+                  onClick={() => setSelectedProgram(event)}
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-base font-bold">{event.nev}</p>
+                      <p className="text-sm mt-1">
+                        📍 {event.helyszin.nev}<br />
+                        🕘 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}
+                      </p>
+                    </div>
+                    {event.kiemelt && (
+                      <span className="ml-2 bg-yellow-300 text-yellow-800 text-xs font-bold px-2 py-0.5 rounded-full">
+                        ⭐ Kiemelt
+                      </span>
+                    )}
+                  </div>
+                  {userLocation && (
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${event.helyszin.lat},${event.helyszin.lng}&travelmode=walking`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block mt-2 text-sm font-semibold text-amber-700 underline hover:text-amber-900 dark:text-amber-300"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      🧭 Útvonal megtekintése
+                    </a>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
+          )}
 
           {/* Következő esemény */}
           {nextEvent && (
@@ -142,25 +174,27 @@ export default function ProgramModal({ onClose }) {
               className="mb-4 p-4 rounded-xl bg-yellow-100 dark:bg-yellow-900/40 border-l-4 border-yellow-600 cursor-pointer hover:shadow transition"
               onClick={() => setSelectedProgram(nextEvent)}
             >
-              <h3 className="flex items-center text-lg font-semibold mb-1">
-                ⏭️ Következő esemény:
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold mb-1">⏭️ Következő esemény</h3>
+                  <p className="text-base font-bold">{nextEvent.nev}</p>
+                  <p className="text-sm mt-1">
+                    🕘 {format(nextEvent.start, 'HH:mm')} kezdésig: <Countdown target={nextEvent.start} />
+                  </p>
+                </div>
                 {nextEvent.kiemelt && (
                   <span className="ml-2 bg-yellow-300 text-yellow-800 text-xs font-bold px-2 py-0.5 rounded-full">
                     ⭐ Kiemelt
                   </span>
                 )}
-              </h3>
-              <p className="text-base font-bold">{nextEvent.nev}</p>
-              <p className="text-sm mt-1">
-                🕘 {format(nextEvent.start, 'HH:mm')} kezdésig ennyi idő van hátra:<br />
-                ⏱️ <Countdown target={nextEvent.start} />
-              </p>
+              </div>
               {userLocation && (
                 <a
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${nextEvent.helyszin.lat},${nextEvent.helyszin.lng}&travelmode=walking`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block mt-2 text-sm font-semibold text-yellow-700 underline hover:text-yellow-900 dark:text-yellow-300"
+                  onClick={e => e.stopPropagation()}
                 >
                   🧭 Vigyél oda
                 </a>
@@ -169,10 +203,13 @@ export default function ProgramModal({ onClose }) {
           )}
 
           {/* Térkép */}
-          {userLocation && currentEvents.length > 0 && (
+          {userLocation && (currentEvents.length > 0 || nextEvent) && (
             <div className="h-[250px] rounded-xl overflow-hidden mt-6 border border-amber-300 dark:border-amber-700">
               <MapContainer
-                center={[currentEvents[0].helyszin.lat, currentEvents[0].helyszin.lng]}
+                center={[
+                  currentEvents[0]?.helyszin?.lat || nextEvent?.helyszin?.lat || userLocation.lat,
+                  currentEvents[0]?.helyszin?.lng || nextEvent?.helyszin?.lng || userLocation.lng
+                ]}
                 zoom={17}
                 scrollWheelZoom={false}
                 style={{ height: '100%', width: '100%' }}
@@ -181,10 +218,30 @@ export default function ProgramModal({ onClose }) {
                 <Marker position={userLocation}><Popup>📍 Itt vagy</Popup></Marker>
                 {currentEvents.map(e => (
                   <Marker key={e.id} position={[e.helyszin.lat, e.helyszin.lng]}>
-                    <Popup>{e.nev}</Popup>
+                    <Popup>
+                      <strong>{e.nev}</strong><br />
+                      {format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}
+                    </Popup>
                   </Marker>
                 ))}
-                <CenterMap center={[currentEvents[0].helyszin.lat, currentEvents[0].helyszin.lng]} />
+                {nextEvent && !currentEvents.some(e => e.id === nextEvent.id) && (
+                  <Marker 
+                    position={[nextEvent.helyszin.lat, nextEvent.helyszin.lng]}
+                    icon={L.icon({
+                      ...L.Icon.Default.prototype.options,
+                      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png'
+                    })}
+                  >
+                    <Popup>
+                      <strong>{nextEvent.nev}</strong><br />
+                      Kezdés: {format(nextEvent.start, 'HH:mm')}
+                    </Popup>
+                  </Marker>
+                )}
+                <CenterMap center={[
+                  currentEvents[0]?.helyszin?.lat || nextEvent?.helyszin?.lat || userLocation.lat,
+                  currentEvents[0]?.helyszin?.lng || nextEvent?.helyszin?.lng || userLocation.lng
+                ]} />
               </MapContainer>
             </div>
           )}
