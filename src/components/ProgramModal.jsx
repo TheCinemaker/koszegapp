@@ -7,19 +7,39 @@ import {
   isBefore,
   differenceInMinutes
 } from 'date-fns';
-
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
 
-// Leaflet marker fix
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png'
 });
+
+function Countdown({ target }) {
+  const [diff, setDiff] = useState(() => Math.max(0, target - new Date()));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDiff(Math.max(0, target - new Date()));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [target]);
+
+  const seconds = Math.floor((diff / 1000) % 60);
+  const minutes = Math.floor((diff / 1000 / 60) % 60);
+  const hours = Math.floor(diff / 1000 / 60 / 60);
+
+  return (
+    <span>
+      {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:
+      {String(seconds).padStart(2, '0')}
+    </span>
+  );
+}
 
 export default function ProgramModal() {
   const [userLocation, setUserLocation] = useState(null);
@@ -66,19 +86,22 @@ export default function ProgramModal() {
 
   return (
     <>
-      <div className="bg-white shadow-xl rounded-xl p-4 max-w-4xl mx-auto my-6">
-        <h2 className="text-xl font-bold mb-4">Mai programok</h2>
+      <div className="bg-white dark:bg-gray-900 shadow-xl rounded-xl p-4 max-w-4xl mx-auto my-6 z-50 relative">
+        <h2 className="text-xl font-bold mb-4">📅 Mai programok</h2>
 
         {currentEvent && (
           <div
-            className="mb-4 p-3 border border-green-400 rounded-md bg-green-50 cursor-pointer"
+            className="mb-4 p-4 border border-green-400 rounded-md bg-green-50 dark:bg-green-900/20 cursor-pointer"
             onClick={() => setSelectedProgram(currentEvent)}
           >
-            <h3 className="font-semibold text-green-800">🎬 Jelenleg zajlik:</h3>
-            <p className="text-lg">{currentEvent.nev}</p>
-            <p className="text-sm text-gray-600">
-              Helyszín: {currentEvent.helyszin.nev || 'ismeretlen'}<br />
-              Hátralévő idő: {currentEvent.end
+            <h3 className="font-semibold text-green-800 dark:text-green-300 mb-1">
+              🎬 Jelenleg zajlik:
+            </h3>
+            <p className="text-lg font-semibold">{currentEvent.nev}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              📍 {currentEvent.helyszin?.nev || 'ismeretlen'}<br />
+              ⏳ Hátralévő idő:{' '}
+              {currentEvent.end
                 ? `${differenceInMinutes(currentEvent.end, new Date())} perc`
                 : 'nem ismert'}
             </p>
@@ -87,31 +110,31 @@ export default function ProgramModal() {
 
         {nextEvent && (
           <div
-            className="mb-4 p-3 border border-blue-400 rounded-md bg-blue-50 cursor-pointer"
+            className="mb-4 p-4 border border-blue-400 rounded-md bg-blue-50 dark:bg-blue-900/20 cursor-pointer"
             onClick={() => setSelectedProgram(nextEvent)}
           >
-            <h3 className="font-semibold text-blue-800">⏭️ Következő esemény:</h3>
-            <p className="text-lg">{nextEvent.nev}</p>
-            <p className="text-sm text-gray-600">
-              Kezdés: {format(nextEvent.start, 'HH:mm')}<br />
-              Visszaszámlálás: {differenceInMinutes(nextEvent.start, new Date())} perc
+            <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-1">
+              ⏭️ Következő esemény:
+            </h3>
+            <p className="text-lg font-semibold">{nextEvent.nev}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              🕘 Kezdés: {format(nextEvent.start, 'HH:mm')}<br />
+              ⏱️ Visszaszámlálás: <Countdown target={nextEvent.start} />
             </p>
           </div>
         )}
 
-        <div className="h-[400px] rounded-md overflow-hidden mt-6">
+        <div className="h-[400px] rounded-md overflow-hidden mt-6 border">
           <MapContainer
             center={userLocation || [47.389, 16.540]}
             zoom={15}
             scrollWheelZoom={false}
             style={{ height: '100%', width: '100%' }}
           >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {userLocation && (
               <Marker position={userLocation}>
-                <Popup>Te vagy itt</Popup>
+                <Popup>📍 Te vagy itt</Popup>
               </Marker>
             )}
             {nextEvent?.helyszin && (
