@@ -47,9 +47,18 @@ export default function App() {
   // states for modal & drawer
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
+  const [wantDrawerAfterModal, setWantDrawerAfterModal] = useState(false);
+
 
   const isHome = location.pathname === '/';
 
+  useEffect(() => {
+  if (!showProgramModal && wantDrawerAfterModal) {
+    setShowOstromDrawer(true);
+    setWantDrawerAfterModal(false); // csak egyszer fusson
+  }
+}, [showProgramModal, wantDrawerAfterModal]);
+  
   useEffect(() => {
     fetch(
       'https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045'
@@ -195,7 +204,7 @@ export default function App() {
       {isHome && showProgramModal && (
       <ProgramModal
         onClose={() => setShowProgramModal(false)}
-        openDrawer={() => setShowOstromDrawer(true)}
+        openDrawer={() => setWantDrawerAfterModal(true)}
       />
   )}
 
