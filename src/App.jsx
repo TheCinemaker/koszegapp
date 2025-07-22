@@ -30,6 +30,7 @@ import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 import FloatingButtons from './components/FloatingButtons';
 import WeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
+import ProgramModal from './components/ProgramModal';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -196,6 +197,8 @@ export default function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
+          <Route path="/program" element={<ProgramModal />} />
+
         </Routes>
       </main>
 
