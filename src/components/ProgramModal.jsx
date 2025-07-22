@@ -1,41 +1,58 @@
-/* --- FÁJL: ProgramModal.jsx (Végleges, teljes verzió Push értesítéssel) --- */
+/* --- FÁJL: ProgramModal.jsx (Végleges, TELJES, iOS-biztos verzió) --- */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { parseISO, isSameDay, isBefore, isAfter, format, formatISO } from 'date-fns';
+import { parseISO, isSameDay, isBefore, isAfter, format, formatISO, isValid } from 'date-fns';
 import { hu } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
 
+// --- BIZTONSÁGI ÉS HELPER FÜGGVÉNYEK ---
+
+// GOLYÓÁLLÓ DÁTUMFELDOLGOZÓ: Ez véd a hibás JSON dátumformátumok okozta összeomlástól.
+function safeParseISO(dateString) {
+    if (!dateString) return null;
+    try {
+        const date = parseISO(dateString);
+        return isValid(date) ? date : null;
+    } catch (error) {
+        console.error(`Hibás dátumformátum, nem sikerült feldolgozni: "${dateString}"`, error);
+        return null;
+    }
+}
+
+// Kedvencek kezelése localStorage-ben (hibaellenőrzéssel)
 function useFavorites() {
     const [favorites, setFavorites] = useState(() => {
         try {
             const stored = localStorage.getItem('programFavorites');
             return stored ? JSON.parse(stored) : [];
         } catch (error) {
-            console.error("Hiba a kedvencek betöltésekor:", error);
+            console.error("Hiba a kedvencek betöltésekor a localStorage-ből:", error);
             return [];
         }
     });
 
     useEffect(() => {
-        localStorage.setItem('programFavorites', JSON.stringify(favorites));
+        try {
+            localStorage.setItem('programFavorites', JSON.stringify(favorites));
+        } catch (error) {
+            console.error("Hiba a kedvencek mentésekor a localStorage-be:", error);
+        }
     }, [favorites]);
 
     const toggleFavorite = (eventId) => {
         setFavorites(prev => 
-            prev.includes(eventId) 
-                ? prev.filter(id => id !== eventId) 
-                : [...prev, eventId]
+            prev.includes(eventId) ? prev.filter(id => id !== eventId) : [...prev, eventId]
         );
     };
     return { favorites, toggleFavorite };
 }
 
+// Az esemény kártya komponens
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite }) {
     const cardClasses = "p-3 rounded-xl border-l-4 cursor-pointer hover:shadow-lg transition mb-2 " + 
         (isFavorite ? "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500" : "bg-amber-200 dark:bg-amber-800/50 border-amber-500");
-
     return (
         <div className={cardClasses} onClick={() => onSelect(event)}>
             <div className="flex items-start justify-between">
@@ -56,11 +73,13 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite }) {
 
 // --- A FŐ KOMPONENS ---
 
-export default function ProgramModal({ onClose }) {
-    // --- STATE-EK ÉS HOOK-OK ---
+export default function ProgramModal({ onClose, openDrawer }) {
+    // --- STATE-EK ---
     const [view, setView] = useState('today');
     const { favorites, toggleFavorite } = useFavorites();
-    const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
+    const [notificationPermission, setNotificationPermission] = useState(
+        typeof window !== 'undefined' && window.Notification ? Notification.permission : 'unsupported'
+    );
     const [weatherData, setWeatherData] = useState(null);
     const [events, setEvents] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
@@ -98,21 +117,19 @@ export default function ProgramModal({ onClose }) {
         setNextEvents(nextGroup);
     }, [events]);
 
-    // 1. useEffect: Minden egyszeri, betöltődési feladatot itt végzünk
+    // 1. useEffect: Minden egyszeri, betöltődési feladat
     useEffect(() => {
         fetch('/data/programok.json')
             .then(res => res.json())
             .then(arr => {
                 const parsed = arr.map(p => {
-                    try {
-                        const start = parseISO(p.idopont);
-                        const end = p.veg_idopont ? parseISO(p.veg_idopont) : new Date(start.getTime() + 60 * 60000);
-                        return { ...p, id: p.id || `${p.nev}-${p.idopont}`, start, end, kiemelt: !!p.kiemelt };
-                    } catch (error) { return null; }
+                    const start = safeParseISO(p.idopont);
+                    if (!start) return null;
+                    const end = safeParseISO(p.veg_idopont) || new Date(start.getTime() + 60 * 60000);
+                    return { ...p, id: p.id || `${p.nev}-${p.idopont}`, start, end, kiemelt: !!p.kiemelt };
                 }).filter(Boolean);
                 setEvents(parsed);
-            })
-            .catch(error => console.error("Hiba a programok betöltésekor:", error));
+            }).catch(error => console.error("Hiba a programok.json betöltésekor:", error));
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -122,21 +139,11 @@ export default function ProgramModal({ onClose }) {
         }
         
         fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
-            .then(res => res.json())
-            .then(data => {
-                if(data.cod === 200) {
-                    setWeatherData({
-                        temp: Math.round(data.main.temp),
-                        description: data.weather[0].description,
-                        icon: data.weather[0].icon,
-                    });
-                }
-            })
+            .then(res => res.json()).then(data => { if(data.cod === 200) setWeatherData({ temp: Math.round(data.main.temp), description: data.weather[0].description, icon: data.weather[0].icon, }); })
             .catch(err => console.error("Időjárás API hiba:", err));
         
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => console.log('Service Worker regisztrálva:', registration))
                 .catch(error => console.error('Service Worker regisztráció hiba:', error));
         }
     }, []);
@@ -149,11 +156,11 @@ export default function ProgramModal({ onClose }) {
         return () => { clearInterval(countdownTimer); clearInterval(eventCheckTimer); };
     }, [evaluateEvents, calculateTimeLeft]);
 
-    // 3. useEffect: Kommunikáció a Service Workerrel, ha a kedvencek változnak
+    // 3. useEffect: Kommunikáció a Service Workerrel
     useEffect(() => {
-        if (navigator.serviceWorker.controller) {
+        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             const favoriteEventDetails = events.filter(event => favorites.includes(event.id));
-            navigator.service-worker.controller.postMessage({
+            navigator.serviceWorker.controller.postMessage({
                 type: 'UPDATE_FAVORITES',
                 favorites: favoriteEventDetails
             });
@@ -161,11 +168,14 @@ export default function ProgramModal({ onClose }) {
     }, [favorites, events]);
 
     const handleNotificationPermission = () => {
-        Notification.requestPermission().then(setNotificationPermission);
+        if (window.Notification) {
+            Notification.requestPermission().then(setNotificationPermission);
+        }
     };
 
     const favoriteEvents = useMemo(() => events.filter(e => favorites.includes(e.id)).sort((a,b) => a.start - b.start), [events, favorites]);
     
+    // JAVÍTÁS: A "Teljes Program" nézet csoportosítója is a biztonságos dátumkezelést használja.
     const fullProgramGrouped = useMemo(() => {
         return events.reduce((acc, event) => {
             const day = formatISO(event.start, { representation: 'date' });
@@ -186,7 +196,6 @@ export default function ProgramModal({ onClose }) {
         <>
             <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
                 <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
-                    {/* FEJLÉC */}
                     <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
                         <div className="flex items-center gap-3">
                             <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
@@ -194,11 +203,9 @@ export default function ProgramModal({ onClose }) {
                         </div>
                         <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
                     </div>
-
-                    {/* VISSZASZÁMLÁLÓ */}
+                    
                     {!timeLeft.isOver && <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner"><span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span></div>}
 
-                    {/* GÖRGETHETŐ TARTALOM */}
                     <div className="bg-amber-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
                         <div className="mb-4 flex border-b-2 border-amber-200 dark:border-zinc-700">
                             <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Mai Program</button>
@@ -229,7 +236,7 @@ export default function ProgramModal({ onClose }) {
                             <div className="space-y-6 animate-fadein">
                                 {Object.entries(fullProgramGrouped).map(([day, dayEvents]) => (
                                     <div key={day}>
-                                        <h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(parseISO(day), 'MMMM d. (eeee)', { locale: hu })}</h3>
+                                        <h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(safeParseISO(day), 'MMMM d. (eeee)', { locale: hu })}</h3>
                                         {dayEvents.sort((a,b) => a.start - b.start).map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}
                                     </div>
                                 ))}
