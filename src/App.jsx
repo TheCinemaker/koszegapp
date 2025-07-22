@@ -42,6 +42,9 @@ export default function App() {
   const langDropdownRef = useRef(null);
   const { dark, toggleDark } = useContext(DarkModeContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showProgramModal, setShowProgramModal] = useState(true);
+  const isHome = location.pathname === '/';
+
 
   useEffect(() => {
     fetch(
@@ -201,6 +204,20 @@ export default function App() {
 
         </Routes>
       </main>
+      {isHome && showProgramModal && (
+  <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+    <div className="relative bg-white dark:bg-gray-900 shadow-xl rounded-xl max-w-3xl w-full mx-4 p-4">
+      <button
+        onClick={() => setShowProgramModal(false)}
+        className="absolute top-2 right-3 text-2xl text-gray-500 hover:text-red-600"
+        aria-label="Bezárás"
+      >
+        ×
+      </button>
+      <ProgramModal />
+    </div>
+  </div>
+)}
 
       <nav className="fixed inset-x-0 bottom-0 bg-white/60 backdrop-blur-md border-t border-beige-200 lg:hidden">
         <div className="flex justify-around py-2">
