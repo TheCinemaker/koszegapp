@@ -28,9 +28,11 @@ import Leisure from './pages/Leisure';
 import LeisureDetail from './pages/LeisureDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
+
 import FloatingButtons from './components/FloatingButtons';
 import WeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 import ProgramModal from './components/ProgramModal';
+import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -41,10 +43,12 @@ export default function App() {
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const langDropdownRef = useRef(null);
   const { dark, toggleDark } = useContext(DarkModeContext);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showProgramModal, setShowProgramModal] = useState(true);
-  const isHome = location.pathname === '/';
 
+  // states for modal & drawer
+  const [showProgramModal, setShowProgramModal] = useState(true);
+  const [showOstromDrawer, setShowOstromDrawer] = useState(false);
+
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     fetch(
@@ -86,8 +90,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
-
-
       {/* Header */}
       <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
@@ -127,21 +129,6 @@ export default function App() {
                   <span className="text-xl mr-1 text-gray-500 dark:text-white">
                     {flags.find(f => f.code === i18n.language)?.emoji || '🌐'}
                   </span>
-                  <span className="uppercase text-xs font-bold hidden">
-                    {i18n.language}
-                  </span>
-                  <svg
-                    className="w-3 h-3 ml-1 text-gray-500 dark:text-white"
-                    fill="none"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M4 6l4 4 4-4"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
                 </button>
                 {showLangDropdown && (
                   <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow rounded z-40 min-w-[80px]">
@@ -180,6 +167,7 @@ export default function App() {
       </header>
 
       <div className="h-16" />
+
       <main className="flex-1 container mx-auto px-4 py-6">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -200,24 +188,36 @@ export default function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
-          <Route path="/program" element={<ProgramModal />} />
-
         </Routes>
       </main>
+
+      {/* ProgramModal (automatikus betöltéskor) */}
       {isHome && showProgramModal && (
-  <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-    <div className="relative bg-white dark:bg-gray-900 shadow-xl rounded-xl max-w-3xl w-full mx-4 p-4">
-      <button
-        onClick={() => setShowProgramModal(false)}
-        className="absolute top-2 right-3 text-2xl text-gray-500 hover:text-red-600"
-        aria-label="Bezárás"
-      >
-        ×
-      </button>
-      <ProgramModal />
-    </div>
-  </div>
-)}
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+          <div className="relative bg-white dark:bg-gray-900 shadow-xl rounded-xl max-w-3xl w-full mx-4 p-4">
+            <ProgramModal
+              onClose={() => setShowProgramModal(false)}
+              openDrawer={() => setShowOstromDrawer(true)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* OstromDrawerFullAnimated */}
+      {showOstromDrawer && (
+        <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} />
+      )}
+
+      {/* Manuális újranyitó gomb */}
+      {isHome && !showProgramModal && (
+        <button
+          onClick={() => setShowProgramModal(true)}
+          className="fixed bottom-6 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition"
+          aria-label="Ostromprogramok megnyitása"
+        >
+          📅
+        </button>
+      )}
 
       <nav className="fixed inset-x-0 bottom-0 bg-white/60 backdrop-blur-md border-t border-beige-200 lg:hidden">
         <div className="flex justify-around py-2">
@@ -237,7 +237,9 @@ export default function App() {
       </nav>
 
       <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
-        <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.1.5</p>
+        <p className="text-xs text-gray-600">
+          © 2025 AS Software & Network Solutions Version: 1.1.5
+        </p>
         <p className="text-xs text-gray-600">© Design: Hidalmasi Erik</p>
         <p className="text-xs text-gray-600">
           Email:{' '}
@@ -246,24 +248,11 @@ export default function App() {
           </a>
         </p>
         <p className="text-xs text-gray-600 mt-2">
-          <Link
-            to="/adatvedelem"
-            className="underline hover:text-indigo-600 transition"
-          >
+          <Link to="/adatvedelem" className="underline hover:text-indigo-600">
             Adatkezelési tájékoztató
           </Link>
         </p>
-        
       </footer>
-      {isHome && !showProgramModal && (
-        <button
-          onClick={() => setShowProgramModal(true)}
-          className="fixed bottom-50 right-0 bg-purple-600 text-white rounded-full shadow-lg p-3 text-l z-50 hover:bg-purple-700 transition"
-          aria-label="Ostromprogramok megnyitása"
-        >
-        📅 Ostromprogram
-  </button>
-)}
 
       <FloatingButtons />
       <WeeklyMenuDrawer />
