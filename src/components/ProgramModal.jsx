@@ -110,7 +110,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
 
           {/* Drawer infó szöveg */}
           <p className="text-sm text-center font-semibold text-amber-700 dark:text-amber-300 mb-4">
-            📜 A teljes program a bal oldali menüből (drawer) érhető el!
+            📜 A teljes program a jobb oldali behúzható menüből érhető el! >>> 
           </p>
 
           {/* Nincs esemény üzenet */}
