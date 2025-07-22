@@ -88,9 +88,10 @@ export default function ProgramModal() {
     );
   }, []);
 
-  return (
-    <>
-      <div className="bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-100 shadow-xl rounded-2xl p-4 mx-4 md:mx-auto my-6 max-w-3xl border border-amber-300 dark:border-amber-700 relative">
+return (
+  <>
+    <div className="fixed inset-y-[30px] inset-x-0 overflow-y-auto z-[999] px-4">
+      <div className="bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-100 shadow-xl rounded-2xl p-4 mx-auto max-w-3xl border border-amber-300 dark:border-amber-700 relative">
         <h2 className="text-xl font-extrabold mb-4">📅 Mai ostromprogramok</h2>
 
         {currentEvent && (
@@ -116,7 +117,7 @@ export default function ProgramModal() {
             <p className="text-lg font-bold">{nextEvent.nev}</p>
             <p className="text-sm">
               🕘 {format(nextEvent.start, 'HH:mm')} kezdés<br />
-              ⏱️ Visszaszámlálás: <Countdown target={nextEvent.start} />
+              ⏱️ Visszaszámlálás: <span className="text-lg font-mono"><Countdown target={nextEvent.start} /></span>
             </p>
           </div>
         )}
@@ -156,11 +157,13 @@ export default function ProgramModal() {
           </MapContainer>
         </div>
       </div>
+    </div>
 
-      <ProgramDetailsSheet
-        program={selectedProgram}
-        onClose={() => setSelectedProgram(null)}
-      />
-    </>
-  );
+    <ProgramDetailsSheet
+      program={selectedProgram}
+      onClose={() => setSelectedProgram(null)}
+    />
+  </>
+);
+
 }
