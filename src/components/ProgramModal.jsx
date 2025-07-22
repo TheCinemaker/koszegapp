@@ -6,7 +6,6 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
 
-// Külön komponens az esemény kártyáknak a jobb olvashatóságért
 function EventCard({ event, onSelect, isNext = false }) {
   const cardClasses = isNext 
     ? "p-3 rounded-xl bg-yellow-100 dark:bg-yellow-900/40 border-l-4 border-yellow-600 cursor-pointer hover:shadow-lg transition mb-2"
@@ -105,7 +104,6 @@ export default function ProgramModal({ onClose }) {
   const noEventsToday = currentEvents.length === 0 && nextEvents.length === 0;
   const mapCenterEvent = currentEvents[0] || nextEvents[0];
 
-  // Kék marker ikon a "következő" eseményekhez a térképen
   const blueIcon = new L.Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -122,10 +120,10 @@ export default function ProgramModal({ onClose }) {
             <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
           </div>
           
-          {/* VISSZASZÁMLÁLÓ SÁV (mindig látszik) */}
+          {/* VISSZASZÁMLÁLÓ SÁV */}
           {!timeLeft.isOver && (
             <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner">
-              <span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span>
+              <span className="font-mono text-sm">Kezdésig még: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s van hátra</span>
             </div>
           )}
 
@@ -161,7 +159,6 @@ export default function ProgramModal({ onClose }) {
         </div>
       </div>
 
-      {/* RÉSZLETEK PANEL MEGJELENÍTÉSE */}
       <ProgramDetailsSheet program={selectedProgram} onClose={() => setSelectedProgram(null)} />
     </>
   );
