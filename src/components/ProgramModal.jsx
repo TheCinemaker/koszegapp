@@ -167,7 +167,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
               </h3>
               <p className="text-base font-bold">{nextEvent.nev}</p>
               <p className="text-sm mt-1">
-                🕘 {format(nextEvent.start,'HH:mm')} kezdés<br/>
+                🕘 {format(nextEvent.start,'HH:mm')} kezdésig ennyi idő van hátra:<br/>
                 ⏱️ <Countdown target={nextEvent.start}/>
               </p>
               {userLocation && (
@@ -185,7 +185,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
 
           {/* Térkép */}
           {userLocation && currentEvent?.helyszin && (
-            <div className="h-[300px] rounded-xl overflow-hidden mt-6 border border-amber-300 dark:border-amber-700">
+            <div className="h-[250px] rounded-xl overflow-hidden mt-6 border border-amber-300 dark:border-amber-700">
               <MapContainer
                 center={[currentEvent.helyszin.lat, currentEvent.helyszin.lng]}
                 zoom={17}
