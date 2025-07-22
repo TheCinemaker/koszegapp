@@ -255,6 +255,16 @@ export default function App() {
         </p>
         
       </footer>
+      {isHome && !showProgramModal && (
+        <button
+          onClick={() => setShowProgramModal(true)}
+          className="fixed bottom-20 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition"
+          aria-label="Ostromprogramok megnyitása"
+        >
+        📅
+  </button>
+)}
+
       <FloatingButtons />
       <WeeklyMenuDrawer />
     </div>
