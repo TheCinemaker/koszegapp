@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-// Ezeket a library-ket telepítened kell és importálnod
-// pl. `npm install date-fns react-leaflet leaflet`
+
 import { parseISO, isSameDay, isBefore, isAfter, format } from 'date-fns';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import ProgramDetailsSheet from './ProgramDetailsSheet';
 
-// Ezeket a saját komponenseidet is importálnod kell
-// import ProgramDetailsSheet from './ProgramDetailsSheet';
-// import Countdown from './Countdown'; // Feltételezem, van egy ilyen komponensed
-// import CenterMap from './CenterMap'; // Feltételezem, van egy ilyen komponensed
 
-// A kód, amit küldtél, innen kezdődik, javítva és kiegészítve
 export default function ProgramModal({ onClose }) {
   // --- STATE-EK ---
-  // Ezeken nem változtattam, tökéletesen voltak definiálva.
+
   const [userLocation, setUserLocation] = useState(null);
   const [events, setEvents] = useState([]);
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -21,8 +16,7 @@ export default function ProgramModal({ onClose }) {
   const [selectedProgram, setSelectedProgram] = useState(null);
 
   // --- VISSZASZÁMLÁLÓ ---
-  // Ezt a logikát is meghagytam, mert jól működik.
-  // A `timeLeft` state-et a `countdownTimer` useEffect-be tettem, hogy egy helyen legyen a kezelése.
+
   const calculateTimeLeft = useCallback(() => {
     const now = new Date();
     const ostromStart = new Date('2025-08-01T08:00:00');
@@ -35,39 +29,30 @@ export default function ProgramModal({ onClose }) {
       seconds: Math.max(0, Math.floor((diff / 1000) % 60)),
       isOver: diff < 0
     };
-  }, []); // useCallback, mert technikailag nem függ semmitől, elég egyszer létrehozni.
+  }, []); 
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   // --- ESEMÉNYEK KIÉRTÉKELÉSE ---
-  // JAVÍTÁS #1: A kiértékelő logikát useCallback-be tettem.
-  // Ennek a dependency-je az 'events' state. Így mindig a legfrissebb eseménylistával dolgozik,
-  // és elkerüljük a "stale closure" hibát.
   const evaluateEvents = useCallback(() => {
     if (events.length === 0) return; // Ne fusson le, amíg nincs adat
 
     const now = new Date();
     const today = events.filter(e => isSameDay(e.start, now));
 
-    // JAVÍTÁS #2: A jelenlegi események szűrése pontosítva.
-    // Mivel a feldolgozáskor minden eseménynek adunk 'end' időpontot,
-    // a feltétel egyszerűsödik és pontosabb lesz.
     const curr = today.filter(e => 
       isBefore(e.start, now) && isAfter(e.end, now)
     );
     
     const nxt = today
       .filter(e => isAfter(e.start, now))
-      .sort((a, b) => a.start - b.start)[0] || null; // Biztonság kedvéért null fallback
+      .sort((a, b) => a.start - b.start)[0] || null; 
 
     setCurrentEvents(curr);
     setNextEvent(nxt);
-  }, [events]); // FÜGGŐSÉG: Csak akkor kell újraalkotni ezt a függvényt, ha az 'events' változik.
+  }, [events]); /
 
-  // --- useEffect HOOK-OK ---
-  // JAVÍTÁS #3: Szétválasztottam a felelősségeket külön useEffect-ekbe.
-
-  // 1. useEffect: Adatbetöltés és lokáció (csak egyszer fut le a komponens betöltődésekor)
+  
   useEffect(() => {
     // Események betöltése a JSON-ból
     fetch('/data/programok.json')
@@ -87,9 +72,9 @@ export default function ProgramModal({ onClose }) {
             return { ...p, start, end, kiemelt: !!p.kiemelt };
           } catch (error) {
             console.error('Hibás dátumformátum a JSON-ban:', p, error);
-            return null; // Hibás elemeket kihagyjuk
+            return null; 
           }
-        }).filter(Boolean); // A null értékek eltávolítása
+        }).filter(Boolean); 
         setEvents(parsed);
       })
       .catch(error => console.error("Hiba a programok betöltésekor:", error));
@@ -101,38 +86,31 @@ export default function ProgramModal({ onClose }) {
         err => console.warn('Helymeghatározás hiba:', err.message)
       );
     }
-  }, []); // Üres dependency tömb `[]` -> Csak egyszer fut le.
+  }, []);
 
-  // 2. useEffect: Időzítők kezelése (figyeli az evaluateEvents változását)
-  useEffect(() => {
-    // A visszaszámláló futtatása másodpercenként
+    useEffect(() => {
     const countdownTimer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    // Az események állapotának frissítése periodikusan
-    // JAVÍTÁS #4: Az interval sűrűségét 10 másodpercre állítottam, ez elég sűrű
-    // egy programfüzethez, és kevésbé terheli a böngészőt.
-    const eventCheckTimer = setInterval(evaluateEvents, 10000); // 10 másodpercenként
-    
-    // Azonnali futtatás a betöltődéskor, hogy ne kelljen várni az első intervallumig
-    evaluateEvents();
 
-    // Cleanup function: leállítja az időzítőket, amikor a komponens eltűnik
+    const eventCheckTimer = setInterval(evaluateEvents, 10000); 
+    
+        evaluateEvents();
     return () => {
       clearInterval(countdownTimer);
       clearInterval(eventCheckTimer);
     };
-  }, [evaluateEvents, calculateTimeLeft]); // FÜGGŐSÉG: Ha ezek a függvények változnak, az időzítők újraindulnak.
+  }, [evaluateEvents, calculateTimeLeft]);
 
   // --- RENDERELÉS ---
-  // A JSX kódod már eleve nagyon jó és átgondolt volt, itt csak apróságokat finomítottam.
+
   const noEventsToday = currentEvents.length === 0 && !nextEvent;
 
   return (
     <>
-      <div className="fixed inset-y-[30px] inset-x-0 overflow-y-auto z-[999] px-4 pb-4"> {/* Hozzáadtam egy padding-bottomot */}
-        <div className="max-w-3xl mx-auto"> {/* Középre igazítás és maximális szélesség */}
+      <div className="fixed inset-y-[30px] inset-x-0 overflow-y-auto z-[999] px-4 pb-4"> 
+        <div className="max-w-3xl mx-auto"> 
           {/* Fejléc */}
           <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
             <h2 className="text-xl font-bold">
@@ -140,7 +118,7 @@ export default function ProgramModal({ onClose }) {
             </h2>
             
             {!timeLeft.isOver && (
-              <div className="hidden sm:flex items-baseline bg-amber-800/80 px-3 py-1 rounded-lg"> {/* Kisebb képernyőn elrejti */}
+              <div className="hidden sm:flex items-baseline bg-amber-800/80 px-3 py-1 rounded-lg"> 
                 <span className="font-mono text-sm">
                   {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p
                 </span>
@@ -155,7 +133,7 @@ export default function ProgramModal({ onClose }) {
               className="text-2xl hover:text-amber-200 transition-colors"
               aria-label="Bezárás"
             >
-              × {/* HTML entitás a 'x' helyett */}
+              × 
             </button>
           </div>
 
@@ -219,8 +197,7 @@ export default function ProgramModal({ onClose }) {
                       <Popup><strong>{nextEvent.nev}</strong><br />Kezdés: {format(nextEvent.start, 'HH:mm')}</Popup>
                     </Marker>
                   )}
-                  {/* <CenterMap center={[...]} /> Feltételezem, ez egy létező komponens */}
-                </MapContainer>
+                 </MapContainer>
               </div>
             )}
           </div>
@@ -228,16 +205,14 @@ export default function ProgramModal({ onClose }) {
       </div>
 
       {/* Részletes nézet (ezt nem változtattam) */}
-      {/* <ProgramDetailsSheet
+      <ProgramDetailsSheet
         program={selectedProgram}
         onClose={() => setSelectedProgram(null)}
-      /> */}
+      /> 
     </>
   );
 }
 
-
-// JAVASLAT: Az eseménykártyát érdemes lehet külön komponensbe szervezni a jobb olvashatóságért.
 function EventCard({ event, userLocation, onSelect, isNext = false }) {
   const cardClasses = isNext 
     ? "p-4 rounded-xl bg-yellow-100 dark:bg-yellow-900/40 border-l-4 border-yellow-600 cursor-pointer hover:shadow-lg transition"
@@ -251,7 +226,6 @@ function EventCard({ event, userLocation, onSelect, isNext = false }) {
           <p className="text-sm mt-1 text-gray-700 dark:text-gray-300">
             📍 {event.helyszin.nev}<br />
             🕘 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}
-            {/* isNext && <Countdown target={event.start} /> */}
           </p>
         </div>
         {event.kiemelt && (
@@ -266,7 +240,7 @@ function EventCard({ event, userLocation, onSelect, isNext = false }) {
           target="_blank"
           rel="noopener noreferrer"
           className="block mt-2 text-sm font-semibold text-amber-700 underline hover:text-amber-900 dark:text-amber-300"
-          onClick={e => e.stopPropagation()} // Megakadályozza, hogy a kártya onClick-je is lefusson
+          onClick={e => e.stopPropagation()} 
         >
           🧭 Útvonalterv gyalog
         </a>
