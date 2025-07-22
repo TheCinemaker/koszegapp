@@ -69,15 +69,22 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite }) {
 }
 
 // EZ A RÉSZ HIÁNYZOTT: Visszaszámláló a következő eseményig
+// CSERÉLD LE A TELJES CountdownToNext FÜGGVÉNYT ERRE:
+
 function CountdownToNext({ targetDate }) {
     const calculateTimeLeft = useCallback(() => {
+        if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
+        
         const diff = new Date(targetDate).getTime() - new Date().getTime();
         if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / 1000 / 60) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        return { days, hours, minutes, seconds, isOver: false };
+        
+        return {
+            days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((diff / 1000 / 60) % 60),
+            seconds: Math.floor((diff / 1000) % 60),
+            isOver: false,
+        };
     }, [targetDate]);
 
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
@@ -87,11 +94,33 @@ function CountdownToNext({ targetDate }) {
         return () => clearInterval(timer);
     }, [calculateTimeLeft]);
 
-    if (timeLeft.isOver) return <span className="font-bold text-green-600">Most kezdődik!</span>;
-    if (timeLeft.days > 0) return (<div className="font-mono font-bold"><span className="text-3xl">{timeLeft.days}</span><span className="text-xl"> nap </span><span className="text-3xl">{String(timeLeft.hours).padStart(2, '0')}</span><span className="text-xl"> óra</span></div>);
-    return (<span className="text-3xl font-mono font-bold">{String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>);
-}
+    if (timeLeft.isOver) {
+        return <span className="font-bold text-green-600 text-2xl">Most kezdődik!</span>;
+    }
 
+    return (
+        <div className="flex justify-center items-baseline space-x-2 sm:space-x-4 font-mono">
+            {timeLeft.days > 0 && (
+                <div className="text-center">
+                    <span className="text-4xl font-bold">{timeLeft.days}</span>
+                    <span className="block text-xs uppercase tracking-wider">Nap</span>
+                </div>
+            )}
+            <div className="text-center">
+                <span className="text-4xl font-bold">{String(timeLeft.hours).padStart(2, '0')}</span>
+                <span className="block text-xs uppercase tracking-wider">Óra</span>
+            </div>
+            <div className="text-center">
+                <span className="text-4xl font-bold">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                <span className="block text-xs uppercase tracking-wider">Perc</span>
+            </div>
+            <div className="text-center">
+                <span className="text-4xl font-bold">{String(timeLeft.seconds).padStart(2, '0')}</span>
+                <span className="block text-xs uppercase tracking-wider">Mp</span>
+            </div>
+        </div>
+    );
+}
 // --- A FŐ KOMPONENS ---
 
 export default function ProgramModal({ onClose, openDrawer }) {
