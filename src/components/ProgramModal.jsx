@@ -7,7 +7,7 @@ import {
   isBefore,
   differenceInMinutes
 } from 'date-fns';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
@@ -39,6 +39,15 @@ function Countdown({ target }) {
       {String(seconds).padStart(2, '0')}
     </span>
   );
+}
+
+// Esemény pozícióját középre állítja
+function CenterMap({ lat, lng }) {
+  const map = useMap();
+  useEffect(() => {
+    map.setView([lat, lng], 18, { animate: true });
+  }, [lat, lng, map]);
+  return null;
 }
 
 export default function ProgramModal() {
@@ -86,7 +95,7 @@ export default function ProgramModal() {
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-900 shadow-xl rounded-xl p-4 max-w-4xl mx-auto my-6 z-50 relative">
+      <div className="bg-white dark:bg-gray-900 shadow-xl rounded-xl p-4 max-w-4xl sm:mx-auto mx-4 my-6 z-50 relative">
         <h2 className="text-xl font-bold mb-4">📅 Mai programok</h2>
 
         {currentEvent && (
@@ -123,20 +132,23 @@ export default function ProgramModal() {
             </p>
           </div>
         )}
+
         {userLocation && nextEvent?.helyszin && (
           <a
             href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${nextEvent.helyszin.lat},${nextEvent.helyszin.lng}&travelmode=walking`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-2 text-sm font-semibold text-blue-600 dark:text-blue-300 underline hover:text-blue-800"
+            className="inline-block mt-2 mb-4 text-sm font-semibold text-blue-600 dark:text-blue-300 underline hover:text-blue-800"
+            style={{ display: 'block', textAlign: 'left' }}
           >
             🧭 Vigyél oda
           </a>
         )}
+
         <div className="h-[400px] rounded-md overflow-hidden mt-6 border">
           <MapContainer
-            center={userLocation || [47.389, 16.540]}
-            zoom={17}
+            center={nextEvent?.helyszin || userLocation || [47.389, 16.540]}
+            zoom={18}
             scrollWheelZoom={false}
             style={{ height: '100%', width: '100%' }}
           >
@@ -147,9 +159,15 @@ export default function ProgramModal() {
               </Marker>
             )}
             {nextEvent?.helyszin && (
-              <Marker position={[nextEvent.helyszin.lat, nextEvent.helyszin.lng]}>
-                <Popup>{nextEvent.nev}</Popup>
-              </Marker>
+              <>
+                <Marker position={[nextEvent.helyszin.lat, nextEvent.helyszin.lng]}>
+                  <Popup>{nextEvent.nev}</Popup>
+                </Marker>
+                <CenterMap
+                  lat={nextEvent.helyszin.lat}
+                  lng={nextEvent.helyszin.lng}
+                />
+              </>
             )}
           </MapContainer>
         </div>
