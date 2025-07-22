@@ -1,0 +1,533 @@
+[
+  {
+    "datum": "2025-08-01",
+    "esemenyek": [
+      {
+        "id": 1,
+        "nev": "XVIII. Kőszegi Ostromnapokat megnyitó puskalövések",
+        "leiras": "A Kőszegi Ostromnapok hivatalos megnyitója puskalövésekkel.",
+        "idopont": "2025-08-01T15:32:00",
+        "veg_idopont": "2025-08-01T15:45:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5410,
+          "nev": "Hősök tornya"
+        }
+      },
+      {
+        "id": 2,
+        "nev": "Ostrom kupa 'megtámadása'",
+        "leiras": "Bemutató a Fő téren.",
+        "idopont": "2025-08-01T16:00:00",
+        "veg_idopont": "2025-08-01T16:30:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 3,
+        "nev": "Kőszegi Vonósok",
+        "leiras": "Hagyományos vonószenekar előadása.",
+        "idopont": "2025-08-01T16:30:00",
+        "veg_idopont": "2025-08-01T17:20:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér - Tábornokház loggia"
+        }
+      },
+      {
+        "id": 4,
+        "nev": "BE-JÓ Történelmi Táncegyüttes",
+        "leiras": "Történelmi táncelőadás.",
+        "idopont": "2025-08-01T17:20:00",
+        "veg_idopont": "2025-08-01T17:50:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 5,
+        "nev": "Kőszegi Tornyosok",
+        "leiras": "Bemutató a Hősök tornyánál.",
+        "idopont": "2025-08-01T17:50:00",
+        "veg_idopont": "2025-08-01T18:00:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5410,
+          "nev": "Hősök tornya"
+        }
+      },
+      {
+        "id": 6,
+        "nev": "Ostromállapot kihirdetése",
+        "leiras": "Ünnepélyes kihirdetés a Jurisics téren.",
+        "idopont": "2025-08-01T18:00:00",
+        "veg_idopont": "2025-08-01T18:30:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér - Tábornokház loggia"
+        }
+      },
+      {
+        "id": 7,
+        "nev": "Horvát Táncház - Zsidányi Csillagocskák",
+        "leiras": "Hagyományos horvát táncelőadás.",
+        "idopont": "2025-08-01T19:00:00",
+        "veg_idopont": "2025-08-01T20:00:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 8,
+        "nev": "Ég a város, ég a vár is - tüzes török támadás",
+        "leiras": "Látványos tűzijáték és bemutató.",
+        "idopont": "2025-08-01T20:00:00",
+        "veg_idopont": "2025-08-01T21:05:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Lépcsős várárok"
+        }
+      },
+      {
+        "id": 9,
+        "nev": "Fáklyás vonulás",
+        "leiras": "Fáklyás felvonulás a várároktól a Jurisics térre.",
+        "idopont": "2025-08-01T21:05:00",
+        "veg_idopont": "2025-08-01T21:30:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Várároktól a Jurisics tér"
+        }
+      },
+      {
+        "id": 10,
+        "nev": "BE-JÓ Történelmi Táncegyüttes tűztánca",
+        "leiras": "Látványos tűztánc előadás.",
+        "idopont": "2025-08-01T21:30:00",
+        "veg_idopont": "2025-08-01T22:00:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 11,
+        "nev": "Török lesen - Jelmezes túra",
+        "leiras": "Jelmezes történelmi séta.",
+        "idopont": "2025-08-01T21:30:00",
+        "veg_idopont": "2025-08-01T22:30:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Tourinform iroda (Fő tér 2)"
+        }
+      },
+      {
+        "id": 12,
+        "nev": "OCHO MACHO Koncert",
+        "leiras": "Élő zenei koncert a Fő téren.",
+        "idopont": "2025-08-01T21:30:00",
+        "veg_idopont": "2025-08-01T23:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      }
+    ]
+  },
+  {
+    "datum": "2025-08-02",
+    "esemenyek": [
+      {
+        "id": 13,
+        "nev": "Éjszakai patronok kilövése",
+        "leiras": "Hagyományőrző lövészet.",
+        "idopont": "2025-08-02T09:00:00",
+        "veg_idopont": "2025-08-02T09:15:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5410,
+          "nev": "Hősök tornya, Fő tér"
+        }
+      },
+      {
+        "id": 14,
+        "nev": "IV. Ostrom Várvédő futás",
+        "leiras": "Történelmi futóverseny több rajtcsoporttal.",
+        "idopont": "2025-08-02T09:00:00",
+        "veg_idopont": "2025-08-02T10:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 15,
+        "nev": "Kőszeg védművei - Történelmi séta",
+        "leiras": "Séta az ostrom helyszínein Révész József múzeumigazgató vezetésével.",
+        "idopont": "2025-08-02T09:15:00",
+        "veg_idopont": "2025-08-02T10:30:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5410,
+          "nev": "Hősök tornya"
+        }
+      },
+      {
+        "id": 16,
+        "nev": "Török sereg sétája a belvárosban",
+        "leiras": "Jelmezes felvonulás.",
+        "idopont": "2025-08-02T10:00:00",
+        "veg_idopont": "2025-08-02T11:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Belváros"
+        }
+      },
+      {
+        "id": 17,
+        "nev": "Vadászkutya bemutató",
+        "leiras": "Hagyományos vadászkutyák bemutatója.",
+        "idopont": "2025-08-02T11:00:00",
+        "veg_idopont": "2025-08-02T11:30:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Várárok"
+        }
+      },
+      {
+        "id": 18,
+        "nev": "Várvédő mustra",
+        "leiras": "Katonai bemutató.",
+        "idopont": "2025-08-02T11:00:00",
+        "veg_idopont": "2025-08-02T11:30:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 19,
+        "nev": "Szablyatánc - 'Czenki' Hársfa Néptáncegyüttes",
+        "leiras": "Hagyományos magyar táncelőadás.",
+        "idopont": "2025-08-02T11:30:00",
+        "veg_idopont": "2025-08-02T12:00:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 20,
+        "nev": "Vásárütés",
+        "leiras": "Hagyományos vásár a Fő téren.",
+        "idopont": "2025-08-02T13:00:00",
+        "veg_idopont": "2025-08-02T14:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 21,
+        "nev": "Tárlatvezetés a Jurisics várban",
+        "leiras": "Állandó kiállítás bemutatása.",
+        "idopont": "2025-08-02T13:00:00",
+        "veg_idopont": "2025-08-02T14:00:00",
+        "helyszin": {
+          "lat": 47.3895,
+          "lng": 16.5415,
+          "nev": "Jurisics vár"
+        }
+      },
+      {
+        "id": 22,
+        "nev": "Pattantyús Martalócok Tüzérségi bemutató",
+        "leiras": "Hagyományos tüzérségi bemutató.",
+        "idopont": "2025-08-02T13:30:00",
+        "veg_idopont": "2025-08-02T14:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 23,
+        "nev": "Dunántúli vár mindennapjai a 16. században",
+        "leiras": "Előadás Dr. Bilkei Irén régész, főlevéltárostól.",
+        "idopont": "2025-08-02T14:00:00",
+        "veg_idopont": "2025-08-02T15:00:00",
+        "helyszin": {
+          "lat": 47.3895,
+          "lng": 16.5415,
+          "nev": "Jurisics vár"
+        }
+      },
+      {
+        "id": 24,
+        "nev": "Batthyány Lovas Bandérium bemutató",
+        "leiras": "Lovas katonai bemutató.",
+        "idopont": "2025-08-02T14:30:00",
+        "veg_idopont": "2025-08-02T15:30:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Lépcsős várárok"
+        }
+      },
+      {
+        "id": 25,
+        "nev": "SilverBirds Bellydance Egyesület hastánc",
+        "leiras": "Hastánc bemutató.",
+        "idopont": "2025-08-02T15:30:00",
+        "veg_idopont": "2025-08-02T16:30:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 26,
+        "nev": "Ostrom felvonulás",
+        "leiras": "Nagy történelmi felvonulás.",
+        "idopont": "2025-08-02T16:30:00",
+        "veg_idopont": "2025-08-02T18:00:00",
+        "helyszin": {
+          "lat": 47.3895,
+          "lng": 16.5415,
+          "nev": "Jurisics vár - Diáksétány"
+        }
+      },
+      {
+        "id": 27,
+        "nev": "Kőszegi Tornyosok",
+        "leiras": "Bemutató a Hősök tornyánál.",
+        "idopont": "2025-08-02T18:00:00",
+        "veg_idopont": "2025-08-02T18:30:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5410,
+          "nev": "Hősök tornya"
+        }
+      },
+      {
+        "id": 28,
+        "nev": "Várostrom",
+        "leiras": "Látványos történelmi csatajelenet.",
+        "idopont": "2025-08-02T18:30:00",
+        "veg_idopont": "2025-08-02T20:00:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Várfal, Diáksétány"
+        }
+      },
+      {
+        "id": 29,
+        "nev": "Kőszeg Város Koncert Fúvószenekara",
+        "leiras": "Hagyományos fúvószenekari koncert.",
+        "idopont": "2025-08-02T20:00:00",
+        "veg_idopont": "2025-08-02T21:00:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 30,
+        "nev": "Régi Világzenék-Szelindek koncert",
+        "leiras": "Hagyományos zenei előadás.",
+        "idopont": "2025-08-02T21:00:00",
+        "veg_idopont": "2025-08-02T22:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 31,
+        "nev": "Retro Disco",
+        "leiras": "Vidéki diszkó a Fő téren.",
+        "idopont": "2025-08-02T22:00:00",
+        "veg_idopont": "2025-08-03T01:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      }
+    ]
+  },
+  {
+    "datum": "2025-08-03",
+    "esemenyek": [
+      {
+        "id": 32,
+        "nev": "Ostromtúra a Szulejmán-kilátóhoz",
+        "leiras": "8 km-es túra a kilátóhoz.",
+        "idopont": "2025-08-03T09:00:00",
+        "veg_idopont": "2025-08-03T12:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Tourinform iroda (Fő tér 2)"
+        }
+      },
+      {
+        "id": 33,
+        "nev": "Harangszóig csatazajos megemlékezés",
+        "leiras": "Megemlékezés a 11 órás harangszóról.",
+        "idopont": "2025-08-03T10:30:00",
+        "veg_idopont": "2025-08-03T11:00:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Diáksétány"
+        }
+      },
+      {
+        "id": 34,
+        "nev": "Tárlatvezetés a Tábornokházban és a Hősök tornyában",
+        "leiras": "Múzeumi kiállítások bemutatása.",
+        "idopont": "2025-08-03T11:30:00",
+        "veg_idopont": "2025-08-03T12:30:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5410,
+          "nev": "Hősök tornya"
+        }
+      },
+      {
+        "id": 35,
+        "nev": "Kőszegi Borkereskedelem - Jurisics Bandérium bemutató",
+        "leiras": "Hagyományos borvásár és katonai bemutató.",
+        "idopont": "2025-08-03T13:00:00",
+        "veg_idopont": "2025-08-03T14:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 36,
+        "nev": "Gyulaffy Bandérium viselet és fegyverzet bemutató",
+        "leiras": "Történelmi egyenruha- és fegyverbemutató.",
+        "idopont": "2025-08-03T14:00:00",
+        "veg_idopont": "2025-08-03T15:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 37,
+        "nev": "SilverBirds Bellydance Egyesület hastánc bemutató",
+        "leiras": "Hastánc előadás.",
+        "idopont": "2025-08-03T15:00:00",
+        "veg_idopont": "2025-08-03T16:00:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 38,
+        "nev": "Barátkozás Marton-Szállás lovaival",
+        "leiras": "Lovakkal való ismerkedés lehetősége.",
+        "idopont": "2025-08-03T15:00:00",
+        "veg_idopont": "2025-08-03T16:00:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Várárok"
+        }
+      },
+      {
+        "id": 39,
+        "nev": "Hagyományőrző csapatok koszorúzása",
+        "leiras": "Ünnepélyes megemlékezés.",
+        "idopont": "2025-08-03T15:32:00",
+        "veg_idopont": "2025-08-03T16:00:00",
+        "helyszin": {
+          "lat": 47.3894,
+          "lng": 16.5412,
+          "nev": "Jurisics tér"
+        }
+      },
+      {
+        "id": 40,
+        "nev": "Gyermek-felnőtt ostrom",
+        "leiras": "Ifjú vitézek és hagyományőrző katonák közös ostroma.",
+        "idopont": "2025-08-03T16:00:00",
+        "veg_idopont": "2025-08-03T17:30:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Lépcsős várárok"
+        }
+      },
+      {
+        "id": 41,
+        "nev": "Boglya Zenekar és Hajnalcsillag Néptáncegyüttes",
+        "leiras": "Koncert és táncház.",
+        "idopont": "2025-08-03T16:00:00",
+        "veg_idopont": "2025-08-03T17:30:00",
+        "helyszin": {
+          "lat": 47.3898,
+          "lng": 16.5405,
+          "nev": "Fő tér"
+        }
+      },
+      {
+        "id": 42,
+        "nev": "A magyarok nyilaitól... - Lovas íjász bemutató",
+        "leiras": "Bemutató a magyar könnyűlovas harcmodorról.",
+        "idopont": "2025-08-03T17:30:00",
+        "veg_idopont": "2025-08-03T18:30:00",
+        "helyszin": {
+          "lat": 47.3900,
+          "lng": 16.5420,
+          "nev": "Várárok"
+        }
+      },
+      {
+        "id": 43,
+        "nev": "Ataru Taiko ütőegyüttes koncert",
+        "leiras": "Hagyományos japán dobkoncert.",
+        "idopont": "2025-08-03T19:00:00",
+        "veg_idopont": "2025-08-03T20:00:00",
+        "helyszin": {
+          "lat": 47.3895,
+          "lng": 16.5415,
+          "nev": "Jurisics vár"
+        }
+      }
+    ]
+  }
+]
