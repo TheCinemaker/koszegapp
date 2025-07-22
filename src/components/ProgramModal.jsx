@@ -136,7 +136,7 @@ export default function ProgramModal() {
         <div className="h-[400px] rounded-md overflow-hidden mt-6 border">
           <MapContainer
             center={userLocation || [47.389, 16.540]}
-            zoom={15}
+            zoom={17}
             scrollWheelZoom={false}
             style={{ height: '100%', width: '100%' }}
           >
