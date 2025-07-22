@@ -1,7 +1,7 @@
-/* --- FÁJL: ProgramModal.jsx (Végleges, TELJES, iOS-biztos verzió) --- */
+/* --- FÁJL: ProgramModal.jsx (Végleges, TELJES, iOS-biztos, javított verzió) --- */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { parseISO, isSameDay, isBefore, isAfter, format, formatISO, isValid } from 'date-fns';
+import { parseISO, isSameDay, isBefore, isAfter, format, formatISO, isValid, startOfDay } from 'date-fns';
 import { hu } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
@@ -9,7 +9,6 @@ import ProgramDetailsSheet from './ProgramDetailsSheet';
 
 // --- BIZTONSÁGI ÉS HELPER FÜGGVÉNYEK ---
 
-// GOLYÓÁLLÓ DÁTUMFELDOLGOZÓ: Ez véd a hibás JSON dátumformátumok okozta összeomlástól.
 function safeParseISO(dateString) {
     if (!dateString) return null;
     try {
@@ -21,7 +20,6 @@ function safeParseISO(dateString) {
     }
 }
 
-// Kedvencek kezelése localStorage-ben (hibaellenőrzéssel)
 function useFavorites() {
     const [favorites, setFavorites] = useState(() => {
         try {
@@ -49,7 +47,6 @@ function useFavorites() {
     return { favorites, toggleFavorite };
 }
 
-// Az esemény kártya komponens
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite }) {
     const cardClasses = "p-3 rounded-xl border-l-4 cursor-pointer hover:shadow-lg transition mb-2 " + 
         (isFavorite ? "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500" : "bg-amber-200 dark:bg-amber-800/50 border-amber-500");
@@ -71,10 +68,36 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite }) {
     );
 }
 
+function CountdownToNext({ targetDate }) {
+    const calculateTimeLeft = useCallback(() => {
+        const diff = new Date(targetDate).getTime() - new Date().getTime();
+        if (diff <= 0) return { hours: 0, minutes: 0, seconds: 0, isOver: true };
+        return {
+            hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((diff / 1000 / 60) % 60),
+            seconds: Math.floor((diff / 1000) % 60),
+            isOver: false,
+        };
+    }, [targetDate]);
+
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+
+    useEffect(() => {
+        const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
+        return () => clearInterval(timer);
+    }, [calculateTimeLeft]);
+
+    if (timeLeft.isOver) return <span className="font-bold text-green-600">Most kezdődik!</span>;
+    return (
+        <span className="font-mono font-bold">
+            {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+        </span>
+    );
+}
+
 // --- A FŐ KOMPONENS ---
 
 export default function ProgramModal({ onClose, openDrawer }) {
-    // --- STATE-EK ---
     const [view, setView] = useState('today');
     const { favorites, toggleFavorite } = useFavorites();
     const [notificationPermission, setNotificationPermission] = useState(
@@ -88,7 +111,6 @@ export default function ProgramModal({ onClose, openDrawer }) {
     const [selectedProgram, setSelectedProgram] = useState(null);
     const [timeLeft, setTimeLeft] = useState(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true }));
 
-    // --- LOGIKA ---
     const calculateTimeLeft = useCallback(() => {
         const now = new Date();
         const ostromStart = new Date('2025-08-01T08:00:00');
@@ -106,18 +128,13 @@ export default function ProgramModal({ onClose, openDrawer }) {
         if (events.length === 0) return;
         const now = new Date();
         const today = events.filter(e => isSameDay(e.start, now));
-
         const curr = today.filter(e => isBefore(e.start, now) && isAfter(e.end, now));
         const upcoming = today.filter(e => isAfter(e.start, now)).sort((a, b) => a.start - b.start);
-        const nextGroup = upcoming.length > 0
-            ? upcoming.filter(e => e.start.getTime() === upcoming[0].start.getTime())
-            : [];
-        
+        const nextGroup = upcoming.length > 0 ? upcoming.filter(e => e.start.getTime() === upcoming[0].start.getTime()) : [];
         setCurrentEvents(curr);
         setNextEvents(nextGroup);
     }, [events]);
 
-    // 1. useEffect: Minden egyszeri, betöltődési feladat
     useEffect(() => {
         fetch('/data/programok.json')
             .then(res => res.json())
@@ -132,23 +149,18 @@ export default function ProgramModal({ onClose, openDrawer }) {
             }).catch(error => console.error("Hiba a programok.json betöltésekor:", error));
 
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                err => console.warn('Helymeghatározás hiba:', err.message)
-            );
+            navigator.geolocation.getCurrentPosition(pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }), err => console.warn('Helymeghatározás hiba:', err.message));
         }
         
         fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
-            .then(res => res.json()).then(data => { if(data.cod === 200) setWeatherData({ temp: Math.round(data.main.temp), description: data.weather[0].description, icon: data.weather[0].icon, }); })
+            .then(res => res.json()).then(data => { if(data.cod === 200) setWeatherData({ temp: Math.round(data.main.temp), description: data.weather[0].description, icon: data.weather[0].icon }); })
             .catch(err => console.error("Időjárás API hiba:", err));
         
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .catch(error => console.error('Service Worker regisztráció hiba:', error));
+            navigator.serviceWorker.register('/service-worker.js').catch(error => console.error('Service Worker regisztráció hiba:', error));
         }
     }, []);
 
-    // 2. useEffect: Az időzítők kezelése
     useEffect(() => {
         const countdownTimer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
         const eventCheckTimer = setInterval(evaluateEvents, 10000);
@@ -156,14 +168,10 @@ export default function ProgramModal({ onClose, openDrawer }) {
         return () => { clearInterval(countdownTimer); clearInterval(eventCheckTimer); };
     }, [evaluateEvents, calculateTimeLeft]);
 
-    // 3. useEffect: Kommunikáció a Service Workerrel
     useEffect(() => {
         if (navigator.serviceWorker && navigator.serviceWorker.controller) {
             const favoriteEventDetails = events.filter(event => favorites.includes(event.id));
-            navigator.serviceWorker.controller.postMessage({
-                type: 'UPDATE_FAVORITES',
-                favorites: favoriteEventDetails
-            });
+            navigator.serviceWorker.controller.postMessage({ type: 'UPDATE_FAVORITES', favorites: favoriteEventDetails });
         }
     }, [favorites, events]);
 
@@ -175,12 +183,11 @@ export default function ProgramModal({ onClose, openDrawer }) {
 
     const favoriteEvents = useMemo(() => events.filter(e => favorites.includes(e.id)).sort((a,b) => a.start - b.start), [events, favorites]);
     
-    // JAVÍTÁS: A "Teljes Program" nézet csoportosítója is a biztonságos dátumkezelést használja.
     const fullProgramGrouped = useMemo(() => {
         return events.reduce((acc, event) => {
-            const day = formatISO(event.start, { representation: 'date' });
-            if (!acc[day]) acc[day] = [];
-            acc[day].push(event);
+            const dayKey = startOfDay(event.start).getTime();
+            if (!acc[dayKey]) acc[dayKey] = { date: event.start, events: [] };
+            acc[dayKey].events.push(event);
             return acc;
         }, {});
     }, [events]);
@@ -191,7 +198,6 @@ export default function ProgramModal({ onClose, openDrawer }) {
         iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
     });
 
-    // --- RENDERELÉS ---
     return (
         <>
             <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
@@ -226,18 +232,38 @@ export default function ProgramModal({ onClose, openDrawer }) {
                         {view === 'today' && (
                             <>
                                 {currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">🎉 Nincs több esemény mára!</p>}
-                                {currentEvents.length > 0 && <div className="mb-6 animate-fadein"><h3 className="section-title border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}</div>}
-                                {nextEvents.length > 0 && <div className="mb-4 animate-fadein"><h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200">⏭️ Következő ({format(nextEvents[0].start, 'HH:mm')}-kor)</h3>{nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}</div>}
+                                <div className="mb-6">
+                                    {currentEvents.length > 0 ? (
+                                        <div className="animate-fadein">
+                                            <h3 className="section-title border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>
+                                            {currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}
+                                        </div>
+                                    ) : nextEvents.length > 0 && (
+                                        <div className="text-center bg-amber-100 dark:bg-amber-900/40 p-4 rounded-xl animate-fadein">
+                                            <p className="text-lg font-semibold text-amber-800 dark:text-amber-200">Jelenleg nincs program.</p>
+                                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">A következő ennyi idő múlva kezdődik:</p>
+                                            <div className="text-3xl mt-2 text-amber-700 dark:text-amber-300">
+                                                <CountdownToNext targetDate={nextEvents[0].start} />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                {nextEvents.length > 0 && (
+                                    <div className="mb-4 animate-fadein">
+                                        <h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200">⏭️ Következő ({format(nextEvents[0].start, 'HH:mm')}-kor)</h3>
+                                        {nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}
+                                    </div>
+                                )}
                                 {userLocation && (currentEvents.length > 0 || nextEvents.length > 0) && <div className="h-[250px] rounded-xl overflow-hidden mt-6 border border-amber-300 dark:border-amber-700"><MapContainer center={[ (currentEvents[0] || nextEvents[0]).helyszin.lat, (currentEvents[0] || nextEvents[0]).helyszin.lng ]} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}><TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /><Marker position={[userLocation.lat, userLocation.lng]}><Popup>📍 Itt vagy</Popup></Marker>{currentEvents.map(e => <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}><Popup><strong>{e.nev}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup></Marker>)}{nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}><Popup><strong>{e.nev}</strong><br/>Kezdés: {format(e.start, 'HH:mm')}</Popup></Marker>)}</MapContainer></div>}
                             </>
                         )}
                         
                         {view === 'full' && (
                             <div className="space-y-6 animate-fadein">
-                                {Object.entries(fullProgramGrouped).map(([day, dayEvents]) => (
-                                    <div key={day}>
-                                        <h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(safeParseISO(day), 'MMMM d. (eeee)', { locale: hu })}</h3>
-                                        {dayEvents.sort((a,b) => a.start - b.start).map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} />)}
+                                {Object.values(fullProgramGrouped).sort((a, b) => a.date - b.date).map(({ date, events: dayEvents }) => (
+                                    <div key={date.getTime()}>
+                                        <h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(date, 'MMMM d. (eeee)', { locale: hu })}</h3>
+                                        {dayEvents.sort((a,b) => a.start - b.start).map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(event.id)} onToggleFavorite={toggleFavorite} />)}
                                     </div>
                                 ))}
                             </div>
