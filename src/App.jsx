@@ -193,12 +193,24 @@ export default function App() {
 
       {/* ProgramModal (automatikus betöltéskor) */}
       {isHome && showProgramModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-          <div className="relative bg-white dark:bg-gray-900 shadow-xl rounded-xl max-w-3xl w-full mx-4 p-4">
-            <ProgramModal
-              onClose={() => setShowProgramModal(false)}
-              openDrawer={() => setShowOstromDrawer(true)}
-            />
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 opacity-100"></div>
+
+          <div
+            className="relative bg-white dark:bg-gray-900 shadow-xl rounded-xl max-w-3xl w-full mx-4 p-4 z-50
+                 transform transition-all duration-300 scale-100 opacity-100"
+          >
+            <button
+              onClick={() => setShowProgramModal(false)}
+              className="absolute top-2 right-3 text-2xl text-gray-500 hover:text-red-600"
+              aria-label="Bezárás"
+          >
+            ×
+          </button>
+          <ProgramModal
+            onClose={() => setShowProgramModal(false)}
+            openDrawer={() => console.log("drawer nyitás")}
+          />
           </div>
         </div>
       )}
