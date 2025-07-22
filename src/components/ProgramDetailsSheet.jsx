@@ -1,27 +1,44 @@
 import React from 'react';
+import { format } from 'date-fns';
 
 export default function ProgramDetailsSheet({ program, onClose }) {
   if (!program) return null;
 
-  const kezd = new Date(program.idopont).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' });
-  const vege = new Date(program.veg_idopont).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' });
-
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t z-50 p-4 rounded-t-xl max-h-[60vh] overflow-y-auto">
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-bold">{program.nev}</h3>
-        <button onClick={onClose} className="text-gray-600 text-xl">×</button>
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-end sm:items-center justify-center">
+      <div className="bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-xl p-4 sm:p-6 w-full sm:max-w-xl mx-2 sm:mx-4 relative shadow-lg">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-3 text-gray-600 dark:text-gray-300 text-2xl hover:text-red-600"
+          aria-label="Bezárás"
+        >
+          ×
+        </button>
+
+        <h2 className="text-xl font-bold mb-1">{program.nev}</h2>
+        <p className="text-sm text-gray-500 mb-2">
+          🕘 {format(new Date(program.idopont), 'HH:mm')} –{' '}
+          {program.veg_idopont ? format(new Date(program.veg_idopont), 'HH:mm') : 'ismeretlen'} <br />
+          📍 {program.helyszin?.nev || 'Helyszín ismeretlen'}
+        </p>
+
+        {program.leiras && (
+          <p className="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-line mb-4">
+            {program.leiras}
+          </p>
+        )}
+
+        {program.helyszin?.lat && program.helyszin?.lng && (
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${program.helyszin.lat},${program.helyszin.lng}&travelmode=walking`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-sm font-semibold text-blue-600 dark:text-blue-300 underline hover:text-blue-800"
+          >
+            🧭 Vigyél oda
+          </a>
+        )}
       </div>
-      <p className="text-sm text-gray-500 mb-1">
-        ⏰ {kezd} – {vege}
-      </p>
-      <p className="text-sm text-gray-500 mb-2">
-        📍 {program.helyszin?.nev}
-      </p>
-      <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-        {program.leiras}
-      </p>
-      {/* Később: útvonal gomb */}
     </div>
   );
 }
