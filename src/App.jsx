@@ -198,9 +198,6 @@ export default function App() {
         openDrawer={() => setShowOstromDrawer(true)}
       />
   )}
-          </div>
-        </div>
-      )}
 
       {/* OstromDrawerFullAnimated */}
       {showOstromDrawer && (
