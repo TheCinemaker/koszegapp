@@ -209,7 +209,7 @@ export default function App() {
           </button>
           <ProgramModal
             onClose={() => setShowProgramModal(false)}
-            openDrawer={() => console.log("drawer nyitás")}
+            openDrawer={() => setShowOstromDrawer(true)} 
           />
           </div>
         </div>
