@@ -1,8 +1,8 @@
 /* --- FÁJL: public/site.webmanifest --- */
 
 {
-  "short_name": "Ostromnapok",
-  "name": "Kőszegi Ostromnapok 2025",
+  "short_name": "KőszegAPP",
+  "name": "KőszegApp 2025",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
