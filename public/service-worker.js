@@ -2,7 +2,7 @@
 
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
-const NOTIFICATION_LEAD_TIME_MINUTES = 15;
+const NOTIFICATION_LEAD_TIME_MINUTES = 1;
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'UPDATE_FAVORITES') {
