@@ -50,6 +50,8 @@ function useFavorites() {
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) { // ÚJ PROP: userLocation
     const cardClasses = "p-3 rounded-xl border-l-4 cursor-pointer hover:shadow-lg transition mb-2 " + 
         (isFavorite ? "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500" : "bg-amber-200 dark:bg-amber-800/50 border-amber-500");
+
+    const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
     
     return (
         <div className={cardClasses} onClick={() => onSelect(event)}>
