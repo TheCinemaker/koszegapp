@@ -1,7 +1,7 @@
 // --- BEÁLLÍTÁSOK ---
 const NOTIFICATION_LEAD_TIME_MINUTES = 15; // Személyes értesítések időablaka
 const EMERGENCY_PUSH_URL = '/emergency-push.json'; // A vész-push JSON fájl
-const CHECK_INTERVAL_MS = 60 * 1000; // Ellenőrzés gyakorisága: 5 perc
+const CHECK_INTERVAL_MS = 5 * 60 * 1000; // Ellenőrzés gyakorisága: 5 perc
 
 // --- BELSŐ VÁLTOZÓK ---
 let favoriteEvents = [];
