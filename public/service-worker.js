@@ -3,7 +3,7 @@
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
 // TESZTHEZ ÁLLÍTSUK NAGYOBBRA AZ IDŐABLAKOT, PL. 60 PERCRE, HOGY BIZTOSAN BELEESSEN
-const NOTIFICATION_LEAD_TIME_MINUTES = 60; 
+const NOTIFICATION_LEAD_TIME_MINUTES = 1; 
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'UPDATE_FAVORITES') {
