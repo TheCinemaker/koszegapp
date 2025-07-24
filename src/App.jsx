@@ -30,7 +30,7 @@ import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 
 import FloatingButtons from './components/FloatingButtons';
-import WeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
+// import WeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 import ProgramModal from './components/ProgramModal';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
 
@@ -215,6 +215,7 @@ export default function App() {
         </button>
       )}
 
+      {/*
       <nav className="fixed inset-x-0 bottom-0 bg-white/60 backdrop-blur-md border-t border-beige-200 lg:hidden">
         <div className="flex justify-around py-2">
           {menu.map(item => (
@@ -231,6 +232,7 @@ export default function App() {
           ))}
         </div>
       </nav>
+      */}
 
       <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
         <p className="text-xs text-gray-600">
@@ -251,7 +253,7 @@ export default function App() {
       </footer>
 
       <FloatingButtons />
-      <WeeklyMenuDrawer />
+      {/* <WeeklyMenuDrawer /> */}
     </div>
   );
 }
