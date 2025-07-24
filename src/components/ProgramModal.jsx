@@ -47,10 +47,9 @@ function useFavorites() {
     return { favorites, toggleFavorite };
 }
 
-function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) { // ÚJ PROP: userLocation
+function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) {
     const cardClasses = "p-3 rounded-xl border-l-4 cursor-pointer hover:shadow-lg transition mb-2 " + 
         (isFavorite ? "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500" : "bg-amber-200 dark:bg-amber-800/50 border-amber-500");
-    
     return (
         <div className={cardClasses} onClick={() => onSelect(event)}>
             <div className="flex items-start justify-between">
@@ -65,15 +64,13 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
                     {isFavorite ? <span className="text-yellow-500 transition-transform duration-200 transform hover:scale-125">★</span> : <span className="text-gray-400 transition-transform duration-200 transform hover:scale-125">☆</span>}
                 </button>
             </div>
-
-            {/* JAVÍTÁS: Az útvonalterv link hozzáadása, ha van GPS pozíció */}
             {userLocation && event.helyszin?.lat && (
                 <a
                     href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${event.helyszin.lat},${event.helyszin.lng}&travelmode=walking`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block mt-2 text-sm font-semibold text-amber-700 underline hover:text-amber-900 dark:text-amber-300"
-                    onClick={e => e.stopPropagation()} // Megakadályozza, hogy a kártya onClick-je is lefusson
+                    onClick={e => e.stopPropagation()}
                 >
                     🧭 Útvonalterv
                 </a>
@@ -84,53 +81,17 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
 
 function InfoModal({ onClose }) {
     return (
-        <div 
-            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
-            onClick={onClose}
-        >
-            <div 
-                className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in"
-                onClick={(e) => e.stopPropagation()}
-            >
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4" onClick={onClose}>
+            <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} className="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 transition">×</button>
-                
-                <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-200 mb-4">ℹ️ Programfüzet infó?</h2>
-                
+                <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-200 mb-4">ℹ️ Hogyan használd?</h2>
                 <ul className="space-y-4 text-gray-700 dark:text-gray-300">
-                    <li className="flex items-start gap-3">
-                        <span className="text-xl pt-1">🔴</span>
-                        <div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program, akár napokkal később is.</div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <span className="text-xl pt-1">🗓️</span>
-                        <div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <span className="text-xl pt-1">★</span>
-                        <div>
-                            <strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!
-                            
-                            {/* JAVÍTÁS ITT: Az iOS specifikus tájékoztató */}
-                            <p className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-800 dark:text-blue-200">
-                                <strong>iPhone tipp:</strong> Az értesítések akkor a legmegbízhatóbbak, ha a Főképernyőre tett ikonról indítod az appot. Lezárt képernyőnél az üzenet a következő feloldáskor érkezik meg. Ezért többször nyisd meg az APP-ot, hogy megkaphasd az esetleges vészinformációkat! 
-                            </p>
-
-                        </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <span className="text-xl pt-1">📅</span>
-                        <div><strong>Ha bezártad:</strong> Ne aggódj! A programfüzetet bármikor újra megnyithatod a főoldalon lévő naptár ikonnal. (Jobb alsó sarokban találod)</div>
-                    </li>
+                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🔴</span><div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program, akár napokkal később is.</div></li>
+                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🗓️</span><div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div></li>
+                    <li className="flex items-start gap-3"><span className="text-xl pt-1">★</span><div><p><strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!</p><p className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-800 dark:text-blue-200"><strong>iPhone tipp:</strong> Az értesítések akkor a legmegbízhatóbbak, ha a Főképernyőre tett ikonról indítod az appot. Lezárt képernyőnél az üzenet a következő feloldáskor érkezik meg.</p></div></li>
+                    <li className="flex items-start gap-3"><span className="text-xl pt-1">📅</span><div><strong>Ha bezártad:</strong> Ne aggódj! A programfüzetet bármikor újra megnyithatod a főoldalon lebegő naptár ikonnal.</div></li>
                 </ul>
-
-                <div className="mt-6 text-center">
-                    <button 
-                        onClick={onClose} 
-                        className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition"
-                    >
-                        Értettem!
-                    </button>
-                </div>
+                <div className="mt-6 text-center"><button onClick={onClose} className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition">Értettem!</button></div>
             </div>
         </div>
     );
@@ -270,7 +231,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
     }, []);
 
     useEffect(() => { const countdownTimer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000); const eventCheckTimer = setInterval(evaluateEvents, 10000); evaluateEvents(); return () => { clearInterval(countdownTimer); clearInterval(eventCheckTimer); }; }, [evaluateEvents, calculateTimeLeft]);
-    useEffect(() => { if (navigator.serviceWorker && navigator.serviceWorker.controller) { const favoriteEventDetails = events.filter(event => favorites.includes(event.id)); console.log('[APP -> SW] Kiáltok a Service Workernek! Ezt küldöm:', favoriteEventDetails); navigator.serviceWorker.controller.postMessage({ type: 'UPDATE_FAVORITES', favorites: favoriteEventDetails }); } }, [favorites, events]);
+    useEffect(() => { if (navigator.serviceWorker && navigator.serviceWorker.controller) { const favoriteEventDetails = events.filter(event => favorites.includes(event.id)); navigator.serviceWorker.controller.postMessage({ type: 'UPDATE_FAVORITES', favorites: favoriteEventDetails }); } }, [favorites, events]);
     const handleNotificationPermission = () => { if (window.Notification) Notification.requestPermission().then(setNotificationPermission); };
     const favoriteEvents = useMemo(() => events.filter(e => favorites.includes(e.id)).sort((a,b) => a.start - b.start), [events, favorites]);
     const fullProgramGrouped = useMemo(() => { return events.reduce((acc, event) => { const dayKey = startOfDay(event.start).getTime(); if (!acc[dayKey]) acc[dayKey] = { date: event.start, events: [] }; acc[dayKey].events.push(event); return acc; }, {}); }, [events]);
@@ -278,105 +239,80 @@ export default function ProgramModal({ onClose, openDrawer }) {
     const getNextEventDayInfo = () => { if (!nextEvents || nextEvents.length === 0) return ""; const nextDate = nextEvents[0].start; const now = new Date(); if (isSameDay(nextDate, now)) return `(${format(nextDate, 'HH:mm')}-kor)`; const dayDiff = differenceInDays(startOfDay(nextDate), startOfDay(now)); if (dayDiff === 1) return `(Holnap, ${format(nextDate, 'HH:mm')}-kor)`; return `(${dayDiff} nap múlva, ${format(nextDate, 'eeee', {locale: hu})})`; };
 
     const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
+
     return (
-    <>
-        <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
-            <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
-                {/* FEJLÉC */}
-                <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                        <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
-                        <button onClick={() => setShowInfoModal(true)} className="bg-black/20 w-7 h-7 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black/40 transition" aria-label="Súgó">
-                            i
-                        </button>
-                        {weatherData && (
-                            <div className="flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg">
-                                <img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" />
-                                <span className="text-sm font-bold">{weatherData.temp}°C</span>
-                            </div>
-                        )}
-                    </div>
-                    <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
-                </div>
-                
-                {/* VISSZASZÁMLÁLÓ A FESZTIVÁL KEZDETÉIG */}
-                {!timeLeft.isOver && (
-                    <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner">
-                        <span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span>
-                    </div>
-                )}
-                
-                {/* GÖRGETHETŐ TARTALOM */}
-                <div className="bg-amber-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
-                    {/* NÉZETVÁLASZTÓ FÜLEK */}
-                    <div className="mb-4 flex border-b-2 border-amber-200 dark:border-zinc-700">
-                        <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Élő</button>
-                        <button onClick={() => setView('full')} className={`px-4 py-2 text-sm font-semibold ${view === 'full' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Teljes Program</button>
-                        <button onClick={() => setView('favorites')} className={`px-4 py-2 text-sm font-semibold flex items-center gap-1 ${view === 'favorites' ? 'border-b-2 border-yellow-500 text-yellow-600 dark:text-yellow-400' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Kedvenceim <span className="text-yellow-500">★</span></button>
+        <>
+            <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
+                <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
+                    <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                            <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
+                            <button onClick={() => setShowInfoModal(true)} className="bg-black/20 w-7 h-7 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black/40 transition" aria-label="Súgó">i</button>
+                            {weatherData && <div className="flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg"><img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" /><span className="text-sm font-bold">{weatherData.temp}°C</span></div>}
+                        </div>
+                        <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
                     </div>
                     
-                    {/* TÖLTÉSI / HIBA / TARTALOM BLOKK */}
-                    {isLoading ? (
-                        <div className="text-center py-10"><p className="text-lg font-semibold text-amber-700 dark:text-amber-300">Programok betöltése...</p></div>
-                    ) : error ? (
-                        <div className="text-center py-10 bg-red-100 dark:bg-red-900/50 p-4 rounded-lg"><p className="text-lg font-bold text-red-700 dark:text-red-300">Hiba történt!</p><p className="text-sm text-red-600 dark:text-red-200 mt-1">{error}</p></div>
-                    ) : (
-                        <>
-                            {notificationPermission === 'default' && (<div className="bg-blue-100 dark:bg-blue-900/50 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 p-3 rounded-lg mb-4 text-center animate-fadein"><p className="font-semibold mb-2">Szeretnél értesítést kapni, mielőtt a kedvenc programjaid kezdődnek?</p><button onClick={handleNotificationPermission} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded-full">Értesítések engedélyezése</button></div>)}
-                            {notificationPermission === 'denied' && (<p className="text-xs text-center text-gray-500 mb-4">Az értesítések le vannak tiltva a böngésződben. A beállításokban tudod engedélyezni.</p>)}
+                    {!timeLeft.isOver && <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner"><span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span></div>}
+                    
+                    <div className="bg-amber-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
+                        <div className="mb-4 flex border-b-2 border-amber-200 dark:border-zinc-700">
+                            <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Élő</button>
+                            <button onClick={() => setView('full')} className={`px-4 py-2 text-sm font-semibold ${view === 'full' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Teljes Program</button>
+                            <button onClick={() => setView('favorites')} className={`px-4 py-2 text-sm font-semibold flex items-center gap-1 ${view === 'favorites' ? 'border-b-2 border-yellow-500 text-yellow-600 dark:text-yellow-400' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Kedvenceim <span className="text-yellow-500">★</span></button>
+                        </div>
+                        
+                        {isLoading ? <div className="text-center py-10"><p className="text-lg font-semibold text-amber-700 dark:text-amber-300">Programok betöltése...</p></div> : error ? <div className="text-center py-10 bg-red-100 dark:bg-red-900/50 p-4 rounded-lg"><p className="text-lg font-bold text-red-700 dark:text-red-300">Hiba történt!</p><p className="text-sm text-red-600 dark:text-red-200 mt-1">{error}</p></div> : <>
+                        {notificationPermission === 'default' && (<div className="bg-blue-100 dark:bg-blue-900/50 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 p-3 rounded-lg mb-4 text-center animate-fadein"><p className="font-semibold mb-2">Szeretnél értesítést kapni, mielőtt a kedvenc programjaid kezdődnek?</p><button onClick={handleNotificationPermission} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded-full">Értesítések engedélyezése</button></div>)}
+                        {notificationPermission === 'denied' && (<p className="text-xs text-center text-gray-500 mb-4">Az értesítések le vannak tiltva a böngésződben. A beállításokban tudod engedélyezni.</p>)}
+                        
+                        {view === 'today' && (<>
+                            {events.length > 0 && currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">🎉 A fesztiválnak vége, köszönjük a részvételt!</p>}
+                            <div className="mb-6">{currentEvents.length > 0 ? <div className="animate-fadein"><h3 className="section-title border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div> : nextEvents.length > 0 && <div className="text-center bg-amber-100 dark:bg-amber-900/40 p-4 rounded-xl animate-fadein"><p className="text-lg font-semibold text-amber-800 dark:text-amber-200">Jelenleg nincs program.</p><p className="text-sm text-gray-600 dark:text-gray-400 mt-1">A következő ennyi idő múlva kezdődik:</p><div className="text-3xl mt-2 text-amber-700 dark:text-amber-300"><CountdownToNext targetDate={nextEvents[0].start} /></div></div>}</div>
+                            {nextEvents.length > 0 && <div className="mb-4 animate-fadein"><h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200">⏭️ Következő {getNextEventDayInfo()}</h3>{nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div>}
                             
-                            {view === 'today' && (
-                                <>
-                                    {events.length > 0 && currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">🎉 Az ostromnapoknak vége, köszönjük a részvételt!</p>}
-                                    <div className="mb-6">{currentEvents.length > 0 ? <div className="animate-fadein"><h3 className="section-title border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div> : nextEvents.length > 0 && <div className="text-center bg-amber-100 dark:bg-amber-900/40 p-4 rounded-xl animate-fadein"><p className="text-lg font-semibold text-amber-800 dark:text-amber-200">Jelenleg nincs program.</p><p className="text-sm text-gray-600 dark:text-gray-400 mt-1">A következő ennyi idő múlva kezdődik:</p><div className="text-3xl mt-2 text-amber-700 dark:text-amber-300"><CountdownToNext targetDate={nextEvents[0].start} /></div></div>}</div>
-                                    {nextEvents.length > 0 && <div className="mb-4 animate-fadein"><h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200">⏭️ Következő {getNextEventDayInfo()}</h3>{nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div>}
-                                    
-                                    {/* --- JAVÍTÁS ITT KEZDŐDIK --- */}
-                                    {userLocation && mapFocusEvent && (
-                                        <div className="mt-6">
-                                            <div className="mb-2 flex justify-between items-center">
-                                                <div>
-                                                    <h4 className="font-bold text-amber-800 dark:text-amber-200">
-                                                        {currentEvents.length > 0 ? 'Jelenlegi esemény a térképen' : 'Következő esemény a térképen'}
-                                                    </h4>
-                                                    <p className="text-xs text-gray-500">{mapFocusEvent.helyszin.nev}</p>
-                                                </div>
-                                                <a
-                                                    href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${mapFocusEvent.helyszin.lat},${mapFocusEvent.helyszin.lng}&travelmode=walking`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-sm font-semibold text-amber-700 underline hover:text-amber-900 dark:text-amber-300 flex items-center gap-1"
-                                                >
-                                                    <span>🧭</span>
-                                                    <span>Odaviszlek</span>
-                                                </a>
-                                            </div>
-                                            <div className="h-[250px] rounded-xl overflow-hidden border border-amber-300 dark:border-amber-700">
-                                                <MapContainer center={[ mapFocusEvent.helyszin.lat, mapFocusEvent.helyszin.lng ]} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-                                                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                                    <Marker position={[userLocation.lat, userLocation.lng]}><Popup>📍 Itt vagy</Popup></Marker>
-                                                    {currentEvents.map(e => <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}><Popup><strong>{e.nev}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup></Marker>)}
-                                                    {nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}><Popup><strong>{e.nev}</strong><br/>Kezdés: {format(e.start, 'HH:mm')}</Popup></Marker>)}
-                                                </MapContainer>
-                                            </div>
+                            {userLocation && mapFocusEvent && (
+                                <div className="mt-6">
+                                    <div className="mb-2 flex justify-between items-center">
+                                        <div>
+                                            <h4 className="font-bold text-amber-800 dark:text-amber-200">
+                                                {currentEvents.length > 0 ? 'Jelenlegi esemény a térképen' : 'Következő esemény a térképen'}
+                                            </h4>
+                                            <p className="text-xs text-gray-500">{mapFocusEvent.helyszin.nev}</p>
                                         </div>
-                                    )}
-                                    {/* --- JAVÍTÁS VÉGE --- */}
-                                </>
+                                        <a
+                                            href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${mapFocusEvent.helyszin.lat},${mapFocusEvent.helyszin.lng}&travelmode=walking`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-sm font-semibold text-amber-700 underline hover:text-amber-900 dark:text-amber-300 flex items-center gap-1"
+                                        >
+                                            <span>🧭</span>
+                                            <span>Odaviszlek</span>
+                                        </a>
+                                    </div>
+                                    <div className="h-[250px] rounded-xl overflow-hidden border border-amber-300 dark:border-amber-700">
+                                        <MapContainer center={[ mapFocusEvent.helyszin.lat, mapFocusEvent.helyszin.lng ]} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+                                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                            <Marker position={[userLocation.lat, userLocation.lng]}><Popup>📍 Itt vagy</Popup></Marker>
+                                            {currentEvents.map(e => <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}><Popup><strong>{e.nev}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup></Marker>)}
+                                            {nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}><Popup><strong>{e.nev}</strong><br/>Kezdés: {format(e.start, 'HH:mm')}</Popup></Marker>)}
+                                        </MapContainer>
+                                    </div>
+                                </div>
                             )}
+                        </>)}
 
-                            {view === 'full' && (<div className="space-y-6 animate-fadein">{Object.values(fullProgramGrouped).sort((a, b) => a.date - b.date).map(({ date, events: dayEvents }) => (<div key={date.getTime()}><h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(date, 'MMMM d. (eeee)', { locale: hu })}</h3>{dayEvents.sort((a,b) => a.start - b.start).map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div>))}</div>)}
-                            
-                            {view === 'favorites' && (<div className="animate-fadein">{favoriteEvents.length > 0 ? favoriteEvents.map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={true} onToggleFavorite={toggleFavorite} userLocation={userLocation} />) : <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">Még nem jelöltél meg kedvencet.<br/>Kattints egy esemény melletti csillagra! ☆</p>}</div>)}
-                        </>
-                    )}
+                        {view === 'full' && (<div className="space-y-6 animate-fadein">{Object.values(fullProgramGrouped).sort((a, b) => a.date - b.date).map(({ date, events: dayEvents }) => (<div key={date.getTime()}><h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(date, 'MMMM d. (eeee)', { locale: hu })}</h3>{dayEvents.sort((a,b) => a.start - b.start).map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(event.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div>))}</div>)}
+                        
+                        {view === 'favorites' && (<div className="animate-fadein">{favoriteEvents.length > 0 ? favoriteEvents.map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={true} onToggleFavorite={toggleFavorite} userLocation={userLocation} />) : <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">Még nem jelöltél meg kedvencet.<br/>Kattints egy esemény melletti csillagra! ☆</p>}</div>)}
+                        </>}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <ProgramDetailsSheet program={selectedProgram} onClose={() => setSelectedProgram(null)} />
-        
-        {showInfoModal && <InfoModal onClose={() => setShowInfoModal(false)} />}
-    </>
-);
+            <ProgramDetailsSheet program={selectedProgram} onClose={() => setSelectedProgram(null)} />
+            
+            {showInfoModal && <InfoModal onClose={() => setShowInfoModal(false)} />}
+        </>
+    );
 }
