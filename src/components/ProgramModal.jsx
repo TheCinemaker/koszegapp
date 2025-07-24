@@ -222,7 +222,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
     }, []);
 
     useEffect(() => { const countdownTimer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000); const eventCheckTimer = setInterval(evaluateEvents, 10000); evaluateEvents(); return () => { clearInterval(countdownTimer); clearInterval(eventCheckTimer); }; }, [evaluateEvents, calculateTimeLeft]);
-    useEffect(() => { if (navigator.serviceWorker && navigator.serviceWorker.controller) { const favoriteEventDetails = events.filter(event => favorites.includes(event.id)); navigator.serviceWorker.controller.postMessage({ type: 'UPDATE_FAVORITES', favorites: favoriteEventDetails }); } }, [favorites, events]);
+    useEffect(() => { if (navigator.serviceWorker && navigator.serviceWorker.controller) { const favoriteEventDetails = events.filter(event => favorites.includes(event.id)); console.log('[APP -> SW] Kiáltok a Service Workernek! Ezt küldöm:', favoriteEventDetails); navigator.serviceWorker.controller.postMessage({ type: 'UPDATE_FAVORITES', favorites: favoriteEventDetails }); } }, [favorites, events]);
     const handleNotificationPermission = () => { if (window.Notification) Notification.requestPermission().then(setNotificationPermission); };
     const favoriteEvents = useMemo(() => events.filter(e => favorites.includes(e.id)).sort((a,b) => a.start - b.start), [events, favorites]);
     const fullProgramGrouped = useMemo(() => { return events.reduce((acc, event) => { const dayKey = startOfDay(event.start).getTime(); if (!acc[dayKey]) acc[dayKey] = { date: event.start, events: [] }; acc[dayKey].events.push(event); return acc; }, {}); }, [events]);
