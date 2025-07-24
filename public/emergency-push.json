@@ -1,5 +1,42 @@
 {
-  "id": 1,
+  "id": 3,
   "title": "🎉 Készülj az Ostromra!",
-  "message": "Az Ostromnapok 2025.08.01-jén 15:32-kor kezdődik!"
+  "message": "Az Ostromnapok 2025.08.01-én 15:32-kor kezdődik!"
+},
+{
+  "id": 4,
+  "title": null,
+  "message": ""
+},{
+  "id": 5,
+  "title": null,
+  "message": ""
+},{
+  "id": 6,
+  "title": null,
+  "message": ""
+},{
+  "id": 7,
+  "title": null,
+  "message": ""
+},{
+  "id": 8,
+  "title": null,
+  "message": ""
+},{
+  "id": 9,
+  "title": null,
+  "message": ""
+},{
+  "id": 10,
+  "title": null,
+  "message": ""
+},{
+  "id": 11,
+  "title": null,
+  "message": ""
+},{
+  "id": 12,
+  "title": null,
+  "message": ""
 }
