@@ -7,9 +7,9 @@
   },
   {
     "id": 2,
-    "title": "",
-    "message": "",
-    "active": false
+    "title": "teszt_1",
+    "message": "tesztpush",
+    "active": true
   },
   {
     "id": 3,
