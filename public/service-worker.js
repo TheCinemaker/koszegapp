@@ -1,14 +1,12 @@
-/* --- FÁJL: public/service-worker.js (10 ID-s Vész-push listával) --- */
-
 // --- BEÁLLÍTÁSOK ---
-const NOTIFICATION_LEAD_TIME_MINUTES = 15;
-const EMERGENCY_PUSH_URL = '/emergency-push.json';
-const CHECK_INTERVAL_MS = 60 * 1000;
+const NOTIFICATION_LEAD_TIME_MINUTES = 15; // Személyes értesítések időablaka
+const EMERGENCY_PUSH_URL = '/emergency-push.json'; // A vész-push JSON fájl
+const CHECK_INTERVAL_MS = 60 * 1000; // Ellenőrzés gyakorisága: 5 perc
 
 // --- BELSŐ VÁLTOZÓK ---
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
-let notifiedEmergencyIds = new Set(); // Mostantól több ID-t is meg tudunk jegyezni
+let notifiedEmergencyIds = new Set();
 
 // --- ESEMÉNYFIGYELŐK ---
 self.addEventListener('message', (event) => {
@@ -21,7 +19,7 @@ self.addEventListener('activate', () => self.clients.claim());
 
 // --- A FŐ LOGIKA ---
 
-// Személyes értesítések ellenőrzése (változatlan)
+// Személyes, kedvencekre vonatkozó értesítések ellenőrzése
 function checkFavoriteNotifications() {
   const now = new Date();
   favoriteEvents.forEach(event => {
@@ -39,33 +37,28 @@ function checkFavoriteNotifications() {
   });
 }
 
-// Vész-push ellenőrzése (a listát feldolgozó logikával)
+// Központi, vész-push értesítések ellenőrzése
 async function checkEmergencyPush() {
     try {
+        // A cache-elést egyedi időbélyeggel akadályozzuk meg
         const response = await fetch(`${EMERGENCY_PUSH_URL}?t=${new Date().getTime()}`);
         if (!response.ok) return;
 
         const emergencyMessages = await response.json();
         
-        // Végigmegyünk a listán
         if (Array.isArray(emergencyMessages)) {
             emergencyMessages.forEach(msg => {
-                // Csak akkor küldünk, ha:
-                // 1. Az üzenet aktív (`active: true`)
-                // 2. Van ID-ja
-                // 3. Ezt az ID-t MÉG NEM küldtük ki korábban
                 if (msg && msg.active === true && msg.id && !notifiedEmergencyIds.has(msg.id)) {
                     self.registration.showNotification(msg.title || 'Fontos közlemény', {
                         body: msg.message,
                         icon: '/android-chrome-192x192.png',
                     });
-                    // Megjegyezzük, hogy ezt az ID-t már elküldtük
                     notifiedEmergencyIds.add(msg.id);
                 }
             });
         }
     } catch (error) {
-        // Hiba esetén csendben maradunk
+        // Hiba esetén csendben maradunk, hogy a Service Worker ne álljon le.
     }
 }
 
@@ -75,4 +68,5 @@ function runChecks() {
     checkEmergencyPush();
 }
 
+// Indítsuk el az ellenőrzést a beállított időközönként
 setInterval(runChecks, CHECK_INTERVAL_MS);
