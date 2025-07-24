@@ -97,6 +97,7 @@ function InfoModal({ onClose }) {
     );
 }
 
+// A NAGY, KIEMELT VISSZASZÁMLÁLÓ
 function CountdownToNext({ targetDate }) {
     const calculateTimeLeft = useCallback(() => {
         if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
@@ -146,6 +147,41 @@ function CountdownToNext({ targetDate }) {
     );
 }
 
+// A KIS, SORON BELÜLI VISSZASZÁMLÁLÓ
+function InlineCountdown({ targetDate }) {
+    const calculateTimeLeft = useCallback(() => {
+        const diff = new Date(targetDate).getTime() - new Date().getTime();
+        if (diff <= 0) return { over: true };
+        return {
+            hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((diff / 1000 / 60) % 60),
+            seconds: Math.floor((diff / 1000) % 60),
+            over: false,
+        };
+    }, [targetDate]);
+
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+
+    useEffect(() => {
+        const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
+        return () => clearInterval(timer);
+    }, [calculateTimeLeft]);
+
+    if (timeLeft.over) {
+        return <span className="text-green-600 font-semibold animate-pulse">Azonnal kezdődik!</span>;
+    }
+
+    const parts = [];
+    if (timeLeft.hours > 0) parts.push(`${timeLeft.hours} óra`);
+    if (timeLeft.minutes > 0) parts.push(`${timeLeft.minutes} perc`);
+    if (timeLeft.hours === 0 && timeLeft.minutes < 10) parts.push(`${timeLeft.seconds} mp`);
+
+    return (
+        <span className="text-amber-700 dark:text-amber-300 font-semibold">
+            ({parts.join(' ')} múlva)
+        </span>
+    );
+}
 // --- A FŐ KOMPONENS ---
 
 export default function ProgramModal({ onClose, openDrawer }) {
@@ -241,21 +277,28 @@ export default function ProgramModal({ onClose, openDrawer }) {
     const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
 
     return (
-        <>
-            <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
-                <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
-                    <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
-                        <div className="flex items-center gap-3">
-                            <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
-                            <button onClick={() => setShowInfoModal(true)} className="bg-black/20 w-7 h-7 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black/40 transition" aria-label="Súgó">i</button>
-                            {weatherData && <div className="flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg"><img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" /><span className="text-sm font-bold">{weatherData.temp}°C</span></div>}
-                        </div>
-                        <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
+    <>
+        <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
+            <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
+                {/* FEJLÉC */}
+                <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
+                        <button onClick={() => setShowInfoModal(true)} className="bg-black/20 w-7 h-7 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black/40 transition" aria-label="Súgó">i</button>
+                        {weatherData && <div className="flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg"><img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" /><span className="text-sm font-bold">{weatherData.temp}°C</span></div>}
                     </div>
-                    
-                    {!timeLeft.isOver && <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner"><span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span></div>}
-                    
-                    <div className="bg-amber-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
+                    <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
+                </div>
+                
+                {/* VISSZASZÁMLÁLÓ A FESZTIVÁL KEZDETÉIG */}
+                {!timeLeft.isOver && (
+                    <div className="sticky top-[58px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner">
+                        <span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span>
+                    </div>
+                )}
+                
+                {/* GÖRGETHETŐ TARTALOM */}
+                <div className="bg-amber-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
                         <div className="mb-4 flex border-b-2 border-amber-200 dark:border-zinc-700">
                             <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Élő</button>
                             <button onClick={() => setView('full')} className={`px-4 py-2 text-sm font-semibold ${view === 'full' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Teljes Program</button>
@@ -267,10 +310,20 @@ export default function ProgramModal({ onClose, openDrawer }) {
                         {notificationPermission === 'denied' && (<p className="text-xs text-center text-gray-500 mb-4">Az értesítések le vannak tiltva a böngésződben. A beállításokban tudod engedélyezni.</p>)}
                         
                         {view === 'today' && (<>
-                            {events.length > 0 && currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">🎉 A fesztiválnak vége, köszönjük a részvételt!</p>}
-                            <div className="mb-6">{currentEvents.length > 0 ? <div className="animate-fadein"><h3 className="section-title border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div> : nextEvents.length > 0 && <div className="text-center bg-amber-100 dark:bg-amber-900/40 p-4 rounded-xl animate-fadein"><p className="text-lg font-semibold text-amber-800 dark:text-amber-200">Jelenleg nincs program.</p><p className="text-sm text-gray-600 dark:text-gray-400 mt-1">A következő ennyi idő múlva kezdődik:</p><div className="text-3xl mt-2 text-amber-700 dark:text-amber-300"><CountdownToNext targetDate={nextEvents[0].start} /></div></div>}</div>
-                            {nextEvents.length > 0 && <div className="mb-4 animate-fadein"><h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200">⏭️ Következő {getNextEventDayInfo()}</h3>{nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div>}
-                            
+                            {nextEvents.length > 0 && (
+                                <div className="mb-4 animate-fadein">
+                                    {/* JAVÍTÁS ITT: A fejléc most már dinamikus */}
+                                    <h3 className="section-title border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200 flex items-baseline gap-2">
+                                        <span>⏭️ Következő</span>
+                                        {isSameDay(nextEvents[0].start, new Date()) ? (
+                                            <InlineCountdown targetDate={nextEvents[0].start} />
+                                        ) : (
+                                            <span className="text-sm font-normal">{getNextEventDayInfo()}</span>
+                                        )}
+                                    </h3>
+                                    {nextEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}
+                                </div>
+                            )}
                             {userLocation && mapFocusEvent && (
                                 <div className="mt-6">
                                     <div className="mb-2 flex justify-between items-center">
