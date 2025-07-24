@@ -356,8 +356,31 @@ export default function ProgramModal({ onClose, openDrawer }) {
                             )}
                         </>)}
 
-                        {view === 'full' && (<div className="space-y-6 animate-fadein">{Object.values(fullProgramGrouped).sort((a, b) => a.date - b.date).map(({ date, events: dayEvents }) => (<div key={date.getTime()}><h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">{format(date, 'MMMM d. (eeee)', { locale: hu })}</h3>{dayEvents.sort((a,b) => a.start - b.start).map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div>))}</div>)}
-                        
+                        {view === 'full' && (
+  <div className="space-y-6 animate-fadein">
+    {Object.values(fullProgramGrouped)
+      .sort((a, b) => a.date - b.date)
+      .map(({ date, events: dayEvents }) => (
+        <div key={date.getTime()}>
+          <h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">
+            {format(date, 'MMMM d. (eeee)', { locale: hu })}
+          </h3>
+          {dayEvents
+            .sort((a, b) => a.start - b.start)
+            .map(event => (
+              <EventCard 
+                key={event.id} 
+                event={event} 
+                onSelect={setSelectedProgram} 
+                isFavorite={favorites.includes(event.id)} 
+                onToggleFavorite={toggleFavorite} 
+                userLocation={userLocation} 
+              />
+            ))}
+        </div>
+      ))}
+  </div>
+)}
                         {view === 'favorites' && (<div className="animate-fadein">{favoriteEvents.length > 0 ? favoriteEvents.map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={true} onToggleFavorite={toggleFavorite} userLocation={userLocation} />) : <p className="text-center text-lg text-amber-700 dark:text-amber-200 italic py-6">Még nem jelöltél meg kedvencet.<br/>Kattints egy esemény melletti csillagra! ☆</p>}</div>)}
                         </>}
                     </div>
