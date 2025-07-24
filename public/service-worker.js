@@ -1,40 +1,54 @@
-/* --- FÁJL: public/service-worker.js --- */
+/* --- FÁJL: public/service-worker.js (Hibakereső verzió) --- */
 
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
-const NOTIFICATION_LEAD_TIME_MINUTES = 1;
+// TESZTHEZ ÁLLÍTSUK NAGYOBBRA AZ IDŐABLAKOT, PL. 60 PERCRE, HOGY BIZTOSAN BELEESSEN
+const NOTIFICATION_LEAD_TIME_MINUTES = 60; 
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'UPDATE_FAVORITES') {
-
-     console.log('[SW <- APP] Hallottam a kiáltást! Megkaptam a kedvenceket:', event.data.favorites);
-    
+    console.log('[SW <- APP] Kedvencek megérkeztek:', event.data.favorites);
     favoriteEvents = event.data.favorites.map(e => ({ ...e, start: new Date(e.start) }));
   }
 });
 
 function checkAndNotify() {
   const now = new Date();
+  console.log(`[SW] Időzítő fut... (${now.toLocaleTimeString()}). Kedvencek: ${favoriteEvents.length}`);
 
-  console.log('[SW] Az időzítőm lefutott ekkor:', now.toLocaleTimeString(), '| Jelenleg ennyi kedvencem van:', favoriteEvents.length);
-  
   favoriteEvents.forEach(event => {
-    if (event.start < now || notifiedEventIds.has(event.id)) {
-      return;
+    // Ellenőrizzük, hogy az 'event.start' érvényes dátum-e
+    if (!(event.start instanceof Date) || isNaN(event.start)) {
+        console.log(`[SW] HIBA: "${event.nev}" eseménynek érvénytelen a kezdési dátuma.`);
+        return;
     }
-    const diffInMinutes = (event.start.getTime() - now.getTime()) / 1000 / 60;
-    if (diffInMinutes > 0 && diffInMinutes <= NOTIFICATION_LEAD_TIME_MINUTES) {
+
+    if (event.start < now) {
+        console.log(`[SW] KIHAGYVA: "${event.nev}" már elkezdődött.`);
+        return;
+    }
+
+    if (notifiedEventIds.has(event.id)) {
+        console.log(`[SW] KIHAGYVA: "${event.nev}" eseményről már küldtünk értesítést.`);
+        return;
+    }
+
+    const diffInMinutes = Math.round((event.start.getTime() - now.getTime()) / 1000 / 60);
+    
+    console.log(`[SW] ELLENŐRZÉS: "${event.nev}". Kezdés ${diffInMinutes} perc múlva. (Feltétel: <= ${NOTIFICATION_LEAD_TIME_MINUTES} perc)`);
+
+    if (diffInMinutes >= 0 && diffInMinutes <= NOTIFICATION_LEAD_TIME_MINUTES) {
+      console.log(`[SW] ÉRTESÍTÉS KÜLDÉSE: "${event.nev}"`);
       self.registration.showNotification('Hamarosan kezdődik a kedvenced!', {
-        body: `"${event.nev}" ${NOTIFICATION_LEAD_TIME_MINUTES} percen belül kezdődik a következő helyszínen: ${event.helyszin.nev}`,
-        icon: '/icon-192.png', // Tegyél egy ikont a public mappába
+        body: `"${event.nev}" ${diffInMinutes} percen belül kezdődik itt: ${event.helyszin.nev}`,
+        icon: '/android-chrome-192x192.png',
       });
       notifiedEventIds.add(event.id);
     }
   });
 }
 
-setInterval(checkAndNotify, 60 * 1000); 
+setInterval(checkAndNotify, 60 * 1000); // Percenkénti ellenőrzés
 
-self.addEventListener('install', () => {
-  self.skipWaiting();
-});
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', () => self.clients.claim());
