@@ -1,13 +1,13 @@
 [
   {
-    "datum": "2025-07-24",
+    "datum": "2025-08-01",
     "esemenyek": [
       {
         "id": 1,
         "nev": "XVIII. Kőszegi Ostromnapokat megnyitó puskalövések",
         "leiras": "A Kőszegi Ostromnapok hivatalos megnyitója puskalövésekkel.",
-        "idopont": "2025-07-24T8:18:00",
-        "veg_idopont": "2025-07-24T22:45:00",
+        "idopont": "2025-08-01T15:32:00",
+        "veg_idopont": "2025-08-01T15:45:00",
         "helyszin": {
           "lat": 47.3896,
           "lng": 16.5410,
