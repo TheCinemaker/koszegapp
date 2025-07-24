@@ -50,8 +50,6 @@ function useFavorites() {
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) { // ÚJ PROP: userLocation
     const cardClasses = "p-3 rounded-xl border-l-4 cursor-pointer hover:shadow-lg transition mb-2 " + 
         (isFavorite ? "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500" : "bg-amber-200 dark:bg-amber-800/50 border-amber-500");
-
-    const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
     
     return (
         <div className={cardClasses} onClick={() => onSelect(event)}>
@@ -279,6 +277,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
     const blueIcon = new L.Icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41] });
     const getNextEventDayInfo = () => { if (!nextEvents || nextEvents.length === 0) return ""; const nextDate = nextEvents[0].start; const now = new Date(); if (isSameDay(nextDate, now)) return `(${format(nextDate, 'HH:mm')}-kor)`; const dayDiff = differenceInDays(startOfDay(nextDate), startOfDay(now)); if (dayDiff === 1) return `(Holnap, ${format(nextDate, 'HH:mm')}-kor)`; return `(${dayDiff} nap múlva, ${format(nextDate, 'eeee', {locale: hu})})`; };
 
+    const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
     return (
     <>
         <div className="fixed inset-y-4 sm:inset-y-8 inset-x-2 sm:inset-x-0 z-[999] px-2 pb-4 pointer-events-none">
