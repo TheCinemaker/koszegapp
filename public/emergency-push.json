@@ -1,42 +1,62 @@
-{
-  "id": 3,
-  "title": "🎉 Készülj az Ostromra!",
-  "message": "Az Ostromnapok 2025.08.01-én 15:32-kor kezdődik!"
-},
-{
-  "id": 4,
-  "title": null,
-  "message": ""
-},{
-  "id": 5,
-  "title": null,
-  "message": ""
-},{
-  "id": 6,
-  "title": null,
-  "message": ""
-},{
-  "id": 7,
-  "title": null,
-  "message": ""
-},{
-  "id": 8,
-  "title": null,
-  "message": ""
-},{
-  "id": 9,
-  "title": null,
-  "message": ""
-},{
-  "id": 10,
-  "title": null,
-  "message": ""
-},{
-  "id": 11,
-  "title": null,
-  "message": ""
-},{
-  "id": 12,
-  "title": null,
-  "message": ""
-}
+[
+  {
+    "id": 99,
+    "title": "🎉 Készülj az Ostromra!",
+    "message": "Az Ostromnapok 2025.08.01-jén 15:32-kor kezdődik!",
+    "active": true
+  },
+  {
+    "id": 2,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 3,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 4,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 5,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 6,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 7,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 8,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 9,
+    "title": "",
+    "message": "",
+    "active": false
+  },
+  {
+    "id": 10,
+    "title": "",
+    "message": "",
+    "active": false
+  }
+]
