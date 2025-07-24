@@ -3,11 +3,11 @@
     "datum": "2025-07-24",
     "esemenyek": [
       {
-        "id": 1001,
+        "id": 1002,
         "nev": "Teszt 1: A Visszaszámláló Indulása",
         "leiras": "Első esemény a mai teszthez.",
-        "idopont": "2025-07-24T13:00:00",
-        "veg_idopont": "2025-07-24T13:45:00",
+        "idopont": "2025-07-24T14:00:00",
+        "veg_idopont": "2025-07-24T14:45:00",
         "helyszin": { "lat": 47.3897, "lng": 16.5404, "nev": "Fő tér" },
         "kiemelt": false
       },
@@ -15,8 +15,8 @@
         "id": 1002,
         "nev": "Teszt 2: Párhuzamos Esemény (Átfedés)",
         "leiras": "Ez az esemény akkor kezdődik, amikor az első még tart.",
-        "idopont": "2025-07-24T13:20:00",
-        "veg_idopont": "2025-07-24T14:00:00",
+        "idopont": "2025-07-24T14:20:00",
+        "veg_idopont": "2025-07-24T15:00:00",
         "helyszin": { "lat": 47.3892, "lng": 16.5411, "nev": "Jurisics tér" },
         "kiemelt": false
       },
@@ -24,8 +24,8 @@
         "id": 1003,
         "nev": "Teszt 3: Pontos Átváltás",
         "leiras": "Ez pontosan akkor kezdődik, amikor a 2-es véget ér.",
-        "idopont": "2025-07-24T14:00:00",
-        "veg_idopont": "2025-07-24T14:30:00",
+        "idopont": "2025-07-24T15:00:00",
+        "veg_idopont": "2025-07-24T15:30:00",
         "helyszin": { "lat": 47.3896, "lng": 16.5415, "nev": "Jurisics Vár" },
         "kiemelt": true
       },
@@ -33,8 +33,8 @@
         "id": 1004,
         "nev": "Teszt 4: Kedvenc & Push Értesítés",
         "leiras": "Ezt csillagozd be a push teszthez!",
-        "idopont": "2025-07-24T14:20:00",
-        "veg_idopont": "2025-07-24T15:00:00",
+        "idopont": "2025-07-24T15:20:00",
+        "veg_idopont": "2025-07-24T16:00:00",
         "helyszin": { "lat": 47.3890, "lng": 16.5419, "nev": "Várárok" },
         "kiemelt": false
       },
@@ -42,8 +42,8 @@
         "id": 1005,
         "nev": "Teszt 5: A Nap Utolsó Eseménye",
         "leiras": "Miután ez véget ér, az 'ostromnapoknak vége' üzenetnek kell megjelennie.",
-        "idopont": "2025-07-24T15:00:00",
-        "veg_idopont": "2025-07-24T15:30:00",
+        "idopont": "2025-07-24T16:00:00",
+        "veg_idopont": "2025-07-24T16:30:00",
         "helyszin": { "lat": 47.3897, "lng": 16.5404, "nev": "Fő tér" },
         "kiemelt": false
       }
