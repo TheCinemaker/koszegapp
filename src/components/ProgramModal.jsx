@@ -410,3 +410,4 @@ export default function ProgramModal({ onClose, openDrawer }) {
         {showInfoModal && <InfoModal onClose={() => setShowInfoModal(false)} />}
     </>
 );
+}
