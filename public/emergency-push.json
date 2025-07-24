@@ -1,15 +1,15 @@
 [
   {
-    "id": 98,
+    "id": 97,
     "title": "🎉 Készülj az Ostromra!",
     "message": "Az Ostromnapok 2025.08.01-jén 15:32-kor kezdődik!",
-    "active": true
+    "active": false
   },
   {
-    "id": 2,
-    "title": "teszt_1",
-    "message": "tesztpush",
-    "active": true
+    "id": 96,
+    "title": "A KőszegAPP-al nem maradsz le semmiről!",
+    "message": "Minden esemény, minden változás azonnal a telefonodon! Mentsd el a kedvenceidet az APP-ban, hogy ne maradj le semmiről!",
+    "active": false
   },
   {
     "id": 3,
