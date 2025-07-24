@@ -1,44 +1,42 @@
-/* --- FÁJL: public/service-worker.js (Hibakereső verzió) --- */
+/* --- FÁJL: public/service-worker.js (Vész-push funkcióval) --- */
 
+// --- BEÁLLÍTÁSOK ---
+const NOTIFICATION_LEAD_TIME_MINUTES = 15; // Személyes értesítések időablaka (perc)
+const EMERGENCY_PUSH_URL = '/emergency-push.json'; // A vész-push JSON fájl elérési útja
+const CHECK_INTERVAL_MS = 60 * 1000; // Ellenőrzés gyakorisága (1 perc)
+
+
+// --- BELSŐ VÁLTOZÓK ---
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
-// TESZTHEZ ÁLLÍTSUK NAGYOBBRA AZ IDŐABLAKOT, PL. 60 PERCRE, HOGY BIZTOSAN BELEESSEN
-const NOTIFICATION_LEAD_TIME_MINUTES = 1; 
+let notifiedEmergencyId = null; // Itt tároljuk a legutóbbi vész-push ID-ját
 
+
+// --- ESEMÉNYFIGYELŐK ---
+
+// Figyeljük, ha a fő app üzenetet küld (kedvencek frissítése)
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'UPDATE_FAVORITES') {
-    console.log('[SW <- APP] Kedvencek megérkeztek:', event.data.favorites);
     favoriteEvents = event.data.favorites.map(e => ({ ...e, start: new Date(e.start) }));
   }
 });
 
-function checkAndNotify() {
+// Azonnali aktiválás
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', () => self.clients.claim());
+
+
+// --- A FŐ LOGIKA ---
+
+// 1. A személyes, kedvencekre vonatkozó értesítések ellenőrzése
+function checkFavoriteNotifications() {
   const now = new Date();
-  console.log(`[SW] Időzítő fut... (${now.toLocaleTimeString()}). Kedvencek: ${favoriteEvents.length}`);
-
   favoriteEvents.forEach(event => {
-    // Ellenőrizzük, hogy az 'event.start' érvényes dátum-e
-    if (!(event.start instanceof Date) || isNaN(event.start)) {
-        console.log(`[SW] HIBA: "${event.nev}" eseménynek érvénytelen a kezdési dátuma.`);
-        return;
+    if (!(event.start instanceof Date) || isNaN(event.start) || event.start < now || notifiedEventIds.has(event.id)) {
+      return;
     }
-
-    if (event.start < now) {
-        console.log(`[SW] KIHAGYVA: "${event.nev}" már elkezdődött.`);
-        return;
-    }
-
-    if (notifiedEventIds.has(event.id)) {
-        console.log(`[SW] KIHAGYVA: "${event.nev}" eseményről már küldtünk értesítést.`);
-        return;
-    }
-
     const diffInMinutes = Math.round((event.start.getTime() - now.getTime()) / 1000 / 60);
-    
-    console.log(`[SW] ELLENŐRZÉS: "${event.nev}". Kezdés ${diffInMinutes} perc múlva. (Feltétel: <= ${NOTIFICATION_LEAD_TIME_MINUTES} perc)`);
-
     if (diffInMinutes >= 0 && diffInMinutes <= NOTIFICATION_LEAD_TIME_MINUTES) {
-      console.log(`[SW] ÉRTESÍTÉS KÜLDÉSE: "${event.nev}"`);
       self.registration.showNotification('Hamarosan kezdődik a kedvenced!', {
         body: `"${event.nev}" ${diffInMinutes} percen belül kezdődik itt: ${event.helyszin.nev}`,
         icon: '/android-chrome-192x192.png',
@@ -48,7 +46,35 @@ function checkAndNotify() {
   });
 }
 
-setInterval(checkAndNotify, 60 * 1000); // Percenkénti ellenőrzés
+// 2. A központi, vész-push értesítések ellenőrzése
+async function checkEmergencyPush() {
+    try {
+        // A `?t=${new Date().getTime()}` rész megakadályozza, hogy a böngésző gyorsítótárazza a fájlt
+        const response = await fetch(`${EMERGENCY_PUSH_URL}?t=${new Date().getTime()}`);
+        if (!response.ok) return;
 
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', () => self.clients.claim());
+        const emergencyData = await response.json();
+        
+        // Csak akkor küldünk, ha van új, érvényes üzenet
+        if (emergencyData && emergencyData.id && emergencyData.id !== notifiedEmergencyId) {
+            self.registration.showNotification(emergencyData.title || 'Fontos közlemény', {
+                body: emergencyData.message,
+                icon: '/android-chrome-192x192.png',
+            });
+            // Megjegyezzük, hogy ezt az ID-t már elküldtük
+            notifiedEmergencyId = emergencyData.id;
+        }
+    } catch (error) {
+        // Csendben kezeljük a hibát, hogy ne álljon le a Service Worker
+        // console.error('[SW] Hiba a vész-push ellenőrzésekor:', error);
+    }
+}
+
+// A fő ciklus, ami mindkét ellenőrzést lefuttatja
+function runChecks() {
+    checkFavoriteNotifications();
+    checkEmergencyPush();
+}
+
+// Indítsuk el az ellenőrzést a beállított időközönként
+setInterval(runChecks, CHECK_INTERVAL_MS);
