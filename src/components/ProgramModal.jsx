@@ -70,18 +70,52 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite }) {
 
 function InfoModal({ onClose }) {
     return (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4" onClick={onClose}>
-            <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
+        <div 
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
+            onClick={onClose}
+        >
+            <div 
+                className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <button onClick={onClose} className="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 transition">×</button>
-                <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-200 mb-4">ℹ️ Hogyan használd?</h2>
-                <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🔴</span><div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program, akár napokkal később is.</div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🗓️</span><div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">★</span><div><strong>Kedvencek:</strong> Kattints egy program melletti csillagra (☆), hogy ide gyűjtsd a személyes menetrended! Kérj értesítőt, hogy ne maradj le semmiről!</div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">📅</span><div><strong>Ha bezártad:</strong> Ne aggódj! A programfüzetet bármikor újra megnyithatod a főoldalon lebegő naptár ikonnal.</div></li>
+                
+                <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-200 mb-4">ℹ️ Programfüzet infó?</h2>
+                
+                <ul className="space-y-4 text-gray-700 dark:text-gray-300">
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">🔴</span>
+                        <div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program, akár napokkal később is.</div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">🗓️</span>
+                        <div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">★</span>
+                        <div>
+                            <strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!
+                            
+                            {/* JAVÍTÁS ITT: Az iOS specifikus tájékoztató */}
+                            <p className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-800 dark:text-blue-200">
+                                <strong>iPhone tipp:</strong> Az értesítések akkor a legmegbízhatóbbak, ha a Főképernyőre tett ikonról indítod az appot. Lezárt képernyőnél az üzenet a következő feloldáskor érkezik meg. Ezért többször nyisd meg az APP-ot, hogy megkaphasd az esetleges vészinformációkat! 
+                            </p>
+
+                        </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">📅</span>
+                        <div><strong>Ha bezártad:</strong> Ne aggódj! A programfüzetet bármikor újra megnyithatod a főoldalon lévő naptár ikonnal. (Jobb alsó sarokban találod)</div>
+                    </li>
                 </ul>
+
                 <div className="mt-6 text-center">
-                    <button onClick={onClose} className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition">Értettem!</button>
+                    <button 
+                        onClick={onClose} 
+                        className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition"
+                    >
+                        Értettem!
+                    </button>
                 </div>
             </div>
         </div>
