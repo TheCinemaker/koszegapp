@@ -1,13 +1,31 @@
+Fejlesztési terv KőszegAPP 2.0
+
 Folyamatban: 
 
-- 18. éttermi menük beépitése bal oldalon besöpörhető modalon, (folyamatban, Design elemek hasonlóak lesznek a bal oldali menühöz)
+(// - 18. éttermi menük beépitése bal oldalon besöpörhető modalon, (folyamatban, Design elemek hasonlóak lesznek a bal oldali menühöz)
       - Használt fileok: WeeklyMenuDrawer.jsx, sheet.js - Ne használd, csak ha átkerül a kész fejezetbe!  
       - Feltöltési lehetőséggel(kész) Feltöltő űrlap linkje: https://docs.google.com/forms/d/1mMxdrh5r4H-lEnbju7xMnY1KstXpoPdMY3_xPNjypMw/edit
       - Google válaszok linkje: https://docs.google.com/spreadsheets/d/1I-f8S2RtPaQS8Pn30HibSQFkuByyfvxJdNMuedy0bhg/edit?gid=1564614289#gid=1564614289
+//)
 
 Attractions oldalak:
 - Bugfix az atractions.jsx-ben és az atractionsdetail.jsx-ben. index.css-ben uj tailwind osztály hozzáadva a vertikális görgetéshez, main.jsx javitva a leaflethez
 - térképes nézet, szűrők, kereső hozzáadása
+- Geolokáció a térképen ("Hol vagyok én?" funkció) pulzáló markerrel és hibakezeléssel.
+- Felugró, animált modal ablak a térképen lévő markerekre kattintva a gyors részletekért.
+- Kedvencek rendszer beépítése a Látnivalók oldalra:
+  - A felhasználók szív ikonnal jelölhetik meg a látnivalókat.
+  - A mentés a böngésző `localStorage`-ébe történik, egyedi kulccsal (`'attraction-favorites'`), így nem ütközik a programfüzet kedvenceivel.
+  - Dinamikusan megjelenő "Kedvenceim" szűrőgomb, ha van legalább egy kedvenc.
+  - Javítva egy renderelési hiba ('fehér képernyő'), ami a kedvencek logikájának bevezetésekor jött elő.
+  - Módosított/új fájlok:
+    - `src/hooks/useFavorites.js` (Új fájl!)
+    - `src/pages/Attractions.jsx` (vagy ahol az oldal van, pl. `src/components/Attractions.jsx`)
+    - `src/components/AttractionsMap.jsx`
+    - `src/components/UserLocationMarker.jsx` (Új fájl!)
+    - `src/components/AttractionDetailModal.jsx` (Új fájl!)
+    - `src/index.css` (A pulzáló marker animációjához)
+
 
 Kész módosítások: 
 
@@ -55,5 +73,3 @@ Módosítási ötletek:
 15. metatag javítása
 16. szűrők beépitése minden oldalra
 17. utvonaltervező beépitése (csak városi séta!)
-
-
