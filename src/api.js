@@ -48,3 +48,13 @@ export async function fetchAttractionById(id) {
   }
   return attraction;
 }
+
+export async function fetchEventById(id) {
+  const events = await fetchEvents(); // Újrahasznosítjuk a meglévő függvényt
+  // Az ID lehet szám vagy string, ezért String() konverzióval biztosra megyünk
+  const event = events.find(e => String(e.id) === String(id)); 
+  if (!event) {
+    throw new Error('A keresett esemény nem található.');
+  }
+  return event;
+}
