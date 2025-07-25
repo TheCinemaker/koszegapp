@@ -181,7 +181,14 @@ export default function Attractions() {
         </div>
       )}
       {modalAttractionId && (
-        <AttractionDetailModal attractionId={modalAttractionId} onClose={() => setModalAttractionId(null)} />
+    <AttractionDetailModal 
+      attractionId={modalAttractionId}
+      onClose={() => setModalAttractionId(null)}
+      // EZT A 3 SORT ADD HOZZÁ:
+      isFavorite={isFavorite}
+      addFavorite={addFavorite}
+      removeFavorite={removeFavorite}
+      />
       )}
     </div>
   );
