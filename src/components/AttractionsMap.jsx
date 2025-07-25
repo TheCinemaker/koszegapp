@@ -1,33 +1,38 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import UserLocationMarker from './UserLocationMarker';
-import { FaCrosshairs } from 'react-icons/fa';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import UserLocationMarker from './UserLocationMarker'; 
+import { FaCrosshairs } from 'react-icons/fa'; 
 
 const koszegCenter = [47.388, 16.541];
 
-export default function AttractionsMap({ items, onMarkerClick }) {
-  if (!items) {
-    return <div>Térkép betöltése...</div>;
-  }
-
-  function MapController({ position }) {
-  const map = useMap();
+function MapController({ position }) {
+  const map = useMap(); 
   useEffect(() => {
     if (position) {
+
       map.flyTo(position, 16); 
     }
   }, [position, map]);
-  return null;
+  return null; 
 }
 
+
+// --- A FŐ, EXPORTÁLT KOMPONENS ---
+export default function AttractionsMap({ items, onMarkerClick, onLocateMe, userPosition, isLocating }) {
   return (
     <div className="relative">
-      <MapContainer center={koszegCenter} zoom={15} style={{ height: '70vh', width: '100%', zIndex: 10 }}>
+      <MapContainer 
+        center={koszegCenter} 
+        zoom={15} 
+        style={{ height: '70vh', width: '100%', zIndex: 10 }}
+        scrollWheelZoom={false} 
+      >
         <TileLayer
           attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
+        {/* A látnivalók markerjei */}
         {items.map(item => (
           <Marker 
             key={item.id} 
@@ -36,14 +41,13 @@ export default function AttractionsMap({ items, onMarkerClick }) {
           />
         ))}
 
-        {/* ÚJ: Itt jelenítjük meg a felhasználó pozícióját */}
+        {/* A felhasználó pozíciójának markerje */}
         <UserLocationMarker position={userPosition} />
         
-        {/* ÚJ: Ez a komponens vezérli a térkép mozgását */}
         <MapController position={userPosition} />
       </MapContainer>
 
-      {/* ÚJ: A "Saját Helyzetem" gomb */}
+      {/* A "Saját Helyzetem" gomb */}
       <button
         onClick={onLocateMe}
         disabled={isLocating}
