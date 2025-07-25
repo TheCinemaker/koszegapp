@@ -40,3 +40,11 @@ export async function fetchParking() {
   return res.json();
 }
 
+export async function fetchAttractionById(id) {
+  const attractions = await fetchAttractions();
+  const attraction = attractions.find(item => item.id === parseInt(id, 10));
+  if (!attraction) {
+    throw new Error('A keresett látnivaló nem található.');
+  }
+  return attraction;
+}
