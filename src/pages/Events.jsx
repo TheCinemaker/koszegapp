@@ -122,18 +122,21 @@ export default function Events() {
         ].map(([opt, label]) => (
           <button
             key={opt}
-            onClick={() => {
-              setFilter(opt);
-              if (opt === 'byMonth') setOpenPicker(true);
-            }}
+              onClick={() => {
+                setFilter(opt); // 1. Beállítjuk az új dátum szűrőt
+                setSelectedTag(null); // 2. VISSZAÁLLÍTJUK A CÍMKE SZŰRŐT!
+              if (opt === 'byMonth') {
+                setOpenPicker(true);
+              }
+          }}
             className={
               'px-4 py-2 rounded-full transition-all duration-200 ' +
-              (filter === opt
-                ? 'bg-indigo-600 text-white font-semibold shadow ring-2 ring-indigo-500'
-                : 'bg-purple-100 text-indigo-500 hover:bg-indigo-600 hover:text-white')
-            }
+                (filter === opt
+              ? 'bg-indigo-600 text-white font-semibold shadow ring-2 ring-indigo-500'
+              : 'bg-purple-100 text-indigo-500 hover:bg-indigo-600 hover:text-white')
+              }
           >
-            {label}
+          {label}
           </button>
         ))}
       </div>
