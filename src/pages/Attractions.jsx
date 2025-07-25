@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { fetchAttractions } from '../api';
 import { Link } from 'react-router-dom';
 import AttractionsMap from '../components/AttractionsMap';
-import { FaList, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaList, FaMapMarkedAlt, FaHeart, FaRegHeart } from 'react-icons/fa';
 import AttractionDetailModal from '../components/AttractionDetailModal';
+import useFavorites from '../hooks/useFavorites'; // feltételezve, hogy létezik
 
 export default function Attractions() {
   const [items, setItems] = useState([]);
@@ -24,72 +25,58 @@ export default function Attractions() {
     fetchAttractions()
       .then(data => {
         setItems(data);
-        const uniqueCategories = [...new Set(data.map(item => item.category))];
-        setCategories(['Minden', ...uniqueCategories]);
+        let availableCategories = ['Minden', ...new Set(data.map(item => item.category))];
+        if (favorites.length > 0) {
+          availableCategories.splice(1, 0, 'Kedvenceim');
+        }
+        setCategories(availableCategories);
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-  setLoading(true);
-  fetchAttractions()
-    .then(data => {
-      setItems(data);
-      let availableCategories = ['Minden', ...new Set(data.map(item => item.category))];
-      if (favorites.length > 0) {
-        availableCategories.splice(1, 0, 'Kedvenceim');
-      }
-      
-      setCategories(availableCategories);
-    })
-    .catch(err => setError(err.message))
-    .finally(() => setLoading(false));
-}, [favorites.length]);
+  }, []); // Eltávolítottuk a favorites.length függőséget
 
   const filteredItems = items
-  .filter(item => {
-    if (selectedCategory === 'Kedvenceim') {
-      return isFavorite(item.id);
+    .filter(item => {
+      if (selectedCategory === 'Kedvenceim') {
+        return isFavorite(item.id);
+      }
+      return selectedCategory === 'Minden' || item.category === selectedCategory;
+    })
+    .filter(item => {
+      const query = searchQuery.toLowerCase().trim();
+      if (query === '') {
+        return true;
+      }
+      const nameMatch = item.name.toLowerCase().includes(query);
+      const descriptionMatch = item.description.toLowerCase().includes(query);
+      const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
+      return nameMatch || descriptionMatch || tagsMatch;
+    });
+
+  const handleLocateMe = () => {
+    if (!navigator.geolocation) {
+      setLocationError('A böngésződ nem támogatja a helymeghatározást.');
+      return;
     }
-    return selectedCategory === 'Minden' || item.category === selectedCategory;
-  })
-  .filter(item => {
-    const query = searchQuery.toLowerCase().trim();
-    if (query === '') {
-      return true;
-    }
-    const nameMatch = item.name.toLowerCase().includes(query);
-    const descriptionMatch = item.description.toLowerCase().includes(query);
-    const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
-    return nameMatch || descriptionMatch || tagsMatch;
-  });
+
+    setIsLocating(true);
+    setLocationError('');
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setUserPosition([latitude, longitude]);
+        setIsLocating(false);
+      },
+      () => {
+        setLocationError('Nem sikerült lekérni a pozíciót. Engedélyezd a böngészőben a helymeghatározást.');
+        setIsLocating(false);
+      }
+    );
+  };
 
   if (loading) return <p className="p-4 text-center">Látnivalók betöltése...</p>;
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
-
-  const handleLocateMe = () => {
-  if (!navigator.geolocation) {
-    setLocationError('A böngésződ nem támogatja a helymeghatározást.');
-    return;
-  }
-
-  setIsLocating(true);
-  setLocationError('');
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const { latitude, longitude } = position.coords;
-      setUserPosition([latitude, longitude]);
-      setIsLocating(false);
-    },
-    () => {
-      setLocationError('Nem sikerült lekérni a pozíciót. Engedélyezd a böngészőben a helymeghatározást.');
-      setIsLocating(false);
-    }
-  );
-};
-  
   return (
     <div className="p-4 relative">
       
