@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchEvents } from '../api';
-import { format, parseISO } from 'date-fns';
 import { fetchEventById } from '../api';
+import { format, parseISO } from 'date-fns';
 
 export default function EventDetail() {
   const { id } = useParams();
@@ -10,26 +9,42 @@ export default function EventDetail() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-  fetchEventById(id)
-    .then(data => {
-      setEvt(data);
-    })
-    .catch(err => {
-      setError(err.message);
-    });
-}, [id]);
+    fetchEventById(id)
+      .then(data => {
+        setEvt(data);
+      })
+      .catch(err => {
+        setError(err.message);
+      });
+  }, [id]);
 
   if (error) return <p className="text-red-500 p-4">Hiba: {error}</p>;
-  if (!evt)   return <p className="p-4">Betöltés...</p>;
+  if (!evt) return <p className="p-4">Betöltés...</p>;
 
-  // dátum formázása (range vagy single)
-  let dateText;
-  if (evt.date.includes('/')) {
-    const [s, e] = evt.date.split('/');
-    dateText = `${format(parseISO(s), 'yyyy.MM.dd')} – ${format(parseISO(e), 'yyyy.MM.dd')}`;
+  // --- JAVÍTOTT DÁTUMKEZELÉS ---
+  // Először létrehozunk egységes, megbízható 's' (start) és 'e' (end) dátum objektumokat,
+  // függetlenül a bejövő JSON formátumától.
+  let s, e;
+  if (evt.startDate) {
+    s = parseISO(evt.startDate);
+    e = parseISO(evt.endDate || evt.startDate);
+  } else if (evt.date && evt.date.includes('/')) {
+    const parts = evt.date.split('/');
+    s = parseISO(parts[0]);
+    e = parseISO(parts[1]);
   } else {
-    dateText = format(parseISO(evt.date), 'yyyy.MM.dd');
+    s = e = parseISO(evt.date);
   }
+
+  // Most már a megbízható 's' és 'e' változókkal dolgozunk.
+  let dateText;
+  // A `+` jel a dátum objektumot számmá alakítja (timestamp), így könnyű őket összehasonlítani.
+  if (+s !== +e) {
+    dateText = `${format(s, 'yyyy.MM.dd')} – ${format(e, 'yyyy.MM.dd')}`;
+  } else {
+    dateText = format(s, 'yyyy.MM.dd');
+  }
+  // --- JAVÍTÁS VÉGE ---
 
   return (
     <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-md rounded-2xl shadow-xl">
@@ -55,7 +70,7 @@ export default function EventDetail() {
       {/* Dátum és idő */}
       <p className="text-rose-50 dark:text-amber-100 mb-1">
         <strong>Dátum:</strong> {dateText}
-        {evt.time && <> &nbsp; <strong>Idő:</strong> {evt.time}</>}
+        {evt.time && <>   <strong>Idő:</strong> {evt.time}</>}
       </p>
 
       {/* Helyszín */}
