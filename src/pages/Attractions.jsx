@@ -14,6 +14,9 @@ export default function Attractions() {
   const [modalAttractionId, setModalAttractionId] = useState(null);
   const [view, setView] = useState('list');
   const [searchQuery, setSearchQuery] = useState('');
+  const [userPosition, setUserPosition] = useState(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationError, setLocationError] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -45,6 +48,27 @@ export default function Attractions() {
   if (loading) return <p className="p-4 text-center">Látnivalók betöltése...</p>;
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
 
+  const handleLocateMe = () => {
+  if (!navigator.geolocation) {
+    setLocationError('A böngésződ nem támogatja a helymeghatározást.');
+    return;
+  }
+
+  setIsLocating(true);
+  setLocationError('');
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      setUserPosition([latitude, longitude]);
+      setIsLocating(false);
+    },
+    () => {
+      setLocationError('Nem sikerült lekérni a pozíciót. Engedélyezd a böngészőben a helymeghatározást.');
+      setIsLocating(false);
+    }
+  );
+};
   
   return (
     <div className="p-4 relative">
@@ -135,7 +159,10 @@ export default function Attractions() {
           <div className="rounded-2xl shadow-xl border border-white/20 overflow-hidden">
             <AttractionsMap 
               items={filteredItems} 
-              onMarkerClick={(id) => setModalAttractionId(id)} 
+              onMarkerClick={(id) => setModalAttractionId(id)}
+              onLocateMe={handleLocateMe}
+              userPosition={userPosition}
+              isLocating={isLocating}
             />
           </div>
         </div>
