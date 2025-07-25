@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchEvents } from '../api';
 import { format, parseISO } from 'date-fns';
+import { fetchEventById } from '../api';
 
 export default function EventDetail() {
   const { id } = useParams();
@@ -9,17 +10,14 @@ export default function EventDetail() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchEvents()
-      .then(data => {
-        const found = data.find(e => String(e.id) === id);
-        if (!found) {
-          setError('Nem található ilyen rendezvény.');
-        } else {
-          setEvt(found);
-        }
-      })
-      .catch(err => setError(err.message));
-  }, [id]);
+  fetchEventById(id)
+    .then(data => {
+      setEvt(data);
+    })
+    .catch(err => {
+      setError(err.message);
+    });
+}, [id]);
 
   if (error) return <p className="text-red-500 p-4">Hiba: {error}</p>;
   if (!evt)   return <p className="p-4">Betöltés...</p>;
