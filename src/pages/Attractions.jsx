@@ -160,8 +160,15 @@ export default function Attractions() {
               <div className="p-4 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-xl font-semibold text-indigo-500 dark:text-indigo-700 pr-2">{item.name}</h3>
-                  <button onClick={() => isFavorite(item.id) ? removeFavorite(item.id) : addFavorite(item.id)} className="text-rose-500 flex-shrink-0 p-1" aria-label={isFavorite(item.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}>
-                    {isFavorite(item.id) ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
+                  <button 
+                    onClick={() => isFavorite(item.id) ? removeFavorite(item.id) : addFavorite(item.id)} 
+                    className="text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90" // MÓDOSÍTOTT
+                    aria-label={isFavorite(item.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
+                  >
+                    {isFavorite(item.id) 
+                    ? <FaHeart size={24} className="animate-heart-pop" /> 
+                    : <FaRegHeart size={24} />
+                    }
                   </button>
                 </div>
                 <p className="text-rose-50 dark:text-amber-100 mb-4 flex-grow">{item.description}</p>
