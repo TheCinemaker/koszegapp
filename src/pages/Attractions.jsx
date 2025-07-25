@@ -9,6 +9,8 @@ export default function Attractions() {
 
   const [categories, setCategories] = useState(['Minden']);
   const [selectedCategory, setSelectedCategory] = useState('Minden');
+  // ÚJ: State a keresőkifejezés tárolására
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -22,17 +24,38 @@ export default function Attractions() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Szűrési logika
-  // A megjelenítendő elemek listája attól függ, melyik kategória van kiválasztva.
-  const filteredItems = selectedCategory === 'Minden'
-    ? items
-    : items.filter(item => item.category === selectedCategory);
+   const filteredItems = items
+    .filter(item => {
+      return selectedCategory === 'Minden' || item.category === selectedCategory;
+    })
+    .filter(item => {
+      const query = searchQuery.toLowerCase().trim();
+      if (query === '') {
+        return true; 
+      }
+      const nameMatch = item.name.toLowerCase().includes(query);
+      const descriptionMatch = item.description.toLowerCase().includes(query);
+      const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
+
+      return nameMatch || descriptionMatch || tagsMatch;
+    });
 
   if (loading) return <p className="p-4 text-center">Látnivalók betöltése...</p>;
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
 
   return (
     <div className="p-4">
+      {/*Keresőmező */}
+      <div className="mb-6 px-4">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Keress látnivalót, pl. reneszánsz..."
+          className="w-full p-3 bg-white/30 backdrop-blur-sm rounded-full text-indigo-900 placeholder-indigo-900/60 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+        />
+      </div>
+      {/*swipe-olható menüsor */}
       <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2 flex-nowrap md:flex-wrap md:justify-center scrollbar-hide">
         {categories.map(category => (
           <button
@@ -50,7 +73,6 @@ export default function Attractions() {
         ))}
       </div>
 
-      {/* A grid most már a SZŰRT listából (`filteredItems`) dolgozik */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredItems.length === 0 && !loading && (
           <div className="col-span-full text-center py-10">
