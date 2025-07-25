@@ -3,6 +3,7 @@ import { fetchAttractions } from '../api';
 import { Link } from 'react-router-dom';
 import AttractionsMap from '../components/AttractionsMap';
 import { FaList, FaMapMarkedAlt } from 'react-icons/fa';
+import AttractionDetailModal from '../components/AttractionDetailModal';
 
 export default function Attractions() {
   const [items, setItems] = useState([]);
@@ -10,7 +11,7 @@ export default function Attractions() {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState(['Minden']);
   const [selectedCategory, setSelectedCategory] = useState('Minden');
-  // A nézetváltó state-je. Alapból a lista nézetet mutatjuk.
+  const [modalAttractionId, setModalAttractionId] = useState(null);
   const [view, setView] = useState('list');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -44,11 +45,9 @@ export default function Attractions() {
   if (loading) return <p className="p-4 text-center">Látnivalók betöltése...</p>;
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
 
-  // === INNEN JÖN A HELYESEN FELÉPÍTETT RETURN BLOKK ===
+  
   return (
-    <div className="p-4">
-      
-      {/* --- 1. KEZELŐSZERVEK SZEKCIÓ --- */}
+    <div className="p-4 relative">
       
       {/* Keresőmező */}
       <div className="mb-6 px-4">
@@ -96,10 +95,8 @@ export default function Attractions() {
         </div>
       </div>
 
-      {/* --- 2. TARTALOM SZEKCIÓ (Feltételes renderelés) --- */}
-
       {view === 'list' ? (
-        // HA A 'view' ÉRTÉKE 'list', EZ JELENIK MEG:
+        // === LISTA NÉZET ===
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.length === 0 && !loading && (
             <div className="col-span-full text-center py-10">
@@ -107,12 +104,12 @@ export default function Attractions() {
             </div>
           )}
           {filteredItems.map(item => (
-            <div key={item.id} className="bg-white/20 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
+            <div key={item.id} className="bg-white/20 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden flex flex-col">
               <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
-              <div className="p-4">
+              <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-xl font-semibold mb-2 text-indigo-500 dark:text-indigo-700">{item.name}</h3>
-                <p className="text-rose-50 dark:text-amber-100 mb-2">{item.description}</p>
-                <div className="flex justify-between items-center">
+                <p className="text-rose-50 dark:text-amber-100 mb-4 flex-grow">{item.description}</p>
+                <div className="flex justify-between items-center mt-auto">
                   <a
                     href={`https://www.google.com/maps?q=${item.coordinates.lat},${item.coordinates.lng}`}
                     target="_blank"
@@ -123,7 +120,7 @@ export default function Attractions() {
                   </a>
                   <Link
                     to={`/attractions/${item.id}`}
-                    className="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600 transition"
+                    className="bg-indigo-500 text-white px-3 py-1 rounded-lg hover:bg-indigo-600 transition"
                   >
                     Részletek
                   </Link>
@@ -133,10 +130,22 @@ export default function Attractions() {
           ))}
         </div>
       ) : (
-        // HA A 'view' ÉRTÉKE BÁRMI MÁS (pl. 'map'), EZ JELENIK MEG:
-        <div className="px-4">
-            <AttractionsMap items={filteredItems} />
+        // === TÉRKÉP NÉZET ===
+        <div className="px-1 sm:px-4">
+          <div className="rounded-2xl shadow-xl border border-white/20 overflow-hidden">
+            <AttractionsMap 
+              items={filteredItems} 
+              onMarkerClick={(id) => setModalAttractionId(id)} 
+            />
+          </div>
         </div>
+      )}
+
+      {modalAttractionId && (
+        <AttractionDetailModal 
+          attractionId={modalAttractionId}
+          onClose={() => setModalAttractionId(null)}
+        />
       )}
     </div>
   );
