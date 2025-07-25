@@ -68,10 +68,13 @@ export default function AttractionDetailModal({ attractionId, onClose, isFavorit
               </h1>
               <button 
                 onClick={() => isFavorite(attr.id) ? removeFavorite(attr.id) : addFavorite(attr.id)} 
-                className="text-rose-500 flex-shrink-0 p-2 -mr-2 mt-1"
+                className="text-rose-500 flex-shrink-0 p-2 -mr-2 mt-1 transition-transform active:scale-90" // MÓDOSÍTOTT
                 aria-label={isFavorite(attr.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
               >
-                {isFavorite(attr.id) ? <FaHeart size={28} /> : <FaRegHeart size={28} />}
+                {isFavorite(attr.id)
+                ? <FaHeart size={28} className="animate-heart-pop" />
+                : <FaRegHeart size={28} />
+                }
               </button>
             </div>
 
