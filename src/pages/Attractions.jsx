@@ -7,9 +7,7 @@ export default function Attractions() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // State a kategóriák tárolására
   const [categories, setCategories] = useState(['Minden']);
-  // State az aktív kategória tárolására. Alapértelmezetten 'Minden'.
   const [selectedCategory, setSelectedCategory] = useState('Minden');
 
   useEffect(() => {
@@ -17,8 +15,6 @@ export default function Attractions() {
     fetchAttractions()
       .then(data => {
         setItems(data);
-        // Ez a sor tökéletesen fog működni a te JSON-öddel!
-        // Kigyűjti az összes egyedi értéket a 'category' mezőkből.
         const uniqueCategories = [...new Set(data.map(item => item.category))];
         setCategories(['Minden', ...uniqueCategories]);
       })
@@ -37,16 +33,16 @@ export default function Attractions() {
 
   return (
     <div className="p-4">
-      {/* Kategória szűrő gombok */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
+      <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2 flex-nowrap md:flex-wrap md:justify-center scrollbar-hide">
         {categories.map(category => (
           <button
             key={category}
+            // A flex-shrink-0 kulcsfontosságú, hogy a gombok ne zsugorodjanak össze!
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 text-sm font-medium rounded-full transition-transform transform active:scale-95 ${
+            className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full transition-transform transform active:scale-95 ${
               selectedCategory === category
-                ? 'bg-indigo-600 text-white shadow-lg' // Aktív gomb stílusa
-                : 'bg-white/30 text-indigo-900 hover:bg-white/50 backdrop-blur-sm' // Inaktív gomb stílusa
+                ? 'bg-indigo-600 text-white shadow-lg'
+                : 'bg-white/30 text-indigo-900 hover:bg-white/50 backdrop-blur-sm'
             }`}
           >
             {category}
@@ -56,7 +52,6 @@ export default function Attractions() {
 
       {/* A grid most már a SZŰRT listából (`filteredItems`) dolgozik */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Ha a szűrés után nincs találat, megjelenítünk egy üzenetet */}
         {filteredItems.length === 0 && !loading && (
           <div className="col-span-full text-center py-10">
             <p className="text-lg text-rose-50 dark:text-amber-100">Nincs találat ebben a kategóriában.</p>
@@ -64,7 +59,7 @@ export default function Attractions() {
         )}
 
         {filteredItems.map(item => (
-          // A kártya komponens változatlan
+          // A kártya komponens 
           <div key={item.id} className="bg-white/20 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
             <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
             <div className="p-4">
