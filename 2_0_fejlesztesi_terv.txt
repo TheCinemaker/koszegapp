@@ -5,7 +5,9 @@ Folyamatban:
       - Feltöltési lehetőséggel(kész) Feltöltő űrlap linkje: https://docs.google.com/forms/d/1mMxdrh5r4H-lEnbju7xMnY1KstXpoPdMY3_xPNjypMw/edit
       - Google válaszok linkje: https://docs.google.com/spreadsheets/d/1I-f8S2RtPaQS8Pn30HibSQFkuByyfvxJdNMuedy0bhg/edit?gid=1564614289#gid=1564614289
 
-- Bugfix az atractions.jsx-ben és az atractionsdetail.jsx-ben. index.css-ben uj tailwind osztály hozzáadva a vertikális görgetéshez
+Attractions oldalak:
+- Bugfix az atractions.jsx-ben és az atractionsdetail.jsx-ben. index.css-ben uj tailwind osztály hozzáadva a vertikális görgetéshez, main.jsx javitva a leaflethez
+- térképes nézet, szűrők, kereső hozzáadása
 
 Kész módosítások: 
 
