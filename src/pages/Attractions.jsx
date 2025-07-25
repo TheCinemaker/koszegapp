@@ -15,6 +15,7 @@ export default function Attractions() {
   const [view, setView] = useState('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [userPosition, setUserPosition] = useState(null);
+  const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
   const [isLocating, setIsLocating] = useState(false);
   const [locationError, setLocationError] = useState('');
 
@@ -30,20 +31,39 @@ export default function Attractions() {
       .finally(() => setLoading(false));
   }, []);
 
-  const filteredItems = items
-    .filter(item => {
-      return selectedCategory === 'Minden' || item.category === selectedCategory;
-    })
-    .filter(item => {
-      const query = searchQuery.toLowerCase().trim();
-      if (query === '') {
-        return true;
+  useEffect(() => {
+  setLoading(true);
+  fetchAttractions()
+    .then(data => {
+      setItems(data);
+      let availableCategories = ['Minden', ...new Set(data.map(item => item.category))];
+      if (favorites.length > 0) {
+        availableCategories.splice(1, 0, 'Kedvenceim');
       }
-      const nameMatch = item.name.toLowerCase().includes(query);
-      const descriptionMatch = item.description.toLowerCase().includes(query);
-      const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
-      return nameMatch || descriptionMatch || tagsMatch;
-    });
+      
+      setCategories(availableCategories);
+    })
+    .catch(err => setError(err.message))
+    .finally(() => setLoading(false));
+}, [favorites.length]);
+
+  const filteredItems = items
+  .filter(item => {
+    if (selectedCategory === 'Kedvenceim') {
+      return isFavorite(item.id);
+    }
+    return selectedCategory === 'Minden' || item.category === selectedCategory;
+  })
+  .filter(item => {
+    const query = searchQuery.toLowerCase().trim();
+    if (query === '') {
+      return true;
+    }
+    const nameMatch = item.name.toLowerCase().includes(query);
+    const descriptionMatch = item.description.toLowerCase().includes(query);
+    const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
+    return nameMatch || descriptionMatch || tagsMatch;
+  });
 
   if (loading) return <p className="p-4 text-center">Látnivalók betöltése...</p>;
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
@@ -129,24 +149,39 @@ export default function Attractions() {
           )}
           {filteredItems.map(item => (
             <div key={item.id} className="bg-white/20 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden flex flex-col">
-              <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
-              <div className="p-4 flex flex-col flex-grow">
-                <h3 className="text-xl font-semibold mb-2 text-indigo-500 dark:text-indigo-700">{item.name}</h3>
-                <p className="text-rose-50 dark:text-amber-100 mb-4 flex-grow">{item.description}</p>
-                <div className="flex justify-between items-center mt-auto">
-                  <a
-                    href={`https://www.google.com/maps?q=${item.coordinates.lat},${item.coordinates.lng}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-500 dark:text-indigo-700 underline"
-                  >
-                    Térképen
-                  </a>
-                  <Link
-                    to={`/attractions/${item.id}`}
-                    className="bg-indigo-500 text-white px-3 py-1 rounded-lg hover:bg-indigo-600 transition"
-                  >
-                    Részletek
+  <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
+  <div className="p-4 flex flex-col flex-grow">
+    
+    {/* ÚJ, ÁTALAKÍTOTT RÉSZ A CÍMNEK ÉS A SZÍVNEK */}
+    <div className="flex justify-between items-start mb-2">
+      <h3 className="text-xl font-semibold text-indigo-500 dark:text-indigo-700 pr-2">
+        {item.name}
+      </h3>
+      <button 
+        onClick={() => isFavorite(item.id) ? removeFavorite(item.id) : addFavorite(item.id)} 
+        className="text-rose-500 flex-shrink-0 p-1"
+        aria-label={isFavorite(item.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
+      >
+        {isFavorite(item.id) ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
+      </button>
+    </div>
+
+    <p className="text-rose-50 dark:text-amber-100 mb-4 flex-grow">{item.description}</p>
+    
+    <div className="flex justify-between items-center mt-auto">
+      <a
+        href={`https://www.google.com/maps?q=${item.coordinates.lat},${item.coordinates.lng}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-indigo-500 dark:text-indigo-700 underline"
+      >
+        Térképen
+      </a>
+      <Link
+        to={`/attractions/${item.id}`}
+        className="bg-indigo-500 text-white px-3 py-1 rounded-lg hover:bg-indigo-600 transition"
+      >
+        Részletek
                   </Link>
                 </div>
               </div>
