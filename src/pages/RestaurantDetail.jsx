@@ -1,30 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchRestaurants } from '../api';
+import RestaurantDetailSkeleton from '../components/RestaurantDetailSkeleton'; // <<< IMPORT
+// Ikonok importálása
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaFacebook, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 export default function RestaurantDetail() {
   const { id } = useParams();
   const [rest, setRest] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // <<< VÁLTOZÁS
 
   useEffect(() => {
+    setLoading(true); // <<< VÁLTOZÁS
     fetchRestaurants()
       .then(data => {
         const found = data.find(r => String(r.id) === id);
-        if (!found) setError('Nem található ilyen vendéglátóhely.');
-        else setRest(found);
+        if (!found) {
+          setError('Nem található ilyen vendéglátóhely.');
+        } else {
+          setRest(found);
+        }
       })
-      .catch(err => setError(err.message));
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false)); // <<< VÁLTOZÁS
   }, [id]);
 
-  if (error) return <p className="text-red-500 p-4">Hiba: {error}</p>;
-  if (!rest)  return <p className="p-4">Betöltés…</p>;
+  // <<< VÁLTOZÁS: A teljes betöltési logika
+  if (loading) return <RestaurantDetailSkeleton />;
+  if (error) return <p className="text-red-500 text-center p-4">Hiba: {error}</p>;
+  if (!rest) return null; // Ha valamiért nincs adat, ne jelenjen meg semmi
 
   return (
-    <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
+    <div className="max-w-3xl mx-auto my-6 p-4 md:p-6 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
       <div className="mb-4">
-        <Link to="/gastronomy" className="inline-block text-indigo-600 hover:underline">
-          ← Vissza
+        <Link to="/gastronomy" className="inline-block text-indigo-600 dark:text-indigo-400 hover:underline">
+          ← Vissza a listához
         </Link>
       </div>
 
@@ -36,17 +47,45 @@ export default function RestaurantDetail() {
         />
       )}
 
-      <h1 className="text-3xl font-bold mb-2 text-indigo-500 dark:text-indigo-700">{rest.name}</h1>
+      <h1 className="text-3xl lg:text-4xl font-bold mb-2 text-indigo-800 dark:text-indigo-300">{rest.name}</h1>
 
       {rest.description && (
-        <p className="text-gray-800 mb-4 text-rose-50 dark:text-amber-100">{rest.description}</p>
+        <p className="text-gray-800 dark:text-gray-200 mb-6">{rest.description}</p>
       )}
+
+      {/* Információs blokk ikonokkal */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mb-8 text-gray-800 dark:text-gray-200">
+        {rest.address && (
+          <div className="flex items-start"><FaMapMarkerAlt className="mt-1 mr-3 text-indigo-500 flex-shrink-0" /><span>{rest.address}</span></div>
+        )}
+        {rest.phone && (
+          <div className="flex items-center"><FaPhone className="mr-3 text-indigo-500 flex-shrink-0" /><a href={`tel:${rest.phone}`} className="hover:underline">{rest.phone}</a></div>
+        )}
+        {rest.email && (
+          <div className="flex items-center"><FaEnvelope className="mr-3 text-indigo-500 flex-shrink-0" /><a href={`mailto:${rest.email}`} className="hover:underline">{rest.email}</a></div>
+        )}
+        {rest.website && (
+          <div className="flex items-center"><FaGlobe className="mr-3 text-indigo-500 flex-shrink-0" /><a href={rest.website} target="_blank" rel="noopener noreferrer" className="hover:underline truncate">{rest.website.replace(/^https?:\/\//, '')}</a></div>
+        )}
+        {rest.facebook && (
+          <div className="flex items-center"><FaFacebook className="mr-3 text-indigo-500 flex-shrink-0" /><a href={rest.facebook} target="_blank" rel="noopener noreferrer" className="hover:underline truncate">{rest.facebook.replace(/^https?:\/\//, '')}</a></div>
+        )}
+        {typeof rest.delivery === "boolean" && (
+          <div className="flex items-center">
+            {rest.delivery 
+              ? <FaCheckCircle className="mr-3 text-green-500 flex-shrink-0" /> 
+              : <FaTimesCircle className="mr-3 text-red-500 flex-shrink-0" />
+            }
+            <span>Házhozszállítás</span>
+          </div>
+        )}
+      </div>
 
       {/* Térkép */}
       {rest.coords && (
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2 text-indigo-500 dark:text-indigo-700">Helyszín térképen</h2>
-          <div className="w-full h-64 rounded-lg overflow-hidden shadow-md">
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-3 text-indigo-800 dark:text-indigo-300">Térkép</h2>
+          <div className="w-full h-80 rounded-lg overflow-hidden shadow-md border-2 border-white/20">
             <iframe
               title="Helyszín térképe"
               src={`https://www.google.com/maps?q=${rest.coords.lat},${rest.coords.lng}&z=16&output=embed`}
@@ -55,75 +94,18 @@ export default function RestaurantDetail() {
               loading="lazy"
             />
           </div>
-          <p className="text-sm text-rose-50 dark:text-amber-100 mt-2">
-            Koordináták: {rest.coords.lat}, {rest.coords.lng}
-          </p>
         </section>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        {rest.address && (
-          <div>
-            <h3 className="font-semibold text-indigo-500 dark:text-indigo-700">Cím</h3>
-            <p className="text-rose-50 dark:text-amber-100">{rest.address}</p>
-          </div>
-        )}
-        {rest.phone && (
-          <div>
-            <h3 className="font-semibold text-indigo-500 dark:text-indigo-700">Telefon</h3>
-            <a href={`tel:${rest.phone}`} className="underline text-rose-50 dark:text-amber-100">{rest.phone}</a>
-          </div>
-        )}
-        {rest.email && (
-          <div>
-            <h3 className="font-semibold text-indigo-500 dark:text-indigo-700">Email</h3>
-            <a href={`mailto:${rest.email}`} className="underline text-rose-50 dark:text-amber-100">{rest.email}</a>
-          </div>
-        )}
-        {rest.website && (
-          <div className="md:col-span-2">
-            <h3 className="font-semibold text-indigo-500 dark:text-indigo-700">Web</h3>
-            <a href={rest.website} target="_blank" rel="noopener noreferrer" className="underline text-rose-50 dark:text-amber-100">
-              {rest.website.replace(/^https?:\/\//, '')}
-            </a>
-          </div>
-        )}
-        {rest.facebook && (
-          <div className="md:col-span-2">
-            <h3 className="font-semibold text-indigo-500 dark:text-indigo-700">Facebook</h3>
-            <a href={rest.facebook} target="_blank" rel="noopener noreferrer" className="underline text-rose-50 dark:text-amber-100">
-              {rest.facebook.replace(/^https?:\/\//, '')}
-            </a>
-          </div>
-        )}
-        {/* Nincs delivery objektum, csak true/false */}
-        {typeof rest.delivery === "boolean" && (
-          <div>
-            <h3 className="font-semibold text-indigo-500 dark:text-indigo-700">Házhozszállítás</h3>
-            <p className="text-rose-50 dark:text-amber-100">{rest.delivery ? "Van" : "Nincs"}</p>
-          </div>
-        )}
-      </div>
-
+      {/* További részletek */}
       {rest.amenities?.length > 0 && (
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2 text-indigo-500 dark:text-indigo-700">Kényelmi szolgáltatások</h2>
-          <ul className="list-disc list-inside text-rose-50 dark:text-amber-100">
-            {rest.amenities.map(a => <li key={a}>{a}</li>)}
-          </ul>
-        </section>
-      )}
-
-      {rest.rating && (
-        <p className="text-sm text-rose-50 dark:text-amber-100">
-          ⭐ {rest.rating} ({rest.reviews_count} értékelés)
-        </p>
-      )}
-
-      {rest.details && (
-        <section className="mt-6">
-          <h2 className="text-xl font-semibold mb-2 text-indigo-500 dark:text-indigo-700">Részletek</h2>
-          <p className="text-rose-50 dark:text-amber-100">{rest.details}</p>
+        <section>
+          <h2 className="text-2xl font-semibold mb-3 text-indigo-800 dark:text-indigo-300">Szolgáltatások</h2>
+          <div className="flex flex-wrap gap-2">
+            {rest.amenities.map(a => 
+              <span key={a} className="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">{a}</span>
+            )}
+          </div>
         </section>
       )}
     </div>
