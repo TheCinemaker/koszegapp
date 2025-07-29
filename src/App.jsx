@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { DarkModeContext } from './contexts/DarkModeContext';
-
-import { useFavorites } from './hooks/useFavorites';
+import { useFavorites } from './contexts/FavoritesContext.jsx';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels } from './api';
 
 import Home from './pages/Home';
