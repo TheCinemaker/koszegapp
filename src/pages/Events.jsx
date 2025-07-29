@@ -10,7 +10,7 @@ import {
   startOfMonth,
   endOfMonth
 } from 'date-fns';
-import { useFavorites } from '../hooks/useFavorites'; // ÚJ
+import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';   // ÚJ
 
 const MONTH_NAMES = [
