@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, useMemo } from 'react'; // useMemo hozzáadva
 import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { DarkModeContext } from './contexts/DarkModeContext';
 
-// <<< LOGIKA KÖZPONTPONTOSÍTÁSA >>>
 import { useFavorites } from './hooks/useFavorites';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels } from './api';
 
-// <<< OLDALAK ÉS KOMPONENSEK IMPORTJA >>>
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
 import AttractionDetail from './pages/AttractionDetail';
@@ -24,13 +22,11 @@ import LeisureDetail from './pages/LeisureDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 
-// ÚJ, GLOBÁLIS KOMPONENSEK
-import FavoritesDropdown from './components/FavoritesDropdown';
+import FavoritesDashboard from './components/FavoritesDashboard'; // A RÉGI HELYETT EZT HASZNÁLJUK
 import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import ProgramModal from './components/ProgramModal';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
-
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -39,7 +35,6 @@ export default function App() {
   const location = useLocation();
   const { dark, toggleDark } = useContext(DarkModeContext);
   
-  // === GLOBÁLIS ÁLLAPOTKEZELÉS ===
   const { favorites, isFavorite } = useFavorites();
   const [appData, setAppData] = useState({
     attractions: [], events: [], leisure: [], restaurants: [], hotels: [], loading: true
@@ -48,17 +43,25 @@ export default function App() {
   const [showWeatherModal, setShowWeatherModal] = useState(false);
   const favoritesRef = useRef(null);
 
-  // --- JAVÍTÁS: HIÁNYZÓ STATE-EK HOZZÁADÁSA ---
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const isHome = location.pathname === '/';
   
-  // === GLOBÁLIS ADATBETÖLTÉS ===
   useEffect(() => {
     Promise.all([
       fetchAttractions(), fetchEvents(), fetchLeisure(), fetchRestaurants(), fetchHotels()
-    ]).then(([attractions, events, leisure, restaurants, hotels]) => {
-      setAppData({ attractions, events, leisure, restaurants, hotels, loading: false });
+    ]).then(([attractions, eventsData, leisure, restaurants, hotels]) => {
+      const now = new Date();
+      // Az eseményeket már betöltéskor megszűrjük a régiektől
+      const normalizedEvents = eventsData.map(evt => {
+          let s, e;
+          if (evt.startDate) { s = new Date(evt.startDate); e = evt.endDate ? new Date(evt.endDate) : s; } 
+          else if (evt.date.includes('/')) { const p = evt.date.split('/'); s = new Date(p[0]); e = new Date(p[1] || p[0]); }
+          else { s = new Date(evt.date); e = s; }
+          return { ...evt, _s: s, _e: e };
+        }).filter(evt => evt._e >= now);
+
+      setAppData({ attractions, events: normalizedEvents, leisure, restaurants, hotels, loading: false });
     }).catch(console.error);
 
     fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
@@ -66,7 +69,6 @@ export default function App() {
       .catch(console.error);
   }, []);
 
-  // Dropdown bezárása külső kattintásra
   useEffect(() => {
     const handleClickOutside = event => {
       if (favoritesRef.current && !favoritesRef.current.contains(event.target)) setShowFavorites(false);
@@ -75,12 +77,12 @@ export default function App() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Kedvencek kiszűrése a dropdownhoz
-  const favoriteAttractions = appData.attractions.filter(item => isFavorite(item.id));
-  const favoriteEvents = appData.events.filter(item => isFavorite(item.id));
-  const favoriteLeisure = appData.leisure.filter(item => isFavorite(item.id));
-
-
+  // --- AZONNALI FRISSÜLÉS JAVÍTÁSA (useMemo) ---
+  // Ezek a listák most már garantáltan újra fognak számolódni, amint a 'favorites' tömb megváltozik.
+  const favoriteAttractions = useMemo(() => appData.attractions.filter(item => isFavorite(item.id)), [appData.attractions, favorites]);
+  const favoriteEvents = useMemo(() => appData.events.filter(item => isFavorite(item.id)), [appData.events, favorites]);
+  const favoriteLeisure = useMemo(() => appData.leisure.filter(item => isFavorite(item.id)), [appData.leisure, favorites]);
+  
   return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
       <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
@@ -90,29 +92,20 @@ export default function App() {
             <span onClick={() => navigate('/')} className="text-base sm:text-lg font-bold text-purple-700 cursor-pointer" >KőszegAPP</span>
           </div>
           <div className="flex items-center space-x-3">
-            {weather.temp !== '--' && (
-              <button onClick={() => setShowWeatherModal(true)} className="flex items-center space-x-1 text-gray-500 dark:text-white bg-beige-200/50 dark:bg-gray-700 backdrop-blur-sm px-2 py-1 rounded-full">
-                <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="weather" className="w-5 h-5"/>
-                <span className="text-sm">{weather.temp}°C</span>
+            <button onClick={() => setShowWeatherModal(true)} className="flex items-center space-x-1 text-gray-500 dark:text-white bg-beige-200/50 dark:bg-gray-700 backdrop-blur-sm px-2 py-1 rounded-full transition hover:scale-105">
+              <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="weather" className="w-5 h-5"/>
+              <span className="text-sm">{weather.temp}°C</span>
+            </button>
+            
+            {/* A KEDVENCEK GOMB AZ ÚJ, MENŐ DROPDOWN-T NYITJA MEG */}
+            <div className="relative" ref={favoritesRef}>
+              <button onClick={() => setShowFavorites(!showFavorites)} className="relative flex items-center px-2 py-1 rounded hover:bg-beige-200/50 dark:hover:bg-gray-700 transition" aria-label="Kedvencek megnyitása">
+                <span className="text-xl text-rose-500">❤️</span>
+                {favorites.length > 0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>}
               </button>
-            )}
-            
-            {/* ÚJ KEDVENCEK GOMB */}
-            {favorites.length > 0 && (
-              <div className="relative" ref={favoritesRef}>
-                <button onClick={() => setShowFavorites(!showFavorites)} className="relative flex items-center px-2 py-1 rounded hover:bg-beige-200/50 dark:hover:bg-gray-700 transition" aria-label="Kedvencek megnyitása">
-                  <span className="text-xl text-rose-500">❤️</span>
-                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>
-                </button>
-                {showFavorites && <FavoritesDropdown attractions={favoriteAttractions} events={favoriteEvents} leisure={favoriteLeisure} onClose={() => setShowFavorites(false)} />}
-              </div>
-            )}
-            
-            {/*
-            <div className="relative" ref={langDropdownRef}>
-              ... a zászlós rész kikommentelve ...
+              {showFavorites && <FavoritesDashboard attractions={favoriteAttractions} events={favoriteEvents} leisure={favoriteLeisure} onClose={() => setShowFavorites(false)} />}
             </div>
-            */}
+            
             <button onClick={toggleDark} className="px-2 py-1 rounded bg-beige-200/50 dark:bg-gray-700 text-sm transition">{dark ? '🌙' : '☀️'}</button>
           </div>
         </div>
@@ -141,44 +134,17 @@ export default function App() {
       </main>
 
       {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
-
-      {/* ProgramModal (automatikus betöltéskor) */}
-      {isHome && showProgramModal && (
-      <ProgramModal
-        onClose={() => setShowProgramModal(false)}
-        openDrawer={() => setShowOstromDrawer(true)}
-      />
-      )}
-
-      {/* OstromDrawerFullAnimated */}
-      {showOstromDrawer && (
-        <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} />
-      )}
-
-      {/* Manuális újranyitó gomb */}
-      {isHome && !showProgramModal && (
-        <button
-          onClick={() => setShowProgramModal(true)}
-          className="w-12 h-12 fixed bottom-5 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition"
-          aria-label="Ostromprogramok megnyitása"
-        >
-          📅
-        </button>
-      )}
-
-      {/*
-      <nav className="fixed inset-x-0 bottom-0 bg-white/60 backdrop-blur-md border-t border-beige-200 lg:hidden">
-        ... alsó menüsor ...
-      </nav>
-      */}
-
+      
+      {/* ... a többi modal, footer, stb. változatlan ... */}
+      {isHome && showProgramModal && ( <ProgramModal onClose={() => setShowProgramModal(false)} openDrawer={() => setShowOstromDrawer(true)} /> )}
+      {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
+      {isHome && !showProgramModal && ( <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-5 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition" aria-label="Ostromprogramok megnyitása">📅</button>)}
       <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
         <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.1.5</p>
         <p className="text-xs text-gray-600">© Design: Hidalmasi Erik</p>
         <p className="text-xs text-gray-600">Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a></p>
         <p className="text-xs text-gray-600 mt-2"><Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link></p>
       </footer>
-
       <FloatingButtons />
     </div>
   );
