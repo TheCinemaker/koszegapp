@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
-import { fetchAttractions, fetchEvents } from '../api';
+// --- JAVÍTOTT IMPORT SZEKCIÓ ---
+import { fetchAttractions, fetchEvents, fetchLeisure } from '../api'; 
 import { useFavorites } from '../hooks/useFavorites';
 import MiniAttractionCard from '../components/MiniAttractionCard';
 import MiniEventCard from '../components/MiniEventCard';
-import { FaChevronDown } from 'react-icons/fa'; // Szükségünk lesz egy ikonra
+import MiniLeisureCard from '../components/MiniLeisureCard'; // HIÁNYZOTT
+import { FaChevronDown, FaRegHeart } from 'react-icons/fa';   // FaRegHeart HIÁNYZOTT
 
 const sections = [
   // ... a meglévő sections tömböd változatlan ...
@@ -22,18 +24,18 @@ const sections = [
 export default function Home() {
   const [attractions, setAttractions] = useState([]);
   const [events, setEvents] = useState([]);
+  const [leisure, setLeisure] = useState([]);
   const [loading, setLoading] = useState(true);
   const { favorites, isFavorite } = useFavorites();
-  
-  // ÚJ STATE a lenyitható szekcióhoz
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
 
   useEffect(() => {
-    // ... az adatbetöltő useEffect változatlan ...
     setLoading(true);
-    Promise.all([fetchAttractions(), fetchEvents()])
-      .then(([attractionsData, eventsData]) => {
+    // A fetchLeisure már bekerült az importba, így ez most már működik
+    Promise.all([fetchAttractions(), fetchEvents(), fetchLeisure()])
+      .then(([attractionsData, eventsData, leisureData]) => {
         setAttractions(attractionsData);
+        setLeisure(leisureData);
         
         const now = new Date();
         const normalizedEvents = eventsData
@@ -53,33 +55,23 @@ export default function Home() {
 
   const favoriteAttractions = attractions.filter(item => isFavorite(item.id));
   const favoriteEvents = events.filter(item => isFavorite(item.id));
+  const favoriteLeisure = leisure.filter(item => isFavorite(item.id));
 
-  // --- A VÁLTOZÁS A RETURN BLOKKBAN VAN ---
+  // A return blokk tökéletes volt, a hibát csak a hiányzó importok okozták.
   return (
     <div className="space-y-8">
-      {/* ÚJ, ÁTALAKÍTOTT KEDVENCEK SZEKCIÓ */}
+      {/* A lenyitható dashboard szekció */}
       {!loading && favorites.length > 0 && (
-        <div className="bg-white/20 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl shadow-lg animate-fadein">
-          
-          {/* Mobilnézetben ez a gomb jelenik meg */}
-          <button 
-            onClick={() => setIsDashboardOpen(!isDashboardOpen)}
-            className="w-full flex justify-between items-center text-left md:hidden"
-          >
-            <h2 className="text-xl font-bold text-rose-500">Kedvenceim</h2>
-            <FaChevronDown className={`transition-transform duration-300 ${isDashboardOpen ? 'rotate-180' : ''}`} />
+        <div className="bg-purple-50 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-lg animate-fadein border border-purple-200 dark:border-gray-700">
+          <button onClick={() => setIsDashboardOpen(!isDashboardOpen)} className="w-full flex justify-between items-center text-left md:cursor-default">
+            <h2 className="text-xl font-bold text-purple-800 dark:text-purple-300">Személyes Programfüzetem</h2>
+            <FaChevronDown className={`text-purple-800 dark:text-purple-300 transition-transform duration-300 md:hidden ${isDashboardOpen ? 'rotate-180' : ''}`} />
           </button>
 
-          {/* Asztali nézetben ez a cím jelenik meg */}
-          <h2 className="hidden text-2xl font-bold text-center text-rose-500 mb-4 md:block">
-            Személyes Programfüzeted
-          </h2>
-
-          {/* A TARTALOM: mobilon lenyílik, asztali gépen mindig látszik */}
-          <div className={`space-y-6 md:block transition-all duration-300 ${isDashboardOpen ? 'mt-4' : 'hidden'}`}>
+          <div className={`space-y-6 transition-all duration-300 md:block ${isDashboardOpen ? 'mt-4' : 'hidden'}`}>
             {favoriteAttractions.length > 0 && (
               <section>
-                <h3 className="text-lg font-semibold mb-3 text-purple-900 dark:text-purple-300">Elmentett Helyek</h3>
+                <h3 className="text-lg font-semibold mb-3 text-purple-700 dark:text-purple-400">Elmentett Helyek</h3>
                 <div className="flex gap-4 overflow-x-auto pb-3 snap-x scrollbar-hide">
                   {favoriteAttractions.map(item => <MiniAttractionCard key={item.id} item={item} />)}
                 </div>
@@ -87,9 +79,17 @@ export default function Home() {
             )}
             {favoriteEvents.length > 0 && (
               <section>
-                <h3 className="text-lg font-semibold mb-3 text-purple-900 dark:text-purple-300">Közelgő Eseményeid</h3>
+                <h3 className="text-lg font-semibold mb-3 text-purple-700 dark:text-purple-400">Közelgő Eseményeid</h3>
                 <div className="flex gap-4 overflow-x-auto pb-3 snap-x scrollbar-hide">
                   {favoriteEvents.map(event => <MiniEventCard key={event.id} event={event} />)}
+                </div>
+              </section>
+            )}
+            {favoriteLeisure.length > 0 && (
+              <section>
+                <h3 className="text-lg font-semibold mb-3 text-purple-700 dark:text-purple-400">Kedvenc Szabadidős Programok</h3>
+                <div className="flex gap-4 overflow-x-auto pb-3 snap-x scrollbar-hide">
+                  {favoriteLeisure.map(item => <MiniLeisureCard key={item.id} item={item} />)}
                 </div>
               </section>
             )}
@@ -97,11 +97,12 @@ export default function Home() {
         </div>
       )}
       
-      {/* Üzenet, ha nincs kedvenc (csak ha a betöltés kész) */}
+      {/* Üzenet, ha nincs kedvenc */}
       {!loading && favorites.length === 0 && (
         <div className="text-center bg-white/20 dark:bg-gray-800/50 p-6 rounded-lg shadow animate-fadein">
-          <p className="font-semibold text-lg text-purple-900 dark:text-purple-300">Állítsd össze a kedvenceid!</p>
-          <p className="text-sm mt-2 text-gray-700 dark:text-gray-300">Böngéssz a <Link to="/attractions" className="text-purple-600 underline">látnivalók</Link> és <Link to="/events" className="text-purple-600 underline">események</Link> között, és a ❤️ ikonnal mentsd el őket ide a főoldalra!</p>
+          <FaRegHeart className="mx-auto text-4xl text-purple-400 mb-3" />
+          <p className="font-semibold text-lg text-purple-900 dark:text-purple-300">Állítsd össze a saját programfüzeted!</p>
+          <p className="text-sm mt-2 text-gray-700 dark:text-gray-300">Böngéssz a látnivalók, események és programok között, és a ❤️ ikonnal mentsd el őket ide a főoldalra!</p>
         </div>
       )}
       
