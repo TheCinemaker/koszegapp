@@ -26,6 +26,29 @@ Attractions oldalak:
     - `src/components/AttractionDetailModal.jsx` (Új fájl!)
     - `src/index.css` (A pulzáló marker animációjához)
 
+Gasztronómia oldalak:
+      - Kódminőség javítása és komponens-alapú refaktorálás:
+      - A gasztronómiai kártyák logikája kiszervezve egy új, újrahasznosítható GastroCard.jsx komponensbe a tisztább kód érdekében.
+      - A listaoldal (Gastronomy.jsx) és a részletező oldal (RestaurantDetail.jsx) modernizálása: robusztus loading és error állapotkezelés bevezetése.
+      - Felhasználói felület (UI) fejlesztése a részletező oldalon: informatív ikonok hozzáadása (cím, telefon, email stb.) a jobb átláthatóságért.
+      -      Build hibák elhárítása: a Netlify build környezetében felmerülő, Parse error típusú hibák felderítése és javítása a komponensekben.
+
+Módosított/új fájlok:
+      src/pages/Gastronomy.jsx
+      src/pages/RestaurantDetail.jsx
+      src/components/GastroCard.jsx (Új fájl!)
+
+Események oldal:
+Kedvencek rendszer bevezetése:
+      Integrálva a meglévő useFavorites hook, lehetővé téve az események kedvencként való elmentését.
+      Szív ikonok (FaHeart, FaRegHeart) elhelyezése az eseménykártyákon a kedvencek jelöléséhez.
+      Dinamikus "Kedvenceim" szűrőgomb hozzáadása, amely csak akkor jelenik meg, ha a felhasználónak van mentett kedvenc eseménye.
+      A szűrési logika kiterjesztése az új "favorites" filter kezelésére.
+Módosított/új fájlok:
+      src/pages/Events.jsx
+
+
+
 
 Kész módosítások: 
 
