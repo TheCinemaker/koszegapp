@@ -3,7 +3,7 @@ import { fetchAttractions } from '../api';
 import { Link } from 'react-router-dom';
 import AttractionsMap from '../components/AttractionsMap';
 import AttractionDetailModal from '../components/AttractionDetailModal';
-import { useFavorites } from '../hooks/useFavorites';
+import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import { FaList, FaMapMarkedAlt, FaHeart, FaRegHeart } from 'react-icons/fa';
 
 export default function Attractions() {
