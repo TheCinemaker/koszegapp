@@ -29,9 +29,9 @@ Attractions oldalak:
 Gasztronómia oldalak:
       - Kódminőség javítása és komponens-alapú refaktorálás:
       - A gasztronómiai kártyák logikája kiszervezve egy új, újrahasznosítható GastroCard.jsx komponensbe a tisztább kód érdekében.
-      - A listaoldal (Gastronomy.jsx) és a részletező oldal (RestaurantDetail.jsx) modernizálása: robusztus loading és error állapotkezelés bevezetése.
-      - Felhasználói felület (UI) fejlesztése a részletező oldalon: informatív ikonok hozzáadása (cím, telefon, email stb.) a jobb átláthatóságért.
-      -      Build hibák elhárítása: a Netlify build környezetében felmerülő, Parse error típusú hibák felderítése és javítása a komponensekben.
+      - A listaoldal (Gastronomy.jsx) és a részletező oldal (RestaurantDetail.jsx) modernizálása: robusztus loading és error                    állapotkezelés bevezetése.
+      - Felhasználói felület (UI) fejlesztése a részletező oldalon: informatív ikonok hozzáadása (cím, telefon, email stb.) a jobb              átláthatóságért.
+      - Build hibák elhárítása: a Netlify build környezetében felmerülő, Parse error típusú hibák felderítése és javítása a                     komponensekben.
 
 Módosított/új fájlok:
       src/pages/Gastronomy.jsx
@@ -47,6 +47,21 @@ Kedvencek rendszer bevezetése:
 Módosított/új fájlok:
       src/pages/Events.jsx
 
+Főoldal (Dashboard):
+            Személyre szabott "Programfüzet" szekció bevezetése a főoldalon (Home.jsx):
+            A funkció a meglévő "indítópult" gombok fölött, kiemelt helyen jelenik meg.
+            Dinamikusan betölti az összes látnivalót és eseményt a háttérben.
+            A useFavorites hook segítségével kiszűri és megjeleníti a felhasználó által kedvencnek jelölt elemeket.
+            A kedvencek két külön, vízszintesen görgethető sávban jelennek meg: "Elmentett Helyek" és "Közelgő Eseményeid".
+            Amennyiben a felhasználónak még nincsenek kedvencei, egy segítőkész üzenet jelenik meg, ami a funkció használatára ösztönöz.
+            Újrahasznosítható miniatűr kártyák létrehozása:
+            MiniAttractionCard.jsx és MiniEventCard.jsx komponensek bevezetése a főoldali kedvencek kompakt és letisztult                           megjelenítéséhez.
+            Tudatos tervezési döntés: A főoldal jelenleg a Látnivalók és Események kedvenceire fókuszál a jobb teljesítmény és a                    felhasználói élmény érdekében, de a jövőben könnyen bővíthető más típusú kedvencekkel (pl. gasztronómia).
+Módosított/új fájlok:
+            src/pages/Home.jsx
+            src/components/MiniAttractionCard.jsx (Új fájl!)
+            src/components/MiniEventCard.jsx (Új fájl!)
+
 
 
 
@@ -61,7 +76,6 @@ HIGH priority!! Megy az 1.0-ba amint kész van!
             - utvonalkereső
             - Hangos infó az eseményről (ha megvan minden infó), JSON-ból olvassuk! Nincs infónk annyi!!!!
             - Használt file-ok: programmodal.jsx, ProgramDetailsSheet.jsx, App.jsx (import, route, programbutton (modal only), programok.json
-
 
 
 
