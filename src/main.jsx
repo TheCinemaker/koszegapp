@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 import App from './App';
+import { FavoritesProvider } from './contexts/FavoritesContext.js'
 
 import './index.css';
 import './i18n';
@@ -22,11 +23,14 @@ L.Icon.Default.mergeOptions({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* Sötét mód provider a teljes alkalmazás fölött */}
-    <DarkModeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </DarkModeProvider>
+    <BrowserRouter>
+      {/* A DarkModeProvider öleli körbe a FavoritesProvider-t */}
+      <DarkModeProvider>
+        {/* A FavoritesProvider öleli körbe az App-ot */}
+        <FavoritesProvider>
+          <App />
+        </FavoritesProvider>
+      </DarkModeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
