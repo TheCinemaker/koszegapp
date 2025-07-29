@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 import App from './App';
-import { FavoritesProvider } from './contexts/FavoritesContext.js'
+import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
 
 import './index.css';
 import './i18n';
