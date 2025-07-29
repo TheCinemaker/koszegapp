@@ -165,7 +165,7 @@ export default function Events() {
 
       {/* 2. CÍMKE SZŰRŐK */}
       {tags.length > 0 && (
-        <div className="flex items-center justify-center flex-wrap gap-2 mb-8">
+        <div className="flex items-center justify-center md:justify-center gap-2 mb-8 overflow-x-auto pb-2 flex-nowrap md:flex-wrap scrollbar-hide">
           {tags.map(tag => (
             <button
               key={tag}
