@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchLeisure } from '../api';
-import { useFavorites } from '../hooks/useFavorites'; // <<< ÚJ
+import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';   // <<< ÚJ
 
 export default function Leisure() {
