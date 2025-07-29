@@ -80,7 +80,7 @@ export default function App() {
   const favoriteEvents = appData.events.filter(item => isFavorite(item.id));
   const favoriteLeisure = appData.leisure.filter(item => isFavorite(item.id));
 
-  
+
   return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
       <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
