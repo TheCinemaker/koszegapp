@@ -62,6 +62,29 @@ Módosított/új fájlok:
             src/components/MiniAttractionCard.jsx (Új fájl!)
             src/components/MiniEventCard.jsx (Új fájl!)
 
+Globális architekturális fejlesztések és új funkciók:
+Központi Adatkezelés bevezetése (App.jsx):
+A teljes alkalmazás adatbetöltési logikája átkerült az App.jsx komponensbe. Az oldalak (Látnivalók, Események stb.) már nem egyenként, hanem központilag, props-ként kapják meg az adatokat. Ez jelentősen javítja a teljesítményt és a kód karbantarthatóságát.
+Globális "Programfüzet" a fejlécben:
+A főoldali, nagy méretű "Programfüzet" szekciót egy elegáns, a fejlécből elérhető, lenyíló menüre cseréltük.
+A fejlécben egy szív ikon ❤️ jelzi a funkciót, mellette egy számláló mutatja az elmentett kedvencek számát.
+A lenyíló menü a korábban létrehozott "mini kártyákat" használja a vonzó, vizuális megjelenésért.
+Azonnali frissülés javítása: A useMemo hook bevezetésével a lenyíló kedvencek menü tartalma most már azonnal és garantáltan frissül, amint a felhasználó egy új elemet ad hozzá vagy elvesz onnan, megszüntetve a korábbi adatszinkronizációs hibákat.
+Szabadidő (Leisure) szekció integrálása a kedvencekbe:
+A "Szabadidő" oldal is megkapta a "szivecskézés" funkciót a useFavorites hook segítségével.
+A kedvencnek jelölt szabadidős programok most már megjelennek a fejlécben lévő globális "Programfüzetben".
+Új Funkció: Részletes Időjárás Előrejelzés:
+A fejlécben található időjárás ikon kattinthatóvá vált.
+Kattintásra egy felugró ablak (modal) jelenik meg, ami többnapos, részletes időjárás-előrejelzést mutat Kőszegre.
+Módosított/új fájlok:
+src/App.jsx (Jelentősen átalakítva)
+src/pages/Home.jsx (Jelentősen egyszerűsítve)
+src/pages/Leisure.jsx
+src/components/FavoritesDropdown.jsx (Törölve)
+src/components/FavoritesDashboard.jsx (Új fájl!)
+src/components/MiniLeisureCard.jsx (Új fájl!)
+src/components/WeatherModal.jsx (Új fájl!)
+
 
 
 
