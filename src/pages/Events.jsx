@@ -26,18 +26,20 @@ export default function Events() {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [openPicker, setOpenPicker] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // ÚJ: Loading state
+  const [loading, setLoading] = useState(true);
   
   // Címke state-ek
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState(null);
 
-  // --- JAVÍTOTT useEffect ---
+  // --- ÚJ RÉSZ: Kereső state ---
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Adatok betöltése
   useEffect(() => {
     setLoading(true);
     fetchEvents()
       .then(data => {
-        // Először rendezzük az adatokat
         const sorted = data.slice().sort((a, b) => {
           const getStart = evt => {
             if (evt.startDate) return new Date(evt.startDate);
@@ -47,10 +49,8 @@ export default function Events() {
           return getStart(a) - getStart(b);
         });
         
-        // Beállítjuk az eseményeket
         setEvents(sorted);
 
-        // Kinyerjük a címkéket
         const allTags = sorted.flatMap(event => event.tags || []);
         const tagCounts = allTags.reduce((acc, tag) => {
           acc[tag] = (acc[tag] || 0) + 1;
@@ -63,9 +63,8 @@ export default function Events() {
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
-  }, []); // Üres dependency tömb, csak egyszer fusson le
+  }, []);
 
-  // --- ÁTHELYEZETT LOGIKA, HOGY A RENDERBEN LEGYEN ---
   const now = new Date();
   const wkStart = startOfWeek(now,{weekStartsOn:1});
   const wkEnd = endOfWeek(now,{weekStartsOn:1});
@@ -85,16 +84,28 @@ export default function Events() {
     return { ...evt, _s: s, _e: e };
   });
 
+  // --- ÚJ RÉSZ: Bővített szűrési logika ---
   const filtered = normalized
-  .filter(evt => {
+  .filter(evt => { // 1. Dátum szűrés
     if (filter === 'week') return areIntervalsOverlapping({start: evt._s, end: evt._e}, {start: wkStart, end: wkEnd});
     if (filter === 'month') return areIntervalsOverlapping({start: evt._s, end: evt._e}, {start: moStart, end: moEnd});
     if (filter === 'byMonth') return evt._s.getMonth() + 1 === selectedMonth;
     return true;
   })
-  .filter(evt => {
+  .filter(evt => { // 2. Címke szűrés
     return !selectedTag || (evt.tags && evt.tags.includes(selectedTag));
+  })
+  .filter(evt => { // 3. Szöveges kereső szűrés
+    const query = searchQuery.toLowerCase().trim();
+    if (query === '') return true; // Ha üres a kereső, minden átmegy
+
+    const nameMatch = evt.name.toLowerCase().includes(query);
+    const descriptionMatch = evt.description ? evt.description.toLowerCase().includes(query) : false;
+    const tagsMatch = evt.tags ? evt.tags.some(tag => tag.toLowerCase().includes(query)) : false;
+    
+    return nameMatch || descriptionMatch || tagsMatch;
   });
+
 
   const upcoming = filtered.filter(evt => evt._e >= now);
   const past = filtered.filter(evt => evt._e < now);
@@ -112,6 +123,17 @@ export default function Events() {
       
       {/* === SZŰRŐK SZEKCIÓ === */}
 
+      {/* --- ÚJ RÉSZ: KERESŐMEZŐ --- */}
+      <div className="mb-6 px-4">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Keress eseményre, pl. koncert..."
+          className="w-full p-3 bg-white/30 backdrop-blur-sm rounded-full text-indigo-900 placeholder-indigo-900/60 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+        />
+      </div>
+
       {/* 1. DÁTUM SZŰRŐK */}
       <div className="flex flex-wrap justify-center gap-3 mb-4">
         {[
@@ -123,12 +145,12 @@ export default function Events() {
           <button
             key={opt}
               onClick={() => {
-                setFilter(opt); // 1. Beállítjuk az új dátum szűrőt
-                setSelectedTag(null); // 2. VISSZAÁLLÍTJUK A CÍMKE SZŰRŐT!
-              if (opt === 'byMonth') {
-                setOpenPicker(true);
-              }
-          }}
+                setFilter(opt);
+                setSelectedTag(null);
+                if (opt === 'byMonth') {
+                  setOpenPicker(true);
+                }
+              }}
             className={
               'px-4 py-2 rounded-full transition-all duration-200 ' +
                 (filter === opt
@@ -141,7 +163,7 @@ export default function Events() {
         ))}
       </div>
 
-      {/* 2. CÍMKE SZŰRŐK (HELYES HELYEN) */}
+      {/* 2. CÍMKE SZŰRŐK */}
       {tags.length > 0 && (
         <div className="flex items-center justify-center flex-wrap gap-2 mb-8">
           {tags.map(tag => (
@@ -168,6 +190,8 @@ export default function Events() {
         </div>
       )}
 
+      {/* ... a kód többi része változatlan ... */}
+      
       {/* HÓNAPVÁLASZTÓ MODAL */}
       {openPicker && (
         <div className="fixed inset-0 z-40 flex items-center justify-center">
@@ -203,14 +227,12 @@ export default function Events() {
 
       {/* === TARTALOM SZEKCIÓ === */}
 
-      {/* KIVÁLASZTOTT HÓNAP KIÍRÁSA */}
       {filter === 'byMonth' && (
         <h2 className="text-center font-medium mb-4">
           Kiválasztott hónap: {MONTH_NAMES[selectedMonth - 1]}
         </h2>
       )}
 
-      {/* KÖZELGŐ ESEMÉNYEK */}
       {upcoming.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {upcoming.map(evt => (
@@ -251,11 +273,9 @@ export default function Events() {
           ))}
         </div>
       ) : (
-        // ÜZENET, HA NINCS TALÁLAT
         <p className="text-center text-gray-600 dark:text-gray-400 my-8">A kiválasztott szűrőkkel nincs közelgő esemény.</p>
       )}
 
-      {/* LEZAJLOTT ESEMÉNYEK */}
       {past.length > 0 && (
         <>
           <h3 className="text-xl font-semibold mb-4 border-t border-gray-300/50 pt-4">Lezajlott események</h3>
