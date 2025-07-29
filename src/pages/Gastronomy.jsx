@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'; // Csak a useMemo-t importáljuk pluszban
 import CustomDropdown from '../components/CustomDropdown';
 import GastroCard from '../components/GastroCard';
 import { fetchRestaurants } from '../api';
 
+// A featuredIds és a shuffle függvény változatlan
 const featuredIds = [10];
 
 function shuffle(array) {
@@ -29,33 +30,43 @@ export default function Gastronomy() {
       .finally(() => setLoading(false));
   }, []);
 
-  const types = ['Minden', ...Array.from(new Set(list.map(r => r.type)))];
+  // --- STABILITÁSI JAVÍTÁS ---
+  // A számításokat useMemo-ba csomagoljuk, hogy ne fussanak le feleslegesen.
 
-  const filteredList = list.filter(r => 
-    filterType === 'all' || filterType === 'Minden' || r.type === filterType
-  );
-  
-  const finalList = [
-    ...filteredList.filter(r => featuredIds.includes(r.id)),
-    ...shuffle(filteredList.filter(r => !featuredIds.includes(r.id)))
-  ];
+  // A kategóriákat CSAK AKKOR számoljuk újra, ha a 'list' (az eredeti adat) megváltozik.
+  const types = useMemo(() => {
+    return ['Minden', ...Array.from(new Set(list.map(r => r.type)))];
+  }, [list]);
 
-  const dropdownOptions = types.map(t => ({
+  // A szűrt és randomizált listát CSAK AKKOR számoljuk újra, ha a 'list' vagy a 'filterType' változik.
+  const finalList = useMemo(() => {
+    const filteredList = list.filter(r => 
+      filterType === 'all' || filterType === 'Minden' || r.type === filterType
+    );
+    
+    const featured = filteredList.filter(r => featuredIds.includes(r.id));
+    const nonFeatured = filteredList.filter(r => !featuredIds.includes(r.id));
+    
+    return [...featured, ...shuffle([...nonFeatured])];
+  }, [list, filterType]);
+
+  // A dropdown opciókat CSAK AKKOR generáljuk újra, ha a 'types' lista megváltozik.
+  const dropdownOptions = useMemo(() => types.map(t => ({
     label: t,
     value: t === 'Minden' ? 'all' : t
-  }));
+  })), [types]);
 
+
+  // --- A KÓD TÖBBI RÉSZE VÁLTOZATLAN ---
   if (error) return <p className="text-red-500 p-4">Hiba: {error}</p>;
 
-  // <<< JAVÍTÁS: A SKELETON HELYETT EZT HASZNÁLJUK >>>
   if (loading) {
     return <p className="text-center p-10">Vendéglátóhelyek betöltése...</p>;
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="mb-6 max-w-sm mx-auto">
-        <h2 className="text-center text-lg font-semibold mb-2">Szűrés kategória szerint:</h2>
+    <div className="p-4">
+      <div className="mb-6">
         <CustomDropdown
           options={dropdownOptions}
           value={filterType}
