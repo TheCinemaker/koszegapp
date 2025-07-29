@@ -3,8 +3,6 @@ import React from 'react';
 export default function RestaurantDetailSkeleton() {
   return (
     <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg animate-pulse">
-     
-      {/* Itt cseréljük a problémás /50-et */}
       <div className="h-5 w-24 bg-gray-300 opacity-50 rounded-md mb-6"></div>
       <div className="w-full h-64 bg-gray-300 opacity-50 rounded-lg mb-6"></div>
       <div className="h-9 w-3/4 bg-gray-300 opacity-50 rounded-md mb-4"></div>
