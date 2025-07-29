@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function RestaurantDetailSkeleton() {
   return (
-    // Ugyanaz a külső konténer, mint az igazi oldalon
     <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg animate-pulse">
       {/* Vissza link helye */}
       <div className="h-5 w-24 bg-gray-300/50 rounded-md mb-6"></div>
