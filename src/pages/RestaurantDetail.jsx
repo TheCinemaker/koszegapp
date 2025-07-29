@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchRestaurants } from '../api';
-import RestaurantDetailSkeleton from '../components/RestaurantDetailSkeleton'; 
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaFacebook, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 export default function RestaurantDetail() {
   const { id } = useParams();
   const [rest, setRest] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     fetchRestaurants()
       .then(data => {
         const found = data.find(r => String(r.id) === id);
@@ -22,11 +21,15 @@ export default function RestaurantDetail() {
         }
       })
       .catch(err => setError(err.message))
-      .finally(() => setLoading(false)); 
+      .finally(() => setLoading(false));
   }, [id]);
-  if (loading) return <RestaurantDetailSkeleton />;
+
   if (error) return <p className="text-red-500 text-center p-4">Hiba: {error}</p>;
-  if (!rest) return null; // Ha valamiért nincs adat, ne jelenjen meg semmi
+  
+  // <<< JAVÍTÁS: A SKELETON HELYETT EZT HASZNÁLJUK >>>
+  if (loading) return <p className="text-center p-10">Részletek betöltése...</p>;
+
+  if (!rest) return null;
 
   return (
     <div className="max-w-3xl mx-auto my-6 p-4 md:p-6 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
@@ -50,7 +53,6 @@ export default function RestaurantDetail() {
         <p className="text-gray-800 dark:text-gray-200 mb-6">{rest.description}</p>
       )}
 
-      {/* Információs blokk ikonokkal */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mb-8 text-gray-800 dark:text-gray-200">
         {rest.address && (
           <div className="flex items-start"><FaMapMarkerAlt className="mt-1 mr-3 text-indigo-500 flex-shrink-0" /><span>{rest.address}</span></div>
@@ -78,7 +80,6 @@ export default function RestaurantDetail() {
         )}
       </div>
 
-      {/* Térkép */}
       {rest.coords && (
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-3 text-indigo-800 dark:text-indigo-300">Térkép</h2>
@@ -94,7 +95,6 @@ export default function RestaurantDetail() {
         </section>
       )}
 
-      {/* További részletek */}
       {rest.amenities?.length > 0 && (
         <section>
           <h2 className="text-2xl font-semibold mb-3 text-indigo-800 dark:text-indigo-300">Szolgáltatások</h2>
