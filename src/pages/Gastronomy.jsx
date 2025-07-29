@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react'; // Csak a useMemo-t importáljuk pluszban
+import React, { useState, useEffect, useMemo, useCallback } from 'react'; // useCallback hozzáadva
 import CustomDropdown from '../components/CustomDropdown';
 import GastroCard from '../components/GastroCard';
 import { fetchRestaurants } from '../api';
 
-// A featuredIds és a shuffle függvény változatlan
 const featuredIds = [10];
 
+// A shuffle függvény változatlan
 function shuffle(array) {
   let currentIndex = array.length, randomIndex;
   while (currentIndex !== 0) {
@@ -30,47 +30,60 @@ export default function Gastronomy() {
       .finally(() => setLoading(false));
   }, []);
 
-  // --- STABILITÁSI JAVÍTÁS ---
-  // A számításokat useMemo-ba csomagoljuk, hogy ne fussanak le feleslegesen.
+  // --- HIBABIZTOS JAVÍTÁS ---
 
-  // A kategóriákat CSAK AKKOR számoljuk újra, ha a 'list' (az eredeti adat) megváltozik.
+  // <<< JAVÍTÁS 1: Biztonságos eseménykezelő a Dropdownhoz >>>
+  // A useCallback biztosítja, hogy ez a függvény ne jöjjön létre minden rendereléskor újra.
+  // A lényeg, hogy egy explicit `(value)` paramétert vár, így biztosítjuk, hogy
+  // a CustomDropdown-ból csak az érték érkezik, nem a teljes event objektum.
+  const handleFilterChange = useCallback((value) => {
+    setFilterType(value);
+  }, []);
+
+  // A kategóriák számolása (useMemo marad, mert ez jó)
   const types = useMemo(() => {
     return ['Minden', ...Array.from(new Set(list.map(r => r.type)))];
   }, [list]);
 
-  // A szűrt és randomizált listát CSAK AKKOR számoljuk újra, ha a 'list' vagy a 'filterType' változik.
+  // A dropdown opciók generálása (useMemo marad)
+  const dropdownOptions = useMemo(() => {
+    return types.map(t => ({
+      label: t,
+      value: t === 'Minden' ? 'all' : t
+    }));
+  }, [types]);
+
+  // <<< JAVÍTÁS 2: A szűrés és randomizálás logikája >>>
+  // A useMemo itt is elengedhetetlen a teljesítmény miatt.
   const finalList = useMemo(() => {
-    const filteredList = list.filter(r => 
+    // Először szűrünk
+    const filtered = list.filter(r => 
       filterType === 'all' || filterType === 'Minden' || r.type === filterType
     );
     
-    const featured = filteredList.filter(r => featuredIds.includes(r.id));
-    const nonFeatured = filteredList.filter(r => !featuredIds.includes(r.id));
+    // Szétválogatjuk a kiemelt és nem kiemelt elemeket
+    const featuredItems = filtered.filter(r => featuredIds.includes(r.id));
+    const nonFeaturedItems = filtered.filter(r => !featuredIds.includes(r.id));
     
-    return [...featured, ...shuffle([...nonFeatured])];
+    // CSAK a nem kiemelt listát keverjük meg, és egy új tömbbe tesszük
+    const shuffledNonFeatured = shuffle([...nonFeaturedItems]);
+
+    // Visszaadjuk a végleges sorrendet
+    return [...featuredItems, ...shuffledNonFeatured];
   }, [list, filterType]);
 
-  // A dropdown opciókat CSAK AKKOR generáljuk újra, ha a 'types' lista megváltozik.
-  const dropdownOptions = useMemo(() => types.map(t => ({
-    label: t,
-    value: t === 'Minden' ? 'all' : t
-  })), [types]);
 
-
-  // --- A KÓD TÖBBI RÉSZE VÁLTOZATLAN ---
   if (error) return <p className="text-red-500 p-4">Hiba: {error}</p>;
+  if (loading) return <p className="text-center p-10">Vendéglátóhelyek betöltése...</p>;
 
-  if (loading) {
-    return <p className="text-center p-10">Vendéglátóhelyek betöltése...</p>;
-  }
-
+  // <<< JAVÍTÁS 3: A biztonságos eseménykezelő átadása >>>
   return (
     <div className="p-4">
       <div className="mb-6">
         <CustomDropdown
           options={dropdownOptions}
           value={filterType}
-          onChange={setFilterType}
+          onChange={handleFilterChange} // Itt már a biztonságos `handleFilterChange`-t használjuk
         />
       </div>
 
