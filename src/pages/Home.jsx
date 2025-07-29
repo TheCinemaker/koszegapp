@@ -55,7 +55,7 @@ export default function Home() {
       {!loading && (
         favorites.length > 0 ? (
           <div className="bg-white/20 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl shadow-lg animate-fadein">
-            <h2 className="text-2xl font-bold text-center text-rose-500 mb-4">Személyes Programfüzeted</h2>
+            <h2 className="text-2xl font-bold text-center text-rose-500 mb-4">Kedvenceid</h2>
             <div className="space-y-6">
               {favoriteAttractions.length > 0 && (
                 <section>
