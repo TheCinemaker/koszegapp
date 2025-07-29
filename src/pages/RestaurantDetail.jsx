@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchRestaurants } from '../api';
-import RestaurantDetailSkeleton from '../components/RestaurantDetailSkeleton'; // <<< IMPORT
-// Ikonok importálása
+import RestaurantDetailSkeleton from '../components/RestaurantDetailSkeleton'; 
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaFacebook, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 export default function RestaurantDetail() {
   const { id } = useParams();
   const [rest, setRest] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // <<< VÁLTOZÁS
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    setLoading(true); // <<< VÁLTOZÁS
+    setLoading(true); 
     fetchRestaurants()
       .then(data => {
         const found = data.find(r => String(r.id) === id);
@@ -23,10 +22,8 @@ export default function RestaurantDetail() {
         }
       })
       .catch(err => setError(err.message))
-      .finally(() => setLoading(false)); // <<< VÁLTOZÁS
+      .finally(() => setLoading(false)); 
   }, [id]);
-
-  // <<< VÁLTOZÁS: A teljes betöltési logika
   if (loading) return <RestaurantDetailSkeleton />;
   if (error) return <p className="text-red-500 text-center p-4">Hiba: {error}</p>;
   if (!rest) return null; // Ha valamiért nincs adat, ne jelenjen meg semmi
