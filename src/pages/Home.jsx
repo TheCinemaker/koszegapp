@@ -29,12 +29,16 @@ export default function Home() {
             to={sec.to}
             aria-label={sec.label}
             className="
-              bg-white/80 ... flex flex-col items-center
-              transition-all duration-200 ease-in-out  
-              transform hover:-translate-y-1           
-              hover:shadow-2xl                         
-              active:scale-95                          
-              "
+              bg-white/80 border border-transparent
+              dark:bg-gray-800/80 dark:border-gray-700
+              rounded-2xl shadow-lg dark:shadow-md p-6
+              flex flex-col items-center
+              group min-h-[140px]
+              transition-all duration-200 ease-in-out
+              transform hover:-translate-y-1
+              hover:shadow-2xl
+              active:scale-95
+            "
             >
             <div className="w-16 h-16 mb-4 rounded-md overflow-hidden drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
               <img src={sec.imgLight} alt={sec.label} className="w-full h-full object-contain block dark:hidden" draggable="false" />
