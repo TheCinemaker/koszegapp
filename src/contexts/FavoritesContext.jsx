@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import toast from 'react-hot-toast'; // <<< ÚJ IMPORT
+import { FaCheckCircle, FaTrashAlt } from 'react-icons/fa'; // <<< ÚJ IMPORT AZ IKONOKHOZ
 
 const FAVORITES_KEY = 'koszeg-app-favorites';
 
@@ -25,12 +27,40 @@ export const FavoritesProvider = ({ children }) => {
     }
   }, [favorites]);
 
+  // --- KIEGÉSZÍTETT FÜGGVÉNYEK ---
+
   const addFavorite = useCallback((id) => {
-    setFavorites((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setFavorites((prev) => {
+      if (prev.includes(id)) {
+        return prev; // Ha már benne van, nem csinálunk semmit
+      }
+      
+      // <<< ÚJ: ÉRTESÍTÉS KÜLDÉSE SIKERES HOZZÁADÁSKOR >>>
+      toast.success('Hozzáadva a kedvencekhez', {
+        icon: <FaCheckCircle className="text-green-500" />,
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+
+      return [...prev, id];
+    });
   }, []);
 
   const removeFavorite = useCallback((id) => {
     setFavorites((prev) => prev.filter((favId) => favId !== id));
+
+    // <<< ÚJ: ÉRTESÍTÉS KÜLDÉSE SIKERES TÖRLÉSKOR >>>
+    toast.error('Eltávolítva a kedvencekből', {
+      icon: <FaTrashAlt className="text-red-500" />,
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
   }, []);
 
   const isFavorite = useCallback(
