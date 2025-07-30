@@ -1,338 +1,338 @@
 [
   {
-  "id": 1,
-  "name": "P (Írott-kő – Kőszeg – Kőszegfalva – Csepreg, Hanga-kapu)",
-  "shortDescription": "14,2 km, közepes nehézség, panorámás alpannonia® szakasz",
-  "description": "Az alpannonia® piros (P) jelzésű útvonal legszebb része, amely az Írott-kő 883 m-es kilátójától indul, majd erdőkön, gesztenyések és források mellett vezet Velem, Cáki erdő és Pogányok érintésével Kőszeg irányába. A Hanga-kapu környékén vadregényes tavak, régi vadászházak és szép ligetek teszik változatossá. A túra közepes nehézségű, de csodálatos panorámákat kínál Burgenland és a Fertő-tó felé.",
-  "image": "irottko.jpg",
-  "coords": {
-    "lat": 47.352897,
-    "lng": 16.433974
+    "id": "leisure-1",
+    "name": "P (Írott-kő – Kőszeg – Kőszegfalva – Csepreg, Hanga-kapu)",
+    "shortDescription": "14,2 km, közepes nehézség, panorámás alpannonia® szakasz",
+    "description": "Az alpannonia® piros (P) jelzésű útvonal legszebb része, amely az Írott-kő 883 m-es kilátójától indul, majd erdőkön, gesztenyések és források mellett vezet Velem, Cáki erdő és Pogányok érintésével Kőszeg irányába. A Hanga-kapu környékén vadregényes tavak, régi vadászházak és szép ligetek teszik változatossá. A túra közepes nehézségű, de csodálatos panorámákat kínál Burgenland és a Fertő-tó felé.",
+    "image": "irottko.jpg",
+    "coords": {
+      "lat": 47.352897,
+      "lng": 16.433974
+    },
+    "lengthKm": 14.2,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=47.352897,16.433974&travelmode=walking",
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/suedburgenland/alpannonia-hard-irottko-naturpark-vandorlas/45875992/",
+    "gpxUrl": "https://files.outdooractive.com/tour/45875992/gpx/Alpannonia-Irottko.gpx"
   },
-  "lengthKm": 14.2,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=47.352897,16.433974&travelmode=walking",
-  "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/suedburgenland/alpannonia-hard-irottko-naturpark-vandorlas/45875992/",
-  "gpxUrl": "https://files.outdooractive.com/tour/45875992/gpx/Alpannonia-Irottko.gpx"
-},
   {
-  "id": 2,
-  "name": "Alpannonia (Írott-kő – Kőszeg szakasz)",
-  "shortDescription": "Kb. 17 km, közepes nehézség, a híres határon átnyúló alpannonia® útvonal része",
-  "description": "Az alpannonia® nemzetközi túraútvonal Kőszeg környéki szakasza az Írott-kő csúcsról indul, és áthalad a Hétvezér-forrásnál, Pogányoknál, a Kálvária templom alatt, majd Kőszeg történelmi belvárosában zárul. Változatos erdei és szántóföldi tájak, kilátással a Fertő tó és Burgenland irányába. A teljes alpannonia® út több mint 120 km, de ez a 17 km-es rész a Kőszegi-hegység leglátványosabb gerincét mutatja be.",
-  "image": "alpa.jpg",
-  "coords": {
-    "lat": 47.3882411,
-    "lng": 16.5418944
+    "id": "leisure-2",
+    "name": "Alpannonia (Írott-kő – Kőszeg szakasz)",
+    "shortDescription": "Kb. 17 km, közepes nehézség, a híres határon átnyúló alpannonia® útvonal része",
+    "description": "Az alpannonia® nemzetközi túraútvonal Kőszeg környéki szakasza az Írott-kő csúcsról indul, és áthalad a Hétvezér-forrásnál, Pogányoknál, a Kálvária templom alatt, majd Kőszeg történelmi belvárosában zárul. Változatos erdei és szántóföldi tájak, kilátással a Fertő tó és Burgenland irányába. A teljes alpannonia® út több mint 120 km, de ez a 17 km-es rész a Kőszegi-hegység leglátványosabb gerincét mutatja be.",
+    "image": "alpa.jpg",
+    "coords": {
+      "lat": 47.3882411,
+      "lng": 16.5418944
+    },
+    "lengthKm": 17,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=47.3882411,16.5418944&travelmode=walking",
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-irottko-koszeg/45875992/",
+    "gpxUrl": "https://files.outdooractive.com/tour/45875992/gpx/Alpannonia-Irottko-Koszeg.gpx"
   },
-  "lengthKm": 17,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=47.3882411,16.5418944&travelmode=walking",
-  "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-irottko-koszeg/45875992/",
-  "gpxUrl": "https://files.outdooractive.com/tour/45875992/gpx/Alpannonia-Irottko-Koszeg.gpx"
-},
   {
-  "id": 3,
-  "name": "S+ (Vöröskereszt – Pogányok)",
-  "shortDescription": "Kb. 2,5 km, könnyű, erdei összekötő séta",
-  "description": "Ez a rövid, körülbelül 2,5 km-es szakasz a Vöröskereszt emlékműtől indul, majd egy erdei úton halad egészen a Pogányokig, ahol szép kilátás nyílik a Szabó-hegy és Kőszeg irányába. Ideális rövid sétához, családdal is kényelmesen bejárható. Innen több hosszabb túraútvonalba is becsatlakozhatunk.",
-  "image": "vorosk.jpg",
-  "coords": {
-    "lat": 47.373708,
-    "lng": 16.490981
+    "id": "leisure-3",
+    "name": "S+ (Vöröskereszt – Pogányok)",
+    "shortDescription": "Kb. 2,5 km, könnyű, erdei összekötő séta",
+    "description": "Ez a rövid, körülbelül 2,5 km-es szakasz a Vöröskereszt emlékműtől indul, majd egy erdei úton halad egészen a Pogányokig, ahol szép kilátás nyílik a Szabó-hegy és Kőszeg irányába. Ideális rövid sétához, családdal is kényelmesen bejárható. Innen több hosszabb túraútvonalba is becsatlakozhatunk.",
+    "image": "vorosk.jpg",
+    "coords": {
+      "lat": 47.373708,
+      "lng": 16.490981
+    },
+    "lengthKm": 2.5,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=47.373708,16.490981&destination=47.381207,16.499041&travelmode=walking",
+    "moreInfoUrl": "https://www.google.com/maps/dir/47.373708,16.490981/47.381207,16.499041",
+    "gpxUrl": "https://www.gpsies.com/map.do?fileId=sampleSPlus.gpx"
   },
-  "lengthKm": 2.5,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=47.373708,16.490981&destination=47.381207,16.499041&travelmode=walking",
-  "moreInfoUrl": "https://www.google.com/maps/dir/47.373708,16.490981/47.381207,16.499041",
-  "gpxUrl": "https://www.gpsies.com/map.do?fileId=sampleSPlus.gpx"
-},
   {
-  "id": 4,
-  "name": "S↺ (Kőszeg – Velem – Kőszegfalva kör)",
-  "shortDescription": "Kb. 8 km, könnyű körút erdei szakaszokkal és panorámával",
-  "description": "Ez a könnyű, körülbelül 8 km-es sétaútvonal Kőszeg belvárosából indul, majd Velem hangulatos utcáin és a környező erdőkön keresztül jut Kőszegfalvára, ahonnan visszatér a történelmi városba. Különlegessége a szelídgesztenyés erdők, a Pogányok közeli kilátások és a kanyargó erdei ösvények, amelyeket kis fatáblák jelölnek. Családi túrának is kiváló.",
-  "image": "velem.jpg",
-  "coords": {
-    "lat": 47.3354788,
-    "lng": 16.5767625
+    "id": "leisure-4",
+    "name": "S↺ (Kőszeg – Velem – Kőszegfalva kör)",
+    "shortDescription": "Kb. 8 km, könnyű körút erdei szakaszokkal és panorámával",
+    "description": "Ez a könnyű, körülbelül 8 km-es sétaútvonal Kőszeg belvárosából indul, majd Velem hangulatos utcáin és a környező erdőkön keresztül jut Kőszegfalvára, ahonnan visszatér a történelmi városba. Különlegessége a szelídgesztenyés erdők, a Pogányok közeli kilátások és a kanyargó erdei ösvények, amelyeket kis fatáblák jelölnek. Családi túrának is kiváló.",
+    "image": "velem.jpg",
+    "coords": {
+      "lat": 47.3354788,
+      "lng": 16.5767625
+    },
+    "lengthKm": 8,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=47.3354788,16.5767625&travelmode=walking",
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/koszeg-velem-kor/45780923/",
+    "gpxUrl": "https://files.outdooractive.com/tour/45780923/gpx/Koszeg-Velem-Kor.gpx"
   },
-  "lengthKm": 8,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/dir/?api=1&destination=47.3354788,16.5767625&travelmode=walking",
-  "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/koszeg-velem-kor/45780923/",
-  "gpxUrl": "https://files.outdooractive.com/tour/45780923/gpx/Koszeg-Velem-Kor.gpx"
-},
   {
-  "id": 5,
-  "name": "Mária-út, M01-06B (Rattersdorf – Hétvezér-forrás – Kőszeg)",
-  "shortDescription": "Kb. 6 km, könnyű zarándokszakasz határon át, Kőszegig",
-  "description": "A Mária-út (Máriazellerweg) egyik legszebb szakasza, amely Rattersdorf (Rőtfalva) településről indulva a magyar–osztrák határon át érkezik a festői Hétvezér-forráshoz, majd a Kőszegi-hegység alján végig Kőszeg történelmi belvárosáig vezet. Könnyű, többnyire erdei és réti útszakaszok jellemzik, ideális rövidebb zarándoklatokhoz, lelki feltöltődéshez is.",
-  "image": "hetfor.jpg",
-  "coords": {
-    "lat": 47.4088589,
-    "lng": 16.4986229
+    "id": "leisure-5",
+    "name": "Mária-út, M01-06B (Rattersdorf – Hétvezér-forrás – Kőszeg)",
+    "shortDescription": "Kb. 6 km, könnyű zarándokszakasz határon át, Kőszegig",
+    "description": "A Mária-út (Máriazellerweg) egyik legszebb szakasza, amely Rattersdorf (Rőtfalva) településről indulva a magyar–osztrák határon át érkezik a festői Hétvezér-forráshoz, majd a Kőszegi-hegység alján végig Kőszeg történelmi belvárosáig vezet. Könnyű, többnyire erdei és réti útszakaszok jellemzik, ideális rövidebb zarándoklatokhoz, lelki feltöltődéshez is.",
+    "image": "hetfor.jpg",
+    "coords": {
+      "lat": 47.4088589,
+      "lng": 16.4986229
+    },
+    "lengthKm": 6,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=47.4088589,16.4986229&destination=47.389000,16.540000&travelmode=walking",
+    "moreInfoUrl": "https://mariaut.hu/utvonalak",
+    "gpxUrl": "https://mariaut.hu/downloads/M01-06B-Rattersdorf-Koszeg.gpx"
   },
-  "lengthKm": 6,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=47.4088589,16.4986229&destination=47.389000,16.540000&travelmode=walking",
-  "moreInfoUrl": "https://mariaut.hu/utvonalak",
-  "gpxUrl": "https://mariaut.hu/downloads/M01-06B-Rattersdorf-Koszeg.gpx"
-},
   {
-  "id": 6,
-  "name": "K+ (Kőszeg, városi összekötő)",
-  "shortDescription": "Kb. 2 km, nagyon könnyű városi séta, parkok és lakóövezetek között",
-  "description": "A Kőszegi-hegység egyik legkönnyebb turistajelzésű szakasza, a K+ (kék plusz) egy rövid városi összekötő útvonal, amely a belvárost (Fő tér, Jurisics-vár) köti össze a Szabó-hegy és Pogányok irányával. Kiváló rövid sétára vagy a hosszabb túrák indulópontjaként.",
-  "image": "varos.jpg",
-  "coords": {
-    "lat": 47.3814643,
-    "lng": 16.5555801
+    "id": "leisure-6",
+    "name": "K+ (Kőszeg, városi összekötő)",
+    "shortDescription": "Kb. 2 km, nagyon könnyű városi séta, parkok és lakóövezetek között",
+    "description": "A Kőszegi-hegység egyik legkönnyebb turistajelzésű szakasza, a K+ (kék plusz) egy rövid városi összekötő útvonal, amely a belvárost (Fő tér, Jurisics-vár) köti össze a Szabó-hegy és Pogányok irányával. Kiváló rövid sétára vagy a hosszabb túrák indulópontjaként.",
+    "image": "varos.jpg",
+    "coords": {
+      "lat": 47.3814643,
+      "lng": 16.5555801
+    },
+    "lengthKm": 2,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=47.3814643,16.5555801&destination=47.389000,16.540000&travelmode=walking",
+    "moreInfoUrl": "https://mapy.cz/s/katagocepe",
+    "gpxUrl": "https://example.com/kplus-koszeg-varosi.gpx"
   },
-  "lengthKm": 2,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=47.3814643,16.5555801&destination=47.389000,16.540000&travelmode=walking",
-  "moreInfoUrl": "https://mapy.cz/s/katagocepe",
-  "gpxUrl": "https://example.com/kplus-koszeg-varosi.gpx"
-},
   {
-  "id": 7,
-  "name": "Tornapálya (Kőszeg, Szabó-hegy)",
-  "shortDescription": "Kb. 700 m-es erdei kondipálya pihenőhelyekkel",
-  "description": "A Szabó-hegy oldalában, a Gyöngyös-patak fölött található Kőszeg népszerű tornapályája, ahol fából készült fitnesz állomások, egyensúlyozók, mászók és padok teszik élvezetesebbé a szabadtéri mozgást. Családok és sportolók egyaránt kedvelik. A pálya kb. 700 m hosszú, erdei környezetben, friss levegővel és madárcsicsergéssel.",
-  "image": "torna.jpg",
-  "coords": {
-    "lat": 47.378366,
-    "lng": 16.5194065
+    "id": "leisure-7",
+    "name": "Tornapálya (Kőszeg, Szabó-hegy)",
+    "shortDescription": "Kb. 700 m-es erdei kondipálya pihenőhelyekkel",
+    "description": "A Szabó-hegy oldalában, a Gyöngyös-patak fölött található Kőszeg népszerű tornapályája, ahol fából készült fitnesz állomások, egyensúlyozók, mászók és padok teszik élvezetesebbé a szabadtéri mozgást. Családok és sportolók egyaránt kedvelik. A pálya kb. 700 m hosszú, erdei környezetben, friss levegővel és madárcsicsergéssel.",
+    "image": "torna.jpg",
+    "coords": {
+      "lat": 47.378366,
+      "lng": 16.5194065
+    },
+    "lengthKm": 0.7,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.378366,16.5194065",
+    "moreInfoUrl": "https://mapy.cz/s/kapudabofu",
+    "gpxUrl": "https://example.com/tornapalya-koszeg.gpx"
   },
-  "lengthKm": 0.7,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.378366,16.5194065",
-  "moreInfoUrl": "https://mapy.cz/s/kapudabofu",
-  "gpxUrl": "https://example.com/tornapalya-koszeg.gpx"
-},
   {
-  "id": 8,
-  "name": "Várárok (Kőszeg vára körül)",
-  "shortDescription": "Parkosított várárok sétány, padokkal és szobrokkal",
-  "description": "A Jurisics-vár körüli egykori védelmi vizesárok ma hangulatos parkosított zöldterület, sétányokkal, padokkal, virágágyásokkal és történelmi emlékművekkel. A városi rendezvények kiemelt helyszíne is: a Kőszegi Ostromnapok felvonulásai, kulturális programjai gyakran érintik ezt a területet. Családok, párok és kutyások is szívesen választják egy könnyed délutáni sétára.",
-  "image": "vararok.jpeg",
-  "coords": {
-    "lat": 47.3880202,
-    "lng": 16.5390162
+    "id": "leisure-8",
+    "name": "Várárok (Kőszeg vára körül)",
+    "shortDescription": "Parkosított várárok sétány, padokkal és szobrokkal",
+    "description": "A Jurisics-vár körüli egykori védelmi vizesárok ma hangulatos parkosított zöldterület, sétányokkal, padokkal, virágágyásokkal és történelmi emlékművekkel. A városi rendezvények kiemelt helyszíne is: a Kőszegi Ostromnapok felvonulásai, kulturális programjai gyakran érintik ezt a területet. Családok, párok és kutyások is szívesen választják egy könnyed délutáni sétára.",
+    "image": "vararok.jpeg",
+    "coords": {
+      "lat": 47.3880202,
+      "lng": 16.5390162
+    },
+    "lengthKm": 0.4,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3880202,16.5390162",
+    "moreInfoUrl": "https://www.koszeg.hu/hu/jurisics-var/",
+    "gpxUrl": null
   },
-  "lengthKm": 0.4,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3880202,16.5390162",
-  "moreInfoUrl": "https://www.koszeg.hu/hu/jurisics-var/",
-  "gpxUrl": null
-},
   {
-  "id": 10,
-  "name": "Testvérvárosi Park",
-  "shortDescription": "Kisebb közösségi park a Balog‑iskola előtt, testvérvárosi emlékhely",
-  "description": "Ez a park közvetlenül a Béri Balog Ádám Általános Iskola előtt található, a 2020-as Zöld Városka projekt részeként épült. Térköves és kavicsos sétányokkal, pergolával, információs gúlával, padokkal, facsemetékkel (japán díszcseresznye, csüngő nyír) és hulladékgyűjtőkkel része lett a helyi közösségi életnek. Gyerekek és felnőttek is használják iskolai és kulturális programokra — például térzenékre és iskolai eseményekre.",
-  "image": "testvervarosi-park-koszeg.jpg",
-  "coords": {
-    "lat": 47.38150,
-    "lng": 16.54496
+    "id": "leisure-10",
+    "name": "Testvérvárosi Park",
+    "shortDescription": "Kisebb közösségi park a Balog‑iskola előtt, testvérvárosi emlékhely",
+    "description": "Ez a park közvetlenül a Béri Balog Ádám Általános Iskola előtt található, a 2020-as Zöld Városka projekt részeként épült. Térköves és kavicsos sétányokkal, pergolával, információs gúlával, padokkal, facsemetékkel (japán díszcseresznye, csüngő nyír) és hulladékgyűjtőkkel része lett a helyi közösségi életnek. Gyerekek és felnőttek is használják iskolai és kulturális programokra — például térzenékre és iskolai eseményekre.",
+    "image": "testvervarosi-park-koszeg.jpg",
+    "coords": {
+      "lat": 47.3815,
+      "lng": 16.54496
+    },
+    "lengthKm": 0.15,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.38150,16.54496",
+    "moreInfoUrl": "https://koszeg.hu/hu/onkormanyzat/projektek/content.php?id=13562",
+    "gpxUrl": null
   },
-  "lengthKm": 0.15,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.38150,16.54496",
-  "moreInfoUrl": "https://koszeg.hu/hu/onkormanyzat/projektek/content.php?id=13562",
-  "gpxUrl": null
-},
   {
-  "id": 11,
-  "name": "Chernel-kert Arborétum",
-  "shortDescription": "2,5 ha arborétum, 700 m tanösvénnyel és madármentő központtal",
-  "description": "A Chernel-kert Arborétum Kőszeg szívében található 2,5 hektáros botanikus kert, melyet 1896-ban Chernel István ornitológus hozott létre. Több mint 300 fa- és cserjefaj található itt, köztük ritka fajok is. Tanösvények, vadvirágos rétek és a Bechtold István Látogatóközpont interaktív kiállításai mutatják be a Kőszegi-hegység élővilágát. Az arborétum madárvédelmi központként is működik, ahol évente sok sérült madarat ápolnak és engednek vissza a természetbe.",
-  "image": "chernel.jpg",
-  "coords": {
-    "lat": 47.3863513,
-    "lng": 16.5308423
+    "id": "leisure-11",
+    "name": "Chernel-kert Arborétum",
+    "shortDescription": "2,5 ha arborétum, 700 m tanösvénnyel és madármentő központtal",
+    "description": "A Chernel-kert Arborétum Kőszeg szívében található 2,5 hektáros botanikus kert, melyet 1896-ban Chernel István ornitológus hozott létre. Több mint 300 fa- és cserjefaj található itt, köztük ritka fajok is. Tanösvények, vadvirágos rétek és a Bechtold István Látogatóközpont interaktív kiállításai mutatják be a Kőszegi-hegység élővilágát. Az arborétum madárvédelmi központként is működik, ahol évente sok sérült madarat ápolnak és engednek vissza a természetbe.",
+    "image": "chernel.jpg",
+    "coords": {
+      "lat": 47.3863513,
+      "lng": 16.5308423
+    },
+    "lengthKm": 0.7,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3863513,16.5308423",
+    "moreInfoUrl": "https://www.koszeg.hu/hu/latnivalok/bechtold-istvan-termeszetvedelmi-latogatokozpont",
+    "gpxUrl": null
   },
-  "lengthKm": 0.7,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3863513,16.5308423",
-  "moreInfoUrl": "https://www.koszeg.hu/hu/latnivalok/bechtold-istvan-termeszetvedelmi-latogatokozpont",
-  "gpxUrl": null
-},
   {
-  "id": 12,
-  "name": "Játszótér (Gyöngyös-patak mellett, Táncsics utca)",
-  "shortDescription": "Új játszótér a Gyöngyös-patak partján, Táncsics Mihály utcánál",
-  "description": "Ez a modern, felújított játszótér közvetlenül a Gyöngyös-patak partján található, a Táncsics Mihály utcánál (kb. 300 m-re a Fő térről), egy lakótelepi zöldövezetben. Játékszerekkel, hintákkal, homokozóval és biztonságos padokkal, hulladékgyűjtőkkel felszerelt, ideális kicsiknek és családos sétáknak.",
-  "image": "jatszi.jpg",
-  "coords": {
-    "lat": 47.387271,
-    "lng": 16.5495056
+    "id": "leisure-12",
+    "name": "Játszótér (Gyöngyös-patak mellett, Táncsics utca)",
+    "shortDescription": "Új játszótér a Gyöngyös-patak partján, Táncsics Mihály utcánál",
+    "description": "Ez a modern, felújított játszótér közvetlenül a Gyöngyös-patak partján található, a Táncsics Mihály utcánál (kb. 300 m-re a Fő térről), egy lakótelepi zöldövezetben. Játékszerekkel, hintákkal, homokozóval és biztonságos padokkal, hulladékgyűjtőkkel felszerelt, ideális kicsiknek és családos sétáknak.",
+    "image": "jatszi.jpg",
+    "coords": {
+      "lat": 47.387271,
+      "lng": 16.5495056
+    },
+    "lengthKm": 0.1,
+    "type": "playground",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.387271,16.5495056",
+    "moreInfoUrl": "https://www.koszeg.hu/hu/aktiv/csaladiprogramok/koszegi-jatszoterek-11647.html",
+    "gpxUrl": null
   },
-  "lengthKm": 0.1,
-  "type": "playground",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.387271,16.5495056",
-  "moreInfoUrl": "https://www.koszeg.hu/hu/aktiv/csaladiprogramok/koszegi-jatszoterek-11647.html",
-  "gpxUrl": null
-},
   {
-  "id": 13,
-  "name": "Szent Korona emlékpark",
-  "shortDescription": "Emlékpark a Koronaőrző bunker fölött, történelmi helyszín",
-  "description": "A Szent Korona emlékpark a Kálvária-hegy lábánál, a Koronaőrző bunker felett található. 1945 márciusa és márciusa között itt őrizték a magyar Szent Koronát – mára emlékparkká alakították, ahol emléktáblák, sétányok és információs táblák idézik fel ezt az eseményt. A terület része a Jeruzsálem-hegy – Korona-körút túraútvonalnak, és a bunker meglátogatható útba ejthető. Belépés ingyenes, állandóan nyitva.",
-  "image": "korona.jpg",
-  "coords": {
-    "lat": 47.39656,
-    "lng": 16.53568
+    "id": "leisure-13",
+    "name": "Szent Korona emlékpark",
+    "shortDescription": "Emlékpark a Koronaőrző bunker fölött, történelmi helyszín",
+    "description": "A Szent Korona emlékpark a Kálvária-hegy lábánál, a Koronaőrző bunker felett található. 1945 márciusa és márciusa között itt őrizték a magyar Szent Koronát – mára emlékparkká alakították, ahol emléktáblák, sétányok és információs táblák idézik fel ezt az eseményt. A terület része a Jeruzsálem-hegy – Korona-körút túraútvonalnak, és a bunker meglátogatható útba ejthető. Belépés ingyenes, állandóan nyitva.",
+    "image": "korona.jpg",
+    "coords": {
+      "lat": 47.39656,
+      "lng": 16.53568
+    },
+    "lengthKm": 0.3,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.39656,16.53568",
+    "moreInfoUrl": "https://www.koszeg.hu/hu/aktualis/fotok/bovul-a-koronaorzo-emlekhely-526.html",
+    "gpxUrl": null
   },
-  "lengthKm": 0.3,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.39656,16.53568",
-  "moreInfoUrl": "https://www.koszeg.hu/hu/aktualis/fotok/bovul-a-koronaorzo-emlekhely-526.html",
-  "gpxUrl": null
-},
   {
-  "id": 14,
-  "name": "Várárok Játszótér",
-  "shortDescription": "Kisebb játszótér a Jurisics-vár vizesárok melletti parkjában",
-  "description": "A várárok játszótér a Jurisics-vár védelmi árok részénél, a vár tövében található, ideális gyerekeknek. Játszóeszközökkel, padokkal, biztonságos burkolattal felszerelt helyszín, amelyet a Kőszegi Ostromnapok programjai is gyakran használanak gyermekostrom és interaktív bemutatók színhelyeként :contentReference[oaicite:1]{index=1}.",
-  "image": "játszi.jpg",
-  "coords": {
-    "lat": 47.3883341,
-    "lng": 16.5388965
+    "id": "leisure-14",
+    "name": "Várárok Játszótér",
+    "shortDescription": "Kisebb játszótér a Jurisics-vár vizesárok melletti parkjában",
+    "description": "A várárok játszótér a Jurisics-vár védelmi árok részénél, a vár tövében található, ideális gyerekeknek. Játszóeszközökkel, padokkal, biztonságos burkolattal felszerelt helyszín, amelyet a Kőszegi Ostromnapok programjai is gyakran használanak gyermekostrom és interaktív bemutatók színhelyeként :contentReference[oaicite:1]{index=1}.",
+    "image": "játszi.jpg",
+    "coords": {
+      "lat": 47.3883341,
+      "lng": 16.5388965
+    },
+    "lengthKm": 0.1,
+    "type": "playground",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3883341,16.5388965",
+    "moreInfoUrl": "https://ostromnapok.hu",
+    "gpxUrl": null
   },
-  "lengthKm": 0.1,
-  "type": "playground",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3883341,16.5388965",
-  "moreInfoUrl": "https://ostromnapok.hu", 
-  "gpxUrl": null
-},
   {
-  "id": 15,
-  "name": "Halismereti tanösvény (Csónakázó-tó körül)",
-  "shortDescription": "800 m tanösvény a tó halfaunájáról, kb. ½ óra",
-  "description": "A Kőszegi Csónakázó-tó körül futó tanösvény 20 információs táblával mutatja be a tó legjellegzetesebb halfajait (pl. ponty, amur, süllő, csuka, keszeg) képekkel és leírásokkal. A séta mintegy 800 méter hosszú, átlagosan fél órát vesz igénybe, ideális családi program vízparti környezetben. A tó 1978 óta működik, és a Kőszegi Sporthorgász Egyesület kezeli, amely 2008-ban építette ki a tanösvényt és 2009-ben a hozzá kapcsolódó bemutatóházat" ,
-  "image": "hal.jpg",
-  "coords": {
-    "lat": 47.3984967,
-    "lng": 16.537518
+    "id": "leisure-15",
+    "name": "Halismereti tanösvény (Csónakázó-tó körül)",
+    "shortDescription": "800 m tanösvény a tó halfaunájáról, kb. ½ óra",
+    "description": "A Kőszegi Csónakázó-tó körül futó tanösvény 20 információs táblával mutatja be a tó legjellegzetesebb halfajait (pl. ponty, amur, süllő, csuka, keszeg) képekkel és leírásokkal. A séta mintegy 800 méter hosszú, átlagosan fél órát vesz igénybe, ideális családi program vízparti környezetben. A tó 1978 óta működik, és a Kőszegi Sporthorgász Egyesület kezeli, amely 2008-ban építette ki a tanösvényt és 2009-ben a hozzá kapcsolódó bemutatóházat",
+    "image": "hal.jpg",
+    "coords": {
+      "lat": 47.3984967,
+      "lng": 16.537518
+    },
+    "lengthKm": 0.8,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3984967,16.537518",
+    "moreInfoUrl": "https://www.koszeg.hu/hu/koszeg/tobbnyomon/halismereti-tanosveny-46.html",
+    "gpxUrl": null
   },
-  "lengthKm": 0.8,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3984967,16.537518",
-  "moreInfoUrl": "https://www.koszeg.hu/hu/koszeg/tobbnyomon/halismereti-tanosveny-46.html",
-  "gpxUrl": null
-},
   {
-  "id": 16,
-  "name": "Öreg platánfa",
-  "shortDescription": "Több mint 200 éves platánfa, 6 m törzskerülettel",
-  "description": "Kőszeg egyik legimpozánsabb természeti öröksége, egy több mint 200 éves, 30 m magas platánfa a Chernel-kert közelében. Törzsének kerülete eléri a 6 métert, a korona átmérője pedig meghaladja a 20 métert. A fa körül padok, információs tábla, valamint gondozott környezet várja a látogatókat, ideális hely egy rövid pihenőre a városnézés közben.",
-  "image": "platan.jpg",
-  "coords": {
-    "lat": 47.384522,
-    "lng": 16.529582
+    "id": "leisure-16",
+    "name": "Öreg platánfa",
+    "shortDescription": "Több mint 200 éves platánfa, 6 m törzskerülettel",
+    "description": "Kőszeg egyik legimpozánsabb természeti öröksége, egy több mint 200 éves, 30 m magas platánfa a Chernel-kert közelében. Törzsének kerülete eléri a 6 métert, a korona átmérője pedig meghaladja a 20 métert. A fa körül padok, információs tábla, valamint gondozott környezet várja a látogatókat, ideális hely egy rövid pihenőre a városnézés közben.",
+    "image": "platan.jpg",
+    "coords": {
+      "lat": 47.384522,
+      "lng": 16.529582
+    },
+    "lengthKm": 0.05,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.384522,16.529582",
+    "moreInfoUrl": "https://koszeg.hu/hu/latnivalok/oreg-platanfa",
+    "gpxUrl": null
   },
-  "lengthKm": 0.05,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.384522,16.529582",
-  "moreInfoUrl": "https://koszeg.hu/hu/latnivalok/oreg-platanfa",
-  "gpxUrl": null
-},
   {
-  "id": 17,
-  "name": "Királyvölgyi öreg gesztenyefa emlékhely",
-  "shortDescription": "500–600 éves óriás gesztenyefa maradványa, 10 m törzskerülettel",
-  "description": "A Királyvölgyi öreg gesztenyefa maradványa Kőszeg legendás természeti emléke: eredetileg a 15. században ültetett gesztenyefa törzse elérte a 10 m körüli kerületet, és több mint 500 éven át állt. Sajnos 1963-ban elhalt, és 1981-ben el kellett távolítani, de a megmaradt csonk köré emlékhely épült: fatetős korlát, információs és audiovizuális táblák. A GesztenyeKék Egyesület 2020-ban felújította: padokkal, lépcsősorral, parkolóval és interaktív rendszerrel (versek, mesék hangszórón keresztül). Ingyenes, állandóan látogatható emlékhely." ,
-  "image": "geszi.jpg",
-  "coords": {
-    "lat": 47.3904818, 
-    "lng": 16.5212472
+    "id": "leisure-17",
+    "name": "Királyvölgyi öreg gesztenyefa emlékhely",
+    "shortDescription": "500–600 éves óriás gesztenyefa maradványa, 10 m törzskerülettel",
+    "description": "A Királyvölgyi öreg gesztenyefa maradványa Kőszeg legendás természeti emléke: eredetileg a 15. században ültetett gesztenyefa törzse elérte a 10 m körüli kerületet, és több mint 500 éven át állt. Sajnos 1963-ban elhalt, és 1981-ben el kellett távolítani, de a megmaradt csonk köré emlékhely épült: fatetős korlát, információs és audiovizuális táblák. A GesztenyeKék Egyesület 2020-ban felújította: padokkal, lépcsősorral, parkolóval és interaktív rendszerrel (versek, mesék hangszórón keresztül). Ingyenes, állandóan látogatható emlékhely.",
+    "image": "geszi.jpg",
+    "coords": {
+      "lat": 47.3904818,
+      "lng": 16.5212472
+    },
+    "lengthKm": 0.1,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.371,16.495",
+    "moreInfoUrl": "https://koszeg.kornyeke.hu/kiralyvolgyi-oreg-gesztenye-emlekhely",
+    "gpxUrl": null
   },
-  "lengthKm": 0.1,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.371,16.495",
-  "moreInfoUrl": "https://koszeg.kornyeke.hu/kiralyvolgyi-oreg-gesztenye-emlekhely",
-  "gpxUrl": null
-}, 
   {
-  "id": 18,
-  "name": "Hármaspad (Királyvölgy)",
-  "shortDescription": "Régi kőszegi találkozóhely, padokkal a Királyvölgyben",
-  "description": "A Királyvölgy legendás pihenőhelye, ahol egykor három pad állt körben egy kis tisztáson – ezért nevezték Hármaspadnak. A helyi fiatalok kedvelt 'randihelye' volt, ma is pihenőpont turistautakon. Része a Királyvölgy–Szikla-forrás túraútvonalnak, ahol vezetett túrák programjai is érintik ezt a pontot :contentReference[oaicite:1]{index=1}.",
-  "image": "kirv.webp",
-  "coords": {
-    "lat": 47.371350,
-    "lng": 16.494470
+    "id": "leisure-18",
+    "name": "Hármaspad (Királyvölgy)",
+    "shortDescription": "Régi kőszegi találkozóhely, padokkal a Királyvölgyben",
+    "description": "A Királyvölgy legendás pihenőhelye, ahol egykor három pad állt körben egy kis tisztáson – ezért nevezték Hármaspadnak. A helyi fiatalok kedvelt 'randihelye' volt, ma is pihenőpont turistautakon. Része a Királyvölgy–Szikla-forrás túraútvonalnak, ahol vezetett túrák programjai is érintik ezt a pontot :contentReference[oaicite:1]{index=1}.",
+    "image": "kirv.webp",
+    "coords": {
+      "lat": 47.37135,
+      "lng": 16.49447
+    },
+    "lengthKm": 0.05,
+    "type": "park",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.371350,16.494470",
+    "moreInfoUrl": "https://www.turistautak.openstreetmap.hu/mentettutv?gpxup/t45862777_alpannonia-_hard_-.gpx",
+    "gpxUrl": null
   },
-  "lengthKm": 0.05,
-  "type": "park",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.371350,16.494470",
-  "moreInfoUrl": "https://www.turistautak.openstreetmap.hu/mentettutv?gpxup/t45862777_alpannonia-_hard_-.gpx",
-  "gpxUrl": null
-},
   {
-  "id": 19,
-  "name": "Ciklámen tanösvény (Kálvária – Óház-tető – Hétforrás)",
-  "shortDescription": "Kb. 5 km, könnyű séta panorámával a Kőszegi-hegységben",
-  "description": "Ez a könnyű, kb. 5 km hosszú tanösvény Kálvária templomtól indul, érinti az Óház-tetőt és a bővizű Hétforrást, változatos erdei ösvényeken vezet át. Különleges élmény a ciklámen virágzás idején. Ideális családi sétának vagy rövidebb túrának, kevés szintemelkedéssel, de gyönyörű panorámákkal.",
-  "image": "ohaz.jpg",
-  "coords": {
-    "lat": 47.3966,
-    "lng": 16.5357
+    "id": "leisure-19",
+    "name": "Ciklámen tanösvény (Kálvária – Óház-tető – Hétforrás)",
+    "shortDescription": "Kb. 5 km, könnyű séta panorámával a Kőszegi-hegységben",
+    "description": "Ez a könnyű, kb. 5 km hosszú tanösvény Kálvária templomtól indul, érinti az Óház-tetőt és a bővizű Hétforrást, változatos erdei ösvényeken vezet át. Különleges élmény a ciklámen virágzás idején. Ideális családi sétának vagy rövidebb túrának, kevés szintemelkedéssel, de gyönyörű panorámákkal.",
+    "image": "ohaz.jpg",
+    "coords": {
+      "lat": 47.3966,
+      "lng": 16.5357
+    },
+    "lengthKm": 5,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3966,16.5357",
+    "moreInfoUrl": "https://kirandulastippek.hu/koszegi-hegyseg-kalvaria-ohaz-teto-hetforras",
+    "gpxUrl": null
   },
-  "lengthKm": 5,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3966,16.5357",
-  "moreInfoUrl": "https://kirandulastippek.hu/koszegi-hegyseg-kalvaria-ohaz-teto-hetforras",
-  "gpxUrl": null
-},
- {
-  "id": 20,
-  "name": "Gerinctúra a Kőszegi‑hegységben",
-  "shortDescription": "Kb. 12 km, közepes nehézség, panorámaút a hegygerincen",
-  "description": "Ez a gerinctúra végigvezet a Kőszegi‑hegység főgerincén: erdőkön, sziklás kilátókon és bővizű források mellett. Közepes nehézségű, autóik is megközelíthetőek a kiindulásnál. Az út során kihagyhatatlan panorámák és természet közeli élmény vár.",
-  "image": "tura.jpg",
-  "coords": {
-    "lat": 47.3600,
-    "lng": 16.4800
-  },
-  "lengthKm": 12,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3600,16.4800",
-  "moreInfoUrl": "https://kirandulastippek.hu/koszegi-hegyseg-gerinctura",
-  "gpxUrl": null
-},
   {
-  "id": 21,
-  "name": "Szent Vid‑hegyi kápolna (Velem)",
-  "shortDescription": "Kb. 3 km, könnyű séta a Szent Vid‑hegyre, kápolnával",
-  "description": "A Velem melletti Szent Vid‑hegy könnyű és látványos sétaútvonala a városból indul. A 589 méteres hegy tetején egy fehérre meszelt kis kápolna áll, ahonnan szép kilátás nyílik a Kőszegi‑hegységre. Ideális rövid családi kirándulás vagy spontán délutáni séta.",
-  "image": "vid.jpg",
-  "coords": {
-    "lat": 47.3880,
-    "lng": 16.5410
+    "id": "leisure-20",
+    "name": "Gerinctúra a Kőszegi‑hegységben",
+    "shortDescription": "Kb. 12 km, közepes nehézség, panorámaút a hegygerincen",
+    "description": "Ez a gerinctúra végigvezet a Kőszegi‑hegység főgerincén: erdőkön, sziklás kilátókon és bővizű források mellett. Közepes nehézségű, autóik is megközelíthetőek a kiindulásnál. Az út során kihagyhatatlan panorámák és természet közeli élmény vár.",
+    "image": "tura.jpg",
+    "coords": {
+      "lat": 47.36,
+      "lng": 16.48
+    },
+    "lengthKm": 12,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3600,16.4800",
+    "moreInfoUrl": "https://kirandulastippek.hu/koszegi-hegyseg-gerinctura",
+    "gpxUrl": null
   },
-  "lengthKm": 3,
-  "type": "hike",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3880,16.5410",
-  "moreInfoUrl": "https://kirandulastippek.hu/velem-szent-vid-kapolna",
-  "gpxUrl": null
-},
   {
-  "id": 18,
-  "name": "Királyvölgyi Tanösvény",
-  "shortDescription": "1,5 km séta, 34 állomás – bemutatja az Írottkő Natúrpark növény- és állatvilágát",
-  "description": "Ez Magyarország első tanösvénye Kőszeg belterületén, amely 34 háromszög alakú információs táblán mutatja be a környék gazdag növény- és állatvilágát. A táblák festményekkel és két nyelvű (magyar–latin) feliratokkal vannak ellátva, a séta kb. 1 óra, mindössze 30‑40 méternyi szintkülönbséggel. A kirándulás Árpád térről indul, követi a K+ turistajelzést, majd a Királyvölgy aszfaltozott útján ér véget. A tanösvényt a Kőszeg Város Önkormányzata tartja karban, a művészi kivitelezés Németh János munkája. Ajánlott kényelmes cipő és jó idő, szakvezetés igényelhető.",
-  "image": "kirv.webp",
-  "coords": {
-    "lat": 47.39206,
-    "lng": 16.53867
+    "id": "leisure-21",
+    "name": "Szent Vid‑hegyi kápolna (Velem)",
+    "shortDescription": "Kb. 3 km, könnyű séta a Szent Vid‑hegyre, kápolnával",
+    "description": "A Velem melletti Szent Vid‑hegy könnyű és látványos sétaútvonala a városból indul. A 589 méteres hegy tetején egy fehérre meszelt kis kápolna áll, ahonnan szép kilátás nyílik a Kőszegi‑hegységre. Ideális rövid családi kirándulás vagy spontán délutáni séta.",
+    "image": "vid.jpg",
+    "coords": {
+      "lat": 47.388,
+      "lng": 16.541
+    },
+    "lengthKm": 3,
+    "type": "hike",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.3880,16.5410",
+    "moreInfoUrl": "https://kirandulastippek.hu/velem-szent-vid-kapolna",
+    "gpxUrl": null
   },
-  "lengthKm": 1.5,
-  "type": "nature",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.39206,16.53867",
-  "moreInfoUrl": "https://koszeg.hu/hu/koszeg/tobbnyomon/kiralyvolgyi-tanosveny-48.html",
-  "gpxUrl": null
-}
+  {
+    "id": "leisure-18",
+    "name": "Királyvölgyi Tanösvény",
+    "shortDescription": "1,5 km séta, 34 állomás – bemutatja az Írottkő Natúrpark növény- és állatvilágát",
+    "description": "Ez Magyarország első tanösvénye Kőszeg belterületén, amely 34 háromszög alakú információs táblán mutatja be a környék gazdag növény- és állatvilágát. A táblák festményekkel és két nyelvű (magyar–latin) feliratokkal vannak ellátva, a séta kb. 1 óra, mindössze 30‑40 méternyi szintkülönbséggel. A kirándulás Árpád térről indul, követi a K+ turistajelzést, majd a Királyvölgy aszfaltozott útján ér véget. A tanösvényt a Kőszeg Város Önkormányzata tartja karban, a művészi kivitelezés Németh János munkája. Ajánlott kényelmes cipő és jó idő, szakvezetés igényelhető.",
+    "image": "kirv.webp",
+    "coords": {
+      "lat": 47.39206,
+      "lng": 16.53867
+    },
+    "lengthKm": 1.5,
+    "type": "nature",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.39206,16.53867",
+    "moreInfoUrl": "https://koszeg.hu/hu/koszeg/tobbnyomon/kiralyvolgyi-tanosveny-48.html",
+    "gpxUrl": null
+  }
 ]
