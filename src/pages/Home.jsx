@@ -15,8 +15,6 @@ const sections = [
 ];
 
 export default function Home() {
-  // Nincs többé useEffect, nincs többé state itt!
-  // Csak a megjelenítés marad.
 
   return (
     // A külső div-et levettem, mert az App.jsx már ad egy keretet.
@@ -32,10 +30,10 @@ export default function Home() {
             aria-label={sec.label}
             className="
               bg-white/80 ... flex flex-col items-center
-              transition-all duration-200 ease-in-out  // <<< ÚJ: Az animáció alapjai
-              transform hover:-translate-y-1           // <<< ÚJ: Lebegő effektus egér fölé húzásakor
-              hover:shadow-2xl                         // <<< ÚJ: Erősebb árnyék lebegéskor
-              active:scale-95                          // <<< ÚJ: "Benyomódó" effektus kattintáskor
+              transition-all duration-200 ease-in-out  
+              transform hover:-translate-y-1           
+              hover:shadow-2xl                         
+              active:scale-95                          
               "
             >
             <div className="w-16 h-16 mb-4 rounded-md overflow-hidden drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
