@@ -17,14 +17,20 @@ Térképes nézet, szűrők, kereső hozzáadása.
 Geolokáció a térképen ("Hol vagyok én?" funkció) pulzáló markerrel és hibakezessel.
 Felugró, animált modal ablak a térképen lévő markerekre kattintva a gyors részletekért.
 
+--------------------------------------------------------------------------------------------------
+
 Gasztronómia oldalak:
 Kódminőség javítása és komponens-alapú refaktorálás:
 A gasztronómiai kártyák logikája kiszervezve egy új, újrahasznosítható GastroCard.jsx komponensbe a tisztább kód érdekében.
 A listaoldal (Gastronomy.jsx) és a részletező oldal (RestaurantDetail.jsx) modernizálása: robusztus loading és error állapotkezelés bevezetése.
 
+--------------------------------------------------------------------------------------------------
+
 Stabilitási hibák javítása: A Gastronomy.jsx oldalon a szűrő használatakor jelentkező "fehér képernyő" hiba elhárítása a useMemo és useCallback hook-ok bevezetésével a felesleges újrarajzolások megakadályozására.
 Felhasználói felület (UI) fejlesztése a részletező oldalon: informatív ikonok hozzáadása (cím, telefon, email stb.) a jobb átláthatóságért.
 Build hibák elhárítása: a Netlify build környezetében felmerülő, Parse error típusú hibák felderítése és javítása.
+
+--------------------------------------------------------------------------------------------------
 
 Események oldal:
 Kedvencek rendszer bevezetése:
@@ -33,15 +39,21 @@ Szív ikonok (FaHeart, FaRegHeart) elhelyezése az eseménykártyákon a kedvenc
 Dinamikusan megjelenő "Kedvenceim" szűrőgomb hozzáadása.
 A szűrési logika kiterjesztése az új "favorites" filter kezelésére.
 
+--------------------------------------------------------------------------------------------------
+
 Globális architekturális fejlesztések és új funkciók:
 Központi, reaktív kedvencek rendszer (FavoritesContext.jsx):
 A korábbi, komponensenkénti useFavorites hook-ot egy központi React Context-re cseréltük.
 Ez garantálja, hogy a kedvencek állapota egyetlen, központi helyen van tárolva, és bármilyen változás (pl. egy szívre kattintás) azonnal és az egész alkalmazásban láthatóvá válik.
 Ezzel megszüntettük a "csak F5-re frissül" hibát.
 
+--------------------------------------------------------------------------------------------------
+
 Adatbázis-szintű ID ütközés javítása:
 A "szellem" kedvencek (nem mentett elemek megjelenése) hibájának orvoslása.
 Létrehoztunk egy Node.js szkriptet (fix-ids.js), ami automatikusan, preffixekkel (attraction-1, event-1 stb.) látta el az összes .json fájlban lévő ID-t, biztosítva azok globális egyediségét.
+
+--------------------------------------------------------------------------------------------------
 
 Központi Adatkezelés (App.jsx):
 Az alkalmazás adatbetöltési logikája átkerült az App.jsx komponensbe. Az oldalak már nem egyenként, hanem központilag, props-ként kapják meg az adatokat, javítva a teljesítményt.
@@ -60,6 +72,28 @@ src/components/FavoritesDashboard.jsx (Új fájl!)
 src/components/MiniAttractionCard.jsx, MiniEventCard.jsx, MiniLeisureCard.jsx (Új fájlok!)
 fix-ids.js (Segédszkript, új)
 
+--------------------------------------------------------------------------------------------------
+
+Időjárás Funkciók:
+Részletes, Interaktív Időjárás Modal:
+A fejlécben található időjárás kijelző kattinthatóvá vált, ami egy új, felugró ablakot nyit meg.
+A modal az OpenWeatherMap 5 napos / 3 órás előrejelzési API végpontját használja a részletes adatok lekéréséhez.
+
+Fejlett Adatfeldolgozás és Megjelenítés:
+A modal egy logikus, többszintű struktúrában jeleníti meg az információt:
+Jelenlegi állapot: Nagyméretű ikonnal, hőmérséklettel, hőérzettel és magyar nyelvű szöveges leírással.
+Óránkénti előrejelzés: Egy vízszintesen görgethető sáv a következő 24 óra legfontosabb adataival (időpont, ikon, hőmérséklet).
+5 napos előrejelzés: Egy letisztult lista a következő napok várható időjárásáról (nap neve, ikon, napi maximum és minimum hőmérséklet).
+Részletes adatok: Egy "műszerfal" szekció extra információkkal, mint a csapadék esélye (%), páratartalom, szélsebesség (km/h-ra átváltva), valamint a napkelte és napnyugta pontos időpontja.
+
+Kódminőség és Teljesítmény:
+A useMemo hook használatával a komplex adatfeldolgozási számítások optimalizálva lettek, biztosítva a komponens gyors és reszponzív működését.
+Módosított/új fájlok:
+src/App.jsx (A modal megnyitásának logikája)
+src/components/WeatherModal.jsx (Jelentősen átalakítva és kibővítve)
+
+--------------------------------------------------------------------------------------------------
+
 HIGH priority!! Megy az 1.0-ba amint kész van! 
       - Ostromnapkor nagy modalban nyilik a napi program, következő program programajánlóval
             - Eseményig hátralévő idő
@@ -70,7 +104,7 @@ HIGH priority!! Megy az 1.0-ba amint kész van!
             - Hangos infó az eseményről (ha megvan minden infó), JSON-ból olvassuk! Nincs infónk annyi!!!!
             - Használt file-ok: programmodal.jsx, ProgramDetailsSheet.jsx, App.jsx (import, route, programbutton (modal only), programok.json
 
-
+--------------------------------------------------------------------------------------------------
 
 
 Módosítási ötletek: 
@@ -101,5 +135,4 @@ Módosítási ötletek:
 13. esemény bevitele külső feltöltéssel (magas priritás!!)
 14. SEO javitása
 15. metatag javítása
-16. szűrők beépitése minden oldalra
 17. utvonaltervező beépitése (csak városi séta!)
