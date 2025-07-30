@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "attraction-1",
     "name": "Jurisics‑vár",
     "category": "Történelem & építészet",
     "description": "A város szíve, későgótikus és korareneszánsz folyosóival a hazai várépítészet egyik ékköve.",
@@ -23,7 +23,7 @@
     "imageDark": "/images/attractions/dark/var_dark.jpg"
   },
   {
-    "id": 2,
+    "id": "attraction-2",
     "name": "Öregtorony (Zwinger)",
     "category": "Történelem & építészet",
     "description": "A kilencszögletű bástya a városfal legkorábbi, 13. századi maradványa.",
@@ -42,7 +42,7 @@
     "image": "/images/zwinger_oregtorony.jpg"
   },
   {
-    "id": 3,
+    "id": "attraction-3",
     "name": "Hősök Tornya (Hősök kapuja)",
     "category": "Történelem & építészet",
     "description": "1932-ben emelt kaputorony a török ostrom 400. évfordulójára.",
@@ -61,7 +61,7 @@
     "image": "/images/hosok_tornya.jpg"
   },
   {
-    "id": 4,
+    "id": "attraction-4",
     "name": "Városháza",
     "category": "Történelem & építészet",
     "description": "Magyarország egyetlen folyamatosan eredeti funkciójában működő városházája.",
@@ -79,7 +79,7 @@
     "image": "/images/varoshaza.jpg"
   },
   {
-    "id": 5,
+    "id": "attraction-5",
     "name": "Tábornokház",
     "category": "Történelem & építészet",
     "description": "Egykor a katonai parancsnokok szálláshelyéül szolgáló épület a Jurisics téren.",
@@ -98,7 +98,7 @@
     "image": "/images/tabornokhaz.jpg"
   },
   {
-    "id": 6,
+    "id": "attraction-6",
     "name": "Lábasház (Levéltár)",
     "category": "Történelem & építészet",
     "description": "Az ország egyetlen dupla árkádos, barokk stílusú levéltára.",
@@ -116,7 +116,7 @@
     "image": "/images/labashaz.jpg"
   },
   {
-    "id": 7,
+    "id": "attraction-7",
     "name": "Sgraffitós‑ház",
     "category": "Történelem & építészet",
     "description": "Díszes sgrafitto‑technikával díszített reneszánsz polgárház a belvárosban.",
@@ -134,7 +134,7 @@
     "image": "/images/sgraffito_haz.jpg"
   },
   {
-    "id": 9,
+    "id": "attraction-9",
     "name": "Arany Egyszarvú Patikamúzeum",
     "category": "Múzeum & kiállítás",
     "description": "Az ország egyik legrégebbi, eredeti berendezésű gyógyszertára.",
@@ -153,7 +153,7 @@
     "image": "/images/attractions/patikamuz.jpg"
   },
   {
-    "id": 10,
+    "id": "attraction-10",
     "name": "Postamúzeum",
     "category": "Múzeum & kiállítás",
     "description": "A posta és hírközlés történetét bemutató szakmúzeum.",
@@ -171,7 +171,7 @@
     "image": "/images/attractions/postamuz.jpg"
   },
   {
-    "id": 11,
+    "id": "attraction-11",
     "name": "Jézus Szíve-templom",
     "category": "Templomok & vallás",
     "description": "A Fő téren álló monumentális, neogótikus csarnoktemplom.",
@@ -189,7 +189,7 @@
     "image": "/images/jezus_szive_templom.jpg"
   },
   {
-    "id": 12,
+    "id": "attraction-12",
     "name": "Szent Jakab-templom",
     "category": "Templomok & vallás",
     "description": "Kőszeg legrégebbi, gótikus temploma értékes középkori freskókkal.",
@@ -208,7 +208,7 @@
     "image": "/images/attractions/Jakab2.jpg"
   },
   {
-    "id": 13,
+    "id": "attraction-13",
     "name": "Szent Imre-templom",
     "category": "Templomok & vallás",
     "description": "A Szent Jakab-templom szomszédságában álló, egykori magyar plébániatemplom.",
@@ -226,7 +226,7 @@
     "image": "/images/attractions/imretemplom.jpg"
   },
   {
-    "id": 14,
+    "id": "attraction-14",
     "name": "Evangélikus templom",
     "category": "Templomok & vallás",
     "description": "1783-as copf stílusú templom a Gyöngyös-patak partján.",
@@ -244,7 +244,7 @@
     "image": "/images/attractions/evangelikus.jpg"
   },
   {
-    "id": 15,
+    "id": "attraction-15",
     "name": "Református templom",
     "category": "Templomok & vallás",
     "description": "1996-ban épült modern templom, ószövetségi sátort idéző formával.",
@@ -262,7 +262,7 @@
     "image": "/images/attractions/reformatus.jpg"
   },
   {
-    "id": 16,
+    "id": "attraction-16",
     "name": "Zsinagóga",
     "category": "Templomok & vallás",
     "description": "1859-ben épült romantikus stílusú imaház, 2022-ben felújítva.",
@@ -280,7 +280,7 @@
     "image": "/images/attractions/zsinagoga.jpg"
   },
   {
-    "id": 17,
+    "id": "attraction-17",
     "name": "Szent Kereszt felmagasztalása kálváriatemplom",
     "category": "Templomok & vallás",
     "description": "A Kálvária-hegy tetején álló barokk templom, stációkkal.",
@@ -299,7 +299,7 @@
     "image": "/images/attractions/kalvaria.jpg"
   },
   {
-    "id": 18,
+    "id": "attraction-18",
     "name": "Városkút",
     "category": "Városi terek & emlékhelyek",
     "description": "1766-ból származó díszkút a Jurisics téren.",
@@ -317,7 +317,7 @@
     "image": "/images/attractions/varoskut.jpg"
   },
   {
-    "id": 19,
+    "id": "attraction-19",
     "name": "Szentháromság-szobor",
     "category": "Városi terek & emlékhelyek",
     "description": "Barokk pestisoszlop a Jurisics téren, 1713‑ból.",
@@ -335,7 +335,7 @@
     "image": "/images/attractions/szentharomsag_szobor.jpg"
   },
   {
-    "id": 20,
+    "id": "attraction-20",
     "name": "11 órai harangszó",
     "category": "Élmény & hagyomány",
     "description": "Kőszeg egyedülálló hagyománya az 1532-es ostrom emlékére.",
@@ -354,7 +354,7 @@
     "image": "/images/attractions/11harang.jpeg"
   },
   {
-    "id": 21,
+    "id": "attraction-21",
     "name": "Fő tér",
     "category": "Városi terek & emlékhelyek",
     "description": "Kőszeg városias tere a Jézus Szíve-templommal és a szökőkúttal.",
@@ -372,7 +372,7 @@
     "image": "/images/fo_ter.jpg"
   },
   {
-    "id": 22,
+    "id": "attraction-22",
     "name": "Várkör",
     "category": "Városi terek & emlékhelyek",
     "description": "A városfalakat körülölelő hangulatos sétálóutca és park.",
@@ -390,7 +390,7 @@
     "image": "/images/attractions/varkor.jpeg"
   },
   {
-    "id": 24,
+    "id": "attraction-24",
     "name": "Cáki Pincesor",
     "category": "Természet & néprajz",
     "description": "Egyedülálló népi műemlékegyüttes a Kőszeg melletti Cák községben.",
@@ -409,7 +409,7 @@
     "image": "/images/attractions/cak.jpg"
   },
   {
-    "id": 25,
+    "id": "attraction-25",
     "name": "Bozsoki Sibrik-várkastély",
     "category": "Történelem & építészet",
     "description": "Vizesárokkal körülvett reneszánsz eredetű várkastély Bozsokon.",
@@ -428,7 +428,7 @@
     "image": "/images/attractions/sibrik.jpg"
   },
   {
-    "id": 26,
+    "id": "attraction-26",
     "name": "Szent Vid-kápolna",
     "category": "Templomok & vallás",
     "description": "A Velem feletti Szent Vid-hegyen álló, 18. századi búcsújáró kápolna.",
@@ -447,7 +447,7 @@
     "image": "/images/attractions/vid.jpg"
   },
   {
-    "id": 27,
+    "id": "attraction-27",
     "name": "Chernel-kert Arborétum",
     "category": "Természet & kirándulás",
     "description": "Védett gyűjteményes kert Chernel István ornitológus egykori birtokán.",
@@ -465,7 +465,7 @@
     "image": "/images/attractions/kert.jpg"
   },
   {
-    "id": 28,
+    "id": "attraction-28",
     "name": "Bechtold István Természetvédelmi Látogatóközpont",
     "category": "Természet & kirándulás",
     "description": "Az Írottkő Natúrpark kapujaként működő interaktív központ.",
@@ -483,7 +483,7 @@
     "image": "/images/attractions/latogatokp_1.jpg"
   },
   {
-    "id": 29,
+    "id": "attraction-29",
     "name": "Hétforrás",
     "category": "Természet & kirándulás",
     "description": "A honfoglaló hét vezérről elnevezett bővizű forrás a hegyekben.",
@@ -501,7 +501,7 @@
     "image": "/images/attractions/hetforr.jpg"
   },
   {
-    "id": 30,
+    "id": "attraction-30",
     "name": "Hörmann-forrás",
     "category": "Természet & kirándulás",
     "description": "A Kőszegi-hegység legmagasabban fekvő természetes forrása, 713 m-en.",
@@ -519,7 +519,7 @@
     "image": "/images/attractions/hormann.jpg"
   },
   {
-    "id": 31,
+    "id": "attraction-31",
     "name": "Óház-kilátó",
     "category": "Kilátók & természet",
     "description": "Kilátó a Kőszegi-hegységben, az egykori felsővár helyén.",
@@ -537,7 +537,7 @@
     "image": "/images/attractions/ohaz.jpg"
   },
   {
-    "id": 32,
+    "id": "attraction-32",
     "name": "Írottkő-kilátó",
     "category": "Kilátók & természet",
     "description": "A Dunántúl legmagasabb pontján, 883 méteren álló kilátó.",
@@ -555,7 +555,7 @@
     "image": "/images/attractions/irottko.jpg"
   },
   {
-    "id": 33,
+    "id": "attraction-33",
     "name": "Szulejmán-kilátó",
     "category": "Kilátók & természet",
     "description": "Kilátópont a Kálvária-hegyen, a történelmi legenda helyszínén.",
@@ -573,7 +573,7 @@
     "image": "/images/attractions/szul.jpg"
   },
   {
-    "id": 34,
+    "id": "attraction-34",
     "name": "Stájer-házak Erdei Iskola",
     "category": "Természet & kirándulás",
     "description": "Hangulatos, 18. századi erdészház-együttes a Kőszegi-hegységben.",
@@ -591,7 +591,7 @@
     "image": "/images/attractions/staj.jpg"
   },
   {
-    "id": 35,
+    "id": "attraction-35",
     "name": "Kőszegi Csónakázó-tó",
     "category": "Természet & kirándulás",
     "description": "Mesterséges tó a város északi szélén, csónakázási és horgászati lehetőséggel.",
