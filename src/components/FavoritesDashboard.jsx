@@ -37,7 +37,7 @@ export default function FavoritesDashboard({ attractions, events, leisure, onClo
 
             {leisure.length > 0 && (
               <section>
-                <h4 className="font-semibold text-sm mb-2 text-gray-600 dark:text-gray-400">Kedvenc Programok</h4>
+                <h4 className="font-semibold text-sm mb-2 text-gray-600 dark:text-gray-400">Szabadidő</h4>
                 <div className="flex gap-3 overflow-x-auto pb-2 snap-x scrollbar-hide">
                   {leisure.map(item => <MiniLeisureCard key={item.id} item={item} />)}
                 </div>
