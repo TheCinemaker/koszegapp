@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DarkModeContext } from './contexts/DarkModeContext';
 import { useFavorites } from './contexts/FavoritesContext.jsx';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels } from './api';
+import { Toaster } from 'react-hot-toast';
 
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
@@ -133,7 +134,7 @@ export default function App() {
       </main>
 
       {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
-      
+      <Toaster position="bottom-center" />
       {/* ... a többi modal, footer, stb. változatlan ... */}
       {isHome && showProgramModal && ( <ProgramModal onClose={() => setShowProgramModal(false)} openDrawer={() => setShowOstromDrawer(true)} /> )}
       {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
