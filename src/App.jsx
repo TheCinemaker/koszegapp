@@ -77,8 +77,6 @@ export default function App() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // --- AZONNALI FRISSÜLÉS JAVÍTÁSA (useMemo) ---
-  // Ezek a listák most már garantáltan újra fognak számolódni, amint a 'favorites' tömb megváltozik.
   const favoriteAttractions = useMemo(() => appData.attractions.filter(item => isFavorite(item.id)), [appData.attractions, favorites]);
   const favoriteEvents = useMemo(() => appData.events.filter(item => isFavorite(item.id)), [appData.events, favorites]);
   const favoriteLeisure = useMemo(() => appData.leisure.filter(item => isFavorite(item.id)), [appData.leisure, favorites]);
