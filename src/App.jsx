@@ -144,6 +144,7 @@ export default function App() {
         <p className="text-xs text-gray-600 mt-2"><Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link></p>
       </footer>
       <FloatingButtons />
+      <OstromDrawerFullAnimated />
     </div>
   );
 }
