@@ -8,7 +8,7 @@ export default function FavoritesDashboard({ attractions, events, leisure, onClo
   const hasContent = attractions.length > 0 || events.length > 0 || leisure.length > 0;
 
   return (
-    <div className="absolute right-0 mt-2 w-80 bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-lg shadow-2xl ring-1 ring-black ring-opacity-5 animate-fadein-fast">
+    <div className="absolute right-0 mt-2 w-80 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 animate-fadein-fast">
       <div className="p-4">
         <div className="flex justify-between items-center mb-3">
           <h3 className="font-bold text-purple-800 dark:text-purple-300">Kedvenceim</h3>
