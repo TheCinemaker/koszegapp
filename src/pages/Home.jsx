@@ -30,8 +30,14 @@ export default function Home() {
             key={sec.to}
             to={sec.to}
             aria-label={sec.label}
-            className="bg-white/80 border border-transparent dark:bg-gray-800/80 dark:border-gray-700 rounded-2xl shadow-lg dark:shadow-md p-6 flex flex-col items-center hover:shadow-2xl dark:hover:shadow-lg transition-all duration-150 transform hover:-translate-y-1 active:scale-95 focus:outline-none focus:ring-2 focus:ring-purple-300 group min-h-[140px]"
-          >
+            className="
+              bg-white/80 ... flex flex-col items-center
+              transition-all duration-200 ease-in-out  // <<< ÚJ: Az animáció alapjai
+              transform hover:-translate-y-1           // <<< ÚJ: Lebegő effektus egér fölé húzásakor
+              hover:shadow-2xl                         // <<< ÚJ: Erősebb árnyék lebegéskor
+              active:scale-95                          // <<< ÚJ: "Benyomódó" effektus kattintáskor
+              "
+            >
             <div className="w-16 h-16 mb-4 rounded-md overflow-hidden drop-shadow-lg group-hover:scale-110 transition-transform duration-200">
               <img src={sec.imgLight} alt={sec.label} className="w-full h-full object-contain block dark:hidden" draggable="false" />
               <img src={sec.imgDark} alt={sec.label} className="w-full h-full object-contain hidden dark:block" draggable="false" />
