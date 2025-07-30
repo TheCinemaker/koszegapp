@@ -8,87 +8,57 @@ Folyamatban:
       - Google válaszok linkje: https://docs.google.com/spreadsheets/d/1I-f8S2RtPaQS8Pn30HibSQFkuByyfvxJdNMuedy0bhg/edit?gid=1564614289#gid=1564614289
 //)
 
+
+Kész módosítások: 
+
 Attractions oldalak:
-- Bugfix az atractions.jsx-ben és az atractionsdetail.jsx-ben. index.css-ben uj tailwind osztály hozzáadva a vertikális görgetéshez, main.jsx javitva a leaflethez
-- térképes nézet, szűrők, kereső hozzáadása
-- Geolokáció a térképen ("Hol vagyok én?" funkció) pulzáló markerrel és hibakezeléssel.
-- Felugró, animált modal ablak a térképen lévő markerekre kattintva a gyors részletekért.
-- Kedvencek rendszer beépítése a Látnivalók oldalra:
-  - A felhasználók szív ikonnal jelölhetik meg a látnivalókat.
-  - A mentés a böngésző `localStorage`-ébe történik, egyedi kulccsal (`'attraction-favorites'`), így nem ütközik a programfüzet kedvenceivel.
-  - Dinamikusan megjelenő "Kedvenceim" szűrőgomb, ha van legalább egy kedvenc.
-  - Javítva egy renderelési hiba ('fehér képernyő'), ami a kedvencek logikájának bevezetésekor jött elő.
-  - Módosított/új fájlok:
-    - `src/hooks/useFavorites.js` (Új fájl!)
-    - `src/pages/Attractions.jsx` (vagy ahol az oldal van, pl. `src/components/Attractions.jsx`)
-    - `src/components/AttractionsMap.jsx`
-    - `src/components/UserLocationMarker.jsx` (Új fájl!)
-    - `src/components/AttractionDetailModal.jsx` (Új fájl!)
-    - `src/index.css` (A pulzáló marker animációjához)
+Bugfix az attractions.jsx-ben és az attractionsdetail.jsx-ben. index.css-ben új tailwind osztály hozzáadva a vertikális görgetéshez, main.jsx javítva a leaflethez.
+Térképes nézet, szűrők, kereső hozzáadása.
+Geolokáció a térképen ("Hol vagyok én?" funkció) pulzáló markerrel és hibakezessel.
+Felugró, animált modal ablak a térképen lévő markerekre kattintva a gyors részletekért.
 
 Gasztronómia oldalak:
-      - Kódminőség javítása és komponens-alapú refaktorálás:
-      - A gasztronómiai kártyák logikája kiszervezve egy új, újrahasznosítható GastroCard.jsx komponensbe a tisztább kód érdekében.
-      - A listaoldal (Gastronomy.jsx) és a részletező oldal (RestaurantDetail.jsx) modernizálása: robusztus loading és error                    állapotkezelés bevezetése.
-      - Felhasználói felület (UI) fejlesztése a részletező oldalon: informatív ikonok hozzáadása (cím, telefon, email stb.) a jobb              átláthatóságért.
-      - Build hibák elhárítása: a Netlify build környezetében felmerülő, Parse error típusú hibák felderítése és javítása a                     komponensekben.
+Kódminőség javítása és komponens-alapú refaktorálás:
+A gasztronómiai kártyák logikája kiszervezve egy új, újrahasznosítható GastroCard.jsx komponensbe a tisztább kód érdekében.
+A listaoldal (Gastronomy.jsx) és a részletező oldal (RestaurantDetail.jsx) modernizálása: robusztus loading és error állapotkezelés bevezetése.
 
-Módosított/új fájlok:
-      src/pages/Gastronomy.jsx
-      src/pages/RestaurantDetail.jsx
-      src/components/GastroCard.jsx (Új fájl!)
+Stabilitási hibák javítása: A Gastronomy.jsx oldalon a szűrő használatakor jelentkező "fehér képernyő" hiba elhárítása a useMemo és useCallback hook-ok bevezetésével a felesleges újrarajzolások megakadályozására.
+Felhasználói felület (UI) fejlesztése a részletező oldalon: informatív ikonok hozzáadása (cím, telefon, email stb.) a jobb átláthatóságért.
+Build hibák elhárítása: a Netlify build környezetében felmerülő, Parse error típusú hibák felderítése és javítása.
 
 Események oldal:
 Kedvencek rendszer bevezetése:
-      Integrálva a meglévő useFavorites hook, lehetővé téve az események kedvencként való elmentését.
-      Szív ikonok (FaHeart, FaRegHeart) elhelyezése az eseménykártyákon a kedvencek jelöléséhez.
-      Dinamikus "Kedvenceim" szűrőgomb hozzáadása, amely csak akkor jelenik meg, ha a felhasználónak van mentett kedvenc eseménye.
-      A szűrési logika kiterjesztése az új "favorites" filter kezelésére.
-Módosított/új fájlok:
-      src/pages/Events.jsx
-
-Főoldal (Dashboard):
-            Személyre szabott "Programfüzet" szekció bevezetése a főoldalon (Home.jsx):
-            A funkció a meglévő "indítópult" gombok fölött, kiemelt helyen jelenik meg.
-            Dinamikusan betölti az összes látnivalót és eseményt a háttérben.
-            A useFavorites hook segítségével kiszűri és megjeleníti a felhasználó által kedvencnek jelölt elemeket.
-            A kedvencek két külön, vízszintesen görgethető sávban jelennek meg: "Elmentett Helyek" és "Közelgő Eseményeid".
-            Amennyiben a felhasználónak még nincsenek kedvencei, egy segítőkész üzenet jelenik meg, ami a funkció használatára ösztönöz.
-            Újrahasznosítható miniatűr kártyák létrehozása:
-            MiniAttractionCard.jsx és MiniEventCard.jsx komponensek bevezetése a főoldali kedvencek kompakt és letisztult                           megjelenítéséhez.
-            Tudatos tervezési döntés: A főoldal jelenleg a Látnivalók és Események kedvenceire fókuszál a jobb teljesítmény és a                    felhasználói élmény érdekében, de a jövőben könnyen bővíthető más típusú kedvencekkel (pl. gasztronómia).
-Módosított/új fájlok:
-            src/pages/Home.jsx
-            src/components/MiniAttractionCard.jsx (Új fájl!)
-            src/components/MiniEventCard.jsx (Új fájl!)
+Integrálva a meglévő useFavorites hook, lehetővé téve az események kedvencként való elmentését.
+Szív ikonok (FaHeart, FaRegHeart) elhelyezése az eseménykártyákon a kedvencek jelöléséhez.
+Dinamikusan megjelenő "Kedvenceim" szűrőgomb hozzáadása.
+A szűrési logika kiterjesztése az új "favorites" filter kezelésére.
 
 Globális architekturális fejlesztések és új funkciók:
-Központi Adatkezelés bevezetése (App.jsx):
-A teljes alkalmazás adatbetöltési logikája átkerült az App.jsx komponensbe. Az oldalak (Látnivalók, Események stb.) már nem egyenként, hanem központilag, props-ként kapják meg az adatokat. Ez jelentősen javítja a teljesítményt és a kód karbantarthatóságát.
+Központi, reaktív kedvencek rendszer (FavoritesContext.jsx):
+A korábbi, komponensenkénti useFavorites hook-ot egy központi React Context-re cseréltük.
+Ez garantálja, hogy a kedvencek állapota egyetlen, központi helyen van tárolva, és bármilyen változás (pl. egy szívre kattintás) azonnal és az egész alkalmazásban láthatóvá válik.
+Ezzel megszüntettük a "csak F5-re frissül" hibát.
+
+Adatbázis-szintű ID ütközés javítása:
+A "szellem" kedvencek (nem mentett elemek megjelenése) hibájának orvoslása.
+Létrehoztunk egy Node.js szkriptet (fix-ids.js), ami automatikusan, preffixekkel (attraction-1, event-1 stb.) látta el az összes .json fájlban lévő ID-t, biztosítva azok globális egyediségét.
+
+Központi Adatkezelés (App.jsx):
+Az alkalmazás adatbetöltési logikája átkerült az App.jsx komponensbe. Az oldalak már nem egyenként, hanem központilag, props-ként kapják meg az adatokat, javítva a teljesítményt.
 Globális "Programfüzet" a fejlécben:
-A főoldali, nagy méretű "Programfüzet" szekciót egy elegáns, a fejlécből elérhető, lenyíló menüre cseréltük.
-A fejlécben egy szív ikon ❤️ jelzi a funkciót, mellette egy számláló mutatja az elmentett kedvencek számát.
-A lenyíló menü a korábban létrehozott "mini kártyákat" használja a vonzó, vizuális megjelenésért.
-Azonnali frissülés javítása: A useMemo hook bevezetésével a lenyíló kedvencek menü tartalma most már azonnal és garantáltan frissül, amint a felhasználó egy új elemet ad hozzá vagy elvesz onnan, megszüntetve a korábbi adatszinkronizációs hibákat.
-Szabadidő (Leisure) szekció integrálása a kedvencekbe:
-A "Szabadidő" oldal is megkapta a "szivecskézés" funkciót a useFavorites hook segítségével.
-A kedvencnek jelölt szabadidős programok most már megjelennek a fejlécben lévő globális "Programfüzetben".
-Új Funkció: Részletes Időjárás Előrejelzés:
-A fejlécben található időjárás ikon kattinthatóvá vált.
-Kattintásra egy felugró ablak (modal) jelenik meg, ami többnapos, részletes időjárás-előrejelzést mutat Kőszegre.
+A főoldali "Programfüzet" egy elegáns, a fejlécből elérhető, menő, kártyás lenyíló menüre (FavoritesDashboard.jsx) cserélődött.
+A fejlécben egy szív ikon ❤️ jelzi a funkciót, egy számlálóval a kedvencek számáról.
+Szabadidő (Leisure) szekció integrálása a kedvencekbe.
+
 Módosított/új fájlok:
 src/App.jsx (Jelentősen átalakítva)
-src/pages/Home.jsx (Jelentősen egyszerűsítve)
-src/pages/Leisure.jsx
-src/components/FavoritesDropdown.jsx (Törölve)
+src/main.jsx (Kiegészítve a FavoritesProvider-rel)
+src/pages/Home.jsx, Attractions.jsx, Events.jsx, Leisure.jsx stb. (Egyszerűsítve, adatbetöltés eltávolítva)
+src/hooks/useFavorites.js (Törölve)
+src/contexts/FavoritesContext.jsx (Új fájl!)
 src/components/FavoritesDashboard.jsx (Új fájl!)
-src/components/MiniLeisureCard.jsx (Új fájl!)
-src/components/WeatherModal.jsx (Új fájl!)
-
-
-
-
-Kész módosítások: 
+src/components/MiniAttractionCard.jsx, MiniEventCard.jsx, MiniLeisureCard.jsx (Új fájlok!)
+fix-ids.js (Segédszkript, új)
 
 HIGH priority!! Megy az 1.0-ba amint kész van! 
       - Ostromnapkor nagy modalban nyilik a napi program, következő program programajánlóval
