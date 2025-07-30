@@ -36,65 +36,59 @@ export default function AboutDetail() {
           KőszegAPP
         </h1>
 
-<p className="text-gray-200 mb-6 leading-relaxed text-lg drop-shadow-[0_0_4px_pink]">
-  A <span className="text-pink-400 font-semibold">KőszegAPP</span> egy mobilbarát webapp,
-  amelynek célja, hogy a városba látogató turisták és helyiek egy helyen, átlátható formában
-  találják meg Kőszeg legizgalmasabb pontjait, programjait, éttermeit, parkolási lehetőségeit
-  és egyéb hasznos közérdekű információkat. Igyekeztünk minden fontos adatot összegyűjteni és
-  folyamatosan frissíteni. Az APP-ba mesterséges intelligencia (AI) alapú chatsegéd is
-  be van építve, amely barátságosan próbál válaszolni a várossal kapcsolatos kérdésekre.
-  A rendszer azonban még fejlődő fázisban van, ezért előfordulhat, hogy hibás vagy pontatlan
-  választ ad – ha ilyet találsz, kérlek jelezd nekünk az elérhetőségeinken!
-
-  A fejlesztés és a kód teljes mértékben privát, városi vagy önkormányzati anyagi és/vagy szellemi segítség nélkül
-  készült. Fontos kiemelni, hogy a <span className="text-pink-400 font-semibold">KőszegAPP</span>
-  egy magánszemély által létrehozott, nem üzleti célú projekt. Cégként vagy gazdasági
-  társaságként a „Kőszeg” név használatához a helyi önkormányzat jegyzőjének hivatalos
-  engedélye szükséges lenne a településnév-használatra vonatkozó jogszabályok alapján.
-  A Kőszeg név használata kizárólag magánszemélyként, város iránti elköteleződésből történik, nem kereskedelmi vagy hivatalos célokra.
-  Ez az alkalmazás azonban nem cég, hanem egy helyi lakos lelkes magánmunkája.
-
-  Az alkalmazásban szereplő információk a legjobb tudásunk szerint kerültek összegyűjtésre,
-  ugyanakkor nem minősülnek hivatalos tájékoztatásnak. Kérjük, minden fontos adatot
-  (például nyitvatartás, telefonszám) ellenőrizz közvetlenül az adott szolgáltatónál!
-</p>
-
-
-        <p className="text-gray-300 mb-8 leading-relaxed text-md drop-shadow-[0_0_3px_cyan] italic">
-          Az APP-ot folyamatosan fejlesztjük, folyamatosan frissítjük, AI adatgyűjtéssel és manuális validációval. 
-          <br/>
-          <span className="text-sm text-cyan-300">(powered by: OpenAI, Google, Facebook API, Openweather API, DeepseekAI, NetlifyAPP)</span>
+        <p className="text-gray-200 mb-6 leading-relaxed text-lg drop-shadow-[0_0_4px_pink]">
+          A <span className="text-pink-400 font-semibold">KőszegAPP</span> egy rajongásból született, mobilbarát webalkalmazás,
+          amelynek célja, hogy a városba látogató turisták és a helyiek egy helyen, átlátható és modern formában
+          találják meg Kőszeg legizgalmasabb pontjait, programjait, éttermeit és minden hasznos információt. Az alkalmazásba mesterséges intelligencia (AI) alapú chatsegéd is be van építve, amely barátságosan próbál válaszolni a várossal kapcsolatos kérdésekre. A rendszer még fejlődő fázisban van, ezért előfordulhat, hogy hibás vagy pontatlan választ ad – ha ilyet találsz, kérlek jelezd nekünk!
         </p>
+        
+        {/* --- ÚJ SZEKCIÓ: Jogi Nyilatkozat --- */}
+        <div className="border-l-4 border-pink-500 pl-4 mb-8 text-sm italic text-gray-400">
+          <h3 className="font-semibold text-pink-400 not-italic mb-2">Fontos tudnivaló</h3>
+          A fejlesztés és a kód teljes mértékben magánforrásból, városi vagy önkormányzati anyagi és/vagy szellemi segítség nélkül készült. A <span className="font-semibold">KőszegAPP</span> egy magánszemély által létrehozott, nem üzleti célú, hobbi projekt. A "Kőszeg" név használata kizárólag a város iránti elköteleződésből történik. Az alkalmazásban szereplő információk a legjobb tudásunk szerint kerültek összegyűjtésre, ugyanakkor nem minősülnek hivatalos tájékoztatásnak. Kérjük, minden fontos adatot (pl. nyitvatartás, árak) ellenőrizz közvetlenül az adott szolgáltatónál!
+        </div>
 
         <h2 className="text-3xl font-bold text-pink-400 mb-4 drop-shadow-[0_0_6px_pink]">Hogyan használd?</h2>
-        <ul className="list-disc list-inside text-gray-200 mb-8 space-y-1">
-          <li>Nyisd meg a <span className="text-cyan-300">visitkoszeg.hu</span> oldalt a mobilodon.</li>
-          <li>Koppints a böngésző menüre → „Hozzáadás a kezdőképernyőhöz”.</li>
-          <li>Ezután ikonként fog megjelenni a telefonodon, mint bármelyik applikáció.</li>
-          <li>Ha bármilyen észrevételed van, ne habozz, keress minket az alább található email-en!</li>
+        <ul className="list-disc list-inside text-gray-200 mb-8 space-y-2">
+          <li>Nyisd meg a <strong className="text-cyan-300">visitkoszeg.hu</strong> oldalt a mobilod böngészőjében.</li>
+          <li>A böngésző menüjében (általában 3 pötty vagy megosztás ikon) koppints a <strong className="text-cyan-300">„Hozzáadás a főképernyőhöz”</strong> opcióra.</li>
+          <li>Ezután az app ikonként fog megjelenni a telefonodon, mint bármelyik másik alkalmazás.</li>
+          <li>A ❤️ ikonnal elmentheted a kedvenc helyeidet és programjaidat, amiket a fejlécben lévő szív ikonra kattintva bármikor elérhetsz.</li>
         </ul>
 
-        <h2 className="text-3xl font-bold text-pink-400 mb-4 drop-shadow-[0_0_6px_pink]">Partnereink:</h2>
-        <h2 className="text-3xl font-bold text-pink-400 mb-4 drop-shadow-[0_0_6px_pink]">Köszönjük a segítséget:</h2>
-        <ul className="list-disc list-inside text-gray-200 mb-8 space-y-1">
-          <li>A DOMAINNÉV kitalálója: Tóth Gábor/Tóth Pincészet</li>
-          <li>A mindig bejövős infókért: Kőszegi Időjárás Előrejelzés / Ráduly László</li>
-          <li>Túrainfókért: KKE Alpok Cycles</li>
-          <li>és nem utolsó sorban a fantasztikus látványért: </li>
-          <li>DESIGN: Hidalmási Erik </li>
+        {/* --- FRISSÍTETT SZEKCIÓ: Köszönetnyilvánítás --- */}
+        <h2 className="text-3xl font-bold text-pink-400 mb-4 drop-shadow-[0_0_6px_pink]">Köszönetnyilvánítás</h2>
+        <p className="text-gray-300 mb-4">Ez a projekt nem jöhetett volna létre a közreműködők és segítők nélkül:</p>
+        <ul className="list-none text-gray-200 mb-8 space-y-2">
+          <li><strong>Domainnév:</strong> Egy titkos jótevőnek, akinek a nevét homály fedi! 😉</li>
+          <li><strong>Időjárás adatok:</strong> Ráduly Lászlónak és a Kőszegi Időjárás Előrejelzésnek a mindig pontos infókért.</li>
+          <li><strong>Túrainformációk:</strong> A KKE Alpok Cycles csapatának.</li>
+          <li><strong>Közösségi támogatás:</strong> A "Kőszeg a mesebeli kisváros" Facebook csoport adminisztrátorának.</li>
+          <li><strong>És a fantasztikus látványért:</strong></li>
+          <li className="pl-4 font-bold text-lg text-cyan-400">DESIGN: Hidalmási Erik</li>
         </ul>
 
         <h2 className="text-3xl font-bold text-pink-400 mb-4 drop-shadow-[0_0_6px_pink]">Kapcsolat</h2>
         <p className="text-gray-200 mb-8">
-          Írj nekünk: 
-          <a href="mailto:koszegapp@gmail.com" className="text-cyan-400 underline hover:text-pink-400 transition ml-2">
+          Hibát találtál, vagy van egy jó ötleted? Írj nekünk!
+          <a href="mailto:koszegapp@gmail.com" className="block mt-2 text-cyan-400 text-lg font-semibold underline hover:text-pink-400 transition">
             koszegapp@gmail.com
           </a>
         </p>
 
-        {/* Easter egg */}
-        <div className="mt-10 text-center text-xs text-cyan-500 animate-pulse opacity-70 hover:opacity-100 transition">
-          👾 Hidden glitch: <span className="text-pink-400 font-bold">404 - CYBER</span>
+        {/* --- FRISSÍTETT SZEKCIÓ: Technológiai háttér --- */}
+        <div className="mt-10 text-xs text-center text-cyan-500 opacity-70">
+          <p className="mb-1">Fejlesztéshez használt technológiák:</p>
+          <p className="font-mono tracking-widest">
+            React • Vite • TailwindCSS • React Router • i18next • date-fns
+          </p>
+          <p className="mt-2 mb-1">Felhasznált API-k és szolgáltatások:</p>
+          <p className="font-mono">
+            OpenAI • Google API • Facebook API • OpenWeather API • Netlify
+          </p>
+          <div className="mt-6 animate-pulse hover:animate-none transition">
+            👾 Hidden glitch: <span className="text-pink-400 font-bold">404 - CYBERPUNK KŐSZEG</span>
+          </div>
         </div>
       </div>
     </div>
