@@ -11,7 +11,7 @@ export default function FavoritesDashboard({ attractions, events, leisure, onClo
     <div className="absolute right-0 mt-2 w-80 bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-lg shadow-2xl ring-1 ring-black ring-opacity-5 animate-fadein-fast">
       <div className="p-4">
         <div className="flex justify-between items-center mb-3">
-          <h3 className="font-bold text-purple-800 dark:text-purple-300">Személyes Programfüzet</h3>
+          <h3 className="font-bold text-purple-800 dark:text-purple-300">Kedvenceim</h3>
           <button onClick={onClose} className="text-xl text-gray-500 hover:text-gray-800 dark:hover:text-white">×</button>
         </div>
         
