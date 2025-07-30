@@ -1,598 +1,522 @@
 [
   {
-    "id": 1,
-    "name": "ANCONAI SZERELMESEK",
-    "date": "2025-07-02",
-    "time": "20:30",
-    "location": "Jurisics-vár nagyszínpad",
-    "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Zenés komédia előadás.",
-    "tags": ["színház","komédia"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 2,
-    "name": "Jon Lonoff: Centiről centire",
-    "date": "2025-07-05",
-    "time": "20:30",
-    "location": "Jurisics-vár belső udvar",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Irodalmi est Jon Lonoff műveiből.",
-    "tags": ["irodalom","színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 3,
-    "name": "Mundus Minor – Trifusz Péter kiállításmegnyitó",
-    "date": "2025-07-10",
-    "time": "18:00",
-    "location": "Jurisics-vár Lovagterem",
-    "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Kortárs művészeti kiállítás megnyitó.",
-    "tags": ["kiállítás","művészet"],
-    "image": "mundus_minor.jpg"
-  },
-  {
-    "id": 4,
-    "name": "Laurence Jyl: FELSŐ SZOMSZÉDOK",
-    "date": "2025-07-10",
-    "time": "18:00",
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Színházi előadás több alkalommal.",
-    "tags": ["színház","dráma"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 5,
-    "name": "Királyok könyve – Történetek Szent Margitról",
-    "date": "2025-07-11",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Irodalmi előadás Szent Margit történeteiről.",
-    "tags": ["irodalom","történelem"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 6,
-    "name": "Donát-napi Bortúra",
-    "date": "2025-07-12",
-    "time": "15:00",
-    "location": "BORTERASZ - Kőszeg környéki pincék",
-    "coords": {"lat":47.3944624,"lng":16.5250188},
-    "description": "Pompás panoráma, ínycsiklandó borok és elbűvölő környezet – mindez vár Téged a 2025. július 12-én, a kőszegi Donát napi bortúrán!Helyszínünk a festői Napostető, Szulejmán kilátó, Királyvölgy.",
-    "tags": ["bor","túra","gasztronómia"],
-    "image": "bor.jpg"
-  },
-  {
-    "id": 7,
-    "name": "Szálinger Balázs: Jurisics, Kőszeg kapitánya",
-    "date": "2025-07-12",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Irodalmi-bábszínházi előadás gyerekeknek.",
-    "tags": ["irodalom","gyerek","színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 8,
-    "name": "Forrás túra",
-    "date": "2025-07-16",
-    "time": "09:00",
-    "location": "Tourinform iroda (Fő tér 2.)",
-    "coords": {"lat":47.3891,"lng":16.5396},
-    "description": "Könnyed természetjárás a környéken.",
-    "tags": ["túra","természet"],
-    "image": "forras.jpg"
-  },
-  {
-    "id": 9,
-    "name": "Fekete Kisasszony",
-    "date": "2025-07-14",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Színházi előadás.",
-    "tags": ["színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 10,
-      "name": "Szabadtéri rajzolás a Szabóhegyen",
-      "date": "2025-07-14",
-      "time": "09:00-11:00",
-      "location": "Szabóhegy",
-      "coords": {"lat": 47.3932, "lng": 16.5480},
-      "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: +36 30 710 9674.",
-      "tags": ["kézműves", "szabadtéri"],
-      "image": "rajzolas.png"
-    },
-  {
-    "id": 11,
-    "name": "Meseautó",
-    "date": "2025-07-14",
-    "time": null,
-    "location": "Kőszeg belváros",
-    "coords": {"lat":47.3895,"lng":16.5400},
-    "description": "Családi meseutazás városnéző járművel.",
-    "tags": ["családi","gyerek"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 12,
-    "name": "A medve és a macska",
-    "date": "2025-07-15",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Gyerekelőadás a várban.",
-    "tags": ["gyerek","színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 13,
-    "name": "F. Tóth Benedek: A BOSSZÚ FOGADÓJA",
-    "date": "2025-07-15",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Kortárs színjáték előadás.",
-    "tags": ["színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 14,
-    "name": "Váratlan vendégek",
-    "date": "2025-07-16",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Színházi előadás.",
-    "tags": ["színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 15,
-    "name": "Mély levegő",
-    "date": "2025-07-17",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Színielőadás a várszínházban.",
-    "tags": ["színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 16,
-    "name": "Márai Sándor: Az igazi",
-    "date": "2025-07-17",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Irodalmi-est Márai művével.",
-    "tags": ["irodalom","színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 17,
-    "name": "Kelekótya haramiák",
-    "date": "2025-07-18",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Vidám színházi előadás.",
-    "tags": ["színház","komédia"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 18,
-    "name": "Lököttek – Karinthy Színház",
-    "date": "2025-07-19",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Vendégelőadás Karinthy Színháztól.",
-    "tags": ["színház","komédia"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 19,
-    "name": "Vera",
-    "date": "2025-07-20",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Színházi előadás Vera történetéről.",
-    "tags": ["dráma","színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 20,
-    "name": "Babszem Jankó",
-    "date": "2025-07-20",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Gyerekmese előadás.",
-    "tags": ["gyerek","mese"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 21,
-    "name": "María Luisa",
-    "date": "2025-07-21",
-    "time": null,
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Irodalmi vagy színházi előadás.",
-    "tags": ["irodalom","színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 22,
-    "name": "SZÁLKÁK – Feledi Project",
-    "date": "2025-07-23",
-    "time": "20:30",
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Kortárs táncszínházi előadás a Feledi Project társulatától.",
-    "tags": ["tánc", "kortárs", "színház"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 23,
-    "name": "Operett-Musical est",
-    "date": "2025-07-26",
-    "time": "20:30",
-    "location": "Jurisics-vár nagyszínpad",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Népszerű operett és musical dallamok estje.",
-    "tags": ["zene", "operett", "musical"],
-    "image": "szinhaz.jpeg"
-  },
-    {
-  "id": 24,
-  "name": "Szabadtéri rajzolás Szabóhegyen",
-  "date": "2025-07-28",
-  "time": "09:00-11:00",
-  "location": "Szabóhegy",
-  "coords": {"lat": 47.3932, "lng": 16.5480},
-  "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
-  "tags": ["kézműves", "szabadtéri"],
-  "image": "rajzolas.png"
-  },
-  {
-    "id": 25,
-    "name": "21 az egyben",
-    "date": "2025-07-28",
-    "time": "20:30",
-    "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
-    "description": "Színházi darab humorral és zenével.",
-    "tags": ["színház", "zene", "komédia"],
-    "image": "szinhaz.jpeg"
-  },
-  {
-    "id": 26,
+    "id": "event-26",
     "name": "Csak egy kis terápia – vígjáték",
     "date": "2025-07-30",
     "time": "20:30",
     "location": "Jurisics-vár",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
+    "coords": {
+      "lat": 47.3893898,
+      "lng": 16.5387551
+    },
     "description": "Vígjáték a Karinthy Színház vendégjátékában.",
-    "tags": ["színház", "vígjáték"],
+    "tags": [
+      "színház",
+      "vígjáték"
+    ],
     "image": "szinhaz.jpeg"
   },
   {
-    "id": 27,
+    "id": "event-27",
     "name": "Ostromnapok",
     "date": "2025-08-01",
     "time": "10:00-23:00",
     "location": "Jurisics-vár és belváros",
-     "coords": {"lat":47.3893898,"lng":16.5387551},
+    "coords": {
+      "lat": 47.3893898,
+      "lng": 16.5387551
+    },
     "description": "1532-es ostrom újrajátszása, korhű vásár, koncertek, gyerekprogramok. Bővebb infő a főoldalon az oldalsó menüben",
-    "tags": ["fesztivál", "történelem", "családi"],
+    "tags": [
+      "fesztivál",
+      "történelem",
+      "családi"
+    ],
     "image": "ostromlogo.png"
   },
   {
-    "id": 28,
+    "id": "event-28",
     "name": "Ostromnapok",
     "date": "2025-08-02",
     "time": "10:00-23:30",
     "location": "Jurisics-vár és belváros",
-    "coords": {"lat":47.3905,"lng":16.5399},
+    "coords": {
+      "lat": 47.3905,
+      "lng": 16.5399
+    },
     "description": "Csatabemutatók, ostromjáték, kézműves vásár.Bővebb infő a főoldalon az oldalsó menüben",
-    "tags": ["fesztivál", "történelem", "csata", "családi"],
+    "tags": [
+      "fesztivál",
+      "történelem",
+      "csata",
+      "családi"
+    ],
     "image": "ostromlogo.png"
   },
   {
-    "id": 29,
+    "id": "event-29",
     "name": "Ostromnapok",
     "date": "2025-08-03",
     "time": "10:00-20:00",
     "location": "Jurisics-vár és környéke",
-    "coords": {"lat":47.3905,"lng":16.5399},
+    "coords": {
+      "lat": 47.3905,
+      "lng": 16.5399
+    },
     "description": "Záró napi programok, gyerekeknek kézműves foglalkozások.Bővebb infő a főoldalon az oldalsó menüben",
-    "tags": ["fesztivál", "gyerek", "népzene", "családi"],
+    "tags": [
+      "fesztivál",
+      "gyerek",
+      "népzene",
+      "családi"
+    ],
     "image": "ostromlogo.png"
   },
   {
-    "id": 30,
+    "id": "event-30",
     "name": "Kendig-csúcs túra",
     "date": "2025-08-09",
     "time": "08:30",
     "location": "Találkozó: Tourinform (Fő tér)",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Túra Kőszeg környékének egyik legszebb magaslatára.",
-    "tags": ["túra", "természet"],
+    "tags": [
+      "túra",
+      "természet"
+    ],
     "image": "kendig.jpg"
   },
   {
     "name": "Szabadtéri rajzolás Szabóhegyen",
-  "date": "2025-07-28",
-  "time": "09:00-11:00",
-  "location": "Szabóhegy",
-  "coords": {"lat": 47.3932, "lng": 16.5480},
-  "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
-  "tags": ["kézműves", "szabadtéri"],
-  "image": "rajzolas.png"
+    "date": "2025-07-28",
+    "time": "09:00-11:00",
+    "location": "Szabóhegy",
+    "coords": {
+      "lat": 47.3932,
+      "lng": 16.548
+    },
+    "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
+    "tags": [
+      "kézműves",
+      "szabadtéri"
+    ],
+    "image": "rajzolas.png"
   },
   {
-    "id": 32,
+    "id": "event-32",
     "name": "Szabadtéri rajzolás Szabóhegyen",
-  "date": "2025-07-28",
-  "time": "09:00-11:00",
-  "location": "Szabóhegy",
-  "coords": {"lat": 47.3932, "lng": 16.5480},
-  "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
-  "tags": ["kézműves", "szabadtéri"],
-  "image": "rajzolas.png"
+    "date": "2025-07-28",
+    "time": "09:00-11:00",
+    "location": "Szabóhegy",
+    "coords": {
+      "lat": 47.3932,
+      "lng": 16.548
+    },
+    "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
+    "tags": [
+      "kézműves",
+      "szabadtéri"
+    ],
+    "image": "rajzolas.png"
   },
   {
     "name": "Szabadtéri rajzolás Szabóhegyen",
-  "date": "2025-07-28",
-  "time": "09:00-11:00",
-  "location": "Szabóhegy",
-  "coords": {"lat": 47.3932, "lng": 16.5480},
-  "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
-  "tags": ["kézműves", "szabadtéri"],
-  "image": "rajzolas.png"
+    "date": "2025-07-28",
+    "time": "09:00-11:00",
+    "location": "Szabóhegy",
+    "coords": {
+      "lat": 47.3932,
+      "lng": 16.548
+    },
+    "description": "FELHÍVÁS a nyári szünetre! A természetben rajzolni jó! A Szabóhegyért Közösen Egyesület óvodás, iskolás gyermekeket és felnőtteket is invitál a Szabóhegyre kéthetente, 2025. június 30-tól 5 alkalommal hétfőnként, 9-11 óráig. Időjárástól függően a szabadban rajzolunk vagy az egyesületi házban. A foglalkozások egymástól függetlenül is látogathatók. Gyere ha szeretsz rajzolni, gyurmába lenyomatot készíteni, csodálni a természet színeit! A 2024-es program a természet formáival is foglalkozik. Gyurmába készítjük a formák negatívját, majd gipszből kiöntjük a pozitív képeket. TALÁLKOZÓ: 8:45-kor a Szabóhegyért Közösen Egyesület háza előtt, 9730 Kőszeg, Felsőerdő u. 36. Hozz színes ceruzát és 2 csomag natúr gyurmát. Jelentkezés: Kőfalvi Etelka +36 30 710 9674.",
+    "tags": [
+      "kézműves",
+      "szabadtéri"
+    ],
+    "image": "rajzolas.png"
   },
   {
-    "id": 34,
+    "id": "event-34",
     "name": "VI. Concordia Kórusfesztivál",
     "date": "2025-08-30",
     "time": "16:00",
     "location": "Belváros, Kőszeg",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Kórusok fesztiválja különböző helyszíneken a városban.",
-    "tags": ["zene", "kórus", "fesztivál"],
+    "tags": [
+      "zene",
+      "kórus",
+      "fesztivál"
+    ],
     "image": "concordia.png"
   },
   {
-    "id": 35,
+    "id": "event-35",
     "name": "Kőszegi Szüret és Borünnep",
     "date": "2025-09-12",
     "time": "18:00-23:00",
     "location": "Jurisics tér és belváros",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "A több napos borünnep kezdete: borpavilonok, zenés esték.",
-    "tags": ["bor", "gasztronómia", "fesztivál"],
+    "tags": [
+      "bor",
+      "gasztronómia",
+      "fesztivál"
+    ],
     "image": "szuret.jpg"
   },
   {
-    "id": 36,
+    "id": "event-36",
     "name": "Kőszegi Szüreti Felvonulás",
     "date": "2025-09-13",
     "time": "14:00",
     "location": "Belváros",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Ezen a programon felvonul a város apraja-nagyja, az iskolák, civil szervezetek, cégek különböző mókás jelmezekben. A felvonulás köré épül a további két nap programja, mely pénteken este fúvósszerenáddal indul és vasárnap könnyed zenei programmal zárul. Szombaton délelőtt tartjuk a városunkba érkező zenekarok zenés fogadását, ami esetenként 6 és 10 zenekar között változik. Szombaton ezektől a zenekaroktól hangos az egész város. Délidőben minden nagyobb vendéglőben fúvószene szól. A felvonulás után a város különböző pontjain lehet népzenét és néptáncot, modern táncot és fúvószenét nézni és hallgatni. A szombat estét a fúvós show zárja a Károly Róbert téren felállított rendezvénysátorban. Vasárnap kora délután a gyermekeknek nekik szóló műsorral, majd a még itt lévő vendégzenekarok térzenéje hallható, végül pedig a könnyebb műfajt játszó zenekarok koncertjeivel zárul a háromnapos fesztivál.",
-    "tags": ["szüret", "hagyomány", "felvonulás"],
+    "tags": [
+      "szüret",
+      "hagyomány",
+      "felvonulás"
+    ],
     "image": "szuret.jpg"
   },
   {
-    "id": 37,
+    "id": "event-37",
     "name": "Kőszegi Borünnep – Főzőverseny",
     "date": "2025-09-13",
     "time": "10:00-15:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Gasztroverseny helyi specialitásokkal.",
-    "tags": ["gasztronómia", "fesztivál"],
+    "tags": [
+      "gasztronómia",
+      "fesztivál"
+    ],
     "image": "fozo.webp"
   },
   {
-    "id": 38,
+    "id": "event-38",
     "name": "Kőszegi Borünnep – Táncház",
     "date": "2025-09-13",
     "time": "20:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Táncház élő zenével a borünnep estéjén.",
-    "tags": ["táncház", "zene", "bor"],
+    "tags": [
+      "táncház",
+      "zene",
+      "bor"
+    ],
     "image": "tanc.jpg"
   },
   {
-    "id": 39,
+    "id": "event-39",
     "name": "Kőszegi Borünnep – Zárónap",
     "date": "2025-09-14",
     "time": "10:00-18:00",
     "location": "Belváros",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Borpavilonok, kézműves vásár, családi programok.",
-    "tags": ["bor", "családi", "kézműves"],
+    "tags": [
+      "bor",
+      "családi",
+      "kézműves"
+    ],
     "image": "bor.jpg"
   },
   {
-    "id": 42,
+    "id": "event-42",
     "name": "Őszi Forrás Túra",
     "date": "2025-10-05",
     "time": "09:00",
     "location": "Találkozó: Tourinform iroda, Fő tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Őszi tematikus gyalogtúra a környék forrásaihoz, könnyű útvonal.",
-    "tags": ["túra", "természet", "családi"],
+    "tags": [
+      "túra",
+      "természet",
+      "családi"
+    ],
     "image": "oszi_forras_tura.jpg"
   },
   {
-    "id": 43,
+    "id": "event-43",
     "name": "Séta Kőszeg belvárosában – Városnéző tematikus séta",
     "date": "2025-10-11",
     "time": "15:00",
     "location": "Fő tér, Tourinform iroda elől",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Vezetett séta történelmi épületekkel, helyi történetekkel.",
-    "tags": ["városnézés", "történelem", "könnyű séta"],
+    "tags": [
+      "városnézés",
+      "történelem",
+      "könnyű séta"
+    ],
     "image": "koszeg_varosnezes.jpg"
   },
   {
-    "id": 44,
+    "id": "event-44",
     "name": "Őszi Vadgasztronómiai Nap",
     "date": "2025-10-19",
     "time": "11:00-17:00",
     "location": "Jurisics-vár udvara",
-    "coords": {"lat":47.3905,"lng":16.5399},
+    "coords": {
+      "lat": 47.3905,
+      "lng": 16.5399
+    },
     "description": "Vadhúsos ételek, helyi borok és kézműves termékek vására.",
-    "tags": ["gasztronómia", "vadhús", "bor"],
+    "tags": [
+      "gasztronómia",
+      "vadhús",
+      "bor"
+    ],
     "image": "vadgasztronomiai_nap.jpg"
   },
   {
-    "id": 45,
+    "id": "event-45",
     "name": "Őszi természetfestő foglalkozás",
     "date": "2025-10-25",
     "time": "10:00-12:00",
     "location": "Szabóhegy",
-    "coords": {"lat":47.3932,"lng":16.5480},
+    "coords": {
+      "lat": 47.3932,
+      "lng": 16.548
+    },
     "description": "Szabadtéri rajzolás és festés az őszi táj inspirációjára.",
-    "tags": ["kézműves", "szabadtéri", "családi"],
+    "tags": [
+      "kézműves",
+      "szabadtéri",
+      "családi"
+    ],
     "image": "oszi_szabadteri_festes.jpg"
   },
   {
-    "id": 46,
+    "id": "event-46",
     "name": "Őszi Barangoló Túra",
     "date": "2025-11-02",
     "time": "09:30",
     "location": "Találkozó: Tourinform, Fő tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Könnyű vezetett túra a környező dombokon, őszi színek között.",
-    "tags": ["túra", "természet", "családi"],
+    "tags": [
+      "túra",
+      "természet",
+      "családi"
+    ],
     "image": "oszi_barangolo.jpg"
   },
   {
-    "id": 47,
+    "id": "event-47",
     "name": "Márton-napi Libalakoma és Bor",
     "date": "2025-11-09",
     "time": "12:00-17:00",
     "location": "Jurisics-vár udvara",
-    "coords": {"lat":47.3905,"lng":16.5399},
+    "coords": {
+      "lat": 47.3905,
+      "lng": 16.5399
+    },
     "description": "Libás ételek, újbor kóstoló, zenés program.",
-    "tags": ["gasztronómia", "bor", "hagyomány"],
+    "tags": [
+      "gasztronómia",
+      "bor",
+      "hagyomány"
+    ],
     "image": "marton_napi_liba.jpg"
   },
   {
-    "id": 48,
+    "id": "event-48",
     "name": "Kézműves Adventi előkészítő",
     "date": "2025-11-17",
     "time": "17:00-19:30",
     "location": "Jurisics-vár KÖSZHÁZ",
-    "coords": {"lat":47.3905,"lng":16.5399},
+    "coords": {
+      "lat": 47.3905,
+      "lng": 16.5399
+    },
     "description": "Adventi koszorú, díszek és kézműves ajándékok készítése.",
-    "tags": ["kézműves", "ünnepi", "családi"],
+    "tags": [
+      "kézműves",
+      "ünnepi",
+      "családi"
+    ],
     "image": "advent_kezmuves.jpg"
   },
   {
-    "id": 49,
+    "id": "event-49",
     "name": "Őszi Városnéző séta – Legendák és históriák",
     "date": "2025-11-23",
     "time": "14:00",
     "location": "Fő tér, Tourinform elől",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Kőszeg történeteinek, legendáinak bejárása helyi idegenvezetővel.",
-    "tags": ["városnézés", "történelem", "könnyű séta"],
+    "tags": [
+      "városnézés",
+      "történelem",
+      "könnyű séta"
+    ],
     "image": "koszeg_legenda.jpg"
   },
   {
-    "id": 50,
+    "id": "event-50",
     "name": "Adventi Vásár megnyitó és első gyertyagyújtás",
     "date": "2025-11-29",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Az adventi időszak kezdete, kézműves árusok, forralt bor, ünnepi fények.",
-    "tags": ["advent", "kézműves", "karácsony"],
+    "tags": [
+      "advent",
+      "kézműves",
+      "karácsony"
+    ],
     "image": "advent_megnyito.jpg"
   },
   {
-    "id": 51,
+    "id": "event-51",
     "name": "Második Adventi gyertyagyújtás",
     "date": "2025-12-06",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Második gyertya meggyújtása, Mikulás program, kézműves foglalkozás gyerekeknek.",
-    "tags": ["advent", "gyerek", "kézműves"],
+    "tags": [
+      "advent",
+      "gyerek",
+      "kézműves"
+    ],
     "image": "masodik_gyertya.jpg"
   },
   {
-    "id": 52,
+    "id": "event-52",
     "name": "Harmadik Adventi gyertyagyújtás",
     "date": "2025-12-13",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Harmadik adventi gyertya és ünnepi koncert a téren.",
-    "tags": ["advent", "zene", "karácsony"],
+    "tags": [
+      "advent",
+      "zene",
+      "karácsony"
+    ],
     "image": "harmadik_gyertya.jpg"
   },
   {
-    "id": 53,
+    "id": "event-53",
     "name": "Negyedik Adventi gyertyagyújtás",
     "date": "2025-12-20",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Negyedik gyertya meggyújtása, betlehemes előadás.",
-    "tags": ["advent", "betlehemes", "karácsony"],
+    "tags": [
+      "advent",
+      "betlehemes",
+      "karácsony"
+    ],
     "image": "negyedik_gyertya.jpg"
   },
   {
-    "id": 54,
+    "id": "event-54",
     "name": "Karácsonyi Vásár zárónap",
     "date": "2025-12-21",
     "time": "10:00-18:00",
     "location": "Jurisics tér és környéke",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Kézműves standok, forralt bor, ünnepi zenék, utolsó adventi vásárlási lehetőség.",
-    "tags": ["karácsony", "kézműves", "gasztronómia"],
+    "tags": [
+      "karácsony",
+      "kézműves",
+      "gasztronómia"
+    ],
     "image": "karacsonyi_vasar.jpg"
   },
   {
-    "id": 55,
+    "id": "event-55",
     "name": "Szilveszteri Főtéri Buli",
     "date": "2025-12-31",
     "time": "22:00-01:00",
     "location": "Jurisics tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "Utcai zene, tánc és tűzijáték az új év köszöntésére.",
-    "tags": ["szilveszter", "zene", "tánc"],
+    "tags": [
+      "szilveszter",
+      "zene",
+      "tánc"
+    ],
     "image": "szilveszter.jpg"
   },
   {
-    "id": 56,
+    "id": "event-56",
     "name": "IV. Ostrom Várvédő Jótékonysági Futás",
     "date": "2025-08-02",
     "time": "9:00-11:00",
     "location": "Fő tér",
-    "coords": {"lat":47.3891,"lng":16.5396},
+    "coords": {
+      "lat": 47.3891,
+      "lng": 16.5396
+    },
     "description": "A verseny négy távon kerül megrendezésre, a nevezési költséget teljes egészében a Kőszeg Beteg Gyermekekért – Myrtill Alapítványon keresztül kapják meg a rászoruló beteg gyerekek! Gyertek, érezzétek jól magatok, és mozogjunk, jótékonykodjunk együtt! Nevezés a helyszínen is lehetséges",
-    "tags": ["Futás", "jótékonyság", "sport"],
+    "tags": [
+      "Futás",
+      "jótékonyság",
+      "sport"
+    ],
     "image": "futas.png"
   },
   {
-    "id": 57,
+    "id": "event-57",
     "name": "Madármegfigyelő séta a Chernel-kertben",
     "date": "2025-07-19",
     "time": "08:00",
@@ -610,7 +534,7 @@
     "image": "madar.jpg"
   },
   {
-    "id": 58,
+    "id": "event-58",
     "name": "Szabadtéri rajzolás a Szabóhegyen",
     "date": "2025-07-14",
     "time": "09:00-11:00",
@@ -627,7 +551,7 @@
     "image": "rajzolas.png"
   },
   {
-    "id": 59,
+    "id": "event-59",
     "name": "Szabadtéri rajzolás a Szabóhegyen",
     "date": "2025-07-28",
     "time": "09:00-11:00",
@@ -644,7 +568,7 @@
     "image": "rajzolas.png"
   },
   {
-    "id": 60,
+    "id": "event-60",
     "name": "Őszi Barangoló Túra",
     "date": "2025-11-02",
     "time": "09:30",
@@ -662,7 +586,7 @@
     "image": "oszi_barangolo.jpg"
   },
   {
-    "id": 61,
+    "id": "event-61",
     "name": "Őszi Forrás Túra",
     "date": "2025-10-05",
     "time": "09:00",
@@ -680,7 +604,7 @@
     "image": "oszi_forras_tura.jpg"
   },
   {
-    "id": 62,
+    "id": "event-62",
     "name": "Őszi Vadgasztronómiai Nap",
     "date": "2025-10-19",
     "time": "11:00-17:00",
