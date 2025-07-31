@@ -1,62 +1,6 @@
-[
-  {
-    "id": 90,
-    "title": "🎉 Készülj az Ostromra! Esernyőt készíts, sajnos esőre kell számítani!",
-    "message": "Az Ostromnapok 2025.08.01-jén 15:32-kor kezdődik! ",
-    "active": true
-  },
-  {
-    "id": 96,
-    "title": "A KőszegAPP-al nem maradsz le semmiről!",
-    "message": "Minden esemény, minden változás azonnal a telefonodon! Mentsd el a kedvenceidet az APP-ban, hogy ne maradj le semmiről!",
-    "active": false
-  },
-  {
-    "id": 3,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 4,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 5,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 6,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 7,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 8,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 9,
-    "title": "",
-    "message": "",
-    "active": false
-  },
-  {
-    "id": 10,
-    "title": "",
-    "message": "",
-    "active": false
-  }
-]
+{
+  "messageId": "emergency-2025-08-02-1", 
+  "isActive": false,
+  "title": "Hamarosan kezdődik a KőszegiOstromnapok rendezvénysorozat!",
+  "message": "Esernyővel készülj a holnapi ostromprogramokra, eső várható"
+}
