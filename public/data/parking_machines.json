@@ -1,12 +1,42 @@
 [
   {
     "id": "machine-1",
-    "address": "Fő tér (déli oldal)",
-    "coords": { "lat": 47.3888, "lng": 16.5415 }
+    "address": "Kossuth Lajos utca 13.",
+    "coords": { "lat": 47.38759879990941, "lng": 16.54354037610732 }
   },
   {
     "id": "machine-2",
-    "address": "Várkör (Tourinform mellett)",
-    "coords": { "lat": 47.3895, "lng": 16.5408 }
-  }
+    "address": "Várkör COOP bolt",
+    "coords": { "lat": 47.38953728020732, "lng": 16.54284766394646 }
+  },
+  {
+    "id": "machine-3",
+    "address": "Harangtorony szálló",
+    "coords": { "lat": 47.39096780462014, "lng": 16.540605689982538 }
+  },
+  {
+    "id": "machine-4",
+    "address": "Károly Róbert tér",
+    "coords": { "lat": 47.39035460341834, "lng": 16.538650616993728 }
+  },
+  {
+    "id": "machine-5",
+    "address": "Várkör 61",
+    "coords": { "lat": 47.387886391336096, "lng": 16.54025402554943 }
+  },
+  {
+    "id": "machine-6",
+    "address": "Várkör 61",
+    "coords": { "lat": 47.387886391336096, "lng": 16.54025402554943 }
+  },
+  {
+    "id": "machine-7",
+    "address": "Liszt Ferenc utca 1",
+    "coords": { "lat": 47.38721558072503, "lng": 16.544172472667103 }
+  },
+  {
+    "id": "machine-8",
+    "address": "Rossmann",
+    "coords": { "lat": 47.38605107339689, "lng": 16.544324335466015 }
+  }  
 ]
