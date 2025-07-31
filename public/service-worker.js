@@ -1,6 +1,6 @@
+
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
-// <<< ÚJ: A már kiküldött vészüzenetek azonosítóit tároljuk >>>
 let sentEmergencyMessageIds = new Set(); 
 const NOTIFICATION_LEAD_TIME_MINUTES = 10;
 
@@ -13,8 +13,18 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// <<< ÚJ: Külön függvény a vészhelyzeti üzenet ellenőrzésére >>>
-const response = await fetch(`/emergency-push.json?t=${new Date().getTime()}`);
+// A service worker életciklus eseményei
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(self.clients.claim());
+});
+
+async function checkEmergencyMessage() {
+  try {
+    const response = await fetch(`/emergency-push.json?t=${new Date().getTime()}`);
     if (!response.ok) return;
 
     const data = await response.json();
@@ -32,16 +42,6 @@ const response = await fetch(`/emergency-push.json?t=${new Date().getTime()}`);
   }
 }
 
-      // Hozzáadjuk az azonosítót a már kiküldöttek listájához
-      sentEmergencyMessageIds.add(data.messageId);
-    }
-  } catch (error) {
-    // Csendben elnyeljük a hibát, hogy a fő ciklus ne álljon le
-    console.error('Hiba a vészhelyzeti üzenet ellenőrzésekor:', error);
-  }
-}
-
-// A te meglévő, tökéletes függvényed a kedvencek ellenőrzésére
 function checkFavoriteNotifications() {
   const now = new Date();
   favoriteEvents.forEach(event => {
@@ -52,28 +52,18 @@ function checkFavoriteNotifications() {
     if (diffInMinutes > 0 && diffInMinutes <= NOTIFICATION_LEAD_TIME_MINUTES) {
       self.registration.showNotification('Hamarosan kezdődik a kedvenced!', {
         body: `"${event.nev}" ${NOTIFICATION_LEAD_TIME_MINUTES} percen belül kezdődik itt: ${event.helyszin.nev}`,
-        icon: '/icon.png',
-        badge: '/badge.png' 
+        icon: '/images/koeszeg_logo_nobg.png', // A hiányzó ikonjaid helyett a logót használjuk
+        badge: '/images/koeszeg_logo_nobg.png' 
       });
       notifiedEventIds.add(event.id);
     }
   });
 }
 
-// <<< MÓDOSÍTÁS: A fő ciklus most már mindkét feladatot elvégzi >>>
+
 function runChecks() {
   checkFavoriteNotifications();
   checkEmergencyMessage();
 }
 
-// Indítsuk el az ellenőrzést percenként
-setInterval(runChecks, 60 * 1000); 
-
-self.addEventListener('install', () => {
-  self.skipWaiting();
-});
-
-// Fontos: Biztosítja, hogy az aktiválás után a service worker átvegye az irányítást
-self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
-});
+setInterval(runChecks, 60 * 1000);
