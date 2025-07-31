@@ -17,7 +17,7 @@ export default function Parking({ parking, loading }) {
           const isPaid = isParkingPaidNow(p.hours);
           return (
             <div key={p.id} className="bg-white/20 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden flex flex-col">
-              {p.image && <img src={`/images/parking/${p.image}`} alt={p.name} className="w-full h-40 object-cover" />}
+              {p.image && <img src={`/images/${p.image}`} alt={p.name} className="w-full h-40 object-cover" />}
               <div className="p-4 flex flex-col flex-grow">
                 <div className="flex justify-between items-start gap-2 mb-1">
                   <h3 className="text-xl font-semibold text-purple-800 dark:text-purple-300 flex-grow">{p.name}</h3>
