@@ -80,7 +80,7 @@ export default function App() {
   const favoriteAttractions = useMemo(() => appData.attractions.filter(item => isFavorite(item.id)), [appData.attractions, favorites]);
   const favoriteEvents = useMemo(() => appData.events.filter(item => isFavorite(item.id)), [appData.events, favorites]);
   const favoriteLeisure = useMemo(() => appData.leisure.filter(item => isFavorite(item.id)), [appData.leisure, favorites]);
-  
+  const favoriteRestaurants = useMemo(() => appData.restaurants.filter(item => isFavorite(item.id)), [appData.restaurants, favorites]);
   return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
       <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
@@ -101,7 +101,13 @@ export default function App() {
                 <span className="text-xl text-rose-500">❤️</span>
                 {favorites.length > 0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>}
               </button>
-              {showFavorites && <FavoritesDashboard attractions={favoriteAttractions} events={favoriteEvents} leisure={favoriteLeisure} onClose={() => setShowFavorites(false)} />}
+              {showFavorites && <FavoritesDashboard 
+                attractions={favoriteAttractions} 
+                events={favoriteEvents} 
+                leisure={favoriteLeisure}
+                restaurants={favoriteRestaurants} 
+                onClose={() => setShowFavorites(false)} 
+            />}
             </div>
             
             <button onClick={toggleDark} className="px-2 py-1 rounded bg-beige-200/50 dark:bg-gray-700 text-sm transition">{dark ? '🌙' : '☀️'}</button>
@@ -133,7 +139,6 @@ export default function App() {
 
       {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
       <Toaster position="bottom-center" />
-      {/* ... a többi modal, footer, stb. változatlan ... */}
       {isHome && showProgramModal && ( <ProgramModal onClose={() => setShowProgramModal(false)} openDrawer={() => setShowOstromDrawer(true)} /> )}
       {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
       {isHome && !showProgramModal && ( <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-5 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition" aria-label="Ostromprogramok megnyitása">📅</button>)}
