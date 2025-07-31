@@ -127,3 +127,4 @@ export default function ParkingMap() {
       </div>
     </div>
   );
+}
