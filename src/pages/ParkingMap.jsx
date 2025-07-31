@@ -21,7 +21,7 @@ export default function ParkingMap() {
   const [userPosition, setUserPosition] = useState(null);
 
   useEffect(() => {
-    fetch('/public/data/parking-zones.json').then(res => res.json()).then(setZones).catch(console.error);
+    fetch('/data/parking-zones.json').then(res => res.json()).then(setZones).catch(console.error);
     fetchParkingMachines().then(setMachines).catch(console.error); 
   }, []);
 
