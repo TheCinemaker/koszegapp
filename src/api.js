@@ -52,9 +52,19 @@ export async function fetchParkingZones() {
 }
 
 export async function fetchParkingMachines() {
-  return fetchData('/data/parking_machines.json', 'A parkolóautomaták betöltése sikertelen.');
-}
-
+  try {
+    const response = await fetch('/data/parking_machines.json');
+    if (!response.ok) {
+      throw new Error('A parkolóautomaták betöltése sikertelen.');
+    }
+    const data = await response.json();
+    console.log('[api.js] Sikeresen betöltött automata adatok:', data); // <<< ÚJ SOR
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
 
 // --- ID ALAPÚ LEKÉRDEZÉSEK ---
 
