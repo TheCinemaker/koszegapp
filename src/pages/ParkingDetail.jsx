@@ -48,7 +48,7 @@ export default function ParkingDetail() {
       <div className="flex flex-col md:flex-row gap-6">
         {park.image && (
           <img
-            src={`/images/parking/${park.image}`}
+            src={`/public/images/parking/${park.image}`}
             alt={park.name}
             className="w-full md:w-1/2 h-auto object-cover rounded-xl shadow-md"
           />
