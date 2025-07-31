@@ -14,22 +14,23 @@ self.addEventListener('message', (event) => {
 });
 
 // <<< ÚJ: Külön függvény a vészhelyzeti üzenet ellenőrzésére >>>
-async function checkEmergencyMessage() {
-  try {
-    // A cache-bust query string biztosítja, hogy mindig a legfrissebb verziót kérje le
-    const response = await fetch(`/api/emergency_message.json?t=${new Date().getTime()}`);
+const response = await fetch(`/emergency-push.json?t=${new Date().getTime()}`);
     if (!response.ok) return;
 
     const data = await response.json();
 
-    // Csak akkor küldünk, ha aktív ÉS ezt az üzenetet még NEM küldtük ki
     if (data && data.isActive && !sentEmergencyMessageIds.has(data.messageId)) {
-      
       self.registration.showNotification(data.title || 'Fontos Közlemény', {
         body: data.message,
-        icon: '/icon.png',
-        badge: '/badge.png'
+        icon: '/images/koeszeg_logo_nobg.png',
+        badge: '/images/koeszeg_logo_nobg.png'
       });
+      sentEmergencyMessageIds.add(data.messageId);
+    }
+  } catch (error) {
+    console.error('Hiba a vészhelyzeti üzenet ellenőrzésekor:', error);
+  }
+}
 
       // Hozzáadjuk az azonosítót a már kiküldöttek listájához
       sentEmergencyMessageIds.add(data.messageId);
