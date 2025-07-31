@@ -132,6 +132,38 @@ Módosított/új fájlok:
 src/pages/Info.jsx (Teljesen újraírva)
 src/api/info.json (Átstrukturálva és bővítve)
 
+Parkolás Szekció ("Parkolás 2.0"):
+Teljes architekturális refaktorálás és kódminőség javítása:
+A Parking.jsx listaoldal átalakítva, hogy a központi App.jsx-ből, props-ként kapja az adatokat, egységesítve az alkalmazás adatkezelési logikáját.
+Az adatbázis (parking.json) id-jai preffixelt, egyedi formátumra lettek cserélve (parking-1), megelőzve a globális ID ütközéseket.
+
+Új Funkció: Dinamikus Státuszjelző:
+Létrehoztunk egy "okos" segédfüggvényt (isParkingPaidNow), ami valós időben elemzi a parkolási zónák díjfizetési időszakát.
+A listaoldalon, a részletező oldalon és a térképes felugró ablakokban is egyértelmű, színes jelzés ("ÉPPEN FIZETŐS" / "MOST INGYENES") tájékoztatja a felhasználót az aktuális állapotról.
+
+Interaktív Térképek Fejlesztése:
+Geolokáció: Mind a teljes oldalas (ParkingMap.jsx), mind a részletező oldali (ParkingDetail.jsx) térkép megkapta a "Hol vagyok?" funkciót, ami egy pulzáló markerrel jelöli a felhasználó pozícióját.
+Parkolóautomata Adatbázis: Létrehoztunk egy új, dedikált adatforrást (parking_machines.json) a parkolóautomaták pontos koordinátáinak tárolására.
+
+Automata Jelölők: A térképek most már egyedi ikonokkal (gombostűkkel) jelölik az összes parkolóautomatát.
+"Vigyél oda!" Navigáció: A térképen lévő automata ikonokra kattintva egy "Vigyél oda!" gomb jelenik meg, ami a Google Maps navigációt indítja el a kiválasztott automatához.
+
+Számos Bug Javítása:
+Kijavítva egy hiba, ami miatt a parkolási zónák nem jelentek meg a térképen (parking-zones.json elérési útvonala és betöltési logikája javítva).
+A képek most már helyesen jelennek meg a lista- és részletező oldalon is (helytelen /public útvonal javítva).
+Elhárítva több, a refaktorálás során keletkezett build- és futásidejű hiba.
+
+Módosított/új fájlok:
+src/pages/Parking.jsx
+src/pages/ParkingDetail.jsx
+src/pages/ParkingMap.jsx
+src/utils/parkingUtils.js (Új fájl!)
+src/utils/icons.js (Új fájl!)
+public/data/parking.json (Átstrukturálva)
+public/data/parking_machines.json (Új fájl!)
+
+--------------------------------------------------------------------------------------------------
+
 HIGH priority!! Megy az 1.0-ba amint kész van! 
       - Ostromnapkor nagy modalban nyilik a napi program, következő program programajánlóval
             - Eseményig hátralévő idő
