@@ -1,72 +1,69 @@
+// Segédfüggvény a ismétlődés elkerülésére
+async function fetchData(url, errorMessage) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(errorMessage || 'Az adatok betöltése sikertelen.');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Hiba a(z) ${url} betöltésekor:`, error);
+    // Visszaadunk egy üres tömböt, hogy az app ne omoljon össze
+    return []; 
+  }
+}
+
+// --- FŐ ADATFORRÁSOK ---
+// Minden adat a /public/data/ mappából jön
+
 export async function fetchAttractions() {
-  const res = await fetch('/data/attractions.json');
-  if (!res.ok) throw new Error('Failed to load attractions data');
-  return res.json();
+  return fetchData('/data/attractions.json', 'A látnivalók betöltése sikertelen.');
 }
 
 export async function fetchEvents() {
-  const res = await fetch('/data/events.json');
-  if (!res.ok) throw new Error('Failed to load events data');
-  return res.json();
+  return fetchData('/data/events.json', 'Az események betöltése sikertelen.');
 }
 
 export async function fetchHotels() {
-  const res = await fetch('/data/hotels.json');
-  if (!res.ok) throw new Error('Failed to load hotels data');
-  return res.json();
+  return fetchData('/data/hotels.json', 'A szállások betöltése sikertelen.');
 }
 
 export async function fetchRestaurants() {
-  const res = await fetch('/data/restaurants.json');
-  if (!res.ok) throw new Error('Failed to load restaurants data');
-  return res.json();
+  return fetchData('/data/restaurants.json', 'A vendéglátóhelyek betöltése sikertelen.');
 }
 
 export async function fetchInfo() {
-  const res = await fetch('/data/info.json');
-  if (!res.ok) throw new Error('Failed to load info data');
-  return res.json();
+  return fetchData('/data/info.json', 'Az információk betöltése sikertelen.');
 }
 
 export async function fetchLeisure() {
-  const res = await fetch('/data/leisure.json');
-  if (!res.ok) throw new Error('Failed to load leisure data');
-  return res.json();
+  return fetchData('/data/leisure.json', 'A szabadidős programok betöltése sikertelen.');
 }
 
 export async function fetchParking() {
-  const res = await fetch('/data/parking.json');
-  if (!res.ok) throw new Error('Failed to load parking data');
-  return res.json();
+  return fetchData('/data/parking.json', 'A parkolók betöltése sikertelen.');
 }
+
+
+// --- SPECIFIKUS ADATFORRÁSOK (PARKOLÁS) ---
+
+export async function fetchParkingZones() {
+  return fetchData('/data/parking-zones.json', 'A parkolási zónák betöltése sikertelen.');
+}
+
+export async function fetchParkingMachines() {
+  return fetchData('/data/parking_machines.json', 'A parkolóautomaták betöltése sikertelen.');
+}
+
+
+// --- ID ALAPÚ LEKÉRDEZÉSEK ---
 
 export async function fetchAttractionById(id) {
   const attractions = await fetchAttractions();
-  const attraction = attractions.find(item => item.id === parseInt(id, 10));
-  if (!attraction) {
-    throw new Error('A keresett látnivaló nem található.');
-  }
-  return attraction;
+  return attractions.find(item => String(item.id) === String(id));
 }
 
 export async function fetchEventById(id) {
   const events = await fetchEvents(); 
-  const event = events.find(e => String(e.id) === String(id)); 
-  if (!event) {
-    throw new Error('A keresett esemény nem található.');
-  }
-  return event;
+  return events.find(e => String(e.id) === String(id));
 }
-
-export const fetchParkingMachines = async () => {
-  try {
-    const response = await fetch('/api/parking_machines.json');
-    if (!response.ok) {
-      throw new Error('A parkolóautomaták betöltése sikertelen.');
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    return []; 
-  }
-};
