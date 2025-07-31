@@ -1,41 +1,44 @@
-import { parse, getDay, isWithinInterval, isSameDay } from 'date-fns';
+import { parse, getDay, isWithinInterval, setHours, setMinutes, setSeconds, isSameDay } from 'date-fns';
 
 export function isParkingPaidNow(hoursString) {
-  if (!hoursString || typeof hoursString !== 'string' || !hoursString.includes(' ')) {
+  if (!hoursString || typeof hoursString !== 'string') {
     return null;
   }
 
   try {
     const now = new Date();
-    // Magyar napok: Vasárnap = 0, Hétfő = 1, ..., Szombat = 6
-    const currentDayOfWeek = getDay(now);
+    const currentDay = getDay(now); // Vasárnap = 0, Hétfő = 1, ...
 
-    const parts = hoursString.split(' ');
+    // Első lépés: levágjuk a felesleges részeket (pl. ", hétvégén ingyenes")
+    const mainPart = hoursString.split(',')[0].trim();
+    
+    const parts = mainPart.split(' ');
+    if (parts.length < 2) return null; 
+
     const dayRange = parts[0];
     const timeRange = parts[1];
 
+    // --- Napok ellenőrzése ---
     const dayMap = { 'H': 1, 'K': 2, 'Sze': 3, 'Cs': 4, 'P': 5, 'Szo': 6, 'V': 0 };
     const [startDayChar, endDayChar] = dayRange.split('-');
     const startDay = dayMap[startDayChar];
     const endDay = dayMap[endDayChar];
 
-    // 1. lépés: A mai nap a fizetős napok között van?
-    if (currentDayOfWeek < startDay || currentDayOfWeek > endDay) {
-      return false; // Ha a mai nap a tartományon kívül van, biztosan ingyenes.
+    if (currentDay < startDay || currentDay > endDay) {
+      return false; 
     }
 
-    // 2. lépés: Az időpont a fizetős sávban van?
-    const [startTimeStr, endTimeStr] = timeRange.split('-');
+    // --- Időpont ellenőrzése ---
+    const [startHourStr, endHourStr] = timeRange.split('-');
+    const startHour = parseInt(startHourStr, 10);
+    const endHour = parseInt(endHourStr, 10);
+
+    let startOfPaidInterval = setSeconds(setMinutes(setHours(now, startHour), 0), 0);
+    let endOfPaidInterval = setSeconds(setMinutes(setHours(now, endHour), 0), 0);
     
-    // Létrehozzuk a mai napra vonatkozó start és end dátum objektumokat
-    const startOfPaidInterval = parse(startTimeStr, 'HH:mm', now);
-    const endOfPaidInterval = parse(endTimeStr, 'HH:mm', now);
-
-    // Biztosítjuk, hogy a dátum a mai nap legyen (ez a parse miatt nem mindig egyértelmű)
-    if (!isSameDay(now, startOfPaidInterval)) return null; // Valami hiba történt
-
+    // Ellenőrizzük, hogy az 'most' a start és end között van-e
     return isWithinInterval(now, { start: startOfPaidInterval, end: endOfPaidInterval });
-    
+
   } catch (error) {
     console.error("Hiba a parkolási idő feldolgozása közben:", error);
     return null;
