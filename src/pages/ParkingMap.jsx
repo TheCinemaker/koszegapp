@@ -6,7 +6,7 @@ import { isParkingPaidNow } from '../utils/parkingUtils';
 import zonesUrl from '../../public/data/parking-zones.json?url';
 
 export default function ParkingMap() {
-  const [zones, setZones] = auseState([]);
+  const [zones, setZones] = useState([]);
 
   // === JAVÍTÁS: VISSZATÉRÉS A FETCH-HEZ, DE A HELYES URL-LEL ===
   useEffect(() => {
