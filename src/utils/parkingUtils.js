@@ -1,59 +1,43 @@
-import { parse, getDay, isWithinInterval } from 'date-fns';
+import { parse, getDay, isWithinInterval, isSameDay } from 'date-fns';
 
-/**
- * Ellenőrzi, hogy egy adott időpont-string alapján
- * a parkolás az aktuális időben fizetős-e.
- * @param {string} hoursString - pl. "H-P 08:00-17:00"
- * @returns {boolean|null} - true (fizetős), false (ingyenes), vagy null (ismeretlen formátum)
- */
 export function isParkingPaidNow(hoursString) {
   if (!hoursString || typeof hoursString !== 'string' || !hoursString.includes(' ')) {
     return null;
   }
 
-  const now = new Date();
-  const currentDay = getDay(now); // Vasárnap = 0, Hétfő = 1, ...
-
   try {
+    const now = new Date();
+    // Magyar napok: Vasárnap = 0, Hétfő = 1, ..., Szombat = 6
+    const currentDayOfWeek = getDay(now);
+
     const parts = hoursString.split(' ');
     const dayRange = parts[0];
     const timeRange = parts[1];
 
-    // --- Napok ellenőrzése ---
     const dayMap = { 'H': 1, 'K': 2, 'Sze': 3, 'Cs': 4, 'P': 5, 'Szo': 6, 'V': 0 };
-    let isTodayPaidDay = false;
+    const [startDayChar, endDayChar] = dayRange.split('-');
+    const startDay = dayMap[startDayChar];
+    const endDay = dayMap[endDayChar];
 
-    if (dayRange.includes('-')) {
-      const [startDayChar, endDayChar] = dayRange.split('-');
-      const startDay = dayMap[startDayChar];
-      const endDay = dayMap[endDayChar];
-      if (currentDay >= startDay && currentDay <= endDay) {
-        isTodayPaidDay = true;
-      }
-    } else {
-      // Ha csak egy nap van megadva (bár a formátumod nem ilyen)
-      if (dayMap[dayRange] === currentDay) {
-        isTodayPaidDay = true;
-      }
+    // 1. lépés: A mai nap a fizetős napok között van?
+    if (currentDayOfWeek < startDay || currentDayOfWeek > endDay) {
+      return false; // Ha a mai nap a tartományon kívül van, biztosan ingyenes.
     }
-    
-    // Ha a mai nap nem fizetős, ingyenes
-    if (!isTodayPaidDay) return false;
 
-    // --- Időpont ellenőrzése ---
+    // 2. lépés: Az időpont a fizetős sávban van?
     const [startTimeStr, endTimeStr] = timeRange.split('-');
-    const start = parse(startTimeStr, 'HH:mm', new Date());
-    const end = parse(endTimeStr, 'HH:mm', new Date());
     
-    // Ugyanarra a napra állítjuk őket a helyes intervallum-ellenőrzéshez
-    start.setFullYear(now.getFullYear(), now.getMonth(), now.getDate());
-    end.setFullYear(now.getFullYear(), now.getMonth(), now.getDate());
-    
-    // Ellenőrizzük, hogy a 'most' a start és end között van-e
-    return isWithinInterval(now, { start, end });
+    // Létrehozzuk a mai napra vonatkozó start és end dátum objektumokat
+    const startOfPaidInterval = parse(startTimeStr, 'HH:mm', now);
+    const endOfPaidInterval = parse(endTimeStr, 'HH:mm', now);
 
+    // Biztosítjuk, hogy a dátum a mai nap legyen (ez a parse miatt nem mindig egyértelmű)
+    if (!isSameDay(now, startOfPaidInterval)) return null; // Valami hiba történt
+
+    return isWithinInterval(now, { start: startOfPaidInterval, end: endOfPaidInterval });
+    
   } catch (error) {
     console.error("Hiba a parkolási idő feldolgozása közben:", error);
-    return null; // Ha a formátum hibás
+    return null;
   }
 }
