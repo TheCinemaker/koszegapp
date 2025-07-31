@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "parking-1",
     "name": "I. övezet (piros)",
     "image": "parking/zone1.png",
     "color": "red",
@@ -799,7 +799,7 @@
     ]
   },
   {
-    "id": 2,
+    "id": "Parking-2",
     "name": "II. övezet (zöld)",
     "image": "parking/zone2.png",
     "color": "green",
