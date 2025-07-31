@@ -4,12 +4,12 @@ import { MapContainer, TileLayer, Polyline, Popup, Marker } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { isParkingPaidNow } from '../utils/parkingUtils';
-import UserLocationMarker from '../components/UserLocationMarker'; // A már meglévő komponensed!
-import { fetchParkingMachines } from '../api'; // Az új API hívás
+import UserLocationMarker from '../components/UserLocationMarker'; 
+import { fetchParkingMachines } from '../api'; 
 
 // Parkolóautomata ikon definiálása
 const machineIcon = new L.Icon({
-  iconUrl: '/images/parking_meter_icon.png', // Tegyél egy ilyen képet a public/images mappába
+  iconUrl: '/images/parking_meter.png', 
   iconSize: [30, 30],
   iconAnchor: [15, 30],
   popupAnchor: [0, -30]
@@ -17,15 +17,14 @@ const machineIcon = new L.Icon({
 
 export default function ParkingMap() {
   const [zones, setZones] = useState([]);
-  const [machines, setMachines] = useState([]); // Új state az automatáknak
+  const [machines, setMachines] = useState([]); 
   const [userPosition, setUserPosition] = useState(null);
 
   useEffect(() => {
-    fetch('/api/parking-zones.json').then(res => res.json()).then(setZones).catch(console.error);
-    fetchParkingMachines().then(setMachines).catch(console.error); // Automaták betöltése
+    fetch('/public/data/parking-zones.json').then(res => res.json()).then(setZones).catch(console.error);
+    fetchParkingMachines().then(setMachines).catch(console.error); 
   }, []);
 
-  // Geolokáció kezelése (ugyanaz, mint az AttractionsMap-on)
   const handleLocateMe = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => setUserPosition([position.coords.latitude, position.coords.longitude]),
