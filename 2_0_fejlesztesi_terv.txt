@@ -114,6 +114,24 @@ src/components/MiniGastroCard.jsx (Új fájl!)
 
 --------------------------------------------------------------------------------------------------
 
+Info Oldal:
+
+Felhasználói felület (UI) és élmény (UX) teljes átalakítása:
+A korábbi, ömlesztett lista helyett az információk logikai kategóriákba lettek rendezve (pl. "Segélyhívók", "Egészségügy", "Turizmus").
+Minden kategória egyedi címet és kiemelést kapott a jobb vizuális elkülönítés és átláthatóság érdekében.
+
+Vizuális elemek bevezetése:
+Minden információs bejegyzés mellé egyedi, a tartalomhoz illeszkedő ikon került (react-icons segítségével), ami gyorsabbá és intuitívabbá teszi az információkeresést.
+A dizájn egységesítve lett, hogy illeszkedjen az alkalmazás lila (purple) fő színsémájához.
+
+Kódminőség javítása:
+Az adatok csoportosítása a kliensoldalon történik a useMemo hook segítségével, ami optimális teljesítményt biztosít.
+Az adatbázis (info.json) strukturáltabbá vált a category és icon mezők bevezetésével.
+
+Módosított/új fájlok:
+src/pages/Info.jsx (Teljesen újraírva)
+src/api/info.json (Átstrukturálva és bővítve)
+
 HIGH priority!! Megy az 1.0-ba amint kész van! 
       - Ostromnapkor nagy modalban nyilik a napi program, következő program programajánlóval
             - Eseményig hátralévő idő
