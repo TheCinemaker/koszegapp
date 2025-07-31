@@ -3,19 +3,23 @@ import { Link } from 'react-router-dom';
 import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { isParkingPaidNow } from '../utils/parkingUtils';
-
-// === JAVÍTÁS: KÖZVETLEN IMPORT ===
-// A Vite be fogja olvasni a fájlt, és a 'zoneData' egy JavaScript tömb lesz.
-import zoneData from '/data/parking-zones.json';
+import zonesUrl from '../../public/data/parking-zones.json?url';
 
 export default function ParkingMap() {
-  const [zones, setZones] = useState([]);
+  const [zones, setZones] = auseState([]);
 
-  // === JAVÍTÁS: A fetch ELTÁVOLÍTVA ===
-  // A 'useEffect' most már csak annyit csinál, hogy beállítja a beimportált adatot.
+  // === JAVÍTÁS: VISSZATÉRÉS A FETCH-HEZ, DE A HELYES URL-LEL ===
   useEffect(() => {
-    setZones(zoneData);
-  }, []); // Ez csak egyszer fut le, a komponens betöltődésekor.
+    fetch(zonesUrl) 
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP hiba! Státusz: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => setZones(data))
+      .catch(error => console.error("Hiba a zónaadatok betöltésekor:", error));
+  }, []);
 
   return (
     <div className="p-4">
