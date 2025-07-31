@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "parking-1",
     "name": "I. övezet (piros)",
     "address": "Kőszeg belváros",
     "coords": { "lat": 47.4155, "lng": 16.4398 },
@@ -21,7 +21,7 @@
     "image": "parking/zone1_1.jpg"
   },
   {
-    "id": 2,
+    "id": "parking-2",
     "name": "II. övezet (zöld)",
     "address": "Kőszeg környéki utcák",
     "coords": { "lat": 47.4155, "lng": 16.4398 },
