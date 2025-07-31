@@ -10,7 +10,7 @@ export default function ParkingDetail() {
   useEffect(() => {
     fetchParking()
       .then(data => {
-        const found = data.find(p => p.id === +id);
+        const found = data.find(p => String(p.id) === id);
         if (!found) setError('Nem található ilyen parkoló.');
         else setPark(found);
       })
