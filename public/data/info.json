@@ -1,57 +1,79 @@
 [
   {
-    "id": 1,
+    "id": "info-1",
+    "category": "emergency",
+    "icon": "FaAmbulance",
     "title": "Orvosi ügyelet",
-    "content": "Kőszeg, Rákóczi Ferenc u. 19, 9730 Magyarország. Telefon: +36 94 317 000. Hétfő–péntek 16:00–22:00, szombat-vasárnap 8:00–14:00."
+    "content": "Kőszeg, Rákóczi Ferenc u. 19, 9730. Tel: +3694317000. H–P 16:00–22:00, Szo–V 8:00–14:00."
   },
   {
-    "id": 2,
+    "id": "info-2",
+    "category": "emergency",
+    "icon": "FaFirstAid",
     "title": "Mentőállomás",
-    "content": "Kőszeg, Gábor Áron u. 1, 9730 Magyarország. Telefon: +36 94 360 161. Nyitva: 0–24."
+    "content": "Kőszeg, Gábor Áron u. 1. Tel: +3694360161. Nyitva: 0–24."
   },
   {
-    "id": 3,
-    "title": "Szent Benedek Gyógyszertár",
-    "content": "Kőszeg, Kossuth Lajos u. 9, 9730 Magyarország. Telefon: +36 94 361 450. Nyitva: H–P 7:30–18:30, Sz 7:30–12:30, V zárva."
-  },
-  {
-    "id": 4,
-    "title": "Szerecsen Gyógyszertár",
-    "content": "Kőszeg, Rohonci u. 21, 9730 Magyarország. Telefon: +36 94 563 060. Nyitva: H–P 8:00–18:00, Sz 8:00–12:00, V zárva."
-  },
-  {
-    "id": 5,
-    "title": "BENU Gyógyszertár",
-    "content": "Kőszeg, Pogányi út 7, 9730 Magyarország. Telefon: +36 94 563 078. Nyitva: H–P 8:00–18:00, Sz 8:00–13:00, V zárva."
-  },
-  {
-    "id": 6,
+    "id": "info-6",
+    "category": "emergency",
+    "icon": "FaFireExtinguisher",
     "title": "Tűzoltóság",
-    "content": "Kőszeg, Liszt Ferenc u. 30, 9730 Magyarország. Telefon: +36 94 563 137. Nyitva: 0–24."
+    "content": "Kőszeg, Liszt Ferenc u. 30. Tel: +3694563137. Nyitva: 0–24."
   },
   {
-    "id": 7,
-    "title": "Tourinform Kőszeg",
-    "content": "Kőszeg, Fő tér 2, 9730 Magyarország. Telefon: +36 94 563 120. Nyitva: H, K, Cs 13:00–17:00, P 9:00–17:00, Sz–V zárva."
+    "id": "info-3",
+    "category": "health",
+    "icon": "FaPills",
+    "title": "Szent Benedek Gyógyszertár",
+    "content": "Kossuth Lajos u. 9. Tel: +3694361450. H–P 7:30–18:30, Szo 7:30–12:30."
   },
   {
-    "id": 8,
+    "id": "info-4",
+    "category": "health",
+    "icon": "FaPills",
+    "title": "Szerecsen Gyógyszertár",
+    "content": "Rohonci u. 21. Tel: +3694563060. H–P 8:00–18:00, Szo 8:00–12:00."
+  },
+  {
+    "id": "info-5",
+    "category": "health",
+    "icon": "FaPills",
+    "title": "BENU Gyógyszertár",
+    "content": "Pogányi út 7. Tel: +3694563078. H–P 8:00–18:00, Szo 8:00–13:00."
+  },
+  {
+    "id": "info-8",
+    "category": "health",
+    "icon": "FaPaw",
     "title": "Állatorvos - Dr. Radák Péter",
-    "content": "Kőszeg, Rohonci u. 40, 9730 Magyarország. Telefon: +36 20 452 6325. Nyitva: H 15:00–19:00, K 10:00–12:00 és 15:00–19:00, Sz 10:00–12:00 és 15:00–19:00, Cs 10:00–12:00 és 15:00–19:00, P 10:00–12:00 és 15:00–19:00, Sz 9:00–12:00, V zárva."
+    "content": "Rohonci u. 40. Tel: +36204526325. H–Szo nyitva, V zárva."
   },
   {
-    "id": 9,
+    "id": "info-7",
+    "category": "tourism",
+    "icon": "FaInfoCircle",
+    "title": "Tourinform Kőszeg",
+    "content": "Fő tér 2. Tel: +3694563120."
+  },
+  {
+    "id": "info-9",
+    "category": "tourism",
+    "icon": "FaRestroom",
     "title": "Nyilvános WC",
     "content": "Piac, Károly Róbert tér."
   },
   {
-    "id": 10,
+    "id": "info-10",
+    "category": "tourism",
+    "icon": "FaParking",
     "title": "Parkolás",
-    "content": "Díjfizetős zónák a belvárosban, parkolóautomatáknál fizetés szükséges. Lásd a menük közt!"
+    "content": "Díjfizetős zónák a belvárosban. Részletek a Parkolás menüpontban."
   },
   {
-    "id": 99,
+    "id": "info-99",
+    "category": "app",
+    "icon": "FaMobileAlt",
     "title": "KőszegAPP - Rólunk",
-    "content": "A KőszegAPP egy helyi fejlesztésű, mobilbarát webalkalmazás, amely Kőszeg városát mutatja be turistáknak és helyieknek. Célja, hogy átlátható és naprakész módon jelenítse meg a város látnivalóit, éttermeit, szállásait, eseményeit és közérdekű információit. Interaktív térképekkel, programlistákkal, étterem- és szállásajánlókkal, időjárási és parkolási infókkal segíti a látogatókat. Különlegessége az AI chat segéd, a Facebook poszt olvasó és a valós idejű eseményböngésző. Kőszeg: a hűség városa – fedezd fel velünk!"
+    "content": "A KőszegAPP egy helyi fejlesztésű, mobilbarát webalkalmazás..."
   }
 ]
