@@ -4,7 +4,6 @@ import { fetchParking, fetchParkingMachines, fetchParkingZones } from '../api';
 import { isParkingPaidNow } from '../utils/parkingUtils';
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
 import UserLocationMarker from '../components/UserLocationMarker';
-import { machineIcon } from '../utils/icons';
 
 export default function ParkingDetail() {
   const { id } = useParams();
@@ -108,7 +107,7 @@ export default function ParkingDetail() {
               <Polyline key={idx} positions={line} pathOptions={{ color: zone.color, weight: 7, opacity: 0.9 }} />
             ))}
             {machines.map(machine => (
-              <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]} icon={machineIcon}>
+              <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]}>
                 <Popup><strong>Parkolóautomata</strong><br/>{machine.address}</Popup>
               </Marker>
             ))}
