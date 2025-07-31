@@ -37,7 +37,6 @@ import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import ProgramModal from './components/ProgramModal';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
-import DailyMenuDrawer from './components/DailyMenuDrawer';
 
 
 // =================================================================
@@ -191,7 +190,6 @@ export default function App() {
       </footer>
 
       <FloatingButtons />
-      <DailyMenuDrawer />
       <OstromDrawerFullAnimated />
     </div>
   );
