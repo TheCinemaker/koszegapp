@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchParking, fetchParkingMachines, fetchParkingZones } from '../api';
+// JAVÍTÁS: Mindhárom API hívás kell
+import { fetchParking, fetchParkingMachines, fetchParkingZones } from '../api'; 
 import { isParkingPaidNow } from '../utils/parkingUtils';
-import ParkingDetailMap from '../components/ParkingDetailMap'; // Az új, okos térkép komponensünk
+// JAVÍTÁS: A dedikált térkép komponens importálása
+import ParkingDetailMap from '../components/ParkingDetailMap'; 
 
 export default function ParkingDetail() {
   const { id } = useParams();
@@ -14,7 +16,7 @@ export default function ParkingDetail() {
 
   useEffect(() => {
     setLoading(true);
-    // Minden szükséges adatot betöltünk egyszerre a hatékonyságért
+    // JAVÍTÁS: Minden szükséges adatot betöltünk egyszerre
     Promise.all([
       fetchParking(),
       fetchParkingMachines(),
@@ -39,13 +41,12 @@ export default function ParkingDetail() {
     }).finally(() => {
       setLoading(false);
     });
-  }, [id]); // Újrafuttatja a betöltést, ha az URL-ben az ID változik
+  }, [id]);
 
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
   if (loading) return <p className="p-4 text-center">Betöltés...</p>;
-  if (!park) return null; // Ha a betöltés kész, de nincs adat, ne jelenjen meg semmi
+  if (!park) return null;
 
-  // Kiszámoljuk a státuszt a segédfüggvénnyel
   const isPaid = isParkingPaidNow(park.hours);
 
   return (
@@ -59,7 +60,7 @@ export default function ParkingDetail() {
       <div className="flex flex-col md:flex-row gap-8 mb-8">
         {park.image && (
           <img 
-            src={`/images/parking/${park.image}`} 
+            src={`/images/${park.image}`}
             alt={park.name} 
             className="w-full md:w-1/2 h-auto object-cover rounded-xl shadow-md"
           />
@@ -103,6 +104,7 @@ export default function ParkingDetail() {
         </div>
       )}
 
+      {/* JAVÍTÁS: A Térkép Szekció az új, okos komponenssel */}
       <div className="mt-8 pt-6 border-t border-purple-200 dark:border-gray-700">
         <h2 className="text-2xl font-semibold mb-4 text-purple-800 dark:text-purple-300">Térkép</h2>
         {park.coords && zone ? (
