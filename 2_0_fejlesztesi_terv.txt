@@ -94,6 +94,26 @@ src/components/WeatherModal.jsx (Jelentősen átalakítva és kibővítve)
 
 --------------------------------------------------------------------------------------------------
 
+Gasztronómia oldalak (Bővítés):
+
+Kedvencek rendszer integrálása:
+A Gastronomy.jsx oldal és a GastroCard.jsx komponens is megkapta a "szivecskézés" funkciót a központi FavoritesContext segítségével.
+A szűrő (CustomDropdown) dinamikusan, a useMemo hook segítségével bővült egy "Kedvenceim" opcióval, ami csak akkor jelenik meg, ha a felhasználónak van mentett kedvenc vendéglátóhelye.
+A szűrési logika kiterjesztve a kedvencek listázására.
+
+Főoldali Dashboard bővítése:
+A kedvencnek jelölt éttermek és vendéglátóhelyek most már megjelennek a fejlécből lenyíló, globális "Programfüzetben" (FavoritesDashboard).
+Létrehoztunk egy új, kompakt MiniGastroCard.jsx komponenst a dashboardon való megjelenítéshez.
+
+Módosított/új fájlok:
+src/pages/Gastronomy.jsx (Refaktorálva, hogy props-ként kapja az adatot és kezelje a kedvenceket)
+src/components/GastroCard.jsx (Kiegészítve a szív ikonnal)
+src/App.jsx (Kiegészítve a favoriteRestaurants logikával)
+src/components/FavoritesDashboard.jsx (Bővítve az új szekcióval)
+src/components/MiniGastroCard.jsx (Új fájl!)
+
+--------------------------------------------------------------------------------------------------
+
 HIGH priority!! Megy az 1.0-ba amint kész van! 
       - Ostromnapkor nagy modalban nyilik a napi program, következő program programajánlóval
             - Eseményig hátralévő idő
