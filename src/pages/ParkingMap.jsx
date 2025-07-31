@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import { isParkingPaidNow } from '../utils/parkingUtils';
 import UserLocationMarker from '../components/UserLocationMarker';
 import { fetchParkingMachines, fetchParkingZones } from '../api';
-import { machineIcon } from '../utils/icons';
 
 export default function ParkingMap() {
   const [zones, setZones] = useState([]);
@@ -70,7 +69,7 @@ export default function ParkingMap() {
         })}
         
         {machines.map(machine => (
-          <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]} icon={machineIcon}>
+          <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]}>
             <Popup>
               <div className="text-sm">
                 <strong>Parkolóautomata</strong><br />
