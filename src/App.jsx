@@ -21,6 +21,7 @@ import Leisure from './pages/Leisure';
 import LeisureDetail from './pages/LeisureDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
+import Parking from './pages/Parking';
 
 import FavoritesDashboard from './components/FavoritesDashboard'; // A RÉGI HELYETT EZT HASZNÁLJUK
 import WeatherModal from './components/WeatherModal';
@@ -34,7 +35,6 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const { dark, toggleDark } = useContext(DarkModeContext);
-  
   const { favorites, isFavorite } = useFavorites();
   const [appData, setAppData] = useState({
     attractions: [], events: [], leisure: [], restaurants: [], hotels: [], loading: true
@@ -42,10 +42,20 @@ export default function App() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
   const favoritesRef = useRef(null);
-
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const isHome = location.pathname === '/';
+  const [appData, setAppData] = useState({
+    attractions: [], ..., parking: [], loading: true 
+  });
+
+  useEffect(() => {
+    Promise.all([
+      fetchAttractions(), ..., fetchParking() 
+    ]).then(([attractions, ..., parking]) => { 
+      // ...
+      setAppData({ attractions, ..., parking, loading: false }); 
+    }).catch(console.error);
   
   useEffect(() => {
     Promise.all([
@@ -134,6 +144,7 @@ export default function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
+          <Route path="/parking" element={<Parking parking={appData.parking} loading={appData.loading} />} />
         </Routes>
       </main>
 
