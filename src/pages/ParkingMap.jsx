@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, Popup, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { isParkingPaidNow } from '../utils/parkingUtils';
-import zonesUrl from '../../public/data/parking-zones.json?url';
+import UserLocationMarker from '../components/UserLocationMarker';
+import { fetchParkingMachines, fetchParkingZones } from '../api';
+import { machineIcon } from '../utils/icons';
 
 export default function ParkingMap() {
   const [zones, setZones] = useState([]);
+  const [machines, setMachines] = useState([]);
+  const [userPosition, setUserPosition] = useState(null);
 
-  // === JAVÍTÁS: VISSZATÉRÉS A FETCH-HEZ, DE A HELYES URL-LEL ===
   useEffect(() => {
-    fetch(zonesUrl) 
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP hiba! Státusz: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => setZones(data))
-      .catch(error => console.error("Hiba a zónaadatok betöltésekor:", error));
+    fetchParkingZones().then(setZones).catch(console.error);
+    fetchParkingMachines().then(setMachines).catch(console.error);
   }, []);
+
+  const handleLocateMe = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => setUserPosition([position.coords.latitude, position.coords.longitude]),
+      () => alert("Hiba a pozíció lekérésekor. Engedélyezd a böngészőben!")
+    );
+  };
 
   return (
     <div className="p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
         <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-300">Kőszegi parkolózónák</h2>
-        <Link
-          to="/parking"
-          className="inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"
-        >
-          ← Vissza a listához
-        </Link>
+        <div className="flex gap-2">
+          <button onClick={handleLocateMe} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow-lg text-sm">Hol vagyok?</button>
+          <Link to="/parking" className="inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+            ← Vissza a listához
+          </Link>
+        </div>
       </div>
 
       <MapContainer
@@ -45,13 +48,8 @@ export default function ParkingMap() {
         />
         {zones.map(zone => {
           const isPaid = isParkingPaidNow(zone.hours);
-
           return zone.lines.map((line, idx) => (
-            <Polyline
-              key={`${zone.id}-${idx}`}
-              positions={line}
-              pathOptions={{ color: zone.color, weight: 5, opacity: 0.8 }}
-            >
+            <Polyline key={`${zone.id}-${idx}`} positions={line} pathOptions={{ color: zone.color, weight: 5, opacity: 0.8 }}>
               <Popup>
                 <div className="text-sm">
                   <div className="flex justify-between items-center mb-1">
@@ -70,6 +68,27 @@ export default function ParkingMap() {
             </Polyline>
           ));
         })}
+        
+        {machines.map(machine => (
+          <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]} icon={machineIcon}>
+            <Popup>
+              <div className="text-sm">
+                <strong>Parkolóautomata</strong><br />
+                {machine.address}
+                <a 
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${machine.coords.lat},${machine.coords.lng}`}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block text-center mt-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded hover:bg-blue-600"
+                >
+                  Vigyél oda!
+                </a>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+        
+        {userPosition && <UserLocationMarker position={userPosition} />}
       </MapContainer>
     </div>
   );
