@@ -49,7 +49,7 @@ export default function ParkingMap() {
         </div>
       </div>
 
-      <div className="relative"> {/* <<< ÚJ: Konténer a jelmagyarázathoz */}
+      <div className="relative">
         <MapContainer
           center={[47.389, 16.540]}
           zoom={16}
@@ -60,12 +60,55 @@ export default function ParkingMap() {
             attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {zones.map(zone => { /* ... a zónák renderelése ... */ })}
-          {machines.map(machine => ( <Marker ... /> ))}
+
+          {/* === ITT A JAVÍTOTT, TELJES KÓD A ZÓNÁKHOZ === */}
+          {zones.map(zone => {
+            const isPaid = isParkingPaidNow(zone.hours);
+            return zone.lines.map((line, idx) => (
+              <Polyline key={`${zone.id}-${idx}`} positions={line} pathOptions={{ color: zone.color, weight: 5, opacity: 0.8 }}>
+                <Popup>
+                  <div className="text-sm">
+                    <div className="flex justify-between items-center mb-1">
+                      <strong className="text-base text-purple-800">{zone.name}</strong>
+                      {isPaid !== null && (
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full text-white ml-2 ${isPaid ? 'bg-red-500' : 'bg-green-500'}`}>
+                          {isPaid ? 'FIZETŐS' : 'INGYENES'}
+                        </span>
+                      )}
+                    </div>
+                    <strong>Ár:</strong> {zone.price}<br />
+                    <strong>Időszak:</strong> {zone.hours}<br />
+                    <strong>Fizetés:</strong> {zone.payment.join(', ')}
+                  </div>
+                </Popup>
+              </Polyline>
+            ));
+          })}
+          
+          {/* === ITT A JAVÍTOTT, TELJES KÓD AZ AUTOMATÁKHOZ === */}
+          {machines.map(machine => (
+            <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]}>
+              <Popup>
+                <div className="text-sm">
+                  <strong>Parkolóautomata</strong><br />
+                  {machine.address}
+                  <a 
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${machine.coords.lat},${machine.coords.lng}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block text-center mt-2 bg-blue-500 text-white text-xs font-bold py-1 px-2 rounded hover:bg-blue-600"
+                  >
+                    Vigyél oda!
+                  </a>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+          
           {userPosition && <UserLocationMarker position={userPosition} />}
         </MapContainer>
 
-        {/* === ÚJ RÉSZ: A JELMAGYARÁZAT === */}
+        {/* A jelmagyarázat változatlan */}
         <div className="absolute bottom-4 right-4 z-[1000] bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg">
           <h4 className="font-bold text-sm mb-2 text-purple-900 dark:text-purple-300">Jelmagyarázat</h4>
           <ul className="space-y-1 text-xs text-gray-800 dark:text-gray-300">
@@ -84,4 +127,3 @@ export default function ParkingMap() {
       </div>
     </div>
   );
-}
