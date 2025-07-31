@@ -179,7 +179,7 @@ export default function App() {
       )}
       {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
       {isHome && !showProgramModal && !showOstromDrawer && (
-        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-20 right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition" aria-label="Ostromprogramok megnyitása">📅</button>
+        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[100px] right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition" aria-label="Ostromprogramok megnyitása">📅</button>
       )}
 
       <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
