@@ -57,3 +57,16 @@ export async function fetchEventById(id) {
   }
   return event;
 }
+
+export const fetchParkingMachines = async () => {
+  try {
+    const response = await fetch('/api/parking_machines.json');
+    if (!response.ok) {
+      throw new Error('A parkolóautomaták betöltése sikertelen.');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return []; 
+  }
+};
