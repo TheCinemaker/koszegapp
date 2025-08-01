@@ -155,7 +155,7 @@ export default function OstromDrawerFullAnimated() {
         { time: "17:50", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
         { time: "18:00", title: "Ostromállapot kihirdetése", location: "Jurisics tér – Tábornokház loggia" },
         { time: "19:00", title: "Horvát Táncház – Zsidányi Csillagocskák", location: "Jurisics tér" },
-        { time: "20:00", title: "„Ég a város, ég a vár is” tűzes török támadás", location: "Lépcsős várárok" },
+        { time: "20:30", title: "„!! HALASZTÁS !! Ég a város, ég a vár is” tűzes török támadás", location: "Lépcsős várárok" },
         { time: "21:05", title: "Fáklyás vonulás", location: "Várárkoktól a Jurisics térre" },
         { time: "21:30–22:00", title: "BE-JÓ Történelmi Táncegyüttes tűztánca", location: "Jurisics tér" },
         { time: "21:30", title: "„Török lesen” Jelmezes túra", location: "Találkozó: Tourinform iroda, Fő tér 2." },
