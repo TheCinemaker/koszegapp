@@ -112,7 +112,7 @@
       },
       {
         "id": 10,
-        "nev": "BE-JÓ Történelmi Táncegyüttes tűztánca",
+        "nev": "!! ELMARAD !!BE-JÓ Történelmi Táncegyüttes tűztánca",
         "leiras": "Látványos tűztánc előadás.",
         "idopont": "2025-08-01T21:30:00",
         "veg_idopont": "2025-08-01T22:00:00",
@@ -138,8 +138,8 @@
         "id": 12,
         "nev": "OCHO MACHO Koncert",
         "leiras": "Élő zenei koncert a Fő téren.",
-        "idopont": "2025-08-01T21:30:00",
-        "veg_idopont": "2025-08-01T23:00:00",
+        "idopont": "2025-08-03T20:00:00",
+        "veg_idopont": "2025-08-03T22:00:00",
         "helyszin": {
           "lat": 47.388210070844565, 
           "lng": 16.541895445680314,
