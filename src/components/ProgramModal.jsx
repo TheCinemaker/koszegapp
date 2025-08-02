@@ -316,6 +316,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
   <div className="sticky top-[98px] z-10 bg-amber-800/95 backdrop-blur-sm text-white text-center p-2 shadow-inner">
     <span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span>
   </div>
+    )}
                     <div className="bg-amber-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
                         <div className="mb-4 flex border-b-2 border-amber-200 dark:border-zinc-700">
                             <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-amber-600 text-amber-700 dark:text-amber-300' : 'text-gray-500 hover:bg-amber-100 dark:hover:bg-zinc-800'}`}>Élő</button>
