@@ -132,7 +132,7 @@ export default function OstromDrawerFullAnimated() {
         { time: "15:00", title: "Barátkozás Marton-Szállás lovaival", location: "Várárok" },
         { time: "15:32", title: "Hagyományőrző csapatok koszorúzása" },
         { time: "16:00", title: "Gyermek-felnőtt ostrom", location: "Lépcsős várárok" },
-        { time: "16:00–18:00", title: "Ocho Macho koncert", location: "Fő tér" },
+        { time: "18:00–20:00", title: "Ocho Macho koncert", location: "Fő tér" },
         { time: "16:00–17:30", title: "Bogyla Zenekar & Hajnalcsillag Néptáncegyüttes koncert & táncház", location: "Fő tér" },
         { time: "17:30–18:30", title: "„A magyarok nyilaitól…” – Marton-Szállás lovas íjászbemutató", location: "Várárok" },
         { time: "19:30", title: "Ataru Taiko koncert", location: "Jurisics vár" },
