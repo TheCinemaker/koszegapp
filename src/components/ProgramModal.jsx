@@ -307,7 +307,7 @@ export default function ProgramModal({ onClose, openDrawer }) {
 </div>
 
 {/* === ÚJ, MÁSODIK FEJLÉC (BANNER) AZ IDŐPONTVÁLTOZÁSNAK === */}
-<div className="sticky top-[58px] z-10 bg-red-600 text-white text-center p-2 shadow-inner font-semibold animate-pulse">
+<div className="sticky top-[58px] z-10 bg-red-600 text-white text-center p-2 shadow-inner font-semibold">
   <p>IDŐPONTVÁLTOZÁS: Az Ocho Macho és ATARU koncertek vasárnap lesznek megtartva!</p>
 </div>
 
