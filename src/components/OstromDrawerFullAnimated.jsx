@@ -8,10 +8,6 @@ export default function OstromDrawerFullAnimated() {
 
   // Image slideshow states
   const [highlightImages] = useState([
-    "/images/highlights/IMG_1722.jpeg",
-    "/images/highlights/IMG_1723.jpeg",
-    "/images/highlights/IMG_1724.jpeg",
-    "/images/highlights/IMG_1725.jpeg",
     "/images/highlights/tothaug1.jpeg"
   ]);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
@@ -96,72 +92,6 @@ export default function OstromDrawerFullAnimated() {
 
   // Event data
   const ostromProgram = [
-    {
-      day: "Felvezető programok",
-      date: "Július 30.–augusztus 1.",
-      events: [
-        {
-          time: "",
-          title: "18. Ostrom Kupa Nemzetközi ökölvívó verseny",
-          location: "Főtér (rossz idő esetén: Balogh Iskola tornacsarnok)",
-          details: [
-            "július 30. 15 órától",
-            "július 31. 14 órától",
-            "augusztus 1. 11 órától"
-          ]
-        },
-        {
-          time: "",
-          title: "4. Ostrom Várvédő jótékonysági Futóverseny",
-          location: "Fő tér / Mirtill Alapítvány",
-          details: [
-            "augusztus 2. Fő tér tömegfutás",
-            "1,5 km, 7 km, 14 km, 21 km a váron és a török táboron át",
-            "Nevezés: helyszínen 7.30–8.30 vagy online",
-            "8.45-kor bemelegítés Hámori Lucával",
-            "Rajt 9 órakor",
-            "Ataru Taiko és hagyományőrzők színesítik",
-            "Teljes bevétel jótékony cél"
-          ]
-        },
-        {
-          time: "",
-          title: "Honvédelmi Sportnap",
-          location: "",
-          details: [
-            "augusztus 1. péntek",
-            "10:00 Ökölvívó bemutató a Fő téren",
-            "10:30 Hagyományőrző bemutató – Fő tér",
-            "11:00 Íjászat – Diáksétány",
-            "11:30 Lézer lövészet és akadálypálya",
-            "12:00 Jurisics Miklós szobrának meglátogatása",
-            "augusztus 2. szombat 9:00 Tömegfutás a történelmi óváros és a váron át"
-          ]
-        },
-        {
-          time: "",
-          title: "Csütörtöktől: Birta Roland képzőművész tollrajzai",
-          location: "Jurisics vár"
-        }
-      ]
-    },
-    {
-      day: "Ostromhétvége - Augusztus 1. péntek",
-      events: [
-        { time: "15:32", title: "XVIII. Kőszegi Ostromnapokat megnyitó puskálövések", location: "Hősök tornya" },
-        { time: "16:00", title: "Ostrom kupa „megtámadása”", location: "Fő tér" },
-        { time: "16:30–17:20", title: "Kőszegi Vonósok", location: "Jurisics tér – Tábornokház loggia" },
-        { time: "17:20–17:50", title: "BE-JÓ Történelmi Táncegyüttes", location: "Jurisics tér" },
-        { time: "17:50", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
-        { time: "18:00", title: "Ostromállapot kihirdetése", location: "Jurisics tér – Tábornokház loggia" },
-        { time: "19:00", title: "Horvát Táncház – Zsidányi Csillagocskák", location: "Jurisics tér" },
-        { time: "20:30", title: "„!!HALASZTÁS !! Ég a város, ég a vár is” tűzes török támadás", location: "Lépcsős várárok" },
-        { time: "21:05", title: "Fáklyás vonulás", location: "Várárkoktól a Jurisics térre" },
-        { time: "21:30–22:00", title: "BE-JÓ Történelmi Táncegyüttes tűztánca", location: "Jurisics tér" },
-        { time: "21:30", title: "„Török lesen” Jelmezes túra", location: "Találkozó: Tourinform iroda, Fő tér 2." },
-        { time: "21:30", title: "OCHO MACHO koncert", location: "Fő tér" }
-      ]
-    },
     {
       day: "Augusztus 2. szombat",
       events: [
