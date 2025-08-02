@@ -136,7 +136,9 @@ export default function OstromDrawerFullAnimated() {
         { time: "17:30–18:30", title: "„A magyarok nyilaitól…” – Marton-Szállás lovas íjászbemutató", location: "Várárok" },
         { time: "19:00", title: "Ataru Taiko koncert", location: "Jurisics vár" },
         { time: "11:30; 14:30", title: "Gyermek Ostrom", note: "5-14 év közötti gyerekeknek" },
-        { time: "10:00–17:00", title: "Kézműves foglalkozások", location: "Csók István Művészkör, Jurisics vár elővár" }
+        { time: "10:00–17:00", title: "Kézműves foglalkozások", location: "Csók István Művészkör, Jurisics vár elővár" },
+        { time: "20:00–22:00", title: "Ocho Macho koncert", location: "Fő tér" }
+        
       ],
       footer: "*MÚZEUMOSTROM – közös kedvezményes belépő a Jurisics vár és Kőszegi Városi Múzeum helyszínekre augusztus 10-ig ingyenes visszatérésre jogosít.",
       disclaimer: "A programváltozás jogát fenntartjuk!"
