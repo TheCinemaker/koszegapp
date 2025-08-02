@@ -347,8 +347,8 @@
         "id": 12,
         "nev": "OCHO MACHO Koncert",
         "leiras": "Élő zenei koncert a Fő téren.",
-        "idopont": "2025-08-03T16:00:00",
-        "veg_idopont": "2025-08-03T18:00:00",
+        "idopont": "2025-08-03T18:00:00",
+        "veg_idopont": "2025-08-03T20:00:00",
         "helyszin": {
           "lat": 47.388210070844565, 
           "lng": 16.541895445680314,
