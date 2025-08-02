@@ -1,16 +1,4 @@
 [
-      {
-        "id": 12,
-        "nev": "OCHO MACHO Koncert",
-        "leiras": "Élő zenei koncert a Fő téren.",
-        "idopont": "2025-08-03T16:00:00",
-        "veg_idopont": "2025-08-03T18:00:00",
-        "helyszin": {
-          "lat": 47.388210070844565, 
-          "lng": 16.541895445680314,
-          "nev": "Fő tér"
-        }
-      },
   {
     "datum": "2025-08-02",
     "esemenyek": [
@@ -353,6 +341,18 @@
           "lat": 47.38861943296275, 
           "lng": 16.53826185367576,
           "nev": "Lépcsős várárok"
+        }
+      },
+          {
+        "id": 12,
+        "nev": "OCHO MACHO Koncert",
+        "leiras": "Élő zenei koncert a Fő téren.",
+        "idopont": "2025-08-03T16:00:00",
+        "veg_idopont": "2025-08-03T18:00:00",
+        "helyszin": {
+          "lat": 47.388210070844565, 
+          "lng": 16.541895445680314,
+          "nev": "Fő tér"
         }
       },
       {
