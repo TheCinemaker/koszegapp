@@ -292,7 +292,9 @@ export default function ProgramModal({ onClose, openDrawer }) {
                 <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
                     <div className="sticky top-0 z-20 bg-amber-600 dark:bg-amber-900 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            <h2 className="text-xl font-bold">🏰 Ostromnapok 2025</h2>
+                            <h2 className="text-xl font-bold">🏰 Ostromnapok 2025 </h2>
+                            <h2 className="text-l font-bold">IDŐPONTVÁLTOZÁS: </h2>
+                            <h2 className="text-l font-bold">Ocho MAcho és ATARU koncert vasárnap! </h2>
                             <button onClick={() => setShowInfoModal(true)} className="bg-black/20 w-7 h-7 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black/40 transition" aria-label="Súgó">i</button>
                             {weatherData && <div className="flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg"><img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" /><span className="text-sm font-bold">{weatherData.temp}°C</span></div>}
                         </div>
