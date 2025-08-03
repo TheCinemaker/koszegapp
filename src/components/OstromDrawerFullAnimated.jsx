@@ -92,33 +92,7 @@ export default function OstromDrawerFullAnimated() {
 
   // Event data
   const ostromProgram = [
-    {
-      day: "Augusztus 2. szombat",
-      events: [
-        { time: "9:00", title: "Éjszakai patronok kilövése", location: "Hősök tornya, Fő tér" },
-        { time: "9:00", title: "IV. Ostrom Várvédő futás rajt", location: "Fő tér (9:00, 9:15, 9:30)" },
-        { time: "9:15", title: "Kőszeg védművei séta", location: "Hősök tornya, Révész József vezetésével" },
-        { time: "10:00", title: "A török sereg sétája a belvárosban" },
-        { time: "11:00", title: "Vadászkutya bemutató", location: "Várárok" },
-        { time: "11:00", title: "Várvédő mustra", location: "Jurisics tér" },
-        { time: "11:30", title: "Szablyatánc – „Czenki” Hársfa Néptáncegyüttes", location: "Jurisics tér" },
-        { time: "13:00", title: "Vásártér", location: "Fő tér" },
-        { time: "13:00", title: "Tárlatvezetés a Jurisics vár állandó kiállításában", note: "Várbelépő vagy Múzeumostrom bérlet szükséges" },
-        { time: "13:30", title: "Pattantyús Martalócok Tüzérségi bemutató", location: "Fő tér" },
-        { time: "14:00", title: "Dr. Bilkei Irén előadása", location: "Jurisics vár", note: "16. századi várélet" },
-        { time: "14:30", title: "Batthyány Lovas Bandérium bemutatója", location: "Lépcsős várárok" },
-        { time: "15:00", title: "Nyugati Vármegye Vitézlő Rendje lovasbemutatója", location: "Lépcsős várárok" },
-        { time: "15:30", title: "SilverBirds Bellydance Egyesület hastánc", location: "Fő tér" },
-        { time: "16:30", title: "Ostrom felvonulás", location: "Jurisics vár – Diáksétány" },
-        { time: "18:00", title: "Kőszegi Tornyosok bemutató", location: "Hősök tornya" },
-        { time: "18:30", title: "Várostrom", location: "Várfal, Diáksétány" },
-        { time: "20:00", title: "Kőszeg Város Koncert Fúvószenekara", location: "Jurisics tér" },
-        { time: "21:00", title: "Régi Világzene-Szelindek koncert", location: "Fő tér" },
-        { time: "22:00", title: "Retro Disco", location: "Fő tér" },
-        { time: "10:00–16:00", title: "Ifjú Vitéz Próba", note: "12-13 között szünet / Jurisics vár katonai táborok" },
-        { time: "10:30; 15:30", title: "Gyermek ostrom", note: "5-14 év közötti gyerekeknek" }
-      ]
-    },
+    
     {
       day: "Augusztus 3. vasárnap",
       events: [
