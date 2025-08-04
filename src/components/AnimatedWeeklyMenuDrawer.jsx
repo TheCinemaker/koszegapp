@@ -265,7 +265,7 @@ export default function AnimatedWeeklyMenuDrawer() {
                     rotate-90 origin-bottom-left cursor-pointer transition-all duration-300 ease-in-out
                     ${open
                       ? 'left-[384px] bg-blue-400 text-white border-blue-600' // Nyitva: 384px = max-w-sm
-                      : 'left-10 -ml-px bg-blue-200 text-blue-700 border-blue-400 opacity-80' // Zárva: Pontosan a szélén
+                      : 'left-0 -ml-px bg-blue-200 text-blue-700 border-blue-400 opacity-80' // Zárva: Pontosan a szélén
                     }
                     hover:opacity-100`}
       >
