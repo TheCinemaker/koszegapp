@@ -261,7 +261,7 @@ export default function AnimatedWeeklyMenuDrawer() {
         onClick={() => setOpen(o => !o)}
         className={`fixed top-1/2 z-[51] transform -translate-y-1/2 
                     px-3 py-1.5 w-24 h-8 flex items-center justify-center
-                    border rounded-tr-2xl rounded-br-2xl shadow
+                    border rounded-t lg-2xl shadow
                     rotate-90 origin-bottom-left cursor-pointer transition-all duration-300 ease-in-out
                     ${open
                       ? 'left-[384px] bg-blue-400 text-white border-blue-600' // Nyitva: 384px = max-w-sm
