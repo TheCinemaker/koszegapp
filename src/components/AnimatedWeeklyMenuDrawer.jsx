@@ -87,21 +87,29 @@ export default function AnimatedWeeklyMenuDrawer() {
   const [expandedRestaurant, setExpandedRestaurant] = useState(null);
 
   useEffect(() => {
+  if (open) {
     let mounted = true;
+    setLoading(true); // Mutassuk a töltés-jelzőt minden megnyitáskor
+
     fetchMenus(sheetId, sheetName)
       .then(data => {
         if (!mounted) return;
         setMenus(data.map(transformEntry));
-        setLoading(false);
       })
       .catch(() => {
         if (mounted) {
           setError('Hiba a menük betöltésekor.');
+        }
+      })
+      .finally(() => {
+        if (mounted) {
           setLoading(false);
         }
       });
+      
     return () => { mounted = false; };
-  }, []);
+  }
+}, [open]);
 
   const onTouchStart = e => { touchStartX.current = e.touches[0].clientX; };
   const onTouchMove  = e => {
