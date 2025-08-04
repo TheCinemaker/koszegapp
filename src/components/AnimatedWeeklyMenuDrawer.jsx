@@ -269,7 +269,7 @@ export default function AnimatedWeeklyMenuDrawer() {
                     }
                     hover:opacity-100`}
       >
-        <span className="text-xs font-bold whitespace-nowrap">NAPI MENÜK</span>
+        <span className="text-xs font-bold whitespace-nowrap">NAPI MENÜ</span>
       </div>
     </>
   );
