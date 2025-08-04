@@ -57,8 +57,8 @@ export default function App() {
     attractions: [], events: [], leisure: [], restaurants: [], hotels: [], parking: [], loading: true
   });
   const [showFavorites, setShowFavorites] = useState(false);
-  {/*
   const [showWeatherModal, setShowWeatherModal] = useState(false);
+  {/*
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const isHome = location.pathname === '/';
