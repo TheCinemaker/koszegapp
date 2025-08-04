@@ -37,7 +37,7 @@ import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import ProgramModal from './components/ProgramModal';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
-import DailyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
+import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 
 
 
