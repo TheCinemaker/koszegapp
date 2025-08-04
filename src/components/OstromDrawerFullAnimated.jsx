@@ -10,7 +10,7 @@ export default function OstromDrawerFullAnimated() {
   const defaultTab = 'szuret';
 
   const [highlightImages] = useState([
-    "/images/highlights/tothaug1.jpeg"
+    "/images/highlights/noevent.png"
   ]);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
