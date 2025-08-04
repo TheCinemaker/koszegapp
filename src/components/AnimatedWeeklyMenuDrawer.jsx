@@ -147,7 +147,7 @@ export default function AnimatedWeeklyMenuDrawer() {
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
         className={`fixed top-0 left-0 h-full z-50 w-full max-w-sm 
-                    transform transition-transform duration-300 ease-in-out
+                    transform transition-transform duration-700 ease-in-out
                     pointer-events-auto
                     ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
@@ -261,8 +261,8 @@ export default function AnimatedWeeklyMenuDrawer() {
         onClick={() => setOpen(o => !o)}
         className={`fixed top-1/2 z-[51] transform -translate-y-1/2 
                     px-3 py-1.5 w-24 h-8 flex items-center justify-center
-                    border rounded-t-lg-2xl shadow
-                    rotate-90 origin-bottom-left cursor-pointer transition-all duration-300 ease-in-out
+                    border rounded-sm shadow
+                    rotate-90 origin-bottom-left cursor-pointer transition-all duration-700 ease-in-out
                     ${open
                       ? 'left-[384px] bg-blue-400 text-white border-blue-600' // Nyitva: 384px = max-w-sm
                       : 'left-0 -ml-px bg-blue-200 text-blue-700 border-blue-400 opacity-80' // Zárva: Pontosan a szélén
