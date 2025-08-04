@@ -7,7 +7,7 @@ export default function OstromDrawerFullAnimated() {
   const initializedRef = useRef(false);
 
   // Alapértelmezett fül, ami automatikusan megnyílik. Ha a szüret az aktuális, legyen 'szuret'.
-  const defaultTab = 'kiemelt';
+  const defaultTab = 'szuret';
 
   const [highlightImages] = useState([
     "/images/highlights/tothaug1.jpeg"
