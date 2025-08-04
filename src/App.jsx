@@ -57,11 +57,13 @@ export default function App() {
     attractions: [], events: [], leisure: [], restaurants: [], hotels: [], parking: [], loading: true
   });
   const [showFavorites, setShowFavorites] = useState(false);
+  {/*
   const [showWeatherModal, setShowWeatherModal] = useState(false);
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const isHome = location.pathname === '/';
-
+  */}
+  
   // =================================================================
   // 3. USE-EFFECT HÍVÁSOK
   // =================================================================
@@ -168,6 +170,7 @@ export default function App() {
       <Toaster position="bottom-center" />
       {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
       
+      {/*
       {isHome && showProgramModal && (
         <ProgramModal
           onClose={() => setShowProgramModal(false)}
@@ -179,8 +182,9 @@ export default function App() {
       )}
       {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
       {isHome && !showProgramModal && !showOstromDrawer && (
-        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 bg-purple-600 text-white rounded-full shadow-lg p-3 text-xl z-50 hover:bg-purple-700 transition" aria-label="Ostromprogramok megnyitása">📅</button>
+        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 ..." aria-label="Ostromprogramok megnyitása">📅</button>
       )}
+      */}
 
       <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
         <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.5.0</p>
