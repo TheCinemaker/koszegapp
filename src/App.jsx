@@ -37,6 +37,8 @@ import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import ProgramModal from './components/ProgramModal';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
+import DailyMenuDrawer from './components/DailyMenuDrawer';
+
 
 
 // =================================================================
@@ -192,7 +194,7 @@ export default function App() {
         <p className="text-xs text-gray-600">Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a></p>
         <p className="text-xs text-gray-600 mt-2"><Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link></p>
       </footer>
-
+      <DailyMenuDrawer /> 
       <FloatingButtons />
       <OstromDrawerFullAnimated />
     </div>
