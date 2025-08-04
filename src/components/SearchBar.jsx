@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 const SOURCES = [
   { url: "/data/attractions.json", label: "Látnivalók",   key: "attractions",   route: "/attractions" },
@@ -17,6 +18,44 @@ export default function SearchBar() {
   const [modal, setModal] = useState(null);
   const ref = useRef();
 
+  // "Élő" keresés useEffect-fel, ami a 'q' (keresőszó) változását figyeli
+  useEffect(() => {
+    // Ha a keresőmező üres, vagy kevesebb mint 2 karakter van benne, mindent törlünk.
+    if (q.trim().length < 2) {
+      setResults({});
+      setShowResults(false);
+      setLoading(false);
+      return;
+    }
+
+    setShowResults(true);
+    setLoading(true);
+
+    // Késleltetjük a keresést, hogy ne minden billentyűleütésre fusson le
+    const delayDebounceFn = setTimeout(async () => {
+      let found = {};
+      for (let src of SOURCES) {
+        try {
+          const resp = await fetch(src.url);
+          const data = await resp.json();
+          const list = data.filter(item =>
+            (item.name && item.name.toLowerCase().includes(q.toLowerCase())) ||
+            (item.tags && item.tags.join(" ").toLowerCase().includes(q.toLowerCase()))
+          );
+          if (list.length) found[src.key] = { label: src.label, items: list, route: src.route };
+        } catch (error) {
+          console.error(`Hiba a(z) ${src.url} betöltésekor:`, error);
+        }
+      }
+      setResults(found);
+      setLoading(false);
+    }, 300); // 300ms várakozás a gépelés befejezése után
+
+    // Takarítás: ha a felhasználó újra gépel, a régi időzítőt töröljük
+    return () => clearTimeout(delayDebounceFn);
+  }, [q]);
+
+  // Külső kattintás figyelése a találati lista bezárásához
   useEffect(() => {
     function clickOutside(e) {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -27,30 +66,14 @@ export default function SearchBar() {
     return () => document.removeEventListener("mousedown", clickOutside);
   }, []);
 
-  const handleSearch = async (e) => {
+  // Megakadályozza, hogy az Enter lenyomása újratöltse az oldalt
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setShowResults(true);
-    let found = {};
-
-    for (let src of SOURCES) {
-      try {
-        const resp = await fetch(src.url);
-        const data = await resp.json();
-        const list = data.filter(item =>
-          (item.name && item.name.toLowerCase().includes(q.toLowerCase())) ||
-          (item.tags && item.tags.join(" ").toLowerCase().includes(q.toLowerCase()))
-        );
-        if (list.length) found[src.key] = { label: src.label, items: list, route: src.route };
-      } catch {}
-    }
-
-    setResults(found);
-    setLoading(false);
   };
 
   function handleItemClick(item, route) {
     setModal({ ...item, route });
+    setShowResults(false);
   }
 
   function closeModal() {
@@ -59,27 +82,27 @@ export default function SearchBar() {
 
   return (
     <div className="relative" ref={ref}>
-      <form onSubmit={handleSearch} className="flex mb-2">
+      <form onSubmit={handleFormSubmit} className="flex mb-2">
         <input
           type="search"
           value={q}
           onChange={e => setQ(e.target.value)}
-          onFocus={() => q.length > 1 && setShowResults(true)}
+          onFocus={() => { if (q.trim().length > 1) setShowResults(true); }}
           placeholder="Keresés: étterem, esemény, látnivaló…"
           className="border px-3 py-2 rounded-l w-full
                      border-gray-300 dark:border-gray-600
                      bg-white dark:bg-gray-700
                      text-gray-900 dark:text-gray-100
                      placeholder-gray-500 dark:placeholder-gray-400
-                     focus:outline-none focus:ring-2 focus:ring-purple-400"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-600"
         />
         <button
           type="submit"
-          className="bg-purple-700 text-white px-4 rounded-r
-                     hover:bg-purple-600
-                     dark:bg-purple-700 dark:hover:bg-purple-600
+          className="bg-indigo-500 text-white px-4 rounded-r
+                     hover:bg-indigo-600
+                     dark:bg-indigo-500 dark:hover:bg-indigo-600
                      transition-colors duration-150
-                     focus:outline-none focus:ring-2 focus:ring-purple-400"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           Keres
         </button>
@@ -96,7 +119,7 @@ export default function SearchBar() {
           )}
           {Object.entries(results).map(([cat, { label, items, route }]) => (
             <div key={cat}>
-              <div className="px-3 pt-2 pb-1 text-xs font-bold text-purple-600 dark:text-purple-400">
+              <div className="px-3 pt-2 pb-1 text-xs font-bold text-indigo-600 dark:text-indigo-400">
                 {label}
               </div>
               <ul>
@@ -107,7 +130,7 @@ export default function SearchBar() {
                       onClick={() => handleItemClick(item, route)}
                       className="w-full text-left px-3 py-2
                                  rounded transition-colors duration-150
-                                 hover:bg-purple-50 dark:hover:bg-gray-700
+                                 hover:bg-indigo-50 dark:hover:bg-gray-700
                                  text-gray-900 dark:text-gray-100"
                     >
                       <span className="font-semibold">{item.name}</span>
@@ -155,19 +178,22 @@ export default function SearchBar() {
                   href={modal.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline text-purple-700 dark:text-purple-300"
+                  className="underline text-indigo-500 dark:text-indigo-300"
                 >Weboldal megnyitása</a>
               </div>
             )}
             {modal.route && modal.id && (
               <div className="mt-4">
-                <a
-                  href={`${modal.route}/${modal.id}`}
-                  className="bg-purple-600 dark:bg-purple-500
+                {/* A Link komponens használata a belső navigációhoz */}
+                <Link
+                  to={`${modal.route}/${modal.id}`}
+                  className="bg-indigo-600 dark:bg-indigo-500
                              text-white px-4 py-2 rounded
-                             hover:bg-purple-700 dark:hover:bg-purple-600
+                             hover:bg-indigo-500 dark:hover:bg-indigo-600
                              transition-colors duration-150"
-                >Részletek oldal →</a>
+                >
+                  Részletek oldal →
+                </Link>
               </div>
             )}
           </div>
