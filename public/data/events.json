@@ -620,5 +620,23 @@
       "bor"
     ],
     "image": "vadgasztro.jpg"
+  },
+  {
+    "id": "event-63",
+    "name": "🎶 Térzene a Platán alatt – zene, nyár, jótékonyság! 🎷🌳",
+    "date": "2025-08-08",
+    "time": "19:00-20:00",
+    "location": "Öreg Platán tövében",
+    "coords": {
+      "lat": 47.389162226330704, 
+      "lng": 16.544752867674845
+    },
+    "description": "A koncert során gyűjtött adományokat Luca családjának ajánljuk fel, ezzel is támogatva a mielőbbi felépülését.",
+    "tags": [
+      "Térzene",
+      "fúvósok",
+      "jótékonyság"
+    ],
+    "image": "platan.jpg"
   }
 ]
