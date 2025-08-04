@@ -131,7 +131,7 @@ export default function AnimatedWeeklyMenuDrawer() {
     { key: 'szombat', label: 'Szombat' },
   ];
   
-    return (
+  return (
     <>
       {/* Overlay háttér, ha nyitva van */}
       {open && (
@@ -141,23 +141,33 @@ export default function AnimatedWeeklyMenuDrawer() {
         />
       )}
 
-      {/* Drawer panel */}
+      {/* Drawer panel konténere - fix szélességgel */}
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={() => (touchStartX.current = null)}
-        className={`fixed top-0 left-0 h-[85%] mt-6 z-50 transform transition-transform duration-300 ease-in-out pointer-events-none ${open ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 h-full z-50 w-full max-w-sm 
+                    transform transition-transform duration-300 ease-in-out
+                    pointer-events-auto
+                    ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="w-full max-w-sm h-full bg-blue-100 dark:bg-zinc-900 shadow-lg border-r-4 border-blue-400 dark:border-purple-500 rounded-r-xl overflow-hidden pointer-events-auto relative flex flex-col">
+        <div className="w-full h-full bg-blue-100 dark:bg-zinc-900 shadow-lg border-r-4 border-blue-400 dark:border-purple-500 rounded-r-xl overflow-hidden relative flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-center border-b p-4 bg-blue-200 dark:bg-zinc-800 border-blue-300 dark:border-zinc-700">
             <h2 className="text-sm font-bold text-blue-800 dark:text-purple-300">{todayDate}</h2>
             <button onClick={() => setOpen(false)} className="text-blue-800 dark:text-purple-300 hover:text-blue-900 dark:hover:text-purple-100" aria-label="Bezárás">✕</button>
           </div>
 
-          {/* Title */}
-          <div className="text-center text-lg font-bold text-blue-900 dark:text-purple-200 px-4 pt-3 pb-2">
-            {expandedRestaurant ? 'Heti Menü' : 'Napi Menü Ajánlatok'}
+          {/* Title és az ÚJ segítő szöveg */}
+          <div className="text-center px-4 pt-3 pb-2">
+            <h2 className="text-lg font-bold text-blue-900 dark:text-purple-200">
+              {expandedRestaurant ? 'Heti Menü' : 'Napi Menü Ajánlatok'}
+            </h2>
+            {!expandedRestaurant && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Kattints egy étteremre a teljes heti menüért!
+              </p>
+            )}
           </div>
 
           {/* Restaurant selector (Csak a lista nézetben látszik) */}
@@ -200,12 +210,12 @@ export default function AnimatedWeeklyMenuDrawer() {
                   <div className="mt-4 space-y-3">
                     {weekDays.map(day => (
                       <div key={day.key}>
-                        <h4 className="font-bold">{day.label}</h4>
+                        <h4 className="font-bold text-gray-800 dark:text-gray-200">{day.label}</h4>
                         <MenuCard dayMenu={expandedRestaurant.menu[day.key]} />
                       </div>
                     ))}
                   </div>
-                  {expandedRestaurant.menu_allando && <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700"><strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}</p>}
+                   {expandedRestaurant.menu_allando && <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700"><strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}</p>}
                 </div>
               </div>
             ) : (
@@ -246,10 +256,18 @@ export default function AnimatedWeeklyMenuDrawer() {
         </div>
       </div>
 
-      {/* Fül */}
+      {/* A Fül (a javított pozícióval) */}
       <div
         onClick={() => setOpen(o => !o)}
-        className={`fixed top-1/2 left-0 z-50 transform -translate-y-1/2 px-3 py-1.5 w-24 h-8 flex items-center justify-center border rounded-tr-2xl rounded-br-2xl shadow rotate-90 origin-left cursor-pointer transition ${open ? 'bg-blue-400 text-white border-blue-600' : 'bg-blue-200 text-blue-700 border-blue-400 opacity-70'} hover:bg-blue-300`}
+        className={`fixed top-1/2 z-[51] transform -translate-y-1/2 
+                    px-3 py-1.5 w-24 h-8 flex items-center justify-center
+                    border rounded-tr-2xl rounded-br-2xl shadow
+                    rotate-90 origin-bottom-left cursor-pointer transition-all duration-300 ease-in-out
+                    ${open
+                      ? 'left-[384px] bg-blue-400 text-white border-blue-600' // Nyitva: 384px = max-w-sm
+                      : 'left-[-15px] bg-blue-200 text-blue-700 border-blue-400 opacity-80' // Zárva: -15px
+                    }
+                    hover:opacity-100`}
       >
         <span className="text-xs font-bold whitespace-nowrap">NAPI MENÜK</span>
       </div>
