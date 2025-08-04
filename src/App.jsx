@@ -194,9 +194,10 @@ export default function App() {
         <p className="text-xs text-gray-600">Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a></p>
         <p className="text-xs text-gray-600 mt-2"><Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link></p>
       </footer>
-      <AnimatedWeeklyMenuDrawer /> 
+
       <FloatingButtons />
       <OstromDrawerFullAnimated />
+      <AnimatedWeeklyMenuDrawer /> 
     </div>
   );
 }
