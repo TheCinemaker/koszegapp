@@ -84,6 +84,7 @@ export default function AnimatedWeeklyMenuDrawer() {
   const [error, setError] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState('');
   const touchStartX = useRef(null);
+  const [expandedRestaurant, setExpandedRestaurant] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -121,12 +122,26 @@ export default function AnimatedWeeklyMenuDrawer() {
   const todayDate = new Date().toLocaleDateString('hu-HU', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
   const dayKey = ['vasarnap', 'hetfo', 'kedd', 'szerda', 'csutortok', 'pentek', 'szombat'][new Date().getDay()];
 
-  return (
+  const weekDays = [
+    { key: 'hetfo', label: 'Hétfő' },
+    { key: 'kedd', label: 'Kedd' },
+    { key: 'szerda', label: 'Szerda' },
+    { key: 'csutortok', label: 'Csütörtök' },
+    { key: 'pentek', label: 'Péntek' },
+    { key: 'szombat', label: 'Szombat' },
+  ];
+  
+    return (
     <>
+      {/* Overlay háttér, ha nyitva van */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
+        <div
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+        />
       )}
 
+      {/* Drawer panel */}
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -134,27 +149,33 @@ export default function AnimatedWeeklyMenuDrawer() {
         className={`fixed top-0 left-0 h-[85%] mt-6 z-50 transform transition-transform duration-300 ease-in-out pointer-events-none ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="w-full max-w-sm h-full bg-blue-100 dark:bg-zinc-900 shadow-lg border-r-4 border-blue-400 dark:border-purple-500 rounded-r-xl overflow-hidden pointer-events-auto relative flex flex-col">
+          {/* Header */}
           <div className="flex justify-between items-center border-b p-4 bg-blue-200 dark:bg-zinc-800 border-blue-300 dark:border-zinc-700">
             <h2 className="text-sm font-bold text-blue-800 dark:text-purple-300">{todayDate}</h2>
             <button onClick={() => setOpen(false)} className="text-blue-800 dark:text-purple-300 hover:text-blue-900 dark:hover:text-purple-100" aria-label="Bezárás">✕</button>
           </div>
 
+          {/* Title */}
           <div className="text-center text-lg font-bold text-blue-900 dark:text-purple-200 px-4 pt-3 pb-2">
-            Napi Menü Ajánlatok
+            {expandedRestaurant ? 'Heti Menü' : 'Napi Menü Ajánlatok'}
           </div>
 
-          <div className="px-4 pb-3">
-            <select
-              className="w-full border p-2 rounded text-sm bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-800 dark:text-gray-200"
-              value={selectedRestaurant}
-              onChange={(e) => setSelectedRestaurant(e.target.value)}
-              aria-label="Válassz éttermet"
-            >
-              <option value="">Összes étterem</option>
-              {restaurants.map((r, idx) => ( <option key={idx} value={r}>{r}</option>))}
-            </select>
-          </div>
+          {/* Restaurant selector (Csak a lista nézetben látszik) */}
+          {!expandedRestaurant && (
+            <div className="px-4 pb-3">
+              <select
+                className="w-full border p-2 rounded text-sm bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-800 dark:text-gray-200"
+                value={selectedRestaurant}
+                onChange={(e) => setSelectedRestaurant(e.target.value)}
+                aria-label="Válassz éttermet"
+              >
+                <option value="">Összes étterem</option>
+                {restaurants.map((r, idx) => ( <option key={idx} value={r}>{r}</option>))}
+              </select>
+            </div>
+          )}
 
+          {/* Menü lista (feltételes megjelenítéssel) */}
           <div className="flex-1 px-4 pb-4 overflow-y-auto space-y-4">
             {loading ? (
               <div className="flex justify-center items-center h-32">
@@ -164,41 +185,72 @@ export default function AnimatedWeeklyMenuDrawer() {
               <div className="text-center p-4 text-red-500">{error}
                 <button onClick={() => window.location.reload()} className="mt-2 px-4 py-1 bg-blue-500 text-white rounded">Újrapróbálom</button>
               </div>
-            ) : filteredMenus.length > 0 ? (
-              filteredMenus.map((menu, idx) => (
-                <div key={`${menu.etterem}-${idx}`} className="bg-white dark:bg-zinc-800 p-3 rounded-lg shadow">
-                  <div className="text-sm font-semibold text-blue-700 dark:text-purple-400">
-                    {menu.etterem}
-                    <div className="text-xs italic mt-1">
-                      {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
-                      {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
-                    </div>
-                     <div className="text-xs font-normal mt-1">
+            ) : expandedRestaurant ? (
+              // --- NÉZET 1: TELJES HETI MENÜ ---
+              <div>
+                <button onClick={() => setExpandedRestaurant(null)} className="text-sm font-semibold text-blue-600 dark:text-purple-400 hover:underline mb-2">
+                  ← Vissza a napi menükhöz
+                </button>
+                <div className="bg-white dark:bg-zinc-800 p-3 rounded-lg shadow">
+                  <h3 className="text-lg font-bold text-blue-800 dark:text-purple-300">{expandedRestaurant.etterem}</h3>
+                  <div className="text-xs italic mt-1 text-blue-700 dark:text-purple-400">
+                    {expandedRestaurant.kapcsolat && <div>Kapcsolat: {expandedRestaurant.kapcsolat}</div>}
+                    {expandedRestaurant.hazhozszallitas && <div>Házhozszállítás: {expandedRestaurant.hazhozszallitas}</div>}
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    {weekDays.map(day => (
+                      <div key={day.key}>
+                        <h4 className="font-bold">{day.label}</h4>
+                        <MenuCard dayMenu={expandedRestaurant.menu[day.key]} />
+                      </div>
+                    ))}
+                  </div>
+                  {expandedRestaurant.menu_allando && <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700"><strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}</p>}
+                </div>
+              </div>
+            ) : (
+              // --- NÉZET 2: NAPI MENÜ LISTA ---
+              filteredMenus.length > 0 ? (
+                filteredMenus.map((menu, idx) => (
+                  <div key={`${menu.etterem}-${idx}`} onClick={() => setExpandedRestaurant(menu)} className="bg-white dark:bg-zinc-800 p-3 rounded-lg shadow cursor-pointer hover:shadow-lg transition">
+                    <div className="text-sm font-semibold text-blue-700 dark:text-purple-400">
+                      {menu.etterem}
+                      <div className="text-xs italic mt-1">
+                        {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
+                        {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
+                      </div>
+                      <div className="text-xs font-normal mt-1">
                         {menu.arak.a && <span>A: <strong>{menu.arak.a} Ft</strong> </span>}
                         {menu.arak.b && <span>B: <strong>{menu.arak.b} Ft</strong> </span>}
                         {menu.arak.c && <span>C: <strong>{menu.arak.c} Ft</strong> </span>}
                         {menu.arak.allando && <span>Állandó: <strong>{menu.arak.allando} Ft</strong></span>}
                       </div>
+                    </div>
+                    <MenuCard dayMenu={menu.menu[dayKey]} />
+                    {menu.menu_allando && <p className="text-xs mt-2 pt-2 border-t border-gray-200 dark:border-zinc-700"><strong>Állandó ajánlat:</strong> {menu.menu_allando}</p>}
                   </div>
-                  <MenuCard dayMenu={menu.menu[dayKey]} />
-                  {menu.menu_allando && <p className="text-xs mt-2 pt-2 border-t border-gray-200 dark:border-zinc-700"><strong>Állandó ajánlat:</strong> {menu.menu_allando}</p>}
+                ))
+              ) : (
+                <div className="text-center text-blue-500 dark:text-purple-400 py-8">
+                  <p>Ma nincs érvényes napi menü.</p>
+                  {validMenus.length > 0 && <p className="text-xs mt-2">({validMenus.length} érvényes menü van a héten, de a mai napra egyik sem.)</p>}
                 </div>
-              ))
-            ) : (
-              <div className="text-center text-blue-500 dark:text-purple-400 py-8">
-                <p>Ma nincs érvényes napi menü.</p>
-                {menus.length > 0 && <p className="text-xs mt-2">({validMenus.length} érvényes menü van a héten, de ma egyik sem aktuális)</p>}
-              </div>
+              )
             )}
           </div>
 
+          {/* Footer */}
           <div className="text-xs text-center text-blue-800 dark:text-purple-300 py-2 border-t bg-blue-200 dark:bg-zinc-800 border-blue-300 dark:border-zinc-700">
             © KőszegAPP – {new Date().getFullYear()}
           </div>
         </div>
       </div>
 
-      <div onClick={() => setOpen(o => !o)} className={`fixed top-1/2 left-0 z-50 transform -translate-y-1/2 px-3 py-1.5 w-24 h-8 flex items-center justify-center border rounded-tr-2xl rounded-br-2xl shadow rotate-90 origin-left cursor-pointer transition ${open ? 'bg-blue-400 text-white border-blue-600' : 'bg-blue-200 text-blue-700 border-blue-400 opacity-70'} hover:bg-blue-300`}>
+      {/* Fül */}
+      <div
+        onClick={() => setOpen(o => !o)}
+        className={`fixed top-1/2 left-0 z-50 transform -translate-y-1/2 px-3 py-1.5 w-24 h-8 flex items-center justify-center border rounded-tr-2xl rounded-br-2xl shadow rotate-90 origin-left cursor-pointer transition ${open ? 'bg-blue-400 text-white border-blue-600' : 'bg-blue-200 text-blue-700 border-blue-400 opacity-70'} hover:bg-blue-300`}
+      >
         <span className="text-xs font-bold whitespace-nowrap">NAPI MENÜK</span>
       </div>
     </>
