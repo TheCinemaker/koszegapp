@@ -1,91 +1,33 @@
 import React from 'react';
 
-export default function MenuCard({ data, showTodayOnly = false }) {
-  const {
-    etterem,
-    kapcsolat,
-    hazhozszallitas,
-    menu_allando,
-    menu_mon_a,
-    menu_mon_b,
-    menu_mon_c,
-    menu_tue_a,
-    menu_tue_b,
-    menu_tue_c,
-    menu_wed_a,
-    menu_wed_b,
-    menu_wed_c,
-    menu_thu_a,
-    menu_thu_b,
-    menu_thu_c,
-    menu_fri_a,
-    menu_fri_b,
-    menu_fri_c,
-    menu_sat_a,
-    menu_sat_b,
-    menu_sat_c,
-  } = data;
+// Ez a komponens már csak egy napi menü adatait kapja meg
+export default function MenuCard({ dayMenu }) {
+  const { leves, foetelek } = dayMenu;
 
-  const dayMap = {
-    0: 'vasarnap',
-    1: 'hetfo',
-    2: 'kedd',
-    3: 'szerda',
-    4: 'csutortok',
-    5: 'pentek',
-    6: 'szombat'
-  };
-
-  const today = new Date().getDay();
-
-  const renderDay = (label, a, b, c) => {
-    if (!a && !b && !c) return null;
-    return (
-      <div className="mb-2">
-        <h4 className="font-semibold">{label}</h4>
-        {a && <p><strong>A:</strong> {a}</p>}
-        {b && <p><strong>B:</strong> {b}</p>}
-        {c && <p><strong>C:</strong> {c}</p>}
-      </div>
-    );
-  };
-
-  const rendered = showTodayOnly
-    ? (() => {
-        const map = {
-          1: ['Hétfő', menu_mon_a, menu_mon_b, menu_mon_c],
-          2: ['Kedd', menu_tue_a, menu_tue_b, menu_tue_c],
-          3: ['Szerda', menu_wed_a, menu_wed_b, menu_wed_c],
-          4: ['Csütörtök', menu_thu_a, menu_thu_b, menu_thu_c],
-          5: ['Péntek', menu_fri_a, menu_fri_b, menu_fri_c],
-          6: ['Szombat', menu_sat_a, menu_sat_b, menu_sat_c]
-        };
-        const [label, a, b, c] = map[today] || ['Nincs menü', '', '', ''];
-        return renderDay(label, a, b, c);
-      })()
-    : <>
-        {renderDay('Hétfő', menu_mon_a, menu_mon_b, menu_mon_c)}
-        {renderDay('Kedd', menu_tue_a, menu_tue_b, menu_tue_c)}
-        {renderDay('Szerda', menu_wed_a, menu_wed_b, menu_wed_c)}
-        {renderDay('Csütörtök', menu_thu_a, menu_thu_b, menu_thu_c)}
-        {renderDay('Péntek', menu_fri_a, menu_fri_b, menu_fri_c)}
-        {renderDay('Szombat', menu_sat_a, menu_sat_b, menu_sat_c)}
-      </>;
+  // Ha az adott naphoz nincs leves ÉS nincsenek főételek, nem jelenítünk meg semmit
+  if (!leves && (!foetelek || foetelek.length === 0)) {
+    return null;
+  }
 
   return (
-    <div className="p-4 border rounded-2xl shadow-sm mb-4 bg-white">
-      <h3 className="text-xl font-bold mb-1">{etterem}</h3>
-      {kapcsolat && <p className="text-sm italic mb-1">Kapcsolat: {kapcsolat}</p>}
-      {hazhozszallitas && <p className="text-sm italic mb-2">Házhozszállítás: {hazhozszallitas}</p>}
-
-      {menu_allando && (
-        <div className="mb-4">
-          <h4 className="font-semibold">Állandó menü</h4>
-          <p>{menu_allando}</p>
+    <div className="mt-2 text-sm">
+      {leves && (
+        <p className="pl-2 border-l-2 border-gray-300 dark:border-gray-600">
+          <span className="font-semibold text-gray-500">Leves: </span>
+          {leves}
+        </p>
+      )}
+      
+      {foetelek && foetelek.length > 0 && (
+        <div className={`mt-1 ${leves ? 'pl-2 border-l-2 border-gray-300 dark:border-gray-600' : ''}`}>
+          {foetelek.map(foetel => (
+            <p key={foetel.label}>
+              <span className="font-bold">{foetel.label}: </span>
+              {foetel.etel}
+            </p>
+          ))}
         </div>
       )}
-
-      {rendered}
     </div>
   );
 }
