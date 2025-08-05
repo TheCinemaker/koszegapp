@@ -11,7 +11,8 @@ import {
   endOfMonth
 } from 'date-fns';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';   // ÚJ
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import EventImageCard from '../components/EventImageCard';
 
 const MONTH_NAMES = [
   'Január','Február','Március','Április',
@@ -239,7 +240,10 @@ export default function Events() {
           {upcoming.map(evt => (
             <div key={evt.id} className="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden flex flex-col">
               {evt.image && (
-                <img src={`/images/events/${evt.image}`} alt={evt.name} className="w-full h-40 object-cover" />
+                <EventImageCard 
+                  src={`/images/events/${evt.image}`} 
+                  alt={evt.name}
+                />
               )}
               <div className="p-4 flex flex-col flex-grow">
                 {/* ÚJ RÉSZ: A CÍM ÉS A SZÍV EGY SORBAN */}
