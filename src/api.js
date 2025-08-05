@@ -77,3 +77,7 @@ export async function fetchEventById(id) {
   const events = await fetchEvents(); 
   return events.find(e => String(e.id) === String(id));
 }
+
+export async function fetchHiddenGems() {
+  return fetchData('/data/hidden_gems.json', 'A rejtett kincsek betöltése sikertelen.');
+}
