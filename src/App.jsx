@@ -30,6 +30,7 @@ import Info from './pages/Info';
 import AboutDetail from './pages/AboutDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
+import GemDetail from './pages/GemDetail';
 
 // --- Globális Komponensek ---
 import FavoritesDashboard from './components/FavoritesDashboard';
@@ -165,6 +166,7 @@ export default function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
+          <Route path="/gem/:id" element={<GemDetail />} />
         </Routes>
       </main>
 
