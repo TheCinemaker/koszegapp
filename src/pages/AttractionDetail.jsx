@@ -7,29 +7,26 @@ export default function AttractionDetail() {
   const { id } = useParams();
   const [attr, setAttr] = useState(null);
   const [error, setError] = useState(null);
-  // ÚJ STATE: A betöltési állapot explicit kezelésére
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // A teljes useEffect logikát lecseréljük
-    setLoading(true); // Indul a betöltés
+    setLoading(true); 
 
     fetchAttractionById(id)
       .then(data => {
         setAttr(data);
-        setError(null); // Sikeres betöltés esetén a korábbi hiba törlése
+        setError(null); 
       })
       .catch(err => {
         setError(err.message);
-        setAttr(null); // Hiba esetén az adatokat is töröljük
+        setAttr(null); 
       })
       .finally(() => {
-        setLoading(false); // A betöltés befejeződött (akár sikeres, akár nem)
+        setLoading(false); 
       });
 
-  }, [id]); // Az effektus csak akkor fut le újra, ha az 'id' megváltozik
+  }, [id]); 
 
-  // ÁTTEKINTHETŐBB KEZELÉSE A KÜLÖNBÖZŐ ÁLLAPOTOKNAK
   if (loading) {
     return <p className="p-4 text-center">Betöltés...</p>;
   }
@@ -38,7 +35,6 @@ export default function AttractionDetail() {
     return <p className="p-4 text-center text-red-500">Hiba: {error}</p>;
   }
   
-  // Ha valamiért nincs adat, de hiba és betöltés sincs
   if (!attr) {
     return (
         <div className="text-center p-4">
@@ -50,7 +46,6 @@ export default function AttractionDetail() {
     );
   }
 
-  // A JSX rész innentől változatlan, minden a helyén van
   return (
     <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-md rounded-2xl shadow-xl">
       <div className="mb-4">
