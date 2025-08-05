@@ -61,6 +61,7 @@ export default function App() {
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
+   const isGemPage = location.pathname.startsWith('/gem/');
   {/*
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
@@ -189,6 +190,11 @@ export default function App() {
         <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 ..." aria-label="Ostromprogramok megnyitása">📅</button>
       )}
       */}
+
+      {!isGemPage && (
+        <>
+          <Toaster position="bottom-center" />
+          {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
 
       <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
         <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.5.0</p>
