@@ -2,16 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 
-// A sections tömb változatlanul kell
 const sections = [
   { to: '/attractions', imgLight: '/images/button/attractions.png',  imgDark: '/images/button/attractions_dark.png', label: 'Látnivalók', desc: 'Fedezd fel Kőszeg történelmi kincseit' },
   { to: '/events',      imgLight: '/images/button/events.png',       imgDark: '/images/button/events_dark.png',      label: 'Események',   desc: 'Friss programok, kiállítások és koncertek' },
   { to: '/gastronomy',  imgLight: '/images/button/gastronomy.png',   imgDark: '/images/button/gastronomy_dark.png',  label: 'Vendéglátás',  desc: 'Éttermek, cukrászdák, kávézók, borozók' },
-  { to: '/weather',     imgLight: '/images/button/weather.png',      imgDark: '/images/button/weather_dark.png',         label: 'Időjárás',    desc: 'Kőszeg időjárás előrejelzés' },
-  { to: '/leisure',     imgLight: '/images/button/freetime.png',     imgDark: '/images/button/freetime_dark.png',         label: 'Szabadidő',   desc: 'Túrák, kerékpárút, sport lehetőségek' },
+  { to: '/weather',     imgLight: '/images/button/weather.png',      imgDark: '/images/button/weather_dark.png',     label: 'Időjárás',    desc: 'Kőszeg időjárás előrejelzés' },
+  { to: '/leisure',     imgLight: '/images/button/freetime.png',     imgDark: '/images/button/freetime_dark.png',    label: 'Szabadidő',   desc: 'Túrák, kerékpárút, sport lehetőségek' },
   { to: '/parking',     imgLight: '/images/button/parking.png',      imgDark: '/images/button/parking_dark.png',     label: 'Parkolás',    desc: 'Minden hasznos infó az autósoknak' },
-  { to: '/hotels',      imgLight: '/images/button/hotels.png',   imgDark: '/images/button/hotels_dark.png',      label: 'Szállások',   desc: 'Találd meg a számodra ideális szállást' },
-  { to: '/info',        imgLight: '/images/button/info.png',        imgDark: '/images/button/info_dark.png',        label: 'Info',         desc: 'Hasznos tudnivalók, elérhetőségek' },
+  { to: '/hotels',      imgLight: '/images/button/hotels.png',       imgDark: '/images/button/hotels_dark.png',      label: 'Szállások',   desc: 'Találd meg a számodra ideális szállást' },
+  { to: '/info',        imgLight: '/images/button/info.png',         imgDark: '/images/button/info_dark.png',        label: 'Info',         desc: 'Hasznos tudnivalók, elérhetőségek' },
 ];
 
 export default function Home() {
