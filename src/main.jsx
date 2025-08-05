@@ -23,7 +23,7 @@ L.Icon.Default.mergeOptions({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       {/* A DarkModeProvider öleli körbe a FavoritesProvider-t */}
       <DarkModeProvider>
         {/* A FavoritesProvider öleli körbe az App-ot */}
