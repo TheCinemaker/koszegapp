@@ -147,7 +147,7 @@ export default function App() {
 
       <div className="h-16" />
 
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main className={`flex-1 container mx-auto ${isGemPage ? '' : 'px-4 py-6'}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/attractions" element={<Attractions attractions={appData.attractions} loading={appData.loading} />} />
@@ -170,12 +170,30 @@ export default function App() {
           <Route path="/gem/:id" element={<GemDetail />} />
         </Routes>
       </main>
-
-      {/* --- GLOBÁLIS KOMPONENSEK MEGJELENÍTÉSE --- */}
-      <Toaster position="bottom-center" />
-      {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
       
-      {/*
+      {/* A globális elemeket csak akkor jelenítjük meg, ha NEM a Gem oldalon vagyunk */}
+      {!isGemPage && (
+        <>
+          <Toaster position="bottom-center" />
+          {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
+          
+          <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
+            <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.5.0</p>
+            <p className="text-xs text-gray-600">© Design: Hidalmasi Erik</p>
+            <p className="text-xs text-gray-600">Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a></p>
+            <p className="text-xs text-gray-600 mt-2"><Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link></p>
+          </footer>
+
+          <FloatingButtons />
+          <OstromDrawerFullAnimated />
+          <AnimatedWeeklyMenuDrawer />
+        </>
+      )}
+    </div>
+  );
+}
+
+{/*
       {isHome && showProgramModal && (
         <ProgramModal
           onClose={() => setShowProgramModal(false)}
@@ -190,22 +208,3 @@ export default function App() {
         <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 ..." aria-label="Ostromprogramok megnyitása">📅</button>
       )}
       */}
-
-      {!isGemPage && (
-        <>
-          <Toaster position="bottom-center" />
-          {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
-
-      <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
-        <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.5.0</p>
-        <p className="text-xs text-gray-600">© Design: Hidalmasi Erik</p>
-        <p className="text-xs text-gray-600">Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a></p>
-        <p className="text-xs text-gray-600 mt-2"><Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link></p>
-      </footer>
-
-      <FloatingButtons />
-      <OstromDrawerFullAnimated />
-      <AnimatedWeeklyMenuDrawer /> 
-    </div>
-  );
-}
