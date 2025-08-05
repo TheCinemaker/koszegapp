@@ -1,98 +1,101 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchEventById } from '../api';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isValid } from 'date-fns';
+import EventImageCard from '../components/EventImageCard'; 
 
 export default function EventDetail() {
   const { id } = useParams();
   const [evt, setEvt] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetchEventById(id)
       .then(data => {
+        if (!data) {
+          throw new Error('A keresett esemény nem található.');
+        }
         setEvt(data);
       })
       .catch(err => {
         setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [id]);
 
-  if (error) return <p className="text-red-500 p-4">Hiba: {error}</p>;
-  if (!evt) return <p className="p-4">Betöltés...</p>;
+  if (loading) return <p className="p-4 text-center">Esemény betöltése...</p>;
+  if (error) return <p className="p-4 text-center text-red-500">Hiba: {error}</p>;
+  if (!evt) return (
+    <div className="text-center p-4">
+      <p className="mb-4">Az esemény nem található, vagy már nem aktuális.</p>
+      <Link to="/events" className="text-purple-600 underline">Vissza az eseményekhez</Link>
+    </div>
+  );
 
-  // --- JAVÍTOTT DÁTUMKEZELÉS ---
-  // Először létrehozunk egységes, megbízható 's' (start) és 'e' (end) dátum objektumokat,
-  // függetlenül a bejövő JSON formátumától.
   let s, e;
-  if (evt.startDate) {
+  if (evt.startDate && isValid(parseISO(evt.startDate))) {
     s = parseISO(evt.startDate);
     e = parseISO(evt.endDate || evt.startDate);
   } else if (evt.date && evt.date.includes('/')) {
     const parts = evt.date.split('/');
     s = parseISO(parts[0]);
     e = parseISO(parts[1]);
-  } else {
+  } else if (evt.date && isValid(parseISO(evt.date))) {
     s = e = parseISO(evt.date);
-  }
-
-  // Most már a megbízható 's' és 'e' változókkal dolgozunk.
-  let dateText;
-  // A `+` jel a dátum objektumot számmá alakítja (timestamp), így könnyű őket összehasonlítani.
-  if (+s !== +e) {
-    dateText = `${format(s, 'yyyy.MM.dd')} – ${format(e, 'yyyy.MM.dd')}`;
   } else {
-    dateText = format(s, 'yyyy.MM.dd');
+    s = e = null;
   }
-  // --- JAVÍTÁS VÉGE ---
 
+  let dateText = "Dátum ismeretlen";
+  if (s && e && isValid(s) && isValid(e)) {
+    if (+s !== +e) {
+      dateText = `${format(s, 'yyyy.MM.dd')} – ${format(e, 'yyyy.MM.dd')}`;
+    } else {
+      dateText = format(s, 'yyyy.MM.dd');
+    }
+  }
+  
   return (
     <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-md rounded-2xl shadow-xl">
-      {/* Vissza gomb */}
-      <div className="mb-4">
-        <Link to="/events" className="inline-block text-indigo-600 hover:underline">
+      <div className="mb-6">
+        <Link to="/events" className="inline-block text-purple-600 dark:text-purple-400 hover:underline font-semibold">
           ← Vissza az eseményekhez
         </Link>
       </div>
 
-      {/* Hero kép */}
+      {/* A Dinamikus Képarányú Kép */}
       {evt.image && (
-        <img
-          src={`/images/events/${evt.image}`}
-          alt={evt.name}
-          className="w-full h-64 object-cover rounded-xl mb-6 shadow-lg"
-        />
+        <div className="mb-6 shadow-lg rounded-xl overflow-hidden">
+          <EventImageCard 
+            src={`/images/events/${evt.image}`}
+            alt={evt.name}
+          />
+        </div>
       )}
 
-      {/* Cím */}
-      <h1 className="text-3xl font-bold mb-2 text-indigo-500 dark:text-indigo-700">{evt.name}</h1>
+      <h1 className="text-3xl font-bold mb-2 text-purple-800 dark:text-purple-300">{evt.name}</h1>
 
-      {/* Dátum és idő */}
-      <p className="text-rose-50 dark:text-amber-100 mb-1">
-        <strong>Dátum:</strong> {dateText}
-        {evt.time && <>   <strong>Idő:</strong> {evt.time}</>}
-      </p>
+      <div className="text-gray-700 dark:text-gray-400 mb-6 space-y-1">
+        <p><strong>Dátum:</strong> {dateText}</p>
+        {evt.time && <p><strong>Idő:</strong> {evt.time}</p>}
+        {evt.location && <p><strong>Helyszín:</strong> {evt.location}</p>}
+      </div>
 
-      {/* Helyszín */}
-      {evt.location && (
-        <p className="text-rose-50 dark:text-amber-100 mb-4">
-          <strong>Helyszín:</strong> {evt.location}
-        </p>
-      )}
-
-      {/* Leírás */}
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold mb-1 text-indigo-500 dark:text-indigo-700">Leírás</h2>
-        <p className="text-rose-50 dark:text-amber-100 leading-relaxed">{evt.description}</p>
+      <section className="space-y-2">
+        <h2 className="text-2xl font-semibold text-purple-800 dark:text-purple-300 border-b pb-1">Leírás</h2>
+        <p className="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap pt-2">{evt.description}</p>
       </section>
 
-      {/* Címkék */}
       {evt.tags?.length > 0 && (
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-1 text-indigo-500 dark:text-indigo-700">Címkék</h2>
+        <div className="mt-6">
+          <h3 className="text-xl font-semibold mb-2 text-purple-800 dark:text-purple-300">Címkék</h3>
           <ul className="flex flex-wrap gap-2">
             {evt.tags.map(tag => (
-              <li key={tag} className="bg-purple-100 text-indigo-500 px-2 py-1 rounded-full text-sm">
+              <li key={tag} className="bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300 px-3 py-1 rounded-full text-sm capitalize">
                 {tag}
               </li>
             ))}
@@ -100,11 +103,10 @@ export default function EventDetail() {
         </div>
       )}
 
-      {/* Térkép (ha van.coords) */}
       {evt.coords && (
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2 text-indigo-500 dark:text-indigo-700">Térkép</h2>
-          <div className="w-full h-64 rounded-lg overflow-hidden shadow-md">
+        <section className="mt-8 pt-6 border-t border-purple-200 dark:border-gray-700">
+          <h2 className="text-2xl font-semibold mb-4 text-purple-800 dark:text-purple-300">Helyszín a Térképen</h2>
+          <div className="w-full h-72 rounded-lg overflow-hidden shadow-md">
             <iframe
               title="Esemény helyszíne"
               src={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}&z=16&output=embed`}
@@ -113,9 +115,6 @@ export default function EventDetail() {
               loading="lazy"
             />
           </div>
-          <p className="text-sm text-rose-50 dark:text-amber-100 mt-2">
-            Koordináták: {evt.coords.lat}, {evt.coords.lng}
-          </p>
         </section>
       )}
     </div>
