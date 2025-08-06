@@ -79,21 +79,6 @@ export default function GemDetail() {
   }
 
   if (error) {
-    // A komponens eleje (importok, logika) változatlan...
-// Az új ScanButton és a showScanHelp state is a helyén van...
-
-  if (gameState === 'loading') {
-    return (
-      <GemPageWrapper>
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-lg font-medium text-white">Keresem a kincset...</p>
-        </div>
-      </GemPageWrapper>
-    );
-  }
-
-  if (error) {
     return (
       <GemPageWrapper>
         <div className="max-w-md bg-white/90 dark:bg-gray-800 rounded-xl p-6 text-center">
@@ -177,7 +162,6 @@ export default function GemDetail() {
               <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">Folytatod a kalandot, vagy megnézed az eddigi zsákmányt?</p>
               <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
                 <Link to="/game/treasure-chest" className="w-full sm:w-auto bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">Megtalált kincseim</Link>
-                {/* A javított gomb, ami a modalt nyitja */}
                 <ScanButton onClick={() => setShowScanHelp(true)} />
               </div>
             </div>
@@ -189,11 +173,9 @@ export default function GemDetail() {
               <p className="text-lg mt-2 text-gray-700 dark:text-gray-300">De ne add fel, próbáld újra!</p>
             </div>
           )}
-
         </div>
       </GemPageWrapper>
 
-      {/* A segítő modal megjelenítése */}
       {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
     </>
   );
