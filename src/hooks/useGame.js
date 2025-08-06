@@ -1,30 +1,33 @@
-import { useState, useEffect, useCallback } from 'react'; // useCallback hozzáadva
+import { useState, useEffect, useCallback } from 'react';
 
-const GAME_STATE_KEY = 'koszeg-city-game-state';
+const GAME_STATE_KEY = 'koszeg-city-game-state'; // A localStorage kulcsa a megtalált kincseknek
+const HAS_PLAYED_KEY = 'has-played-koszeg-game'; // A kulcs annak jelzésére, hogy látta-e már az intrót
 
-const getInitialState = () => {
+const getInitialGems = () => {
   try {
     const item = window.localStorage.getItem(GAME_STATE_KEY);
     return item ? JSON.parse(item) : [];
-  } catch {
+  } catch (error) {
+    console.error("Hiba a megtalált kincsek betöltésekor:", error);
     return [];
   }
 };
 
 export function useGame() {
-  const [foundGems, setFoundGems] = useState(getInitialState);
+  const [foundGems, setFoundGems] = useState(getInitialGems);
 
   useEffect(() => {
-    localStorage.setItem(GAME_STATE_KEY, JSON.stringify(foundGems));
+    try {
+      window.localStorage.setItem(GAME_STATE_KEY, JSON.stringify(foundGems));
+    } catch (error) {
+      console.error("Hiba a megtalált kincsek mentésekor:", error);
+    }
   }, [foundGems]);
 
   const addFoundGem = useCallback((gemId) => {
     setFoundGems((prev) => (prev.includes(gemId) ? prev : [...prev, gemId]));
   }, []);
 
-  // === ITT A FONTOS JAVÍTÁS ===
-  // A useCallback biztosítja, hogy ez a függvény csak akkor jöjjön létre újra,
-  // ha a 'foundGems' tömb ténylegesen megváltozik. Így stabil marad a renderelések között.
   const isGemFound = useCallback(
     (gemId) => foundGems.includes(gemId),
     [foundGems]
@@ -32,7 +35,12 @@ export function useGame() {
 
   const resetGame = useCallback(() => {
     setFoundGems([]);
+    window.localStorage.removeItem(HAS_PLAYED_KEY); // Az intrót is reseteljük
   }, []);
+  
+  // Funkciók az intró állapot kezelésére
+  const hasPlayedBefore = () => !!window.localStorage.getItem(HAS_PLAYED_KEY);
+  const markAsPlayed = () => window.localStorage.setItem(HAS_PLAYED_KEY, 'true');
 
-  return { foundGems, addFoundGem, isGemFound, resetGame };
+  return { foundGems, addFoundGem, isGemFound, resetGame, hasPlayedBefore, markAsPlayed };
 }
