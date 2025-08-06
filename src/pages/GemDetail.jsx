@@ -3,10 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 
-// Egy segédkomponens a "wrapper" ismétlésének elkerülésére
-const GemPageWrapper = ({ children }) => (
+// A Wrapper segédkomponens marad, mert a dizájnhoz kell
+const GemPageWrapper = ({ children, className = "" }) => (
   <div className="bg-gray-900/90 backdrop-blur-sm -m-4 -mb-6 min-h-screen flex items-center justify-center p-4">
-    <div className="max-w-3xl w-full bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl animate-scale-in p-6 text-center">
+    <div className={`max-w-3xl w-full bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl animate-scale-in p-6 text-center ${className}`}>
       {children}
     </div>
   </div>
@@ -18,19 +18,22 @@ export default function GemDetail() {
   
   const [gem, setGem] = useState(null);
   const [gameState, setGameState] = useState('loading');
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
+    // === ITT A JAVÍTOTT, STABIL LOGIKA ===
+    let isMounted = true; // Elkerüli a state frissítést, ha a komponens közben "kiszerelt"
     setGameState('loading');
+
     fetchHiddenGems()
       .then(data => {
+        if (!isMounted) return;
         const found = data.find(g => g.id === id);
         if (!found) {
           setError('Ez a kincs nem található az adatbázisban.');
         } else {
           setGem(found);
+          // A kezdő állapotot a 'gem' betöltése UTÁN döntjük el
           if (isGemFound(id)) {
             setGameState('already_found');
           } else {
@@ -38,9 +41,13 @@ export default function GemDetail() {
           }
         }
       })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [id, isGemFound]); // Visszatettem az isGemFound-ot, mert a context miatt stabilnak kell lennie
+      .catch(err => {
+        if (isMounted) setError(err.message);
+      });
+
+    return () => { isMounted = false; };
+      
+  }, [id, isGemFound]); // Az isGemFound már stabil, így ez a useEffect csak akkor fut le, ha KELL
 
   const handleAnswer = (option) => {
     if (option.isCorrect) {
@@ -52,8 +59,7 @@ export default function GemDetail() {
     }
   };
 
-  // === ITT A JAVÍTÁS ===
-  if (loading) {
+  if (gameState === 'loading') {
     return (
       <GemPageWrapper>
         <p className="font-semibold text-lg">Keresem a kincset...</p>
@@ -79,10 +85,9 @@ export default function GemDetail() {
     );
   }
 
-  // A fő return blokk most már csak a sikeres esetet kezeli
+  // --- A FŐ MEGJELENÍTÉS ---
   return (
     <div className="bg-gray-900/90 backdrop-blur-sm -m-4 -mb-6 min-h-screen flex items-center justify-center p-4">
-      {/* A különböző gameState nézetek egy közös "kártya" konténeren belül jelennek meg */}
       <div className="max-w-3xl w-full bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl p-6">
         
         {gameState === 'intro' && (
@@ -133,9 +138,9 @@ export default function GemDetail() {
         )}
 
         {gameState === 'wrong_answer' && (
-          <div className="text-center">
+          <div className="animate-fadein text-center">
             <h1 className="text-3xl font-bold text-red-500">Sajnos nem ez a helyes válasz!</h1>
-            <p className="text-lg mt-2 text-white">De ne add fel, próbáld újra!</p>
+            <p className="text-lg mt-2 text-gray-700 dark:text-gray-300">De ne add fel, próbáld újra!</p>
           </div>
         )}
 
