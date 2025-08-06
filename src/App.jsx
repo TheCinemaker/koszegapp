@@ -172,7 +172,7 @@ export default function App() {
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
           <Route path="/gem/:id" element={<GemDetail />} />
-          <Route path="/my-gems" element={<MyGems />} />
+          <Route path="/game/treasure-chest" element={<MyGems />} />
           <Route path="/game/intro" element={<GameIntro />} />
         </Routes>
       </main>
