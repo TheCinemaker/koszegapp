@@ -24,9 +24,13 @@ export default function GemDetail() {
       navigate('/game/intro', { state: { redirectTo: location.pathname }, replace: true });
       return;
     }
+    
+    let isMounted = true;
     setGameState('loading');
+    
     fetchHiddenGems()
       .then(data => {
+        if (!isMounted) return;
         const found = data.find(g => g.id === id);
         if (!found) {
           setError('Ez a kincs nem található az adatbázisban.');
@@ -39,9 +43,13 @@ export default function GemDetail() {
           }
         }
       })
-      .catch(err => setError(err.message));
-  }, [id, isGemFound, hasPlayedBefore, navigate, location]); // location hozzáadva a függőségi tömbhöz
-
+      .catch(err => {
+        if (isMounted) setError(err.message);
+      });
+      
+    return () => { isMounted = false; };
+      
+  }, [id, isGemFound, hasPlayedBefore, navigate, location]); 
   const handleAnswer = (option) => {
     if (option.isCorrect) {
       addFoundGem(gem.id);
