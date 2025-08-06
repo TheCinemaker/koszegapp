@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'; 
 import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 
-// Segédkomponens a "wrapper" ismétlésének elkerülésére
 const GemPageWrapper = ({ children }) => (
   <div className="bg-gray-900/90 backdrop-blur-sm -m-4 -mb-6 min-h-screen flex items-center justify-center p-4">
     {children}
@@ -13,6 +12,7 @@ const GemPageWrapper = ({ children }) => (
 export default function GemDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation(); 
   const { addFoundGem, isGemFound, hasPlayedBefore } = useGame();
   
   const [gem, setGem] = useState(null);
@@ -21,7 +21,7 @@ export default function GemDetail() {
 
   useEffect(() => {
     if (!hasPlayedBefore()) {
-      navigate('/game/intro', { state: { redirectTo: `/game/gem/${id}` }, replace: true });
+      navigate('/game/intro', { state: { redirectTo: location.pathname }, replace: true });
       return;
     }
     setGameState('loading');
@@ -40,7 +40,7 @@ export default function GemDetail() {
         }
       })
       .catch(err => setError(err.message));
-  }, [id, isGemFound, hasPlayedBefore, navigate]);
+  }, [id, isGemFound, hasPlayedBefore, navigate, location]); // location hozzáadva a függőségi tömbhöz
 
   const handleAnswer = (option) => {
     if (option.isCorrect) {
@@ -55,17 +55,16 @@ export default function GemDetail() {
   if (gameState === 'loading') {
     return <GemPageWrapper><p className="font-semibold text-lg text-white">Keresem a kincset...</p></GemPageWrapper>;
   }
-
   if (error) {
     return <GemPageWrapper><p className="font-semibold text-lg text-red-500">Hiba: {error}</p></GemPageWrapper>;
   }
-
   if (!gem) {
     return <GemPageWrapper><p className="font-semibold text-lg text-white">Ez a kincs nem létezik.</p></GemPageWrapper>;
   }
 
   return (
     <div className="bg-gray-900/90 backdrop-blur-sm -m-4 -mb-6 min-h-screen flex items-center justify-center p-4">
+      <div className="max-w-3xl w-full bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl p-6">
       <div className="max-w-3xl w-full bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl p-6">
         
         {gameState === 'intro' && (
