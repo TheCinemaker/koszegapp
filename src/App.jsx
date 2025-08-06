@@ -62,7 +62,7 @@ export default function App() {
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
-   const isGemPage = location.pathname.startsWith('/gem/');
+  const isGemPage = location.pathname.startsWith('/gem/') || location.pathname === '/my-gems';
   {/*
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
