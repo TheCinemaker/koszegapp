@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'; 
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 
+// JAVÍTÁS: A Wrapper most már a háttérképet használja
 const GemPageWrapper = ({ children }) => (
-  <div className="fixed inset-0 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center p-4">
+  <div 
+    className="-m-4 -mb-6 min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
+    style={{
+      backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/game/terkep.webp')"
+    }}
+  >
     {children}
   </div>
 );
@@ -54,12 +60,6 @@ export default function GemDetail() {
     }
   };
 
-  // Loading and error states
-  // A komponens eleje (importok, logika) változatlan marad...
-
-  // === ITT KEZDŐDIK A CSERE ===
-
-  // 1. A betöltési és hiba állapotok
   if (gameState === 'loading') {
     return (
       <GemPageWrapper>
@@ -99,12 +99,9 @@ export default function GemDetail() {
     );
   }
 
-  // 2. A fő tartalom megjelenítése
   return (
     <GemPageWrapper>
       <div className="max-w-2xl w-full bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl overflow-hidden p-6">
-        
-        {/* Itt már csak a játék állapotok közötti váltás van */}
         
         {gameState === 'intro' && (
           <div className="animate-scale-in">
@@ -112,12 +109,22 @@ export default function GemDetail() {
               <h1 className="text-3xl font-bold text-amber-800 dark:text-amber-300 mb-2">🎉 Felfedeztél egy kincset! 🎉</h1>
               <div className="w-20 h-1 bg-amber-600 mx-auto rounded-full"></div>
             </div>
-            <img src={`/images/${gem.image}`} alt={gem.name} className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md mb-6" />
+            
+            <img 
+              src={`/images/${gem.image}`} 
+              alt={gem.name}
+              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md mb-6"
+            />
+            
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-amber-900 dark:text-amber-200 mb-2">{gem.name}</h2>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{gem.description}</p>
             </div>
-            <button onClick={() => setGameState('question')} className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg">
+            
+            <button 
+              onClick={() => setGameState('question')}
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg"
+            >
               Készen állsz a kihívásra?
             </button>
           </div>
@@ -128,14 +135,20 @@ export default function GemDetail() {
             <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-300 mb-6 text-center">{gem.question}</h2>
             <div className="space-y-3 mb-6">
               {gem.options.map((opt, i) => (
-                <button key={i} onClick={() => handleAnswer(opt)} className="w-full text-left p-4 rounded-lg bg-white/80 dark:bg-gray-700/80 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition border border-amber-200 dark:border-gray-600">
+                <button 
+                  key={i}
+                  onClick={() => handleAnswer(opt)}
+                  className="w-full text-left p-4 rounded-lg bg-white/80 dark:bg-gray-700/80 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition border border-amber-200 dark:border-gray-600"
+                >
                   {opt.text}
                 </button>
               ))}
             </div>
             {gem.hint && (
               <div className="bg-amber-100/50 dark:bg-gray-700/50 p-3 rounded-lg border-l-4 border-amber-500">
-                <p className="text-sm text-amber-800 dark:text-amber-200"><span className="font-semibold">Segítség:</span> {gem.hint}</p>
+                <p className="text-sm text-amber-800 dark:text-amber-200">
+                  <span className="font-semibold">Segítség:</span> {gem.hint}
+                </p>
               </div>
             )}
           </div>
