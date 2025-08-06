@@ -31,6 +31,7 @@ import AboutDetail from './pages/AboutDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 import GemDetail from './pages/GemDetail';
+import MyGems from './pages/MyGems';
 
 // --- Globális Komponensek ---
 import FavoritesDashboard from './components/FavoritesDashboard';
@@ -168,6 +169,7 @@ export default function App() {
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
           <Route path="/gem/:id" element={<GemDetail />} />
+          <Route path="/my-gems" element={<MyGems />} />
         </Routes>
       </main>
       
