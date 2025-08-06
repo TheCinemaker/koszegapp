@@ -1,11 +1,17 @@
 [
   {
     "id": "gem-1",
-    "name": "A Sgraffitós-ház Oroszlánja",
+    "name": "Sgraffitós-ház Oroszlánja",
     "image": "gems/sgraffito_haz.jpg",
     "description": "Az 1560-as években épült reneszánsz ház homlokzatán egy különleges, vakolatdíszítéses (sgraffito) oroszlán látható, ami a ház egykori tulajdonosának, egy gazdag kereskedőnek a címerállata volt. Figyeld meg a részletesen kidolgozott sörényét! Ez Kőszeg egyik legszebb reneszánsz lakóháza.",
     "coords": { "lat": 47.38955, "lng": 16.54181 },
-    "next_gem_id": "gem-2"
+    "question": "A ház falán egy oroszlán látható. Melyik híres kőszegi család címerében szerepelt még ez az állat?",
+    "options": [
+      { "text": "A Jurisics család", "isCorrect": false },
+      { "text": "A Chernel család", "isCorrect": true, "next_gem_id": "gem-2" },
+      { "text": "A Nádasdy család", "isCorrect": false }
+    ],
+    "hint": "A család nevét viseli a híres kőszegi arborétum is."
   },
   {
     "id": "gem-2",
@@ -13,7 +19,13 @@
     "image": "gems/varoskut.jpg",
     "description": "Ez a barokk stílusú kút 1766-ban készült el. Tetején Mária, a magyarok védasszonyának szobra áll, amint a földgömbön állva eltapossa a kígyót, a bűn jelképét. A kút egykor a város legfontosabb vízvételi helye volt.",
     "coords": { "lat": 47.38933, "lng": 16.54145 },
-    "next_gem_id": "gem-3"
+    "question": "A kút tetején Mária szobra áll. Mit tapos el a lábával a szobor a földgömbön?",
+    "options": [
+      { "text": "Egy sárkányt", "isCorrect": false },
+      { "text": "Egy oroszlánt", "isCorrect": false },
+      { "text": "Egy kígyót", "isCorrect": true, "next_gem_id": "gem-3" }
+    ],
+    "hint": "A bűn jelképét keresd."
   },
   {
     "id": "gem-3",
@@ -21,7 +33,13 @@
     "image": "gems/szent_antal.jpg",
     "description": "A Jurisics tér egyik házának falfülkéjében rejtőzik Páduai Szent Antal 18. századi szobra. A szent a ferences rend híres prédikátora volt, és gyakran ábrázolják a gyermek Jézussal a karján. A szobor a ház egykori tulajdonosának vallásosságáról tanúskodik.",
     "coords": { "lat": 47.38912, "lng": 16.54158 },
-    "next_gem_id": "gem-4"
+    "question": "Melyik híres ostrom vezérének a nevét viseli a tér, ahol ez a szobor áll?",
+    "options": [
+      { "text": "Szulejmán szultán", "isCorrect": false },
+      { "text": "Jurisics Miklós", "isCorrect": true, "next_gem_id": "gem-4" },
+      { "text": "Zrínyi Miklós", "isCorrect": false }
+    ],
+    "hint": "A kőszegi vár kapitánya volt 1532-ben."
   },
   {
     "id": "gem-4",
@@ -29,7 +47,13 @@
     "image": "gems/labashaz_ceger.jpg",
     "description": "A Lábasház (az árkádos épület) sarkán lévő cégér a kőszegi csizmadiacéh jelképe volt. A 18. században készült aranyozott csizma messziről hirdette a mesterek ügyességét. A Lábasház egykor a város legfontosabb kereskedelmi központja volt.",
     "coords": { "lat": 47.38883, "lng": 16.54221 },
-    "next_gem_id": "gem-5"
+    "question": "Az épület nevét az árkádos, 'lábakon' álló szerkezetéről kapta. Hány ilyen 'lábat' (oszlopot) számolsz meg a ház alatt?",
+    "options": [
+      { "text": "Hét (7)", "isCorrect": true, "next_gem_id": "gem-5" },
+      { "text": "Öt (5)", "isCorrect": false },
+      { "text": "Kilenc (9)", "isCorrect": false }
+    ],
+    "hint": "Nem páratlan szám."
   },
   {
     "id": "gem-5",
@@ -37,6 +61,12 @@
     "image": "gems/galyarab_tabla.jpg",
     "description": "Az evangélikus templom bejárata mellett található ez a tábla, amely annak a 26 magyar protestáns lelkésznek állít emléket, akiket a 17. századi ellenreformáció idején gályarabságra ítéltek. Történetük a vallásszabadságért vívott harc jelképévé vált.",
     "coords": { "lat": 47.38791, "lng": 16.54344 },
-    "next_gem_id": null
+    "question": "Melyik holland admirális szabadította ki a gályarabságra ítélt magyar lelkészeket?",
+    "options": [
+      { "text": "Willem van Oranje", "isCorrect": false },
+      { "text": "Michiel de Ruyter", "isCorrect": true, "next_gem_id": null },
+      { "text": "Maarten Tromp", "isCorrect": false }
+    ],
+    "hint": "Az ő nevét viseli a holland haditengerészet több hajója is."
   }
 ]
