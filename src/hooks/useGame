@@ -1,0 +1,29 @@
+import { useState, useEffect } from 'react';
+
+const GAME_STATE_KEY = 'koszeg-city-game-state';
+
+export function useGame() {
+  const [foundGems, setFoundGems] = useState(() => {
+    return JSON.parse(localStorage.getItem(GAME_STATE_KEY) || '[]');
+  });
+
+  useEffect(() => {
+    localStorage.setItem(GAME_STATE_KEY, JSON.stringify(foundGems));
+  }, [foundGems]);
+
+  const addFoundGem = (gemId) => {
+    if (!foundGems.includes(gemId)) {
+      setFoundGems(prev => [...prev, gemId]);
+    }
+  };
+
+  const isGemFound = (gemId) => {
+    return foundGems.includes(gemId);
+  };
+
+  const resetGame = () => {
+    setFoundGems([]);
+  };
+
+  return { foundGems, addFoundGem, isGemFound, resetGame };
+}
