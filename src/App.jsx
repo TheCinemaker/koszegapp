@@ -1,17 +1,11 @@
-// =================================================================
-// 1. ÖSSZES IMPORT
-// =================================================================
 import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
-
-// --- Context-ek és API hívások ---
 import { DarkModeContext } from './contexts/DarkModeContext';
 import { useFavorites } from './contexts/FavoritesContext.jsx';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels, fetchParking } from './api';
 
-// --- Oldalak (Pages) ---
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
 import AttractionDetail from './pages/AttractionDetail';
@@ -34,21 +28,13 @@ import GemDetail from './pages/GemDetail';
 import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
 
-// --- Globális Komponensek ---
 import FavoritesDashboard from './components/FavoritesDashboard';
 import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
-import ProgramModal from './components/ProgramModal';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
 import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 
-
-
-// =================================================================
-// 2. EXPORT DEFAULT FUNCTION
-// =================================================================
 export default function App() {
-  // --- Hooks ---
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -56,27 +42,15 @@ export default function App() {
   const { favorites, isFavorite } = useFavorites();
   const favoritesRef = useRef(null);
 
-  // --- Állapotok (States) ---
   const [weather, setWeather] = useState({ icon: '', temp: '--' });
   const [appData, setAppData] = useState({
     attractions: [], events: [], leisure: [], restaurants: [], hotels: [], parking: [], loading: true
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
-  const isGamePage = location.pathname.startsWith('/gem/') || 
-                   location.pathname.startsWith('/game/') ||
-                   location.pathname === '/my-gems';
-  {/*
-  const [showProgramModal, setShowProgramModal] = useState(true);
-  const [showOstromDrawer, setShowOstromDrawer] = useState(false);
-  const isHome = location.pathname === '/';
-  */}
-  
-  // =================================================================
-  // 3. USE-EFFECT HÍVÁSOK
-  // =================================================================
-  
-  // --- Globális Adatbetöltés ---
+
+  const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
+
   useEffect(() => {
     Promise.all([
       fetchAttractions(), fetchEvents(), fetchLeisure(), fetchRestaurants(), fetchHotels(), fetchParking()
@@ -84,7 +58,7 @@ export default function App() {
       const now = new Date();
       const normalizedEvents = eventsData.map(evt => {
           let s, e;
-          if (evt.startDate) { s = new Date(evt.startDate); e = evt.endDate ? new Date(evt.endDate) : s; } 
+          if (evt.startDate) { s = new Date(evt.startDate); e = evt.endDate ? new Date(evt.endDate) : s; }
           else if (evt.date.includes('/')) { const p = evt.date.split('/'); s = new Date(p[0]); e = new Date(p[1] || p[0]); }
           else { s = new Date(evt.date); e = s; }
           return { ...evt, _s: s, _e: e };
@@ -98,7 +72,6 @@ export default function App() {
       .catch(console.error);
   }, []);
 
-  // --- Kedvencek Dropdown bezárása ---
   useEffect(() => {
     const handleClickOutside = event => {
       if (favoritesRef.current && !favoritesRef.current.contains(event.target)) setShowFavorites(false);
@@ -107,18 +80,12 @@ export default function App() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // =================================================================
-  // 4. MEMO-ZOTT ÉRTÉKEK
-  // =================================================================
   const favoriteAttractions = useMemo(() => appData.attractions.filter(item => isFavorite(item.id)), [appData.attractions, favorites]);
   const favoriteEvents = useMemo(() => appData.events.filter(item => isFavorite(item.id)), [appData.events, favorites]);
   const favoriteLeisure = useMemo(() => appData.leisure.filter(item => isFavorite(item.id)), [appData.leisure, favorites]);
   const favoriteRestaurants = useMemo(() => appData.restaurants.filter(item => isFavorite(item.id)), [appData.restaurants, favorites]);
 
-  // =================================================================
-  // 5. RENDER (RETURN)
-  // =================================================================
-    return (
+  return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
       
       {!isInGameMode && (
@@ -157,7 +124,6 @@ export default function App() {
       
       <main className={`flex-1 container mx-auto ${isInGameMode ? '' : 'px-4 py-6'}`}>
         <Routes>
-          {/* --- NORMÁL ÚTVONALAK --- */}
           <Route path="/" element={<Home />} />
           <Route path="/attractions" element={<Attractions attractions={appData.attractions} loading={appData.loading} />} />
           <Route path="/attractions/:id" element={<AttractionDetail />} />
@@ -177,7 +143,6 @@ export default function App() {
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
           
-          {/* --- JÁTÉK ÚTVONALAK --- */}
           <Route path="/gem/:id" element={<GemDetail />} />
           <Route path="/my-gems" element={<MyGems />} />
           <Route path="/game/intro" element={<GameIntro />} />
@@ -206,18 +171,3 @@ export default function App() {
     </div>
   );
 }
-{/*
-      {isHome && showProgramModal && (
-        <ProgramModal
-          onClose={() => setShowProgramModal(false)}
-          openDrawer={() => {
-            setShowProgramModal(false);
-            setShowOstromDrawer(true);
-          }}
-        />
-      )}
-      {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
-      {isHome && !showProgramModal && !showOstromDrawer && (
-        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 ..." aria-label="Ostromprogramok megnyitása">📅</button>
-      )}
-      */}
