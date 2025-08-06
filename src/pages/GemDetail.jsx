@@ -37,7 +37,7 @@ export default function GemDetail() {
   if (!gem && !loading) return <p className="p-4 text-center">Ez a kincs nem létezik.</p>;
 
   return (
-    <div className="fixed inset-0 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center p-5">
+    <div className="fixed inset-0 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center pt-[64px] pb-[72px] px-4">
       {/* Betöltő képernyő a kincsesládával */}
       {loading && (
         <div className="text-center">
@@ -52,35 +52,35 @@ export default function GemDetail() {
 
       {/* A tartalom kártya, ami csak az animáció után jelenik meg */}
       {showContent && gem && (
-        <div className="w-full max-w-md mx-auto my-5 bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl animate-scale-in overflow-y-auto max-h-[calc(100vh-40px)]">
+        <div className="w-full max-w-md mx-auto bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl animate-scale-in overflow-y-auto max-h-[calc(100vh-64px-72px-40px)]">
           <div className="p-6">
             <div className="text-center mb-6">
-              <h1 className="text-3xl font-bold text-purple-800 dark:text-purple-300">🎉 Felfedeztél egy rejtett kincset! 🎉</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-purple-800 dark:text-purple-300">🎉 Felfedeztél egy rejtett kincset! 🎉</h1>
             </div>
             
             <img 
               src={`/images/${gem.image}`} 
               alt={gem.name} 
-              className="w-full h-auto max-h-[50vh] object-cover rounded-xl mb-6 shadow-md"
+              className="w-full h-auto max-h-[40vh] object-cover rounded-xl mb-6 shadow-md"
             />
             
-            <h2 className="text-2xl font-semibold mb-2 text-purple-900 dark:text-purple-200">{gem.name}</h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8">{gem.description}</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-2 text-purple-900 dark:text-purple-200">{gem.name}</h2>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 md:mb-8">{gem.description}</p>
             
-            <div className="mt-8 pt-6 border-t border-purple-200 dark:border-gray-700 flex flex-col sm:flex-row justify-center items-center gap-4 text-center">
+            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-purple-200 dark:border-gray-700 flex flex-col sm:flex-row justify-center items-center gap-3 md:gap-4 text-center">
               {gem.next_gem_id ? (
                 <Link 
                   to={`/gem/${gem.next_gem_id}`} 
-                  className="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg"
+                  className="w-full sm:w-auto bg-green-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-base md:text-lg"
                 >
                   Irány a következő kincs! &rarr;
                 </Link>
               ) : (
-                <p className="font-semibold text-lg">Gratulálok, végigértél a Felfedező Túrán!</p>
+                <p className="font-semibold text-base md:text-lg">Gratulálok, végigértél a Felfedező Túrán!</p>
               )}
               <Link 
                 to="/" 
-                className="w-full sm:w-auto bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition"
+                className="w-full sm:w-auto bg-gray-500 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-gray-600 transition text-base md:text-lg"
               >
                 Vissza a Főoldalra
               </Link>
