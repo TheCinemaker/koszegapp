@@ -63,9 +63,9 @@ export default function App() {
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
-  const isGemPage = location.pathname.startsWith('/gem/') || 
-                 location.pathname === '/my-gems' || 
-                 location.pathname === '/game/intro';
+  const isGamePage = location.pathname.startsWith('/gem/') || 
+                   location.pathname.startsWith('/game/') ||
+                   location.pathname === '/my-gems';
   {/*
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
@@ -118,41 +118,46 @@ export default function App() {
   // =================================================================
   // 5. RENDER (RETURN)
   // =================================================================
-  return (
+    return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
-      <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
-        <div className="container mx-auto flex items-center justify-between px-4 py-3">
-          <div className="flex items-center space-x-2">
-            <img onClick={() => navigate('/')} src="/images/koeszeg_logo_nobg.png" alt="KőszegAPP logo" className="w-8 h-8 cursor-pointer" />
-            <span onClick={() => navigate('/')} className="text-base sm:text-lg font-bold text-purple-700 cursor-pointer" >KőszegAPP</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <button onClick={() => setShowWeatherModal(true)} className="flex items-center space-x-1 text-gray-500 dark:text-white bg-beige-200/50 dark:bg-gray-700 backdrop-blur-sm px-2 py-1 rounded-full transition hover:scale-105">
-              <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="weather" className="w-5 h-5"/>
-              <span className="text-sm">{weather.temp}°C</span>
-            </button>
-            <div className="relative" ref={favoritesRef}>
-              <button onClick={() => setShowFavorites(!showFavorites)} className="relative flex items-center px-2 py-1 rounded hover:bg-beige-200/50 dark:hover:bg-gray-700 transition" aria-label="Kedvencek megnyitása">
-                <span className="text-xl text-rose-500">❤️</span>
-                {favorites.length > 0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>}
-              </button>
-              {showFavorites && <FavoritesDashboard 
-                attractions={favoriteAttractions} 
-                events={favoriteEvents} 
-                leisure={favoriteLeisure}
-                restaurants={favoriteRestaurants} 
-                onClose={() => setShowFavorites(false)} 
-              />}
+      
+      {!isInGameMode && (
+        <>
+          <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
+            <div className="container mx-auto flex items-center justify-between px-4 py-3">
+              <div className="flex items-center space-x-2">
+                <img onClick={() => navigate('/')} src="/images/koeszeg_logo_nobg.png" alt="KőszegAPP logo" className="w-8 h-8 cursor-pointer" />
+                <span onClick={() => navigate('/')} className="text-base sm:text-lg font-bold text-purple-700 cursor-pointer" >KőszegAPP</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <button onClick={() => setShowWeatherModal(true)} className="flex items-center space-x-1 text-gray-500 dark:text-white bg-beige-200/50 dark:bg-gray-700 backdrop-blur-sm px-2 py-1 rounded-full transition hover:scale-105">
+                  <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="weather" className="w-5 h-5"/>
+                  <span className="text-sm">{weather.temp}°C</span>
+                </button>
+                <div className="relative" ref={favoritesRef}>
+                  <button onClick={() => setShowFavorites(!showFavorites)} className="relative flex items-center px-2 py-1 rounded hover:bg-beige-200/50 dark:hover:bg-gray-700 transition" aria-label="Kedvencek megnyitása">
+                    <span className="text-xl text-rose-500">❤️</span>
+                    {favorites.length > 0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>}
+                  </button>
+                  {showFavorites && <FavoritesDashboard 
+                    attractions={favoriteAttractions} 
+                    events={favoriteEvents} 
+                    leisure={favoriteLeisure}
+                    restaurants={favoriteRestaurants} 
+                    onClose={() => setShowFavorites(false)} 
+                  />}
+                </div>
+                <button onClick={toggleDark} className="px-2 py-1 rounded bg-beige-200/50 dark:bg-gray-700 text-sm transition">{dark ? '🌙' : '☀️'}</button>
+              </div>
             </div>
-            <button onClick={toggleDark} className="px-2 py-1 rounded bg-beige-200/50 dark:bg-gray-700 text-sm transition">{dark ? '🌙' : '☀️'}</button>
-          </div>
-        </div>
-      </header>
-
-      <div className="h-16" />
-
-      <main className={`flex-1 container mx-auto ${isGemPage ? '' : 'px-4 py-6'}`}>
+          </header>
+          <div className="h-16" />
+        </>
+      )}
+      
+      <main className={`flex-1 container mx-auto ${isInGameMode ? '' : 'px-4 py-6'}`}>
         <Routes>
+          {/* --- NORMÁL ÚTVONALAK --- */}
           <Route path="/" element={<Home />} />
           <Route path="/attractions" element={<Attractions attractions={appData.attractions} loading={appData.loading} />} />
           <Route path="/attractions/:id" element={<AttractionDetail />} />
@@ -171,14 +176,17 @@ export default function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/info/:id" element={<AboutDetail />} />
           <Route path="/adatvedelem" element={<Adatvedelem />} />
+          
+          {/* --- JÁTÉK ÚTVONALAK --- */}
           <Route path="/gem/:id" element={<GemDetail />} />
-          <Route path="/game/treasure-chest" element={<MyGems />} />
+          <Route path="/my-gems" element={<MyGems />} />
           <Route path="/game/intro" element={<GameIntro />} />
+          <Route path="/game/gem/:id" element={<GemDetail />} />
+          <Route path="/game/treasure-chest" element={<MyGems />} />
         </Routes>
       </main>
       
-      {/* A globális elemeket csak akkor jelenítjük meg, ha NEM a Gem oldalon vagyunk */}
-      {!isGemPage && (
+      {!isInGameMode && (
         <>
           <Toaster position="bottom-center" />
           {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
@@ -198,7 +206,6 @@ export default function App() {
     </div>
   );
 }
-
 {/*
       {isHome && showProgramModal && (
         <ProgramModal
