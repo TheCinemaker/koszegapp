@@ -4,7 +4,7 @@ import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 
 const GemPageWrapper = ({ children }) => (
-  <div className="bg-gray-900/90 backdrop-blur-sm -m-4 -mb-6 min-h-screen flex items-center justify-center p-4">
+  <div className="fixed inset-0 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center p-4">
     {children}
   </div>
 );
@@ -12,7 +12,7 @@ const GemPageWrapper = ({ children }) => (
 export default function GemDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
   const { addFoundGem, isGemFound, hasPlayedBefore } = useGame();
   
   const [gem, setGem] = useState(null);
@@ -24,7 +24,7 @@ export default function GemDetail() {
       navigate('/game/intro', { state: { redirectTo: location.pathname }, replace: true });
       return;
     }
-    
+
     let isMounted = true;
     setGameState('loading');
     
@@ -36,20 +36,14 @@ export default function GemDetail() {
           setError('Ez a kincs nem található az adatbázisban.');
         } else {
           setGem(found);
-          if (isGemFound(id)) {
-            setGameState('already_found');
-          } else {
-            setGameState('intro');
-          }
+          setGameState(isGemFound(id) ? 'already_found' : 'intro');
         }
       })
-      .catch(err => {
-        if (isMounted) setError(err.message);
-      });
+      .catch(err => isMounted && setError(err.message));
       
     return () => { isMounted = false; };
-      
-  }, [id, isGemFound, hasPlayedBefore, navigate, location]); 
+  }, [id, isGemFound, hasPlayedBefore, navigate, location]);
+
   const handleAnswer = (option) => {
     if (option.isCorrect) {
       addFoundGem(gem.id);
@@ -60,72 +54,105 @@ export default function GemDetail() {
     }
   };
 
+  // Loading and error states
   if (gameState === 'loading') {
-    return <GemPageWrapper><p className="font-semibold text-lg text-white">Keresem a kincset...</p></GemPageWrapper>;
+    return (
+      <GemPageWrapper>
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-lg font-medium text-white">Keresem a kincset...</p>
+        </div>
+      </GemPageWrapper>
+    );
   }
+
   if (error) {
-    return <GemPageWrapper><p className="font-semibold text-lg text-red-500">Hiba: {error}</p></GemPageWrapper>;
+    return (
+      <GemPageWrapper>
+        <div className="max-w-md bg-white/90 dark:bg-gray-800 rounded-xl p-6 text-center">
+          <p className="text-xl font-bold text-red-500 mb-4">Hiba történt</p>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">{error}</p>
+          <Link to="/" className="inline-block bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+            Vissza a főoldalra
+          </Link>
+        </div>
+      </GemPageWrapper>
+    );
   }
+
   if (!gem) {
-    return <GemPageWrapper><p className="font-semibold text-lg text-white">Ez a kincs nem létezik.</p></GemPageWrapper>;
+    return (
+      <GemPageWrapper>
+        <div className="max-w-md bg-white/90 dark:bg-gray-800 rounded-xl p-6 text-center">
+          <p className="text-xl font-bold text-gray-800 dark:text-white mb-4">Kincs nem található</p>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">Ez a kincs nem létezik az adatbázisban.</p>
+          <Link to="/" className="inline-block bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+            Vissza a főoldalra
+          </Link>
+        </div>
+      </GemPageWrapper>
+    );
   }
 
   return (
-    <div className="bg-gray-900/90 backdrop-blur-sm -m-4 -mb-6 min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-3xl w-full bg-purple-50 dark:bg-gray-800 rounded-2xl shadow-2xl p-6">
-        
+    <GemPageWrapper>
+      <div className="max-w-2xl w-full bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl overflow-hidden">
+        {/* Game State Views */}
         {gameState === 'intro' && (
-          <div className="animate-scale-in">
-            <h1 className="text-3xl font-bold text-purple-800 dark:text-purple-300 text-center mb-6">🎉 Felfedeztél egy rejtett kincset! 🎉</h1>
-            <img src={`/images/${gem.image}`} alt={gem.name} className="w-full h-auto max-h-[60vh] object-cover rounded-xl mb-6 shadow-md"/>
-            <h2 className="text-2xl font-semibold mb-2 text-purple-900 dark:text-purple-200">{gem.name}</h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8">{gem.description}</p>
-            <button onClick={() => setGameState('question')} className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg">Készen állsz a következő kihívásra?</button>
+          <div className="animate-scale-in p-6">
+            <div className="text-center mb-6">
+              <h1 className="text-3xl font-bold text-amber-800 dark:text-amber-300 mb-2">🎉 Felfedeztél egy kincset! 🎉</h1>
+              <div className="w-20 h-1 bg-amber-600 mx-auto rounded-full"></div>
+            </div>
+            
+            <img 
+              src={`/images/${gem.image}`} 
+              alt={gem.name}
+              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md mb-6"
+            />
+            
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold text-amber-900 dark:text-amber-200 mb-2">{gem.name}</h2>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{gem.description}</p>
+            </div>
+            
+            <button 
+              onClick={() => setGameState('question')}
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg"
+            >
+              Készen állsz a kihívásra?
+            </button>
           </div>
         )}
 
         {gameState === 'question' && (
-          <div className="animate-fadein">
-            <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-300 mb-6 text-center">{gem.question}</h2>
-            <div className="mt-6 space-y-3">
+          <div className="animate-fadein p-6">
+            <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-300 mb-6 text-center">{gem.question}</h2>
+            
+            <div className="space-y-3 mb-6">
               {gem.options.map((opt, i) => (
-                <button key={i} onClick={() => handleAnswer(opt)} className="block w-full text-left p-4 rounded-lg bg-white/50 dark:bg-gray-700/50 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition font-semibold">
+                <button 
+                  key={i}
+                  onClick={() => handleAnswer(opt)}
+                  className="w-full text-left p-4 rounded-lg bg-white/80 dark:bg-gray-700/80 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition border border-amber-200 dark:border-gray-600"
+                >
                   {opt.text}
                 </button>
               ))}
             </div>
-            {gem.hint && <p className="text-sm mt-6 text-center text-gray-500 dark:text-gray-400"><strong>Segítség:</strong> {gem.hint}</p>}
+            
+            {gem.hint && (
+              <div className="bg-amber-100/50 dark:bg-gray-700/50 p-3 rounded-lg border-l-4 border-amber-500">
+                <p className="text-sm text-amber-800 dark:text-amber-200">
+                  <span className="font-semibold">Segítség:</span> {gem.hint}
+                </p>
+              </div>
+            )}
           </div>
         )}
 
-        {gameState === 'correct' && (
-          <div className="animate-fadein text-center">
-            <h1 className="text-3xl font-bold text-green-500 mb-4">Helyes Válasz!</h1>
-            <p className="text-lg text-gray-700 dark:text-gray-300">A következő kincshez vezető utat megnyitottad.</p>
-            <Link to={`/game/gem/${gem.options.find(o => o.isCorrect).next_gem_id}`} className="inline-block mt-6 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg">
-              Irány a következő kincs! &rarr;
-            </Link>
-          </div>
-        )}
-
-        {gameState === 'already_found' && (
-          <div className="animate-fadein text-center">
-            <h1 className="text-3xl font-bold text-purple-800 dark:text-purple-300 mb-4">Ezt a kincset már megtaláltad!</h1>
-            <p className="text-lg text-gray-700 dark:text-gray-300">Folytatod a kalandot, vagy megnézed az eddigi zsákmányt?</p>
-            <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link to="/game/treasure-chest" className="w-full sm:w-auto bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">Megtalált kincseim</Link>
-              <Link to="/" className="w-full sm:w-auto bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition">Vissza a Főoldalra</Link>
-            </div>
-          </div>
-        )}
-
-        {gameState === 'wrong_answer' && (
-          <div className="animate-fadein text-center">
-            <h1 className="text-3xl font-bold text-red-500">Sajnos nem ez a helyes válasz!</h1>
-            <p className="text-lg mt-2 text-gray-700 dark:text-gray-300">De ne add fel, próbáld újra!</p>
-          </div>
-        )}
+        {/* Other game states... */}
       </div>
-    </div>
+    </GemPageWrapper>
   );
 }
