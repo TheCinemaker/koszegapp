@@ -32,6 +32,7 @@ import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 import GemDetail from './pages/GemDetail';
 import MyGems from './pages/MyGems';
+import GameIntro from './pages/GameIntro';
 
 // --- Globális Komponensek ---
 import FavoritesDashboard from './components/FavoritesDashboard';
@@ -62,7 +63,9 @@ export default function App() {
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
-  const isGemPage = location.pathname.startsWith('/gem/') || location.pathname === '/my-gems';
+  const isGemPage = location.pathname.startsWith('/gem/') || 
+                 location.pathname === '/my-gems' || 
+                 location.pathname === '/game/intro';
   {/*
   const [showProgramModal, setShowProgramModal] = useState(true);
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
@@ -170,6 +173,7 @@ export default function App() {
           <Route path="/adatvedelem" element={<Adatvedelem />} />
           <Route path="/gem/:id" element={<GemDetail />} />
           <Route path="/my-gems" element={<MyGems />} />
+          <Route path="/game/intro" element={<GameIntro />} />
         </Routes>
       </main>
       
