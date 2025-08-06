@@ -171,3 +171,23 @@ export default function App() {
     </div>
   );
 }
+
+{/*
+  const [showProgramModal, setShowProgramModal] = useState(true);
+  const [showOstromDrawer, setShowOstromDrawer] = useState(false);
+  const isHome = location.pathname === '/';
+
+      {isHome && showProgramModal && (
+        <ProgramModal
+          onClose={() => setShowProgramModal(false)}
+          openDrawer={() => {
+            setShowProgramModal(false);
+            setShowOstromDrawer(true);
+          }}
+        />
+      )}
+      {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
+      {isHome && !showProgramModal && !showOstromDrawer && (
+        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 ..." aria-label="Ostromprogramok megnyitása">📅</button>
+      )}
+      */}
