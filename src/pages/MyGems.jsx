@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// === ÚJ IMPORT A NAVIGÁCIÓHOZ ===
+import { Link, useNavigate } from 'react-router-dom'; 
 import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -8,6 +9,9 @@ export default function MyGems() {
   const { foundGems, resetGame } = useGame();
   const [allGems, setAllGems] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // === ÚJ: A useNavigate hook behívása ===
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchHiddenGems()
@@ -15,13 +19,15 @@ export default function MyGems() {
       .finally(() => setLoading(false));
   }, []);
 
+  // === JAVÍTOTT FÜGGVÉNY ===
   const handleReset = () => {
     if (window.confirm("Biztosan törölni szeretnéd az összes eddigi felfedezésedet? Ezzel a játékot újraindítod.")) {
       resetGame();
+      // Átirányítjuk a felhasználót a Főoldalra a játék törlése után
+      navigate('/'); 
     }
   };
 
-  // Kiszűrjük az összes kincs közül azokat, amiket a felhasználó már megtalált
   const discoveredGems = allGems.filter(gem => foundGems.includes(gem.id));
 
   if (loading) return <p className="text-center p-10">Gyűjtemény betöltése...</p>;
@@ -39,7 +45,6 @@ export default function MyGems() {
         <>
           <p className="mb-4">Gratulálok! Eddig {discoveredGems.length} kincset találtál meg a {allGems.length}-ből. Csak így tovább!</p>
           
-          {/* TÉRKÉP A MEGTALÁLT KINCSEKKEL */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-3">Kincseid a térképen</h2>
             <div className="h-80 w-full rounded-lg overflow-hidden shadow-md">
@@ -54,10 +59,9 @@ export default function MyGems() {
             </div>
           </div>
 
-          {/* LISTA A MEGTALÁLT KINCSEKRŐL */}
           <div className="space-y-4">
             {discoveredGems.map(gem => (
-              <Link to={`/gem/${gem.id}`} key={gem.id} className="flex items-center gap-4 bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow hover:shadow-lg transition">
+              <Link to={`/game/gem/${gem.id}`} key={gem.id} className="flex items-center gap-4 bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow hover:shadow-lg transition">
                 <img src={`/images/${gem.image}`} alt={gem.name} className="w-24 h-24 object-cover rounded-md flex-shrink-0" />
                 <div>
                   <h3 className="font-bold text-lg text-purple-900 dark:text-purple-200">{gem.name}</h3>
@@ -67,7 +71,6 @@ export default function MyGems() {
             ))}
           </div>
 
-          {/* JÁTÉK ÚJRAINDÍTÁSA GOMB */}
           <div className="text-center mt-8 pt-6 border-t border-purple-200 dark:border-gray-700">
             <button onClick={handleReset} className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">
               Játék újraindítása (Felfedezések törlése)
