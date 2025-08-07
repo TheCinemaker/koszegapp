@@ -49,7 +49,7 @@ export default function MyGems() {
   const renderGemCard = (gem, isFound) => {
     const backgroundUrl = isFound
       ? "/images/game/located.jpeg"
-      : "/images/game/notlocated.jpeg";
+      : "/images/game/notlocated.webp";
 
     return (
       <div
