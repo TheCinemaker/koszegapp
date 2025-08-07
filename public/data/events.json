@@ -659,5 +659,41 @@
       "séta"
     ],
     "image": "zsinagoganapok.jpg"
+  },
+  {
+    "id": "event-72",
+    "name": "Történelmi séta a Jurisics Bandériummal",
+    "date": "2025-08-09",
+    "time": "10:00-13:00",
+    "location": "Fő tér - turinform iroda",
+    "coords": {
+      "lat": 47.388058151183024, 
+      "lng": 16.542272541548005 
+    },
+    "description": "📖 Interaktív séta történelmi hangulatban",
+    "tags": [
+      "Séta",
+      "Interaktiv",
+      "Bandérium"
+    ],
+    "image": "banderium.jpg"
+  },
+  {
+    "id": "event-73",
+    "name": "Találkozó és könyvbemutató – Kiss János: Fennen hirdetvén az emberek jóságát",
+    "date": "2025-08-09",
+    "time": "10:00-13:00",
+    "location": "Hotel Írottkő aula",
+    "coords": {
+      "lat": 47.38817742534213, 
+      "lng": 16.542599969864415  
+    },
+    "description": "Vedd meg a MÁV diákotthon történetét bemutató könyvet Kiss János dedikálásával!",
+    "tags": [
+      "Bemutató",
+      "Könyv",
+      "Dedikálás"
+    ],
+    "image": "konyv.jpg"
   }
 ]
