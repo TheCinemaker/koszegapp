@@ -198,32 +198,32 @@ export default function GemDetail() {
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black/90 flex items-center justify-center p-4"
-      style={{
-        backgroundImage: "radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('/images/game/terkep.webp')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
+    <>
       <div
-        className="max-w-md w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
+        className="fixed inset-0 bg-black/90 flex items-center justify-center p-4"
         style={{
-          backgroundImage: "url('/images/game/pergamen.jpeg')",
+          backgroundImage: "radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('/images/game/terkep.webp')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-16 pb-16">
-          {renderContent()}
+        <div
+          className="max-w-md w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
+          style={{
+            backgroundImage: "url('/images/game/pergamen.jpeg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-16 pb-16">
+            {/* A renderContent függvény gondoskodik a helyes tartalomról */}
+            {renderContent()}
+          </div>
         </div>
-        
-        <div className="pointer-events-none absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#fdf5e6] via-[#fdf5e6aa] to-transparent z-20" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#fdf5e6] via-[#fdf5e6aa] to-transparent z-20" />
       </div>
-
+      
       {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
-    </div>
+    </>
   );
 }
