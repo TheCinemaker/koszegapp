@@ -32,16 +32,15 @@ return (
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Scrollozható tartalom, maszkolással */}
       <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
         <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
 
           <h1 className="text-4xl sm:text-5xl font-bold">
-            Megidézted a térképet...
+            Megtaláltad a város kincsesládájának egyik darabját!
           </h1>
 
           <p>
-            Egy ősi erő válaszolt a hívásodra. A kezedben tartott <strong>titkos térkép</strong> nem csupán papír – hanem egy kulcs, ami Kőszeg rejtett múltját és elveszett kincseit fedi fel előtted.
+            A kezedben tartott <strong>titkos nagyító</strong> nem csupán eszköz – hanem egy kulcs, ami Kőszeg rejtett múltját és nem ismert kincseit fedi fel előtted.
           </p>
 
           <ul className="text-left space-y-4 list-none">
@@ -51,7 +50,7 @@ return (
           </ul>
 
           <p className="text-3xl sm:text-4xl font-bold">
-            ⚠️ A játék elindult. Nincs visszaút. Most már játszanod kell.
+            ⚠️ A játék elindult. Nincs visszaút! Most már játszanod kell.
           </p>
 
           <p className="text-2xl sm:text-3xl font-bold">
