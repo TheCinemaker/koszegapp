@@ -17,7 +17,7 @@ const GemPageWrapper = ({ children }) => (
 
 const ScanButton = ({ onClick }) => (
   <button onClick={onClick} className="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg text-center">
-    📷 Találj egy új kincset!
+    📷 Keress egy új kincset!
   </button>
 );
 
@@ -123,7 +123,7 @@ export default function GemDetail() {
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{gem.description}</p>
               </div>
               <button onClick={() => setGameState('question')} className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg">
-                Készen állsz a kihívásra?
+                Mehetünk tovább??
               </button>
             </div>
           )}
