@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import L from 'leaflet'; // A Leaflet importja kell a globális beállításokhoz
+
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerIcon2x,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
 
 export default function DiscoveredGemCard({ gem }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  // Leaflet térképhez szükséges, hogy ne omoljon össze a CSS transzformáció miatt
-  if (typeof window !== 'undefined') {
-    delete L.Icon.Default.prototype._getIconUrl;
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-      iconUrl: require('leaflet/dist/images/marker-icon.png'),
-      shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-    });
-  }
-
   return (
-    // A külső konténer kapja a 'flip-card' és a feltételes 'flipped' osztályt
     <div 
       className={`flip-card w-full aspect-square ${isFlipped ? 'flipped' : ''}`}
-      onClick={() => setIsFlipped(!isFlipped)} // Bárhova kattintva megfordul
+      onClick={() => setIsFlipped(!isFlipped)}
     >
       <div className="flip-card-inner">
         {/* === ELŐLAP: A KINCS ADATAI === */}
@@ -41,15 +42,17 @@ export default function DiscoveredGemCard({ gem }) {
 
         {/* === HÁTLAP: A TÉRKÉP === */}
         <div className="flip-card-back bg-gray-700 rounded-2xl shadow-lg border-2 border-amber-800/30 overflow-hidden">
-          <MapContainer 
-            center={[gem.coords.lat, gem.coords.lng]} 
-            zoom={16} 
-            scrollWheelZoom={false} 
-            style={{ height: "100%", width: "100%" }}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[gem.coords.lat, gem.coords.lng]} />
-          </MapContainer>
+          {isFlipped && (
+            <MapContainer 
+              center={[gem.coords.lat, gem.coords.lng]} 
+              zoom={16} 
+              scrollWheelZoom={false} 
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={[gem.coords.lat, gem.coords.lng]} />
+            </MapContainer>
+          )}
         </div>
       </div>
     </div>
