@@ -108,6 +108,31 @@ export default function GemDetail() {
         </div>
       );
     }
+    if (gameState === 'read_only') {
+      return (
+        <div className="animate-scale-in">
+          <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
+            <h1 className="text-4xl sm:text-5xl font-bold">
+              A(z) {gem.name} Története
+            </h1>
+            <img
+              src={`/images/${gem.image}`}
+              alt={gem.name}
+              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md"
+            />
+            <div>
+              <p className="whitespace-pre-line">{gem.description}</p>
+            </div>
+            <Link 
+              to="/game/treasure-chest" 
+              className="inline-block mt-6 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all shadow-lg"
+            >
+              Vissza a gyűjteményhez
+            </Link>
+          </div>
+        </div>
+      );
+    }
 
     if (gameState === 'intro') {
       return (
