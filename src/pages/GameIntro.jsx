@@ -23,53 +23,39 @@ export default function GameIntro() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="max-w-md w-full bg-amber-50/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-[0_0_60px_rgba(255,215,0,0.2)] border-2 border-amber-700/40 animate-fadein-slow">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-amber-800 dark:text-amber-300 font-serif mb-4">
-            Megidézted a térképet...
-          </h1>
-          <div className="w-24 h-1 bg-amber-600 mx-auto rounded-full"></div>
-        </div>
+      <div
+        className="max-w-md w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow"
+        style={{
+          backgroundImage: "url('/images/game/pergamen.jpeg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className="p-6 sm:p-8 pt-24 pb-24 text-center font-zeyada text-amber-900 text-lg leading-relaxed">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">Megidézted a térképet...</h1>
 
-        <div className="space-y-6 mb-8 text-amber-900 dark:text-amber-100 text-lg leading-relaxed">
-          <p>
-            Egy ősi erő válaszolt a hívásodra. A kezedben tartott <span className="font-semibold text-amber-700 dark:text-yellow-400">titkos térkép</span> nem csupán papír – hanem egy <em>kulcs</em>, ami Kőszeg rejtett múltját és elveszett kincseit fedi fel előtted.
+          <p className="mb-6">
+            Egy ősi erő válaszolt a hívásodra. A kezedben tartott <strong>titkos térkép</strong> nem csupán papír – hanem egy kulcs, ami Kőszeg rejtett múltját és elveszett kincseit fedi fel előtted.
           </p>
 
-          <ul className="space-y-3 text-base text-amber-800 dark:text-amber-200">
-            <li className="flex items-start">
-              <span className="mr-2">📍</span>
-              <span>
-                Járd be a várost, és keresd a QR kódokat elrejtve szobrokon, műemlékeken, falakon...
-              </span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">🧠</span>
-              <span>
-                Oldd meg a rejtvényeket, amiket a kódok őriznek – minden válasz egy újabb titkot nyit meg.
-              </span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">💎</span>
-              <span>
-                Gyűjtsd össze az összes kincset – de csak a legkitartóbbak láthatják mindet!
-              </span>
-            </li>
+          <ul className="text-left space-y-3 pl-4 pr-2">
+            <li>📍 Keresd a QR kódokat a város eldugott pontjain</li>
+            <li>🧠 Oldd meg a rejtvényeket, hogy továbbjuthass</li>
+            <li>💎 Csak a legkitartóbbak találják meg az összes kincset</li>
           </ul>
 
-          <div className="bg-amber-100/50 dark:bg-amber-800/30 p-4 rounded-lg border-l-4 border-amber-500">
-            <p className="font-semibold text-amber-800 dark:text-amber-200">
-              ⚠️ A játék elindult. Nincs visszaút. Most már <span className="underline">játszanod kell</span>.
-            </p>
+          <div className="mt-6 bg-amber-100/70 p-4 rounded-md border-l-4 border-amber-500 shadow-md">
+            ⚠️ A játék elindult. Nincs visszaút. Most már játszanod kell.
           </div>
-        </div>
 
-        <button
-          onClick={handleStartGame}
-          className="w-full bg-gradient-to-r from-amber-700 to-amber-800 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-800 hover:to-amber-900 transition shadow-lg text-lg"
-        >
-          🗺️ INDÍTSD EL A KALANDOT!
-        </button>
+          <button
+            onClick={handleStartGame}
+            className="mt-6 w-full bg-gradient-to-r from-amber-700 to-amber-800 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-800 hover:to-amber-900 transition shadow-lg text-lg"
+          >
+            🗺️ INDÍTSD EL A KALANDOT!
+          </button>
+        </div>
       </div>
     </div>
   );
