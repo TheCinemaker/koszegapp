@@ -56,7 +56,7 @@ export default function GemDetail() {
     }
   };
 
-  const renderContent = () => {
+    const renderContent = () => {
     if (gameState === 'loading') {
       return (
         <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
@@ -128,22 +128,22 @@ export default function GemDetail() {
 
     if (gameState === 'question') {
       return (
-        <div className="animate-fadein">
-          <h2 className="text-2xl font-bold text-amber-800 dark:text-amber-300 mb-6 text-center">{gem.question}</h2>
-          <div className="space-y-3 mb-6">
+        <div className="animate-fadein font-zeyada text-amber-900 text-2xl leading-relaxed text-center space-y-6">
+          <h2 className="text-3xl sm:text-4xl font-bold">{gem.question}</h2>
+          <div className="space-y-4">
             {gem.options.map((opt, i) => (
               <button 
                 key={i} 
                 onClick={() => handleAnswer(opt)} 
-                className="w-full text-left p-4 rounded-lg bg-white/80 dark:bg-gray-700/80 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition border border-amber-200 dark:border-gray-600"
+                className="w-full text-center p-4 rounded-lg bg-amber-100/50 hover:bg-amber-100 transition border-2 border-amber-700/30 text-2xl font-semibold"
               >
                 {opt.text}
               </button>
             ))}
           </div>
           {gem.hint && (
-            <div className="bg-amber-100/50 dark:bg-gray-700/50 p-3 rounded-lg border-l-4 border-amber-500">
-              <p className="text-sm text-amber-800 dark:text-amber-200">
+            <div className="bg-amber-100/50 p-3 rounded-lg border-l-4 border-amber-500 text-left">
+              <p className="text-xl">
                 <span className="font-semibold">Segítség:</span> {gem.hint}
               </p>
             </div>
@@ -154,9 +154,9 @@ export default function GemDetail() {
 
     if (gameState === 'correct') {
       return (
-        <div className="animate-fadein text-center">
-          <h1 className="text-4xl font-bold text-green-600 mb-4">Helyes Válasz!</h1>
-          <p className="text-lg text-gray-700 dark:text-gray-300">A következő kincshez vezető utat megnyitottad.</p>
+        <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
+          <h1 className="text-4xl font-bold text-green-600">Helyes Válasz!</h1>
+          <p className="text-3xl">A következő kincshez vezető utat megnyitottad.</p>
           <Link 
             to={`/game/gem/${gem.options.find(o => o.isCorrect).next_gem_id}`} 
             className="inline-block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg"
@@ -169,13 +169,13 @@ export default function GemDetail() {
 
     if (gameState === 'already_found') {
       return (
-        <div className="animate-fadein text-center">
-          <h1 className="text-3xl font-bold text-amber-800 dark:text-amber-300 mb-4">Ezt a kincset már megtaláltad!</h1>
-          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">Folytatod a kalandot, vagy megnézed az eddigi zsákmányt?</p>
+        <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
+          <h1 className="text-4xl font-bold">Ezt a kincset már megtaláltad!</h1>
+          <p className="text-3xl">Folytatod a kalandot, vagy megnézed az eddigi zsákmányt?</p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Link 
               to="/game/treasure-chest" 
-              className="w-full sm:w-auto bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition"
+              className="w-full sm:w-auto bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition"
             >
               Megtalált kincseim
             </Link>
@@ -187,9 +187,9 @@ export default function GemDetail() {
 
     if (gameState === 'wrong_answer') {
       return (
-        <div className="animate-fadein text-center">
-          <h1 className="text-3xl font-bold text-red-500 mb-4">Sajnos nem ez a helyes válasz!</h1>
-          <p className="text-lg mt-2 text-gray-700 dark:text-gray-300">De ne add fel, próbáld újra!</p>
+        <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
+          <h1 className="text-4xl font-bold text-red-600">Sajnos nem ez a helyes válasz!</h1>
+          <p className="text-3xl">De ne add fel, próbáld újra!</p>
         </div>
       );
     }
@@ -215,12 +215,12 @@ export default function GemDetail() {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
+        <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-16 pb-16">
           {renderContent()}
         </div>
-        {/* Fade maszkolás */}
-        <div className="pointer-events-none absolute top-0 left-0 w-full h-28 bg-gradient-to-b from-transparent via-[#fdf5e6aa] to-[#fdf5e6] z-20" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-transparent via-[#fdf5e6aa] to-[#fdf5e6] z-20" />
+        
+        <div className="pointer-events-none absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#fdf5e6] via-[#fdf5e6aa] to-transparent z-20" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#fdf5e6] via-[#fdf5e6aa] to-transparent z-20" />
       </div>
 
       {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
