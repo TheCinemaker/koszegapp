@@ -50,12 +50,17 @@ export default function GameIntro() {
         ⚠️ A játék elindult. Nincs visszaút. Most már játszanod kell.
       </p>
 
-      <button
-        onClick={handleStartGame}
-        className="mt-6 w-full bg-gradient-to-r from-amber-700 to-amber-800 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-800 hover:to-amber-900 transition shadow-lg text-lg"
-      >
-        🗺️ INDÍTSD EL A KALANDOT!
-      </button>
+      <p className="mt-8 text-xl sm:text-2xl font-semibold">
+        A kezdéshez kattints a pecsétre!
+      </p>
+        <div className="mt-4 flex justify-center">
+          <img
+              src="/images/game/waxseal.jpeg"
+              alt="Pecsét – kezdés"
+              onClick={handleStartGame}
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover cursor-pointer shadow-lg hover:scale-105 transition-transform duration-300 animate-float"
+          />
+      </div>
 
     </div>
   </div>
