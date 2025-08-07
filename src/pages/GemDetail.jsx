@@ -101,7 +101,7 @@ export default function GemDetail() {
         <div className="animate-scale-in">
           <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
             <h1 className="text-4xl sm:text-5xl font-bold">
-              🎉 Felfedeztél egy kincset! 🎉
+              Felfedeztél egy újabb kincset!
             </h1>
             <img
               src={`/images/${gem.image}`}
@@ -211,7 +211,7 @@ export default function GemDetail() {
           className="max-w-md w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
           style={{
             backgroundImage: "url('/images/game/pergamen.jpeg')",
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
           }}
