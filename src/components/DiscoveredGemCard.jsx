@@ -4,40 +4,26 @@ import { FaChevronDown } from 'react-icons/fa';
 export default function DiscoveredGemCard({ gem }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const backgroundUrl = "/images/game/located.jpeg";
-
   return (
-    <div
-      className="bg-white/50 dark:bg-gray-700/50 rounded-lg shadow hover:shadow-lg transition-all duration-300 cursor-pointer"
+    <div 
+      className="bg-cover bg-center rounded-2xl shadow-lg border-2 border-amber-800/30 cursor-pointer transition-all duration-300 hover:shadow-xl"
+      style={{ backgroundImage: "url('/images/game/located.jpeg')" }}
       onClick={() => setIsOpen(!isOpen)}
     >
-      {/* --- A KÁRTYA ÖSSZECSUKOTT ÁLLAPOTA --- */}
-      <div className="flex items-center gap-4 p-3">
-        <img 
-          src={`/images/${gem.image}`} 
-          alt={gem.name} 
-          className="w-20 h-20 object-cover rounded-md flex-shrink-0" 
-        />
-        <div className="flex-grow">
-          <h3 className="font-bold text-lg text-purple-900 dark:text-purple-200">{gem.name}</h3>
-          <p className={`text-sm text-gray-600 dark:text-gray-400 transition-all duration-300 ${isOpen ? '' : 'line-clamp-2'}`}>
-            {gem.description}
-          </p>
+      <div className="flex flex-col h-full bg-black/10 backdrop-blur-sm p-4 rounded-2xl">
+        <div className="flex-grow text-center font-zeyada text-amber-900">
+          <h3 className="text-2xl font-bold line-clamp-2">{gem.name}</h3>
+          <img src={`/images/${gem.image}`} alt={gem.name} className="w-full h-24 object-cover rounded-md my-2 shadow-inner" />
         </div>
-        <FaChevronDown className={`text-2xl text-purple-500 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <FaChevronDown className={`mx-auto text-xl text-amber-800/70 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </div>
       
-      {/* --- A LENYÍLÓ, EXTRA TARTALOM --- */}
-      <div 
-        className={`transition-all duration-300 ease-in-out grid ${isOpen ? 'grid-rows-[1fr] opacity-100 pt-3 mt-3 border-t' : 'grid-rows-[0fr] opacity-0'}`}
-        style={{ borderColor: 'rgba(177, 145, 230, 0.3)' }}
-      >
-        <div className="overflow-hidden px-3 pb-3">
-          <div className="space-y-2 text-sm text-gray-800 dark:text-gray-200">
-            <p><strong>Rejtvény:</strong> {gem.question}</p>
-            <p className="text-green-700 dark:text-green-400 font-semibold">
-              <strong>Helyes válasz:</strong> {gem.options.find(o => o.isCorrect).text}
-            </p>
+      {/* Lenyíló rész */}
+      <div className={`transition-all duration-300 ease-in-out grid ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+        <div className="overflow-hidden">
+          <div className="p-4 pt-2 text-center font-zeyada text-amber-900 text-xl space-y-2">
+            <p className="border-t border-amber-800/20 pt-2">{gem.description}</p>
+            <p className="text-green-800 font-semibold text-lg"><strong>Helyes válasz:</strong> {gem.options.find(o => o.isCorrect).text}</p>
           </div>
         </div>
       </div>
