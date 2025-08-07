@@ -97,3 +97,25 @@
 .animate-heart-pop {
   animation: heart-pop 0.3s ease-in-out;
 }
+
+.scroll-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6.25%,
+    black 93.75%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6.25%,
+    black 93.75%,
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
