@@ -72,48 +72,55 @@ return (
     <GemPageWrapper>
       <div className="max-w-2xl w-full bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl overflow-hidden p-6">
         {gameState === 'intro' && (
-          <div className="animate-scale-in">
-            <div
-              className="relative max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 overflow-hidden"
-              style={{
-                backgroundImage: "url('/images/game/pergamen.jpeg')",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            >
-              <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-20 pb-20">
-                <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-10 font-bold">
-                  <h1 className="text-4xl sm:text-5xl font-bold">
-                    🎉 Felfedeztél egy kincset! 🎉
-                  </h1>
-                  <img
-                    src={`/images/${gem.image}`}
-                    alt={gem.name}
-                    className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md"
-                  />
-                  <div>
-                    <h2 className="text-3xl sm:text-4xl mb-4">{gem.name}</h2>
-                    <p className="whitespace-pre-line">{gem.description}</p>
-                  </div>
-                  <p className="text-3xl sm:text-4xl font-bold">
-                    Készen állsz a következő kihívásra?
-                  </p>
-                  <button
-                    onClick={() => setGameState('question')}
-                    className="mt-6 w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg text-lg"
-                  >
-                    Induljon a kihívás! 💎
-                  </button>
-                </div>
-              </div>
-              {/* Fade maszkolás - felül */}
-              <div className="pointer-events-none absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#fdf5e6] to-transparent z-20" />
-              {/* Fade maszkolás - alul */}
-              <div className="pointer-events-none absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#fdf5e6] to-transparent z-20" />
-            </div>
+  <div className="animate-scale-in">
+    <div
+      className="relative max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 overflow-hidden"
+      style={{
+        backgroundImage: "url('/images/game/pergamen.jpeg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Scrollozható tartalom maszkolva */}
+      <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
+        <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-10 font-bold">
+
+          <h1 className="text-4xl sm:text-5xl font-bold">
+            Felfedeztél egy kincset!
+          </h1>
+
+          <img
+            src={`/images/${gem.image}`}
+            alt={gem.name}
+            className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md"
+          />
+
+          <div>
+            <h2 className="text-3xl sm:text-4xl mb-4">{gem.name}</h2>
+            <p className="whitespace-pre-line">{gem.description}</p>
           </div>
-        )}
+
+          <p className="text-3xl sm:text-4xl font-bold">
+            Készen állsz a következő kihívásra?
+          </p>
+
+          <button
+            onClick={() => setGameState('question')}
+            className="mt-6 w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg text-lg"
+          >
+            Induljon a kihívás! 💎
+          </button>
+        </div>
+      </div>
+
+      {/* Fade maszkolás - felül */}
+      <div className="pointer-events-none absolute top-0 left-0 w-full h-28 bg-gradient-to-b from-transparent via-[#fdf5e6aa] to-[#fdf5e6] z-20" />
+      {/* Fade maszkolás - alul */}
+      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-transparent via-[#fdf5e6aa] to-[#fdf5e6] z-20" />
+    </div>
+  </div>
+)}
 
         {gameState === 'question' && (
           <div className="animate-fadein">
