@@ -20,13 +20,18 @@ export default function GemDetail() {
   const [gameState, setGameState] = useState('loading');
   const [error, setError] = useState(null);
   const [showScanHelp, setShowScanHelp] = useState(false);
+
+  // === ITT A FONTOS VÁLTOZÓ ===
+  // Ellenőrizzük, hogy a "Trófeaszobából" jöttünk-e
+  const cameFromMyGems = location.state?.fromMyGems === true;
   
   useEffect(() => {
+    // Az intró átirányítás változatlan
     if (!hasPlayedBefore()) {
       navigate('/game/intro', { state: { redirectTo: location.pathname }, replace: true });
       return;
     }
-
+    
     let isMounted = true;
     setGameState('loading');
     
@@ -38,13 +43,22 @@ export default function GemDetail() {
           setError('Ez a kincs nem található az adatbázisban.');
         } else {
           setGem(found);
-          setGameState(isGemFound(id) ? 'already_found' : 'intro');
+          // === ITT A JAVÍTOTT LOGIKA ===
+          if (cameFromMyGems) {
+            // Ha a gyűjteményből jöttünk, mindig a "csak olvasó" nézetet mutatjuk
+            setGameState('read_only');
+          } else if (isGemFound(id)) {
+            setGameState('already_found');
+          } else {
+            setGameState('intro');
+          }
         }
       })
       .catch(err => isMounted && setError(err.message));
       
     return () => { isMounted = false; };
-  }, [id, isGemFound, hasPlayedBefore, navigate, location]);
+      
+  }, [id, isGemFound, hasPlayedBefore, navigate, location, cameFromMyGems]);
 
   const handleAnswer = (option) => {
     if (option.isCorrect) {
@@ -55,7 +69,6 @@ export default function GemDetail() {
       setTimeout(() => setGameState('question'), 1500);
     }
   };
-
     const renderContent = () => {
     if (gameState === 'loading') {
       return (
