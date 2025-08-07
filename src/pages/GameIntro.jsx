@@ -24,16 +24,16 @@ return (
     }}
   >
     <div
-      className="max-w-md w-full max-h-[90vh] rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
-      style={{
-        backgroundImage: "url('/images/game/pergamen.jpeg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
+      className="max-w-md w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
+        style={{
+      backgroundImage: "url('/images/game/pergamen.jpeg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}
+  >
       {/* Scrollozható tartalom, maszkolva */}
-      <div className="scroll-mask overflow-y-auto h-full relative z-10 px-6 sm:px-8 pt-24 pb-24">
+      <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-6 sm:px-8 pt-24 pb-24">
         <div className="font-zeyada text-amber-900 text-xl sm:text-2xl leading-relaxed text-center space-y-6">
 
           <h1 className="text-4xl sm:text-5xl font-bold">Megidézted a térképet...</h1>
