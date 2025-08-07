@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // 1. Add this line:
   darkMode: 'class',
 
   content: [
@@ -23,7 +22,7 @@ module.exports = {
           800: "#52a5dd",
           900: "#52a5dd"
         },
-         indigo: {
+        indigo: {
           500: "#52a5dd",
           600: "#2788C9",
           700: "#5ebdfe",
@@ -35,7 +34,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"]
+        sans: ["Inter", "sans-serif"],
+        zeyada: ['Zeyada', 'cursive'] 
       }
     }
   },
