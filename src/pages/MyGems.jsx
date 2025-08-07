@@ -56,7 +56,7 @@ export default function MyGems() {
     );
   }
 
-  return (
+    return (
     <>
       <div 
         className="-m-4 -mb-6 min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
@@ -77,21 +77,21 @@ export default function MyGems() {
               </p>
               
               <div className="mb-8">
-                {/* ... Térkép (ez csak a megtaláltakat mutatja, ez jó) ... */}
-                <MapContainer ...>
-                  {/* ... */}
-                  {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
-                    <Marker key={gem.id} ...>
-                      <Popup>{gem.name}</Popup>
-                    </Marker>
-                  ))}
-                </MapContainer>
+                <h2 className="text-xl font-semibold mb-3 text-amber-800 dark:text-amber-300">Kincseid a térképen</h2>
+                <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
+                  <MapContainer center={[47.389, 16.542]} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
+                    {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
+                      <Marker key={gem.id} position={[gem.coords.lat, gem.coords.lng]}>
+                        <Popup>{gem.name}</Popup>
+                      </Marker>
+                    ))}
+                  </MapContainer>
+                </div>
               </div>
 
-              {/* === ITT A JAVÍTÁS: A "TRÓFEA FAL" RÁCS === */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {allGems.map(gem => 
-                  // Itt döntjük el, hogy a "kinyitott" vagy a "zárolt" kártyát mutatjuk
                   foundGems.includes(gem.id) ? (
                     <DiscoveredGemCard key={gem.id} gem={gem} />
                   ) : (
