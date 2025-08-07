@@ -127,22 +127,6 @@ return (
 
             {allGems.length > 0 && (
               <>
-                <div>
-                  <h2 className="text-3xl sm:text-4xl mb-4 font-bold">Kincseid a térképen</h2>
-                  <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
-                    <MapContainer center={[47.389, 16.542]} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-                      <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        attribution='&copy; OpenStreetMap'
-                      />
-                      {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
-                        <Marker key={gem.id} position={[gem.coords.lat, gem.coords.lng]}>
-                          <Popup>{gem.name}</Popup>
-                        </Marker>
-                      ))}
-                    </MapContainer>
-                  </div>
-                </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
                   {allGems.map(gem => renderGemCard(gem, foundGems.includes(gem.id)))}
@@ -159,7 +143,22 @@ return (
                 </div>
               </>
             )}
-
+            <div>
+                  <h2 className="text-3xl sm:text-4xl mb-4 font-bold">Kincseid a térképen</h2>
+                  <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
+                    <MapContainer center={[47.389, 16.542]} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+                      <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; OpenStreetMap'
+                      />
+                      {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
+                        <Marker key={gem.id} position={[gem.coords.lat, gem.coords.lng]}>
+                          <Popup>{gem.name}</Popup>
+                        </Marker>
+                      ))}
+                    </MapContainer>
+                  </div>
+                </div>
             {allGems.length === 0 && (
               <>
                 <p className="text-lg text-amber-900">Még nem találtál egyetlen rejtett kincset sem.</p>
