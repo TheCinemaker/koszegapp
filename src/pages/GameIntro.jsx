@@ -23,7 +23,6 @@ return (
       backgroundPosition: 'center',
     }}
   >
-    {/* KÖZÉPEN a kártya */}
     <div
       className="max-w-md w-full max-h-[90vh] rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
       style={{
@@ -33,10 +32,8 @@ return (
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Scrollozható belső tartalom */}
-      <div
-        className="overflow-y-auto h-full relative z-10 px-6 sm:px-8 pt-24 pb-24"
-      >
+      {/* Scrollozható tartalom, maszkolva */}
+      <div className="scroll-mask overflow-y-auto h-full relative z-10 px-6 sm:px-8 pt-24 pb-24">
         <div className="font-zeyada text-amber-900 text-xl sm:text-2xl leading-relaxed text-center space-y-6">
 
           <h1 className="text-4xl sm:text-5xl font-bold">Megidézted a térképet...</h1>
@@ -69,12 +66,7 @@ return (
           </div>
         </div>
       </div>
-
-      {/* Fade maszkolás */}
-      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-amber-50/95 to-transparent pointer-events-none z-20" />
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-amber-50/95 to-transparent pointer-events-none z-20" />
     </div>
   </div>
 );
-
 }
