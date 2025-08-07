@@ -1,3 +1,69 @@
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetchHiddenGems } from '../api';
+import { useGame } from '../hooks/useGame';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import DiscoveredGemCard from '../components/DiscoveredGemCard'; 
+import LockedGemCard from '../components/LockedGemCard'; 
+import ScanHelpModal from '../components/ScanHelpModal'; 
+
+// Leaflet ikon javítás a megbízható működésért
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerIcon2x,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
+
+// A ScanButton komponens definíciója
+const ScanButton = ({ onClick }) => (
+  <button 
+    onClick={onClick} 
+    className="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg text-center"
+  >
+    📷 Találj egy új kincset!
+  </button>
+);
+
+export default function MyGems() {
+  // --- Hooks ---
+  const { foundGems, resetGame } = useGame();
+  const navigate = useNavigate();
+
+  // --- Állapotok (States) ---
+  const [allGems, setAllGems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showScanHelp, setShowScanHelp] = useState(false);
+
+  // --- Adatbetöltés ---
+  useEffect(() => {
+    setLoading(true);
+    fetchHiddenGems()
+      .then(data => setAllGems(data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  // --- Eseménykezelők ---
+  const handleReset = () => {
+    if (window.confirm("Biztosan törölni szeretnéd az összes eddigi felfedezésedet? Ezzel a játékot újraindítod.")) {
+      resetGame();
+      navigate('/');
+    }
+  };
+
+  // --- Betöltési és Hiba Állapotok Kezelése ---
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-gray-900/90 flex items-center justify-center p-4">
+        <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 return (
     <>
       <div 
