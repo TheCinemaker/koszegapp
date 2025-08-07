@@ -6,8 +6,8 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import DiscoveredGemCard from '../components/DiscoveredGemCard'; 
 import ScanHelpModal from '../components/ScanHelpModal'; 
+import LockedGemCard from '../components/LockedGemCard';
 
-// Leaflet ikon javítás
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -70,30 +70,34 @@ export default function MyGems() {
             </Link>
           </div>
 
-          {discoveredGems.length > 0 ? (
+          {allGems.length > 0 ? (
             <>
               <p className="mb-6 text-amber-900 dark:text-amber-200 text-center font-semibold">
-                Gratulálok! Eddig {discoveredGems.length} kincset találtál meg a(z) {allGems.length}-ből.
+                Gratulálok! Eddig {foundGems.length} kincset találtál meg a(z) {allGems.length}-ből.
               </p>
               
               <div className="mb-8">
-                <h2 className="text-xl font-semibold mb-3 text-amber-800 dark:text-amber-300">Kincseid a térképen</h2>
-                <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
-                  <MapContainer center={[47.389, 16.542]} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
-                    {discoveredGems.map(gem => (
-                      <Marker key={gem.id} position={[gem.coords.lat, gem.coords.lng]}>
-                        <Popup>{gem.name}</Popup>
-                      </Marker>
-                    ))}
-                  </MapContainer>
-                </div>
+                {/* ... Térkép (ez csak a megtaláltakat mutatja, ez jó) ... */}
+                <MapContainer ...>
+                  {/* ... */}
+                  {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
+                    <Marker key={gem.id} ...>
+                      <Popup>{gem.name}</Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
               </div>
 
-              <div className="space-y-4">
-                {discoveredGems.map(gem => (
-                  <DiscoveredGemCard key={gem.id} gem={gem} />
-                ))}
+              {/* === ITT A JAVÍTÁS: A "TRÓFEA FAL" RÁCS === */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {allGems.map(gem => 
+                  // Itt döntjük el, hogy a "kinyitott" vagy a "zárolt" kártyát mutatjuk
+                  foundGems.includes(gem.id) ? (
+                    <DiscoveredGemCard key={gem.id} gem={gem} />
+                  ) : (
+                    <LockedGemCard key={gem.id} />
+                  )
+                )}
               </div>
 
               <div className="mt-8 pt-6 border-t border-amber-200/50 dark:border-gray-700 flex flex-col sm:flex-row justify-center items-center gap-4">
