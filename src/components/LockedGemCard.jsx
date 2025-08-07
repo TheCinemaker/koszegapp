@@ -6,7 +6,7 @@ export default function LockedGemCard() {
     <div
       className="relative w-full aspect-square bg-cover bg-center rounded-2xl shadow-lg border-2 border-amber-800/30 overflow-hidden flex items-center justify-center"
       style={{
-        backgroundImage: "url('/images/game/notlocated.jpeg')",
+        backgroundImage: "url('/images/game/notlocated.webp')",
       }}
     >
       <div className="absolute inset-0 bg-black/10 backdrop-blur-sm rounded-2xl"></div>
