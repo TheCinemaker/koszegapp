@@ -71,4 +71,5 @@ export default function GameIntro() {
   {/* Alul fade maszkolás */}
   <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-amber-50/95 to-transparent pointer-events-none z-20" />
 </div>
+  );
 }
