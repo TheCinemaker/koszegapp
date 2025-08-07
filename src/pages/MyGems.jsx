@@ -97,13 +97,16 @@ export default function MyGems() {
 return (
   <>
     <div
-      className="-m-4 -mb-6 min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
+      className="fixed inset-0 bg-black/90 flex items-center justify-center p-4"
       style={{
-        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/game/terkep.webp')",
+        backgroundImage:
+          "radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('/images/game/terkep.webp')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
       <div
-        className="max-w-6xl w-full backdrop-blur-sm rounded-2xl shadow-2xl p-4 md:p-6 max-h-[90vh] overflow-y-auto border-2 border-amber-800/30"
+        className="max-w-6xl w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
         style={{
           backgroundImage: "url('/images/game/pergamen.jpeg')",
           backgroundSize: 'contain',
@@ -111,54 +114,74 @@ return (
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="flex justify-between items-center mb-6 flex-wrap gap-2">
-          <h1 className="text-3xl font-bold text-amber-800 dark:text-amber-300">Felfedezett Kincseid</h1>
-          <Link to="/" className="text-sm bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
-            Kilépés a játékból
-          </Link>
-          </div>
+        <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
+          <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-10 font-bold">
 
-          {allGems.length > 0 ? (
-            <>
-              <p className="mb-6 text-amber-900 dark:text-amber-200 text-center font-semibold">
-                Gratulálok! Eddig {foundGems.length} kincset találtál meg a(z) {allGems.length}-ből.
-              </p>
+            <h1 className="text-4xl sm:text-5xl font-bold">
+              Felfedezett Kincseid
+            </h1>
 
-              <div className="mb-8">
-                <h2 className="text-xl font-semibold mb-3 text-amber-800 dark:text-amber-300">Kincseid a térképen</h2>
-                <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
-                  <MapContainer center={[47.389, 16.542]} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
-                    {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
-                      <Marker key={gem.id} position={[gem.coords.lat, gem.coords.lng]}>
-                        <Popup>{gem.name}</Popup>
-                      </Marker>
-                    ))}
-                  </MapContainer>
+            <p>
+              Gratulálunk! Eddig <strong>{foundGems.length}</strong> kincset találtál meg a(z) <strong>{allGems.length}</strong>-ből.
+            </p>
+
+            {allGems.length > 0 && (
+              <>
+                <div>
+                  <h2 className="text-3xl sm:text-4xl mb-4 font-bold">Kincseid a térképen</h2>
+                  <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
+                    <MapContainer center={[47.389, 16.542]} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+                      <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; OpenStreetMap'
+                      />
+                      {allGems.filter(gem => foundGems.includes(gem.id)).map(gem => (
+                        <Marker key={gem.id} position={[gem.coords.lat, gem.coords.lng]}>
+                          <Popup>{gem.name}</Popup>
+                        </Marker>
+                      ))}
+                    </MapContainer>
+                  </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {allGems.map(gem => renderGemCard(gem, foundGems.includes(gem.id)))}
-              </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
+                  {allGems.map(gem => renderGemCard(gem, foundGems.includes(gem.id)))}
+                </div>
 
-              <div className="mt-8 pt-6 border-t border-amber-200/50 dark:border-gray-700 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
+                  <ScanButton onClick={() => setShowScanHelp(true)} />
+                  <button
+                    onClick={handleReset}
+                    className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold"
+                  >
+                    Játék újraindítása
+                  </button>
+                </div>
+              </>
+            )}
+
+            {allGems.length === 0 && (
+              <>
+                <p className="text-lg text-amber-900">Még nem találtál egyetlen rejtett kincset sem.</p>
                 <ScanButton onClick={() => setShowScanHelp(true)} />
-                <button onClick={handleReset} className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">
-                  Játék újraindítása
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-10">
-              <p className="text-lg mb-6 text-amber-800 dark:text-amber-200">Még nem találtál egyetlen rejtett kincset sem.</p>
-              <ScanButton onClick={() => setShowScanHelp(true)} />
+              </>
+            )}
+
+            <div className="mt-12">
+              <Link
+                to="/"
+                className="inline-block text-sm bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+              >
+                Kilépés a játékból
+              </Link>
             </div>
-          )}
+
+          </div>
         </div>
       </div>
+    </div>
 
-      {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
-    </>
-  );
+    {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
+  </>
+);
 }
