@@ -5,6 +5,8 @@ import { useGame } from '../hooks/useGame';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import ScanHelpModal from '../components/ScanHelpModal';
+import DiscoveredGemCard from '../components/DiscoveredGemCard'; // Új, lenyitható kártya
+import LockedGemCard from '../components/LockedGemCard';       // Új, zárolt kártya
 
 // Leaflet ikon javítás
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -30,7 +32,6 @@ const ScanButton = ({ onClick }) => (
 export default function MyGems() {
   const { foundGems, resetGame } = useGame();
   const navigate = useNavigate();
-  const location = useLocation();
   const [allGems, setAllGems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showScanHelp, setShowScanHelp] = useState(false);
@@ -46,49 +47,6 @@ export default function MyGems() {
       resetGame();
       navigate('/');
     }
-  };
-
-  const renderGemCard = (gem, isFound) => {
-    const backgroundUrl = isFound ? `/images/game/located.jpeg` : `/images/game/notlocated.webp`;
-
-    const cardContent = (
-      <div
-        className="relative aspect-square rounded-xl overflow-hidden shadow-lg border-2 border-amber-700/40 h-full transition-transform duration-300 group-hover:scale-105"
-        style={{
-          backgroundImage: `url(${backgroundUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
-        <div className="pointer-events-none absolute top-0 left-0 w-full h-16"/>
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16" />
-        <div className="flex flex-col items-center justify-center h-full text-center px-4 pt-6 pb-6 z-20 relative font-zeyada text-amber-900 text-2xl font-bold leading-relaxed">
-          {isFound ? (
-            <>
-              <h2 className="text-2xl sm:text-3xl mb-2">{gem.name}</h2>
-              <p className="text-sm font-normal line-clamp-3">{gem.description}</p>
-            </>
-          ) : (
-            <>
-              <p className="text-sm opacity-70 font-normal">Még felfedezésre vár...</p>
-            </>
-          )}
-        </div>
-      </div>
-    );
-
-    return isFound ? (
-      <Link 
-        to={`/game/gem/${gem.id}`} 
-        key={gem.id} 
-        className="group"
-        state={{ fromMyGems: true }}
-      >
-        {cardContent}
-      </Link>
-    ) : (
-      <div key={gem.id}>{cardContent}</div>
-    );
   };
 
   if (loading) {
@@ -118,7 +76,7 @@ export default function MyGems() {
             backgroundRepeat: 'no-repeat',
           }}
         >
-          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-16 pb-16">
+          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-4 sm:px-[12.5%] pt-16 pb-16">
             <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-10 font-bold">
               <h1 className="text-4xl sm:text-5xl font-bold">
                 Felfedezett Kincseid
@@ -129,15 +87,6 @@ export default function MyGems() {
                     Gratulálunk! Eddig <strong>{foundGems.length}</strong> kincset találtál meg a(z) <strong>{allGems.length}</strong>-ből.
                   </p>
                   
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
-                    {allGems.map(gem => renderGemCard(gem, foundGems.includes(gem.id)))}
-                  </div>
-                  <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <ScanButton onClick={() => setShowScanHelp(true)} />
-                    <button onClick={handleReset} className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">
-                      Játék újraindítása
-                    </button>
-                  </div>
                   <div>
                     <h2 className="text-3xl sm:text-4xl mb-4 font-bold">Kincseid a térképen</h2>
                     <div className="h-80 w-full rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30">
@@ -150,6 +99,23 @@ export default function MyGems() {
                         ))}
                       </MapContainer>
                     </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+                    {allGems.map(gem => 
+                      foundGems.includes(gem.id) ? (
+                        <DiscoveredGemCard key={gem.id} gem={gem} />
+                      ) : (
+                        <LockedGemCard key={gem.id} />
+                      )
+                    )}
+                  </div>
+
+                  <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <ScanButton onClick={() => setShowScanHelp(true)} />
+                    <button onClick={handleReset} className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">
+                      Játék újraindítása
+                    </button>
                   </div>
                 </>
               ) : (
