@@ -60,8 +60,8 @@ export default function MyGems() {
           backgroundPosition: 'center'
         }}
       >
-        <div className="pointer-events-none absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-[#f3eadf] via-[#f3eadfbf] to-transparent z-10" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#f3eadf] via-[#f3eadfbf] to-transparent z-10" />
+        <div className="pointer-events-none absolute top-0 left-0 w-full h-16 " />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16 " />
         <div className="flex flex-col items-center justify-center h-full text-center px-4 pt-6 pb-6 z-20 relative font-zeyada text-amber-900 text-2xl font-bold leading-relaxed">
           {isFound ? (
             <>
@@ -70,9 +70,9 @@ export default function MyGems() {
             </>
           ) : (
             <>
-              <p className="text-4xl opacity-60">❓</p>
+              
               <p className="mt-2 text-2xl">Rejtett Kincs</p>
-              <p className="text-sm opacity-70 font-normal">Még felfedezésre vár...</p>
+              <p className="text-sm opacity-30 font-normal">Még felfedezésre vár...</p>
             </>
           )}
         </div>
