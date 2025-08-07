@@ -3,12 +3,19 @@ import { FaQuestion } from 'react-icons/fa';
 
 export default function LockedGemCard() {
   return (
-    <div className="flex items-center justify-center gap-4 bg-black/10 dark:bg-gray-900/50 backdrop-blur-sm p-3 rounded-lg shadow-inner h-full border-2 border-dashed border-gray-500/50">
-      <div className="text-center text-gray-500 dark:text-gray-400">
-        <FaQuestion className="text-4xl mx-auto opacity-50" />
-        <h3 className="font-semibold mt-2 text-sm">Rejtett Kincs</h3>
-        <p className="text-xs opacity-70">Még felfedezésre vár...</p>
+    <div
+      className="relative w-full aspect-square bg-cover bg-center rounded-2xl shadow-lg border-2 border-amber-800/30 overflow-hidden flex items-center justify-center"
+      style={{
+        backgroundImage: "url('/images/game/notlocated.jpeg')",
+      }}
+    >
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-sm rounded-2xl"></div>
+      <div className="relative z-10 text-center text-white font-zeyada space-y-2 px-4">
+        <FaQuestion className="text-5xl opacity-60 mx-auto" />
+        <h3 className="text-xl sm:text-2xl font-bold">Rejtett kincs</h3>
+        <p className="text-sm sm:text-base opacity-80">Még felfedezésre vár...</p>
       </div>
     </div>
   );
 }
+
