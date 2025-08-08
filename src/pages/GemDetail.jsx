@@ -4,37 +4,33 @@ import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 import ScanHelpModal from '../components/ScanHelpModal';
 
-const ScanButton = ({ onClick }) => (
-  <button onClick={onClick} className="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg text-center">
-    📷 Keress egy új kincset!
-  </button>
-);
-
 export default function GemDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { addFoundGem, isGemFound, hasPlayedBefore } = useGame();
-  
+
   const [gem, setGem] = useState(null);
   const [gameState, setGameState] = useState('loading');
   const [error, setError] = useState(null);
   const [showScanHelp, setShowScanHelp] = useState(false);
 
-  // === ITT A FONTOS VÁLTOZÓ ===
-  // Ellenőrizzük, hogy a "Trófeaszobából" jöttünk-e
+  // Ellenőrizzük, hogy a gyűjtemény nézetből jöttünk-e
   const cameFromMyGems = location.state?.fromMyGems === true;
-  
+
   useEffect(() => {
-    // Az intró átirányítás változatlan
     if (!hasPlayedBefore()) {
-      navigate('/game/intro', { state: { redirectTo: location.pathname }, replace: true });
+      // Ha még nem játszott, átirányítjuk az intróba, majd onnan vissza erre az oldalra
+      navigate(
+        '/game/intro',
+        { state: { redirectTo: location.pathname }, replace: true }
+      );
       return;
     }
-    
+
     let isMounted = true;
     setGameState('loading');
-    
+
     fetchHiddenGems()
       .then(data => {
         if (!isMounted) return;
@@ -43,9 +39,7 @@ export default function GemDetail() {
           setError('Ez a kincs nem található az adatbázisban.');
         } else {
           setGem(found);
-          // === ITT A JAVÍTOTT LOGIKA ===
           if (cameFromMyGems) {
-            // Ha a gyűjteményből jöttünk, mindig a "csak olvasó" nézetet mutatjuk
             setGameState('read_only');
           } else if (isGemFound(id)) {
             setGameState('already_found');
@@ -54,11 +48,21 @@ export default function GemDetail() {
           }
         }
       })
-      .catch(err => isMounted && setError(err.message));
-      
-    return () => { isMounted = false; };
-      
-  }, [id, isGemFound, hasPlayedBefore, navigate, location, cameFromMyGems]);
+      .catch(err => {
+        if (isMounted) setError(err.message);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [
+    id,
+    hasPlayedBefore,
+    isGemFound,
+    navigate,
+    location.pathname,
+    cameFromMyGems
+  ]);
 
   const handleAnswer = (option) => {
     if (option.isCorrect) {
@@ -69,7 +73,8 @@ export default function GemDetail() {
       setTimeout(() => setGameState('question'), 1500);
     }
   };
-    const renderContent = () => {
+
+  const renderContent = () => {
     if (gameState === 'loading') {
       return (
         <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
@@ -84,8 +89,8 @@ export default function GemDetail() {
         <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
           <h1 className="text-4xl font-bold text-red-600">Hiba történt</h1>
           <p className="text-2xl">{error}</p>
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-block mt-6 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all shadow-lg"
           >
             Vissza a főoldalra
@@ -99,8 +104,8 @@ export default function GemDetail() {
         <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
           <h1 className="text-4xl font-bold">Kincs nem található</h1>
           <p className="text-2xl">Ez a kincs nem létezik az adatbázisban.</p>
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-block mt-6 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all shadow-lg"
           >
             Vissza a főoldalra
@@ -108,6 +113,7 @@ export default function GemDetail() {
         </div>
       );
     }
+
     if (gameState === 'read_only') {
       return (
         <div className="animate-scale-in">
@@ -123,8 +129,8 @@ export default function GemDetail() {
             <div>
               <p className="whitespace-pre-line">{gem.description}</p>
             </div>
-            <Link 
-              to="/game/treasure-chest" 
+            <Link
+              to="/game/treasure-chest"
               className="inline-block mt-6 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all shadow-lg"
             >
               Vissza a gyűjteményhez
@@ -170,9 +176,9 @@ export default function GemDetail() {
           <h2 className="text-3xl sm:text-4xl font-bold">{gem.question}</h2>
           <div className="space-y-4">
             {gem.options.map((opt, i) => (
-              <button 
-                key={i} 
-                onClick={() => handleAnswer(opt)} 
+              <button
+                key={i}
+                onClick={() => handleAnswer(opt)}
                 className="w-full text-center p-4 rounded-lg bg-amber-100/50 hover:bg-amber-100 transition border-2 border-amber-700/30 text-2xl font-semibold"
               >
                 {opt.text}
@@ -195,8 +201,8 @@ export default function GemDetail() {
         <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
           <h1 className="text-4xl font-bold text-green-600">Helyes Válasz!</h1>
           <p className="text-3xl">A következő kincshez vezető utat megnyitottad.</p>
-          <Link 
-            to={`/game/gem/${gem.options.find(o => o.isCorrect).next_gem_id}`} 
+          <Link
+            to={`/game/gem/${gem.options.find(o => o.isCorrect).next_gem_id}`}
             className="inline-block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg"
           >
             Irány a következő kincs! &rarr;
@@ -211,8 +217,8 @@ export default function GemDetail() {
           <h1 className="text-4xl font-bold">Ezt a kincset már megtaláltad!</h1>
           <p className="text-3xl">Folytatod a kalandot, vagy megnézed az eddigi zsákmányt?</p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link 
-              to="/game/treasure-chest" 
+            <Link
+              to="/game/treasure-chest"
               className="w-full sm:w-auto bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition"
             >
               Megtalált kincseim
@@ -236,6 +242,7 @@ export default function GemDetail() {
   };
 
   return (
+
     <>
       <div
         className="fixed inset-0 bg-black/90 flex items-center justify-center p-4"
