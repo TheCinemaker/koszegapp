@@ -67,7 +67,7 @@
     transform: translateY(-4px);
   }
 }
-
+}
 .animate-floating {
   animation: floating 3s ease-in-out infinite;
 }
