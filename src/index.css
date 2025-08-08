@@ -10,34 +10,49 @@
     @apply text-lg font-semibold mb-3 pb-2 border-b-2;
   }
   .flip-card-container {
+    -webkit-perspective: 1500px;
     perspective: 1500px;
   }
+  /* 3D transform és tranzíció prefixekkel */
   .flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
+    -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+    -webkit-transition: -webkit-transform 0.8s;
     transition: transform 0.8s;
   }
-  .flipped .flip-card-inner {
+  /* Amikor flipped, forgassa el */
+  .flip-card-container.flipped .flip-card-inner {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
   }
-  .flip-card-front, .flip-card-back {
+
+  /* Front/back abszolút pozíció és backface-visibility prefixekkel */
+  .flip-card-front,
+  .flip-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
-  .flip-card-back {
-    transform: rotateY(180deg);
+
+  /* A back oldalt előre fordítva is rejtjük, ha nincs flipped */
+  .flip-card-container:not(.flipped) .flip-card-back {
+    visibility: hidden;
   }
+  /* A front oldalt elrejtjük, ha flipped */
   .flip-card-container.flipped .flip-card-front {
-    /* A front ne fogadjon el kattintást */
+    visibility: hidden;
+  }
+
+  /* Pointer-event kezelése, hogy hátlapon ne zavarja az előlap */
+  .flip-card-container.flipped .flip-card-front {
     pointer-events: none;
   }
   .flip-card-container.flipped .flip-card-back {
-    /* A back viszont igen */
     pointer-events: auto;
   }
 }
