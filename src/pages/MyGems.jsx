@@ -1,3 +1,4 @@
+// src/pages/MyGems.jsx
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchHiddenGems } from '../api';
@@ -13,7 +14,6 @@ import compassImg from '/images/game/compass.jpeg';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -63,13 +63,10 @@ export default function MyGems() {
     <>
       <div 
         className="-m-4 -mb-6 min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/images/game/terkep.webp')"
-        }}
+        style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/images/game/terkep.webp')" }}
       >
-        <div className="flip-card-container w-full max-w-6xl h-[90vh]">
-          <div className={`flip-card-inner ${isFlipped ? 'flipped' : ''}`}>
+        <div className={`flip-card-container ${isFlipped ? 'flipped' : ''} w-full max-w-6xl h-[90vh]`}>
+          <div className="flip-card-inner">
 
             {/* — FRONT (lista) — */}
             <div className="flip-card-front">
@@ -77,9 +74,8 @@ export default function MyGems() {
                 className="w-full h-full flex flex-col rounded-2xl shadow-2xl border-2 border-amber-700/40 relative overflow-hidden"
                 style={{
                   backgroundImage: "url('/images/game/pergamen.jpeg')",
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
                 }}
               >
                 <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
@@ -87,21 +83,20 @@ export default function MyGems() {
 
                     <div className="flex justify-between items-center gap-4">
                       <h1 className="text-4xl sm:text-5xl">Felfedezett Kincseid</h1>
-                      <img
-                        src={compassImg}
-                        alt="Térképnézet"
+                      <button
                         onClick={() => setIsFlipped(true)}
-                        className="w-12 h-12 rounded-full cursor-pointer shadow-lg hover:scale-105 transition-transform duration-300"
-                      />
+                        className="w-12 h-12 rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
+                      >
+                        <img src={compassImg} alt="Térképnézet" className="w-full h-full object-cover" />
+                      </button>
                     </div>
 
                     {allGems.length > 0 ? (
                       <>
                         <p>
-                          Gratulálok! Eddig <strong>{foundGems.length}</strong> kincset találtál a(z){' '}
-                          <strong>{allGems.length}</strong>-ból.
+                          Gratulálok! Eddig <strong>{foundGems.length}</strong> kincset 
+                          találtál a(z) <strong>{allGems.length}</strong>-ból.
                         </p>
-
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8">
                           {allGems.map(gem =>
                             foundGems.includes(gem.id)
@@ -109,7 +104,6 @@ export default function MyGems() {
                               : <LockedGemCard key={gem.id} />
                           )}
                         </div>
-
                         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
                           <ScanButton onClick={() => setShowScanHelp(true)} />
                           <button
@@ -147,25 +141,24 @@ export default function MyGems() {
                 className="w-full h-full flex flex-col rounded-2xl shadow-2xl border-2 border-amber-700/40 relative overflow-hidden"
                 style={{
                   backgroundImage: "url('/images/game/pergamen.jpeg')",
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
                 }}
               >
                 <div className="flex justify-between items-center mb-4 p-4">
                   <h2 className="text-3xl font-bold text-amber-800">A Kincsek Térképe</h2>
-                  <img
-                    src={compassImg}
-                    alt="Lista nézet"
+                  <button
                     onClick={() => setIsFlipped(false)}
-                    className="w-10 h-10 rounded-full cursor-pointer shadow-lg hover:scale-105 transition-transform duration-300"
-                  />
+                    className="w-10 h-10 rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
+                  >
+                    <img src={compassImg} alt="Lista nézet" className="w-full h-full object-cover" />
+                  </button>
                 </div>
                 <div className="flex-1 rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30 m-4">
                   <MapContainer
                     center={[47.389, 16.542]}
                     zoom={15}
-                    scrollWheelZoom={true}
+                    scrollWheelZoom
                     style={{ height: '100%', width: '100%' }}
                   >
                     <TileLayer
@@ -179,8 +172,7 @@ export default function MyGems() {
                         opacity={foundGems.includes(gem.id) ? 1 : 0.5}
                       >
                         <Popup>
-                          {gem.name}
-                          {!foundGems.includes(gem.id) && ' (Rejtett)'}
+                          {gem.name}{!foundGems.includes(gem.id) && ' (Rejtett)'}
                         </Popup>
                       </Marker>
                     ))}
@@ -188,11 +180,11 @@ export default function MyGems() {
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
-      
+
       {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
     </>
   );
