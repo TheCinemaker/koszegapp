@@ -137,22 +137,26 @@ export default function MyGems() {
 
             {/* — BACK (térkép) — */}
             <div className="flip-card-back">
-              <div
-                className="w-full h-full flex flex-col rounded-2xl shadow-2xl border-2 border-amber-700/40 relative overflow-hidden"
-                style={{
-                  backgroundImage: "url('/images/game/pergamen.jpeg')",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              >
-                <div className="flex justify-between items-center mb-4 p-4">
-                  <h2 className="text-3xl font-bold text-amber-800">A Kincsek Térképe</h2>
-                  <button
-                    onClick={() => setIsFlipped(false)}
-                    className="w-10 h-10 rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
-                  >
-                    <img src={compassImg} alt="Lista nézet" className="w-full h-full object-cover" />
-                  </button>
+  <div
+    className="w-full h-full flex flex-col rounded-2xl shadow-2xl border-2 border-amber-700/40 relative overflow-hidden"
+    style={{
+      backgroundImage: "url('/images/game/pergamen.jpeg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}
+  >
+    <div className="flex justify-between items-center mb-4 p-4">
+      <h2 className="text-3xl font-bold text-amber-800">A Kincsek Térképe</h2>
+      <button
+        onClick={() => setIsFlipped(false)}
+        className="w-10 h-10 rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
+      >
+        <img
+          src={compassImg}
+          alt="Vissza lista nézethez"
+          className="w-full h-full object-cover"
+        />
+      </button>
                 </div>
                 <div className="flex-1 rounded-lg overflow-hidden shadow-md border-2 border-amber-700/30 m-4">
                   <MapContainer
