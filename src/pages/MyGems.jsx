@@ -65,42 +65,34 @@ export default function MyGems() {
         className="-m-4 -mb-6 min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
         style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/images/game/terkep.webp')" }}
       >
-        <div className="flip-card-container w-full max-w-6xl h-[90vh]">
-          <div className={`flip-card-inner ${isFlipped ? 'flipped' : ''}`}>
+        {/* === JAVÍTÁS: A FLIPPED OSZTÁLY ITT VAN === */}
+        <div className={`flip-card-container w-full max-w-6xl h-[90vh] ${isFlipped ? 'flipped' : ''}`}>
+          <div className="flip-card-inner">
             
-            {/* === ELŐLAP: A "TRÓFEA FAL" === */}
+            {/* === ELŐLAP: A "TRÓFEA FAL" - ÚJ, KÖZPONTI DIZÁJNNAL === */}
             <div className="flip-card-front">
               <div
                 className="w-full h-full flex flex-col rounded-2xl shadow-2xl border-2 border-amber-700/40 relative overflow-hidden"
-                style={{
-                  backgroundImage: "url('/images/game/pergamen.jpeg')",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
+                style={{ backgroundImage: "url('/images/game/pergamen.jpeg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
               >
-                <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-4 sm:px-8 md:px-16 pt-12 pb-12">
-                  <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-10 font-bold">
-                    <div className="flex justify-between items-center flex-wrap gap-4 px-4">
-                      <h1 className="text-4xl sm:text-5xl font-bold text-left">Felfedezett Kincseid</h1>
+                {/* A scroll-mask és a központi tartalom konténer, mint az intrónál */}
+                <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[10%] pt-12 pb-12">
+                  <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
+                    <div className="flex justify-between items-center flex-wrap gap-4">
+                      <h1 className="text-4xl sm:text-5xl font-bold">Felfedezett Kincseid</h1>
                       <button onClick={() => setIsFlipped(true)} className="w-16 h-16 rounded-full shadow-lg hover:scale-110 transition-transform duration-300" aria-label="Térképnézet">
                         <img src={compassImg} alt="Iránytű" className="w-full h-full object-cover rounded-full" />
                       </button>
                     </div>
                     {allGems.length > 0 ? (
                       <>
-                        <p>Gratulálok! Eddig <strong>{foundGems.length}</strong> kincset találtál meg a(z) <strong>{allGems.length}</strong>-ből.</p>
+                        <p>Gratulálok! Eddig <strong>{foundGems.length}</strong> / <strong>{allGems.length}</strong> kincset találtál meg.</p>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                          {allGems.map(gem =>
-                            foundGems.includes(gem.id)
-                              ? <DiscoveredGemCard key={gem.id} gem={gem} />
-                              : <LockedGemCard key={gem.id} />
-                          )}
+                          {allGems.map(gem => foundGems.includes(gem.id) ? <DiscoveredGemCard key={gem.id} gem={gem} /> : <LockedGemCard key={gem.id} /> )}
                         </div>
                         <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
                           <ScanButton onClick={() => setShowScanHelp(true)} />
-                          <button onClick={handleReset} className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">
-                            Játék újraindítása
-                          </button>
+                          <button onClick={handleReset} className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">Játék újraindítása</button>
                         </div>
                       </>
                     ) : (
