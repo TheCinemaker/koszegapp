@@ -32,6 +32,14 @@
   .flip-card-back {
     transform: rotateY(180deg);
   }
+  .flip-card-container.flipped .flip-card-front {
+    /* A front ne fogadjon el kattintást */
+    pointer-events: none;
+  }
+  .flip-card-container.flipped .flip-card-back {
+    /* A back viszont igen */
+    pointer-events: auto;
+  }
 }
 
 @keyframes scale-in {
