@@ -8,7 +8,8 @@ import {
   startOfWeek,
   endOfWeek,
   startOfMonth,
-  endOfMonth
+  endOfMonth,
+  endOfDay
 } from 'date-fns';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
@@ -77,15 +78,23 @@ export default function Events() {
     let s, e;
     if (evt.startDate) {
       s = parseISO(evt.startDate);
-      e = parseISO(evt.endDate || evt.startDate);
-    } else if (evt.date.includes('/')) {
-      [s, e] = evt.date.split('/').map(d => parseISO(d));
-    } else {
-      s = e = parseISO(evt.date);
+      e = evt.endDate ? parseISO(evt.endDate) : endOfDay(s);
+    } else if (evt.date && evt.date.includes('/')) {
+      const parts = evt.date.split('/');
+      s = parseISO(parts[0]);
+      e = parseISO(parts[1]);
+    } else if (evt.date) {
+      s = parseISO(evt.date);
+      if (evt.time && evt.time.includes('-')) {
+        const endTime = evt.time.split('-')[1]; // "21:00"
+        e = parseISO(`${evt.date}T${endTime}`);
+      } else {
+        // Ha nincs végidőpont, a nap végét (23:59:59) tekintjük a végének
+        e = endOfDay(s);
+      }
     }
     return { ...evt, _s: s, _e: e };
   });
-
   // --- FRISSÍTETT SZŰRÉSI LOGIKA ---
   const filtered = normalized
   .filter(evt => {
