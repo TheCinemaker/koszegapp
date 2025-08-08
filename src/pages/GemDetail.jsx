@@ -4,6 +4,12 @@ import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 import ScanHelpModal from '../components/ScanHelpModal';
 
+const ScanButton = ({ onClick }) => (
+  <button onClick={onClick} className="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg text-center">
+    📷 Keress egy új kincset!
+  </button>
+);
+
 export default function GemDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
