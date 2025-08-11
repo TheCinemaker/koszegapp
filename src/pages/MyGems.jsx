@@ -44,7 +44,7 @@ function Modal({ isOpen, onClose, children }) {
             <div
             className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-8 pb-8"
             style={{ WebkitOverflowScrolling: 'touch' }}
-+         >
+            >
             {children}
           </div>
 
