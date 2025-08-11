@@ -82,7 +82,7 @@ function DiscoveredGemCard({ gem, onOpen }) {
           {gem.name}
         </h3>
         <img
-          src={`/images/${gem.image}`}
+          src={`/images/game/${gem.image}`}
           alt={gem.name}
           className="w-full h-20 object-cover rounded-md shadow-inner"
         />
