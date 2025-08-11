@@ -19,11 +19,7 @@ export default function DiscoveredGemCard({ gem, onOpen }) {
         </h3>
 
         {/* Kép */}
-        <img
-          src={`/images/${gem.image}`}
-          alt={gem.name}
-          className="w-full h-24 object-cover rounded-md my-2 shadow-inner"
-        />
+        <img src={`/images/game/${gem.image}`} alt={gem.name} className="w-full h-20 object-cover rounded-md my-1 shadow-inner" />
 
         {/* CTA sáv alul */}
         <div className="mt-auto flex items-center justify-center gap-2 font-sans text-sm font-semibold text-amber-900/80">
