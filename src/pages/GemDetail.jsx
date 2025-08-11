@@ -154,7 +154,7 @@ export default function GemDetail() {
               Felfedeztél egy újabb kincset!
             </h1>
             <img
-              src={`/images/${gem.image}`}
+              src={`/images/gmae/${gem.image}`}
               alt={gem.name}
               className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md"
             />
