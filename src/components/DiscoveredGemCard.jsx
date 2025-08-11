@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
+import React from 'react';
+import { FaChevronRight } from 'react-icons/fa';
 
-export default function DiscoveredGemCard({ gem }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function DiscoveredGemCard({ gem, onOpen }) {
   return (
-    <div
-      className="bg-cover bg-center rounded-2xl shadow-lg border-2 border-amber-800/30 cursor-pointer transition-all duration-300"
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg border-2 border-amber-800/30 bg-cover bg-center focus:outline-none focus:ring-2 focus:ring-amber-600"
       style={{ backgroundImage: "url('/images/game/located.jpeg')" }}
-      onClick={() => setIsOpen(!isOpen)}
+      aria-label={`${gem.name} megnyitása`}
     >
-      {/* A kártya teljes tartalma egyetlen flex konténerben van */}
-      <div className="flex flex-col h-full bg-black/10 backdrop-blur-[2px] p-3 rounded-2xl">
-        {/* Felső, mindig látható rész */}
-        <div className="flex-grow text-center font-zeyada text-amber-900">
-          <h3 className="text-xl font-bold line-clamp-2">{gem.name}</h3>
-          <img src={`/images/${gem.image}`} alt={gem.name} className="w-full h-20 object-cover rounded-md my-1 shadow-inner" />
-        </div>
-        <FaChevronDown className={`mx-auto text-lg text-amber-800/70 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-        
-        {/* === JAVÍTOTT LENYÍLÓ TARTALOM === */}
-        {/* A max-height trükköt használjuk a 'grid-rows' helyett */}
-        <div 
-          className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}
-        >
-          <div className="p-3 pt-2 text-center font-zeyada text-amber-900 text-xl space-y-2">
-            <p className="border-t border-amber-800/20 pt-2 font-normal text-base">{gem.description}</p>
-          </div>
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-[2px]" />
+
+      <div className="relative z-10 h-full flex flex-col p-3 text-amber-900">
+        {/* Cím (kézírás), rövid, jól olvasható méretben */}
+        <h3 className="font-zeyada text-2xl font-bold text-center drop-shadow">
+          {gem.name}
+        </h3>
+
+        {/* Kép */}
+        <img
+          src={`/images/${gem.image}`}
+          alt={gem.name}
+          className="w-full h-24 object-cover rounded-md my-2 shadow-inner"
+        />
+
+        {/* CTA sáv alul */}
+        <div className="mt-auto flex items-center justify-center gap-2 font-sans text-sm font-semibold text-amber-900/80">
+          <span>Részletek</span>
+          <FaChevronRight className="transition-transform group-hover:translate-x-0.5" />
         </div>
       </div>
-    </div>
+    </button>
   );
 }
