@@ -11,7 +11,7 @@ export default function LockedGemCard() {
       <div className="relative z-10 text-center text-white font-zeyada space-y-2 px-4">
         <FaQuestion className="text-5xl opacity-60 mx-auto" />
         <h3 className="text-xl sm:text-2xl font-bold">Rejtett kincs</h3>
-        <p className="text-sm sm:text-base opacity-80">Még felfedezésre vár...</p>
+        <p className="font-sans text-xs sm:text-sm opacity-90">Még felfedezésre vár...</p>
       </div>
     </div>
   );
