@@ -24,7 +24,7 @@ function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 overflow-y-auto"
       aria-modal="true"
       role="dialog"
     >
@@ -41,6 +41,10 @@ function Modal({ isOpen, onClose, children }) {
         >
           {/* Görgethető belső tartalom maszkolva – ugyanúgy, mint az intróban */}
           <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-8 pb-8">
+            <div
+            className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-8 pb-8"
+            style={{ WebkitOverflowScrolling: 'touch' }}
++         >
             {children}
           </div>
 
