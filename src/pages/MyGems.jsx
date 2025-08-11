@@ -20,18 +20,19 @@ L.Icon.Default.mergeOptions({
 });
 
 // --- Egyszerű Modal komponens (portál nélkül) ---
+// FIX: belső görgetéshez min-h-0 a flex konténereken + iOS touch scroll
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80"
       aria-modal="true"
       role="dialog"
     >
       <div className="relative w-full max-w-3xl max-h-[90vh] rounded-2xl overflow-hidden border-2 border-amber-700/40 shadow-2xl">
         {/* Pergamen háttér a modalban is */}
         <div
-          className="h-full w-full flex flex-col relative overflow-hidden"
+          className="h-full w-full flex flex-col relative overflow-hidden min-h-0"
           style={{
             backgroundImage: "url('/images/game/pergamen.jpeg')",
             backgroundSize: 'cover',
@@ -39,9 +40,11 @@ function Modal({ isOpen, onClose, children }) {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          {/* Görgethető belső tartalom maszkolva – ugyanúgy, mint az intróban */}
-          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-8 pb-8">
-            
+          {/* Görgethető belső tartalom – mint az intróban */}
+          <div
+            className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-8 pb-8 min-h-0"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             {children}
           </div>
 
@@ -87,9 +90,7 @@ function DiscoveredGemCard({ gem, onOpen }) {
           alt={gem.name}
           className="w-full h-20 object-cover rounded-md shadow-inner"
         />
-        <p className="font-sans text-xs text-amber-900/80">
-          Koppints a részletekhez
-        </p>
+        <p className="font-sans text-xs text-amber-900/80">Koppints a részletekhez</p>
       </div>
     </button>
   );
@@ -180,7 +181,10 @@ export default function MyGems() {
           }}
         >
           {/* görgethető belső – scroll-mask, mint az intróban */}
-          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
+          <div
+            className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24 min-h-0"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
               {/* Fejléc + kis kerek kompasz gomb (térkép modal) */}
               <div className="flex justify-between items-center flex-wrap gap-4">
