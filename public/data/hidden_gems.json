@@ -2,7 +2,7 @@
   {
   "id": "gem-1",
   "name": "Sgraffitós-ház Oroszlánja",
-  "image": "gems/sgraffito_haz.jpg",
+  "image": "gems/gem-1.jpg",
   "description": "A Jurisics tér 7. számú háza, a Sgraffitos ház. Maga a sgraffitó szó azt jelenti, kaparni. A díszítési eljárás lényege az, hogy a falra legalább két réteg vakolatot hordtak fel, amelyek közül a felső volt a világosabb, ebbe karcolták be a mintákat. A Sgraffitós-ház reneszánsz eredetű. 1560 környékén építették emeletessé, ekkor kaparták ki jellegzetes díszítéseit. A 18-19. században udvari szárnnyal is bővítették, és barokk stílusban alakították át homlokzatát. Emeleti helyiségének mennyezetét freskó díszíti, mely a Szegény Lázár és a gazdag ember lakomája bibliai történet ábrázolja. Tulajdonosai között szerepeltek a malommal is bíró Salamonok, és két sebész család (Haász és Baumann család). Az épület oromfalában lévő kis szoborfülke van, benne barokk Mária szobor látható, alatta pedig latin nyelvű idézetet olvashatunk Szent Pál egyik leveléből (\"Non est volentis neque currentis, sed miserentis Dei.\" Jelentése: Tehát nem azon múlik, aki erőlködik, vagy aki törtet, hanem az Irgalmas Istenen 1668.). Ez a mondat adja az Iskola a határon című regény két fejezetének címét. Ottlik Géza 1923 és 1926 között volt kőszegi diák, az itt töltött három esztendő emlékét (is) megörökíti Európa-hírű regényében. Az épület földszintjén egy vendéglő, a Garabonciás Pizzéria üzemel, az emeleten a Felsőbbfokú Tanulmányok Intézetéhez tartozó, gyönyörűen berendezett könyvtár és kutatóközpont működik, ahol magyar és külföldi diákok végzik tudományos munkájukat.",
   "coords": { "lat": 47.38955, "lng": 16.54181 },
   "question": "A ház falán egy oroszlán látható. Melyik híres kőszegi család címerében szerepelt még ez az állat?",
@@ -16,7 +16,7 @@
   {
     "id": "gem-2",
     "name": "A Városkút (Mária-kút)",
-    "image": "gems/varoskut.jpg",
+    "image": "gems/gem-2.jpg",
     "description": "Ez a barokk stílusú kút 1766-ban készült el. Tetején Mária, a magyarok védasszonyának szobra áll, amint a földgömbön állva eltapossa a kígyót, a bűn jelképét. A kút egykor a város legfontosabb vízvételi helye volt.",
     "coords": { "lat": 47.38933, "lng": 16.54145 },
     "question": "A kút tetején Mária szobra áll. Mit tapos el a lábával a szobor a földgömbön?",
@@ -30,7 +30,7 @@
   {
     "id": "gem-3",
     "name": "Páduai Szent Antal Szobra",
-    "image": "gems/szent_antal.jpg",
+    "image": "gems/gem-3.jpg",
     "description": "A Jurisics tér egyik házának falfülkéjében rejtőzik Páduai Szent Antal 18. századi szobra. A szent a ferences rend híres prédikátora volt, és gyakran ábrázolják a gyermek Jézussal a karján. A szobor a ház egykori tulajdonosának vallásosságáról tanúskodik.",
     "coords": { "lat": 47.38912, "lng": 16.54158 },
     "question": "Melyik híres ostrom vezérének a nevét viseli a tér, ahol ez a szobor áll?",
@@ -44,7 +44,7 @@
   {
     "id": "gem-4",
     "name": "A Lábasház Aranycsizmás Cégére",
-    "image": "gems/labashaz_ceger.jpg",
+    "image": "gems/gem-4.jpg",
     "description": "A Lábasház (az árkádos épület) sarkán lévő cégér a kőszegi csizmadiacéh jelképe volt. A 18. században készült aranyozott csizma messziről hirdette a mesterek ügyességét. A Lábasház egykor a város legfontosabb kereskedelmi központja volt.",
     "coords": { "lat": 47.38883, "lng": 16.54221 },
     "question": "Az épület nevét az árkádos, 'lábakon' álló szerkezetéről kapta. Hány ilyen 'lábat' (oszlopot) számolsz meg a ház alatt?",
@@ -58,7 +58,7 @@
   {
     "id": "gem-5",
     "name": "A Gályarabok Emléktáblája",
-    "image": "gems/galyarab_tabla.jpg",
+    "image": "gems/gem-5.jpg",
     "description": "Az evangélikus templom bejárata mellett található ez a tábla, amely annak a 26 magyar protestáns lelkésznek állít emléket, akiket a 17. századi ellenreformáció idején gályarabságra ítéltek. Történetük a vallásszabadságért vívott harc jelképévé vált.",
     "coords": { "lat": 47.38791, "lng": 16.54344 },
     "question": "Melyik holland admirális szabadította ki a gályarabságra ítélt magyar lelkészeket?",
