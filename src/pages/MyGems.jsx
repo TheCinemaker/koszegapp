@@ -293,7 +293,7 @@ export default function MyGems() {
           <div className="space-y-6 text-center">
             <h2 className="text-4xl font-bold font-zeyada text-amber-900">{detailGem.name}</h2>
             <img
-              src={`/images/${detailGem.image}`}
+              src={`/images/game/${detailGem.image}`}
               alt={detailGem.name}
               className="w-full h-56 object-cover rounded-lg shadow-md"
             />
