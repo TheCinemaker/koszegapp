@@ -20,19 +20,18 @@ L.Icon.Default.mergeOptions({
 });
 
 // --- Egyszerű Modal komponens (portál nélkül) ---
-// FONTOS: a maszk és a görgetés külön elemen van, hogy mobilon is menjen a scroll.
-function Modal({ isOpen, onClose, children, title }) {
+function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 overflow-y-auto"
       aria-modal="true"
       role="dialog"
     >
-      <div className="relative w-full max-w-3xl max-h-[90vh] rounded-2xl overflow-hidden border-2 border-amber-700/40 shadow-2xl">
-        {/* Pergamen háttér */}
+      <div className="relative w-full max-w-3xl max-h-[90vh] rounded-2xl overflow-hidden border-2 border-amber-700/40 shadow-2xl overflow-y-auto">
+        {/* Pergamen háttér a modalban is */}
         <div
-          className="h-full w-full flex flex-col relative overflow-hidden min-h-0"
+          className="h-full w-full flex flex-col relative overflow-hidden"
           style={{
             backgroundImage: "url('/images/game/pergamen.jpeg')",
             backgroundSize: 'cover',
@@ -40,31 +39,13 @@ function Modal({ isOpen, onClose, children, title }) {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          {/* Fejléc opcionális címnek (nem kötelező) */}
-          {title ? (
-            <div className="px-[12.5%] pt-6 pb-2">
-              <h2 className="text-3xl sm:text-4xl font-bold font-zeyada text-amber-900 text-center">
-                {title}
-              </h2>
-            </div>
-          ) : null}
-
-          {/* Maszk-wrapper + görgető */}
-          <div className="relative flex-1 min-h-0">
-            {/* Felső/belső fade (nem blokkolja a scrollt) */}
-            <div className="pointer-events-none absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-[#fdf5e6] to-transparent z-10" />
-            <div className="pointer-events-none absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-[#fdf5e6] to-transparent z-10" />
-
-            {/* Tényleges scrolloló tartalom */}
-            <div
-              className="h-full overflow-y-auto px-[12.5%] pt-6 pb-8"
-              style={{ WebkitOverflowScrolling: 'touch' }}
-            >
-              {children}
-            </div>
+          {/* Görgethető belső tartalom maszkolva – ugyanúgy, mint az intróban */}
+          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-8 pb-8">
+            
+            {children}
           </div>
 
-          {/* Bezárás gomb */}
+          {/* Bezárás gomb a jobb felső sarokban */}
           <button
             onClick={onClose}
             className="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/50 text-white backdrop-blur hover:bg-black/70 transition font-sans text-lg z-20"
@@ -106,7 +87,9 @@ function DiscoveredGemCard({ gem, onOpen }) {
           alt={gem.name}
           className="w-full h-20 object-cover rounded-md shadow-inner"
         />
-        <p className="font-sans text-xs text-amber-900/80">Koppints a részletekhez</p>
+        <p className="font-sans text-xs text-amber-900/80">
+          Koppints a részletekhez
+        </p>
       </div>
     </button>
   );
@@ -196,94 +179,84 @@ export default function MyGems() {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          {/* görgethető belső – top/bottom fade + külön scrolloló elem */}
-          <div className="relative flex-1 min-h-0">
-            <div className="pointer-events-none absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#fdf5e6] to-transparent z-10" />
-            <div className="pointer-events-none absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#fdf5e6] to-transparent z-10" />
+          {/* görgethető belső – scroll-mask, mint az intróban */}
+          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
+            <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
+              {/* Fejléc + kis kerek kompasz gomb (térkép modal) */}
+              <div className="flex justify-between items-center flex-wrap gap-4">
+                <h1 className="text-4xl sm:text-5xl font-bold">Felfedezett Kincseid</h1>
+                <button
+                  onClick={() => setShowMapModal(true)}
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg hover:scale-110 transition-transform duration-300"
+                  aria-label="Térképnézet"
+                >
+                  <img
+                    src={compassImg}
+                    alt="Iránytű"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </button>
+              </div>
 
-            <div
-              className="h-full overflow-y-auto px-[12.5%] pt-24 pb-24"
-              style={{ WebkitOverflowScrolling: 'touch' }}
-            >
-              <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
-                {/* Fejléc + kis kerek kompasz gomb (térkép modal) */}
-                <div className="flex justify-between items-center flex-wrap gap-4">
-                  <h1 className="text-4xl sm:text-5xl font-bold">Felfedezett Kincseid</h1>
-                  <button
-                    onClick={() => setShowMapModal(true)}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg hover:scale-110 transition-transform duration-300"
-                    aria-label="Térképnézet"
-                  >
-                    <img
-                      src={compassImg}
-                      alt="Iránytű"
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  </button>
-                </div>
+              {allGems.length > 0 ? (
+                <>
+                  <p className="font-sans font-semibold text-amber-900">
+                    Gratulálok! Eddig <strong>{foundGems.length}</strong> / <strong>{allGems.length}</strong> kincset találtál meg.
+                  </p>
 
-                {allGems.length > 0 ? (
-                  <>
-                    <p className="font-sans font-semibold text-amber-900">
-                      Gratulálok! Eddig <strong>{foundGems.length}</strong> / <strong>{allGems.length}</strong> kincset találtál meg.
-                    </p>
-
-                    {/* Kiskártya-rács */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                      {allGems.map(gem =>
-                        foundSet.has(gem.id) ? (
-                          <DiscoveredGemCard
-                            key={gem.id}
-                            gem={gem}
-                            onOpen={setDetailGem}
-                          />
-                        ) : (
-                          <LockedGemCard key={gem.id} />
-                        )
-                      )}
-                    </div>
-
-                    {/* Láb – Scan + Reset */}
-                    <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
-                      <ScanButton onClick={() => setShowScanHelp(true)} />
-                      <button
-                        onClick={handleReset}
-                        className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold font-sans"
-                      >
-                        Játék újraindítása
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <div className="space-y-6">
-                    <p className="font-sans text-lg text-amber-900">
-                      Még nem találtál egyetlen rejtett kincset sem.
-                    </p>
-                    <ScanButton onClick={() => setShowScanHelp(true)} />
+                  {/* Kiskártya-rács */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    {allGems.map(gem =>
+                      foundSet.has(gem.id) ? (
+                        <DiscoveredGemCard
+                          key={gem.id}
+                          gem={gem}
+                          onOpen={setDetailGem}
+                        />
+                      ) : (
+                        <LockedGemCard key={gem.id} />
+                      )
+                    )}
                   </div>
-                )}
 
-                <div className="pt-4">
-                  <Link
-                    to="/"
-                    className="inline-block text-sm bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition font-sans"
-                  >
-                    Kilépés a játékból
-                  </Link>
+                  {/* Láb – Scan + Reset */}
+                  <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <ScanButton onClick={() => setShowScanHelp(true)} />
+                    <button
+                      onClick={handleReset}
+                      className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold font-sans"
+                    >
+                      Játék újraindítása
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-6">
+                  <p className="font-sans text-lg text-amber-900">
+                    Még nem találtál egyetlen rejtett kincset sem.
+                  </p>
+                  <ScanButton onClick={() => setShowScanHelp(true)} />
                 </div>
+              )}
+
+              <div className="pt-4">
+                <Link
+                  to="/"
+                  className="inline-block text-sm bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition font-sans"
+                >
+                  Kilépés a játékból
+                </Link>
               </div>
             </div>
           </div>
-          {/* /scroll terület */}
         </div>
       </div>
 
       {/* === TÉRKÉP MODAL (összes kincs) === */}
-      <Modal
-        isOpen={showMapModal}
-        onClose={() => setShowMapModal(false)}
-        title="A Kincsek Térképe"
-      >
+      <Modal isOpen={showMapModal} onClose={() => setShowMapModal(false)}>
+        <h2 className="text-3xl sm:text-4xl font-bold font-zeyada text-amber-900 text-center mb-6">
+          A Kincsek Térképe
+        </h2>
         <div className="font-sans text-amber-900/80 text-center mb-4">
           A megtalált kincsek erősebb színnel jelennek meg.
         </div>
@@ -316,13 +289,10 @@ export default function MyGems() {
       </Modal>
 
       {/* === KINCS-RÉSZLETEK MODAL (kiskártyáról) === */}
-      <Modal
-        isOpen={!!detailGem}
-        onClose={() => setDetailGem(null)}
-        title={detailGem ? detailGem.name : undefined}
-      >
+      <Modal isOpen={!!detailGem} onClose={() => setDetailGem(null)}>
         {detailGem && (
           <div className="space-y-6 text-center">
+            <h2 className="text-4xl font-bold font-zeyada text-amber-900">{detailGem.name}</h2>
             <img
               src={`/images/game/${detailGem.image}`}
               alt={detailGem.name}
