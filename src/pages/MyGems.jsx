@@ -199,9 +199,7 @@ export default function MyGems() {
             className="relative flex-1 overflow-y-auto px-[12.5%] pt-24 pb-24"
             style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
           >
-            {/* Felső/alsó fade */}
-            <div className="pointer-events-none sticky -top-24 left-0 w-full h-20 bg-gradient-to-b from-[#fdf5e6] to-transparent" />
-            <div className="pointer-events-none sticky bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#fdf5e6] to-transparent" />
+          
 
             <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
               <div className="flex justify-between items-center flex-wrap gap-4">
