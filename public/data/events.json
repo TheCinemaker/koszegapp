@@ -38,7 +38,7 @@
   {
     "id": "event-35",
     "name": "Kőszegi Szüret és Borünnep",
-    "date": "2025-09-12",
+    "date": "2025-09-26",
     "time": "18:00-23:00",
     "location": "Jurisics tér és belváros",
     "coords": {
@@ -56,7 +56,7 @@
   {
     "id": "event-36",
     "name": "Kőszegi Szüreti Felvonulás",
-    "date": "2025-09-13",
+    "date": "2025-09-26",
     "time": "14:00",
     "location": "Belváros",
     "coords": {
@@ -74,7 +74,7 @@
   {
     "id": "event-37",
     "name": "Kőszegi Borünnep – Főzőverseny",
-    "date": "2025-09-13",
+    "date": "2025-09-26",
     "time": "10:00-15:00",
     "location": "Jurisics tér",
     "coords": {
@@ -91,7 +91,7 @@
   {
     "id": "event-38",
     "name": "Kőszegi Borünnep – Táncház",
-    "date": "2025-09-13",
+    "date": "2025-09-26",
     "time": "20:00",
     "location": "Jurisics tér",
     "coords": {
@@ -109,7 +109,7 @@
   {
     "id": "event-39",
     "name": "Kőszegi Borünnep – Zárónap",
-    "date": "2025-09-14",
+    "date": "2025-09-27",
     "time": "10:00-18:00",
     "location": "Belváros",
     "coords": {
