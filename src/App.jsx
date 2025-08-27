@@ -27,6 +27,7 @@ import Adatvedelem from './pages/Adatvedelem';
 import GemDetail from './pages/GemDetail';
 import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
+import ProgramModal from './components/ProgramModal';
 
 import FavoritesDashboard from './components/FavoritesDashboard';
 import WeatherModal from './components/WeatherModal';
@@ -48,6 +49,9 @@ export default function App() {
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
+  const [showProgramModal, setShowProgramModal] = useState(true);
+  const [showOstromDrawer, setShowOstromDrawer] = useState(false);
+  const isHome = location.pathname === '/';
 
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
@@ -166,28 +170,24 @@ export default function App() {
           <FloatingButtons />
           <OstromDrawerFullAnimated />
           <AnimatedWeeklyMenuDrawer />
+          
+          {/* === 2. ITT A HELYES HELYEN VAN A LOGIKA === */}
+          {isHome && showProgramModal && (
+            <ProgramModal onClose={() => setShowProgramModal(false)} />
+          )}
+      
+          {isHome && !showProgramModal && (
+            <button 
+              onClick={() => setShowProgramModal(true)} 
+              className="w-14 h-14 fixed bottom-20 right-4 bg-purple-700 text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-purple-800 transition transform hover:scale-110 z-50" 
+              aria-label="Programfüzet megnyitása"
+            >
+              🍇
+            </button>
+          )}
+
         </>
       )}
     </div>
   );
 }
-
-{/*
-  const [showProgramModal, setShowProgramModal] = useState(true);
-  const [showOstromDrawer, setShowOstromDrawer] = useState(false);
-  const isHome = location.pathname === '/';
-
-      {isHome && showProgramModal && (
-        <ProgramModal
-          onClose={() => setShowProgramModal(false)}
-          openDrawer={() => {
-            setShowProgramModal(false);
-            setShowOstromDrawer(true);
-          }}
-        />
-      )}
-      {showOstromDrawer && ( <OstromDrawerFullAnimated onClose={() => setShowOstromDrawer(false)} /> )}
-      {isHome && !showProgramModal && !showOstromDrawer && (
-        <button onClick={() => setShowProgramModal(true)} className="w-12 h-12 fixed bottom-[120px] right-4 ..." aria-label="Ostromprogramok megnyitása">📅</button>
-      )}
-      */}
