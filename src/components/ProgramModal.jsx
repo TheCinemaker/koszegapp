@@ -89,7 +89,7 @@ function InfoModal({ onClose }) {
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">🔴</span><div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program.</div></li>
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">🗓️</span><div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div></li>
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">★</span><div><p><strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!</p><p className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-800 dark:text-blue-200"><strong>Tipp:</strong> Az értesítések akkor a legmegbízhatóbbak, ha a Főképernyőre tett ikonról indítod az appot.</p></div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">📅</span><div><strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő naptár ikonnal.</div></li>
+                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🍇</span><div><strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő szőlő (🍇) ikonnal.</div></li>
                 </ul>
                 <div className="mt-6 text-center"><button onClick={onClose} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full transition">Értettem!</button></div>
             </div>
