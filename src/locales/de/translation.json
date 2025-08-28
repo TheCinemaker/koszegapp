@@ -12,7 +12,9 @@
     "routePlanner": "Route planen",
     "takeMeThere": "Bring mich hin",
     "helpTitle": "Wie benutzt man es?",
-    "iUnderstand": "Verstanden!"
+    "iUnderstand": "Verstanden!",
+    "countdownPrefix": "Start in:",
+    "countdownFormat": "{{days}}T {{hours}}S {{minutes}}M {{seconds}}s"
   },
   "infoModal": {
     "title": "Wie benutzt man es?",
