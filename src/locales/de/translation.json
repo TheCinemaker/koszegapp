@@ -18,7 +18,10 @@
     "nextDayTomorrow": "(Morgen, um {{time}} Uhr)",
     "nextDayInXDays": "(In {{count}} Tagen, am {{dayName}})",
     "favoritesEmptyTitle": "Du hast noch keine Favoriten markiert.",
-    "favoritesEmptySubtitle": "Klicke auf den Stern ☆ neben einer Veranstaltung!"
+    "favoritesEmptySubtitle": "Klicke auf den Stern ☆ neben einer Veranstaltung!",
+    "timeUnits": { "day": "Tag", "hour": "Std", "minute": "Min", "second": "Sek" },
+    "inlineCountdownFormat": "(in {{parts}})",
+    "inlineTimeUnits": { "hour": "Std", "minute": "Min", "second": "Sek" }
   },
   "infoModal": {
     "title": "Wie benutzt man es?",
