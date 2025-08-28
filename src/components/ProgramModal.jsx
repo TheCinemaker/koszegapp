@@ -352,7 +352,10 @@ export default function ProgramModal({ onClose }) {
 
                     {!timeLeft.isOver && (
                         <div className="sticky top-[58px] z-10 bg-purple-900/95 backdrop-blur-sm text-white text-center p-2 shadow-inner">
-                            <span className="font-mono text-sm">Kezdésig: {timeLeft.days}n {timeLeft.hours}ó {timeLeft.minutes}p {timeLeft.seconds}s</span>
+                            <span className="font-mono text-sm">
+        {t('programModal.countdownPrefix')}{' '}
+        {t('programModal.countdownFormat', { days: timeLeft.days, hours: timeLeft.hours, minutes: timeLeft.minutes, seconds: timeLeft.seconds })}
+    </span>
                         </div>
                     )}
 
