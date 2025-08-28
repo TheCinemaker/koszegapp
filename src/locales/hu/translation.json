@@ -1,28 +1,17 @@
 {
-  "app": {
-    "title": "KőszegAPP"
-  },
-  "menu": {
-    "home": "Főoldal",
-    "attractions": "Látnivalók",
-    "events": "Események",
-    "gastronomy": "Vendéglátás",
-    "parking": "Parkolás",
-    "info": "Info",
-    "hotels": "Szállások"
-  },
-  "pages": {
-    "home": "Üdvözlünk a KőszegAPP főoldalán!",
-    "attractions": "Itt lesznek a látnivalók listája",
-    "events": "Itt lesznek az események",
-    "gastronomy": "Itt találod a helyi éttermeket és szállásokat",
-    "parking": "Parkolási információk itt",
-    "info": "Általános információk"
-  },
-  "home": {
-    "welcomeTitle": "Üdvözlünk a KőszegAPP-ban!",
-    "introText": "Fedezd fel Kőszeg látnivalóit, eseményeit, éttermeit és parkolási lehetőségeit egy helyen!",
-    "currentWeather": "Aktuális időjárás",
-    "featuredEvent": "Kiemelt esemény: {{event}}"
+  "programModal": {
+    "title": "Kőszegi Szüret 2025",
+    "live": "Élő",
+    "fullProgram": "Teljes Program",
+    "favorites": "Kedvenceim",
+    "currentlyRunning": "Jelenleg zajlik",
+    "nextEvent": "Következő",
+    "festivalOver": "A fesztiválnak vége, köszönjük a részvételt!",
+    "noCurrentEvent": "Jelenleg nincs program.",
+    "countdownStartsIn": "A következő ennyi idő múlva kezdődik:",
+    "routePlanner": "Útvonalterv",
+    "takeMeThere": "Odaviszlek",
+    "helpTitle": "Hogyan használd?",
+    "iUnderstand": "Értettem!"
   }
 }
