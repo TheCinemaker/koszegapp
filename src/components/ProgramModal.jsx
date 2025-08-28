@@ -1,11 +1,18 @@
-/* --- FÁJL: ProgramModal.jsx (Kőszegi Szüret 2024 verzió) --- */
+/* --- FÁJL: ProgramModal.jsx (Teljes, Többnyelvű, Kőszegi Szüret 2025 verzió) --- */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'; 
 import { parseISO, isSameDay, isBefore, isAfter, format, isValid, startOfDay, differenceInDays } from 'date-fns';
-import { hu } from 'date-fns/locale';
+import { hu, enUS, de } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
+
+const localeMap = {
+  hu: hu,
+  en: enUS,
+  de: de
+};
 
 // --- BIZTONSÁGI ÉS HELPER FÜGGVÉNYEK ---
 
@@ -15,7 +22,7 @@ function safeParseISO(dateString) {
         const date = parseISO(dateString);
         return isValid(date) ? date : null;
     } catch (error) {
-        console.error(`Hibás dátumformátum, nem sikerült feldolgozni: "${dateString}"`, error);
+        console.error(`Hibás dátumformátum, nem sikerült feldgozni: "${dateString}"`, error);
         return null;
     }
 }
@@ -48,15 +55,18 @@ function useFavorites() {
 }
 
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) {
+    const { t, i18n } = useTranslation();
+    const currentLang = i18n.language;
+
     const cardClasses = "p-3 rounded-xl border-l-4 cursor-pointer hover:shadow-lg transition mb-2 " + 
         (isFavorite ? "bg-yellow-100 dark:bg-yellow-900/40 border-yellow-500" : "bg-purple-100 dark:bg-purple-900/50 border-purple-500");
     return (
         <div className={cardClasses} onClick={() => onSelect(event)}>
             <div className="flex items-start justify-between">
                 <div className="flex-grow pr-2">
-                    <p className="font-bold text-gray-900 dark:text-gray-100">{event.nev}</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100">{event.nev[currentLang] || event.nev.hu}</p>
                     <div className="text-sm mt-1 text-gray-700 dark:text-gray-300 space-y-1">
-                        <p>📍 {event.helyszin.nev}</p>
+                        <p>📍 {event.helyszin.nev[currentLang] || event.helyszin.nev.hu}</p>
                         <p>🕘 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}</p>
                     </div>
                 </div>
@@ -72,7 +82,7 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
                     className="block mt-2 text-sm font-semibold text-purple-700 underline hover:text-purple-900 dark:text-purple-300"
                     onClick={e => e.stopPropagation()}
                 >
-                    🧭 Útvonalterv
+                    🧭 {t('programModal.routePlanner')}
                 </a>
             )}
         </div>
@@ -80,18 +90,19 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
 }
 
 function InfoModal({ onClose }) {
+    const { t } = useTranslation();
     return (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4" onClick={onClose}>
             <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} className="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 transition">×</button>
-                <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-200 mb-4">ℹ️ Hogyan használd?</h2>
+                <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-200 mb-4">ℹ️ {t('programModal.helpTitle')}</h2>
                 <ul className="space-y-4 text-gray-700 dark:text-gray-300">
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">🔴</span><div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program.</div></li>
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">🗓️</span><div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div></li>
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">★</span><div><p><strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!</p><p className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-800 dark:text-blue-200"><strong>Tipp:</strong> Az értesítések akkor a legmegbízhatóbbak, ha a Főképernyőre tett ikonról indítod az appot.</p></div></li>
                     <li className="flex items-start gap-3"><span className="text-xl pt-1">🍇</span><div><strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő szőlő (🍇) ikonnal.</div></li>
                 </ul>
-                <div className="mt-6 text-center"><button onClick={onClose} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full transition">Értettem!</button></div>
+                <div className="mt-6 text-center"><button onClick={onClose} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full transition">{t('programModal.iUnderstand')}</button></div>
             </div>
         </div>
     );
@@ -181,6 +192,10 @@ function InlineCountdown({ targetDate }) {
 // --- A FŐ KOMPONENS ---
 
 export default function ProgramModal({ onClose }) {
+    const { t, i18n } = useTranslation();
+    const currentLang = i18n.language;
+    const currentLocale = localeMap[currentLang] || hu;
+
     const [view, setView] = useState('today');
     const { favorites, toggleFavorite } = useFavorites();
     const [notificationPermission, setNotificationPermission] = useState(typeof window !== 'undefined' && window.Notification ? Notification.permission : 'unsupported');
@@ -197,7 +212,6 @@ export default function ProgramModal({ onClose }) {
 
     const calculateTimeLeft = useCallback(() => {
         const now = new Date();
-        // === EZT A DÁTUMOT FRISSÍTSD AZ AKTUÁLIS FESZTIVÁL KEZDETÉHEZ! ===
         const festivalStart = new Date('2025-09-26T17:00:00');
         const diff = festivalStart - now;
         return {
@@ -283,7 +297,7 @@ export default function ProgramModal({ onClose }) {
         iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
     });
     
-    const getNextEventDayInfo = () => { if (!nextEvents || nextEvents.length === 0) return ""; const nextDate = nextEvents[0].start; const now = new Date(); if (isSameDay(nextDate, now)) return ``; const dayDiff = differenceInDays(startOfDay(nextDate), startOfDay(now)); if (dayDiff === 1) return `(Holnap, ${format(nextDate, 'HH:mm')}-kor)`; return `(${dayDiff} nap múlva, ${format(nextDate, 'eeee', {locale: hu})})`; };
+    const getNextEventDayInfo = () => { if (!nextEvents || nextEvents.length === 0) return ""; const nextDate = nextEvents[0].start; const now = new Date(); if (isSameDay(nextDate, now)) return ``; const dayDiff = differenceInDays(startOfDay(nextDate), startOfDay(now)); if (dayDiff === 1) return `(Holnap, ${format(nextDate, 'HH:mm')}-kor)`; return `(${dayDiff} nap múlva, ${format(nextDate, 'eeee', {locale: currentLocale})})`; };
 
     const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
 
@@ -293,22 +307,27 @@ export default function ProgramModal({ onClose }) {
                 <div className="max-w-3xl mx-auto flex flex-col h-full pointer-events-auto">
                     <div className="sticky top-0 z-20 bg-purple-800 dark:bg-purple-950 text-white p-3 rounded-t-2xl shadow-md flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                            {/* === FRISSÍTETT CÍM === */}
-                            <h2 className="text-xl font-bold">🍇 Kőszegi Szüret 2025</h2>
+                            <h2 className="text-xl font-bold">🍇 {t('programModal.title')}</h2>
                             <button onClick={() => setShowInfoModal(true)} className="bg-black/20 w-7 h-7 rounded-full flex items-center justify-center text-lg font-bold hover:bg-black/40 transition" aria-label="Súgó">i</button>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
                             {weatherData && (
                             <div className="hidden sm:flex items-center gap-1 bg-black/20 px-2 py-1 rounded-lg">
                                 <img src={`https://openweathermap.org/img/wn/${weatherData.icon}.png`} alt={weatherData.description} className="w-6 h-6" />
                                 <span className="text-sm font-bold">{weatherData.temp}°C</span>
                             </div>
                             )}
+                            
+                            <div className="flex items-center space-x-1 bg-black/20 p-1 rounded-full">
+                                <button onClick={() => i18n.changeLanguage('hu')} className={`w-6 h-6 rounded-full text-xs transition flex items-center justify-center ${currentLang === 'hu' ? 'ring-2 ring-white' : 'opacity-60 hover:opacity-100'}`} aria-label="Magyar">🇭🇺</button>
+                                <button onClick={() => i18n.changeLanguage('en')} className={`w-6 h-6 rounded-full text-xs transition flex items-center justify-center ${currentLang === 'en' ? 'ring-2 ring-white' : 'opacity-60 hover:opacity-100'}`} aria-label="English">🇬🇧</button>
+                                <button onClick={() => i18n.changeLanguage('de')} className={`w-6 h-6 rounded-full text-xs transition flex items-center justify-center ${currentLang === 'de' ? 'ring-2 ring-white' : 'opacity-60 hover:opacity-100'}`} aria-label="Deutsch">🇩🇪</button>
+                            </div>
+
                             <button onClick={onClose} className="text-2xl hover:text-purple-200 transition-colors" aria-label="Bezárás">×</button>
                         </div>
                     </div>
                     
-                    {/* === KIKOMMENTELT BANNER, SZÜKSÉG ESETÉN VISSZAKAPCSOLHATÓ === */}
                     {/*
                     <div className="sticky top-[58px] z-10 bg-red-600 text-white text-center p-2 shadow-inner font-semibold">
                         <p>FONTOS KÖZLEMÉNY: Itt jelenhet meg egy rendkívüli információ!</p>
@@ -323,9 +342,9 @@ export default function ProgramModal({ onClose }) {
 
                     <div className="bg-purple-50 dark:bg-zinc-900 p-4 rounded-b-2xl shadow-lg flex-grow overflow-y-auto">
                         <div className="mb-4 flex border-b-2 border-purple-200 dark:border-zinc-700">
-                            <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-purple-600 text-purple-700 dark:text-purple-300' : 'text-gray-500 hover:bg-purple-100 dark:hover:bg-zinc-800'}`}>Élő</button>
-                            <button onClick={() => setView('full')} className={`px-4 py-2 text-sm font-semibold ${view === 'full' ? 'border-b-2 border-purple-600 text-purple-700 dark:text-purple-300' : 'text-gray-500 hover:bg-purple-100 dark:hover:bg-zinc-800'}`}>Teljes Program</button>
-                            <button onClick={() => setView('favorites')} className={`px-4 py-2 text-sm font-semibold flex items-center gap-1 ${view === 'favorites' ? 'border-b-2 border-yellow-500 text-yellow-600 dark:text-yellow-400' : 'text-gray-500 hover:bg-purple-100 dark:hover:bg-zinc-800'}`}>Kedvenceim <span className="text-yellow-500">★</span></button>
+                            <button onClick={() => setView('today')} className={`px-4 py-2 text-sm font-semibold ${view === 'today' ? 'border-b-2 border-purple-600 text-purple-700 dark:text-purple-300' : 'text-gray-500 hover:bg-purple-100 dark:hover:bg-zinc-800'}`}>{t('programModal.live')}</button>
+                            <button onClick={() => setView('full')} className={`px-4 py-2 text-sm font-semibold ${view === 'full' ? 'border-b-2 border-purple-600 text-purple-700 dark:text-purple-300' : 'text-gray-500 hover:bg-purple-100 dark:hover:bg-zinc-800'}`}>{t('programModal.fullProgram')}</button>
+                            <button onClick={() => setView('favorites')} className={`px-4 py-2 text-sm font-semibold flex items-center gap-1 ${view === 'favorites' ? 'border-b-2 border-yellow-500 text-yellow-600 dark:text-yellow-400' : 'text-gray-500 hover:bg-purple-100 dark:hover:bg-zinc-800'}`}>{t('programModal.favorites')} <span className="text-yellow-500">★</span></button>
                         </div>
                         
                         {isLoading ? <div className="text-center py-10"><p className="text-lg font-semibold text-purple-700 dark:text-purple-300">Programok betöltése...</p></div> : error ? <div className="text-center py-10 bg-red-100 dark:bg-red-900/50 p-4 rounded-lg"><p className="text-lg font-bold text-red-700 dark:text-red-300">Hiba történt!</p><p className="text-sm text-red-600 dark:text-red-200 mt-1">{error}</p></div> : <>
@@ -333,12 +352,12 @@ export default function ProgramModal({ onClose }) {
                         {notificationPermission === 'denied' && (<p className="text-xs text-center text-gray-500 mb-4">Az értesítések le vannak tiltva a böngésződben. A beállításokban tudod engedélyezni.</p>)}
                         
                         {view === 'today' && (<>
-                            {events.length > 0 && currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-purple-700 dark:text-purple-200 italic py-6">🎉 A fesztiválnak vége, köszönjük a részvételt!</p>}
-                            <div className="mb-6">{currentEvents.length > 0 ? <div className="animate-fadein"><h3 className="section-title border-purple-300 dark:border-purple-700 text-purple-800 dark:text-purple-200">🎬 Jelenleg zajlik ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div> : nextEvents.length > 0 && <div className="text-center bg-purple-100 dark:bg-purple-900/40 p-4 rounded-xl animate-fadein"><p className="text-lg font-semibold text-purple-800 dark:text-purple-200">Jelenleg nincs program.</p><p className="text-sm text-gray-600 dark:text-gray-400 mt-1">A következő ennyi idő múlva kezdődik:</p><div className="text-3xl mt-2 text-purple-700 dark:text-purple-300"><CountdownToNext targetDate={nextEvents[0].start} /></div></div>}</div>
+                            {events.length > 0 && currentEvents.length === 0 && nextEvents.length === 0 && <p className="text-center text-lg text-purple-700 dark:text-purple-200 italic py-6">🎉 {t('programModal.festivalOver')}</p>}
+                            <div className="mb-6">{currentEvents.length > 0 ? <div className="animate-fadein"><h3 className="section-title border-purple-300 dark:border-purple-700 text-purple-800 dark:text-purple-200">🎬 {t('programModal.currentlyRunning')} ({currentEvents.length})</h3>{currentEvents.map(e => <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />)}</div> : nextEvents.length > 0 && <div className="text-center bg-purple-100 dark:bg-purple-900/40 p-4 rounded-xl animate-fadein"><p className="text-lg font-semibold text-purple-800 dark:text-purple-200">{t('programModal.noCurrentEvent')}</p><p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{t('programModal.countdownStartsIn')}</p><div className="text-3xl mt-2 text-purple-700 dark:text-purple-300"><CountdownToNext targetDate={nextEvents[0].start} /></div></div>}</div>
                             
                             {nextEvents.length > 0 && <div className="mb-4 animate-fadein">
                                 <h3 className="section-title border-teal-300 dark:border-teal-700 text-teal-800 dark:text-teal-200 flex items-baseline gap-2">
-                                    <span>⏭️ Következő</span>
+                                    <span>⏭️ {t('programModal.nextEvent')}</span>
                                     {isSameDay(nextEvents[0].start, new Date()) ? (
                                         <InlineCountdown targetDate={nextEvents[0].start} />
                                     ) : (
@@ -351,8 +370,8 @@ export default function ProgramModal({ onClose }) {
                                 <div className="mt-6">
                                     <div className="mb-2 flex justify-between items-center">
                                         <div>
-                                            <h4 className="font-bold text-purple-800 dark:text-purple-200">{currentEvents.length > 0 ? 'Jelenlegi esemény a térképen' : 'Következő esemény a térképen'}</h4>
-                                            <p className="text-xs text-gray-500">{mapFocusEvent.helyszin.nev}</p>
+                                            <h4 className="font-bold text-purple-800 dark:text-purple-200">{currentEvents.length > 0 ? t('programModal.currentlyRunning') : t('programModal.nextEvent')}</h4>
+                                            <p className="text-xs text-gray-500">{mapFocusEvent.helyszin.nev[currentLang] || mapFocusEvent.helyszin.nev.hu}</p>
                                         </div>
                                         <a
                                             href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${mapFocusEvent.helyszin.lat},${mapFocusEvent.helyszin.lng}&travelmode=walking`}
@@ -361,15 +380,15 @@ export default function ProgramModal({ onClose }) {
                                             className="text-sm font-semibold text-purple-700 underline hover:text-purple-900 dark:text-purple-300 flex items-center gap-1"
                                         >
                                             <span>🧭</span>
-                                            <span>Odaviszlek</span>
+                                            <span>{t('programModal.takeMeThere')}</span>
                                         </a>
                                     </div>
                                     <div className="h-[250px] rounded-xl overflow-hidden border border-purple-300 dark:border-purple-700">
                                         <MapContainer center={[ mapFocusEvent.helyszin.lat, mapFocusEvent.helyszin.lng ]} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
                                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                                             <Marker position={[userLocation.lat, userLocation.lng]}><Popup>📍 Itt vagy</Popup></Marker>
-                                            {currentEvents.map(e => <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}><Popup><strong>{e.nev}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup></Marker>)}
-                                            {nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}><Popup><strong>{e.nev}</strong><br/>Kezdés: {format(e.start, 'HH:mm')}</Popup></Marker>)}
+                                            {currentEvents.map(e => <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}><Popup><strong>{e.nev[currentLang] || e.nev.hu}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup></Marker>)}
+                                            {nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}><Popup><strong>{e.nev[currentLang] || e.nev.hu}</strong><br/>Kezdés: {format(e.start, 'HH:mm')}</Popup></Marker>)}
                                         </MapContainer>
                                     </div>
                                 </div>
@@ -383,7 +402,7 @@ export default function ProgramModal({ onClose }) {
                                 .map(({ date, events: dayEvents }) => (
                                     <div key={date.getTime()}>
                                     <h3 className="section-title border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 capitalize">
-                                        {format(date, 'MMMM d. (eeee)', { locale: hu })}
+                                        {format(date, 'MMMM d. (eeee)', { locale: currentLocale })}
                                     </h3>
                                     {dayEvents
                                         .sort((a, b) => a.start - b.start)
