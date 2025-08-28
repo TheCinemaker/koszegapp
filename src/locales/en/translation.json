@@ -12,7 +12,9 @@
     "routePlanner": "Directions",
     "takeMeThere": "Take me there",
     "helpTitle": "How to use?",
-    "iUnderstand": "Got it!"
+    "iUnderstand": "Got it!",
+    "countdownPrefix": "Starts in:",
+    "countdownFormat": "{{days}}d {{hours}}h {{minutes}}m {{seconds}}s"
   },
   "infoModal": {
     "title": "How to use?",
