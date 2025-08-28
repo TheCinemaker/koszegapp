@@ -1,26 +1,17 @@
 {
-  "app": { "title": "KőszegAPP" },
-  "menu": {
-    "home": "Startseite",
-    "attractions": "Sehenswürdigkeiten",
-    "events": "Veranstaltungen",
-    "gastronomy": "Gastronomie",
-    "parking": "Parken",
-    "info": "Info",
-    "menu.hotels": "Hotels"
-  },
-  "pages": {
-    "home": "Willkommen auf der Startseite der KőszegAPP!",
-    "attractions": "Hier findest du die Liste der Sehenswürdigkeiten",
-    "events": "Hier findest du die kommenden Veranstaltungen",
-    "gastronomy": "Entdecke hier lokale Restaurants und Unterkünfte",
-    "parking": "Parkinformationen findest du hier",
-    "info": "Allgemeine Informationen"
-  },
-  "home": {
-    "welcomeTitle": "Willkommen bei KőszegAPP!",
-    "introText": "Entdecke Sehenswürdigkeiten, Veranstaltungen, Restaurants und Parkmöglichkeiten an einem Ort!",
-    "currentWeather": "Aktuelles Wetter",
-    "featuredEvent": "Top‑Veranstaltung: {{event}}"
+  "programModal": {
+    "title": "Kőszeger Weinlese 2025",
+    "live": "Live",
+    "fullProgram": "Gesamtprogramm",
+    "favorites": "Meine Favoriten",
+    "currentlyRunning": "Läuft gerade",
+    "nextEvent": "Nächstes Event",
+    "festivalOver": "Das Festival ist vorbei, danke für die Teilnahme!",
+    "noCurrentEvent": "Derzeit findet keine Veranstaltung statt.",
+    "countdownStartsIn": "Die nächste Veranstaltung beginnt in:",
+    "routePlanner": "Route planen",
+    "takeMeThere": "Bring mich hin",
+    "helpTitle": "Wie benutzt man es?",
+    "iUnderstand": "Verstanden!"
   }
 }
