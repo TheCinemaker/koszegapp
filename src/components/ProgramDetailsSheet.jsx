@@ -1,59 +1,73 @@
 import React from 'react';
+// ÚJ: Importáljuk a fordító hookot
+import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 
 export default function ProgramDetailsSheet({ program, onClose }) {
-  if (!program) return null;
+  // ÚJ: Használjuk a hookot, hogy megkapjuk az aktuális nyelvet
+  const { i18n } = useTranslation();
+  const currentLang = i18n.language;
+
+  if (!program) {
+    return null;
+  }
 
   return (
-    <div 
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 px-4"
-      onClick={onClose}
-    >
-  
+    <>
+      {/* Háttér */}
       <div 
-        className="max-w-xl w-full rounded-2xl shadow-2xl bg-amber-50 dark:bg-zinc-900 animate-scale-in"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* FEJLÉC (ugyanaz a stílus, mint a fő modalnak) */}
-        <div className="bg-amber-600 dark:bg-amber-900 text-white p-4 rounded-t-2xl flex justify-between items-start">
-          <div>
-            <h2 className="text-2xl font-extrabold">{program.nev}</h2>
-            {program.kiemelt && (
-              <span className="mt-1 inline-block bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                KIEMELT ESEMÉNY
-              </span>
-            )}
+        className="fixed inset-0 bg-black/40 z-[1000] animate-fadein-fast"
+        onClick={onClose}
+      />
+
+      {/* A "Sheet" (a felugró lap) */}
+      <div className="fixed bottom-0 left-0 right-0 z-[1001] bg-white dark:bg-zinc-800 rounded-t-2xl shadow-2xl p-6 max-h-[85vh] overflow-y-auto animate-slide-up">
+        
+        {/* Bezárás gomb */}
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition"
+          aria-label="Bezárás"
+        >
+          &times;
+        </button>
+
+        {/* Cím */}
+        <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-200 pr-8">
+          {/* JAVÍTVA: Az aktuális nyelvnek megfelelő nevet jelenítjük meg */}
+          {program.nev[currentLang] || program.nev.hu}
+        </h2>
+
+        {/* Kiemelt jelzés */}
+        {program.kiemelt && (
+          <div className="mt-2 inline-block bg-yellow-200 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full">
+            ⭐ Kiemelt esemény
           </div>
-          <button onClick={onClose} className="text-2xl hover:text-amber-200 transition-colors" aria-label="Bezárás">×</button>
+        )}
+        
+        <div className="mt-4 space-y-3 text-gray-700 dark:text-gray-300">
+          {/* Időpont */}
+          <div className="flex items-center gap-3">
+            <span className="text-xl">🕘</span>
+            <span>{format(program.start, 'yyyy. MMMM d. HH:mm')} – {format(program.end, 'HH:mm')}</span>
+          </div>
+
+          {/* Helyszín */}
+          <div className="flex items-center gap-3">
+            <span className="text-xl">📍</span>
+            {/* JAVÍTVA: Az aktuális nyelvnek megfelelő helyszínnevet jelenítjük meg */}
+            <span>{program.helyszin.nev[currentLang] || program.helyszin.nev.hu}</span>
+          </div>
         </div>
 
-        {/* TARTALOM */}
-        <div className="p-5">
-          <div className="text-sm text-gray-700 dark:text-gray-300 space-y-2 mb-4">
-            <p><strong>🕘 Időpont:</strong> {format(program.start, 'yyyy. MM. dd. HH:mm')} – {format(program.end, 'HH:mm')}</p>
-            <p><strong>📍 Helyszín:</strong> {program.helyszin.nev}</p>
-          </div>
-          
-          {program.leiras && (
-            <div className="mt-4 text-gray-800 dark:text-gray-200 text-base leading-relaxed whitespace-pre-line border-t border-amber-200 dark:border-zinc-700 pt-4">
-              {program.leiras}
-            </div>
-          )}
-
-          {program.helyszin?.lat && (
-            <div className="mt-6">
-              <a
-                href={`https://www.google.com/maps/dir/?api=1&destination=${program.helyszin.lat},${program.helyszin.lng}&travelmode=walking`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-full font-semibold transition"
-              >
-                🧭 Útvonaltervezés ide
-              </a>
-            </div>
-          )}
+        {/* Leírás */}
+        <div className="mt-6 pt-4 border-t border-gray-200 dark:border-zinc-700">
+          <p className="text-base text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+            {/* JAVÍTVA: Az aktuális nyelvnek megfelelő leírást jelenítjük meg */}
+            {program.leiras[currentLang] || program.leiras.hu}
+          </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }
