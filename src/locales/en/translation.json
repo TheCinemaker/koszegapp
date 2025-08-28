@@ -14,7 +14,9 @@
     "helpTitle": "How to use?",
     "iUnderstand": "Got it!",
     "countdownPrefix": "Starts in:",
-    "countdownFormat": "{{days}}d {{hours}}h {{minutes}}m {{seconds}}s"
+    "countdownFormat": "{{days}}d {{hours}}h {{minutes}}m {{seconds}}s",
+    "nextDayTomorrow": "(Tomorrow, at {{time}})",
+    "nextDayInXDays": "(In {{count}} days, on {{dayName}})"
   },
   "infoModal": {
     "title": "How to use?",
