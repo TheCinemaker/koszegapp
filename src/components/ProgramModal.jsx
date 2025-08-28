@@ -99,19 +99,19 @@ function InfoModal({ onClose }) {
                 <ul className="space-y-4 text-gray-700 dark:text-gray-300">
                     <li className="flex items-start gap-3">
                         <span className="text-xl pt-1">🔴</span>
-                        <div><Trans i18nKey="infoModal.item1" components={{ strong: <strong /> }} /></div>
+                        <div>{t('infoModal.item1')}</div>
                     </li>
                     <li className="flex items-start gap-3">
                         <span className="text-xl pt-1">🗓️</span>
-                        <div><Trans i18nKey="infoModal.item2" components={{ strong: <strong /> }} /></div>
+                        <div>{t('infoModal.item2')}</div>
                     </li>
                     <li className="flex items-start gap-3">
                         <span className="text-xl pt-1">★</span>
-                        <div><Trans i18nKey="infoModal.item3" components={{ strong: <strong /> }} /></div>
+                        <div>{t('infoModal.item3')}</div>
                     </li>
                     <li className="flex items-start gap-3">
                         <span className="text-xl pt-1">🍇</span>
-                        <div><Trans i18nKey="infoModal.item4" components={{ strong: <strong /> }} /></div>
+                        <div>{t('infoModal.item4')}</div>
                     </li>
                 </ul>
                 <div className="mt-6 text-center">
