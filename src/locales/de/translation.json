@@ -14,4 +14,12 @@
     "helpTitle": "Wie benutzt man es?",
     "iUnderstand": "Verstanden!"
   }
-}
+},
+  "infoModal": {
+    "title": "Wie benutzt man es?",
+    "button": "Verstanden!",
+    "item1": "<strong>Live-Ansicht:</strong> Hier sehen Sie, was gerade passiert und was als Nächstes kommt.",
+    "item2": "<strong>Gesamtprogramm:</strong> Durchsuchen Sie alle Veranstaltungen des Festivals, nach Tagen sortiert.",
+    "item3": "<strong>Favoriten & Benachrichtigungen:</strong> Klicken Sie auf einen Stern (☆), um eine Veranstaltung zu Ihren Favoriten hinzuzufügen und eine Benachrichtigung zu erhalten!",
+    "item4": "<strong>Wenn Sie es schließen:</strong> Sie können den Programmführer jederzeit mit dem schwebenden Trauben-Symbol (🍇) auf der Hauptseite wieder öffnen."
+  }
