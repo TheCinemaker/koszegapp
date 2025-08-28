@@ -1,7 +1,7 @@
 /* --- FÁJL: ProgramModal.jsx (Teljes, Többnyelvű, Kőszegi Szüret 2025 verzió) --- */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation, Trans } from 'react-i18next'; 
 import { parseISO, isSameDay, isBefore, isAfter, format, isValid, startOfDay, differenceInDays } from 'date-fns';
 import { hu, enUS, de } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -89,25 +89,46 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
     );
 }
 
+// A ProgramModal.jsx fájl tetején, az importoknál, egészítsd ki ezt a sort:
+import { useTranslation, Trans } from 'react-i18next';
+
+// ...
+
+// Majd cseréld le a teljes InfoModal függvényt erre:
 function InfoModal({ onClose }) {
     const { t } = useTranslation();
     return (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4" onClick={onClose}>
             <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} className="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 transition">×</button>
-                <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-200 mb-4">ℹ️ {t('programModal.helpTitle')}</h2>
+                <h2 className="text-2xl font-bold text-purple-800 dark:text-purple-200 mb-4">ℹ️ {t('infoModal.title')}</h2>
                 <ul className="space-y-4 text-gray-700 dark:text-gray-300">
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🔴</span><div><strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program.</div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🗓️</span><div><strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.</div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">★</span><div><p><strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!</p><p className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-800 dark:text-blue-200"><strong>Tipp:</strong> Az értesítések akkor a legmegbízhatóbbak, ha a Főképernyőre tett ikonról indítod az appot.</p></div></li>
-                    <li className="flex items-start gap-3"><span className="text-xl pt-1">🍇</span><div><strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő szőlő (🍇) ikonnal.</div></li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">🔴</span>
+                        <div><Trans i18nKey="infoModal.item1" components={{ strong: <strong /> }} /></div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">🗓️</span>
+                        <div><Trans i18nKey="infoModal.item2" components={{ strong: <strong /> }} /></div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">★</span>
+                        <div><Trans i18nKey="infoModal.item3" components={{ strong: <strong /> }} /></div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                        <span className="text-xl pt-1">🍇</span>
+                        <div><Trans i18nKey="infoModal.item4" components={{ strong: <strong /> }} /></div>
+                    </li>
                 </ul>
-                <div className="mt-6 text-center"><button onClick={onClose} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full transition">{t('programModal.iUnderstand')}</button></div>
+                <div className="mt-6 text-center">
+                    <button onClick={onClose} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full transition">
+                        {t('infoModal.button')}
+                    </button>
+                </div>
             </div>
         </div>
     );
 }
-
 function CountdownToNext({ targetDate }) {
     const calculateTimeLeft = useCallback(() => {
         if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
