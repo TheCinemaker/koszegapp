@@ -21,6 +21,11 @@
     "favoritesEmptySubtitle": "Kattints egy esemény melletti csillagra! ☆",
     "timeUnits": { "day": "Nap", "hour": "Óra", "minute": "Perc", "second": "Mp" },
     "inlineCountdownFormat": "({{parts}} múlva)",
+    "inlineTimeUnits": { "hour": "óra", "minute": "perc", "second": "mp" },
+    "nowStarting": "Most kezdődik!",
+    "nowStartingInline": "Azonnal kezdődik!",
+    "timeUnits": { "day": "Nap", "hour": "Óra", "minute": "Perc", "second": "Mp" },
+    "inlineCountdownFormat": "({{parts}} múlva)",
     "inlineTimeUnits": { "hour": "óra", "minute": "perc", "second": "mp" }
   },
   "infoModal": {
