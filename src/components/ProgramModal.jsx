@@ -313,8 +313,22 @@ export default function ProgramModal({ onClose }) {
         iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
     });
     
-    const getNextEventDayInfo = () => { if (!nextEvents || nextEvents.length === 0) return ""; const nextDate = nextEvents[0].start; const now = new Date(); if (isSameDay(nextDate, now)) return ``; const dayDiff = differenceInDays(startOfDay(nextDate), startOfDay(now)); if (dayDiff === 1) return `(Holnap, ${format(nextDate, 'HH:mm')}-kor)`; return `(${dayDiff} nap múlva, ${format(nextDate, 'eeee', {locale: currentLocale})})`; };
+    const getNextEventDayInfo = () => {
+    if (!nextEvents || nextEvents.length === 0) return "";
+    const nextDate = nextEvents[0].start;
+    const now = new Date();
 
+    if (isSameDay(nextDate, now)) return ""; // Ha ma van, nem kell kiírni semmit
+
+    const dayDiff = differenceInDays(startOfDay(nextDate), startOfDay(now));
+
+    if (dayDiff === 1) {
+        return t('programModal.nextDayTomorrow', { time: format(nextDate, 'HH:mm') });
+    }
+
+    const dayName = format(nextDate, 'eeee', { locale: currentLocale });
+    return t('programModal.nextDayInXDays', { count: dayDiff, dayName: dayName });
+};
     const mapFocusEvent = currentEvents.length > 0 ? currentEvents[0] : nextEvents[0];
 
     return (
@@ -439,7 +453,17 @@ export default function ProgramModal({ onClose }) {
                                 ))}
                             </div>
                         )}
-                        {view === 'favorites' && (<div className="animate-fadein">{favoriteEvents.length > 0 ? favoriteEvents.map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={true} onToggleFavorite={toggleFavorite} userLocation={userLocation} />) : <p className="text-center text-lg text-purple-700 dark:text-purple-200 italic py-6">Még nem jelöltél meg kedvencet.<br/>Kattints egy esemény melletti csillagra! ☆</p>}</div>)}
+                        {view === 'favorites' && (
+                          <div className="animate-fadein">
+                            {favoriteEvents.length > 0 ? 
+                              favoriteEvents.map(event => <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={true} onToggleFavorite={toggleFavorite} userLocation={userLocation} />) : 
+                          <p className="text-center text-lg text-purple-700 dark:text-purple-200 italic py-6">
+                            {t('programModal.favoritesEmptyTitle')}<br/>
+                            {t('programModal.favoritesEmptySubtitle')}
+                        </p>
+        }
+    </div>
+)}
                         </>}
                     </div>
                 </div>
