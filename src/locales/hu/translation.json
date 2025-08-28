@@ -13,8 +13,7 @@
     "takeMeThere": "Odaviszlek",
     "helpTitle": "Hogyan használd?",
     "iUnderstand": "Értettem!"
-  }
-},
+  },
   "infoModal": {
     "title": "Hogyan használd?",
     "button": "Értettem!",
@@ -23,3 +22,4 @@
     "item3": "<strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!",
     "item4": "<strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő szőlő (🍇) ikonnal."
   }
+}
