@@ -21,6 +21,11 @@
     "favoritesEmptySubtitle": "Click the star ☆ next to an event!",
     "timeUnits": { "day": "Day", "hour": "Hour", "minute": "Min", "second": "Sec" },
     "inlineCountdownFormat": "(in {{parts}})",
+    "inlineTimeUnits": { "hour": "hour", "minute": "min", "second": "sec" },
+    "nowStarting": "Starting now!",
+    "nowStartingInline": "Starts immediately!",
+    "timeUnits": { "day": "Day", "hour": "Hour", "minute": "Min", "second": "Sec" },
+    "inlineCountdownFormat": "(in {{parts}})",
     "inlineTimeUnits": { "hour": "hour", "minute": "min", "second": "sec" }
   },
   "infoModal": {
