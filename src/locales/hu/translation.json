@@ -14,7 +14,9 @@
     "helpTitle": "Hogyan használd?",
     "iUnderstand": "Értettem!",
     "countdownPrefix": "Kezdésig:",
-    "countdownFormat": "{{days}}n {{hours}}ó {{minutes}}p {{seconds}}s"
+    "countdownFormat": "{{days}}n {{hours}}ó {{minutes}}p {{seconds}}s",
+    "nextDayTomorrow": "(Holnap, {{time}}-kor)",
+    "nextDayInXDays": "({{count}} nap múlva, {{dayName}})"
   },
   "infoModal": {
     "title": "Hogyan használd?",
