@@ -1,4 +1,4 @@
-/* --- FÁJL: ProgramModal.jsx (Teljes, Többnyelvű, Kőszegi Szüret 2025 verzió) --- */
+/* --- FÁJL: ProgramModal.jsx (Végleges, Többnyelvű, Kőszegi Szüret 2025) --- */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation, Trans } from 'react-i18next'; 
@@ -89,12 +89,6 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
     );
 }
 
-// A ProgramModal.jsx fájl tetején, az importoknál, egészítsd ki ezt a sort:
-import { useTranslation, Trans } from 'react-i18next';
-
-// ...
-
-// Majd cseréld le a teljes InfoModal függvényt erre:
 function InfoModal({ onClose }) {
     const { t } = useTranslation();
     return (
@@ -129,6 +123,7 @@ function InfoModal({ onClose }) {
         </div>
     );
 }
+
 function CountdownToNext({ targetDate }) {
     const calculateTimeLeft = useCallback(() => {
         if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
