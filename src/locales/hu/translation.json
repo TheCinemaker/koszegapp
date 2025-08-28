@@ -16,7 +16,9 @@
     "countdownPrefix": "Kezdésig:",
     "countdownFormat": "{{days}}n {{hours}}ó {{minutes}}p {{seconds}}s",
     "nextDayTomorrow": "(Holnap, {{time}}-kor)",
-    "nextDayInXDays": "({{count}} nap múlva, {{dayName}})"
+    "nextDayInXDays": "({{count}} nap múlva, {{dayName}})",
+    "favoritesEmptyTitle": "Még nem jelöltél meg kedvencet.",
+    "favoritesEmptySubtitle": "Kattints egy esemény melletti csillagra! ☆"
   },
   "infoModal": {
     "title": "Hogyan használd?",
