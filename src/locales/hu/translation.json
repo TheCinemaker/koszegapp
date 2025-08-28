@@ -12,7 +12,9 @@
     "routePlanner": "Útvonalterv",
     "takeMeThere": "Odaviszlek",
     "helpTitle": "Hogyan használd?",
-    "iUnderstand": "Értettem!"
+    "iUnderstand": "Értettem!",
+    "countdownPrefix": "Kezdésig:",
+    "countdownFormat": "{{days}}n {{hours}}ó {{minutes}}p {{seconds}}s"
   },
   "infoModal": {
     "title": "Hogyan használd?",
