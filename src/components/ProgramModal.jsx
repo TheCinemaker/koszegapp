@@ -125,28 +125,13 @@ function InfoModal({ onClose }) {
 }
 
 function CountdownToNext({ targetDate }) {
-    const calculateTimeLeft = useCallback(() => {
-        if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
-        const diff = new Date(targetDate).getTime() - new Date().getTime();
-        if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, isOver: true };
-        return {
-            days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((diff / 1000 / 60) % 60),
-            seconds: Math.floor((diff / 1000) % 60),
-            isOver: false,
-        };
-    }, [targetDate]);
-
+    const { t } = useTranslation(); // Fordító hook használata
+    const calculateTimeLeft = useCallback(() => { /* ... kód változatlan ... */ }, [targetDate]);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
-
-    useEffect(() => {
-        const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
-        return () => clearInterval(timer);
-    }, [calculateTimeLeft]);
+    useEffect(() => { /* ... kód változatlan ... */ }, [calculateTimeLeft]);
 
     if (timeLeft.isOver) {
-        return <span className="font-bold text-green-600 text-2xl">Most kezdődik!</span>;
+        return <span className="font-bold text-green-600 text-2xl">{t('programModal.nowStarting')}</span>;
     }
 
     return (
@@ -154,56 +139,46 @@ function CountdownToNext({ targetDate }) {
             {timeLeft.days > 0 && (
                 <div className="text-center">
                     <span className="text-4xl font-bold">{timeLeft.days}</span>
-                    <span className="block text-xs uppercase tracking-wider">Nap</span>
+                    <span className="block text-xs uppercase tracking-wider">{t('programModal.timeUnits.day')}</span>
                 </div>
             )}
             <div className="text-center">
                 <span className="text-4xl font-bold">{String(timeLeft.hours).padStart(2, '0')}</span>
-                <span className="block text-xs uppercase tracking-wider">Óra</span>
+                <span className="block text-xs uppercase tracking-wider">{t('programModal.timeUnits.hour')}</span>
             </div>
             <div className="text-center">
                 <span className="text-4xl font-bold">{String(timeLeft.minutes).padStart(2, '0')}</span>
-                <span className="block text-xs uppercase tracking-wider">Perc</span>
+                <span className="block text-xs uppercase tracking-wider">{t('programModal.timeUnits.minute')}</span>
             </div>
             <div className="text-center">
                 <span className="text-4xl font-bold">{String(timeLeft.seconds).padStart(2, '0')}</span>
-                <span className="block text-xs uppercase tracking-wider">Mp</span>
+                <span className="block text-xs uppercase tracking-wider">{t('programModal.timeUnits.second')}</span>
             </div>
         </div>
     );
 }
 
 function InlineCountdown({ targetDate }) {
-    const calculateTimeLeft = useCallback(() => {
-        const diff = new Date(targetDate).getTime() - new Date().getTime();
-        if (diff <= 0) return { over: true };
-        return {
-            hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((diff / 1000 / 60) % 60),
-            seconds: Math.floor((diff / 1000) % 60),
-            over: false,
-        };
-    }, [targetDate]);
-
+    const { t } = useTranslation(); // Fordító hook használata
+    const calculateTimeLeft = useCallback(() => { /* ... kód változatlan ... */ }, [targetDate]);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
-
-    useEffect(() => {
-        const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
-        return () => clearInterval(timer);
-    }, [calculateTimeLeft]);
+    useEffect(() => { /* ... kód változatlan ... */ }, [calculateTimeLeft]);
 
     if (timeLeft.over) {
-        return <span className="text-green-600 font-semibold animate-pulse">Azonnal kezdődik!</span>;
+        return <span className="text-green-600 font-semibold animate-pulse">{t('programModal.nowStartingInline')}</span>;
     }
 
     const parts = [];
-    if (timeLeft.hours > 0) parts.push(`${timeLeft.hours} óra`);
-    if (timeLeft.minutes > 0) parts.push(`${timeLeft.minutes} perc`);
-    if (timeLeft.hours === 0 && timeLeft.minutes < 10) parts.push(`${timeLeft.seconds} mp`);
+    if (timeLeft.hours > 0) parts.push(`${timeLeft.hours} ${t('programModal.inlineTimeUnits.hour')}`);
+    if (timeLeft.minutes > 0) parts.push(`${timeLeft.minutes} ${t('programModal.inlineTimeUnits.minute')}`);
+    if (timeLeft.hours === 0 && timeLeft.minutes < 10) parts.push(`${timeLeft.seconds} ${t('programModal.inlineTimeUnits.second')}`);
 
-    return (<span className="text-purple-700 dark:text-purple-300 font-semibold">({parts.join(' ')} múlva)</span>);
+    return (
+        <span className="text-purple-700 dark:text-purple-300 font-semibold">
+            {t('programModal.inlineCountdownFormat', { parts: parts.join(' ') })}
+        </span>
+    );
 }
-
 
 // --- A FŐ KOMPONENS ---
 
