@@ -16,7 +16,9 @@
     "countdownPrefix": "Starts in:",
     "countdownFormat": "{{days}}d {{hours}}h {{minutes}}m {{seconds}}s",
     "nextDayTomorrow": "(Tomorrow, at {{time}})",
-    "nextDayInXDays": "(In {{count}} days, on {{dayName}})"
+    "nextDayInXDays": "(In {{count}} days, on {{dayName}})",
+    "favoritesEmptyTitle": "You haven't marked any favorites yet.",
+    "favoritesEmptySubtitle": "Click the star ☆ next to an event!"
   },
   "infoModal": {
     "title": "How to use?",
