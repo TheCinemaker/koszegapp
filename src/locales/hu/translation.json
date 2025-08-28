@@ -18,7 +18,10 @@
     "nextDayTomorrow": "(Holnap, {{time}}-kor)",
     "nextDayInXDays": "({{count}} nap múlva, {{dayName}})",
     "favoritesEmptyTitle": "Még nem jelöltél meg kedvencet.",
-    "favoritesEmptySubtitle": "Kattints egy esemény melletti csillagra! ☆"
+    "favoritesEmptySubtitle": "Kattints egy esemény melletti csillagra! ☆",
+    "timeUnits": { "day": "Nap", "hour": "Óra", "minute": "Perc", "second": "Mp" },
+    "inlineCountdownFormat": "({{parts}} múlva)",
+    "inlineTimeUnits": { "hour": "óra", "minute": "perc", "second": "mp" }
   },
   "infoModal": {
     "title": "Hogyan használd?",
