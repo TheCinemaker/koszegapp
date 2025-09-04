@@ -4,91 +4,52 @@
     "esemenyek": [
       {
         "id": 101,
-        "nev": {
-          "hu": "Kőszeg Város Ifjúsági Fúvószenekara",
-          "en": "Youth Brass Band of Kőszeg",
-          "de": "Jugendblaskapelle der Stadt Kőszeg"
-        },
-        "leiras": {
-          "hu": "A fesztivál nyitókoncertje Kőszeg Város Ifjúsági Fúvószenekarának előadásában.",
-          "en": "The festival's opening concert, performed by the Youth Brass Band of Kőszeg.",
-          "de": "Das Eröffnungskonzert des Festivals, dargeboten von der Jugendblaskapelle der Stadt Kőszeg."
-        },
+        "nev": { "hu": "Kőszeg Város Ifjúsági Fúvószenekara", "en": "Youth Brass Band of Kőszeg", "de": "Jugendblaskapelle der Stadt Kőszeg" },
+        "leiras": { "hu": "A fesztivál nyitókoncertje.", "en": "The opening concert of the festival.", "de": "Das Eröffnungskonzert des Festivals." },
         "idopont": "2025-09-26T17:00:00",
-        "veg_idopont": "2025-09-26T17:45:00",
-        "helyszin": { 
-          "lat": 47.39017284724587, "lng": 16.538364686501225, 
-          "nev":  {
-            "hu": "Rendezvénysátor (Károly Róbert tér)",
-            "en": "Event Tent (Károly Róbert Square)",
-            "de": "Veranstaltungszelt (Károly-Róbert-Platz)"
-          }
-        }
+        "veg_idopont": "2025-09-26T17:30:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 102,
-        "nev": {
-          "hu": "Hivatalos megnyitó",
-          "en": "Official Opening Ceremony",
-          "de": "Offizielle Eröffnung"
-        },
-        "leiras": {
-          "hu": "Az első hordó bor csapra verése, Város Bora eredményhirdetése, közreműködnek a Kőszegi Tornyosok.",
-          "en": "Tapping of the first wine barrel, announcement of the 'Wine of the City' award, featuring the Kőszeg Tower Musicians.",
-          "de": "Anstich des ersten Weinfasses, Bekanntgabe des 'Wein der Stadt'-Preises, mit den Kőszege Turmbläsern."
-        },
-        "idopont": "2025-09-26T17:45:00",
-        "veg_idopont": "2025-09-26T19:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
+        "nev": { "hu": "Hivatalos Megnyitó", "en": "Official Opening Ceremony", "de": "Offizielle Eröffnung" },
+        "leiras": { "hu": "Az első hordó bor csapra verése, Város Bora eredményhirdetése. Közreműködnek a Kőszegi Tornyosok.", "en": "Tapping of the first wine barrel, 'Wine of the City' award ceremony. Featuring the Kőszeg Tower Musicians.", "de": "Anstich des ersten Weinfasses, 'Wein der Stadt' Preisverleihung. Mit den Kőszege Turmbläsern." },
+        "idopont": "2025-09-26T17:30:00",
+        "veg_idopont": "2025-09-26T18:00:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 103,
-        "nev": {
-          "hu": "Fúvós Szerenád",
-          "en": "Brass Serenade",
-          "de": "Bläserserenade"
-        },
-        "leiras": {
-          "hu": "Rázene Városi Fúvószenekar és Kőszeg Város Koncert Fúvószenekara ad szerenádot a Fő téren.",
-          "en": "Serenade by the Rázene City Brass Band and the Kőszeg City Concert Brass Band on the Main Square.",
-          "de": "Serenade der Städtischen Blaskapelle Rázene und der Konzertblaskapelle Kőszeg auf dem Hauptplatz."
-        },
-        "idopont": "2025-09-26T19:00:00",
-        "veg_idopont": "2025-09-26T20:30:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
+        "nev": { "hu": "Gájer Bálint koncert", "en": "Bálint Gájer Concert", "de": "Konzert von Bálint Gájer" },
+        "leiras": { "hu": "Gájer Bálint élő koncertje.", "en": "Live concert by Bálint Gájer.", "de": "Live-Konzert von Bálint Gájer." },
+        "idopont": "2025-09-26T18:00:00",
+        "veg_idopont": "2025-09-26T19:00:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 104,
-        "nev": {
-          "hu": "Lángok és fátylak éjszakája",
-          "en": "Night of Flames and Veils",
-          "de": "Nacht der Flammen und Schleier"
-        },
-        "leiras": {
-          "hu": "Be-Jó Tűztánc és Silverbirds Bellydance látványos előadása.",
-          "en": "Spectacular performance by Be-Jó Fire Dance and Silverbirds Bellydance.",
-          "de": "Spektakuläre Vorstellung von Be-Jó Feuertanz und Silverbirds Bellydance."
-        },
-        "idopont": "2025-09-26T21:00:00",
-        "veg_idopont": "2025-09-26T21:30:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } },
-        "kiemelt": true
+        "nev": { "hu": "Fúvós Szerenád", "en": "Brass Serenade", "de": "Bläserserenade" },
+        "leiras": { "hu": "Kőszeg Város Koncert Fúvószenekarának előadása.", "en": "Performance by the Kőszeg City Concert Brass Band.", "de": "Auftritt der Konzertblaskapelle der Stadt Kőszeg." },
+        "idopont": "2025-09-26T19:00:00",
+        "veg_idopont": "2025-09-26T21:00:00",
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
       },
       {
         "id": 105,
-        "nev": {
-          "hu": "SOULWAVE koncert",
-          "en": "SOULWAVE Concert",
-          "de": "SOULWAVE Konzert"
-        },
-        "leiras": {
-          "hu": "Élő koncert a rendezvénysátorban a nap zárásaként.",
-          "en": "Live concert in the event tent to close the day.",
-          "de": "Live-Konzert im Veranstaltungszelt zum Abschluss des Tages."
-        },
+        "nev": { "hu": "Lángok és fátylak éjszakája", "en": "Night of Flames and Veils", "de": "Nacht der Flammen und Schleier" },
+        "leiras": { "hu": "Be-Jó Tűztánc és Silverbirds Bellydance látványos előadása.", "en": "Spectacular performance by Be-Jó Fire Dance and Silverbirds Bellydance.", "de": "Spektakuläre Vorstellung von Be-Jó Feuertanz und Silverbirds Bellydance." },
+        "idopont": "2025-09-26T21:00:00",
+        "veg_idopont": "2025-09-26T21:30:00",
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } },
+        "kiemelt": true
+      },
+      {
+        "id": 106,
+        "nev": { "hu": "SOULWAVE koncert", "en": "SOULWAVE Concert", "de": "SOULWAVE Konzert" },
+        "leiras": { "hu": "Élő koncert a rendezvénysátorban a nap zárásaként.", "en": "Live concert in the event tent to close the day.", "de": "Live-Konzert im Veranstaltungszelt zum Abschluss des Tages." },
         "idopont": "2025-09-26T21:30:00",
         "veg_idopont": "2025-09-26T23:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       }
     ]
   },
@@ -97,132 +58,76 @@
     "esemenyek": [
       {
         "id": 201,
-        "nev": {
-          "hu": "Vendégzenekarok zenés fogadása",
-          "en": "Musical Welcome for Guest Bands",
-          "de": "Musikalischer Empfang der Gastkapellen"
-        },
-        "leiras": {
-          "hu": "A nemzetközi fúvószenekari találkozó vendégeinek fogadása zenével.",
-          "en": "Welcoming the guests of the international brass band meeting with music.",
-          "de": "Empfang der Gäste des internationalen Blasmusiktreffens mit Musik."
-        },
+        "nev": { "hu": "Vendégzenekarok zenés fogadása", "en": "Musical Welcome for Guest Bands", "de": "Musikalischer Empfang der Gastkapellen" },
+        "leiras": { "hu": "A nemzetközi fúvószenekari találkozó vendégeinek fogadása zenével.", "en": "Welcoming the guests of the international brass band meeting with music.", "de": "Empfang der Gäste des internationalen Blasmusiktreffens mit Musik." },
         "idopont": "2025-09-27T10:00:00",
-        "veg_idopont": "2025-09-27T12:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
+        "veg_idopont": "2025-09-27T11:30:00",
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
       },
       {
         "id": 202,
-        "nev": {
-          "hu": "Jó ebédhez szól a ... fúvószene",
-          "en": "Lunchtime Brass Music",
-          "de": "Blasmusik zum Mittagessen"
-        },
-        "leiras": {
-          "hu": "Fúvószene a város különböző éttermeiben az ebédidő alatt.",
-          "en": "Brass music in various restaurants of the city during lunchtime.",
-          "de": "Blasmusik in verschiedenen Restaurants der Stadt während der Mittagszeit."
-        },
-        "idopont": "2025-09-27T12:00:00",
-        "veg_idopont": "2025-09-27T14:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Kőszeg éttermei", "en": "Restaurants of Kőszeg", "de": "Restaurants in Kőszeg" } }
+        "nev": { "hu": "Jó ebédhez szól a... fúvószene", "en": "Lunchtime Brass Music", "de": "Blasmusik zum Mittagessen" },
+        "leiras": { "hu": "Fúvószene a város különböző éttermeiben az ebédidő alatt.", "en": "Brass music in various restaurants of the city during lunchtime.", "de": "Blasmusik in verschiedenen Restaurants der Stadt während der Mittagszeit." },
+        "idopont": "2025-09-27T11:30:00",
+        "veg_idopont": "2025-09-27T13:15:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 203,
-        "nev": {
-          "hu": "Szüreti Karnevál",
-          "en": "Harvest Carnival",
-          "de": "Weinlese-Karneval"
-        },
-        "leiras": {
-          "hu": "Hagyományos szüreti felvonulás a város utcáin.",
-          "en": "Traditional harvest parade through the city streets.",
-          "de": "Traditioneller Weinleseumzug durch die Straßen der Stadt."
-        },
-        "idopont": "2025-09-27T14:00:00",
-        "veg_idopont": "2025-09-27T16:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "A város utcái", "en": "City Streets", "de": "Straßen der Stadt" } },
-        "kiemelt": true
+        "nev": { "hu": "Fúvószenekarok zenés felvonulása", "en": "Musical Parade of Brass Bands", "de": "Musikalischer Umzug der Blaskapellen" },
+        "leiras": { "hu": "A zenekarok a Károly Róbert tér–Országzászló–Kossuth utca–Rákóczi utca útvonalon vonulnak a karnevál helyszínére.", "en": "The bands will parade along the Károly Róbert Square–Országzászló–Kossuth Street–Rákóczi Street route to the carnival site.", "de": "Die Kapellen marschieren entlang der Route Károly-Róbert-Platz–Országzászló–Kossuth-Straße–Rákóczi-Straße zum Karnevalsort." },
+        "idopont": "2025-09-27T13:15:00",
+        "veg_idopont": "2025-09-27T14:00:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Felvonulási útvonal (Indulás: Károly Róbert tér)", "en": "Parade Route (Start: Károly Róbert Square)", "de": "Umzugsroute (Start: Károly-Róbert-Platz)" } }
       },
       {
         "id": 204,
-        "nev": {
-          "hu": "Fúvós térzenék",
-          "en": "Open-Air Brass Music",
-          "de": "Platzkonzerte der Blaskapellen"
-        },
-        "leiras": {
-          "hu": "Különböző fúvószenekarok adnak térzenét a város terein.",
-          "en": "Various brass bands give open-air concerts on the city squares.",
-          "de": "Verschiedene Blaskapellen geben Platzkonzerte auf den Plätzen der Stadt."
-        },
-        "idopont": "2025-09-27T16:00:00",
-        "veg_idopont": "2025-09-27T18:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Fő tér, Jurisics tér", "en": "Main Square, Jurisics Square", "de": "Hauptplatz, Jurisics-Platz" } }
+        "nev": { "hu": "Szüreti Karnevál", "en": "Harvest Carnival", "de": "Weinlese-Karneval" },
+        "leiras": { "hu": "Hagyományos szüreti felvonulás a város utcáin.", "en": "Traditional harvest parade through the city streets.", "de": "Traditioneller Weinleseumzug durch die Straßen der Stadt." },
+        "idopont": "2025-09-27T14:00:00",
+        "veg_idopont": "2025-09-27T16:00:00",
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "A város utcái", "en": "City Streets", "de": "Straßen der Stadt" } },
+        "kiemelt": true
       },
       {
         "id": 205,
-        "nev": {
-          "hu": "Táncbemutatók",
-          "en": "Dance Performances",
-          "de": "Tanzvorführungen"
-        },
-        "leiras": {
-          "hu": "A Blumenkranz Bezi Német Nemzetiségi Tánccsoport bemutatója.",
-          "en": "Performance by the Blumenkranz Bezi German Nationality Dance Group.",
-          "de": "Vorführung der deutschen Nationalitätentanzgruppe Blumenkranz Bezi."
-        },
+        "nev": { "hu": "Fúvós térzenék", "en": "Open-Air Brass Concerts", "de": "Platzkonzerte der Blaskapellen" },
+        "leiras": { "hu": "Fellépnek: Csepreg, Szombathely, Tét, Sárvár fúvószenekarai.", "en": "Featuring brass bands from Csepreg, Szombathely, Tét, and Sárvár.", "de": "Mit den Blaskapellen aus Csepreg, Szombathely, Tét und Sárvár." },
         "idopont": "2025-09-27T16:00:00",
         "veg_idopont": "2025-09-27T17:30:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "Fő tér és Jurisics tér", "en": "Main Square and Jurisics Square", "de": "Hauptplatz und Jurisics-Platz" } }
       },
       {
         "id": 206,
-        "nev": {
-          "hu": "Fúvós-show",
-          "en": "Brass Band Show",
-          "de": "Blasmusik-Show"
-        },
-        "leiras": {
-          "hu": "Kőszeg Város Fúvószenekarának látványos show-műsora.",
-          "en": "Spectacular show by the Kőszeg City Brass Band.",
-          "de": "Spektakuläre Show der Blaskapelle der Stadt Kőszeg."
-        },
-        "idopont": "2025-09-27T17:30:00",
-        "veg_idopont": "2025-09-27T19:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
+        "nev": { "hu": "Táncbemutatók", "en": "Dance Performances", "de": "Tanzvorführungen" },
+        "leiras": { "hu": "Fellépnek: Dance Jam, Blumenkranz Bezi Német Nemzetiségi Tánccsoport, Be-Jó Táncegyüttes, Galaxy RRC.", "en": "Performances by Dance Jam, Blumenkranz Bezi German Nationality Dance Group, Be-Jó Dance Ensemble, Galaxy RRC.", "de": "Auftritte von Dance Jam, der deutschen Nationalitätentanzgruppe Blumenkranz Bezi, dem Be-Jó Tanzensemble, Galaxy RRC." },
+        "idopont": "2025-09-27T16:00:00",
+        "veg_idopont": "2025-09-27T17:30:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 207,
-        "nev": {
-          "hu": "Korponay Zsófi és Bánó Zoltán koncert",
-          "en": "Concert by Zsófi Korponay & Zoltán Bánó",
-          "de": "Konzert von Zsófi Korponay & Zoltán Bánó"
-        },
-        "leiras": {
-          "hu": "Könnyűzenei koncert a Fő téren (csak jó idő esetén).",
-          "en": "Pop music concert on the Main Square (weather permitting).",
-          "de": "Popkonzert auf dem Hauptplatz (nur bei gutem Wetter)."
-        },
-        "idopont": "2025-09-27T18:00:00",
-        "veg_idopont": "2025-09-27T20:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
+        "nev": { "hu": "Fúvós-show", "en": "Brass Band Show", "de": "Blasmusik-Show" },
+        "leiras": { "hu": "Fellépnek: Rázene Városi Fúvószenekar, Szentgotthárd Város Fúvószenekara, Kőszeg Város Fúvószenekara.", "en": "Featuring: Rázene City Brass Band, Szentgotthárd City Brass Band, Kőszeg City Brass Band.", "de": "Mit: Städtische Blaskapelle Rázene, Städtische Blaskapelle Szentgotthárd, Blaskapelle der Stadt Kőszeg." },
+        "idopont": "2025-09-27T17:30:00",
+        "veg_idopont": "2025-09-27T19:00:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 208,
-        "nev": {
-          "hu": "Szüreti Bál - Fáraó",
-          "en": "Harvest Ball with the Fáraó band",
-          "de": "Weinleseball mit der Fáraó-Band"
-        },
-        "leiras": {
-          "hu": "Zenés-táncos mulatság a Fáraó zenekarral.",
-          "en": "Party with live music and dancing with the Fáraó band.",
-          "de": "Tanzabend mit Live-Musik von der Fáraó-Band."
-        },
+        "nev": { "hu": "Prokofjev, Korponay Zsófi és Bánó Zoltán", "en": "Prokofjev, Zsófi Korponay and Zoltán Bánó", "de": "Prokofjev, Zsófi Korponay und Zoltán Bánó" },
+        "leiras": { "hu": "Könnyűzenei koncert a Fő téren (csak jó idő esetén).", "en": "Pop music concert on the Main Square (weather permitting).", "de": "Popkonzert auf dem Hauptplatz (nur bei gutem Wetter)." },
+        "idopont": "2025-09-27T18:00:00",
+        "veg_idopont": "2025-09-27T20:00:00",
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
+      },
+      {
+        "id": 209,
+        "nev": { "hu": "Szüreti Bál - Fáraó", "en": "Harvest Ball with Fáraó band", "de": "Weinleseball mit der Fáraó-Band" },
+        "leiras": { "hu": "Zenés-táncos mulatság a Fáraó zenekarral.", "en": "Party with live music and dancing with the Fáraó band.", "de": "Tanzabend mit Live-Musik von der Fáraó-Band." },
         "idopont": "2025-09-27T21:00:00",
         "veg_idopont": "2025-09-28T02:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } },
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } },
         "kiemelt": true
       }
     ]
@@ -232,67 +137,43 @@
     "esemenyek": [
       {
         "id": 301,
-        "nev": {
-          "hu": "Westside TSE táncbemutató",
-          "en": "Westside Dance Club Performance",
-          "de": "Tanzvorführung des Westside TSE"
-        },
-        "leiras": {
-          "hu": "A Westside Táncsport Egyesület bemutatója.",
-          "en": "Performance by the Westside Dance Sport Association.",
-          "de": "Vorführung des Tanzsportvereins Westside."
-        },
-        "idopont": "2025-09-28T14:00:00",
-        "veg_idopont": "2025-09-28T15:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
+        "nev": { "hu": "Kőszeg Város Ifjúsági Fúvószenekara térzenéje", "en": "Open-Air Concert by the Youth Brass Band of Kőszeg", "de": "Platzkonzert der Jugendblaskapelle der Stadt Kőszeg" },
+        "leiras": { "hu": "A Kőszeg Város Ifjúsági Fúvószenekara térzenéje.", "en": "Open-air concert by the Youth Brass Band of Kőszeg.", "de": "Platzkonzert der Jugendblaskapelle der Stadt Kőszeg." },
+        "idopont": "2025-09-28T11:00:00",
+        "veg_idopont": "2025-09-28T12:30:00",
+        "helyszin": { "lat": 47.388848, "lng": 16.541030, "nev": { "hu": "Jurisics tér", "en": "Jurisics Square", "de": "Jurisics-Platz" } }
       },
       {
         "id": 302,
-        "nev": {
-          "hu": "Néptánc és népzene",
-          "en": "Folk Dance and Folk Music",
-          "de": "Volkstanz und Volksmusik"
-        },
-        "leiras": {
-          "hu": "Fellép a Hajnalcsillag Néptáncegyüttes, a Kőszegi Cimborák és a Boglya zenekar.",
-          "en": "Performances by the Hajnalcsillag Folk Dance Ensemble, Kőszegi Cimborák, and the Boglya band.",
-          "de": "Auftritte des Volkstanzensembles Hajnalcsillag, der Kőszegi Cimborák und der Boglya-Band."
-        },
-        "idopont": "2025-09-28T15:00:00",
-        "veg_idopont": "2025-09-28T17:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
+        "nev": { "hu": "Westside TSE", "en": "Westside Dance Club", "de": "Westside TSE" },
+        "leiras": { "hu": "A Westside Táncsport Egyesület bemutatója.", "en": "Performance by the Westside Dance Sport Association.", "de": "Vorführung des Tanzsportvereins Westside." },
+        "idopont": "2025-09-28T14:00:00",
+        "veg_idopont": "2025-09-28T15:00:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 303,
-        "nev": {
-          "hu": "Yahamo Brass Band és zenei programok",
-          "en": "Yahamo Brass Band and Musical Programs",
-          "de": "Yahamo Brass Band und weitere Musikprogramme"
-        },
-        "leiras": {
-          "hu": "Szórakoztató zenei programok a Fő téren.",
-          "en": "Entertaining musical programs on the Main Square.",
-          "de": "Unterhaltsame Musikprogramme auf dem Hauptplatz."
-        },
+        "nev": { "hu": "Hajnalcsillag Néptáncegyüttes", "en": "Hajnalcsillag Folk Dance Ensemble", "de": "Volkstanzensemble Hajnalcsillag" },
+        "leiras": { "hu": "Fellép a Hajnalcsillag Néptáncegyüttes, a Kőszegi Cimborák és a Boglya zenekar.", "en": "Performances by the Hajnalcsillag Folk Dance Ensemble, Kőszegi Cimborák, and the Boglya band.", "de": "Auftritte des Volkstanzensembles Hajnalcsillag, der Kőszegi Cimborák und der Boglya-Band." },
         "idopont": "2025-09-28T15:00:00",
-        "veg_idopont": "2025-09-28T18:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
+        "veg_idopont": "2025-09-28T17:00:00",
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } }
       },
       {
         "id": 304,
-        "nev": {
-          "hu": "SING SING és ZORALL koncert",
-          "en": "SING SING and ZORALL Concert",
-          "de": "SING SING und ZORALL Konzert"
-        },
-        "leiras": {
-          "hu": "A fesztivált záró nagykoncertek a rendezvénysátorban.",
-          "en": "The grand closing concerts of the festival in the event tent.",
-          "de": "Die großen Abschlusskonzerte des Festivals im Veranstaltungszelt."
-        },
+        "nev": { "hu": "Yahamo Brass Band, Sunday Brunch, Silent Support", "en": "Yahamo Brass Band, Sunday Brunch, Silent Support", "de": "Yahamo Brass Band, Sunday Brunch, Silent Support" },
+        "leiras": { "hu": "Szórakoztató zenei programok a Fő téren.", "en": "Entertaining musical programs on the Main Square.", "de": "Unterhaltsame Musikprogramme auf dem Hauptplatz." },
+        "idopont": "2025-09-28T15:00:00",
+        "veg_idopont": "2025-09-28T18:00:00",
+        "helyszin": { "lat": 47.388158, "lng": 16.541661, "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" } }
+      },
+      {
+        "id": 305,
+        "nev": { "hu": "SING SING és ZORALL koncert", "en": "SING SING and ZORALL Concert", "de": "SING SING und ZORALL Konzert" },
+        "leiras": { "hu": "A fesztivált záró nagykoncertek a rendezvénysátorban.", "en": "The grand closing concerts of the festival in the event tent.", "de": "Die großen Abschlusskonzerte des Festivals im Veranstaltungszelt." },
         "idopont": "2025-09-28T18:00:00",
         "veg_idopont": "2025-09-28T22:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } },
+        "helyszin": { "lat": 47.390172, "lng": 16.538364, "nev": { "hu": "Rendezvénysátor (Károly Róbert tér)", "en": "Event Tent (Károly Róbert Square)", "de": "Veranstaltungszelt (Károly-Róbert-Platz)" } },
         "kiemelt": true
       }
     ]
