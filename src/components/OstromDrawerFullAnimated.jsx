@@ -178,24 +178,28 @@ export default function OstromDrawerFullAnimated() {
         </h4>
         <div className="space-y-3">
             <div>
-                <p className="font-semibold">🕘 17:00 – Kőszeg Város Ifjúsági Fúvószenekara</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">17:00 – Ifjúsági Fúvószenekar</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕘 17:45 – Hivatalos megnyitó</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">17:30 – Hivatalos Megnyitó</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕘 19:00 – Fúvós Szerenád</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Fő tér</p>
+                <p className="font-semibold">18:00 – Gájer Bálint</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕘 21:00 – Lángok és fátylak éjszakája</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Fő tér</p>
+                <p className="font-semibold">19:00 – Fúvós Szerenád</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
             </div>
             <div>
-                <p className="font-semibold">🕘 21:30 – SOULWAVE koncert</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">21:00 – Be-Jó Tűztánc & Silverbirds</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+            </div>
+            <div>
+                <p className="font-semibold">21:30 – Soulwave Koncert</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
         </div>
     </div>
@@ -207,32 +211,32 @@ export default function OstromDrawerFullAnimated() {
         </h4>
         <div className="space-y-3">
             <div>
-                <p className="font-semibold">🕙 10:00 – Vendégzenekarok fogadása</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Fő tér</p>
+                <p className="font-semibold">10:00 – Vendégzenekarok fogadása</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
             </div>
             <div>
-                <p className="font-semibold">🕛 12:00 – Jó ebédhez szól a fúvószene</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Kőszeg éttermei</p>
+                <p className="font-semibold">13:15 – Zenekarok felvonulása</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Károly Róbert tér-től</p>
             </div>
             <div>
-                <p className="font-semibold">🕑 14:00 – Szüreti Karnevál</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 A város utcáin</p>
+                <p className="font-semibold">14:00 – Szüreti Karnevál</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Város utcáin</p>
             </div>
             <div>
-                <p className="font-semibold">🕓 16:00 – Fúvós térzenék és táncbemutatók</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Fő tér, Jurisics tér, Rendezvénysátor</p>
+                <p className="font-semibold">16:00 – Fúvós térzenék & Táncbemutatók</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér, Jurisics tér, Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕠 17:30 – Fúvós-show</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">17:30 – Fúvós-Show</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕕 18:00 – Korponay Zsófi és Bánó Zoltán</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Fő tér (jó idő esetén)</p>
+                <p className="font-semibold">18:00 – Prokofjev, Korponay, Bánó</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
             </div>
             <div>
-                <p className="font-semibold">🕘 21:00 – Szüreti Bál a Fáraóval</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">21:00 – Szüreti Bál - Fáraó</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
         </div>
     </div>
@@ -244,27 +248,31 @@ export default function OstromDrawerFullAnimated() {
         </h4>
         <div className="space-y-3">
             <div>
-                <p className="font-semibold">🕑 14:00 – Westside TSE táncbemutató</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">11:00 – Fúvószenekari Térzene</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Jurisics tér</p>
             </div>
             <div>
-                <p className="font-semibold">🕒 15:00 – Néptánc és népzene</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">14:00 – Westside TSE</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕒 15:00 – Yahamo Brass Band</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Fő tér</p>
+                <p className="font-semibold">15:00 – Hajnalcsillag Néptáncegyüttes</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
             <div>
-                <p className="font-semibold">🕕 18:00 – SING SING és ZORALL koncert</p>
-                <p className="text-xs text-green-700/80 ml-6">📍 Rendezvénysátor (Károly Róbert tér)</p>
+                <p className="font-semibold">15:00 – Yahamo Brass Band & more</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+            </div>
+            <div>
+                <p className="font-semibold">18:00 – Sing Sing & Zorall Koncert</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
             </div>
         </div>
     </div>
 
     {/* --- KIEGÉSZÍTŐ INFORMÁCIÓK --- */}
     <div className="pt-4 mt-4 border-t-2 border-green-300 text-xs italic text-green-800/80 text-center">
-        <p>A rendezvény ideje alatt a Károly Róbert téren Vidámpark, a Fő téren és a Jurisics téren kézműves kirakodóvásár várja a látogatókat!</p>
+        <p>A rendezvény ideje alatt Vidámpark, kézműves vásár, étel- és italkülönlegességek várják a látogatókat!</p>
         <p className="mt-2">A műsorváltoztatás jogát fenntartjuk!</p>
     </div>
 </div>
