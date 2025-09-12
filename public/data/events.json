@@ -695,5 +695,24 @@
       "Dedikálás"
     ],
     "image": "konyv.jpg"
-  }
+  },
+{
+  "id": "event-73",
+  "name": "Teljesítménytúrák",
+  "date": "2025-10-04",
+  "time": "07:00-13:00",
+  "location": "Jurisics vár",
+  "coords": {
+    "lat": 47.389619405345535,
+    "lng": 16.53916943128784
+  },
+  "description": "Idei utolsó klasszikus teljesítménytúránkon a Kőszegi-hegység változatos és gyönyörű, már őszi ruhába öltöző látnivalóit és nevezetességeit kereshetik fel a túra résztvevői három táv közül választva: A rövid, 10 km-es táv kiválóan alkalmas családilagos teljesítésre egy délelőtti program keretében, a közepes, 20 km-es táv már több kihívást tartalmazó, kitartást igénylő útvonal, végül a maratoni, 42 km-es táv pedig igazi gyakorlott túrázóknak ajánlott, ők felkeresik pl. a Dunántúl és egyben Burgenland legmagasabb pontját, Írott-kőt is, ahonnan tiszta idő esetén fantasztikus kilátások nyílnak. Természetesen mindhárom távon garantált a megszokott, bőséges ellátás az ellenőrzőpontjainkon és a célban. Gyertek, gyönyörködjetek saját szemeitekkel az őszi Kőszegi-hegység látványosságaiban, érezzétek jól magatokat. 🙂 Sok szeretettel várunk mindenkit! 🩵",
+  "tags": [
+    "Túra",
+    "Természet",
+    "Sport",
+    "Családprogram"
+  ],
+  "image": "okt4tura.jpg"
+}
 ]
