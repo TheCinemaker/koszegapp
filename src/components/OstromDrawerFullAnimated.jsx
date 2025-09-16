@@ -337,8 +337,8 @@ export default function OstromDrawerFullAnimated() {
           <div className={`sticky bottom-0 text-center py-2 text-xs font-bold border-t
             ${
               openDrawer === 'kiemelt'
-              ? 'bg-rose-100 border-rose-300'
-              : 'bg-green-200 border-green-400'
+              ? 'bg-rose-500 text-white border-rose-700'
+              : 'bg-green-500 text-white border-green-700'
             }`}
           >
             © KőszegAPP – 2025
