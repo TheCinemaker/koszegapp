@@ -98,9 +98,7 @@ export default function OstromDrawerFullAnimated() {
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] transition-all duration-700"
           onClick={() => setModalOpen(false)}
         >
-          <div className="text-center absolute top-4 w-full text-white text-xs font-bold">
-            Kattints a bezáráshoz!
-          </div>
+          <div className="text-center absolute top-4 w-full text-white text-xs font-bold">Kattints a bezáráshoz!</div>
           <img 
             src={highlightImages[currentImageIdx]} 
             alt={`tuzoltonap-${currentImageIdx}`} 
@@ -121,49 +119,23 @@ export default function OstromDrawerFullAnimated() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`fixed top-[50px] right-0 z-50 transform transition-transform duration-700 ease-in-out
-          ${openDrawer ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-[50px] right-0 z-50 transform transition-transform duration-700 ease-in-out ${openDrawer ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div
           onScroll={handleUserInteraction}
           onMouseDown={handleUserInteraction}
-          className={`w-72 h-[75vh] shadow-xl border-l-4 rounded-l-2xl overflow-y-auto font-sans flex flex-col
-            ${
-              openDrawer === 'kiemelt'
-              ? 'bg-red-700 text-white border-red-900'
-              : 'bg-green-100 text-green-900 border-green-500'
-            }`}
+          className={`w-72 h-[75vh] shadow-xl border-l-4 rounded-l-2xl overflow-y-auto font-sans flex flex-col ${openDrawer === 'kiemelt' ? 'bg-red-700 text-white border-red-900' : 'bg-green-100 text-green-900 border-green-500'}`}
         >
-          <div className={`sticky top-0 px-4 py-3 flex justify-between items-center border-b z-10
-            ${
-              openDrawer === 'kiemelt'
-              ? 'bg-red-800 border-red-900 text-white'
-              : 'bg-green-200 border-green-400'
-            }`}
-          >
-            <h3 className="text-lg font-extrabold">
-              {
-               openDrawer === 'kiemelt' ? '🚒 TŰZOLTÓNAP' :
-               '🍇 Szüret 2025'
-              }
-            </h3>
-            <button
-              onClick={() => setOpenDrawer(null)}
-              className="text-2xl font-bold hover:scale-125 transition"
-              aria-label="Bezárás"
-            >
-              ✖
-            </button>
+          <div className={`sticky top-0 px-4 py-3 flex justify-between items-center border-b z-10 ${openDrawer === 'kiemelt' ? 'bg-red-800 border-red-900 text-white' : 'bg-green-200 border-green-400'}`}>
+            <h3 className="text-lg font-extrabold">{openDrawer === 'kiemelt' ? '🚒 TŰZOLTÓNAP' : '🍇 Szüret 2025'}</h3>
+            <button onClick={() => setOpenDrawer(null)} className="text-2xl font-bold hover:scale-125 transition" aria-label="Bezárás">✖</button>
           </div>
 
           <div className="p-4 flex-1 space-y-6 text-sm leading-relaxed overflow-y-auto">
             {openDrawer === 'kiemelt' ? (
               <div className="text-left space-y-4">
                 <h2 className="text-base font-extrabold tracking-wide">X. Tűzoltó Találkozó és bemutató</h2>
-                <p className="text-xs opacity-90 italic">
-                  Tisztelettel és nagy előkészítő munkával várja Önöket a 157 éves tűzoltó egyesületünk minden tagja –
-                  a nyolcvanas évekig Magyarország legkisebb és 1328 óta szabad királyi városában, Kőszegen.
-                </p>
+                <p className="text-xs opacity-90 italic">Tisztelettel és nagy előkészítő munkával várja Önöket a 157 éves tűzoltó egyesületünk minden tagja – a nyolcvanas évekig Magyarország legkisebb és 1328 óta szabad királyi városában, Kőszegen.</p>
 
                 <div className="space-y-2">
                   <h4 className="font-bold text-sm">📅 Időpont & helyszín</h4>
@@ -180,8 +152,7 @@ export default function OstromDrawerFullAnimated() {
 
                 <div className="space-y-2">
                   <h4 className="font-bold text-sm">🎺 Ünnepélyes átvonulás</h4>
-                  <p className="text-sm">A megnyitót követően Kőszeg Város Koncert Fúvószenekara vezetésével a csapatok
-                    a tűzoltóság épületéhez vonulnak, ahol az összetartozást jelképező táblákat helyezik el.</p>
+                  <p className="text-sm">A megnyitót követően Kőszeg Város Koncert Fúvószenekara vezetésével a csapatok a tűzoltóság épületéhez vonulnak, ahol az összetartozást jelképező táblákat helyezik el.</p>
                 </div>
 
                 <div className="space-y-2">
@@ -219,55 +190,121 @@ export default function OstromDrawerFullAnimated() {
                   <p className="text-sm ml-2">Károly Róbert tér → Várkör → Kossuth Lajos utca → Munkácsy Mihály utca → Rákóczi Ferenc utca → Szombathelyi út → 87-es főút</p>
                 </div>
 
-                <div className="pt-3 mt-3 border-t text-xs opacity-80 text-center">
-                  A műsorváltoztatás jogát fenntartjuk.
-                </div>
+                <div className="pt-3 mt-3 border-t text-xs opacity-80 text-center">A műsorváltoztatás jogát fenntartjuk.</div>
               </div>
-            ) : ( /* szüret fül tartalom */
+            ) : (
               <div className="text-left text-sm text-green-900 space-y-5">
-                {/* SZÜRET tartalom változatlan marad */}
+                <div>
+                  <h4 className="font-extrabold text-base text-green-800 pb-2 mb-3 border-b-2 border-green-300">Szeptember 26., Péntek</h4>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="font-semibold">17:00 – Ifjúsági Fúvószenekar</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">17:30 – Hivatalos Megnyitó</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">18:00 – Gájer Bálint</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">19:00 – Fúvós Szerenád</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">21:00 – Be-Jó Tűztánc & Silverbirds</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">21:30 – Soulwave Koncert</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-extrabold text-base text-green-800 pb-2 mb-3 border-b-2 border-green-300">Szeptember 27., Szombat</h4>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="font-semibold">10:00 – Vendégzenekarok fogadása</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">13:15 – Zenekarok felvonulása</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Károly Róbert tér-től</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">14:00 – Szüreti Karnevál</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Város utcáin</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">16:00 – Fúvós térzenék & Táncbemutatók</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Fő tér, Jurisics tér, Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">17:30 – Fúvós-Show</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">18:00 – Prokofjev, Korponay, Bánó</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">21:00 – Szüreti Bál - Fáraó</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-extrabold text-base text-green-800 pb-2 mb-3 border-b-2 border-green-300">Szeptember 28., Vasárnap</h4>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="font-semibold">11:00 – Fúvószenekari Térzene</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Jurisics tér</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">14:00 – Westside TSE</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">15:00 – Hajnalcsillag Néptáncegyüttes</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">15:00 – Yahamo Brass Band & more</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold">18:00 – Sing Sing & Zorall Koncert</p>
+                      <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-4 border-t-2 border-green-300 text-xs italic text-green-800/80 text-center">
+                  <p>A rendezvény ideje alatt Vidámpark, kézműves vásár, étel- és italkülönlegességek várják a látogatókat!</p>
+                  <p className="mt-2">A műsorváltoztatás jogát fenntartjuk!</p>
+                </div>
               </div>
             )}
           </div>
 
-          <div className={`sticky bottom-0 text-center py-2 text-xs font-bold border-t
-            ${
-              openDrawer === 'kiemelt'
-              ? 'bg-red-800 border-red-900 text-white'
-              : 'bg-green-200 border-green-400'
-            }`}
-          >
-            © KőszegAPP – 2025
-          </div>
+          <div className={`sticky bottom-0 text-center py-2 text-xs font-bold border-t ${openDrawer === 'kiemelt' ? 'bg-red-800 border-red-900 text-white' : 'bg-green-200 border-green-400'}`}>© KőszegAPP – 2025</div>
         </div>
 
-        {/* Drawer toggle buttons */}
         <div
           onClick={() => handleDrawerClick('szuret')}
-          className={`absolute top-[35%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center
-            border rounded-br-2xl rounded-bl-2xl shadow transform rotate-90 origin-left
-            cursor-pointer transition
-            ${
-              openDrawer === 'szuret'
-              ? 'bg-green-400 text-green-900 border-green-600'
-              : 'bg-green-200 text-green-700 border-green-400 opacity-70'
-            }
-            hover:bg-green-300`}
+          className={`absolute top-[35%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center border rounded-br-2xl rounded-bl-2xl shadow transform rotate-90 origin-left cursor-pointer transition ${openDrawer === 'szuret' ? 'bg-green-400 text-green-900 border-green-600' : 'bg-green-200 text-green-700 border-green-400 opacity-70'} hover:bg-green-300`}
         >
           <span className="text-xs font-bold">SZÜRET 2025</span>
         </div>
 
         <div
           onClick={() => handleDrawerClick('kiemelt')}
-          className={`absolute top-[55%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center
-            border rounded-br-2xl rounded-bl-2xl shadow transform rotate-90 origin-left
-            cursor-pointer transition
-            ${
-              openDrawer === 'kiemelt'
-              ? 'bg-red-600 text-white border-red-900'
-              : 'bg-red-200 text-red-800 border-red-400 opacity-80'
-            }
-            hover:bg-red-400 hover:text-white`}
+          className={`absolute top-[55%] px-3 py-1.5 -left-4 w-35 h-10 flex items-center justify-center border rounded-br-2xl rounded-bl-2xl shadow transform rotate-90 origin-left cursor-pointer transition ${openDrawer === 'kiemelt' ? 'bg-red-600 text-white border-red-900' : 'bg-red-200 text-red-800 border-red-400 opacity-80'} hover:bg-red-400 hover:text-white`}
         >
           <span className="text-xs font-bold">TŰZOLTÓNAP</span>
         </div>
