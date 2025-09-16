@@ -714,5 +714,25 @@
     "Családprogram"
   ],
   "image": "okt4tura.jpg"
+},
+  {
+  "id": "event-75",
+  "name": "X. Tűzoltó Találkozó és Bemutató",
+  "date": "2025-09-20",
+  "time": "09:30-18:00",
+  "location": "Jurisics tér, Fő tér és város utcái",
+  "coords": {
+    "lat": 47.3896,
+    "lng": 16.5402
+  },
+  "description": "🚒 A 157 éves kőszegi tűzoltó egyesület tisztelettel várja Önöket a jubileumi találkozóra. Felvonulás, műszaki és bevetési bemutatók, gyermekprogramok és közel 70 tűzoltóautó látványos felvonulása.",
+  "tags": [
+    "Tűzoltóság",
+    "Bemutató",
+    "Családi",
+    "Felvonulás"
+  ],
+  "image": "tuzoltonap.jpg"
 }
+
 ]
