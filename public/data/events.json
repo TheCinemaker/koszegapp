@@ -482,5 +482,163 @@
   "description": "Ismerkedés a Dr. Nagy László EGYMI park természeti értékeivel Illés Péter biológiatanár vezetésével (20/526-4300). Hossz és időtartam: kb. 1,5 km, 1,5 óra. Nehézségi fok: könnyű.",
   "tags": ["séta", "természet", "oktatás", "családi"],
   "image": "iskola_a_hataron_seta.jpg"
-}
+},
+  {
+  "id": "event-102",
+  "nev": "A mohácsi csatatér kutatásának legújabb eredményei",
+  "leiras": "📖 Előadás Dr. Bertók Gábortól a mohácsi csatatér kutatásának legújabb eredményeiről. A program a Mohács 500 emlékév keretében kerül megrendezésre.",
+  "idopont": "2025-09-25T17:00:00",
+  "veg_idopont": "2025-09-25T18:00:00",
+  "helyszin": {
+    "nev": "Kőszeg, Várkör 35-37. Előadóterem",
+    "lat": 47.389684487474725, 
+    "lng": 16.542610586908175
+  },
+  "image": "mohacsi_eloadas.jpg",
+  "tags": [
+    "Előadás",
+    "Történelem",
+    "Mohács 500"
+  ]
+},
+  {
+    "id": "event-103",
+    "nev": "A Szent Jakab-templom falképeinek restaurálása",
+    "leiras": "🎨 Heitler András restaurátor előadása a Chernel Kálmán Városi Könyvtár rendezvénytermében, majd a freskók megtekintése a templomban.",
+    "idopont": "2025-09-20T10:00:00",
+    "veg_idopont": "2025-09-20T12:00:00",
+    "helyszin": {
+      "nev": "Chernel Kálmán Városi Könyvtár, Kőszeg",
+      "lat": 47.38959730871888, 
+      "lng": 16.54266467920193
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Előadás", "Restaurálás", "Képzőművészet"]
+  },
+  {
+    "id": "event-104",
+    "nev": "A Szent Imre-templom feltárt története",
+    "leiras": "🏛️ Pap Ildikó Katalin és Simon Zsófia régész vezetése a Szent Imre-templomban.",
+    "idopont": "2025-09-20T13:00:00",
+    "veg_idopont": "2025-09-20T14:00:00",
+    "helyszin": {
+      "nev": "Szent Imre-templom, Kőszeg",
+      "lat": 47.38913080736752, 
+      "lng": 16.54066899489738
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Régészet", "Templom", "Vezetés"]
+  },
+  {
+    "id": "event-104",
+    "nev": "A legerősebb bástya. Mikor és hogyan is épült?",
+    "leiras": "🛡️ B. Benkhar Lilla régész vezetése a Zwingerben.",
+    "idopont": "2025-09-20T14:00:00",
+    "veg_idopont": "2025-09-20T16:00:00",
+    "helyszin": {
+      "nev": "Zwinger, Chernel utca 16., Kőszeg",
+      "lat": 47.38810429744994, 
+      "lng": 16.539714457863823
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Történelem", "Vezetés", "Várfal"]
+  },
+  {
+    "id": "event-105",
+    "nev": "A Sgraffitós-ház története",
+    "leiras": "🏠 Németh Klenó Mária művészettörténész vezetése a Sgraffitós-házban.",
+    "idopont": "2025-09-20T16:00:00",
+    "veg_idopont": "2025-09-20T18:00:00",
+    "helyszin": {
+      "nev": "Sgraffitós-ház, Jurisics tér 7., Kőszeg",
+      "lat": 47.389042579521664, 
+      "lng": 16.541064716061634
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Művészet", "Építészet"]
+  },
+  {
+    "id": "event-106",
+    "nev": "‘Orr alá labor’ – községi bencések élete",
+    "leiras": "📚 Kőszegi bencések élete a XX. században. Történész vezetés a Hotel Benedict Hostelben.",
+    "idopont": "2025-09-20T18:00:00",
+    "veg_idopont": "2025-09-20T19:00:00",
+    "helyszin": {
+      "nev": "Hotel Benedict, Kőszeg",
+      "lat": 47.389558977295735, 
+      "lng": 16.540098889651834
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Történelem", "Egyház"]
+  },
+  {
+    "id": "event-107",
+    "nev": "Toronyélmény vezetés",
+    "leiras": "🔔 Banyay Csaba esperes-lelkész vezetése az evangélikus templomtoronyban.",
+    "idopont": "2025-09-20T14:30:00",
+    "veg_idopont": "2025-09-20T15:30:00",
+    "helyszin": {
+      "nev": "Evangélikus templom, Várkör 44., Kőszeg",
+      "lat": 47.39104608541747, 
+      "lng": 16.540397836463235
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Templom", "Vezetés", "Panoráma"]
+  },
+  {
+    "id": "event-108",
+    "nev": "Churchill unokája: egy angol kémnő Kőszegen",
+    "leiras": "🕵️‍♀️ Mátyay Mónika történész vezetése a Táblaház utcai házban.",
+    "idopont": "2025-09-21T11:00:00",
+    "veg_idopont": "2025-09-21T12:00:00",
+    "helyszin": {
+      "nev": "Táblaház utca 11., Kőszeg",
+      "lat": 47.39028083123983, 
+      "lng": 16.540616877833216
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Történelem", "Kémhistória"]
+  },
+  {
+    "id": "event-109",
+    "nev": "Hajdan volt kőszegiek nyomában",
+    "leiras": "🪦 Lovassy Klára régész vezetése a régi városi temetőben.",
+    "idopont": "2025-09-21T13:00:00",
+    "veg_idopont": "2025-09-21T15:00:00",
+    "helyszin": {
+      "nev": "Régi temető, Temető utca 30., Kőszeg",
+      "lat": 47.38588481374005, 
+      "lng": 16.537880299029926
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Történelem", "Régészet", "Séta"]
+  },
+  {
+    "id": "event-110",
+    "nev": "Gyógyír a léleknek",
+    "leiras": "🎶 Kőszegi Vonósok barokk kamarazenekar koncertje az Arany Egyszarvú Patikamúzeumban.",
+    "idopont": "2025-09-21T15:00:00",
+    "veg_idopont": "2025-09-21T16:00:00",
+    "helyszin": {
+      "nev": "Arany Egyszarvú Patikamúzeum, Jurisics tér 11., Kőszeg",
+      "lat": 47.389285306865446, 
+      "lng": 16.5409190649991
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Zene", "Barokk", "Koncert"]
+  },
+  {
+    "id": "event-111",
+    "nev": "Schey Mózes-től a Kulacs vendéglőig",
+    "leiras": "🏠 Söptei Imre felfedező vezetése az Óvárosban, indulás a Várkör 12. alól.",
+    "idopont": "2025-09-21T18:00:00",
+    "veg_idopont": "2025-09-21T19:00:00",
+    "helyszin": {
+      "nev": "Találkozó: Várkör 12., Kőszeg",
+      "lat": 47.38908987468242, 
+      "lng": 16.543049884524333
+    },
+    "image": "orokseg.jpg",
+    "tags": ["Történelem", "Séta", "Helytörténet"]
+  }
 ]
