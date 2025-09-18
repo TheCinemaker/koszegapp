@@ -1,55 +1,81 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import CustomDropdown from '../components/CustomDropdown';
 import GastroCard from '../components/GastroCard';
 import { useFavorites } from '../contexts/FavoritesContext';
 
 const featuredIds = ['gastro-10'];
 
-function shuffle(array) {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+// --- Stabil “random” súly: ugyanarra az id-re mindig ugyanaz a szám ---
+function hash32(str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
   }
-  return shuffled;
+  // unsigned 32-bit -> 0..1
+  return (h >>> 0) / 0xffffffff;
 }
 
-export default function Gastronomy({ restaurants, loading }) {
+// Id + session-só alapján kap stabil “random” súlyt
+function makeStableWeightFn(salt) {
+  return (id) => hash32(String(salt) + ':' + String(id));
+}
+
+export default function Gastronomy({ restaurants = [], loading }) {
   const [filterType, setFilterType] = useState('all');
   const { favorites, isFavorite } = useFavorites();
+
+  // egy session alatt állandó só (nem változik renderenként)
+  const saltRef = useRef(Math.random().toString(36).slice(2));
+  const weightOf = useMemo(() => makeStableWeightFn(saltRef.current), []);
 
   const handleFilterChange = useCallback((value) => {
     setFilterType(value);
   }, []);
 
+  // Dropdown címkék
   const types = useMemo(() => {
-    let baseTypes = ['Minden', ...Array.from(new Set(restaurants.map(r => r.type)))];
-    if (favorites.some(favId => restaurants.some(item => item.id === favId && favId.startsWith('gastro-')))) {
-      if (!baseTypes.includes('Kedvenceim')) {
-        baseTypes.splice(1, 0, 'Kedvenceim');
-      }
-    }
-    return baseTypes;
+    const base = Array.from(new Set(restaurants.map(r => r.type))).filter(Boolean);
+    const hasFavGastro = favorites.some(
+      favId => restaurants.some(item => item.id === favId && String(favId).startsWith('gastro-'))
+    );
+    // “Minden” mindig elöl, “Kedvenceim” (ha kell) utána
+    const labels = ['Minden'];
+    if (hasFavGastro) labels.push('Kedvenceim');
+    return [...labels, ...base];
   }, [restaurants, favorites]);
 
-  const dropdownOptions = useMemo(() => {
-    return types.map(t => ({
-      label: t,
-      value: t === 'Minden' ? 'all' : t
-    }));
-  }, [types]);
+  const dropdownOptions = useMemo(
+    () => types.map(t => ({ label: t, value: t === 'Minden' ? 'all' : t })),
+    [types]
+  );
 
+  // Stabil sorrend: featured elöl, a többi ID-alapú stabil súllyal rendezve
   const finalList = useMemo(() => {
+    // Szűrés
     const filtered = restaurants.filter(r => {
       if (filterType === 'Kedvenceim') return isFavorite(r.id);
       return filterType === 'all' || r.type === filterType;
     });
-    
+
+    // Featured + non-featured
     const featured = filtered.filter(r => featuredIds.includes(r.id));
     const nonFeatured = filtered.filter(r => !featuredIds.includes(r.id));
-    
-    return [...featured, ...shuffle(nonFeatured)];
-  }, [restaurants, filterType, isFavorite]);
+
+    // Stabil “random” sorrend a nonFeatured-re (kedvenceléskor sem ugrik)
+    nonFeatured.sort((a, b) => {
+      const wa = weightOf(a.id);
+      const wb = weightOf(b.id);
+      if (wa === wb) {
+        // tiebreaker: név szerint
+        return a.name.localeCompare(b.name, 'hu');
+      }
+      return wa - wb;
+    });
+
+    // Featured marad elöl, a többiek stabil pszeudo-random
+    return [...featured, ...nonFeatured];
+  }, [restaurants, filterType, isFavorite, weightOf]);
 
   if (loading) {
     return <p className="text-center p-10">Vendéglátóhelyek betöltése...</p>;
@@ -65,12 +91,13 @@ export default function Gastronomy({ restaurants, loading }) {
           onChange={handleFilterChange}
         />
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {finalList.length > 0 ? (
           finalList.map(restaurant => (
-            <GastroCard 
-              key={restaurant.id} 
-              restaurant={restaurant} 
+            <GastroCard
+              key={restaurant.id}
+              restaurant={restaurant}
             />
           ))
         ) : (
