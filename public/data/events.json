@@ -113,18 +113,6 @@
   "link": "https://www.irottkofutas.hu"
 },
   {
-    "id": "event-44",
-    "name": "Őszi Vadgasztronómiai Nap",
-    "date": "2025-10-19",
-    "end_date": "2025-10-19",
-    "time": "11:00-17:00",
-    "location": "Jurisics-vár udvara",
-    "coords": { "lat": 47.3905, "lng": 16.5399 },
-    "description": "Vadhúsos ételek, helyi borok és kézműves termékek vására.",
-    "tags": ["gasztronómia", "vadhús", "bor"],
-    "image": "vadgasztronomiai_nap.jpg"
-  },
-  {
     "id": "event-45",
     "name": "Őszi természetfestő foglalkozás",
     "date": "2025-10-25",
