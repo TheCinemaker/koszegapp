@@ -664,6 +664,24 @@
     "Felvonulás"
   ],
   "image": "tuzoltonap.jpg"
+},
+  {
+  "id": "event-43",
+  "name": "Nyitott Porta Napok 2025 – Vasfüggöny",
+  "date": "2025-09-27",
+  "end_date": "2025-09-28",
+  "time": "Egész nap",
+  "location": "Bozsok, Cák, Csepreg, Gyöngyösfalu, Kőszeg, Kőszegdoroszló, Velem",
+  "description": "Országszerte közel 150 családi gazdaság, pince és manufaktúra nyitja meg a kapuit 2025. augusztus 23. – október 4. között. A Vasfüggöny mentén szeptember 27–28. között várják a látogatókat Bozsok, Cák, Csepreg, Gyöngyösfalu, Kőszeg, Kőszegdoroszló és Velem településeken. Helyi termék kóstolók, porta túrák, kézművesfoglalkozások és számos élmény vezeti végig a vendégeket az agroturizmus világában. Ingyenes program!",
+  "tags": [
+    "agroturizmus",
+    "gasztronómia",
+    "családi",
+    "kézműves"
+  ],
+  "image": "nyitott_porta_2025.jpg",
+  "link": "https://www.facebook.com/nyitottportanapok"
 }
+
 
 ]
