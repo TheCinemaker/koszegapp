@@ -84,18 +84,6 @@
     "image": "oszi_forras_tura.jpg"
   },
   {
-    "id": "event-77",
-    "name": "Séta Kőszeg belvárosában – Városnéző tematikus séta",
-    "date": "2025-10-11",
-    "end_date": "2025-10-11",
-    "time": "15:00",
-    "location": "Fő tér, Tourinform iroda elől",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
-    "description": "Vezetett séta történelmi épületekkel és helyi történetekkel.",
-    "tags": ["városnézés", "történelem", "könnyű séta"],
-    "image": "koszeg_varosnezes.jpg"
-  },
-  {
   "id": "event-78",
   "name": "Írottkő Futóverseny 2025",
   "date": "2025-10-05",
