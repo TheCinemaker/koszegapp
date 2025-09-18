@@ -111,7 +111,7 @@ export default function App() {
                     {favorites.length > 0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>}
                   </button>
                   {showFavorites && (
-                    <FavoritesDropdown
+                    <FavoritesDashboard
                     attractions={favoriteAttractions}
                     events={favoriteEvents}
                     leisure={favoriteLeisure}
