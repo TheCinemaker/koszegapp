@@ -29,7 +29,7 @@ import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
 import ProgramModal from './components/ProgramModal';
 
-import FavoritesDashboard from './components/FavoritesDashboard';
+import FavoritesDropdown from './components/FavoritesDropdown';
 import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
@@ -110,13 +110,14 @@ export default function App() {
                     <span className="text-xl text-rose-500">❤️</span>
                     {favorites.length > 0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{favorites.length}</span>}
                   </button>
-                  {showFavorites && <FavoritesDashboard 
-                    attractions={favoriteAttractions} 
-                    events={favoriteEvents} 
+                  {showFavorites && (
+                    <FavoritesDropdown
+                    attractions={favoriteAttractions}
+                    events={favoriteEvents}
                     leisure={favoriteLeisure}
-                    restaurants={favoriteRestaurants} 
-                    onClose={() => setShowFavorites(false)} 
-                  />}
+                    onClose={() => setShowFavorites(false)}
+                    />
+                    )}
                 </div>
                 <button onClick={toggleDark} className="px-2 py-1 rounded bg-beige-200/50 dark:bg-gray-700 text-sm transition">{dark ? '🌙' : '☀️'}</button>
               </div>
