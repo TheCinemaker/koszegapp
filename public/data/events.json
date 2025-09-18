@@ -96,6 +96,24 @@
     "image": "koszeg_varosnezes.jpg"
   },
   {
+  "id": "event-78",
+  "name": "Írottkő Futóverseny 2025",
+  "date": "2025-10-05",
+  "end_date": "2025-10-05",
+  "time": "Egész nap",
+  "location": "Kőszegi-hegység és Írottkő térsége",
+  "description": "A távok sokszínű választéka, változatos ösvények és meredek emelkedők: különleges élmény minden résztvevőnek. A hosszabb távok Ausztriába is átnyúlnak, az Írottkő nyugati oldalának látványával. Minden részlet (programok, nevezés, felkészülés) a honlapon.",
+  "tags": [
+    "futás",
+    "sport",
+    "verseny",
+    "természet"
+  ],
+  "image": "irottko_futas_2025.jpg",
+  "link": "https://www.irottkofutas.hu"
+}
+
+  {
     "id": "event-44",
     "name": "Őszi Vadgasztronómiai Nap",
     "date": "2025-10-19",
