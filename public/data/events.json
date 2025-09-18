@@ -1,40 +1,4 @@
 [
-  
-  {
-    "id": "event-30",
-    "name": "Kendig-csúcs túra",
-    "date": "2025-08-09",
-    "time": "08:30",
-    "location": "Találkozó: Tourinform (Fő tér)",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Túra Kőszeg környékének egyik legszebb magaslatára.",
-    "tags": [
-      "túra",
-      "természet"
-    ],
-    "image": "kendig.jpg"
-  },
-  {
-    "id": "event-34",
-    "name": "VI. Concordia Kórusfesztivál",
-    "date": "2025-08-30",
-    "time": "16:00",
-    "location": "Belváros, Kőszeg",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Kórusok fesztiválja különböző helyszíneken a városban.",
-    "tags": [
-      "zene",
-      "kórus",
-      "fesztivál"
-    ],
-    "image": "concordia.png"
-  },
   {
     "id": "event-35",
     "name": "Kőszegi Szüret és Fúvószenekari találkozó",
