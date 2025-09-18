@@ -41,16 +41,22 @@ export default function GastroCard({ restaurant }) {
         {/* <<< ÚJ: Cím és szív ikon egy sorban >>> */}
         <div className="flex justify-between items-start mb-1">
           <h3 className="text-xl font-semibold text-purple-800 dark:text-purple-300 pr-2 flex-grow">{restaurant.name}</h3>
-          <button 
-            onClick={() => isFavorite(restaurant.id) ? removeFavorite(restaurant.id) : addFavorite(restaurant.id)} 
-            className="text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90"
-            aria-label={isFavorite(restaurant.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();      // ne kövessen linket
+              e.stopPropagation();     // ne buborékozzon fel a kártyára
+                isFavorite(restaurant.id)
+                ? removeFavorite(restaurant.id)
+                : addFavorite(restaurant.id);
+        }}
+        className="text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90"
+        aria-label={isFavorite(restaurant.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
           >
-            {isFavorite(restaurant.id) 
-              ? <FaHeart size={22} className="animate-heart-pop" /> 
-              : <FaRegHeart size={22} />
-            }
-          </button>
+  {isFavorite(restaurant.id)
+    ? <FaHeart size={22} className="animate-heart-pop" />
+    : <FaRegHeart size={22} />}
+</button>
         </div>
 
         <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
