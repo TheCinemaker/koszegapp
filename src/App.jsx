@@ -35,6 +35,7 @@ import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
 import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
+import LiveCityMap from './components/LiveCityMap';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -282,6 +283,17 @@ export default function App() {
           <Route path="/game/intro" element={<GameIntro />} />
           <Route path="/game/gem/:id" element={<GemDetail />} />
           <Route path="/game/treasure-chest" element={<MyGems />} />
+          <Route path="/live-map" element={<div className="container mx-auto px-4 py-6">
+              <h1 className="text-2xl font-bold mb-4">Élő várostérkép</h1>
+                <LiveCityMap
+                  events={appData.events}
+                  attractions={appData.attractions}
+                  leisure={appData.leisure}
+                  restaurants={appData.restaurants}
+              />
+            </div>
+          }
+          />
         </Routes>
       </main>
 
@@ -300,6 +312,7 @@ export default function App() {
               <Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link>
             </p>
           </footer>
+          <Link to="/live-map" className="px-3 py-1 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700">🗺️ Térkép</Link>
 
           <FloatingButtons />
           <OstromDrawerFullAnimated />
