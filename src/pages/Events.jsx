@@ -76,7 +76,7 @@ export default function Events() {
   const [selectedTag, setSelectedTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
+  const { favorites, addFavorite, removeFavorite, isFavorite, pruneFavorites } = useFavorites();
 
   useEffect(() => {
     setLoading(true);
@@ -91,6 +91,19 @@ export default function Events() {
         // dátum szerinti rendezés (kezdőnap)
         const sorted = norm.slice().sort((a, b) => a.date.localeCompare(b.date));
         setEvents(sorted);
+
+        // --- KEDVENCEK AUTOTAKARÍTÁS ---
+        const validIds = new Set(sorted.map(e => e.id));
+        const isUpcomingById = (id) => {
+        const evt = sorted.find(x => x.id === id);
+        if (!evt) return false;
+        const s = parseISO(evt.date);
+        const e = parseISO(evt.end_date || evt.date);
+        // end-of-day a végdátumra
+        e.setHours(23,59,59,999);
+        return e >= new Date();
+        };
+        pruneFavorites(validIds, isUpcomingById);
 
         // top tagek
         const allTags = sorted.flatMap(event => event.tags || []);
@@ -121,7 +134,7 @@ export default function Events() {
   const filtered = useMemo(() => {
     const base = normalized
       .filter(evt => {
-        if (filter === 'favorites') return isFavorite(evt.id);
+        if (filter === 'favorites') return isFavorite(evt.id) && evt._e && evt._e >= now;
         if (filter === 'week') return areIntervalsOverlapping({start: evt._s, end: evt._e}, {start: wkStart, end: wkEnd});
         if (filter === 'month') return areIntervalsOverlapping({start: evt._s, end: evt._e}, {start: moStart, end: moEnd});
         if (filter === 'byMonth') return evt._s && (evt._s.getMonth() + 1 === selectedMonth);
@@ -326,13 +339,36 @@ export default function Events() {
                     <h4 className="text-lg font-semibold truncate text-indigo-500 dark:text-indigo-700 pr-2 flex-grow">
                       {evt.name}
                     </h4>
-                    <button 
-                      onClick={() => isFavorite(evt.id) ? removeFavorite(evt.id) : addFavorite(evt.id)} 
-                      className="text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90"
-                      aria-label={isFavorite(evt.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
-                    >
-                      {isFavorite(evt.id) ? <FaHeart size={22} className="animate-heart-pop" /> : <FaRegHeart size={22} />}
-                    </button>
+                    {(() => {
+  const isPast = evt._e && evt._e < now;
+  return (
+    <button
+      onClick={() => {
+        if (isPast) return; // ha lejárt, nem csinál semmit
+        isFavorite(evt.id) ? removeFavorite(evt.id) : addFavorite(evt.id);
+      }}
+      className={
+        'text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90 ' +
+        (isPast ? 'opacity-40 cursor-not-allowed' : '')
+      }
+      aria-label={
+        isPast
+          ? 'Lezajlott esemény nem jelölhető kedvencnek'
+          : isFavorite(evt.id)
+          ? 'Eltávolítás a kedvencekből'
+          : 'Hozzáadás a kedvencekhez'
+      }
+      title={isPast ? 'Lezajlott esemény nem jelölhető kedvencnek' : ''}
+    >
+      {isFavorite(evt.id) ? (
+        <FaHeart size={22} className="animate-heart-pop" />
+      ) : (
+        <FaRegHeart size={22} />
+      )}
+    </button>
+  );
+})()}
+
                   </div>
 
                   <p className="text-sm text-rose-50 dark:text-amber-100 mb-3">
