@@ -442,7 +442,7 @@
     "end_date": "2025-09-18",
     "time": "18:00",
     "location": "Zsinagóga",
-    "coords": { "lat": 47.39123, "lng": 16.54157 },
+    "coords": { "lat": 47.39094750017947,  "lng": 16.541631206816614 },
     "description": "A Vukán Creative Art verseny zárókoncertje a kőszegi Zsinagógában. Ingyenes.",
     "tags": ["zene", "koncert", "klasszikus", "ingyenes"],
     "image": "vukan_zarokoncert.jpg"
