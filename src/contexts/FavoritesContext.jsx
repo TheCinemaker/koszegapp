@@ -1,82 +1,96 @@
-import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
-import toast from 'react-hot-toast'; // <<< ÚJ IMPORT
-import { FaCheckCircle, FaTrashAlt } from 'react-icons/fa'; // <<< ÚJ IMPORT AZ IKONOKHOZ
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import toast from 'react-hot-toast';
+import { FaCheckCircle, FaTrashAlt } from 'react-icons/fa';
 
 const FAVORITES_KEY = 'koszeg-app-favorites';
 
 const FavoritesContext = createContext();
 
-const getInitialState = () => {
+const safeLocalStorageGet = (key, fallback) => {
   try {
-    const item = window.localStorage.getItem(FAVORITES_KEY);
-    return item ? JSON.parse(item) : [];
-  } catch (error) {
-    console.error("Hiba a kedvencek beolvasásakor:", error);
-    return [];
+    if (typeof window === 'undefined') return fallback;
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    console.error('Favorites load error:', e);
+    return fallback;
   }
 };
 
 export const FavoritesProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState(getInitialState);
+  const [favorites, setFavorites] = useState(() => safeLocalStorageGet(FAVORITES_KEY, []));
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-    } catch (error) {
-      console.error("Hiba a kedvencek mentésekor:", error);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+      }
+    } catch (e) {
+      console.error('Favorites save error:', e);
     }
   }, [favorites]);
 
-  // --- KIEGÉSZÍTETT FÜGGVÉNYEK ---
-
   const addFavorite = useCallback((id) => {
-    setFavorites((prev) => {
-      if (prev.includes(id)) {
-        return prev; // Ha már benne van, nem csinálunk semmit
-      }
-      
-      // <<< ÚJ: ÉRTESÍTÉS KÜLDÉSE SIKERES HOZZÁADÁSKOR >>>
+    setFavorites(prev => {
+      if (prev.includes(id)) return prev;
       toast.success('Hozzáadva a kedvencekhez', {
         icon: <FaCheckCircle className="text-green-500" />,
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          color: '#fff',
-        },
+        style: { borderRadius: '10px', background: '#333', color: '#fff' },
       });
-
       return [...prev, id];
     });
   }, []);
 
   const removeFavorite = useCallback((id) => {
-    setFavorites((prev) => prev.filter((favId) => favId !== id));
-
-    // <<< ÚJ: ÉRTESÍTÉS KÜLDÉSE SIKERES TÖRLÉSKOR >>>
+    setFavorites(prev => prev.filter(x => x !== id));
     toast.error('Eltávolítva a kedvencekből', {
       icon: <FaTrashAlt className="text-red-500" />,
-      style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-      },
+      style: { borderRadius: '10px', background: '#333', color: '#fff' },
     });
   }, []);
 
-  const isFavorite = useCallback(
-    (id) => favorites.includes(id),
-    [favorites]
-  );
+  const toggleFavorite = useCallback((id) => {
+    setFavorites(prev => {
+      const exists = prev.includes(id);
+      if (exists) {
+        toast.error('Eltávolítva a kedvencekből', {
+          icon: <FaTrashAlt className="text-red-500" />,
+          style: { borderRadius: '10px', background: '#333', color: '#fff' },
+        });
+        return prev.filter(x => x !== id);
+      } else {
+        toast.success('Hozzáadva a kedvencekhez', {
+          icon: <FaCheckCircle className="text-green-500" />,
+          style: { borderRadius: '10px', background: '#333', color: '#fff' },
+        });
+        return [...prev, id];
+      }
+    });
+  }, []);
 
-  const value = { favorites, addFavorite, removeFavorite, isFavorite };
+  const clearFavorites = useCallback(() => {
+    setFavorites([]);
+    toast('Összes kedvenc törölve', { style: { borderRadius: '10px', background: '#333', color: '#fff' }});
+  }, []);
 
-  return (
-    <FavoritesContext.Provider value={value}>
-      {children}
-    </FavoritesContext.Provider>
-  );
+  // külső listák alapján takarítás: csak létező és jövőbeni marad
+  const pruneFavorites = useCallback((validIdsSet, isUpcomingById) => {
+    setFavorites(prev => prev.filter(id => validIdsSet.has(id) && isUpcomingById(id)));
+  }, []);
+
+  const isFavorite = useCallback((id) => favorites.includes(id), [favorites]);
+
+  const value = useMemo(() => ({
+    favorites,
+    addFavorite,
+    removeFavorite,
+    toggleFavorite,
+    clearFavorites,
+    pruneFavorites,
+    isFavorite,
+  }), [favorites, addFavorite, removeFavorite, toggleFavorite, clearFavorites, pruneFavorites, isFavorite]);
+
+  return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 };
 
-export const useFavorites = () => {
-  return useContext(FavoritesContext);
-};
+export const useFavorites = () => useContext(FavoritesContext);
