@@ -304,7 +304,7 @@ export default function App() {
           {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
 
           <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
-            <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.5.0</p>
+            <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.9.2</p>
             <p className="text-xs text-gray-600">© Design: Hidalmasi Erik</p>
             <p className="text-xs text-gray-600">
               Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a>
