@@ -211,6 +211,7 @@ export default function App() {
                   <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="weather" className="w-5 h-5" />
                   <span className="text-sm">{weather.temp}°C</span>
                 </button>
+                <Link to="/live-map" className="px-3 py-1 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700">🗺️ Térkép</Link>
 
                 <div className="relative" ref={favoritesRef}>
                   <button
@@ -312,7 +313,6 @@ export default function App() {
               <Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link>
             </p>
           </footer>
-          <Link to="/live-map" className="px-3 py-1 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700">🗺️ Térkép</Link>
 
           <FloatingButtons />
           <OstromDrawerFullAnimated />
