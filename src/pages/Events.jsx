@@ -340,11 +340,11 @@ export default function Events() {
                   </p>
 
                   {evt.location && (
-                    <p className="text-sm text-black mb-4">
+                    <p className="text-sm text-white/90 mb-4">
                       📍 {evt.location}
                       {evt.coords && (
                         <a
-                          className="ml-2 text-black underline"
+                          className="ml-2 text-blue-100 underline"
                           href={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}`}
                           target="_blank"
                           rel="noopener noreferrer"
