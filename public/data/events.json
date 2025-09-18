@@ -292,7 +292,7 @@
   },
   {
     "id": "event-55",
-    "name": "Szilveszteri Főtéri Buli",
+    "name": "Szilveszteri Főtéri találka",
     "date": "2025-12-31",
     "time": "22:00-01:00",
     "location": "Jurisics tér",
@@ -300,7 +300,7 @@
       "lat": 47.3891,
       "lng": 16.5396
     },
-    "description": "Utcai zene, tánc és tűzijáték az új év köszöntésére.",
+    "description": "A "hagyományos" fő téri Újév köszöntő, tüzijátékkal, pezsgővel. ",
     "tags": [
       "szilveszter",
       "zene",
