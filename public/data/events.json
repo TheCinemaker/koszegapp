@@ -150,18 +150,6 @@
     "image": "oszi_barangolo.jpg"
   },
   {
-    "id": "event-47",
-    "name": "Márton-napi Libalakoma és Bor",
-    "date": "2025-11-09",
-    "end_date": "2025-11-09",
-    "time": "12:00-17:00",
-    "location": "Jurisics-vár udvara",
-    "coords": { "lat": 47.3905, "lng": 16.5399 },
-    "description": "Libás ételek, újbor kóstoló, zenés program.",
-    "tags": ["gasztronómia", "bor", "hagyomány"],
-    "image": "marton_napi_liba.jpg"
-  },
-  {
     "id": "event-48",
     "name": "Kézműves Adventi előkészítő",
     "date": "2025-11-17",
@@ -256,5 +244,199 @@
     "description": "A \"hagyományos\" fő téri Újév-köszöntő, tűzijátékkal és pezsgővel.",
     "tags": ["szilveszter", "zene", "tánc"],
     "image": "szilveszter.jpg"
+  },
+  [
+  {
+    "id": "event-79",
+    "name": "Marék Veronika – Mesés délelőtt",
+    "date": "2025-09-27",
+    "end_date": "2025-09-27",
+    "time": "10:00",
+    "location": "Városi Könyvtár (rendezvényterem)",
+    "description": "Diavetítés Marék Veronika meséiből kisgyermekeknek, szülőknek és nagyszülőknek. Ingyenes program.",
+    "tags": ["gyerekprogram", "családi", "irodalom"],
+    "image": "marek_veronika_mesedelo.jpg"
+  },
+  {
+    "id": "event-80",
+    "name": "Természetismereti séta – „Iskola a határon” park",
+    "date": "2025-09-30",
+    "end_date": "2025-09-30",
+    "time": "15:00",
+    "location": "Találkozó: Kőszeg, Tourinform (Fő tér 2.)",
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Ismerkedés a Dr. Nagy László EGYMI park természeti értékeivel Illés Péter biológiatanár vezetésével (20/526-4300). Táv: ~1,5 km • Időtartam: ~1,5 óra.",
+    "tags": ["séta", "természet", "oktatás", "családi"],
+    "image": "termeszetismereti_seta.jpg"
+  },
+  {
+    "id": "event-81",
+    "name": "Állatkertek a vadon élőkért – képes előadás",
+    "date": "2025-10-02",
+    "end_date": "2025-10-03",
+    "time": "Egész nap",
+    "location": "Városi Könyvtár (rendezvényterem)",
+    "description": "Az Állatok Világnapja alkalmából óvodás és iskolás csoportoknak Dankovics Róbert herpetológus muzeológus képes előadásai. Előzetes regisztráció: balogh.beata@kvmkl.hu. Ingyenes.",
+    "tags": ["oktatás", "természet", "gyerekprogram", "előadás"],
+    "image": "allatkertek_eloadas.jpg"
+  },
+  {
+    "id": "event-82",
+    "name": "4 dobos a Toronyban – improvizációs est",
+    "date": "2025-10-03",
+    "end_date": "2025-10-03",
+    "time": "19:00",
+    "location": "Zwinger",
+    "description": "Geröly Tamás és három zenésztársa improvizációs estje. Jegyfoglalás: 20-413-3530, 30-999-8320. Belépő: 3800 Ft.",
+    "tags": ["zene", "koncert", "improvizáció"],
+    "image": "4_dobos_toronyban.jpg"
+  },
+  {
+    "id": "event-83",
+    "name": "Kőszegi Vonósok – MUZSIKOCKA koncert",
+    "date": "2025-10-04",
+    "end_date": "2025-10-04",
+    "time": "19:00",
+    "location": "Jurisics vár – Lovagterem",
+    "description": "A Zene világnapja alkalmából: a Kőszegi Vonósok a hangszerek és stílusok „kockáival” játszva mutatják a zene sokoldalúságát. Ingyenes.",
+    "tags": ["zene", "koncert", "klasszikus"],
+    "image": "koszegi_vonosok_koncert.jpg"
+  },
+  {
+    "id": "event-84",
+    "name": "Állatok Világnapja a Látogatóközpontban",
+    "date": "2025-10-04",
+    "end_date": "2025-10-04",
+    "time": "Egész nap",
+    "location": "Bechtold István Természetvédelmi Látogatóközpont",
+    "description": "Programok az Állatok Világnapja alkalmából a természetvédelmi látogatóközpontban. Ingyenes.",
+    "tags": ["természet", "családi", "állatok"],
+    "image": "allatok_vilagnapja_bechtold.jpg"
+  },
+  {
+    "id": "event-85",
+    "name": "Gesztenye túra – Vezetett túra az Írottkő Natúrparkban",
+    "date": "2025-10-04",
+    "end_date": "2025-10-04",
+    "time": "",
+    "location": "Találkozó: Rákóczi út 25. előtti kis tér",
+    "description": "Útvonal: Óriás Platán – Ottlik sétány – Csónakázó tó – Hideg-völgy – Napostető – Szent Sír/„Szenzsermen” kereszt – Merengő – Királyvölgy – Kőszeg. Táv: ~10 km. Ingyenes.",
+    "tags": ["túra", "természet", "családi"],
+    "image": "gesztenye_tura.jpg"
+  },
+  {
+    "id": "event-78",
+    "name": "Írottkő Futóverseny 2025",
+    "date": "2025-10-05",
+    "end_date": "2025-10-05",
+    "time": "Egész nap",
+    "location": "Kőszegi-hegység és Írottkő térsége",
+    "description": "Sokszínű távok, változatos terep és erdei hangulat. A hosszabb távok Ausztriába is átnyúlnak. Részletek és nevezés a honlapon.",
+    "tags": ["futás", "sport", "verseny", "természet"],
+    "image": "irottko_futas_2025.jpg",
+    "link": "https://www.irottkofutas.hu"
+  },
+  {
+    "id": "event-86",
+    "name": "Fasching Zsuzsanna zenepedagógus: „A zene az kell, hogy ne vesszünk el…”",
+    "date": "2025-10-07",
+    "end_date": "2025-10-07",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "description": "Előadás a zene szerepéről és közösségteremtő erejéről. Ingyenes.",
+    "tags": ["előadás", "zene", "oktatás"],
+    "image": "fasching_zsuzsanna_eloadas.jpg"
+  },
+  {
+    "id": "event-87",
+    "name": "Lőcsei Péter irodalomtörténész: Irodalmi évfordulók 2025 – kiállításmegnyitó",
+    "date": "2025-10-09",
+    "end_date": "2025-10-09",
+    "time": "16:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "description": "Kiállításmegnyitó irodalmi évfordulók kapcsán. Ingyenes.",
+    "tags": ["kiállítás", "irodalom", "megnyitó"],
+    "image": "irodalmi_evfordulok_2025.jpg"
+  },
+  {
+    "id": "event-88",
+    "name": "Kovács Ágnes irodalomtörténész: A kettétört kockacukor – Ottlik Géza Buda",
+    "date": "2025-10-09",
+    "end_date": "2025-10-09",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "description": "Őszi szabadegyetemi előadás: férfiak és nők Ottlik Géza Buda című regényében. Ingyenes.",
+    "tags": ["előadás", "irodalom"],
+    "image": "kettetort_kockacukor_eloadas.jpg"
+  },
+  {
+    "id": "event-89",
+    "name": "Szabóhegyi gesztenyesütés",
+    "date": "2025-10-11",
+    "end_date": "2025-10-11",
+    "time": "14:00",
+    "location": "Egyesületi ház",
+    "description": "A Szabóhegyért Közösen Egyesület közösségi programja. Elérhetőség: +36 30 232 2315. Ingyenes.",
+    "tags": ["gasztronómia", "közösség", "családi", "szabadtéri"],
+    "image": "szabohegyi_gesztenyesutes.jpg"
+  },
+  {
+    "id": "event-90",
+    "name": "Egyházközségi Bál – jótékonysági esemény",
+    "date": "2025-10-11",
+    "end_date": "2025-10-11",
+    "time": "",
+    "location": "Jurisics vár – Lovagterem",
+    "description": "A Római Katolikus Egyházközség jótékonysági bálja a Jurisics vár lovagtermében.",
+    "tags": ["bál", "közösség", "jótékonyság"],
+    "image": "egyhazkozsegi_bal.jpg"
+  },
+  {
+    "id": "event-91",
+    "name": "Little G Weevil – blues koncert",
+    "date": "2025-10-11",
+    "end_date": "2025-10-11",
+    "time": "19:00",
+    "location": "Zwinger",
+    "description": "Little G Weevil blues gitáros koncertje. Az estet megnyitja: Zsoldos Báró Zoltán & Szántner László. Jegyfoglalás: 20-413-3530, 30-999-8320. Belépő: 4200 Ft.",
+    "tags": ["zene", "koncert", "blues"],
+    "image": "little_g_weevil.jpg"
+  },
+  {
+    "id": "event-92",
+    "name": "Dr. Varga Szabolcs történész: A végítélet kora (1526–1541)",
+    "date": "2025-10-16",
+    "end_date": "2025-10-16",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "description": "Őszi szabadegyetemi előadás: várakozás és valóság a Magyar Királyságban 1526–1541 között. Ingyenes.",
+    "tags": ["előadás", "történelem"],
+    "image": "vegitelet_kora_eloadas.jpg"
+  },
+  {
+    "id": "event-93",
+    "name": "Tábor-hegy kerülés – vezetett túra",
+    "date": "2025-10-18",
+    "end_date": "2025-10-18",
+    "time": "09:00",
+    "location": "Találkozó: Tourinform (Fő tér 2.)",
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Útvonal: Andalgó-tanösvény – Rattersdorf – Keresztkút – Zeiger-nyereg – vasfüggöny túraút – Királyvölgy – Fő tér. Táv: ~20 km • Szint: ~550 m • Időtartam: ~7 óra • Túravezető: Hegyvári Ferenc (30/396-8050). Útlevél vagy érvényes személyi szükséges!",
+    "tags": ["túra", "természet", "határátkelés", "családi"],
+    "image": "taborhegy_kerules.jpg"
+  },
+  {
+    "id": "event-94",
+    "name": "TVRTKO a Föld körül – Vujity Tvrtko estje",
+    "date": "2025-10-18",
+    "end_date": "2025-10-18",
+    "time": "18:00",
+    "location": "Jurisics vár – Lovagterem",
+    "description": "Kalandok, optimizmus, motiváció – a „Túl minden határon” est folytatása. Jegyek és infó az eseményoldalakon.",
+    "tags": ["előadás", "motiváció", "utazás"],
+    "image": "tvrtko_a_fold_korul.jpg",
+    "link": "https://hydelight.jegy.hu/search?q=tvrtko"
   }
+]
+
 ]
