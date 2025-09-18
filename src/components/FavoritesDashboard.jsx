@@ -3,20 +3,58 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
 
-function imgSrc(kind, item) {
-  // próbáljuk meg a mappákat: events / attractions / leisure / gastro
-  const name = item?.image || '';
-  if (!name) return '';
-  const byKind = {
+// --- KÉP FALLBACK HELPER ---
+function buildCandidates(kind, rawName) {
+  const name = rawName || '';
+  if (!name) return [];
+
+  // ha abszolút URL vagy már /images-szel kezdődik → elsőként ezt próbáljuk
+  const direct = (name.startsWith('http') || name.startsWith('/images/')) ? [name] : [];
+
+  const primaryByKind = {
     events: `/images/events/${name}`,
     attractions: `/images/attractions/${name}`,
     leisure: `/images/leisure/${name}`,
     restaurants: `/images/gastro/${name}`,
   };
-  return byKind[kind] || `/images/${name}`;
+
+  const primary = primaryByKind[kind];
+  const fallback = `/images/${name}`;
+
+  // dedup: ha direct == primary vagy fallback, ne ismételjük
+  const list = [];
+  for (const src of [ ...(direct.length ? direct : []), primary, fallback ]) {
+    if (src && !list.includes(src)) list.push(src);
+  }
+  return list;
 }
 
+function ImgWithFallback({ kind, name, alt, className }) {
+  const [idx, setIdx] = React.useState(0);
+  const candidates = React.useMemo(() => buildCandidates(kind, name), [kind, name]);
+  const src = candidates[idx] || '';
+
+  if (!src) {
+    return <div className="w-full h-full bg-neutral-200 dark:bg-neutral-600" />;
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      onError={() => {
+        setIdx((i) => (i + 1 < candidates.length ? i + 1 : i));
+      }}
+    />
+  );
+}
+
+// --- MINI TILE ---
 function MiniTile({ kind, item, onClose, onRemove }) {
+  if (!item) return null;
+
   const hrefMap = {
     events: `/events/${item.id}`,
     attractions: `/attractions/${item.id}`,
@@ -24,7 +62,6 @@ function MiniTile({ kind, item, onClose, onRemove }) {
     restaurants: `/gastronomy/${item.id}`,
   };
   const href = hrefMap[kind];
-  const src = imgSrc(kind, item);
 
   return (
     <div className="relative w-36 shrink-0 snap-start rounded-xl overflow-hidden bg-white/70 dark:bg-gray-700/60 shadow">
@@ -39,19 +76,15 @@ function MiniTile({ kind, item, onClose, onRemove }) {
         ×
       </button>
 
-      {/* kép */}
-      {src ? (
-        <div className="w-full aspect-[16/10] bg-neutral-200 dark:bg-neutral-600">
-          <img
-            src={src}
-            alt={item.name}
-            className="w-full h-full object-cover"
-            onError={(e) => { e.currentTarget.style.display='none'; }}
-          />
-        </div>
-      ) : (
-        <div className="w-full aspect-[16/10] bg-neutral-200 dark:bg-neutral-600" />
-      )}
+      {/* kép - 16:10 keret, cover; poszterek is szépen beférnek */}
+      <div className="w-full aspect-[16/10] bg-neutral-200 dark:bg-neutral-600">
+        <ImgWithFallback
+          kind={kind}
+          name={item.image}
+          alt={item.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       {/* cím + link */}
       <Link
@@ -66,6 +99,7 @@ function MiniTile({ kind, item, onClose, onRemove }) {
   );
 }
 
+// --- DASHBOARD ---
 export default function FavoritesDashboard({
   attractions = [],
   events = [],
