@@ -1,29 +1,20 @@
 // src/components/LiveCityMap.jsx
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
-  Polyline,
   ZoomControl,
 } from 'react-leaflet';
 import L from 'leaflet';
 import { parseISO } from 'date-fns';
 
-// FONTOS: valahol globálisan legyen:
+// FONTOS: a Leaflet CSS-nek *globálisan* be kell lennie húzva (pl. main.jsx vagy index.css):
 // import 'leaflet/dist/leaflet.css';
 
-// ---- Színek (egységes helyen) ----
-const COLORS = {
-  events: '#ef4444',       // piros
-  attractions: '#3b82f6',  // kék
-  leisure: '#22c55e',      // zöld
-  restaurants: '#f97316',  // narancs
-};
-
-// ---- Kattintható kör ikonok (nagyobb hitbox) ----
+// ===== Ikonok (nagyobb kattintható felület, árnyék, színes pötty) =====
 const makeDot = (hex) =>
   L.divIcon({
     className: 'leaflet-dot-icon',
@@ -36,53 +27,36 @@ const makeDot = (hex) =>
   });
 
 const ICONS = {
-  events: makeDot(COLORS.events),
-  attractions: makeDot(COLORS.attractions),
-  leisure: makeDot(COLORS.leisure),
-  restaurants: makeDot(COLORS.restaurants),
+  events: makeDot('#ef4444'),       // piros
+  attractions: makeDot('#3b82f6'),  // kék
+  leisure: makeDot('#22c55e'),      // zöld
+  restaurants: makeDot('#f97316'),  // narancs
 };
 
-// ---- Hónapok (HU rövid) ----
-const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+// Saját pozíció ikon (kék)
+const userIcon = L.divIcon({
+  className: 'leaflet-user-icon',
+  html: `<span style="
+    display:inline-block;width:14px;height:14px;border-radius:50%;
+    background:#2563eb; box-shadow:0 0 0 2px #fff, 0 0 6px rgba(0,0,0,.4);
+  "></span>`,
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+});
 
-// ---- Szebb alaptérképek ----
-const TILE_STYLES = {
-  OpenStreetMap: {
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attr:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-  CartoLight: {
-    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    attr:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  },
-  CartoDark: {
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    attr:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  },
-};
+// ===== Helper: többféle sémából helyszínek kinyerése =====
+// Visszatér: [{lat, lng, label?}, ...] (lehet 0, 1 vagy több elem)
+function pickLocations(item) {
+  if (!item) return [];
 
-
-// ---- Helper: több koordináta kinyerése (új + régi sémák) ----
-// Visszatér: [{lat,lng,label?,time?}, ...]
-function pickLatLngs(item) {
-  if (!item || typeof item !== 'object') return [];
-
-  // új séma: locations tömb
-  if (Array.isArray(item.locations) && item.locations.length) {
+  // ÚJ többhelyszínű séma: locations: [{lat,lng,label?}, ...]
+  if (Array.isArray(item.locations)) {
     return item.locations
-      .filter((l) => typeof l.lat === 'number' && typeof l.lng === 'number')
-      .map((l) => ({
-        lat: l.lat,
-        lng: l.lng,
-        label: l.name || '',
-        time: l.time || '',
-      }));
+      .map((p) => normalizeLatLng(p))
+      .filter(Boolean);
   }
 
-  // régi séma: egyetlen coords
+  // Régi egyhelyszínű sémák: coords / coordinates / location.coords / stb.
   const c =
     item.coords ||
     item.coordinates ||
@@ -91,32 +65,44 @@ function pickLatLngs(item) {
     item.location?.coordinates ||
     null;
 
-  if (c && typeof c.lat === 'number' && typeof c.lng === 'number') {
-    return [
-      {
-        lat: c.lat,
-        lng: c.lng,
-        label: item.location || '',
-        time: item.time || '',
-      },
-    ];
+  if (c) {
+    const single = normalizeLatLng(c);
+    return single ? [single] : [];
   }
 
-  if (typeof item.lat === 'number' && typeof item.lng === 'number') {
-    return [
-      {
-        lat: item.lat,
-        lng: item.lng,
-        label: item.location || '',
-        time: item.time || '',
-      },
-    ];
-  }
-
-  return [];
+  // Esetleg közvetlen lat/lng mezők
+  const fallback = normalizeLatLng(item);
+  return fallback ? [fallback] : [];
 }
 
-// ---- Fő komponens ----
+function normalizeLatLng(obj) {
+  if (!obj) return null;
+  // lat/lng számszerűen
+  if (typeof obj.lat === 'number' && typeof obj.lng === 'number') {
+    const out = { lat: obj.lat, lng: obj.lng };
+    if (obj.label) out.label = String(obj.label);
+    return out;
+  }
+  return null;
+}
+
+// ===== Hónapnevek (selecthez) =====
+const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+
+// ===== Térkép csempestílusok (OSM / OpenMapTiles variánsok) =====
+const TILE_STYLES = {
+  OSM: {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attr:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors',
+  },
+  CartoLight: {
+    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    attr:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+};
+
 export default function LiveCityMap({
   events = [],
   attractions = [],
@@ -125,11 +111,11 @@ export default function LiveCityMap({
 }) {
   const navigate = useNavigate();
 
-  // Térkép középpont: Kőszeg belváros
+  // Középpont: Kőszeg belváros
   const center = [47.3896, 16.5402];
 
-  // UI state
-  const [tileKey, setTileKey] = useState('CartoLight');
+  // UI állapotok
+  const [tileKey, setTileKey] = useState('OSM');
   const [month, setMonth] = useState(new Date().getMonth()); // 0..11
   const [show, setShow] = useState({
     events: true,
@@ -138,47 +124,89 @@ export default function LiveCityMap({
     restaurants: true,
   });
 
-  // --- Események hónapra szűrése ---
+  // Saját pozíció
+  const [userPos, setUserPos] = useState(null);
+
+  // Geolokáció bekapcsolása (egyszer)
+  useEffect(() => {
+    if (!('geolocation' in navigator)) return;
+    const watchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        setUserPos([latitude, longitude]);
+      },
+      (err) => {
+        // csendben lenyeljük, ha tiltva van
+        console.warn('Geolocation hiba:', err?.message);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 10_000,
+        timeout: 10_000,
+      }
+    );
+    return () => {
+      try { navigator.geolocation.clearWatch(watchId); } catch {}
+    };
+  }, []);
+
+  // Események havi szűrése
   const monthlyEvents = useMemo(() => {
     const safe = Array.isArray(events) ? events : [];
     return safe.filter((e) => {
-      const start =
-        e?._s instanceof Date
-          ? e._s
-          : e?.date
-          ? parseISO(e.date)
-          : null;
+      // _s (normalizált) vagy date -> parseISO
+      const start = e?._s
+        ? new Date(e._s)
+        : (e?.date ? parseISO(e.date) : null);
+
       if (!start || isNaN(start)) return false;
       return start.getMonth() === month;
     });
   }, [events, month]);
 
-  // --- Marker listák (helyszínenként szétbontva) ---
+  // Marker listák (csak valós koordináták esetén)
   const markers = useMemo(() => {
-    const make = (arr) =>
-      (Array.isArray(arr) ? arr : [])
-        .flatMap((it) => pickLatLngs(it).map((pos, idx) => ({ item: it, pos, idx })))
-        .filter((x) => !!x.pos);
-
     return {
-      events: make(monthlyEvents),
-      attractions: make(attractions),
-      leisure: make(leisure),
-      restaurants: make(restaurants),
+      events: monthlyEvents
+        .flatMap((e) => {
+          const locs = pickLocations(e);
+          if (!locs.length) return [];
+          return locs.map((pos, idx) => ({ item: e, pos, idx }));
+        }),
+      attractions: (Array.isArray(attractions) ? attractions : [])
+        .flatMap((a) => {
+          const locs = pickLocations(a);
+          if (!locs.length) return [];
+          return locs.map((pos, idx) => ({ item: a, pos, idx }));
+        }),
+      leisure: (Array.isArray(leisure) ? leisure : [])
+        .flatMap((l) => {
+          const locs = pickLocations(l);
+          if (!locs.length) return [];
+          return locs.map((pos, idx) => ({ item: l, pos, idx }));
+        }),
+      restaurants: (Array.isArray(restaurants) ? restaurants : [])
+        .flatMap((r) => {
+          const locs = pickLocations(r);
+          if (!locs.length) return [];
+          return locs.map((pos, idx) => ({ item: r, pos, idx }));
+        }),
     };
   }, [monthlyEvents, attractions, leisure, restaurants]);
 
-  const tile = TILE_STYLES[tileKey] || TILE_STYLES.CartoLight;
+  const tile = TILE_STYLES[tileKey] || TILE_STYLES.OSM;
 
-  // --- Ikonszín kinyerése a legendához (a divIcon HTML-jéből) ---
-  const iconHex = (key) =>
-    ICONS[key].options.html.match(/background:(.*?);/)?.[1] || '#999';
+  // Okos bezárás: ha van visszaút, lépjünk vissza, különben Home
+  const close = () => {
+    if (window.history.length > 1) navigate(-1);
+    else navigate('/');
+  };
 
   return (
     <div className="relative w-full h-[calc(100dvh-64px)]">
-      {/* Bezáró „X” gomb (fehér kör, fekete vastag X) */}
+      {/* Bezáró X (fehér kör, fekete vastag X) */}
       <button
-        onClick={() => navigate('/')}
+        onClick={close}
         className="absolute top-3 right-3 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
         aria-label="Bezárás"
         title="Bezárás"
@@ -186,7 +214,7 @@ export default function LiveCityMap({
         ✕
       </button>
 
-      {/* Vezérlő panel – mobilon is látható (bal felső) */}
+      {/* Vezérlőpanel (mobilon is jól látható) */}
       <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
         {/* Hónap választó */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
@@ -197,31 +225,32 @@ export default function LiveCityMap({
             onChange={(e) => setMonth(Number(e.target.value))}
           >
             {MONTHS_HU.map((m, i) => (
-              <option key={m} value={i}>
-                {m}
-              </option>
+              <option key={m} value={i}>{m}</option>
             ))}
           </select>
         </div>
 
         {/* Rétegek kapcsolók */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]">
-          <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">
-            Rétegek
-          </span>
-          {Object.entries(show).map(([key, isVisible]) => (
-            <label key={key} className="flex items-center gap-2 text-sm">
+          <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">Rétegek</span>
+          {(['events','attractions','leisure','restaurants']).map((key) => (
+            <label key={key} className="flex items-center gap-2 text-sm cursor-pointer">
               <input
                 type="checkbox"
-                checked={isVisible}
-                onChange={(e) =>
-                  setShow((s) => ({ ...s, [key]: e.target.checked }))
-                }
+                checked={!!show[key]}
+                onChange={(e) => setShow((s) => ({ ...s, [key]: e.target.checked }))}
               />
               <span className="inline-flex items-center gap-1">
+                {/* kis színminta */}
                 <span
                   className="inline-block w-3 h-3 rounded-full"
-                  style={{ background: iconHex(key) }}
+                  style={{
+                    background:
+                      key === 'events' ? '#ef4444' :
+                      key === 'attractions' ? '#3b82f6' :
+                      key === 'leisure' ? '#22c55e' :
+                      '#f97316'
+                  }}
                 />
                 {key === 'events' && 'Események'}
                 {key === 'attractions' && 'Látnivalók'}
@@ -241,34 +270,30 @@ export default function LiveCityMap({
             onChange={(e) => setTileKey(e.target.value)}
           >
             {Object.keys(TILE_STYLES).map((k) => (
-              <option key={k} value={k}>
-                {k}
-              </option>
+              <option key={k} value={k}>{k}</option>
             ))}
           </select>
         </div>
       </div>
 
-      {/* Legend – jobb alsó sarok */}
+      {/* Jelmagyarázat */}
       <div className="absolute bottom-3 right-3 z-[998] bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 text-xs">
-        <div className="font-semibold mb-1 text-gray-700 dark:text-gray-200">
-          Jelmagyarázat
-        </div>
-        {Object.keys(ICONS).map((key) => (
+        <div className="font-semibold mb-1 text-gray-700 dark:text-gray-200">Jelmagyarázat</div>
+        {[
+          ['events',  '#ef4444',  'Esemény'],
+          ['attractions','#3b82f6','Látnivaló'],
+          ['leisure','#22c55e',   'Szabadidő'],
+          ['restaurants','#f97316','Vendéglátó'],
+          ['user',   '#2563eb',   'Itt vagyok'],
+        ].map(([key, color, label]) => (
           <div key={key} className="flex items-center gap-2 mb-1">
-            <span
-              className="inline-block w-3 h-3 rounded-full"
-              style={{ background: iconHex(key) }}
-            />
-            {key === 'events' && 'Esemény'}
-            {key === 'attractions' && 'Látnivaló'}
-            {key === 'leisure' && 'Szabadidő'}
-            {key === 'restaurants' && 'Vendéglátó'}
+            <span className="inline-block w-3 h-3 rounded-full" style={{ background: color }} />
+            {label}
           </div>
         ))}
       </div>
 
-      {/* A tényleges Leaflet térkép */}
+      {/* A tényleges térkép */}
       <MapContainer
         center={center}
         zoom={14}
@@ -278,136 +303,85 @@ export default function LiveCityMap({
         <TileLayer url={tile.url} attribution={tile.attr} />
         <ZoomControl position="bottomleft" />
 
-        {/* Opcionális: esemény útvonalak (LineString) */}
-        {show.events &&
-          Array.isArray(events) &&
-          events.map((e) => {
-            if (
-              !e?.route ||
-              e.route.type !== 'LineString' ||
-              !Array.isArray(e.route.coordinates)
-            )
-              return null;
-            const latlngs = e.route.coordinates
-              .filter((pair) => Array.isArray(pair) && pair.length >= 2)
-              .map(([lng, lat]) => [lat, lng]); // GeoJSON -> Leaflet
-            if (!latlngs.length) return null;
-            return (
-              <Polyline
-                key={`route-${e.id}`}
-                positions={latlngs}
-                pathOptions={{
-                  color: COLORS.events,
-                  weight: 3,
-                  opacity: 0.8,
-                  dashArray: '6 6',
-                }}
-              />
-            );
-          })}
+        {/* Saját pozíció */}
+        {userPos && (
+          <Marker position={userPos} icon={userIcon}>
+            <Popup>📍 Itt vagy most</Popup>
+          </Marker>
+        )}
 
-        {/* Események (több helyszín) */}
-        {show.events &&
-          markers.events.map(({ item, pos, idx }) => (
-            <Marker
-              key={`ev-${item.id}-${idx}`}
-              position={[pos.lat, pos.lng]}
-              icon={ICONS.events}
-            >
-              <Popup>
-                <div className="text-sm">
-                  <div className="font-semibold mb-1">{item.name}</div>
-                  {pos.label && (
-                    <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>
-                  )}
-                  {pos.time && (
-                    <div className="text-xs opacity-80 mb-1">🕒 {pos.time}</div>
-                  )}
-                  <button
-                    className="text-indigo-600 underline text-xs"
-                    onClick={() => navigate(`/events/${item.id}`)}
-                  >
-                    Részletek →
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
+        {/* Események */}
+        {show.events && markers.events.map(({ item, pos, idx }) => (
+          <Marker key={`ev-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.events}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {pos.label && <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>}
+                {!pos.label && item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
+                <button
+                  className="text-indigo-600 underline text-xs"
+                  onClick={() => navigate(`/events/${item.id}`)}
+                >
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
 
         {/* Látnivalók */}
-        {show.attractions &&
-          markers.attractions.map(({ item, pos, idx }) => (
-            <Marker
-              key={`at-${item.id}-${idx}`}
-              position={[pos.lat, pos.lng]}
-              icon={ICONS.attractions}
-            >
-              <Popup>
-                <div className="text-sm">
-                  <div className="font-semibold mb-1">{item.name}</div>
-                  {item.category && (
-                    <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>
-                  )}
-                  <button
-                    className="text-indigo-600 underline text-xs"
-                    onClick={() => navigate(`/attractions/${item.id}`)}
-                  >
-                    Részletek →
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
+        {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
+          <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
+                <button
+                  className="text-indigo-600 underline text-xs"
+                  onClick={() => navigate(`/attractions/${item.id}`)}
+                >
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
 
         {/* Szabadidő */}
-        {show.leisure &&
-          markers.leisure.map(({ item, pos, idx }) => (
-            <Marker
-              key={`le-${item.id}-${idx}`}
-              position={[pos.lat, pos.lng]}
-              icon={ICONS.leisure}
-            >
-              <Popup>
-                <div className="text-sm">
-                  <div className="font-semibold mb-1">{item.name}</div>
-                  {item.category && (
-                    <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>
-                  )}
-                  <button
-                    className="text-indigo-600 underline text-xs"
-                    onClick={() => navigate(`/leisure/${item.id}`)}
-                  >
-                    Részletek →
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
+        {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
+          <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
+                <button
+                  className="text-indigo-600 underline text-xs"
+                  onClick={() => navigate(`/leisure/${item.id}`)}
+                >
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
 
         {/* Vendéglátó */}
-        {show.restaurants &&
-          markers.restaurants.map(({ item, pos, idx }) => (
-            <Marker
-              key={`re-${item.id}-${idx}`}
-              position={[pos.lat, pos.lng]}
-              icon={ICONS.restaurants}
-            >
-              <Popup>
-                <div className="text-sm">
-                  <div className="font-semibold mb-1">{item.name}</div>
-                  {item.type && (
-                    <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>
-                  )}
-                  <button
-                    className="text-indigo-600 underline text-xs"
-                    onClick={() => navigate(`/gastronomy/${item.id}`)}
-                  >
-                    Részletek →
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
+        {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
+          <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
+                <button
+                  className="text-indigo-600 underline text-xs"
+                  onClick={() => navigate(`/gastronomy/${item.id}`)}
+                >
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
   );
