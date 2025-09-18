@@ -262,8 +262,8 @@
     "description": "A Királyvölgy legendás pihenőhelye, ahol egykor három pad állt körben egy kis tisztáson – ezért nevezték Hármaspadnak. A helyi fiatalok kedvelt 'randihelye' volt, ma is pihenőpont turistautakon. Része a Királyvölgy–Szikla-forrás túraútvonalnak, ahol vezetett túrák programjai is érintik ezt a pontot :contentReference[oaicite:1]{index=1}.",
     "image": "kirv.webp",
     "coords": {
-      "lat": 47.37135,
-      "lng": 16.49447
+      "lat": 47.39044509100016, 
+      "lng": 16.529360223776383
     },
     "lengthKm": 0.05,
     "type": "park",
