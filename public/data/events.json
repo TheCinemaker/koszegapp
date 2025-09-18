@@ -37,7 +37,7 @@
   },
   {
     "id": "event-35",
-    "name": "Kőszegi Szüret és Borünnep",
+    "name": "Kőszegi Szüret és Fúvószenekari találkozó",
     "date": "2025-09-26",
     "time": "18:00-23:00",
     "location": "Jurisics tér és belváros",
@@ -49,7 +49,9 @@
     "tags": [
       "bor",
       "gasztronómia",
-      "fesztivál"
+      "fesztivál",
+      "zene",
+      "fúvósok"
     ],
     "image": "szuret.jpg"
   },
@@ -58,7 +60,7 @@
     "name": "Kőszegi Szüreti Felvonulás",
     "date": "2025-09-26",
     "time": "14:00",
-    "location": "Belváros",
+    "location": "Belváros utcái",
     "coords": {
       "lat": 47.3891,
       "lng": 16.5396
@@ -71,41 +73,7 @@
     ],
     "image": "szuret.jpg"
   },
-  {
-    "id": "event-37",
-    "name": "Kőszegi Borünnep – Főzőverseny",
-    "date": "2025-09-26",
-    "time": "10:00-15:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Gasztroverseny helyi specialitásokkal.",
-    "tags": [
-      "gasztronómia",
-      "fesztivál"
-    ],
-    "image": "fozo.webp"
-  },
-  {
-    "id": "event-38",
-    "name": "Kőszegi Borünnep – Táncház",
-    "date": "2025-09-26",
-    "time": "20:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Táncház élő zenével a borünnep estéjén.",
-    "tags": [
-      "táncház",
-      "zene",
-      "bor"
-    ],
-    "image": "tanc.jpg"
-  },
+  
   {
     "id": "event-39",
     "name": "Kőszegi Borünnep – Zárónap",
