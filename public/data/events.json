@@ -470,6 +470,29 @@
   "description": "Illés Péter biológiatanár vezetésével (20/526-4300). Útvonal: Pogány-völgy természeti értékeinek felfedezése. Hossz: kb. 6 km, időtartam: ~2,5 óra. Nehézségi fok: könnyű. Javasolt öltözet: zárt cipő, hosszúnadrág, esőkabát.",
   "tags": ["túra", "természet", "családi", "oktatás"],
   "image": "poganyvolgy_tura.jpg"
+},
+  {
+  "id": "event-100",
+  "name": "Népmese Napja",
+  "date": "2025-09-30",
+  "end_date": "2025-09-30",
+  "time": "16:00-18:00",
+  "location": "Városi Könyvtár",
+  "coords": { "lat": 47.38955, "lng": 16.54055 },
+  "description": "A Hajnalcsillag Néptáncegyüttes foglalkozásain 8–15 óra között óvodások és alsó tagozatosok, 16–18 óra között családok ismerhetik meg Az aranyszőrű bárány című népmesét viseletbemutatóval egybekötve. Előzetes regisztráció: balogh.beata@kvmkl.hu",
+  "tags": ["népmese", "gyerekprogram", "családi", "néptánc"],
+  "image": "nepmese_napja.jpg"
+},
+  {
+  "id": "event-101",
+  "name": "Természetismereti séta – Iskola a határon park",
+  "date": "2025-09-30",
+  "end_date": "2025-09-30",
+  "time": "15:00",
+  "location": "Találkozó: Tourinform iroda, Fő tér 2.",
+  "coords": { "lat": 47.3891, "lng": 16.5396 },
+  "description": "Ismerkedés a Dr. Nagy László EGYMI park természeti értékeivel Illés Péter biológiatanár vezetésével (20/526-4300). Hossz és időtartam: kb. 1,5 km, 1,5 óra. Nehézségi fok: könnyű.",
+  "tags": ["séta", "természet", "oktatás", "családi"],
+  "image": "iskola_a_hataron_seta.jpg"
 }
-
 ]
