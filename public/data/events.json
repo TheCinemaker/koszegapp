@@ -422,5 +422,53 @@
     "tags": ["előadás", "motiváció", "utazás"],
     "image": "tvrtko_a_fold_korul.jpg",
     "link": "https://hydelight.jegy.hu/search?q=tvrtko"
+  },
+  {
+  "id": "event-95",
+  "name": "Alpannonia® Hard – Kőszeg panorámakör",
+  "date": "2025-09-20",
+  "end_date": "2025-09-20",
+  "time": "09:00-15:00",
+  "location": "Találkozó: Tourinform iroda (Kőszeg, Fő tér 2.)",
+  "coords": { "lat": 47.3891, "lng": 16.5396 },
+  "description": "Vezetett túra az Írottkő Natúrparkban. Útvonal: Kálvária – Trianoni kereszt – Borterasz – Szulejmán-kilátó – Borterasz – fadepó – Óház-tető (gerinctúra) – Vöröskereszt – sárga kereszt – Felső-Pogányok – szőlőskertek – Kövi-dűlő – dr. Ambró Gy. u. – Panoráma krt. – Csőszház u. – Szt. György u. – Kőszeg. Táv: ~17 km • Szint: ~490 m • Időtartam: ~6 óra. Túravezető: Hegyvári Ferenc (30/396-8050). Ingyenes.",
+  "tags": ["túra", "természet", "panoráma", "középhaladó"],
+  "image": "alpannonia_hard_panoramakor.jpg"
+},
+    {
+    "id": "event-96",
+    "name": "Tisztogatási munkálatok a Szabóhegyen",
+    "date": "2025-09-20",
+    "end_date": "2025-09-20",
+    "time": "09:00",
+    "location": "Szabóhegy",
+    "coords": { "lat": 47.3932, "lng": 16.5480 },
+    "description": "Közösségi takarítás a Szabóhegyen. Szervező: Szabóhegyért Közösen Egyesület. Elérhetőség: +36 30 232 2315. Ingyenes.",
+    "tags": ["közösség", "önkéntesség", "szabadtéri", "családi"],
+    "image": "szabohegy_tisztogatas.jpg"
+  },
+  {
+    "id": "event-97",
+    "name": "Kulturális Örökség Napjai Kőszegen",
+    "date": "2025-09-20",
+    "end_date": "2025-09-20",
+    "time": "Egész nap",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "coords": { "lat": 47.3894, "lng": 16.5413 },
+    "description": "Ingyenes programok és tematikus bemutatók a Kulturális Örökség Napjai keretében Kőszegen.",
+    "tags": ["kultúra", "örökség", "családi", "ingyenes"],
+    "image": "kulturalis_orokseg_napjai_koszeg.jpg"
+  },
+  {
+    "id": "event-98",
+    "name": "Vukán Creative Art verseny – zárókoncert",
+    "date": "2025-09-18",
+    "end_date": "2025-09-18",
+    "time": "18:00",
+    "location": "Zsinagóga",
+    "coords": { "lat": 47.39123, "lng": 16.54157 },
+    "description": "A Vukán Creative Art verseny zárókoncertje a kőszegi Zsinagógában. Ingyenes.",
+    "tags": ["zene", "koncert", "klasszikus", "ingyenes"],
+    "image": "vukan_zarokoncert.jpg"
   }
 ]
