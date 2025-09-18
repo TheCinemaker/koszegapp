@@ -1,687 +1,242 @@
 [
   {
-    "id": "event-35",
-    "name": "Kőszegi Szüret - Nemzetközi fúvószenekari találkozó",
-    "date": "2025-09-26",
-    "time": "18:00-23:00",
-    "location": "Jurisics tér és belváros",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Kőszeg legnagyobb rendezvénye a város utcáin, terein, koncertek, étel-ital!",
-    "tags": [
-      "bor",
-      "gasztronómia",
-      "fesztivál",
-      "zene",
-      "fúvósok"
-    ],
-    "image": "szuret.jpg"
+    "id": "event-75",
+    "name": "X. Tűzoltó Találkozó és Bemutató",
+    "date": "2025-09-20",
+    "end_date": "2025-09-20",
+    "time": "09:30-18:00",
+    "location": "Jurisics tér, Fő tér és város utcái",
+    "coords": { "lat": 47.3896, "lng": 16.5402 },
+    "description": "🚒 A 157 éves kőszegi tűzoltó egyesület tisztelettel várja Önöket a jubileumi találkozóra. Felvonulás, műszaki és bevetési bemutatók, gyermekprogramok és közel 70 tűzoltóautó látványos felvonulása.",
+    "tags": ["tűzoltóság", "bemutató", "családi", "felvonulás"],
+    "image": "tuzoltonap.jpg"
   },
   {
     "id": "event-36",
     "name": "Kőszegi Szüreti Felvonulás",
     "date": "2025-09-26",
+    "end_date": "2025-09-26",
     "time": "14:00",
     "location": "Belváros utcái",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Ezen a programon felvonul a város apraja-nagyja, az iskolák, civil szervezetek, cégek különböző mókás jelmezekben. A felvonulás köré épül a további két nap programja, mely pénteken este fúvósszerenáddal indul és vasárnap könnyed zenei programmal zárul. Szombaton délelőtt tartjuk a városunkba érkező zenekarok zenés fogadását, ami esetenként 6 és 10 zenekar között változik. Szombaton ezektől a zenekaroktól hangos az egész város. Délidőben minden nagyobb vendéglőben fúvószene szól. A felvonulás után a város különböző pontjain lehet népzenét és néptáncot, modern táncot és fúvószenét nézni és hallgatni. A szombat estét a fúvós show zárja a Károly Róbert téren felállított rendezvénysátorban. Vasárnap kora délután a gyermekeknek nekik szóló műsorral, majd a még itt lévő vendégzenekarok térzenéje hallható, végül pedig a könnyebb műfajt játszó zenekarok koncertjeivel zárul a háromnapos fesztivál.",
-    "tags": [
-      "szüret",
-      "hagyomány",
-      "felvonulás"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Felvonul a város apraja-nagyja: iskolák, civil szervezetek, cégek mókás jelmezekben. A felvonulás köré épül a háromnapos fesztivál.",
+    "tags": ["szüret", "hagyomány", "felvonulás"],
     "image": "szuret.jpg"
   },
-  
+  {
+    "id": "event-35",
+    "name": "Kőszegi Szüret - Nemzetközi fúvószenekari találkozó",
+    "date": "2025-09-26",
+    "end_date": "2025-09-26",
+    "time": "18:00-23:00",
+    "location": "Jurisics tér és belváros",
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Kőszeg legnagyobb rendezvénye a város utcáin és terein: koncertek, étel-ital, fúvósszerenád.",
+    "tags": ["bor", "gasztronómia", "fesztivál", "zene", "fúvósok"],
+    "image": "szuret.jpg"
+  },
+  {
+    "id": "event-43",
+    "name": "Nyitott Porta Napok 2025 – Vasfüggöny",
+    "date": "2025-09-27",
+    "end_date": "2025-09-28",
+    "time": "Egész nap",
+    "location": "Bozsok, Cák, Csepreg, Gyöngyösfalu, Kőszeg, Kőszegdoroszló, Velem",
+    "description": "Országszerte közel 150 családi gazdaság, pince és manufaktúra nyitja meg a kapuit 2025. augusztus 23. – október 4. között. A Vasfüggöny mentén szept. 27–28-án várják a látogatókat. Helyi termék kóstolók, porta túrák, kézművesfoglalkozások – ingyenes program!",
+    "tags": ["agroturizmus", "gasztronómia", "családi", "kézműves"],
+    "image": "nyitott_porta_2025.jpg",
+    "link": "https://www.facebook.com/nyitottportanapok"
+  },
   {
     "id": "event-39",
     "name": "Kőszegi Szüret – Zárónap",
     "date": "2025-09-27",
+    "end_date": "2025-09-27",
     "time": "10:00-18:00",
     "location": "Belváros - Rendezvénysátor",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
     "description": "Borpavilonok, kézműves vásár, családi programok.",
-    "tags": [
-      "bor",
-      "családi"
-    ],
+    "tags": ["bor", "családi"],
     "image": "bor.jpg"
+  },
+  {
+    "id": "event-74",
+    "name": "Teljesítménytúrák",
+    "date": "2025-10-04",
+    "end_date": "2025-10-04",
+    "time": "07:00-13:00",
+    "location": "Jurisics vár",
+    "coords": { "lat": 47.389619405345535, "lng": 16.53916943128784 },
+    "description": "Az idei utolsó klasszikus teljesítménytúrán 10, 20 és 42 km-es távok közül lehet választani. Bőséges ellátás az ellenőrzőpontokon és a célban.",
+    "tags": ["túra", "természet", "sport", "családi"],
+    "image": "okt4tura.jpg"
   },
   {
     "id": "event-42",
     "name": "Őszi Forrás Túra",
     "date": "2025-10-05",
+    "end_date": "2025-10-05",
     "time": "09:00",
     "location": "Találkozó: Tourinform iroda, Fő tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Őszi tematikus gyalogtúra a környék forrásaihoz, könnyű útvonal.",
-    "tags": [
-      "túra",
-      "természet",
-      "családi"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Tematikus gyalogtúra a környék forrásaihoz. Könnyű útvonal, családbarát program.",
+    "tags": ["túra", "természet", "családi"],
     "image": "oszi_forras_tura.jpg"
   },
   {
-    "id": "event-43",
+    "id": "event-77",
     "name": "Séta Kőszeg belvárosában – Városnéző tematikus séta",
     "date": "2025-10-11",
+    "end_date": "2025-10-11",
     "time": "15:00",
     "location": "Fő tér, Tourinform iroda elől",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Vezetett séta történelmi épületekkel, helyi történetekkel.",
-    "tags": [
-      "városnézés",
-      "történelem",
-      "könnyű séta"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Vezetett séta történelmi épületekkel és helyi történetekkel.",
+    "tags": ["városnézés", "történelem", "könnyű séta"],
     "image": "koszeg_varosnezes.jpg"
   },
   {
     "id": "event-44",
     "name": "Őszi Vadgasztronómiai Nap",
     "date": "2025-10-19",
+    "end_date": "2025-10-19",
     "time": "11:00-17:00",
     "location": "Jurisics-vár udvara",
-    "coords": {
-      "lat": 47.3905,
-      "lng": 16.5399
-    },
+    "coords": { "lat": 47.3905, "lng": 16.5399 },
     "description": "Vadhúsos ételek, helyi borok és kézműves termékek vására.",
-    "tags": [
-      "gasztronómia",
-      "vadhús",
-      "bor"
-    ],
+    "tags": ["gasztronómia", "vadhús", "bor"],
     "image": "vadgasztronomiai_nap.jpg"
   },
   {
     "id": "event-45",
     "name": "Őszi természetfestő foglalkozás",
     "date": "2025-10-25",
+    "end_date": "2025-10-25",
     "time": "10:00-12:00",
     "location": "Szabóhegy",
-    "coords": {
-      "lat": 47.3932,
-      "lng": 16.548
-    },
+    "coords": { "lat": 47.3932, "lng": 16.548 },
     "description": "Szabadtéri rajzolás és festés az őszi táj inspirációjára.",
-    "tags": [
-      "kézműves",
-      "szabadtéri",
-      "családi"
-    ],
+    "tags": ["kézműves", "szabadtéri", "családi"],
     "image": "oszi_szabadteri_festes.jpg"
   },
   {
     "id": "event-46",
     "name": "Őszi Barangoló Túra",
     "date": "2025-11-02",
+    "end_date": "2025-11-02",
     "time": "09:30",
     "location": "Találkozó: Tourinform, Fő tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Könnyű vezetett túra a környező dombokon, őszi színek között.",
-    "tags": [
-      "túra",
-      "természet",
-      "családi"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Könnyű vezetett túra a környező dombokon, őszi színek között. Helyi történetekkel és érdekességekkel.",
+    "tags": ["túra", "természet", "családi"],
     "image": "oszi_barangolo.jpg"
   },
   {
     "id": "event-47",
     "name": "Márton-napi Libalakoma és Bor",
     "date": "2025-11-09",
+    "end_date": "2025-11-09",
     "time": "12:00-17:00",
     "location": "Jurisics-vár udvara",
-    "coords": {
-      "lat": 47.3905,
-      "lng": 16.5399
-    },
+    "coords": { "lat": 47.3905, "lng": 16.5399 },
     "description": "Libás ételek, újbor kóstoló, zenés program.",
-    "tags": [
-      "gasztronómia",
-      "bor",
-      "hagyomány"
-    ],
+    "tags": ["gasztronómia", "bor", "hagyomány"],
     "image": "marton_napi_liba.jpg"
   },
   {
     "id": "event-48",
     "name": "Kézműves Adventi előkészítő",
     "date": "2025-11-17",
+    "end_date": "2025-11-17",
     "time": "17:00-19:30",
     "location": "Jurisics-vár KÖSZHÁZ",
-    "coords": {
-      "lat": 47.3905,
-      "lng": 16.5399
-    },
+    "coords": { "lat": 47.3905, "lng": 16.5399 },
     "description": "Adventi koszorú, díszek és kézműves ajándékok készítése.",
-    "tags": [
-      "kézműves",
-      "ünnepi",
-      "családi"
-    ],
+    "tags": ["kézműves", "ünnepi", "családi"],
     "image": "advent_kezmuves.jpg"
   },
   {
     "id": "event-49",
     "name": "Őszi Városnéző séta – Legendák és históriák",
     "date": "2025-11-23",
+    "end_date": "2025-11-23",
     "time": "14:00",
     "location": "Fő tér, Tourinform elől",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Kőszeg történeteinek, legendáinak bejárása helyi idegenvezetővel.",
-    "tags": [
-      "városnézés",
-      "történelem",
-      "könnyű séta"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Kőszeg történeteinek és legendáinak bejárása helyi idegenvezetővel.",
+    "tags": ["városnézés", "történelem", "könnyű séta"],
     "image": "koszeg_legenda.jpg"
   },
   {
     "id": "event-50",
     "name": "Adventi Vásár megnyitó és első gyertyagyújtás",
     "date": "2025-11-29",
+    "end_date": "2025-11-29",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Az adventi időszak kezdete, kézműves árusok, forralt bor, ünnepi fények.",
-    "tags": [
-      "advent",
-      "kézműves",
-      "karácsony"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Az adventi időszak kezdete: kézműves árusok, forralt bor, ünnepi fények.",
+    "tags": ["advent", "kézműves", "karácsony"],
     "image": "advent_megnyito.jpg"
   },
   {
     "id": "event-51",
     "name": "Második Adventi gyertyagyújtás",
     "date": "2025-12-06",
+    "end_date": "2025-12-06",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Második gyertya meggyújtása, Mikulás program, kézműves foglalkozás gyerekeknek.",
-    "tags": [
-      "advent",
-      "gyerek",
-      "kézműves"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "Második gyertya meggyújtása, Mikulás-program, kézműves foglalkozás gyerekeknek.",
+    "tags": ["advent", "gyerek", "kézműves"],
     "image": "masodik_gyertya.jpg"
   },
   {
     "id": "event-52",
     "name": "Harmadik Adventi gyertyagyújtás",
     "date": "2025-12-13",
+    "end_date": "2025-12-13",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
     "description": "Harmadik adventi gyertya és ünnepi koncert a téren.",
-    "tags": [
-      "advent",
-      "zene",
-      "karácsony"
-    ],
+    "tags": ["advent", "zene", "karácsony"],
     "image": "harmadik_gyertya.jpg"
   },
   {
     "id": "event-53",
     "name": "Negyedik Adventi gyertyagyújtás",
     "date": "2025-12-20",
+    "end_date": "2025-12-20",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
     "description": "Negyedik gyertya meggyújtása, betlehemes előadás.",
-    "tags": [
-      "advent",
-      "betlehemes",
-      "karácsony"
-    ],
+    "tags": ["advent", "betlehemes", "karácsony"],
     "image": "negyedik_gyertya.jpg"
   },
   {
     "id": "event-54",
     "name": "Karácsonyi Vásár zárónap",
     "date": "2025-12-21",
+    "end_date": "2025-12-21",
     "time": "10:00-18:00",
     "location": "Jurisics tér és környéke",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
     "description": "Kézműves standok, forralt bor, ünnepi zenék, utolsó adventi vásárlási lehetőség.",
-    "tags": [
-      "karácsony",
-      "kézműves",
-      "gasztronómia"
-    ],
+    "tags": ["karácsony", "kézműves", "gasztronómia"],
     "image": "karacsonyi_vasar.jpg"
   },
   {
     "id": "event-55",
     "name": "Szilveszteri Főtéri találka",
     "date": "2025-12-31",
+    "end_date": "2025-12-31",
     "time": "22:00-01:00",
     "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "A "hagyományos" fő téri Újév köszöntő, tüzijátékkal, pezsgővel. ",
-    "tags": [
-      "szilveszter",
-      "zene",
-      "tánc"
-    ],
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "A \"hagyományos\" fő téri Újév-köszöntő, tűzijátékkal és pezsgővel.",
+    "tags": ["szilveszter", "zene", "tánc"],
     "image": "szilveszter.jpg"
-  },
-  {
-    "id": "event-56",
-    "name": "IV. Ostrom Várvédő Jótékonysági Futás",
-    "date": "2025-08-02",
-    "time": "9:00-11:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "A verseny négy távon kerül megrendezésre, a nevezési költséget teljes egészében a Kőszeg Beteg Gyermekekért – Myrtill Alapítványon keresztül kapják meg a rászoruló beteg gyerekek! Gyertek, érezzétek jól magatok, és mozogjunk, jótékonykodjunk együtt! Nevezés a helyszínen is lehetséges",
-    "tags": [
-      "Futás",
-      "jótékonyság",
-      "sport"
-    ],
-    "image": "futas.png"
-  },
-  {
-    "id": "event-57",
-    "name": "Madármegfigyelő séta a Chernel-kertben",
-    "date": "2025-07-19",
-    "time": "08:00",
-    "location": "Chernel-kert Arborétum",
-    "coords": {
-      "lat": 47.38583,
-      "lng": 16.53055
-    },
-    "description": "A Chernel-kert Arborétum madárbarát tanösvényén kalauzoló séta során a résztvevők megismerkedhetnek a helyi madárvilággal. Szükség esetén távcsövet biztosítanak.",
-    "tags": [
-      "természet",
-      "tanösvény",
-      "madarak"
-    ],
-    "image": "madar.jpg"
-  },
-  {
-    "id": "event-58",
-    "name": "Szabadtéri rajzolás a Szabóhegyen",
-    "date": "2025-07-14",
-    "time": "09:00-11:00",
-    "location": "Szabóhegy",
-    "coords": {
-      "lat": 47.3932,
-      "lng": 16.548
-    },
-    "description": "A természetben zajló kreatív program, ahol a résztvevők papírra vethetik a táj szépségeit. Eszközöket biztosítanak.",
-    "tags": [
-      "kézműves",
-      "szabadtéri"
-    ],
-    "image": "rajzolas.png"
-  },
-  {
-    "id": "event-59",
-    "name": "Szabadtéri rajzolás a Szabóhegyen",
-    "date": "2025-07-28",
-    "time": "09:00-11:00",
-    "location": "Szabóhegy",
-    "coords": {
-      "lat": 47.3932,
-      "lng": 16.548
-    },
-    "description": "Ismét szabadtéri rajzolás a Szabóhegyen, a természet inspirálta műalkotásokért.",
-    "tags": [
-      "kézműves",
-      "szabadtéri"
-    ],
-    "image": "rajzolas.png"
-  },
-  {
-    "id": "event-60",
-    "name": "Őszi Barangoló Túra",
-    "date": "2025-11-02",
-    "time": "09:30",
-    "location": "Találkozó: Tourinform, Fő tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Könnyű vezetett túra a környező dombokon, őszi színek között. A séta során helyi történetek és érdekességek hangzanak el.",
-    "tags": [
-      "túra",
-      "természet",
-      "családi"
-    ],
-    "image": "oszi_barangolo.jpg"
-  },
-  {
-    "id": "event-61",
-    "name": "Őszi Forrás Túra",
-    "date": "2025-10-05",
-    "time": "09:00",
-    "location": "Találkozó: Tourinform, Fő tér",
-    "coords": {
-      "lat": 47.3891,
-      "lng": 16.5396
-    },
-    "description": "Tematikus gyalogtúra a környék forrásaihoz. Könnyű útvonal, ajánlott kényelmes cipő. Kiváló családi program.",
-    "tags": [
-      "túra",
-      "természet",
-      "családi"
-    ],
-    "image": "oszi_forras_tura.jpg"
-  },
-  {
-    "id": "event-62",
-    "name": "Őszi Vadgasztronómiai Nap",
-    "date": "2025-10-19",
-    "time": "11:00-17:00",
-    "location": "Jurisics-vár udvara",
-    "coords": {
-      "lat": 47.3905,
-      "lng": 16.5399
-    },
-    "description": "Vadhúsos ételek, helyi borok, kézműves termékek vására, zenés programok.",
-    "tags": [
-      "gasztronómia",
-      "vadhús",
-      "bor"
-    ],
-    "image": "vadgasztro.jpg"
-  },
-  {
-    "id": "event-63",
-    "name": "🎶 Térzene a Platán alatt – zene, nyár, jótékonyság! 🎷🌳",
-    "date": "2025-08-08",
-    "time": "19:00-20:00",
-    "location": "Öreg Platán tövében",
-    "coords": {
-      "lat": 47.389162226330704, 
-      "lng": 16.544752867674845
-    },
-    "description": "A koncert során gyűjtött adományokat Luca családjának ajánljuk fel, ezzel is támogatva a mielőbbi felépülését.",
-    "tags": [
-      "Térzene",
-      "fúvósok",
-      "jótékonyság"
-    ],
-    "image": "platan.jpg"
-  },
-  {
-    "id": "event-64",
-    "name": "🎶 Főtéri Zenés Esték – Bujtás Ervin",
-    "date": "2025-08-08",
-    "time": "19:00-21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.388208225675214, 
-      "lng": 16.542009796155106 
-    },
-    "description": "🎶 Gitárdallamok és nyáresti hangulat – ingyenes koncert!",
-    "tags": [
-      "Zene",
-      "Gitár",
-      "Chill"
-    ],
-    "image": "zenesestek.jpg"
-  },
-  {
-    "id": "event-65",
-    "name": "🎶 Főtéri Zenés Esték – Radiogram",
-    "date": "2025-08-09",
-    "time": "19:00-21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.388208225675214, 
-      "lng": 16.542009796155106 
-    },
-    "description": "🎤 Modern dallamok a nyári estéhez – ingyenes koncert!",
-    "tags": [
-      "Zene",
-      "Modernzene",
-      "Chill"
-    ],
-    "image": "zenesestek.jpg"
-  },
-  {
-    "id": "event-66",
-    "name": "🎶 Főtéri Zenés Esték – Peltzer Géza",
-    "date": "2025-08-15",
-    "time": "19:00-21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.388208225675214, 
-      "lng": 16.542009796155106 
-    },
-    "description": "ingyenes koncert!",
-    "tags": [
-      "Zene",
-      "Chill"
-    ],
-    "image": "zenesestek.jpg"
-  },
-  {
-    "id": "event-67",
-    "name": "🎶 Főtéri Zenés Esték – Meggie és Tomsa",
-    "date": "2025-08-16",
-    "time": "19:00-21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.388208225675214, 
-      "lng": 16.542009796155106 
-    },
-    "description": "A legnagyobb slágerek - ingyenes koncert!",
-    "tags": [
-      "Zene",
-      "slágerek",
-      "Chill"
-    ],
-    "image": "zenesestek.jpg"
-  },
-  {
-    "id": "event-68",
-    "name": "🎶 Főtéri Zenés Esték – Trio Picanto",
-    "date": "2025-08-22",
-    "time": "19:00-21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.388208225675214, 
-      "lng": 16.542009796155106 
-    },
-    "description": "ingyenes koncert!",
-    "tags": [
-      "Zene",
-      "Gitár",
-      "Chill"
-    ],
-    "image": "zenesestek.jpg"
-  },
-  {
-    "id": "event-69",
-    "name": "🎶 Főtéri Zenés Esték – Kvarc",
-    "date": "2025-08-23",
-    "time": "19:00-21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.388208225675214, 
-      "lng": 16.542009796155106 
-    },
-    "description": "A megszokott jó hangulatú konceert - ingyenes koncert!",
-    "tags": [
-      "Zene",
-      "Gitár",
-      "Chill"
-    ],
-    "image": "zenesestek.jpg"
-  },
-    {
-    "id": "event-70",
-    "name": "Zsinagóga napok",
-    "date": "2025-08-11",
-    "time": "17:00-20:00",
-    "location": "Zsinagóga",
-    "coords": {
-      "lat": 47.39123011960285, 
-      "lng": 16.541570559283006  
-    },
-    "description": "Könyvbemutató, kiállításmegnyitó",
-    "tags": [
-      "Zene",
-      "Gitár"
-    ],
-    "image": "zsinagoganapok.jpg"
-  },
-  {
-    "id": "event-71",
-    "name": "Zsinagóga napok",
-    "date": "2025-08-12",
-    "time": "9:00-20:00",
-    "location": "Zsinagóga",
-    "coords": {
-      "lat": 47.39123011960285, 
-      "lng": 16.541570559283006  
-    },
-    "description": "Konferenciától a koncertig programok egész nap.",
-    "tags": [
-      "konferencia",
-      "Gitár",
-      "séta"
-    ],
-    "image": "zsinagoganapok.jpg"
-  },
-  {
-    "id": "event-72",
-    "name": "Történelmi séta a Jurisics Bandériummal",
-    "date": "2025-08-09",
-    "time": "10:00-13:00",
-    "location": "Fő tér - turinform iroda",
-    "coords": {
-      "lat": 47.388058151183024, 
-      "lng": 16.542272541548005 
-    },
-    "description": "📖 Interaktív séta történelmi hangulatban",
-    "tags": [
-      "Séta",
-      "Interaktiv",
-      "Bandérium"
-    ],
-    "image": "banderium.jpg"
-  },
-  {
-    "id": "event-73",
-    "name": "Találkozó és könyvbemutató – Kiss János: Fennen hirdetvén az emberek jóságát",
-    "date": "2025-08-09",
-    "time": "10:00-13:00",
-    "location": "Hotel Írottkő aula",
-    "coords": {
-      "lat": 47.38817742534213, 
-      "lng": 16.542599969864415  
-    },
-    "description": "Vedd meg a MÁV diákotthon történetét bemutató könyvet Kiss János dedikálásával!",
-    "tags": [
-      "Bemutató",
-      "Könyv",
-      "Dedikálás"
-    ],
-    "image": "konyv.jpg"
-  },
-{
-  "id": "event-74",
-  "name": "Teljesítménytúrák",
-  "date": "2025-10-04",
-  "time": "07:00-13:00",
-  "location": "Jurisics vár",
-  "coords": {
-    "lat": 47.389619405345535,
-    "lng": 16.53916943128784
-  },
-  "description": "Idei utolsó klasszikus teljesítménytúránkon a Kőszegi-hegység változatos és gyönyörű, már őszi ruhába öltöző látnivalóit és nevezetességeit kereshetik fel a túra résztvevői három táv közül választva: A rövid, 10 km-es táv kiválóan alkalmas családilagos teljesítésre egy délelőtti program keretében, a közepes, 20 km-es táv már több kihívást tartalmazó, kitartást igénylő útvonal, végül a maratoni, 42 km-es táv pedig igazi gyakorlott túrázóknak ajánlott, ők felkeresik pl. a Dunántúl és egyben Burgenland legmagasabb pontját, Írott-kőt is, ahonnan tiszta idő esetén fantasztikus kilátások nyílnak. Természetesen mindhárom távon garantált a megszokott, bőséges ellátás az ellenőrzőpontjainkon és a célban. Gyertek, gyönyörködjetek saját szemeitekkel az őszi Kőszegi-hegység látványosságaiban, érezzétek jól magatokat. 🙂 Sok szeretettel várunk mindenkit! 🩵",
-  "tags": [
-    "Túra",
-    "Természet",
-    "Sport",
-    "Családprogram"
-  ],
-  "image": "okt4tura.jpg"
-},
-  {
-  "id": "event-75",
-  "name": "X. Tűzoltó Találkozó és Bemutató",
-  "date": "2025-09-20",
-  "time": "09:30-18:00",
-  "location": "Jurisics tér, Fő tér és város utcái",
-  "coords": {
-    "lat": 47.3896,
-    "lng": 16.5402
-  },
-  "description": "🚒 A 157 éves kőszegi tűzoltó egyesület tisztelettel várja Önöket a jubileumi találkozóra. Felvonulás, műszaki és bevetési bemutatók, gyermekprogramok és közel 70 tűzoltóautó látványos felvonulása.",
-  "tags": [
-    "Tűzoltóság",
-    "Bemutató",
-    "Családi",
-    "Felvonulás"
-  ],
-  "image": "tuzoltonap.jpg"
-},
-  {
-  "id": "event-43",
-  "name": "Nyitott Porta Napok 2025 – Vasfüggöny",
-  "date": "2025-09-27",
-  "end_date": "2025-09-28",
-  "time": "Egész nap",
-  "location": "Bozsok, Cák, Csepreg, Gyöngyösfalu, Kőszeg, Kőszegdoroszló, Velem",
-  "description": "Országszerte közel 150 családi gazdaság, pince és manufaktúra nyitja meg a kapuit 2025. augusztus 23. – október 4. között. A Vasfüggöny mentén szeptember 27–28. között várják a látogatókat Bozsok, Cák, Csepreg, Gyöngyösfalu, Kőszeg, Kőszegdoroszló és Velem településeken. Helyi termék kóstolók, porta túrák, kézművesfoglalkozások és számos élmény vezeti végig a vendégeket az agroturizmus világában. Ingyenes program!",
-  "tags": [
-    "agroturizmus",
-    "gasztronómia",
-    "családi",
-    "kézműves"
-  ],
-  "image": "nyitott_porta_2025.jpg",
-  "link": "https://www.facebook.com/nyitottportanapok"
-}
-
-
+  }
 ]
