@@ -1,409 +1,173 @@
 // src/components/LiveCityMap.jsx
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
+import React, { useMemo, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import { Link } from 'react-router-dom';
-import { useFavorites } from '../contexts/FavoritesContext.jsx';
+import 'leaflet/dist/leaflet.css';
+import {
+  startOfMonth,
+  endOfMonth,
+  areIntervalsOverlapping,
+  format
+} from 'date-fns';
 
-// --- kis utilok ---
-const hasCoords = (obj) => obj?.coords && typeof obj.coords.lat === 'number' && typeof obj.coords.lng === 'number';
+// Alap ikon fix Leaflet-hez (hogy látszódjon a marker)
+const icon = new L.Icon({
+  iconUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  iconRetinaUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+  shadowUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -30],
+  shadowSize: [41, 41]
+});
 
-const dateRangeText = (evt) => {
-  if (!evt?.date) return '';
-  if (evt.end_date && evt.end_date !== evt.date) return `${evt.date} – ${evt.end_date}`;
-  return evt.date;
-};
-
-const imgByKind = (kind, image) => {
-  if (!image) return '';
-  if (image.startsWith('http') || image.startsWith('/images/')) return image;
-  const base = {
-    events: `/images/events/${image}`,
-    attractions: `/images/attractions/${image}`,
-    restaurants: `/images/gastro/${image}`,
-    leisure: `/images/leisure/${image}`,
-  }[kind];
-  return base || `/images/${image}`;
-};
-
-const mapsLink = (lat, lng) =>
-  `https://www.google.com/maps?q=${encodeURIComponent(`${lat},${lng}`)}&z=16`;
-
-// --- egységes divIcon (emoji + szín)
-const makeIcon = (bg, emoji = '📍') =>
-  L.divIcon({
-    className: 'custom-div-icon',
-    html: `<div class="map-pin" style="background:${bg}">${emoji}</div>`,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -28],
-  });
-
-// külön színek/fajta
-const ICONS = {
-  events: makeIcon('#ef4444', '🎪'),
-  attractions: makeIcon('#10b981', '🏛️'),
-  restaurants: makeIcon('#6366f1', '🍽️'),
-  leisure: makeIcon('#f59e0b', '🎯'),
-};
-
-// --- bounds helper (látható markerekhez igazítjuk a nézetet)
-function FitBounds({ items }) {
-  const map = useMap();
-  const prevKey = useRef('');
-  useEffect(() => {
-    const pts = items
-      .filter(hasCoords)
-      .map(i => [i.coords.lat, i.coords.lng]);
-    const key = JSON.stringify(pts);
-    if (!pts.length || key === prevKey.current) return;
-    prevKey.current = key;
-    const bounds = L.latLngBounds(pts);
-    // kis padding, hogy mobilon is kényelmes legyen
-    map.fitBounds(bounds, { padding: [40, 40] });
-  }, [items, map]);
-  return null;
+// Helper: eldönti, hogy az esemény időintervalluma metszi-e az adott hónapot
+function eventOverlapsMonth(evt, monthDate) {
+  if (!evt?._s || !evt?._e) return false;
+  const mStart = startOfMonth(monthDate);
+  const mEnd = endOfMonth(monthDate);
+  return areIntervalsOverlapping(
+    { start: evt._s, end: evt._e },
+    { start: mStart, end: mEnd },
+    { inclusive: true }
+  );
 }
 
+// Hónap címkék HU
+const MONTH_LABELS = [
+  'Január','Február','Március','Április','Május','Június',
+  'Július','Augusztus','Szeptember','Október','November','December'
+];
+
 export default function LiveCityMap({ events = [], attractions = [], leisure = [], restaurants = [] }) {
-  // rétegek: csak Események legyen ON by default
-  const [layers, setLayers] = useState({
-    events: true,
-    attractions: false,
-    restaurants: false,
-    leisure: false,
-  });
-  const [onlyFavs, setOnlyFavs] = useState(false);
+  // Alap: Kőszeg közepe
+  const center = [47.3893, 16.5407];
 
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  // Szűrők
+  const now = new Date();
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(now.getMonth()); // 0..11
+  const [selectedYear, setSelectedYear] = useState(now.getFullYear());
+  const [futureOnly, setFutureOnly] = useState(true);
 
-  // szűrések
-  const visibleEvents = useMemo(() => {
-    const base = events.filter(hasCoords);
-    return onlyFavs ? base.filter(e => isFavorite(e.id)) : base;
-  }, [events, onlyFavs, isFavorite]);
+  const monthDate = useMemo(() => {
+    const d = new Date(selectedYear, selectedMonthIndex, 1);
+    return d;
+  }, [selectedYear, selectedMonthIndex]);
 
-  const visibleAttractions = useMemo(() => {
-    const base = attractions.filter(hasCoords);
-    return onlyFavs ? base.filter(a => isFavorite(a.id)) : base;
-  }, [attractions, onlyFavs, isFavorite]);
+  // Események szűrése: csak amiknek van coords, és beleesnek a kiválasztott hónapba
+  const filteredEvents = useMemo(() => {
+    const base = events.filter(
+      (e) => e?.coords?.lat && e?.coords?.lng && eventOverlapsMonth(e, monthDate)
+    );
+    if (!futureOnly) return base;
+    const today = new Date();
+    return base.filter(e => e._e >= today);
+  }, [events, monthDate, futureOnly]);
 
-  const visibleRestaurants = useMemo(() => {
-    const base = restaurants.filter(hasCoords);
-    return onlyFavs ? base.filter(r => isFavorite(r.id)) : base;
-  }, [restaurants, onlyFavs, isFavorite]);
-
-  const visibleLeisure = useMemo(() => {
-    const base = leisure.filter(hasCoords);
-    return onlyFavs ? base.filter(l => isFavorite(l.id)) : base;
-  }, [leisure, onlyFavs, isFavorite]);
-
-  // ami épp látható (bounds-hoz)
-  const itemsForBounds = useMemo(() => {
-    const res = [];
-    if (layers.events) res.push(...visibleEvents);
-    if (layers.attractions) res.push(...visibleAttractions);
-    if (layers.restaurants) res.push(...visibleRestaurants);
-    if (layers.leisure) res.push(...visibleLeisure);
-    return res;
-  }, [layers, visibleEvents, visibleAttractions, visibleRestaurants, visibleLeisure]);
-
-  // mobilbarát fix magasság
-  const styleContainer = 'w-full h-[calc(100vh-160px)] rounded-xl overflow-hidden shadow-lg';
+  // Opcionálisan helyek is mehetnének, de most az áttekinthetőség miatt csak események:
+  // const pointsFromAttractions = attractions.filter(a => a.coords?.lat && a.coords?.lng).map(...)
 
   return (
-    <div className="relative">
-      {/* Felső filter-sáv (mobilbarát) */}
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className="text-sm font-semibold mr-1">Rétegek:</span>
-        {[
-          ['events', 'Események'],
-          ['attractions', 'Látnivalók'],
-          ['restaurants', 'Vendéglátás'],
-          ['leisure', 'Szabadidő'],
-        ].map(([key, label]) => (
-          <label key={key} className="inline-flex items-center gap-1 text-sm bg-white/70 dark:bg-gray-800/70 px-2 py-1 rounded-full shadow">
-            <input
-              type="checkbox"
-              checked={layers[key]}
-              onChange={() => setLayers(prev => ({ ...prev, [key]: !prev[key] }))}
-            />
-            <span>{label}</span>
-          </label>
-        ))}
+    <div className="relative w-full h-[70vh] rounded-2xl overflow-hidden shadow-lg">
+      {/* Vezérlők (overlay) */}
+      <div className="absolute z-[500] top-3 left-3 right-3 flex items-center gap-2">
+        {/* Hónapválasztó „chip”-ek */}
+        <div className="flex-1 overflow-x-auto scrollbar-hide">
+          <div className="inline-flex gap-2 px-2 py-1 rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md">
+            {MONTH_LABELS.map((label, idx) => (
+              <button
+                key={label}
+                onClick={() => setSelectedMonthIndex(idx)}
+                className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition
+                  ${idx === selectedMonthIndex
+                    ? 'bg-indigo-600 text-white font-semibold shadow'
+                    : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                  }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-        <label className="inline-flex items-center gap-1 text-sm ml-auto bg-white/70 dark:bg-gray-800/70 px-2 py-1 rounded-full shadow">
-          <input type="checkbox" checked={onlyFavs} onChange={() => setOnlyFavs(v => !v)} />
-          <span>Csak kedvenceim</span>
+        {/* Év (-/+), ha átlógna a következő évre is */}
+        <div className="flex items-center gap-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-2 py-1 rounded-xl">
+          <button
+            onClick={() => setSelectedYear(y => y - 1)}
+            className="px-2 py-1 text-sm rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+            title="Előző év"
+          >
+            ‹
+          </button>
+          <span className="px-2 text-sm font-semibold">{selectedYear}</span>
+          <button
+            onClick={() => setSelectedYear(y => y + 1)}
+            className="px-2 py-1 text-sm rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+            title="Következő év"
+          >
+            ›
+          </button>
+        </div>
+
+        {/* Csak jövőbeliek toggle */}
+        <label className="flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-3 py-1 rounded-xl cursor-pointer">
+          <input
+            type="checkbox"
+            checked={futureOnly}
+            onChange={(e) => setFutureOnly(e.target.checked)}
+          />
+          <span className="text-xs">Csak jövőbeliek</span>
         </label>
       </div>
 
-      {/* TÉRKÉP */}
-      <div className={styleContainer}>
-        <MapContainer center={[47.3891, 16.5396]} zoom={14} className="w-full h-full">
-          <TileLayer
-            // jó kontraszt, mobilbarát
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; OpenStreetMap"
-          />
+      {/* Térkép */}
+      <MapContainer center={center} zoom={14} style={{ width: '100%', height: '100%' }}>
+        <TileLayer
+          attribution='&copy; OpenStreetMap'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-          {/* bounds a látható markerekhez */}
-          <FitBounds items={itemsForBounds} />
-
-          {/* ESEMÉNYEK */}
-          {layers.events && (
-            <MarkerClusterGroup chunkedLoading>
-              {visibleEvents.map(evt => (
-                <Marker
-                  key={`e-${evt.id}`}
-                  position={[evt.coords.lat, evt.coords.lng]}
-                  icon={ICONS.events}
+        {filteredEvents.map((evt) => (
+          <Marker
+            key={evt.id}
+            position={[evt.coords.lat, evt.coords.lng]}
+            icon={icon}
+          >
+            <Popup>
+              <div className="space-y-1">
+                <div className="font-semibold">{evt.name}</div>
+                <div className="text-xs text-gray-600">
+                  {format(evt._s, 'yyyy.MM.dd')}
+                  {(+evt._e !== +evt._s) ? ` – ${format(evt._e, 'yyyy.MM.dd')}` : ''}
+                  {evt.time ? ` • ${evt.time}` : ''}
+                </div>
+                {evt.location && (
+                  <div className="text-xs">📍 {evt.location}</div>
+                )}
+                <a
+                  href={`/events/${evt.id}`}
+                  className="inline-block mt-1 text-xs bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700"
                 >
-                  <Popup>
-                    <div className="w-64">
-                      {evt.image && (
-                        <div className="w-full aspect-[16/10] rounded-lg overflow-hidden mb-2 bg-neutral-200">
-                          <img
-                            src={imgByKind('events', evt.image)}
-                            alt={evt.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
-                      <h3 className="font-semibold text-sm mb-1">{evt.name}</h3>
-                      <p className="text-xs text-gray-600 mb-2">
-                        {dateRangeText(evt)} {evt.time ? `• ${evt.time}` : ''}
-                      </p>
+                  Részletek
+                </a>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
 
-                      <div className="flex gap-2">
-                        <Link
-                          to={`/events/${evt.id}`}
-                          className="text-xs px-2 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-                        >
-                          Részlet
-                        </Link>
-                        <a
-                          className="text-xs px-2 py-1 rounded bg-gray-200 hover:bg-gray-300"
-                          href={mapsLink(evt.coords.lat, evt.coords.lng)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Vigyél oda
-                        </a>
-                        <button
-                          onClick={() =>
-                            isFavorite(evt.id) ? removeFavorite(evt.id) : addFavorite(evt.id)
-                          }
-                          className={`ml-auto text-xs px-2 py-1 rounded ${
-                            isFavorite(evt.id)
-                              ? 'bg-rose-600 text-white'
-                              : 'bg-rose-100 text-rose-700 hover:bg-rose-200'
-                          }`}
-                        >
-                          {isFavorite(evt.id) ? 'Kedvenc ✓' : 'Szivecskézem'}
-                        </button>
-                      </div>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-
-          {/* LÁTNIVALÓK */}
-          {layers.attractions && (
-            <MarkerClusterGroup chunkedLoading>
-              {visibleAttractions.map(a => (
-                <Marker
-                  key={`a-${a.id}`}
-                  position={[a.coords.lat, a.coords.lng]}
-                  icon={ICONS.attractions}
-                >
-                  <Popup>
-                    <div className="w-64">
-                      {a.image && (
-                        <div className="w-full aspect-[16/10] rounded-lg overflow-hidden mb-2 bg-neutral-200">
-                          <img
-                            src={imgByKind('attractions', a.image)}
-                            alt={a.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
-                      <h3 className="font-semibold text-sm mb-1">{a.name}</h3>
-                      {a.location && <p className="text-xs text-gray-600 mb-2">{a.location}</p>}
-                      <div className="flex gap-2">
-                        <Link
-                          to={`/attractions/${a.id}`}
-                          className="text-xs px-2 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-                        >
-                          Részlet
-                        </Link>
-                        <a
-                          className="text-xs px-2 py-1 rounded bg-gray-200 hover:bg-gray-300"
-                          href={mapsLink(a.coords.lat, a.coords.lng)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Vigyél oda
-                        </a>
-                        <button
-                          onClick={() =>
-                            isFavorite(a.id) ? removeFavorite(a.id) : addFavorite(a.id)
-                          }
-                          className={`ml-auto text-xs px-2 py-1 rounded ${
-                            isFavorite(a.id)
-                              ? 'bg-rose-600 text-white'
-                              : 'bg-rose-100 text-rose-700 hover:bg-rose-200'
-                          }`}
-                        >
-                          {isFavorite(a.id) ? 'Kedvenc ✓' : 'Szivecskézem'}
-                        </button>
-                      </div>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-
-          {/* VENDÉGLÁTÁS */}
-          {layers.restaurants && (
-            <MarkerClusterGroup chunkedLoading>
-              {visibleRestaurants.map(r => (
-                <Marker
-                  key={`r-${r.id}`}
-                  position={[r.coords.lat, r.coords.lng]}
-                  icon={ICONS.restaurants}
-                >
-                  <Popup>
-                    <div className="w-64">
-                      {r.image && (
-                        <div className="w-full aspect-[16/10] rounded-lg overflow-hidden mb-2 bg-neutral-200">
-                          <img
-                            src={imgByKind('restaurants', r.image)}
-                            alt={r.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
-                      <h3 className="font-semibold text-sm mb-1">{r.name}</h3>
-                      {r.tags?.length > 0 && (
-                        <p className="text-xs text-gray-600 mb-2">{r.tags.join(' • ')}</p>
-                      )}
-                      <div className="flex gap-2">
-                        <Link
-                          to={`/gastronomy/${r.id}`}
-                          className="text-xs px-2 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-                        >
-                          Részlet
-                        </Link>
-                        <a
-                          className="text-xs px-2 py-1 rounded bg-gray-200 hover:bg-gray-300"
-                          href={mapsLink(r.coords.lat, r.coords.lng)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Vigyél oda
-                        </a>
-                        <button
-                          onClick={() =>
-                            isFavorite(r.id) ? removeFavorite(r.id) : addFavorite(r.id)
-                          }
-                          className={`ml-auto text-xs px-2 py-1 rounded ${
-                            isFavorite(r.id)
-                              ? 'bg-rose-600 text-white'
-                              : 'bg-rose-100 text-rose-700 hover:bg-rose-200'
-                          }`}
-                        >
-                          {isFavorite(r.id) ? 'Kedvenc ✓' : 'Szivecskézem'}
-                        </button>
-                      </div>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-
-          {/* SZABADIDŐ */}
-          {layers.leisure && (
-            <MarkerClusterGroup chunkedLoading>
-              {visibleLeisure.map(l => (
-                <Marker
-                  key={`l-${l.id}`}
-                  position={[l.coords.lat, l.coords.lng]}
-                  icon={ICONS.leisure}
-                >
-                  <Popup>
-                    <div className="w-64">
-                      {l.image && (
-                        <div className="w-full aspect-[16/10] rounded-lg overflow-hidden mb-2 bg-neutral-200">
-                          <img
-                            src={imgByKind('leisure', l.image)}
-                            alt={l.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
-                      <h3 className="font-semibold text-sm mb-1">{l.name}</h3>
-                      {l.location && <p className="text-xs text-gray-600 mb-2">{l.location}</p>}
-                      <div className="flex gap-2">
-                        <Link
-                          to={`/leisure/${l.id}`}
-                          className="text-xs px-2 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-                        >
-                          Részlet
-                        </Link>
-                        <a
-                          className="text-xs px-2 py-1 rounded bg-gray-200 hover:bg-gray-300"
-                          href={mapsLink(l.coords.lat, l.coords.lng)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Vigyél oda
-                        </a>
-                        <button
-                          onClick={() =>
-                            isFavorite(l.id) ? removeFavorite(l.id) : addFavorite(l.id)
-                          }
-                          className={`ml-auto text-xs px-2 py-1 rounded ${
-                            isFavorite(l.id)
-                              ? 'bg-rose-600 text-white'
-                              : 'bg-rose-100 text-rose-700 hover:bg-rose-200'
-                          }`}
-                        >
-                          {isFavorite(l.id) ? 'Kedvenc ✓' : 'Szivecskézem'}
-                        </button>
-                      </div>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-        </MapContainer>
+      {/* Alsó infósáv: hány esemény látható */}
+      <div className="absolute z-[500] bottom-3 left-3 right-3">
+        <div className="px-3 py-2 rounded-xl bg-white/85 dark:bg-gray-800/85 backdrop-blur-md text-xs flex items-center justify-between">
+          <span>
+            Látható események: <strong>{filteredEvents.length}</strong> • {MONTH_LABELS[selectedMonthIndex]} {selectedYear}
+          </span>
+          <span className="opacity-70">Nagyítás a pontos elhelyezkedéshez</span>
+        </div>
       </div>
-
-      {/* kis CSS a divIcon-hoz (globál css-be is átteheted, de így is oké) */}
-      <style>{`
-        .custom-div-icon .map-pin {
-          width: 28px;
-          height: 28px;
-          border-radius: 9999px;
-          display: grid;
-          place-items: center;
-          color: #fff;
-          font-size: 14px;
-          box-shadow: 0 6px 12px rgba(0,0,0,.25);
-          transform: translateY(-2px);
-        }
-      `}</style>
     </div>
   );
 }
