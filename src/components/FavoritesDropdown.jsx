@@ -54,7 +54,7 @@ export default function FavoritesDropdown({ attractions = [], events = [], leisu
             <ul className="space-y-1">
               {sec.items.map(item => {
                 // ha netán stringet kapnánk, guard
-                const id = typeof item === 'string' ? item : item.id;
+                const id = String(typeof item === 'string' ? item : item.id);
                 const name = typeof item === 'string' ? item : item.name;
                 const href = `/${sec.kind}/${id}`;
                 const muted = sec.kind === 'events' ? isPastEvent(item) : false;
@@ -79,7 +79,7 @@ export default function FavoritesDropdown({ attractions = [], events = [], leisu
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        removeFavorite(id);
+                        removeFavorite(String(id));
                       }}
                       aria-label="Eltávolítás a kedvencekből"
                       className="shrink-0 rounded-md px-2 py-0.5 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
