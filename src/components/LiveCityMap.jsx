@@ -47,6 +47,11 @@ const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 
 
 // ---- Szebb alaptérképek ----
 const TILE_STYLES = {
+  OpenStreetMap: {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attr:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
   CartoLight: {
     url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     attr:
@@ -63,6 +68,7 @@ const TILE_STYLES = {
       '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
   },
 };
+
 
 // ---- Helper: több koordináta kinyerése (új + régi sémák) ----
 // Visszatér: [{lat,lng,label?,time?}, ...]
