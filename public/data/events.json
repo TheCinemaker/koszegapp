@@ -40,10 +40,10 @@
   
   {
     "id": "event-39",
-    "name": "Kőszegi Borünnep – Zárónap",
+    "name": "Kőszegi Szüret – Zárónap",
     "date": "2025-09-27",
     "time": "10:00-18:00",
-    "location": "Belváros",
+    "location": "Belváros - Rendezvénysátor",
     "coords": {
       "lat": 47.3891,
       "lng": 16.5396
@@ -51,8 +51,7 @@
     "description": "Borpavilonok, kézműves vásár, családi programok.",
     "tags": [
       "bor",
-      "családi",
-      "kézműves"
+      "családi"
     ],
     "image": "bor.jpg"
   },
