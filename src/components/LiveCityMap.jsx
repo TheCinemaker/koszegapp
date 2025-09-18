@@ -1,282 +1,260 @@
 // src/components/LiveCityMap.jsx
 import React, { useMemo, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, LayersControl, LayerGroup, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { parseISO, isValid } from 'date-fns';
 
-// FONTOS: legyen a leaflet CSS importálva valahol globálisan (pl. main.jsx / index.css-ben):
-// import 'leaflet/dist/leaflet.css';
+// Leaflet default marker ikon fix (különben nem tölti be a sprite-ot build után)
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+const DefaultIcon = L.icon({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
-const MONTHS_HU = ['Jan','Feb','Már','Ápr','Máj','Jún','Júl','Aug','Szep','Okt','Nov','Dec'];
+// ——— segédek
+const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
 
-// Egyszerű színes pötty ikon (divIcon)
-function dotIcon(color = '#2563eb') {
-  return L.divIcon({
-    className: '',
-    html: `<span style="
-      display:inline-block;
-      width:14px;height:14px;border-radius:50%;
-      background:${color};
-      border:2px solid white;
-      box-shadow:0 0 0 1px rgba(0,0,0,.25);
-      "></span>`,
-    iconSize: [16,16],
-    iconAnchor: [8,8],
-  });
-}
-
-// --- Biztonságos segédek ---
-const toArray = (v) => Array.isArray(v) ? v : (v ? [v] : []);
-const hasCoords = (x) => !!(x && x.coords && typeof x.coords.lat === 'number' && typeof x.coords.lng === 'number');
-
-// Esemény dátum hónap kivonása (date vagy _s alapján)
-function eventMonth(evt) {
-  try {
-    if (evt?._s instanceof Date && !isNaN(evt._s)) return evt._s.getMonth(); // 0-11
-    if (evt?.date) {
-      const d = new Date(evt.date);
-      if (!isNaN(d)) return d.getMonth();
-    }
-  } catch {}
+function getMonthFromEvent(evt) {
+  if (!evt) return null;
+  // előnyben: ISO 'date' mező
+  if (evt.date) {
+    const d = parseISO(evt.date);
+    if (isValid(d)) return d.getMonth() + 1;
+  }
+  // fallback: _s (App.jsx-ben számolt kezdő)
+  if (evt._s instanceof Date && !isNaN(evt._s)) {
+    return evt._s.getMonth() + 1;
+  }
   return null;
 }
 
+function hasCoords(item) {
+  return item && item.coords && typeof item.coords.lat === 'number' && typeof item.coords.lng === 'number';
+}
+
+// Színek a rétegekhez
+const COLORS = {
+  events: '#ef4444',       // piros
+  attractions: '#22c55e',  // zöld
+  leisure: '#f59e0b',      // borostyán
+  restaurants: '#6366f1',  // indigó
+};
+
 export default function LiveCityMap({
-  // alapértelmezett üres tömbök — így nem lesz undefined.map hiba
   events = [],
   attractions = [],
   leisure = [],
   restaurants = [],
-  // város közép
-  center = [47.3896, 16.5402],
-  zoom = 14
 }) {
-  const now = new Date();
-  const [monthIdx, setMonthIdx] = useState(now.getMonth()); // 0..11, aktuális hónap
-  const [layers, setLayers] = useState({
-    events: true,
-    attractions: true,
-    leisure: true,
-    restaurants: true,
-  });
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
 
-  // Színkódok
-  const COLORS = {
-    events: '#e11d48',       // rózsaszín/piros
-    attractions: '#2563eb',  // kék
-    leisure: '#16a34a',      // zöld
-    restaurants: '#f59e0b',  // sárga/narancs
-  };
-
-  // Marker ikonok cache-elve
-  const ICONS = useMemo(() => ({
-    events: dotIcon(COLORS.events),
-    attractions: dotIcon(COLORS.attractions),
-    leisure: dotIcon(COLORS.leisure),
-    restaurants: dotIcon(COLORS.restaurants),
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), []);
-
-  // Hónap chip-sor (mobilbarát, vízszintesen görgethető)
-  const MonthChips = (
-    <div className="fixed left-0 right-0 top-[64px] z-[401] px-3">
-      <div className="w-full max-w-screen mx-auto bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-2xl shadow border border-black/5">
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar p-2">
-          {MONTHS_HU.map((m, idx) => (
-            <button
-              key={m}
-              onClick={() => setMonthIdx(idx)}
-              className={
-                'px-3 py-1 rounded-full text-sm shrink-0 ' +
-                (monthIdx === idx
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100')
-              }
-              aria-pressed={monthIdx === idx}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  // Rétegkapcsolók (jobb felső sarok)
-  const LayerToggles = (
-    <div className="fixed right-3 top-[116px] z-[402]">
-      <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-xl shadow border border-black/5 p-2 space-y-1">
-        {[
-          ['events', 'Események'],
-          ['attractions', 'Látnivalók'],
-          ['leisure', 'Szabadidő'],
-          ['restaurants', 'Vendéglátó'],
-        ].map(([key, label]) => (
-          <label key={key} className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={!!layers[key]}
-              onChange={() => setLayers(prev => ({ ...prev, [key]: !prev[key] }))}
-            />
-            <span className="inline-flex items-center gap-2">
-              <span
-                className="inline-block w-2.5 h-2.5 rounded-full"
-                style={{ background: COLORS[key] }}
-              />
-              {label}
-            </span>
-          </label>
-        ))}
-      </div>
-    </div>
-  );
-
-  // Legenda (alsó közép, mindig látszik)
-  const LegendBar = (
-    <div className="fixed bottom-3 left-3 right-3 z-[402]">
-      <div className="mx-auto max-w-screen-sm bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full shadow border border-black/5 px-3 py-2 flex items-center justify-center gap-4 text-xs">
-        <span className="inline-flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.events }} /> Esemény
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.attractions }} /> Látnivaló
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.leisure }} /> Szabadidő
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.restaurants }} /> Vendéglátó
-        </span>
-      </div>
-    </div>
-  );
-
-  // ESEMÉNYEK — hónap szerinti szűrés + coords guard
-  const monthEvents = useMemo(() => {
-    const list = toArray(events).filter(Boolean);
-    return list.filter(evt => {
-      if (!hasCoords(evt)) return false;
-      const m = eventMonth(evt);
-      return m === monthIdx;
+  // ——— SZŰRÉSEK
+  const filteredEvents = useMemo(() => {
+    const arr = Array.isArray(events) ? events : [];
+    return arr.filter(e => {
+      if (!hasCoords(e)) return false;
+      const m = getMonthFromEvent(e);
+      return m ? m === month : true; // ha nincs hónap, engedjük át
     });
-  }, [events, monthIdx]);
+  }, [events, month]);
 
-  // A TÖBBI RÉTEG — csak coords guard, nincs hónap szűrés
-  const poiAttractions = useMemo(() => toArray(attractions).filter(hasCoords), [attractions]);
-  const poiLeisure = useMemo(() => toArray(leisure).filter(hasCoords), [leisure]);
-  const poiRestaurants = useMemo(() => toArray(restaurants).filter(hasCoords), [restaurants]);
+  const validAttractions = useMemo(
+    () => (Array.isArray(attractions) ? attractions.filter(hasCoords) : []),
+    [attractions]
+  );
+  const validLeisure = useMemo(
+    () => (Array.isArray(leisure) ? leisure.filter(hasCoords) : []),
+    [leisure]
+  );
+  const validRestaurants = useMemo(
+    () => (Array.isArray(restaurants) ? restaurants.filter(hasCoords) : []),
+    [restaurants]
+  );
+
+  // ——— Középpont: Kőszeg
+  const center = [47.3891, 16.5396];
+  const zoom = 14;
 
   return (
-    <div className="relative w-full h-[calc(100vh-112px)] md:h-[calc(100vh-96px)] rounded-xl overflow-hidden">
-      {/* UI elemek */}
-      {MonthChips}
-      {LayerToggles}
-      {LegendBar}
+    <div className="relative w-full h-[70vh] md:h-[78vh] rounded-2xl overflow-hidden shadow-xl">
+      {/* Hónapválasztó (mobil-barát, fix bal-felső) */}
+      <div className="absolute top-2 left-2 z-[1000] bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-lg shadow p-2">
+        <label htmlFor="month" className="block text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">
+          Hónap
+        </label>
+        <select
+          id="month"
+          value={month}
+          onChange={(e) => setMonth(parseInt(e.target.value, 10))}
+          className="text-sm px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900"
+        >
+          {MONTH_SHORT.map((m, i) => (
+            <option key={m} value={i + 1}>{m}</option>
+          ))}
+        </select>
+      </div>
 
-      {/* Térkép */}
-      <MapContainer center={center} zoom={zoom} className="w-full h-full z-[400]">
-        <TileLayer
-          // Szép alapcsempék, ingyenes
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://carto.com/">CARTO</a>, &copy; OpenStreetMap'
-        />
+      {/* Legenda (bal-alsó) */}
+      <div className="absolute bottom-2 left-2 z-[1000] bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-lg shadow p-2 text-xs">
+        <div className="font-semibold mb-1">Jelmagyarázat</div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.events }} />
+          <span>Események</span>
+        </div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.attractions }} />
+          <span>Látnivalók</span>
+        </div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.leisure }} />
+          <span>Szabadidő</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-block w-3 h-3 rounded-full" style={{ background: COLORS.restaurants }} />
+          <span>Vendéglátás</span>
+        </div>
+      </div>
 
-        {/* Események */}
-        {layers.events && monthEvents.map(evt => (
-          <Marker
-            key={`evt-${evt.id}`}
-            position={[evt.coords.lat, evt.coords.lng]}
-            icon={ICONS.events}
-          >
-            <Popup>
-              <div className="min-w-[180px]">
-                <div className="font-semibold">{evt.name}</div>
-                {evt.date && (
-                  <div className="text-xs opacity-80 mt-1">
-                    {evt.end_date && evt.end_date !== evt.date
-                      ? `${evt.date} – ${evt.end_date}`
-                      : evt.date}
-                    {evt.time ? ` • ${evt.time}` : ''}
-                  </div>
-                )}
-                {evt.location && (
-                  <div className="text-xs mt-1">📍 {evt.location}</div>
-                )}
-                <a
-                  className="inline-block mt-2 text-xs px-2 py-1 rounded bg-rose-600 text-white hover:bg-rose-700"
-                  href={`/events/${evt.id}`}
+      {/* A tényleges térkép */}
+      <MapContainer center={center} zoom={zoom} scrollWheelZoom className="w-full h-full">
+        {/* --- Térkép stílus váltó (jobb-felső) --- */}
+        <LayersControl position="topright">
+          {/* Alaprétegek */}
+          <LayersControl.BaseLayer checked name="OpenStreetMap">
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; OpenStreetMap contributors"
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer name="Carto Light">
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              attribution="&copy; OSM, &copy; Carto"
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer name="Carto Dark">
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              attribution="&copy; OSM, &copy; Carto"
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer name="OpenTopoMap">
+            <TileLayer
+              url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+              attribution="Map data &copy; OSM, SRTM | Map style &copy; OpenTopoMap"
+              maxZoom={17}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer name="Esri Műhold">
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              attribution="Tiles &copy; Esri — Source: Esri, Maxar, Earthstar, GeoEye"
+              maxZoom={20}
+            />
+          </LayersControl.BaseLayer>
+
+          {/* Átlapolt rétegek (tetszés szerint ki/be kapcsolhatók) */}
+          <LayersControl.Overlay checked name="Események">
+            <LayerGroup>
+              {filteredEvents.map(e => (
+                <CircleMarker
+                  key={`e-${e.id}`}
+                  center={[e.coords?.lat, e.coords?.lng]}
+                  radius={7}
+                  pathOptions={{ color: COLORS.events, fillColor: COLORS.events, fillOpacity: 0.8 }}
                 >
-                  Részletek
-                </a>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+                  <Popup>
+                    <div className="min-w-[180px]">
+                      <div className="font-semibold mb-1">{e.name}</div>
+                      {e.date && <div className="text-xs opacity-80">📅 {e.date}{e.end_date && e.end_date !== e.date ? ` – ${e.end_date}` : ''}</div>}
+                      {e.time && <div className="text-xs opacity-80">⏰ {e.time}</div>}
+                      {e.location && <div className="text-xs opacity-80">📍 {e.location}</div>}
+                      <div className="mt-2">
+                        <a className="text-indigo-600 underline text-sm" href={`/events/${e.id}`}>Részletek</a>
+                      </div>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              ))}
+            </LayerGroup>
+          </LayersControl.Overlay>
 
-        {/* Látnivalók */}
-        {layers.attractions && poiAttractions.map(a => (
-          <Marker
-            key={`att-${a.id}`}
-            position={[a.coords.lat, a.coords.lng]}
-            icon={ICONS.attractions}
-          >
-            <Popup>
-              <div className="min-w-[180px]">
-                <div className="font-semibold">{a.name}</div>
-                {a.location && <div className="text-xs mt-1">📍 {a.location}</div>}
-                <a
-                  className="inline-block mt-2 text-xs px-2 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-                  href={`/attractions/${a.id}`}
-                >
-                  Részletek
-                </a>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+          <LayersControl.Overlay checked name="Látnivalók">
+            <LayerGroup>
+              {validAttractions.map(a => (
+                <Marker key={`a-${a.id}`} position={[a.coords.lat, a.coords.lng]}>
+                  <Popup>
+                    <div className="min-w-[180px]">
+                      <div className="font-semibold mb-1">{a.name}</div>
+                      {a.location && <div className="text-xs opacity-80">📍 {a.location}</div>}
+                      <div className="mt-2">
+                        <a className="text-indigo-600 underline text-sm" href={`/attractions/${a.id}`}>Részletek</a>
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </LayerGroup>
+          </LayersControl.Overlay>
 
-        {/* Szabadidő */}
-        {layers.leisure && poiLeisure.map(l => (
-          <Marker
-            key={`lei-${l.id}`}
-            position={[l.coords.lat, l.coords.lng]}
-            icon={ICONS.leisure}
-          >
-            <Popup>
-              <div className="min-w-[180px]">
-                <div className="font-semibold">{l.name}</div>
-                {l.location && <div className="text-xs mt-1">📍 {l.location}</div>}
-                <a
-                  className="inline-block mt-2 text-xs px-2 py-1 rounded bg-green-600 text-white hover:bg-green-700"
-                  href={`/leisure/${l.id}`}
+          <LayersControl.Overlay checked name="Szabadidő">
+            <LayerGroup>
+              {validLeisure.map(l => (
+                <CircleMarker
+                  key={`l-${l.id}`}
+                  center={[l.coords.lat, l.coords.lng]}
+                  radius={6}
+                  pathOptions={{ color: COLORS.leisure, fillColor: COLORS.leisure, fillOpacity: 0.85 }}
                 >
-                  Részletek
-                </a>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+                  <Popup>
+                    <div className="min-w-[180px]">
+                      <div className="font-semibold mb-1">{l.name}</div>
+                      {l.location && <div className="text-xs opacity-80">📍 {l.location}</div>}
+                      <div className="mt-2">
+                        <a className="text-indigo-600 underline text-sm" href={`/leisure/${l.id}`}>Részletek</a>
+                      </div>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              ))}
+            </LayerGroup>
+          </LayersControl.Overlay>
 
-        {/* Vendéglátó */}
-        {layers.restaurants && poiRestaurants.map(r => (
-          <Marker
-            key={`res-${r.id}`}
-            position={[r.coords.lat, r.coords.lng]}
-            icon={ICONS.restaurants}
-          >
-            <Popup>
-              <div className="min-w-[180px]">
-                <div className="font-semibold">{r.name}</div>
-                {r.location && <div className="text-xs mt-1">📍 {r.location}</div>}
-                <a
-                  className="inline-block mt-2 text-xs px-2 py-1 rounded bg-amber-500 text-white hover:bg-amber-600"
-                  href={`/gastronomy/${r.id}`}
+          <LayersControl.Overlay checked name="Vendéglátás">
+            <LayerGroup>
+              {validRestaurants.map(r => (
+                <CircleMarker
+                  key={`r-${r.id}`}
+                  center={[r.coords.lat, r.coords.lng]}
+                  radius={6}
+                  pathOptions={{ color: COLORS.restaurants, fillColor: COLORS.restaurants, fillOpacity: 0.85 }}
                 >
-                  Részletek
-                </a>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+                  <Popup>
+                    <div className="min-w-[180px]">
+                      <div className="font-semibold mb-1">{r.name}</div>
+                      {r.type && <div className="text-xs opacity-80">🍽️ {r.type}</div>}
+                      {r.location && <div className="text-xs opacity-80">📍 {r.location}</div>}
+                      <div className="mt-2">
+                        <a className="text-indigo-600 underline text-sm" href={`/gastronomy/${r.id}`}>Részletek</a>
+                      </div>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              ))}
+            </LayerGroup>
+          </LayersControl.Overlay>
+        </LayersControl>
       </MapContainer>
     </div>
   );
