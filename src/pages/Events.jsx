@@ -92,19 +92,6 @@ export default function Events() {
         const sorted = norm.slice().sort((a, b) => a.date.localeCompare(b.date));
         setEvents(sorted);
 
-        // --- KEDVENCEK AUTOTAKARÍTÁS ---
-        const validIds = new Set(sorted.map(e => e.id));
-        const isUpcomingById = (id) => {
-        const evt = sorted.find(x => x.id === id);
-        if (!evt) return false;
-        const s = parseISO(evt.date);
-        const e = parseISO(evt.end_date || evt.date);
-        // end-of-day a végdátumra
-        e.setHours(23,59,59,999);
-        return e >= new Date();
-        };
-        pruneFavorites(validIds, isUpcomingById);
-
         // top tagek
         const allTags = sorted.flatMap(event => event.tags || []);
         const tagCounts = allTags.reduce((acc, tag) => {
