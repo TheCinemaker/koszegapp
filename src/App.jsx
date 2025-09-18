@@ -29,7 +29,7 @@ import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
 import ProgramModal from './components/ProgramModal';
 
-import FavoritesDropdown from './components/FavoritesDropdown';
+import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
