@@ -116,7 +116,18 @@ export default function FavoritesDashboard({
     (restaurants?.length || 0) > 0;
 
   return (
-    <div className="absolute right-0 mt-2 w-96 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 animate-fadein-fast">
+    <div
+      className="
+        fixed left-[15px] right-[15px] top-20 z-50
+        md:absolute md:right-0 md:left-auto md:top-auto md:mt-2
+        bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg
+        rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700
+        animate-fadein-fast
+        w-auto md:w-96
+      "
+      role="dialog"
+      aria-label="Kedvenceim"
+    >
       <div className="p-4">
         <div className="flex justify-between items-center mb-3">
           <h3 className="font-bold text-purple-800 dark:text-purple-300">Kedvenceim</h3>
