@@ -111,8 +111,7 @@
   ],
   "image": "irottko_futas_2025.jpg",
   "link": "https://www.irottkofutas.hu"
-}
-
+},
   {
     "id": "event-44",
     "name": "Őszi Vadgasztronómiai Nap",
@@ -245,7 +244,6 @@
     "tags": ["szilveszter", "zene", "tánc"],
     "image": "szilveszter.jpg"
   },
-  [
   {
     "id": "event-79",
     "name": "Marék Veronika – Mesés délelőtt",
@@ -323,18 +321,6 @@
     "description": "Útvonal: Óriás Platán – Ottlik sétány – Csónakázó tó – Hideg-völgy – Napostető – Szent Sír/„Szenzsermen” kereszt – Merengő – Királyvölgy – Kőszeg. Táv: ~10 km. Ingyenes.",
     "tags": ["túra", "természet", "családi"],
     "image": "gesztenye_tura.jpg"
-  },
-  {
-    "id": "event-78",
-    "name": "Írottkő Futóverseny 2025",
-    "date": "2025-10-05",
-    "end_date": "2025-10-05",
-    "time": "Egész nap",
-    "location": "Kőszegi-hegység és Írottkő térsége",
-    "description": "Sokszínű távok, változatos terep és erdei hangulat. A hosszabb távok Ausztriába is átnyúlnak. Részletek és nevezés a honlapon.",
-    "tags": ["futás", "sport", "verseny", "természet"],
-    "image": "irottko_futas_2025.jpg",
-    "link": "https://www.irottkofutas.hu"
   },
   {
     "id": "event-86",
@@ -437,6 +423,4 @@
     "image": "tvrtko_a_fold_korul.jpg",
     "link": "https://hydelight.jegy.hu/search?q=tvrtko"
   }
-]
-
 ]
