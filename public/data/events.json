@@ -258,8 +258,8 @@
   {
     "id": "event-80",
     "name": "Természetismereti séta – „Iskola a határon” park",
-    "date": "2025-09-30",
-    "end_date": "2025-09-30",
+    "date": "2025-09-23",
+    "end_date": "2025-09-23",
     "time": "15:00",
     "location": "Találkozó: Kőszeg, Tourinform (Fő tér 2.)",
     "coords": { "lat": 47.3891, "lng": 16.5396 },
@@ -470,5 +470,18 @@
     "description": "A Vukán Creative Art verseny zárókoncertje a kőszegi Zsinagógában. Ingyenes.",
     "tags": ["zene", "koncert", "klasszikus", "ingyenes"],
     "image": "vukan_zarokoncert.jpg"
-  }
+  },
+  {
+  "id": "event-99",
+  "name": "Természetismereti túra – a Pogány-völgy természeti értékei",
+  "date": "2025-09-20",
+  "end_date": "2025-09-20",
+  "time": "09:00",
+  "location": "Találkozó: Tourinform iroda, Fő tér 2.",
+  "coords": { "lat": 47.3891, "lng": 16.5396 },
+  "description": "Illés Péter biológiatanár vezetésével (20/526-4300). Útvonal: Pogány-völgy természeti értékeinek felfedezése. Hossz: kb. 6 km, időtartam: ~2,5 óra. Nehézségi fok: könnyű. Javasolt öltözet: zárt cipő, hosszúnadrág, esőkabát.",
+  "tags": ["túra", "természet", "családi", "oktatás"],
+  "image": "poganyvolgy_tura.jpg"
+}
+
 ]
