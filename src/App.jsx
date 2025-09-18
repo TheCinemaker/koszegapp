@@ -40,7 +40,7 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const { dark, toggleDark } = useContext(DarkModeContext);
-  const { favorites, isFavorite } = useFavorites();
+  const { favorites, isFavorite, pruneFavorites } = useFavorites();
   const favoritesRef = useRef(null);
 
   const [weather, setWeather] = useState({ icon: '', temp: '--' });
@@ -70,6 +70,24 @@ export default function App() {
 
       setAppData({ attractions, events: normalizedEvents, leisure, restaurants, hotels, parking, loading: false });
     }).catch(console.error);
+    // --- KEDVENCEK TAKARÍTÁSA (egyszer, globálisan) ---
+      const validIds = new Set([
+        ...attractions.map(a => String(a.id)),
+        ...normalizedEvents.map(e => String(e.id)), // csak jövőbeliek vannak itt
+        ...leisure.map(l => String(l.id)),
+        ...restaurants.map(r => String(r.id)),
+        ...hotels.map(h => String(h.id)),
+        ...parking.map(p => String(p.id)),
+      ]);
+    const eventsById = new Map(normalizedEvents.map(e => [String(e.id), e]));
+    const isUpcomingById = (id) => {
+    const key = String(id);
+// ha NEM esemény: hagyjuk meg
+    if (!eventsById.has(key)) return true;
+// ha esemény: csak a jövőbeliek maradjanak
+  return true; // normalizedEvents már jövőbeliek nálad, így ez elég
+;
+pruneFavorites(validIds, isUpcomingById);
 
     fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
       .then(res => res.json()).then(data => data && setWeather({ icon: data.weather[0].icon, temp: Math.round(data.main.temp) }))
