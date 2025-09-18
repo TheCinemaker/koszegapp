@@ -1,16 +1,43 @@
 [
-  {
-    "id": "event-75",
-    "name": "X. Tűzoltó Találkozó és Bemutató",
-    "date": "2025-09-20",
-    "end_date": "2025-09-20",
-    "time": "09:30-18:00",
-    "location": "Jurisics tér, Fő tér és város utcái",
-    "coords": { "lat": 47.3896, "lng": 16.5402 },
-    "description": "🚒 A 157 éves kőszegi tűzoltó egyesület tisztelettel várja Önöket a jubileumi találkozóra. Felvonulás, műszaki és bevetési bemutatók, gyermekprogramok és közel 70 tűzoltóautó látványos felvonulása.",
-    "tags": ["tűzoltóság", "bemutató", "családi", "felvonulás"],
-    "image": "tuzoltonap.jpg"
+{
+  "id": "event-75",
+  "name": "X. Tűzoltó Találkozó és Bemutató",
+  "date": "2025-09-20",
+  "end_date": "2025-09-20",
+  "time": "09:30-18:00",
+
+  "location": "Jurisics tér, Fő tér és város utcái",
+  "locations": [
+    {
+      "name": "Jurisics tér",
+      "lat": 47.38904632807397,
+      "lng": 16.540876322284962
+    },
+    {
+      "name": "Fő tér",
+      "lat": 47.38899445987315,
+      "lng": 16.54091115644673
+    },
+    {
+      "name": "Károly Róbert tér",
+      "lat": 47.39018197934715,
+      "lng": 16.538320085500562
+    }
+  ],
+  "route": {
+    "type": "LineString",
+    "coordinates": [
+      [16.540876322284962, 47.38904632807397],
+      [16.54091115644673, 47.38899445987315],
+      [16.538320085500562, 47.39018197934715]
+    ]
   },
+
+  "description": "🚒 A 157 éves kőszegi tűzoltó egyesület tisztelettel várja Önöket a jubileumi találkozóra. Felvonulás, műszaki és bevetési bemutatók, gyermekprogramok és közel 70 tűzoltóautó látványos felvonulása.",
+  "tags": ["tűzoltóság", "bemutató", "családi", "felvonulás"],
+  "image": "tuzoltonap.jpg"
+}
+
   {
     "id": "event-36",
     "name": "Kőszegi Szüreti Felvonulás",
