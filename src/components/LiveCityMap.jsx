@@ -91,20 +91,12 @@ const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 
 
 // --- szép OpenMap tile + opciók ---
 const TILE_STYLES = {
-  OpenMap: {
-    url: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
-    attr: '&copy; OpenStreetMap contributors & Wikimedia maps',
-  },
   OSM: {
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attr: '&copy; OpenStreetMap contributors',
   },
   CartoLight: {
     url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    attr: '&copy; OSM & CARTO',
-  },
-  CartoDark: {
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
     attr: '&copy; OSM & CARTO',
   },
 };
