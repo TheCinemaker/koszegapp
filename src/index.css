@@ -250,3 +250,31 @@
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.6),
               0 0 20px rgba(0, 255, 255, 0.4);
 }
+/* pulzáló esemény pötty gyűrű */
+.pulse-ring {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 9px;   /* 30px ikonterület – 12px pont → (30-12)/2 = 9 */
+  top: 9px;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+  animation: pulse-dot 1.8s ease-out infinite;
+}
+@keyframes pulse-dot {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2.8);
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    opacity: 0;
+  }
+}
