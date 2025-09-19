@@ -1,4 +1,16 @@
 [
+  {
+    "id": "event-199",
+    "name": "tesztesemény",
+    "date": "2025-09-19",
+    "end_date": "2025-09-19",
+    "time": "10:00-23:00",
+    "location": "Belváros - Rendezvénysátor",
+    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "description": "tesztesemény",
+    "tags": ["bor", "családi"],
+    "image": "teszt.jpg"
+  },
 {
   "id": "event-75",
   "name": "X. Tűzoltó Találkozó és Bemutató",
