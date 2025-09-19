@@ -9,12 +9,9 @@ import {
   ZoomControl,
 } from 'react-leaflet';
 import L from 'leaflet';
-import { parseISO } from 'date-fns';
+import { parseISO, isSameDay, isWithinInterval } from 'date-fns';
 
-// FONTOS: a Leaflet CSS-nek *globálisan* be kell lennie húzva (pl. main.jsx vagy index.css):
-// import 'leaflet/dist/leaflet.css';
-
-// ===== Ikonok (nagyobb kattintható felület, árnyék, színes pötty) =====
+// --- pötty ikonok ---
 const makeDot = (hex) =>
   L.divIcon({
     className: 'leaflet-dot-icon',
@@ -26,14 +23,30 @@ const makeDot = (hex) =>
     iconAnchor: [15, 15],
   });
 
+// pulzáló változat (körgyűrű + középpont)
+const makePulsingDot = (hex) =>
+  L.divIcon({
+    className: 'leaflet-pulse-dot',
+    html: `
+      <span class="pulse-ring"></span>
+      <span style="
+        display:inline-block;width:12px;height:12px;border-radius:50%;
+        background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
+        position:relative;
+      "></span>
+    `,
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+  });
+
 const ICONS = {
-  events: makeDot('#ef4444'),       // piros
-  attractions: makeDot('#3b82f6'),  // kék
-  leisure: makeDot('#22c55e'),      // zöld
-  restaurants: makeDot('#f97316'),  // narancs
+  events: makeDot('#ef4444'),
+  eventsToday: makePulsingDot('#ef4444'),
+  attractions: makeDot('#3b82f6'),
+  leisure: makeDot('#22c55e'),
+  restaurants: makeDot('#f97316'),
 };
 
-// Saját pozíció ikon (kék)
 const userIcon = L.divIcon({
   className: 'leaflet-user-icon',
   html: `<span style="
@@ -44,40 +57,9 @@ const userIcon = L.divIcon({
   iconAnchor: [15, 15],
 });
 
-// ===== Helper: többféle sémából helyszínek kinyerése =====
-// Visszatér: [{lat, lng, label?}, ...] (lehet 0, 1 vagy több elem)
-function pickLocations(item) {
-  if (!item) return [];
-
-  // ÚJ többhelyszínű séma: locations: [{lat,lng,label?}, ...]
-  if (Array.isArray(item.locations)) {
-    return item.locations
-      .map((p) => normalizeLatLng(p))
-      .filter(Boolean);
-  }
-
-  // Régi egyhelyszínű sémák: coords / coordinates / location.coords / stb.
-  const c =
-    item.coords ||
-    item.coordinates ||
-    item.coordinate ||
-    item.location?.coords ||
-    item.location?.coordinates ||
-    null;
-
-  if (c) {
-    const single = normalizeLatLng(c);
-    return single ? [single] : [];
-  }
-
-  // Esetleg közvetlen lat/lng mezők
-  const fallback = normalizeLatLng(item);
-  return fallback ? [fallback] : [];
-}
-
+// ---- többhelyszín támogatás ----
 function normalizeLatLng(obj) {
   if (!obj) return null;
-  // lat/lng számszerűen
   if (typeof obj.lat === 'number' && typeof obj.lng === 'number') {
     const out = { lat: obj.lat, lng: obj.lng };
     if (obj.label) out.label = String(obj.label);
@@ -85,21 +67,106 @@ function normalizeLatLng(obj) {
   }
   return null;
 }
+function pickLocations(item) {
+  if (!item) return [];
+  if (Array.isArray(item.locations)) {
+    return item.locations.map(normalizeLatLng).filter(Boolean);
+  }
+  const c =
+    item.coords ||
+    item.coordinates ||
+    item.coordinate ||
+    item.location?.coords ||
+    item.location?.coordinates ||
+    null;
+  if (c) {
+    const one = normalizeLatLng(c);
+    return one ? [one] : [];
+  }
+  const fb = normalizeLatLng(item);
+  return fb ? [fb] : [];
+}
 
-// ===== Hónapnevek (selecthez) =====
+// ---- Időpont formázás a popup-ba ----
+function formatEventWhen(e) {
+  // rendelkezésre állhat: e._s / e._e (Date), vagy e.date / e.end_date (ISO), és e.time (pl. "09:00-18:00" | "09:00")
+  const s =
+    e?._s
+      ? new Date(e._s)
+      : e?.date
+      ? parseISO(e.date)
+      : null;
+  const ee =
+    e?._e
+      ? new Date(e._e)
+      : e?.end_date
+      ? parseISO(e.end_date)
+      : s;
+
+  if (!s) return e.time ? e.time : 'Időpont később';
+
+  const pad = (n) => String(n).padStart(2, '0');
+  const d = (dt) => `${dt.getFullYear()}.${pad(dt.getMonth() + 1)}.${pad(dt.getDate())}`;
+
+  // ha van time, azt írjuk ki – ez a legrövidebb és leginformatívabb
+  if (e.time && e.time.trim()) {
+    if (ee && d(s) !== d(ee)) {
+      return `${d(s)} – ${d(ee)} • ${e.time}`;
+    }
+    return `${d(s)} • ${e.time}`;
+  }
+
+  // nincs time → dátum vagy dátumtartomány
+  if (ee && d(s) !== d(ee)) {
+    return `${d(s)} – ${d(ee)}`;
+  }
+  return d(s);
+}
+
+// Ma zajlik-e?
+function isEventToday(e) {
+  const today = new Date();
+  const s =
+    e?._s
+      ? new Date(e._s)
+      : e?.date
+      ? parseISO(e.date)
+      : null;
+  const ee =
+    e?._e
+      ? new Date(e._e)
+      : e?.end_date
+      ? parseISO(e.end_date)
+      : s;
+
+  if (!s) return false;
+  if (!ee) return isSameDay(today, s);
+  // ha tartomány, akkor ma essen közé
+  return (
+    isSameDay(today, s) ||
+    isSameDay(today, ee) ||
+    isWithinInterval(today, { start: s, end: ee })
+  );
+}
+
 const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
 
-// ===== Térkép csempestílusok (OSM / OpenMapTiles variánsok) =====
 const TILE_STYLES = {
   OSM: {
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attr:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors',
+    attr: '&copy; OpenStreetMap contributors',
   },
   CartoLight: {
     url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    attr:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attr: '&copy; OSM & CARTO',
+  },
+  CartoDark: {
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    attr: '&copy; OSM & CARTO',
+  },
+  StadiaAlidade: {
+    url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+    attr: '&copy; Stadia Maps & OpenMapTiles & OSM',
   },
 };
 
@@ -110,93 +177,60 @@ export default function LiveCityMap({
   restaurants = [],
 }) {
   const navigate = useNavigate();
-
-  // Középpont: Kőszeg belváros
   const center = [47.3896, 16.5402];
 
-  // UI állapotok
   const [tileKey, setTileKey] = useState('OSM');
-  const [month, setMonth] = useState(new Date().getMonth()); // 0..11
+  const [month, setMonth] = useState(new Date().getMonth());
   const [show, setShow] = useState({
     events: true,
     attractions: true,
     leisure: true,
     restaurants: true,
   });
-
-  // Saját pozíció
   const [userPos, setUserPos] = useState(null);
 
-  // Geolokáció bekapcsolása (egyszer)
   useEffect(() => {
     if (!('geolocation' in navigator)) return;
-    const watchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        setUserPos([latitude, longitude]);
-      },
-      (err) => {
-        // csendben lenyeljük, ha tiltva van
-        console.warn('Geolocation hiba:', err?.message);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 10_000,
-        timeout: 10_000,
-      }
+    const id = navigator.geolocation.watchPosition(
+      (pos) => setUserPos([pos.coords.latitude, pos.coords.longitude]),
+      () => {},
+      { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
     );
-    return () => {
-      try { navigator.geolocation.clearWatch(watchId); } catch {}
-    };
+    return () => { try { navigator.geolocation.clearWatch(id); } catch {} };
   }, []);
 
-  // Események havi szűrése
   const monthlyEvents = useMemo(() => {
     const safe = Array.isArray(events) ? events : [];
     return safe.filter((e) => {
-      // _s (normalizált) vagy date -> parseISO
-      const start = e?._s
-        ? new Date(e._s)
-        : (e?.date ? parseISO(e.date) : null);
-
-      if (!start || isNaN(start)) return false;
-      return start.getMonth() === month;
+      const s = e?._s ? new Date(e._s) : (e?.date ? parseISO(e.date) : null);
+      if (!s || isNaN(s)) return false;
+      return s.getMonth() === month;
     });
   }, [events, month]);
 
-  // Marker listák (csak valós koordináták esetén)
-  const markers = useMemo(() => {
-    return {
-      events: monthlyEvents
-        .flatMap((e) => {
-          const locs = pickLocations(e);
-          if (!locs.length) return [];
-          return locs.map((pos, idx) => ({ item: e, pos, idx }));
-        }),
-      attractions: (Array.isArray(attractions) ? attractions : [])
-        .flatMap((a) => {
-          const locs = pickLocations(a);
-          if (!locs.length) return [];
-          return locs.map((pos, idx) => ({ item: a, pos, idx }));
-        }),
-      leisure: (Array.isArray(leisure) ? leisure : [])
-        .flatMap((l) => {
-          const locs = pickLocations(l);
-          if (!locs.length) return [];
-          return locs.map((pos, idx) => ({ item: l, pos, idx }));
-        }),
-      restaurants: (Array.isArray(restaurants) ? restaurants : [])
-        .flatMap((r) => {
-          const locs = pickLocations(r);
-          if (!locs.length) return [];
-          return locs.map((pos, idx) => ({ item: r, pos, idx }));
-        }),
-    };
-  }, [monthlyEvents, attractions, leisure, restaurants]);
+  const markers = useMemo(() => ({
+    events: monthlyEvents.flatMap((e) => {
+      const locs = pickLocations(e);
+      if (!locs.length) return [];
+      const today = isEventToday(e);
+      return locs.map((pos, idx) => ({ item: e, pos, idx, today }));
+    }),
+    attractions: (Array.isArray(attractions) ? attractions : []).flatMap((a) => {
+      const locs = pickLocations(a);
+      return locs.map((pos, idx) => ({ item: a, pos, idx }));
+    }),
+    leisure: (Array.isArray(leisure) ? leisure : []).flatMap((l) => {
+      const locs = pickLocations(l);
+      return locs.map((pos, idx) => ({ item: l, pos, idx }));
+    }),
+    restaurants: (Array.isArray(restaurants) ? restaurants : []).flatMap((r) => {
+      const locs = pickLocations(r);
+      return locs.map((pos, idx) => ({ item: r, pos, idx }));
+    }),
+  }), [monthlyEvents, attractions, leisure, restaurants]);
 
   const tile = TILE_STYLES[tileKey] || TILE_STYLES.OSM;
 
-  // Okos bezárás: ha van visszaút, lépjünk vissza, különben Home
   const close = () => {
     if (window.history.length > 1) navigate(-1);
     else navigate('/');
@@ -204,7 +238,7 @@ export default function LiveCityMap({
 
   return (
     <div className="relative w-full h-[calc(100dvh-64px)]">
-      {/* Bezáró X (fehér kör, fekete vastag X) */}
+      {/* Bezárás */}
       <button
         onClick={close}
         className="absolute top-3 right-3 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
@@ -214,9 +248,8 @@ export default function LiveCityMap({
         ✕
       </button>
 
-      {/* Vezérlőpanel (mobilon is jól látható) */}
+      {/* Panel */}
       <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
-        {/* Hónap választó */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
           <label className="text-xs text-gray-600 dark:text-gray-300">Hónap:</label>
           <select
@@ -224,13 +257,10 @@ export default function LiveCityMap({
             value={month}
             onChange={(e) => setMonth(Number(e.target.value))}
           >
-            {MONTHS_HU.map((m, i) => (
-              <option key={m} value={i}>{m}</option>
-            ))}
+            {MONTHS_HU.map((m, i) => (<option key={m} value={i}>{m}</option>))}
           </select>
         </div>
 
-        {/* Rétegek kapcsolók */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]">
           <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">Rétegek</span>
           {(['events','attractions','leisure','restaurants']).map((key) => (
@@ -241,15 +271,13 @@ export default function LiveCityMap({
                 onChange={(e) => setShow((s) => ({ ...s, [key]: e.target.checked }))}
               />
               <span className="inline-flex items-center gap-1">
-                {/* kis színminta */}
                 <span
                   className="inline-block w-3 h-3 rounded-full"
                   style={{
                     background:
                       key === 'events' ? '#ef4444' :
                       key === 'attractions' ? '#3b82f6' :
-                      key === 'leisure' ? '#22c55e' :
-                      '#f97316'
+                      key === 'leisure' ? '#22c55e' : '#f97316'
                   }}
                 />
                 {key === 'events' && 'Események'}
@@ -261,7 +289,6 @@ export default function LiveCityMap({
           ))}
         </div>
 
-        {/* Térkép-stílus választó */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
           <label className="text-xs text-gray-600 dark:text-gray-300">Térkép:</label>
           <select
@@ -269,9 +296,7 @@ export default function LiveCityMap({
             value={tileKey}
             onChange={(e) => setTileKey(e.target.value)}
           >
-            {Object.keys(TILE_STYLES).map((k) => (
-              <option key={k} value={k}>{k}</option>
-            ))}
+            {Object.keys(TILE_STYLES).map((k) => (<option key={k} value={k}>{k}</option>))}
           </select>
         </div>
       </div>
@@ -291,31 +316,31 @@ export default function LiveCityMap({
             {label}
           </div>
         ))}
+        <div className="mt-1 text-[11px] opacity-75">A pulzáló piros pont: ma zajló esemény.</div>
       </div>
 
-      {/* A tényleges térkép */}
-      <MapContainer
-        center={center}
-        zoom={14}
-        className="w-full h-full"
-        zoomControl={false}
-      >
+      <MapContainer center={center} zoom={14} className="w-full h-full" zoomControl={false}>
         <TileLayer url={tile.url} attribution={tile.attr} />
         <ZoomControl position="bottomleft" />
 
-        {/* Saját pozíció */}
+        {/* user */}
         {userPos && (
           <Marker position={userPos} icon={userIcon}>
             <Popup>📍 Itt vagy most</Popup>
           </Marker>
         )}
 
-        {/* Események */}
-        {show.events && markers.events.map(({ item, pos, idx }) => (
-          <Marker key={`ev-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.events}>
+        {/* események (pulzál ma) + IDŐPONT A POPUPBAN */}
+        {show.events && markers.events.map(({ item, pos, idx, today }) => (
+          <Marker
+            key={`ev-${item.id}-${idx}`}
+            position={[pos.lat, pos.lng]}
+            icon={today ? ICONS.eventsToday : ICONS.events}
+          >
             <Popup>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
+                <div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>
                 {pos.label && <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>}
                 {!pos.label && item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
                 <button
@@ -329,17 +354,14 @@ export default function LiveCityMap({
           </Marker>
         ))}
 
-        {/* Látnivalók */}
+        {/* látnivalók */}
         {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
           <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
             <Popup>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
-                <button
-                  className="text-indigo-600 underline text-xs"
-                  onClick={() => navigate(`/attractions/${item.id}`)}
-                >
+                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/attractions/${item.id}`)}>
                   Részletek →
                 </button>
               </div>
@@ -347,17 +369,14 @@ export default function LiveCityMap({
           </Marker>
         ))}
 
-        {/* Szabadidő */}
+        {/* szabadidő */}
         {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
           <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
             <Popup>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
-                <button
-                  className="text-indigo-600 underline text-xs"
-                  onClick={() => navigate(`/leisure/${item.id}`)}
-                >
+                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/leisure/${item.id}`)}>
                   Részletek →
                 </button>
               </div>
@@ -365,17 +384,14 @@ export default function LiveCityMap({
           </Marker>
         ))}
 
-        {/* Vendéglátó */}
+        {/* vendéglátó */}
         {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
           <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
             <Popup>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
-                <button
-                  className="text-indigo-600 underline text-xs"
-                  onClick={() => navigate(`/gastronomy/${item.id}`)}
-                >
+                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/gastronomy/${item.id}`)}>
                   Részletek →
                 </button>
               </div>
