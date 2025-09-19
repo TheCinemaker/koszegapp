@@ -2,43 +2,34 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  ZoomControl,
+  MapContainer, TileLayer, Marker, Popup, ZoomControl,
 } from 'react-leaflet';
 import L from 'leaflet';
 import { parseISO, isSameDay, isWithinInterval } from 'date-fns';
 
-// --- pötty ikonok ---
-const makeDot = (hex) =>
-  L.divIcon({
-    className: 'leaflet-dot-icon',
-    html: `<span style="
+// --- ikonok ---
+const makeDot = (hex) => L.divIcon({
+  className: 'leaflet-dot-icon',
+  html: `<span style="
+    display:inline-block;width:12px;height:12px;border-radius:50%;
+    background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
+  "></span>`,
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+});
+const makePulsingDot = (hex) => L.divIcon({
+  className: 'leaflet-pulse-dot',
+  html: `
+    <span class="pulse-ring"></span>
+    <span style="
       display:inline-block;width:12px;height:12px;border-radius:50%;
       background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
-    "></span>`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-  });
-
-// pulzáló változat (körgyűrű + középpont)
-const makePulsingDot = (hex) =>
-  L.divIcon({
-    className: 'leaflet-pulse-dot',
-    html: `
-      <span class="pulse-ring"></span>
-      <span style="
-        display:inline-block;width:12px;height:12px;border-radius:50%;
-        background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
-        position:relative;
-      "></span>
-    `,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-  });
-
+      position:relative;
+    "></span>
+  `,
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+});
 const ICONS = {
   events: makeDot('#ef4444'),
   eventsToday: makePulsingDot('#ef4444'),
@@ -46,7 +37,6 @@ const ICONS = {
   leisure: makeDot('#22c55e'),
   restaurants: makeDot('#f97316'),
 };
-
 const userIcon = L.divIcon({
   className: 'leaflet-user-icon',
   html: `<span style="
@@ -57,7 +47,7 @@ const userIcon = L.divIcon({
   iconAnchor: [15, 15],
 });
 
-// ---- többhelyszín támogatás ----
+// --- többhelyszín ---
 function normalizeLatLng(obj) {
   if (!obj) return null;
   if (typeof obj.lat === 'number' && typeof obj.lng === 'number') {
@@ -72,85 +62,32 @@ function pickLocations(item) {
   if (Array.isArray(item.locations)) {
     return item.locations.map(normalizeLatLng).filter(Boolean);
   }
-  const c =
-    item.coords ||
-    item.coordinates ||
-    item.coordinate ||
-    item.location?.coords ||
-    item.location?.coordinates ||
-    null;
-  if (c) {
-    const one = normalizeLatLng(c);
-    return one ? [one] : [];
-  }
+  const c = item.coords || item.coordinates || item.coordinate || item.location?.coords || item.location?.coordinates || null;
+  if (c) { const one = normalizeLatLng(c); return one ? [one] : []; }
   const fb = normalizeLatLng(item);
   return fb ? [fb] : [];
 }
 
-// ---- Időpont formázás a popup-ba ----
+// --- idő formázó & “ma” detektálás ---
 function formatEventWhen(e) {
-  // rendelkezésre állhat: e._s / e._e (Date), vagy e.date / e.end_date (ISO), és e.time (pl. "09:00-18:00" | "09:00")
-  const s =
-    e?._s
-      ? new Date(e._s)
-      : e?.date
-      ? parseISO(e.date)
-      : null;
-  const ee =
-    e?._e
-      ? new Date(e._e)
-      : e?.end_date
-      ? parseISO(e.end_date)
-      : s;
-
-  if (!s) return e.time ? e.time : 'Időpont később';
-
+  const s = e?._s ? new Date(e._s) : (e?.date ? parseISO(e.date) : null);
+  const ee = e?._e ? new Date(e._e) : (e?.end_date ? parseISO(e.end_date) : s);
+  if (!s) return e.time?.trim() || 'Időpont később';
   const pad = (n) => String(n).padStart(2, '0');
   const d = (dt) => `${dt.getFullYear()}.${pad(dt.getMonth() + 1)}.${pad(dt.getDate())}`;
-
-  // ha van time, azt írjuk ki – ez a legrövidebb és leginformatívabb
-  if (e.time && e.time.trim()) {
-    if (ee && d(s) !== d(ee)) {
-      return `${d(s)} – ${d(ee)} • ${e.time}`;
-    }
-    return `${d(s)} • ${e.time}`;
-  }
-
-  // nincs time → dátum vagy dátumtartomány
-  if (ee && d(s) !== d(ee)) {
-    return `${d(s)} – ${d(ee)}`;
-  }
-  return d(s);
+  if (e.time?.trim()) return ee && d(s) !== d(ee) ? `${d(s)} – ${d(ee)} • ${e.time}` : `${d(s)} • ${e.time}`;
+  return ee && d(s) !== d(ee) ? `${d(s)} – ${d(ee)}` : d(s);
 }
-
-// Ma zajlik-e?
 function isEventToday(e) {
   const today = new Date();
-  const s =
-    e?._s
-      ? new Date(e._s)
-      : e?.date
-      ? parseISO(e.date)
-      : null;
-  const ee =
-    e?._e
-      ? new Date(e._e)
-      : e?.end_date
-      ? parseISO(e.end_date)
-      : s;
-
+  const s = e?._s ? new Date(e._s) : (e?.date ? parseISO(e.date) : null);
+  const ee = e?._e ? new Date(e._e) : (e?.end_date ? parseISO(e.end_date) : s);
   if (!s) return false;
   if (!ee) return isSameDay(today, s);
-  // ha tartomány, akkor ma essen közé
-  return (
-    isSameDay(today, s) ||
-    isSameDay(today, ee) ||
-    isWithinInterval(today, { start: s, end: ee })
-  );
+  return isSameDay(today, s) || isSameDay(today, ee) || isWithinInterval(today, { start: s, end: ee });
 }
 
 const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
-
 const TILE_STYLES = {
   OSM: {
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -181,13 +118,9 @@ export default function LiveCityMap({
 
   const [tileKey, setTileKey] = useState('OSM');
   const [month, setMonth] = useState(new Date().getMonth());
-  const [show, setShow] = useState({
-    events: true,
-    attractions: true,
-    leisure: true,
-    restaurants: true,
-  });
+  const [show, setShow] = useState({ events: true, attractions: true, leisure: true, restaurants: true });
   const [userPos, setUserPos] = useState(null);
+  const [panelOpen, setPanelOpen] = useState(true); // ÖSSZECSUKHATÓ panel
 
   useEffect(() => {
     if (!('geolocation' in navigator)) return;
@@ -237,75 +170,103 @@ export default function LiveCityMap({
   };
 
   return (
-    <div className="relative w-full h-[calc(100dvh-64px)]">
-      {/* Bezárás */}
+    // FIXED & INSET: 15px margó minden oldalon (safe-area-val)
+    <div
+      className="fixed z-40"
+      style={{
+        top: 'max(15px, env(safe-area-inset-top))',
+        left: 'max(15px, env(safe-area-inset-left))',
+        right: 'max(15px, env(safe-area-inset-right))',
+        bottom: 'max(15px, env(safe-area-inset-bottom))',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        boxShadow: '0 10px 30px rgba(0,0,0,.2)',
+        background: 'var(--map-bg, #fff)',
+      }}
+    >
+      {/* Bezárás (kicsi, fehér kör) */}
       <button
         onClick={close}
-        className="absolute top-3 right-3 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
+        className="absolute top-2 right-2 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
         aria-label="Bezárás"
         title="Bezárás"
       >
         ✕
       </button>
 
-      {/* Panel */}
-      <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
-        <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
-          <label className="text-xs text-gray-600 dark:text-gray-300">Hónap:</label>
-          <select
-            className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600"
-            value={month}
-            onChange={(e) => setMonth(Number(e.target.value))}
-          >
-            {MONTHS_HU.map((m, i) => (<option key={m} value={i}>{m}</option>))}
-          </select>
-        </div>
+      {/* Panel toggler – kis kör gomb, bal felső sarok */}
+      <button
+        onClick={() => setPanelOpen((v) => !v)}
+        className="absolute top-2 left-2 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
+        aria-label="Vezérlők"
+        title="Vezérlők"
+      >
+        ⚙️
+      </button>
 
-        <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]">
-          <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">Rétegek</span>
-          {(['events','attractions','leisure','restaurants']).map((key) => (
-            <label key={key} className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={!!show[key]}
-                onChange={(e) => setShow((s) => ({ ...s, [key]: e.target.checked }))}
-              />
-              <span className="inline-flex items-center gap-1">
-                <span
-                  className="inline-block w-3 h-3 rounded-full"
-                  style={{
-                    background:
-                      key === 'events' ? '#ef4444' :
-                      key === 'attractions' ? '#3b82f6' :
-                      key === 'leisure' ? '#22c55e' : '#f97316'
-                  }}
+      {/* Összecsukható panel */}
+      {panelOpen && (
+        <div className="absolute top-12 left-2 z-[999] flex flex-col gap-2 w-[min(86vw,280px)]">
+          {/* Hónap */}
+          <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
+            <label className="text-xs text-gray-600 dark:text-gray-300">Hónap:</label>
+            <select
+              className="flex-1 text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600"
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+            >
+              {MONTHS_HU.map((m, i) => (<option key={m} value={i}>{m}</option>))}
+            </select>
+          </div>
+
+          {/* Rétegek */}
+          <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1">
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">Rétegek</span>
+            {(['events','attractions','leisure','restaurants']).map((key) => (
+              <label key={key} className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={!!show[key]}
+                  onChange={(e) => setShow((s) => ({ ...s, [key]: e.target.checked }))}
                 />
-                {key === 'events' && 'Események'}
-                {key === 'attractions' && 'Látnivalók'}
-                {key === 'leisure' && 'Szabadidő'}
-                {key === 'restaurants' && 'Vendéglátó'}
-              </span>
-            </label>
-          ))}
-        </div>
+                <span className="inline-flex items-center gap-1">
+                  <span
+                    className="inline-block w-3 h-3 rounded-full"
+                    style={{
+                      background:
+                        key === 'events' ? '#ef4444' :
+                        key === 'attractions' ? '#3b82f6' :
+                        key === 'leisure' ? '#22c55e' : '#f97316'
+                    }}
+                  />
+                  {key === 'events' && 'Események'}
+                  {key === 'attractions' && 'Látnivalók'}
+                  {key === 'leisure' && 'Szabadidő'}
+                  {key === 'restaurants' && 'Vendéglátó'}
+                </span>
+              </label>
+            ))}
+          </div>
 
-        <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
-          <label className="text-xs text-gray-600 dark:text-gray-300">Térkép:</label>
-          <select
-            className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600"
-            value={tileKey}
-            onChange={(e) => setTileKey(e.target.value)}
-          >
-            {Object.keys(TILE_STYLES).map((k) => (<option key={k} value={k}>{k}</option>))}
-          </select>
+          {/* Tile-választó */}
+          <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
+            <label className="text-xs text-gray-600 dark:text-gray-300">Térkép:</label>
+            <select
+              className="flex-1 text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600"
+              value={tileKey}
+              onChange={(e) => setTileKey(e.target.value)}
+            >
+              {Object.keys(TILE_STYLES).map((k) => (<option key={k} value={k}>{k}</option>))}
+            </select>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Jelmagyarázat */}
-      <div className="absolute bottom-3 right-3 z-[998] bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 text-xs">
+      {/* Legend – jobb alsó sarok, kompakt kártya */}
+      <div className="absolute bottom-2 right-2 z-[998] bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 text-[11px]">
         <div className="font-semibold mb-1 text-gray-700 dark:text-gray-200">Jelmagyarázat</div>
         {[
-          ['events',  '#ef4444',  'Esemény'],
+          ['events',  '#ef4444',  'Esemény (ma: pulzál)'],
           ['attractions','#3b82f6','Látnivaló'],
           ['leisure','#22c55e',   'Szabadidő'],
           ['restaurants','#f97316','Vendéglátó'],
@@ -313,92 +274,95 @@ export default function LiveCityMap({
         ].map(([key, color, label]) => (
           <div key={key} className="flex items-center gap-2 mb-1">
             <span className="inline-block w-3 h-3 rounded-full" style={{ background: color }} />
-            {label}
+            <span className="text-[11px]">{label}</span>
           </div>
         ))}
-        <div className="mt-1 text-[11px] opacity-75">A pulzáló piros pont: ma zajló esemény.</div>
       </div>
 
-      <MapContainer center={center} zoom={14} className="w-full h-full" zoomControl={false}>
-        <TileLayer url={tile.url} attribution={tile.attr} />
-        <ZoomControl position="bottomleft" />
+      {/* MAP */}
+      <div className="w-[calc(100vw-30px- env(safe-area-inset-left) - env(safe-area-inset-right))] h-[calc(100vh-30px- env(safe-area-inset-top) - env(safe-area-inset-bottom))]">
+        <MapContainer
+          center={center}
+          zoom={14}
+          className="w-full h-full"
+          zoomControl={false}
+        >
+          <TileLayer url={tile.url} attribution={tile.attr} />
+          <ZoomControl position="bottomleft" />
 
-        {/* user */}
-        {userPos && (
-          <Marker position={userPos} icon={userIcon}>
-            <Popup>📍 Itt vagy most</Popup>
-          </Marker>
-        )}
+          {userPos && (
+            <Marker position={userPos} icon={userIcon}>
+              <Popup>📍 Itt vagy most</Popup>
+            </Marker>
+          )}
 
-        {/* események (pulzál ma) + IDŐPONT A POPUPBAN */}
-        {show.events && markers.events.map(({ item, pos, idx, today }) => (
-          <Marker
-            key={`ev-${item.id}-${idx}`}
-            position={[pos.lat, pos.lng]}
-            icon={today ? ICONS.eventsToday : ICONS.events}
-          >
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                <div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>
-                {pos.label && <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>}
-                {!pos.label && item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
-                <button
-                  className="text-indigo-600 underline text-xs"
-                  onClick={() => navigate(`/events/${item.id}`)}
-                >
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+          {/* események */}
+          {show.events && markers.events.map(({ item, pos, idx, today }) => (
+            <Marker
+              key={`ev-${item.id}-${idx}`}
+              position={[pos.lat, pos.lng]}
+              icon={today ? ICONS.eventsToday : ICONS.events}
+            >
+              <Popup>
+                <div className="text-sm">
+                  <div className="font-semibold mb-1">{item.name}</div>
+                  <div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>
+                  {pos.label && <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>}
+                  {!pos.label && item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
+                  <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/events/${item.id}`)}>
+                    Részletek →
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
 
-        {/* látnivalók */}
-        {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
-          <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
-                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/attractions/${item.id}`)}>
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+          {/* látnivalók */}
+          {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
+            <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
+              <Popup>
+                <div className="text-sm">
+                  <div className="font-semibold mb-1">{item.name}</div>
+                  {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
+                  <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/attractions/${item.id}`)}>
+                    Részletek →
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
 
-        {/* szabadidő */}
-        {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
-          <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
-                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/leisure/${item.id}`)}>
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+          {/* szabadidő */}
+          {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
+            <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
+              <Popup>
+                <div className="text-sm">
+                  <div className="font-semibold mb-1">{item.name}</div>
+                  {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
+                  <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/leisure/${item.id}`)}>
+                    Részletek →
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
 
-        {/* vendéglátó */}
-        {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
-          <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
-                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/gastronomy/${item.id}`)}>
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+          {/* vendéglátó */}
+          {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
+            <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
+              <Popup>
+                <div className="text-sm">
+                  <div className="font-semibold mb-1">{item.name}</div>
+                  {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
+                  <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/gastronomy/${item.id}`)}>
+                    Részletek →
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
     </div>
   );
 }
