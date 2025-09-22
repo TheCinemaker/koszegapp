@@ -38,33 +38,9 @@ const userIcon = L.divIcon({
 });
 
 // ---- Segédfüggvények ----
-function normalizeLatLng(obj) {
-  if (!obj || typeof obj.lat !== 'number' || typeof obj.lng !== 'number') { return null; }
-  const out = { lat: obj.lat, lng: obj.lng };
-  if (obj.label) { out.label = String(obj.label); }
-  return out;
-}
-function pickLocations(item) {
-  if (!item) { return []; }
-  if (Array.isArray(item.locations)) { return item.locations.map(normalizeLatLng).filter(Boolean); }
-  const c = item.coords || item.coordinates || item.coordinate || item.location?.coords || item.location?.coordinates || null;
-  if (c) { const one = normalizeLatLng(c); return one ? [one] : []; }
-  const fb = normalizeLatLng(item);
-  return fb ? [fb] : [];
-}
-function formatEventWhen(e) {
-  const s = e.date ? parseISO(e.date) : null;
-  const ee = e.end_date ? parseISO(e.end_date) : null;
-  if (!s || isNaN(s)) { return e.time ? e.time : 'Időpont később'; }
-  const pad = (n) => String(n).padStart(2, '0');
-  const d = (dt) => `${dt.getFullYear()}.${pad(dt.getMonth() + 1)}.${pad(dt.getDate())}`;
-  if (e.time && e.time.trim()) {
-    if (ee && !isNaN(ee) && d(s) !== d(ee)) { return `${d(s)} – ${d(ee)} • ${e.time}`; }
-    return `${d(s)} • ${e.time}`;
-  }
-  if (ee && !isNaN(ee) && d(s) !== d(ee)) { return `${d(s)} – ${d(ee)}`; }
-  return d(s);
-}
+function normalizeLatLng(obj) { if (!obj || typeof obj.lat !== 'number' || typeof obj.lng !== 'number') { return null; } const out = { lat: obj.lat, lng: obj.lng }; if (obj.label) { out.label = String(obj.label); } return out; }
+function pickLocations(item) { if (!item) { return []; } if (Array.isArray(item.locations)) { return item.locations.map(normalizeLatLng).filter(Boolean); } const c = item.coords || item.coordinates || item.coordinate || item.location?.coords || item.location?.coordinates || null; if (c) { const one = normalizeLatLng(c); return one ? [one] : []; } const fb = normalizeLatLng(item); return fb ? [fb] : []; }
+function formatEventWhen(e) { const s = e.date ? parseISO(e.date) : null; const ee = e.end_date ? parseISO(e.end_date) : null; if (!s || isNaN(s)) { return e.time ? e.time : 'Időpont később'; } const pad = (n) => String(n).padStart(2, '0'); const d = (dt) => `${dt.getFullYear()}.${pad(dt.getMonth() + 1)}.${pad(dt.getDate())}`; if (e.time && e.time.trim()) { if (ee && !isNaN(ee) && d(s) !== d(ee)) { return `${d(s)} – ${d(ee)} • ${e.time}`; } return `${d(s)} • ${e.time}`; } if (ee && !isNaN(ee) && d(s) !== d(ee)) { return `${d(s)} – ${d(ee)}`; } return d(s); }
 function isEventToday(e) {
   const today = new Date();
   const startDate = e.date ? parseISO(e.date) : null;
@@ -89,10 +65,9 @@ export default function LiveCityMap({
   const center = [47.3896, 16.5402];
 
   const [tileKey, setTileKey] = useState('CartoLight');
-  const [show, setShow] = useState({ events: true, attractions: true, leisure: true, restaurants: true });
-
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
+  const [show, setShow] = useState({ events: true, attractions: true, leisure: true, restaurants: true });
   const [userPos, setUserPos] = useState(null);
 
   const availableYears = useMemo(() => {
@@ -181,6 +156,10 @@ export default function LiveCityMap({
           <select value={month} onChange={(e) => setMonth(Number(e.target.value))} className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600">
             {MONTHS_HU.map((m, i) => <option key={m} value={i}>{m}</option>)}
           </select>
+          {/* EZ AZ ÚJ RÉSZ: */}
+          <span className="text-xs text-gray-500 dark:text-gray-400 ml-1 whitespace-nowrap">
+            ({monthlyEvents.length} esemény)
+          </span>
         </div>
         
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]">
