@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { DarkModeContext } from './contexts/DarkModeContext';
 import { useFavorites } from './contexts/FavoritesContext.jsx';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels, fetchParking } from './api';
-import { parseISO } from 'date-fns';
+import { parseISO, endOfDay } from 'date-fns';
 
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
