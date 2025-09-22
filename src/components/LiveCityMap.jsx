@@ -9,7 +9,7 @@ import {
   ZoomControl,
 } from 'react-leaflet';
 import L from 'leaflet';
-import { parseISO, isSameDay, isWithinInterval } from 'date-fns';
+import { parseISO, isSameDay, isWithinInterval, endOfDay } from 'date-fns';
 
 // --- pötty ikonok ---
 const makeDot = (hex) =>
@@ -124,29 +124,29 @@ function formatEventWhen(e) {
 }
 
 // Ma zajlik-e?
+fu// Ma zajlik-e?
 function isEventToday(e) {
-  const today = new Date();
-  const s =
-    e?._s
-      ? new Date(e._s)
-      : e?.date
-      ? parseISO(e.date)
-      : null;
-  const ee =
-    e?._e
-      ? new Date(e._e)
-      : e?.end_date
-      ? parseISO(e.end_date)
-      : s;
+  const today = new Date(); // Pl. Május 21, 14:30
 
-  if (!s) return false;
-  if (!ee) return isSameDay(today, s);
-  // ha tartomány, akkor ma essen közé
-  return (
-    isSameDay(today, s) ||
-    isSameDay(today, ee) ||
-    isWithinInterval(today, { start: s, end: ee })
-  );
+  // A kezdődátumot a nap elejének tekintjük
+  const startDate = e.date ? parseISO(e.date) : null;
+  if (!startDate || isNaN(startDate)) {
+    return false;
+  }
+
+  const endDateString = e.end_date || e.date;
+  const parsedEndDate = parseISO(endDateString);
+
+  const effectiveEndDate = (!parsedEndDate || isNaN(parsedEndDate)) 
+    ? startDate 
+    : parsedEndDate;
+
+  const interval = {
+    start: startDate,
+    end: endOfDay(effectiveEndDate),
+  };
+
+  return isWithinInterval(today, interval);
 }
 
 const MONTHS_HU = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
