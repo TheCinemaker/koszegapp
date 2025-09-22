@@ -214,9 +214,47 @@ export default function LiveCityMap({
           </Marker>
         ))}
         
-        {show.attractions && markers.attractions.map(({ item, pos, idx }) => <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}><Popup>...</Popup></Marker>)}
-        {show.leisure && markers.leisure.map(({ item, pos, idx }) => <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}><Popup>...</Popup></Marker>)}
-        {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}><Popup>...</Popup></Marker>)}
+        {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
+          <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
+                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/attractions/${item.id}`)}>
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+
+        {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
+          <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
+                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/leisure/${item.id}`)}>
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+        
+        {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
+          <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
+            <Popup>
+              <div className="text-sm">
+                <div className="font-semibold mb-1">{item.name}</div>
+                {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
+                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/gastronomy/${item.id}`)}>
+                  Részletek →
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
   );
