@@ -200,7 +200,7 @@ export default function LiveCityMap({
         
         {show.events && markers.events.map(({ key, pos, items, today }) => (
           <Marker key={key} position={[pos.lat, pos.lng]} icon={today ? ICONS.eventsToday : ICONS.events}>
-            <Popup>
+            <Popup maxWidth={250}>
               <div className="text-sm max-h-60 overflow-y-auto">
                 {items.map(item => (
                   <div key={item.id} className="mb-3 border-b pb-2 last:border-b-0 last:mb-0">
