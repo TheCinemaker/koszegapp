@@ -56,7 +56,7 @@
     "end_date": "2025-09-26",
     "time": "14:00",
     "location": "Belváros utcái",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.39014621751529, "lng": 16.53834705168139 }, 
     "description": "Felvonul a város apraja-nagyja: iskolák, civil szervezetek, cégek mókás jelmezekben. A felvonulás köré épül a háromnapos fesztivál.",
     "tags": ["szüret", "hagyomány", "felvonulás"],
     "image": "szuret.jpg"
@@ -67,8 +67,8 @@
     "date": "2025-09-26",
     "end_date": "2025-09-28",
     "time": "10:00-23:00",
-    "location": "Jurisics tér és belváros",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "location": "Károly Róbert tér és belváros",
+    "coords": { "lat": 47.39014621751529, "lng": 16.53834705168139 },  
     "description": "Kőszeg legnagyobb rendezvénye a város utcáin és terein: koncertek, étel-ital, fúvósszerenád.",
     "tags": ["bor", "gasztronómia", "fesztivál", "zene", "fúvósok"],
     "image": "szuret.jpg"
