@@ -74,14 +74,10 @@ useEffect(() => {
       fetchParking()
     ])
       .then(([attractions, eventsData, leisure, restaurants, hotels, parking]) => {
-        
-        // --- A VÉGLEGES, MEGBÍZHATÓ SZŰRÉSI LOGIKA ---
-        const now = new Date();
 
-        const normalizedEvents = eventsData
-          .map(evt => {
+        const normalizedEvents = eventsData.map(evt => {
             let s, e;
-            // A dátumfeldolgozás már megbízható a parseISO-val
+            // A dátumfeldolgozás a megbízható parseISO-val
             if (evt.startDate) {
               s = parseISO(evt.startDate);
               e = evt.endDate ? parseISO(evt.endDate) : s;
@@ -94,18 +90,6 @@ useEffect(() => {
               e = evt.end_date ? parseISO(evt.end_date) : s;
             }
             return { ...evt, _s: s, _e: e };
-          })
-          // JAVÍTÁS: Ez a szűrő már helyesen működik.
-          // Csak azokat az eseményeket tartja meg, amiknek a végdátuma
-          // a mai nap VÉGE előtt vagy azzal egy időben van.
-          // Így a mai, éjfélkor végződő események is benne maradnak.
-          .filter(evt => {
-            // Ellenőrizzük, hogy a dátum érvényes-e, mielőtt szűrnénk
-            if (isNaN(evt._e.getTime())) {
-              console.warn(`Érvénytelen végdátum az eseménynél: ${evt.name}`);
-              return false;
-            }
-            return endOfDay(evt._e) >= now;
           });
 
         setAppData({
@@ -133,7 +117,7 @@ useEffect(() => {
       })
       .catch(console.error);
 
-    // időjárás (változatlan)
+    // időjárás
     fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
       .then(res => res.json())
       .then(data => data && setWeather({ icon: data.weather[0].icon, temp: Math.round(data.main.temp) }))
