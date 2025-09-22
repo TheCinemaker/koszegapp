@@ -325,8 +325,7 @@ export default function LiveCityMap({
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 <div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>
-                {pos.label && <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>}
-                {!pos.label && item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
+                {item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
                 <button
                   className="text-indigo-600 underline text-xs"
                   onClick={() => navigate(`/events/${item.id}`)}
