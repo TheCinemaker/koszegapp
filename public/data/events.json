@@ -214,7 +214,7 @@
     "end_date": "2025-09-23",
     "time": "15:00",
     "location": "Találkozó: Kőszeg, Tourinform (Fő tér 2.)",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.388133018607675, "lng": 16.542176531907938 },  
     "description": "Ismerkedés a Dr. Nagy László EGYMI park természeti értékeivel Illés Péter biológiatanár vezetésével (20/526-4300). Táv: ~1,5 km • Időtartam: ~1,5 óra.",
     "tags": ["séta", "természet", "oktatás", "családi"],
     "image": "termeszetismereti_seta.jpg"
@@ -226,7 +226,7 @@
     "end_date": "2025-09-25",
     "time": "17:00-18:00",
     "location": "Kőszeg, Várkör 35-37. – Előadóterem",
-    "coords": { "lat": 47.389684, "lng": 16.542610 },
+    "coords": { "lat": 47.389683667286135, "lng": 16.542549990196665 },  
     "description": "Előadás Dr. Bertók Gábortól a mohácsi csatatér kutatásának legújabb eredményeiről. A program a Mohács 500 emlékév keretében.",
     "tags": ["előadás", "történelem", "Mohács 500"],
     "image": "mohacsi_eloadas.jpg"
@@ -238,8 +238,8 @@
     "end_date": "2025-09-26",
     "time": "14:00",
     "location": "Belváros utcái",
-    "coords": { "lat": 47.389673, "lng": 16.542696 },
-    "description": "Felvonul a város apraja-nagyja: iskolák, civil szervezetek, cégek mókás jelmezekben. A felvonulás köré épül a háromnapos fesztivál.",
+    "coords": { "lat": 47.38876777332131, "lng": 16.54298184836199 },  
+    "description": "Felvonul a város apraja-nagyja: iskolák, civil szervezetek, cégek mókás jelmezekben. A felvonulás köré épül a háromnapos fesztivál. A GPS koordináta a legjobb helyre visz!",
     "tags": ["szüret", "hagyomány", "felvonulás"],
     "image": "szuret.jpg"
   },
@@ -250,7 +250,7 @@
     "end_date": "2025-09-28",
     "time": "10:00-23:00",
     "location": "Károly Róbert tér és belváros",
-    "coords": { "lat": 47.390146, "lng": 16.538347 },
+    "coords": { "lat": 47.39015007088282, "lng": 16.538341418447462 },  
     "description": "Kőszeg legnagyobb rendezvénye a város utcáin és terein: koncertek, étel-ital, fúvósszerenád.",
     "tags": ["bor", "gasztronómia", "fesztivál", "zene", "fúvósok"],
     "image": "szuret.jpg"
@@ -262,7 +262,7 @@
     "end_date": "2025-09-27",
     "time": "10:00-18:00",
     "location": "Belváros - Rendezvénysátor",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.39015007088282, "lng": 16.538341418447462 },
     "description": "Borpavilonok, kézműves vásár, családi programok.",
     "tags": ["bor", "családi"],
     "image": "bor.jpg"
@@ -274,7 +274,7 @@
     "end_date": "2025-09-27",
     "time": "10:00",
     "location": "Városi Könyvtár (rendezvényterem)",
-    "coords": { "lat": 47.3895, "lng": 16.5414 },
+    "coords": { "lat": 47.389683667286135, "lng": 16.542549990196665 },
     "description": "Diavetítés Marék Veronika meséiből kisgyermekeknek, szülőknek és nagyszülőknek. Ingyenes program.",
     "tags": ["gyerekprogram", "családi", "irodalom"],
     "image": "marek_veronika_mesedelo.jpg"
@@ -286,7 +286,7 @@
     "end_date": "2025-09-28",
     "time": "Egész nap",
     "location": "Bozsok, Cák, Csepreg, Gyöngyösfalu, Kőszeg, Kőszegdoroszló, Velem",
-    "coords": { "lat": 47.389, "lng": 16.541 },
+    "coords": { "lat": 47.35520717716476, "lng": 16.5109448707691 }, 
     "description": "Országszerte közel 150 családi gazdaság, pince és manufaktúra nyitja meg a kapuit. A Vasfüggöny mentén szept. 27–28-án várják a látogatókat.",
     "tags": ["agroturizmus", "gasztronómia", "családi", "kézműves"],
     "image": "nyitott_porta_2025.jpg",
@@ -299,7 +299,7 @@
     "end_date": "2025-09-30",
     "time": "16:00-18:00",
     "location": "Városi Könyvtár",
-    "coords": { "lat": 47.38955, "lng": 16.54055 },
+    "coords": { "lat": 47.389683667286135, "lng": 16.542549990196665 },
     "description": "A Hajnalcsillag Néptáncegyüttes foglalkozásai Az aranyszőrű bárány című népmesével.",
     "tags": ["népmese", "gyerekprogram", "családi", "néptánc"],
     "image": "nepmese_napja.jpg"
@@ -311,7 +311,7 @@
     "end_date": "2025-09-30",
     "time": "15:00",
     "location": "Találkozó: Tourinform iroda, Fő tér 2.",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.388133018607675, "lng": 16.542176531907938 },
     "description": "Ismerkedés a Dr. Nagy László EGYMI park természeti értékeivel Illés Péter biológiatanár vezetésével.",
     "tags": ["séta", "természet", "oktatás", "családi"],
     "image": "iskola_a_hataron_seta.jpg"
@@ -323,7 +323,7 @@
     "end_date": "2025-10-03",
     "time": "Egész nap",
     "location": "Városi Könyvtár (rendezvényterem)",
-    "coords": { "lat": 47.3895, "lng": 16.5414 },
+    "coords": { "lat": 47.389683667286135, "lng": 16.542549990196665 },
     "description": "Az Állatok Világnapja alkalmából óvodás és iskolás csoportoknak Dankovics Róbert herpetológus muzeológus képes előadásai.",
     "tags": ["oktatás", "természet", "gyerekprogram", "előadás"],
     "image": "allatkertek_eloadas.jpg"
@@ -335,7 +335,7 @@
     "end_date": "2025-10-03",
     "time": "19:00",
     "location": "Zwinger",
-    "coords": { "lat": 47.3881, "lng": 16.5397 },
+    "coords": { "lat": 47.388082206938876, "lng": 16.539727363299843 },  
     "description": "Geröly Tamás és három zenésztársa improvizációs estje. Belépő: 3800 Ft.",
     "tags": ["zene", "koncert", "improvizáció"],
     "image": "4_dobos_toronyban.jpg"
@@ -347,7 +347,7 @@
     "end_date": "2025-10-04",
     "time": "07:00-13:00",
     "location": "Jurisics vár",
-    "coords": { "lat": 47.389619, "lng": 16.539169 },
+    "coords": { "lat": 47.38958227192023, "lng": 16.538988129021668 }, 
     "description": "Az idei utolsó klasszikus teljesítménytúrán 10, 20 és 42 km-es távok közül lehet választani.",
     "tags": ["túra", "természet", "sport", "családi"],
     "image": "okt4tura.jpg"
@@ -359,7 +359,7 @@
     "end_date": "2025-10-04",
     "time": "19:00",
     "location": "Jurisics vár – Lovagterem",
-    "coords": { "lat": 47.3896, "lng": 16.5391 },
+    "coords": { "lat": 47.38958227192023, "lng": 16.538988129021668 }, 
     "description": "A Zene világnapja alkalmából: a Kőszegi Vonósok a hangszerek és stílusok „kockáival” játszva mutatják a zene sokoldalúságát. Ingyenes.",
     "tags": ["zene", "koncert", "klasszikus"],
     "image": "koszegi_vonosok_koncert.jpg"
@@ -371,7 +371,7 @@
     "end_date": "2025-10-04",
     "time": "Egész nap",
     "location": "Bechtold István Természetvédelmi Látogatóközpont",
-    "coords": { "lat": 47.388, "lng": 16.523 },
+    "coords": { "lat": 47.385862396619906, "lng": 16.53058919746385 }, 
     "description": "Programok az Állatok Világnapja alkalmából a természetvédelmi látogatóközpontban. Ingyenes.",
     "tags": ["természet", "családi", "állatok"],
     "image": "allatok_vilagnapja_bechtold.jpg"
@@ -383,7 +383,7 @@
     "end_date": "2025-10-04",
     "time": "",
     "location": "Találkozó: Rákóczi út 25. előtti kis tér",
-    "coords": { "lat": 47.388, "lng": 16.544 },
+    "coords": { "lat": 47.38600628146236, "lng": 16.543423741247494 }, 
     "description": "Útvonal: Óriás Platán – Ottlik sétány – Csónakázó tó – Hideg-völgy – Napostető – Szent Sír/„Szenzsermen” kereszt – Merengő – Királyvölgy – Kőszeg. Táv: ~10 km. Ingyenes.",
     "tags": ["túra", "természet", "családi"],
     "image": "gesztenye_tura.jpg"
@@ -395,7 +395,7 @@
     "end_date": "2025-10-05",
     "time": "09:00",
     "location": "Találkozó: Tourinform iroda, Fő tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.388133018607675, "lng": 16.542176531907938 },
     "description": "Tematikus gyalogtúra a környék forrásaihoz. Könnyű útvonal, családbarát program.",
     "tags": ["túra", "természet", "családi"],
     "image": "oszi_forras_tura.jpg"
@@ -407,7 +407,7 @@
     "end_date": "2025-10-05",
     "time": "Egész nap",
     "location": "Kőszegi-hegység és Írottkő térsége",
-    "coords": { "lat": 47.351, "lng": 16.441 },
+    "coords": { "lat": 47.387779183473725, "lng": 16.512642336470886 },  
     "description": "A távok sokszínű választéka, változatos ösvények és meredek emelkedők. A hosszabb távok Ausztriába is átnyúlnak.",
     "tags": ["futás", "sport", "verseny", "természet"],
     "image": "irottko_futas_2025.jpg",
@@ -420,7 +420,7 @@
     "end_date": "2025-10-07",
     "time": "17:00",
     "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
-    "coords": { "lat": 47.3895, "lng": 16.5414 },
+    "coords": { "lat": 47.38870937829947, "lng": 16.540937786415814 },  
     "description": "Előadás a zene szerepéről és közösségteremtő erejéről. Ingyenes.",
     "tags": ["előadás", "zene", "oktatás"],
     "image": "fasching_zsuzsanna_eloadas.jpg"
@@ -432,7 +432,7 @@
     "end_date": "2025-10-09",
     "time": "16:00",
     "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
-    "coords": { "lat": 47.3895, "lng": 16.5414 },
+    "coords": { "lat": 47.38870937829947, "lng": 16.540937786415814 },
     "description": "Kiállításmegnyitó irodalmi évfordulók kapcsán. Ingyenes.",
     "tags": ["kiállítás", "irodalom", "megnyitó"],
     "image": "irodalmi_evfordulok_2025.jpg"
@@ -444,7 +444,7 @@
     "end_date": "2025-10-09",
     "time": "17:00",
     "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
-    "coords": { "lat": 47.3895, "lng": 16.5414 },
+    "coords": { "lat": 47.38870937829947, "lng": 16.540937786415814 },
     "description": "Őszi szabadegyetemi előadás: férfiak és nők Ottlik Géza Buda című regényében. Ingyenes.",
     "tags": ["előadás", "irodalom"],
     "image": "kettetort_kockacukor_eloadas.jpg"
@@ -456,7 +456,7 @@
     "end_date": "2025-10-11",
     "time": "14:00",
     "location": "Egyesületi ház",
-    "coords": { "lat": 47.377, "lng": 16.529 },
+    "coords": { "lat":  47.38231783170553, "lng":16.51136763619961 }, 
     "description": "A Szabóhegyért Közösen Egyesület közösségi programja. Ingyenes.",
     "tags": ["gasztronómia", "közösség", "családi", "szabadtéri"],
     "image": "szabohegyi_gesztenyesutes.jpg"
@@ -468,7 +468,7 @@
     "end_date": "2025-10-11",
     "time": "",
     "location": "Jurisics vár – Lovagterem",
-    "coords": { "lat": 47.3896, "lng": 16.5391 },
+    "coords": { "lat": 47.38950061404838, "lng": 16.538367265324656 },  
     "description": "A Római Katolikus Egyházközség jótékonysági bálja a Jurisics vár lovagtermében.",
     "tags": ["bál", "közösség", "jótékonyság"],
     "image": "egyhazkozsegi_bal.jpg"
@@ -480,7 +480,7 @@
     "end_date": "2025-10-11",
     "time": "19:00",
     "location": "Zwinger",
-    "coords": { "lat": 47.3881, "lng": 16.5397 },
+    "coords": { "lat":  47.388238115967525,, "lng": 16.53966167166386 }, 
     "description": "Little G Weevil blues gitáros koncertje. Belépő: 4200 Ft.",
     "tags": ["zene", "koncert", "blues"],
     "image": "little_g_weevil.jpg"
@@ -492,7 +492,7 @@
     "end_date": "2025-10-16",
     "time": "17:00",
     "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
-    "coords": { "lat": 47.3895, "lng": 16.5414 },
+    "coords": { "lat": 47.38870937829947, "lng": 16.540937786415814 }
     "description": "Őszi szabadegyetemi előadás: várakozás és valóság a Magyar Királyságban 1526–1541 között. Ingyenes.",
     "tags": ["előadás", "történelem"],
     "image": "vegitelet_kora_eloadas.jpg"
@@ -504,7 +504,7 @@
     "end_date": "2025-10-18",
     "time": "09:00",
     "location": "Találkozó: Tourinform (Fő tér 2.)",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.388133018607675, "lng": 16.542176531907938 },
     "description": "Útvonal: Andalgó-tanösvény – Rattersdorf – Keresztkút – Zeiger-nyereg – vasfüggöny túraút – Királyvölgy – Fő tér. Táv: ~20 km. Útlevél vagy érvényes személyi szükséges!",
     "tags": ["túra", "természet", "határátkelés", "családi"],
     "image": "taborhegy_kerules.jpg"
@@ -516,7 +516,7 @@
     "end_date": "2025-10-18",
     "time": "18:00",
     "location": "Jurisics vár – Lovagterem",
-    "coords": { "lat": 47.3896, "lng": 16.5391 },
+    "coords": { "lat": 47.38950061404838, "lng": 16.538367265324656 }, 
     "description": "Kalandok, optimizmus, motiváció – a „Túl minden határon” est folytatása.",
     "tags": ["előadás", "motiváció", "utazás"],
     "image": "tvrtko_a_fold_korul.jpg",
@@ -529,7 +529,7 @@
     "end_date": "2025-10-25",
     "time": "10:00-12:00",
     "location": "Szabóhegy",
-    "coords": { "lat": 47.3932, "lng": 16.548 },
+    "coords": { "lat": 47.38155387863713, "lng": 16.503254068474263 }, 
     "description": "Szabadtéri rajzolás és festés az őszi táj inspirációjára.",
     "tags": ["kézműves", "szabadtéri", "családi"],
     "image": "oszi_szabadteri_festes.jpg"
@@ -541,7 +541,7 @@
     "end_date": "2025-11-02",
     "time": "09:30",
     "location": "Találkozó: Tourinform, Fő tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.388133018607675, "lng": 16.542176531907938 },
     "description": "Könnyű vezetett túra a környező dombokon, őszi színek között.",
     "tags": ["túra", "természet", "családi"],
     "image": "oszi_barangolo.jpg"
@@ -553,7 +553,7 @@
     "end_date": "2025-11-17",
     "time": "17:00-19:30",
     "location": "Jurisics-vár KÖSZHÁZ",
-    "coords": { "lat": 47.3905, "lng": 16.5399 },
+    "coords": { "lat": 47.38958818922525, "lng": 16.539128262701528 },  
     "description": "Adventi koszorú, díszek és kézműves ajándékok készítése.",
     "tags": ["kézműves", "ünnepi", "családi"],
     "image": "advent_kezmuves.jpg"
@@ -565,7 +565,7 @@
     "end_date": "2025-11-23",
     "time": "14:00",
     "location": "Fő tér, Tourinform elől",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.388133018607675, "lng": 16.542176531907938 },
     "description": "Kőszeg történeteinek és legendáinak bejárása helyi idegenvezetővel.",
     "tags": ["városnézés", "történelem", "könnyű séta"],
     "image": "koszeg_legenda.jpg"
@@ -577,7 +577,7 @@
     "end_date": "2025-11-29",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.38889139229017, "lng": 16.540995799405696 },  
     "description": "Az adventi időszak kezdete: kézműves árusok, forralt bor, ünnepi fények.",
     "tags": ["advent", "kézműves", "karácsony"],
     "image": "advent_megnyito.jpg"
@@ -589,7 +589,7 @@
     "end_date": "2025-12-06",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.38889139229017, "lng": 16.540995799405696 },
     "description": "Második gyertya meggyújtása, Mikulás-program, kézműves foglalkozás gyerekeknek.",
     "tags": ["advent", "gyerek", "kézműves"],
     "image": "masodik_gyertya.jpg"
@@ -601,7 +601,7 @@
     "end_date": "2025-12-13",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.38889139229017, "lng": 16.540995799405696 },
     "description": "Harmadik adventi gyertya és ünnepi koncert a téren.",
     "tags": ["advent", "zene", "karácsony"],
     "image": "harmadik_gyertya.jpg"
@@ -613,7 +613,7 @@
     "end_date": "2025-12-20",
     "time": "17:00",
     "location": "Jurisics tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.38889139229017, "lng": 16.540995799405696 },
     "description": "Negyedik gyertya meggyújtása, betlehemes előadás.",
     "tags": ["advent", "betlehemes", "karácsony"],
     "image": "negyedik_gyertya.jpg"
@@ -625,7 +625,7 @@
     "end_date": "2025-12-21",
     "time": "10:00-18:00",
     "location": "Jurisics tér és környéke",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.38889139229017, "lng": 16.540995799405696 },
     "description": "Kézműves standok, forralt bor, ünnepi zenék, utolsó adventi vásárlási lehetőség.",
     "tags": ["karácsony", "kézműves", "gasztronómia"],
     "image": "karacsonyi_vasar.jpg"
@@ -637,7 +637,7 @@
     "end_date": "2025-12-31",
     "time": "22:00-01:00",
     "location": "Jurisics tér",
-    "coords": { "lat": 47.3891, "lng": 16.5396 },
+    "coords": { "lat": 47.38889139229017, "lng": 16.540995799405696 },
     "description": "A hagyományos fő téri Újév-köszöntő, tűzijátékkal és pezsgővel.",
     "tags": ["szilveszter", "zene", "tánc"],
     "image": "szilveszter.jpg"
