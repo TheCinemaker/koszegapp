@@ -94,7 +94,6 @@ export default function App() {
             }
             return { ...evt, _s: s, _e: e };
           })
-          .filter(evt => evt._e >= startOfToday);
 
         setAppData({
           attractions,
