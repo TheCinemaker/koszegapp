@@ -64,7 +64,7 @@ export default function App() {
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
   // Adatbetöltés + globális kedvenc-prune (egyszer)
- useEffect(() => {
+  useEffect(() => {
     Promise.all([
       fetchAttractions(),
       fetchEvents(),
@@ -75,14 +75,12 @@ export default function App() {
     ])
       .then(([attractions, eventsData, leisure, restaurants, hotels, parking]) => {
         
-        // JAVÍTÁS #1: Létrehozunk egy 'startOfToday' változót a helyes szűréshez.
         const startOfToday = new Date();
         startOfToday.setHours(0, 0, 0, 0);
 
         const normalizedEvents = eventsData
           .map(evt => {
             let s, e;
-            // JAVÍTÁS #2: Mindenhol a megbízható `parseISO`-t használjuk `new Date()` helyett!
             if (evt.startDate) {
               s = parseISO(evt.startDate);
               e = evt.endDate ? parseISO(evt.endDate) : s;
@@ -91,12 +89,11 @@ export default function App() {
               s = parseISO(p[0]);
               e = parseISO(p[1] || p[0]);
             } else {
-              s = parseISO(evt.date); // Ez most már helyesen kezeli a "2025-09-22" formátumot
-              e = evt.end_date ? parseISO(evt.end_date) : s; // és az end_date-et is
+              s = parseISO(evt.date);
+              e = evt.end_date ? parseISO(evt.end_date) : s;
             }
             return { ...evt, _s: s, _e: e };
           })
-          // JAVÍTÁS #1 FOLYTATÁSA: A szűrő most már a nap elejéhez hasonlít.
           .filter(evt => evt._e >= startOfToday);
 
         setAppData({
@@ -109,7 +106,6 @@ export default function App() {
           loading: false
         });
 
-        // --- KEDVENCEK TAKARÍTÁSA (ez a rész változatlan) ---
         const validIds = new Set([
           ...attractions.map(a => String(a.id)),
           ...normalizedEvents.map(e => String(e.id)),
@@ -124,14 +120,6 @@ export default function App() {
       })
       .catch(console.error);
 
-    // időjárás (ez a rész változatlan)
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
-      .then(res => res.json())
-      .then(data => data && setWeather({ icon: data.weather[0].icon, temp: Math.round(data.main.temp) }))
-      .catch(console.error);
-}, [pruneFavorites]);
-
-    // időjárás
     fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
       .then(res => res.json())
       .then(data => data && setWeather({ icon: data.weather[0].icon, temp: Math.round(data.main.temp) }))
