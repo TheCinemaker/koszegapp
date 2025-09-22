@@ -480,7 +480,7 @@
     "end_date": "2025-10-11",
     "time": "19:00",
     "location": "Zwinger",
-    "coords": { "lat":  47.388238115967525,, "lng": 16.53966167166386 }, 
+    "coords": { "lat":  47.388238115967525, "lng": 16.53966167166386 }, 
     "description": "Little G Weevil blues gitáros koncertje. Belépő: 4200 Ft.",
     "tags": ["zene", "koncert", "blues"],
     "image": "little_g_weevil.jpg"
@@ -492,7 +492,7 @@
     "end_date": "2025-10-16",
     "time": "17:00",
     "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár",
-    "coords": { "lat": 47.38870937829947, "lng": 16.540937786415814 }
+    "coords": { "lat": 47.38870937829947, "lng": 16.540937786415814 },
     "description": "Őszi szabadegyetemi előadás: várakozás és valóság a Magyar Királyságban 1526–1541 között. Ingyenes.",
     "tags": ["előadás", "történelem"],
     "image": "vegitelet_kora_eloadas.jpg"
