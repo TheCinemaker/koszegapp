@@ -70,6 +70,9 @@ export default function LiveCityMap({
   const [show, setShow] = useState({ events: true, attractions: true, leisure: true, restaurants: true });
   const [userPos, setUserPos] = useState(null);
 
+  // --- 1. ÚJ STATE A MOBIL PANEL NYITÁSÁHOZ/ZÁRÁSÁHOZ ---
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
   const availableYears = useMemo(() => {
     const currentYear = new Date().getFullYear();
     return Array.from({ length: 3 }, (_, i) => currentYear + i);
@@ -88,18 +91,15 @@ export default function LiveCityMap({
   const monthlyEvents = useMemo(() => {
     const today = new Date();
     const startOfToday = startOfDay(today);
-
     const futureEvents = (Array.isArray(events) ? events : []).filter(e => {
       const endDateString = e.end_date || e.date;
       const parsedEndDate = parseISO(endDateString);
       if (isNaN(parsedEndDate)) return false;
       return parsedEndDate >= startOfToday;
     });
-
     const refDateForMonth = new Date(year, month);
     const monthStart = startOfMonth(refDateForMonth);
     const monthEnd = endOfMonth(refDateForMonth);
-
     return futureEvents.filter((e) => {
       const startDate = e.date ? parseISO(e.date) : null;
       if (!startDate || isNaN(startDate)) return false;
@@ -122,7 +122,6 @@ export default function LiveCityMap({
       });
       return acc;
     }, {});
-
     const eventMarkers = Object.values(eventsByCoord).map(group => {
       const isTodayGroup = group.items.some(item => isEventToday(item));
       return {
@@ -132,7 +131,6 @@ export default function LiveCityMap({
         today: isTodayGroup,
       };
     });
-
     return {
       events: eventMarkers,
       attractions: (Array.isArray(attractions) ? attractions : []).flatMap(a => pickLocations(a).map((pos, idx) => ({ item: a, pos, idx }))),
@@ -148,7 +146,23 @@ export default function LiveCityMap({
     <div className="relative w-full h-[calc(100dvh-64px)]">
       <button onClick={close} className="absolute top-3 right-3 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100">✕</button>
       
-      <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
+      {/* --- 2. ÚJ GOMB, AMI CSAK MOBILON LÁTSZIK --- */}
+      <button
+        onClick={() => setIsPanelOpen(true)}
+        className="md:hidden absolute top-3 left-3 z-[999] w-8 h-8 rounded-full bg-white/95 text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
+        aria-label="Beállítások"
+      >
+        ⚙️
+      </button>
+
+      {/* --- 3. A PANEL MOST MÁR RESZPONZÍV --- */}
+      {/* Mobilon csak akkor jelenik meg, ha `isPanelOpen` igaz. Nagyobb képernyőn (`md:`) mindig látszik. */}
+      <div className={`absolute top-3 left-3 z-[999] flex-col gap-2 ${isPanelOpen ? 'flex' : 'hidden'} md:flex`}>
+        {/* --- 4. BEZÁRÁS GOMB A MOBIL PANELHEZ --- */}
+        <div className="md:hidden flex justify-end mb-2">
+            <button onClick={() => setIsPanelOpen(false)} className="font-bold text-lg">✕</button>
+        </div>
+
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
           <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600">
             {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
@@ -156,7 +170,6 @@ export default function LiveCityMap({
           <select value={month} onChange={(e) => setMonth(Number(e.target.value))} className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600">
             {MONTHS_HU.map((m, i) => <option key={m} value={i}>{m}</option>)}
           </select>
-          {/* EZ AZ ÚJ RÉSZ: */}
           <span className="text-xs text-gray-500 dark:text-gray-400 ml-1 whitespace-nowrap">
             ({monthlyEvents.length} esemény)
           </span>
@@ -182,7 +195,8 @@ export default function LiveCityMap({
         </div>
       </div>
       
-      <div className="absolute bottom-3 right-3 z-[998] bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 text-xs">
+      {/* --- 5. A JELMAGYARÁZAT IS ELTŰNIK MOBILON --- */}
+      <div className="hidden md:block absolute bottom-3 right-3 z-[998] bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 text-xs">
         <div className="font-semibold mb-1 text-gray-700 dark:text-gray-200">Jelmagyarázat</div>
         {[ ['events',  '#ef4444',  'Esemény'], ['attractions','#3b82f6','Látnivaló'], ['leisure','#22c55e',   'Szabadidő'], ['restaurants','#f97316','Vendéglátó'], ['user',   '#2563eb',   'Itt vagyok'], ].map(([key, color, label]) => ( <div key={key} className="flex items-center gap-2 mb-1"><span className="inline-block w-3 h-3 rounded-full" style={{ background: color }} />{label}</div> ))}
         <div className="mt-1 text-[11px] opacity-75">A pulzáló piros pont: ma zajló esemény.</div>
@@ -194,7 +208,7 @@ export default function LiveCityMap({
         
         {userPos && (
           <Marker position={userPos} icon={userIcon}>
-            <Popup>📍 Itt vagy most</Popup>
+            <Popup maxWidth={250}>📍 Itt vagy most</Popup>
           </Marker>
         )}
         
@@ -217,7 +231,7 @@ export default function LiveCityMap({
         
         {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
           <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
-            <Popup>
+            <Popup maxWidth={250}>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
@@ -231,7 +245,7 @@ export default function LiveCityMap({
 
         {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
           <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
-            <Popup>
+            <Popup maxWidth={250}>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
@@ -245,7 +259,7 @@ export default function LiveCityMap({
         
         {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
           <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
-            <Popup>
+            <Popup maxWidth={250}>
               <div className="text-sm">
                 <div className="font-semibold mb-1">{item.name}</div>
                 {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
