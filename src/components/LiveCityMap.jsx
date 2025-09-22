@@ -39,68 +39,40 @@ const userIcon = L.divIcon({
 
 // ---- Segédfüggvények ----
 function normalizeLatLng(obj) {
-  if (!obj || typeof obj.lat !== 'number' || typeof obj.lng !== 'number') {
-    return null;
-  }
+  if (!obj || typeof obj.lat !== 'number' || typeof obj.lng !== 'number') { return null; }
   const out = { lat: obj.lat, lng: obj.lng };
-  if (obj.label) {
-    out.label = String(obj.label);
-  }
+  if (obj.label) { out.label = String(obj.label); }
   return out;
 }
 function pickLocations(item) {
-  if (!item) {
-    return [];
-  }
-  if (Array.isArray(item.locations)) {
-    return item.locations.map(normalizeLatLng).filter(Boolean);
-  }
-  const c =
-    item.coords ||
-    item.coordinates ||
-    item.coordinate ||
-    item.location?.coords ||
-    item.location?.coordinates ||
-    null;
-  if (c) {
-    const one = normalizeLatLng(c);
-    return one ? [one] : [];
-  }
+  if (!item) { return []; }
+  if (Array.isArray(item.locations)) { return item.locations.map(normalizeLatLng).filter(Boolean); }
+  const c = item.coords || item.coordinates || item.coordinate || item.location?.coords || item.location?.coordinates || null;
+  if (c) { const one = normalizeLatLng(c); return one ? [one] : []; }
   const fb = normalizeLatLng(item);
   return fb ? [fb] : [];
 }
 function formatEventWhen(e) {
   const s = e.date ? parseISO(e.date) : null;
   const ee = e.end_date ? parseISO(e.end_date) : null;
-  if (!s || isNaN(s)) {
-    return e.time ? e.time : 'Időpont később';
-  }
+  if (!s || isNaN(s)) { return e.time ? e.time : 'Időpont később'; }
   const pad = (n) => String(n).padStart(2, '0');
   const d = (dt) => `${dt.getFullYear()}.${pad(dt.getMonth() + 1)}.${pad(dt.getDate())}`;
   if (e.time && e.time.trim()) {
-    if (ee && !isNaN(ee) && d(s) !== d(ee)) {
-      return `${d(s)} – ${d(ee)} • ${e.time}`;
-    }
+    if (ee && !isNaN(ee) && d(s) !== d(ee)) { return `${d(s)} – ${d(ee)} • ${e.time}`; }
     return `${d(s)} • ${e.time}`;
   }
-  if (ee && !isNaN(ee) && d(s) !== d(ee)) {
-    return `${d(s)} – ${d(ee)}`;
-  }
+  if (ee && !isNaN(ee) && d(s) !== d(ee)) { return `${d(s)} – ${d(ee)}`; }
   return d(s);
 }
 function isEventToday(e) {
   const today = new Date();
   const startDate = e.date ? parseISO(e.date) : null;
-  if (!startDate || isNaN(startDate)) {
-    return false;
-  }
+  if (!startDate || isNaN(startDate)) { return false; }
   const endDateString = e.end_date || e.date;
   const parsedEndDate = parseISO(endDateString);
   const effectiveEndDate = !parsedEndDate || isNaN(parsedEndDate) ? startDate : parsedEndDate;
-  const interval = {
-    start: startOfDay(startDate),
-    end: endOfDay(effectiveEndDate),
-  };
+  const interval = { start: startOfDay(startDate), end: endOfDay(effectiveEndDate) };
   return isWithinInterval(today, interval);
 }
 
@@ -117,12 +89,7 @@ export default function LiveCityMap({
   const center = [47.3896, 16.5402];
 
   const [tileKey, setTileKey] = useState('CartoLight');
-  const [show, setShow] = useState({
-    events: true,
-    attractions: true,
-    leisure: true,
-    restaurants: true,
-  });
+  const [show, setShow] = useState({ events: true, attractions: true, leisure: true, restaurants: true });
 
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
@@ -144,12 +111,21 @@ export default function LiveCityMap({
   }, []);
 
   const monthlyEvents = useMemo(() => {
-    const safeEvents = Array.isArray(events) ? events : [];
+    const today = new Date();
+    const startOfToday = startOfDay(today);
+
+    const futureEvents = (Array.isArray(events) ? events : []).filter(e => {
+      const endDateString = e.end_date || e.date;
+      const parsedEndDate = parseISO(endDateString);
+      if (isNaN(parsedEndDate)) return false;
+      return parsedEndDate >= startOfToday;
+    });
+
     const refDateForMonth = new Date(year, month);
     const monthStart = startOfMonth(refDateForMonth);
     const monthEnd = endOfMonth(refDateForMonth);
 
-    return safeEvents.filter((e) => {
+    return futureEvents.filter((e) => {
       const startDate = e.date ? parseISO(e.date) : null;
       if (!startDate || isNaN(startDate)) return false;
       const endDateString = e.end_date || e.date;
@@ -159,18 +135,36 @@ export default function LiveCityMap({
     });
   }, [events, year, month]);
 
-  const markers = useMemo(() => ({
-    events: monthlyEvents.flatMap((e) => {
-      if (!e || !e.id) return [];
-      const locs = pickLocations(e);
-      if (!locs.length) return [];
-      const today = isEventToday(e);
-      return locs.map((pos, idx) => ({ item: e, pos, idx, today }));
-    }),
-    attractions: (Array.isArray(attractions) ? attractions : []).flatMap(a => pickLocations(a).map((pos, idx) => ({ item: a, pos, idx }))),
-    leisure: (Array.isArray(leisure) ? leisure : []).flatMap(l => pickLocations(l).map((pos, idx) => ({ item: l, pos, idx }))),
-    restaurants: (Array.isArray(restaurants) ? restaurants : []).flatMap(r => pickLocations(r).map((pos, idx) => ({ item: r, pos, idx }))),
-  }), [monthlyEvents, attractions, leisure, restaurants]); // VÁLTOZTATÁS: A függőség most már `monthlyEvents`
+  const markers = useMemo(() => {
+    const eventsByCoord = monthlyEvents.reduce((acc, event) => {
+      const locs = pickLocations(event);
+      locs.forEach(loc => {
+        const key = `${loc.lat},${loc.lng}`;
+        if (!acc[key]) {
+          acc[key] = { pos: loc, items: [] };
+        }
+        acc[key].items.push(event);
+      });
+      return acc;
+    }, {});
+
+    const eventMarkers = Object.values(eventsByCoord).map(group => {
+      const isTodayGroup = group.items.some(item => isEventToday(item));
+      return {
+        key: `group-${group.pos.lat}-${group.pos.lng}`,
+        pos: group.pos,
+        items: group.items,
+        today: isTodayGroup,
+      };
+    });
+
+    return {
+      events: eventMarkers,
+      attractions: (Array.isArray(attractions) ? attractions : []).flatMap(a => pickLocations(a).map((pos, idx) => ({ item: a, pos, idx }))),
+      leisure: (Array.isArray(leisure) ? leisure : []).flatMap(l => pickLocations(l).map((pos, idx) => ({ item: l, pos, idx }))),
+      restaurants: (Array.isArray(restaurants) ? restaurants : []).flatMap(r => pickLocations(r).map((pos, idx) => ({ item: r, pos, idx }))),
+    };
+  }, [monthlyEvents, attractions, leisure, restaurants]);
 
   const tile = TILE_STYLES[tileKey] || TILE_STYLES.CartoLight;
   const close = () => { window.history.length > 1 ? navigate(-1) : navigate('/'); };
@@ -180,7 +174,6 @@ export default function LiveCityMap({
       <button onClick={close} className="absolute top-3 right-3 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100">✕</button>
       
       <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
-        {/* BEILLESZTVE: Év- és hónapválasztó */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
           <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600">
             {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
@@ -189,7 +182,7 @@ export default function LiveCityMap({
             {MONTHS_HU.map((m, i) => <option key={m} value={i}>{m}</option>)}
           </select>
         </div>
-
+        
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]">
           <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">Rétegek</span>
           {(['events', 'attractions', 'leisure', 'restaurants']).map((key) => (
@@ -226,9 +219,20 @@ export default function LiveCityMap({
           </Marker>
         )}
         
-        {show.events && markers.events.map(({ item, pos, idx, today }) => (
-          <Marker key={`ev-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={today ? ICONS.eventsToday : ICONS.events}>
-            <Popup><div className="text-sm"><div className="font-semibold mb-1">{item.name}</div><div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>{item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}<button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/events/${item.id}`)}>Részletek →</button></div></Popup>
+        {show.events && markers.events.map(({ key, pos, items, today }) => (
+          <Marker key={key} position={[pos.lat, pos.lng]} icon={today ? ICONS.eventsToday : ICONS.events}>
+            <Popup>
+              <div className="text-sm max-h-60 overflow-y-auto">
+                {items.map(item => (
+                  <div key={item.id} className="mb-3 border-b pb-2 last:border-b-0 last:mb-0">
+                    <div className="font-semibold mb-1">{item.name}</div>
+                    <div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>
+                    {item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
+                    <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/events/${item.id}`)}>Részletek →</button>
+                  </div>
+                ))}
+              </div>
+            </Popup>
           </Marker>
         ))}
         
