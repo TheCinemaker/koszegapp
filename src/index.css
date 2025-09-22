@@ -1,362 +1,327 @@
-// src/components/LiveCityMap.jsx
-import React, { useMemo, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  ZoomControl,
-} from 'react-leaflet';
-import L from 'leaflet';
-import {
-  parseISO,
-  isSameDay,
-} from 'date-fns';
+/* --- FÁJL: index.css --- */
 
-// IMPORTANT: valahol globálisan legyen importálva:
-// import 'leaflet/dist/leaflet.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-// --- pötty ikonok ---
-const makeDot = (hex) =>
-  L.divIcon({
-    className: 'leaflet-dot-icon',
-    html: `<span style="
-      display:inline-block;width:12px;height:12px;border-radius:50%;
-      background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
-    "></span>`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-  });
-
-// pulzáló változat (körgyűrű + középpont)
-const makePulsingDot = (hex) =>
-  L.divIcon({
-    className: 'leaflet-pulse-dot',
-    html: `
-      <span class="pulse-ring"></span>
-      <span style="
-        display:inline-block;width:12px;height:12px;border-radius:50%;
-        background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
-        position:relative;
-      "></span>
-    `,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-  });
-
-const ICONS = {
-  events: makeDot('#ef4444'),
-  eventsToday: makePulsingDot('#ef4444'),
-  attractions: makeDot('#3b82f6'),
-  leisure: makeDot('#22c55e'),
-  restaurants: makeDot('#f97316'),
-};
-
-const userIcon = L.divIcon({
-  className: 'leaflet-user-icon',
-  html: `<span style="
-    display:inline-block;width:14px;height:14px;border-radius:50%;
-    background:#2563eb; box-shadow:0 0 0 2px #fff, 0 0 6px rgba(0,0,0,.4);
-  "></span>`,
-  iconSize: [30, 30],
-  iconAnchor: [15, 15],
-});
-
-// ---- többhelyszín támogatás ----
-function normalizeLatLng(obj) {
-  if (!obj) return null;
-  if (typeof obj.lat === 'number' && typeof obj.lng === 'number') {
-    const out = { lat: obj.lat, lng: obj.lng };
-    if (obj.label) out.label = String(obj.label);
-    return out;
+/* Egyedi, újrafelhasználható komponens stílusok */
+@layer components {
+  .section-title {
+    @apply text-lg font-semibold mb-3 pb-2 border-b-2;
   }
-  return null;
-}
-function pickLocations(item) {
-  if (!item) return [];
-  if (Array.isArray(item.locations)) {
-    return item.locations.map(normalizeLatLng).filter(Boolean);
+  .flip-card-container {
+    perspective: 1500px;
   }
-  const c =
-    item.coords ||
-    item.coordinates ||
-    item.coordinate ||
-    item.location?.coords ||
-    item.location?.coordinates ||
-    null;
-  if (c) {
-    const one = normalizeLatLng(c);
-    return one ? [one] : [];
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Selymesebb forgás */
   }
-  const fb = normalizeLatLng(item);
-  return fb ? [fb] : [];
+  .flip-card-inner.flipped {
+    transform: rotateY(180deg);
+  }
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
 }
 
-// ---- Időpont formázás a popup-ba ----
-function formatEventWhen(e) {
-  const s = e?._s
-    ? new Date(e._s)
-    : e?.date
-    ? parseISO(e.date)
-    : null;
-  const ee = e?._e
-    ? new Date(e._e)
-    : e?.end_date
-    ? parseISO(e.end_date)
-    : s;
-
-  if (!s || Number.isNaN(+s)) return e.time ? e.time : 'Időpont később';
-
-  const pad = (n) => String(n).padStart(2, '0');
-  const d = (dt) => `${dt.getFullYear()}.${pad(dt.getMonth() + 1)}.${pad(dt.getDate())}`;
-
-  if (e.time && e.time.trim()) {
-    if (ee && d(s) !== d(ee)) return `${d(s)} – ${d(ee)} • ${e.time}`;
-    return `${d(s)} • ${e.time}`;
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  if (ee && d(s) !== d(ee)) return `${d(s)} – ${d(ee)}`;
-  return d(s);
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
 }
 
-// Ma zajlik-e?
-function isEventToday(e) {
-  const today = new Date();
-  const s = e?._s ? new Date(e._s) : (e?.date ? parseISO(e.date) : null);
-  const ee = e?._e ? new Date(e._e) : (e?.end_date ? parseISO(e.end_date) : s);
-  if (!s) return false;
-  if (!ee) return isSameDay(today, s);
-  return (
-    isSameDay(today, s) ||
-    isSameDay(today, ee) ||
-    (s <= today && today <= ee)
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadein {
+  animation: fadein 0.7s cubic-bezier(.19, 1, .22, 1) both;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.animate-border-rainbow > div {
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.animate-floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(3);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+.leaflet-pulse-marker {
+  transform-origin: center;
+  animation: pulse 2s infinite;
+}
+
+/* szív animáció */
+@keyframes heart-pop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-heart-pop {
+  animation: heart-pop 0.3s ease-in-out;
+}
+
+/* görgetési maszk */
+.scroll-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
   );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
-const TILE_STYLES = {
-  OSM: {
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attr: '&copy; OpenStreetMap contributors',
-  },
-  CartoLight: {
-    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    attr: '&copy; OpenStreetMap contributors, &copy; CARTO'
+/* holografikus plakátfal */
+.holo-wall {
+  background: linear-gradient(270deg,
+    #ff00ff,
+    #00ffff,
+    #ffff00,
+    #ff6600,
+    #ff00ff);
+  background-size: 800% 800%;
+  animation: holo-shift 12s ease infinite;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5),
+              0 0 40px rgba(0, 255, 255, 0.3);
+}
+@keyframes holo-shift {
+  0% {
+    background-position: 0% 50%;
   }
-};
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
-export default function LiveCityMap({
-  events = [],
-  attractions = [],
-  leisure = [],
-  restaurants = [],
-}) {
-  const navigate = useNavigate();
-  const center = [47.3896, 16.5402];
+/* élő várostérkép marker pulzálás + fényglow */
+.map-marker-glow {
+  position: relative;
+}
+.map-marker-glow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: rgba(0, 200, 255, 0.5);
+  animation: marker-pulse 2s infinite;
+}
+@keyframes marker-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
 
-  const [tileKey, setTileKey] = useState('CartoLight');
-  const [show, setShow] = useState({
-    events: true,
-    attractions: true,
-    leisure: true,
-    restaurants: true,
-  });
-  const [userPos, setUserPos] = useState(null);
+/* "glitch" animáció szövegre */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 red, -2px 0 cyan;
+  }
+  20% {
+    text-shadow: -2px 0 lime, 2px 0 blue;
+  }
+  40% {
+    text-shadow: 2px 2px magenta, -2px -2px yellow;
+  }
+  60% {
+    text-shadow: -2px -2px red, 2px 2px cyan;
+  }
+  80% {
+    text-shadow: 2px 0 yellow, -2px 0 lime;
+  }
+  100% {
+    text-shadow: none;
+  }
+}
+.text-glitch {
+  animation: glitch 1s infinite;
+}
 
-  // geolokáció (ha elérhető)
-  useEffect(() => {
-    if (!('geolocation' in navigator)) return;
-    const id = navigator.geolocation.watchPosition(
-      (pos) => setUserPos([pos.coords.latitude, pos.coords.longitude]),
-      () => {},
-      { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
-    );
-    return () => { try { navigator.geolocation.clearWatch(id); } catch {} };
-  }, []);
+/* 3D neon border */
+.neon-border {
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.6),
+              0 0 20px rgba(0, 255, 255, 0.4);
+}
 
-  // --- Marker listák (csak valós coords-szal) ---
-  const markers = useMemo(() => ({
-    events: events.flatMap((e) => {
-      const locs = pickLocations(e);
-      if (!locs.length) return [];
-      const today = isEventToday(e);
-      return locs.map((pos, idx) => ({ item: e, pos, idx, today }));
-    }),
-    attractions: (Array.isArray(attractions) ? attractions : []).flatMap((a) => {
-      const locs = pickLocations(a);
-      return locs.map((pos, idx) => ({ item: a, pos, idx }));
-    }),
-    leisure: (Array.isArray(leisure) ? leisure : []).flatMap((l) => {
-      const locs = pickLocations(l);
-      return locs.map((pos, idx) => ({ item: l, pos, idx }));
-    }),
-    restaurants: (Array.isArray(restaurants) ? restaurants : []).flatMap((r) => {
-      const locs = pickLocations(r);
-      return locs.map((pos, idx) => ({ item: r, pos, idx }));
-    }),
-  }), [events, attractions, leisure, restaurants]);
+/* pulzáló esemény pötty gyűrű */
+.pulse-ring {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 9px;   /* 30px ikonterület – 12px pont → (30-12)/2 = 9 */
+  top: 9px;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+  animation: pulse-dot 1.8s ease-out infinite;
+}
+@keyframes pulse-dot {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2.8);
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    opacity: 0;
+  }
+}
 
-  const tile = TILE_STYLES[tileKey] || TILE_STYLES.CartoLight;
+/* Reszponzív design további finomításai */
+@media (max-width: 768px) {
+  .flip-card-container {
+    perspective: 1000px;
+  }
+  
+  .section-title {
+    @apply text-base;
+  }
+  
+  .holo-wall {
+    border-radius: 0.5rem;
+  }
+}
 
-  const close = () => {
-    if (window.history.length > 1) navigate(-1);
-    else navigate('/');
-  };
+/* Sötét mód támogatás */
+@media (prefers-color-scheme: dark) {
+  .neon-border {
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8),
+                0 0 30px rgba(0, 255, 255, 0.6);
+  }
+}
 
-  return (
-    <div className="relative w-full h-[calc(100dvh-64px)]">
-      {/* Bezárás (X) */}
-      <button
-        onClick={close}
-        className="absolute top-3 right-3 z-[1000] w-8 h-8 rounded-full bg-white text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-100"
-        aria-label="Bezárás"
-        title="Bezárás"
-      >
-        ✕
-      </button>
-
-      {/* Panel – bal felső sarok */}
-      <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
-        {/* Rétegek */}
-        <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]">
-          <span className="text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">Rétegek</span>
-          {(['events','attractions','leisure','restaurants']).map((key) => (
-            <label key={key} className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={!!show[key]}
-                onChange={(e) => setShow((s) => ({ ...s, [key]: e.target.checked }))}
-              />
-              <span className="inline-flex items-center gap-1">
-                <span
-                    className="inline-block w-3 h-3 rounded-full"
-                    style={{
-                      background:
-                        key === 'events' ? '#ef4444' :
-                        key === 'attractions' ? '#3b82f6' :
-                        key === 'leisure' ? '#22c55e' : '#f97316'
-                    }}
-                  />
-                {key === 'events' && 'Események'}
-                {key === 'attractions' && 'Látnivalók'}
-                {key === 'leisure' && 'Szabadidő'}
-                {key === 'restaurants' && 'Vendéglátó'}
-              </span>
-            </label>
-          ))}
-        </div>
-
-        {/* Térkép-stílus */}
-        <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
-          <label className="text-xs text-gray-600 dark:text-gray-300">Térkép:</label>
-          <select
-            className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600"
-            value={tileKey}
-            onChange={(e) => setTileKey(e.target.value)}
-          >
-            {Object.keys(TILE_STYLES).map((k) => (<option key={k} value={k}>{k}</option>))}
-          </select>
-        </div>
-      </div>
-
-      {/* Jelmagyarázat – jobb alsó sarok */}
-      <div className="absolute bottom-3 right-3 z-[998] bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 text-xs">
-        <div className="font-semibold mb-1 text-gray-700 dark:text-gray-200">Jelmagyarázat</div>
-        {[
-          ['events',      '#ef4444', 'Esemény'],
-          ['attractions', '#3b82f6', 'Látnivaló'],
-          ['leisure',     '#22c55e', 'Szabadidő'],
-          ['restaurants', '#f97316', 'Vendéglátó'],
-          ['user',        '#2563eb', 'Itt vagyok'],
-        ].map(([key, color, label]) => (
-          <div key={key} className="flex items-center gap-2 mb-1">
-            <span className="inline-block w-3 h-3 rounded-full" style={{ background: color }} />
-            {label}
-          </div>
-        ))}
-        <div className="mt-1 text-[11px] opacity-75">A pulzáló piros pont: ma zajló esemény.</div>
-      </div>
-
-      {/* Térkép */}
-      <MapContainer center={center} zoom={14} className="w-full h-full" zoomControl={false}>
-        <TileLayer url={tile.url} attribution={tile.attr} />
-        <ZoomControl position="bottomleft" />
-
-        {/* user */}
-        {userPos && (
-          <Marker position={userPos} icon={userIcon}>
-            <Popup>📍 Itt vagy most</Popup>
-          </Marker>
-        )}
-
-        {/* események */}
-        {show.events && markers.events.map(({ item, pos, idx, today }) => (
-          <Marker
-            key={`ev-${item.id}-${idx}`}
-            position={[pos.lat, pos.lng]}
-            icon={today ? ICONS.eventsToday : ICONS.events}
-          >
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                <div className="text-xs mb-1">🗓 {formatEventWhen(item)}</div>
-                {pos.label && <div className="text-xs opacity-80 mb-1">📍 {pos.label}</div>}
-                {!pos.label && item.location && <div className="text-xs opacity-80 mb-1">📍 {item.location}</div>}
-                <button
-                  className="text-indigo-600 underline text-xs"
-                  onClick={() => navigate(`/events/${item.id}`)}
-                >
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* látnivalók */}
-        {show.attractions && markers.attractions.map(({ item, pos, idx }) => (
-          <Marker key={`at-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.attractions}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
-                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/attractions/${item.id}`)}>
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* szabadidő */}
-        {show.leisure && markers.leisure.map(({ item, pos, idx }) => (
-          <Marker key={`le-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.leisure}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                {item.category && <div className="text-xs opacity-80 mb-1">🏷 {item.category}</div>}
-                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/leisure/${item.id}`)}>
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* vendéglátó */}
-        {show.restaurants && markers.restaurants.map(({ item, pos, idx }) => (
-          <Marker key={`re-${item.id}-${idx}`} position={[pos.lat, pos.lng]} icon={ICONS.restaurants}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">{item.name}</div>
-                {item.type && <div className="text-xs opacity-80 mb-1">🍽 {item.type}</div>}
-                <button className="text-indigo-600 underline text-xs" onClick={() => navigate(`/gastronomy/${item.id}`)}>
-                  Részletek →
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </div>
-  );
+/* Nyomtatási stílusok */
+@media print {
+  .holo-wall,
+  .neon-border,
+  .text-glitch {
+    animation: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+  }
+  
+  .flip-card-inner {
+    transform: none !important;
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: relative;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+  }
 }
