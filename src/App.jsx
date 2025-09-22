@@ -64,14 +64,6 @@ export default function App() {
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
   // Adatbetöltés + globális kedvenc-prune (egyszer)
-  // src/App.jsx
-
-// A fájl tetején, a többi import mellett, győződj meg róla, hogy ez is ott van:
-import { parseISO, endOfDay } from 'date-fns';
-
-// ... a kód többi része ...
-
-// CSERÉLD LE A TELJES useEffect BLOKKOT ERRE A VERZIÓRA:
 useEffect(() => {
     Promise.all([
       fetchAttractions(),
