@@ -13,8 +13,9 @@ import {
   parseISO,
   isWithinInterval,
   endOfDay,
-  startOfMonth,
-  endOfMonth,
+  startOfDay,
+  isSameDay,
+  format
 } from 'date-fns';
 
 // --- pötty ikonok ---
@@ -111,28 +112,22 @@ function formatEventWhen(e) {
   return d(s);
 }
 
-// ---- Ma zajlik-e? (A legmegbízhatóbb verzió) ----
+// ---- Ma zajlik-e? (Egyszerűsített és megbízható változat) ----
 function isEventToday(e) {
   const today = new Date();
+  const todayStart = startOfDay(today);
+  const todayEnd = endOfDay(today);
+  
   const startDate = e.date ? parseISO(e.date) : null;
+  if (!startDate || isNaN(startDate)) return false;
 
-  if (!startDate || isNaN(startDate)) {
-    return false;
-  }
-
-  const endDateString = e.end_date || e.date;
-  const parsedEndDate = parseISO(endDateString);
-  const effectiveEndDate = (!parsedEndDate || isNaN(parsedEndDate)) ? startDate : parsedEndDate;
-
-  const interval = {
-    start: startDate,
-    end: endOfDay(effectiveEndDate),
-  };
-
-  return isWithinInterval(today, interval);
+  const endDate = e.end_date ? parseISO(e.end_date) : startDate;
+  
+  // Ellenőrizzük, hogy az esemény időintervalluma átfed-e a mai nappal
+  return isWithinInterval(todayStart, { start: startDate, end: endDate }) ||
+         isWithinInterval(todayEnd, { start: startDate, end: endDate }) ||
+         isWithinInterval(startDate, { start: todayStart, end: todayEnd });
 }
-
-const MONTHS_HU = ['Jan','Feb','Már','Ápr','Máj','Jún','Júl','Aug','Szep','Okt','Nov','Dec'];
 
 const TILE_STYLES = {
   CartoLight: {
@@ -155,7 +150,6 @@ export default function LiveCityMap({
   const center = [47.3896, 16.5402];
 
   const [tileKey, setTileKey] = useState('CartoLight');
-  const [month, setMonth] = useState(new Date().getMonth());
   const [show, setShow] = useState({
     events: true,
     attractions: true,
@@ -163,6 +157,7 @@ export default function LiveCityMap({
     restaurants: true,
   });
   const [userPos, setUserPos] = useState(null);
+  const [selectedDate, setSelectedDate] = useState('today'); // 'today', 'all'
 
   useEffect(() => {
     if (!('geolocation' in navigator)) return;
@@ -174,31 +169,20 @@ export default function LiveCityMap({
     return () => { try { navigator.geolocation.clearWatch(id); } catch {} };
   }, []);
 
-  // HÓNAP SZERINTI SZŰRÉS: Csak az adott hónap eseményeit mutatjuk
-  const monthlyEvents = useMemo(() => {
+  // Mai vagy összes esemény szűrése
+  const filteredEvents = useMemo(() => {
     const safe = Array.isArray(events) ? events : [];
     
-    const refDateForMonth = new Date();
-    refDateForMonth.setMonth(month);
+    if (selectedDate === 'today') {
+      return safe.filter(e => isEventToday(e));
+    }
     
-    const monthStart = startOfMonth(refDateForMonth);
-    const monthEnd = endOfMonth(refDateForMonth);
-
-    return safe.filter((e) => {
-      const startDate = e.date ? parseISO(e.date) : null;
-      if (!startDate || isNaN(startDate)) return false;
-
-      const endDateString = e.end_date || e.date;
-      const parsedEndDate = parseISO(endDateString);
-      const effectiveEndDate = (!parsedEndDate || isNaN(parsedEndDate)) ? startDate : parsedEndDate;
-      
-      return startDate <= monthEnd && effectiveEndDate >= monthStart;
-    });
-  }, [events, month]);
+    return safe;
+  }, [events, selectedDate]);
 
   // MARKEREK LÉTREHOZÁSA a szűrt eseményekből
   const markers = useMemo(() => ({
-    events: monthlyEvents.flatMap((e) => {
+    events: filteredEvents.flatMap((e) => {
       const locs = pickLocations(e);
       if (!locs.length) return [];
       const today = isEventToday(e);
@@ -216,7 +200,7 @@ export default function LiveCityMap({
       const locs = pickLocations(r);
       return locs.map((pos, idx) => ({ item: r, pos, idx }));
     }),
-  }), [monthlyEvents, attractions, leisure, restaurants]);
+  }), [filteredEvents, attractions, leisure, restaurants]);
 
   const tile = TILE_STYLES[tileKey] || TILE_STYLES.CartoLight;
 
@@ -237,14 +221,16 @@ export default function LiveCityMap({
       </button>
 
       <div className="absolute top-3 left-3 z-[999] flex flex-col gap-2">
+        {/* Dátum választó */}
         <div className="bg-white/95 dark:bg-gray-800/95 rounded-lg shadow-md p-2 flex items-center gap-2">
-          <label className="text-xs text-gray-600 dark:text-gray-300">Hónap:</label>
+          <label className="text-xs text-gray-600 dark:text-gray-300">Események:</label>
           <select
             className="text-sm bg-white dark:bg-gray-700 rounded px-2 py-1 border border-gray-200 dark:border-gray-600"
-            value={month}
-            onChange={(e) => setMonth(Number(e.target.value))}
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
           >
-            {MONTHS_HU.map((m, i) => (<option key={m} value={i}>{m}</option>))}
+            <option value="today">Ma</option>
+            <option value="all">Összes</option>
           </select>
         </div>
 
