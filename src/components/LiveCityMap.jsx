@@ -21,8 +21,22 @@ const makeDot = (hex) =>
   });
 const makePulsingDot = (hex) =>
   L.divIcon({
-    className: 'leaflet-pulse-dot',
-    html: `<span class="pulse-ring"></span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${hex}; box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);position:relative;"></span>`,
+    className: 'leaflet-pulse-dot', // Ez a 30x30-as konténer
+    html: `
+      <span class="pulse-ring"></span>
+      <span style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display:inline-block;
+        width:12px;
+        height:12px;
+        border-radius:50%;
+        background:${hex};
+        box-shadow:0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.35);
+      "></span>
+    `,
     iconSize: [30, 30],
     iconAnchor: [15, 15],
   });
