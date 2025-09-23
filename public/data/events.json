@@ -677,5 +677,17 @@
   "description": "A Jurisics-vár Művelődési Központ és Kőszeg Város Önkormányzatának ajándékműsora a Zene és az Idősek Világnapja alkalmából. Fellép az OpeRETtRO Társulat, a műsorban közismert nóták és operett részletek csendülnek fel. A belépés díjtalan, a programra a nyugdíjas korú kőszegi lakosokat várják.",
   "tags": ["operett", "nóta", "zene", "idősek", "nyugdíjas", "ingyenes"],
   "image": "idoszene.jpg"
+},
+  {
+  "id": "event-57",
+  "name": "Madármegfigyelés és gyűrűzés az Abért-tónál",
+  "date": "2025-10-04",
+  "end_date": "2025-10-04",
+  "time": "E6:30-10:00",
+  "location": "Abért-tó",
+  "coords": { "lat": 47.361555, "lng": 16.566649 },
+  "description": "Madármegfigyelés és madárgyűrűzés az Őrségi Nemzeti Park és az MME szervezésében az őszi madárvonulás idején. A szakemberek teleszkópok és függönyhálók segítségével hozzák testközelbe a madarakat. Az esemény része az Európai Madármegfigyelő Napok rendezvénysorozatnak.",
+  "tags": ["madárles", "természet", "túra", "családi", "ingyenes", "madárgyűrűzés"],
+  "image": "madarles.jpg"
 }
 ]
