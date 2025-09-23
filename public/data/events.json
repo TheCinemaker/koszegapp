@@ -641,5 +641,29 @@
     "description": "A hagyományos fő téri Újév-köszöntő, tűzijátékkal és pezsgővel.",
     "tags": ["szilveszter", "zene", "tánc"],
     "image": "szilveszter.jpg"
+  },
+  {
+    "id": "event-54",
+    "name": "Szüreti koncert a Tóth borházban - MEGGIE",
+    "date": "2025-09-26",
+    "end_date": "2025-09-26",
+    "time": "19:30-04:00",
+    "location": "Tóth pincészet",
+    "coords": { "lat": 47.38734623076627, "lng": 16.541998862130487 }, 
+    "description": "MEGGIE koncert a borházban",
+    "tags": ["szüret", "zene", "tánc"],
+    "image": "toth26.jpg"
+  },
+  {
+    "id": "event-55",
+    "name": "Szüreti zenés est a Tóth borházban - DJ BLAZSEW & FRIENDS",
+    "date": "2025-09-27",
+    "end_date": "2025-09-27",
+    "time": "16:00-23:59",
+    "location": "Tóth pincészet",
+    "coords": { "lat": 47.38734623076627, "lng": 16.541998862130487 }, 
+    "description": "DJ Blazsew könnyű, táncolható zenékkel vár mindenkit!",
+    "tags": ["szüret", "zene", "tánc"],
+    "image": "toth26.jpg"
   }
 ]
