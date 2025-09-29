@@ -186,7 +186,7 @@ export default function AnimatedWeeklyMenuDrawer() {
                 </div>
                 <div className="mt-4 space-y-3">
                   {weekDays.map(day => {
-                    const d = expandedRestaurant.menu?.[day.key];
+                    const d = expandedRestaurant.menu?.[day.key] || EMPTY_DAY;
                     if (!d || (!d.leves && (!d.foetelek || d.foetelek.length === 0))) return null; // ugord
                     return (
                     <div key={day.key}>
