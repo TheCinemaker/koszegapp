@@ -145,7 +145,7 @@ export default function OstromDrawerFullAnimated() {
             <h3 className="text-lg font-extrabold">
               {
                openDrawer === 'kiemelt' ? '✨ KIEMELT FELÜLET' :
-               '🍇 Szüret 2025'
+               'ORSOLYA NAP 2025'
               }
             </h3>
             <button
@@ -174,105 +174,19 @@ export default function OstromDrawerFullAnimated() {
     {/* --- PÉNTEK --- */}
     <div>
         <h4 className="font-extrabold text-base text-green-800 pb-2 mb-3 border-b-2 border-green-300">
-            Szeptember 26., Péntek
+            2025. Október 24. - 2025. Október 25., 10:00 - 18:00
         </h4>
         <div className="space-y-3">
             <div>
-                <p className="font-semibold">17:00 – Ifjúsági Fúvószenekar</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">17:30 – Hivatalos Megnyitó</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">18:00 – Gájer Bálint</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">19:00 – Fúvós Szerenád</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
-            </div>
-            <div>
-                <p className="font-semibold">21:00 – Be-Jó Tűztánc & Silverbirds</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
-            </div>
-            <div>
-                <p className="font-semibold">21:30 – Soulwave Koncert</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-        </div>
-    </div>
-
-    {/* --- SZOMBAT --- */}
-    <div>
-        <h4 className="font-extrabold text-base text-green-800 pb-2 mb-3 border-b-2 border-green-300">
-            Szeptember 27., Szombat
-        </h4>
-        <div className="space-y-3">
-            <div>
-                <p className="font-semibold">10:00 – Vendégzenekarok fogadása</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
-            </div>
-            <div>
-                <p className="font-semibold">13:15 – Zenekarok felvonulása</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Károly Róbert tér-től</p>
-            </div>
-            <div>
-                <p className="font-semibold">14:00 – Szüreti Karnevál</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Város utcáin</p>
-            </div>
-            <div>
-                <p className="font-semibold">16:00 – Fúvós térzenék & Táncbemutatók</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér, Jurisics tér, Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">17:30 – Fúvós-Show</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">18:00 – Prokofjev, Korponay, Bánó</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
-            </div>
-            <div>
-                <p className="font-semibold">21:00 – Szüreti Bál - Fáraó</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-        </div>
-    </div>
-
-    {/* --- VASÁRNAP --- */}
-    <div>
-        <h4 className="font-extrabold text-base text-green-800 pb-2 mb-3 border-b-2 border-green-300">
-            Szeptember 28., Vasárnap
-        </h4>
-        <div className="space-y-3">
-            <div>
-                <p className="font-semibold">11:00 – Fúvószenekari Térzene</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Jurisics tér</p>
-            </div>
-            <div>
-                <p className="font-semibold">14:00 – Westside TSE</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">15:00 – Hajnalcsillag Néptáncegyüttes</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
-            </div>
-            <div>
-                <p className="font-semibold">15:00 – Yahamo Brass Band & more</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Fő tér</p>
-            </div>
-            <div>
-                <p className="font-semibold">18:00 – Sing Sing & Zorall Koncert</p>
-                <p className="text-xs text-green-700/80 ml-5">📍 Rendezvénysátor</p>
+                <p className="font-semibold">ORSOLYA NAPI VÁSÁR</p>
+                <p className="text-xs text-green-700/80 ml-5">📍 Diáksétány</p>
             </div>
         </div>
     </div>
 
     {/* --- KIEGÉSZÍTŐ INFORMÁCIÓK --- */}
     <div className="pt-4 mt-4 border-t-2 border-green-300 text-xs italic text-green-800/80 text-center">
-        <p>A rendezvény ideje alatt Vidámpark, kézműves vásár, étel- és italkülönlegességek várják a látogatókat!</p>
+        <p>ORSOLYA NAPI VÁSÁR PROGRAMFÜZET HAMAROSAN</p>
         <p className="mt-2">A műsorváltoztatás jogát fenntartjuk!</p>
     </div>
 </div>
