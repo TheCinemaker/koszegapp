@@ -145,7 +145,7 @@ export default function OstromDrawerFullAnimated() {
             <h3 className="text-lg font-extrabold">
               {
                openDrawer === 'kiemelt' ? '✨ KIEMELT FELÜLET' :
-               'ORSOLYA NAP 2025'
+               'ORSOLYA NAP'
               }
             </h3>
             <button
