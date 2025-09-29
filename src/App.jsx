@@ -314,8 +314,8 @@ useEffect(() => {
           </footer>
 
           <FloatingButtons />
-          <OstromDrawerFullAnimated />
-          <AnimatedWeeklyMenuDrawer />
+          /* <OstromDrawerFullAnimated />
+          <AnimatedWeeklyMenuDrawer /> */
 
           {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />}
 
