@@ -5,9 +5,9 @@
       {
         "id": 101,
         "nev": {
-          "hu": "Programfüzet feltöltése folyamatban",
-          "en": "Program booklet upload in progress",
-          "de": "Programmheft wird hochgeladen"
+          "hu": "Orsolya napi vásár",
+          "en": "St. Ursula’s Fair",
+          "de": "Ursula-Markt"
         },
         "leiras": {
           "hu": "Nincs információ",
@@ -17,8 +17,8 @@
         "idopont": "2025-10-24T10:00:00",
         "veg_idopont": "2025-10-25T18:00:00",
         "helyszin": {
-          "lat": 47.390172,
-          "lng": 16.538364,
+          "lat": 47.38939838353243,
+          "lng": 16.539224213570474,
           "nev": {
             "hu": "Diáksétány",
             "en": "Students' Promenade",
@@ -34,9 +34,9 @@
       {
         "id": 201,
         "nev": {
-          "hu": "Programfüzet feltöltése folyamatban",
-          "en": "Program booklet upload in progress",
-          "de": "Programmheft wird hochgeladen"
+          "hu": "Orsolya napi vásár",
+          "en": "St. Ursula’s Fair",
+          "de": "Ursula-Markt"
         },
         "leiras": {
           "hu": "Nincs információ",
@@ -46,8 +46,8 @@
         "idopont": "2025-10-25T10:00:00",
         "veg_idopont": "2025-10-25T18:30:00",
         "helyszin": {
-          "lat": 47.390172,
-          "lng": 16.538364,
+          "lat": 47.38939838353243,
+          "lng": 16.539224213570474, 
           "nev": {
             "hu": "Diáksétány",
             "en": "Students' Promenade",
@@ -58,4 +58,3 @@
     ]
   }
 ]
-
