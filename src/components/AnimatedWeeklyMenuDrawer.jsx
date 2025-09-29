@@ -4,6 +4,7 @@ import { fetchMenus } from '../api/sheet.js';
 
 const sheetId = '1I-f8S2RtPaQS8Pn30HibSQFkuByyfvxJdNMuedy0bhg';
 const sheetName = 'Form Responses 1';
+const EMPTY_DAY = { leves: null, foetelek: [] };
 
 const transformEntry = (raw) => {
   const days = {
@@ -184,13 +185,16 @@ export default function AnimatedWeeklyMenuDrawer() {
                   {expandedRestaurant.hazhozszallitas && <div>Házhozszállítás: {expandedRestaurant.hazhozszallitas}</div>}
                 </div>
                 <div className="mt-4 space-y-3">
-                  {weekDays.map(day => (
+                  {weekDays.map(day => {
+                    const d = expandedRestaurant.menu?.[day.key];
+                    if (!d || (!d.leves && (!d.foetelek || d.foetelek.length === 0))) return null; // ugord
+                    return (
                     <div key={day.key}>
-                      <h4 className="font-bold text-gray-800 dark:text-gray-200">{day.label}</h4>
-                      <MenuCard dayMenu={expandedRestaurant.menu?.[day.key]} />
-                    </div>
-                  ))}
+                      <h4 className="font-bold">{day.label}</h4>
+              <MenuCard dayMenu={d} />
                 </div>
+              );
+            })}
                 {expandedRestaurant.menu_allando && (
                   <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700">
                     <strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}
@@ -215,7 +219,7 @@ export default function AnimatedWeeklyMenuDrawer() {
                         {menu.arak.allando && <span>Állandó: <strong>{menu.arak.allando} Ft</strong></span>}
                       </div>
                     </div>
-                    <MenuCard dayMenu={menu.menu?.[dayKey]} />
+                    <MenuCard dayMenu={menu.menu?.[dayKey] || EMPTY_DAY} />
                     {menu.menu_allando && (
                       <p className="text-xs mt-2 pt-2 border-t border-gray-200 dark:border-zinc-700">
                         <strong>Állandó ajánlat:</strong> {menu.menu_allando}
