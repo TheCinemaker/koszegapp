@@ -29,12 +29,12 @@ import Adatvedelem from './pages/Adatvedelem';
 import GemDetail from './pages/GemDetail';
 import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
-import ProgramModal from './components/ProgramModal';
+/* import ProgramModal from './components/ProgramModal'; */
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import WeatherModal from './components/WeatherModal';
 import FloatingButtons from './components/FloatingButtons';
-import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
+/* import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated'; */
 import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 import LiveCityMap from './components/LiveCityMap';
 
