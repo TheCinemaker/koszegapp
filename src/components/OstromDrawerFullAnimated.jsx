@@ -217,7 +217,7 @@ export default function OstromDrawerFullAnimated() {
             }
             hover:bg-green-300`}
         >
-          <span className="text-xs font-bold">SZÜRET 2025</span>
+          <span className="text-xs font-bold">ORSOLYA NAP 2025</span>
         </div>
 
         <div
