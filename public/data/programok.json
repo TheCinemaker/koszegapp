@@ -5,20 +5,20 @@
       {
         "id": 101,
         "nev": {
-          "hu": "Orsolya napi vásár",
-          "en": "St. Ursula’s Fair",
-          "de": "Ursula-Markt"
+          "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál",
+          "en": "Orsolya Fair – Flavours of the Nature Park Gastronomy Festival",
+          "de": "Ursula-Markt – Kulinarisches Festival „Geschmack des Naturparks“"
         },
         "leiras": {
-          "hu": "Nincs információ",
-          "en": "No information",
-          "de": "Keine Informationen"
+          "hu": "Kézműves vásár, szabadtéri főzés és főzőverseny. A hagyományos vásár évszázadok óta ad lehetőséget a helyi kézműveseknek és termelőknek. Borászok, méhészek, fazekasok, fafaragók és más kézművesek kínálják portékáikat, kóstolókkal és kulturális programokkal kísérve a Fő téren és a Jurisics várban.",
+          "en": "Craft fair, outdoor cooking, and cooking competition. This traditional fair has centuries-old roots in Kőszeg, where local artisans and farmers sold their products. Today, winemakers, beekeepers, potters, woodcarvers, and many others present their goods, with tastings and cultural performances in the Main Square and Jurisics Castle.",
+          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb. Der Markt hat jahrhundertealte Traditionen in Kőszeg, wo lokale Handwerker und Bauern ihre Waren anboten. Heute stellen Winzer, Imker, Töpfer, Holzschnitzer und viele andere ihre Produkte aus, begleitet von Verkostungen und kulturellen Darbietungen auf dem Hauptplatz und in der Jurisics-Burg."
         },
         "idopont": "2025-10-24T10:00:00",
         "veg_idopont": "2025-10-25T18:00:00",
         "helyszin": {
-          "lat": 47.38939838353243,
-          "lng": 16.539224213570474,
+          "lat": 47.390172,
+          "lng": 16.538364,
           "nev": {
             "hu": "Diáksétány",
             "en": "Students' Promenade",
@@ -34,20 +34,20 @@
       {
         "id": 201,
         "nev": {
-          "hu": "Orsolya napi vásár",
-          "en": "St. Ursula’s Fair",
-          "de": "Ursula-Markt"
+          "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál",
+          "en": "Orsolya Fair – Flavours of the Nature Park Gastronomy Festival",
+          "de": "Ursula-Markt – Kulinarisches Festival „Geschmack des Naturparks“"
         },
         "leiras": {
-          "hu": "Nincs információ",
-          "en": "No information",
-          "de": "Keine Informationen"
+          "hu": "Kézműves vásár, szabadtéri főzés és főzőverseny. A hagyományos vásár évszázadok óta ad lehetőséget a helyi kézműveseknek és termelőknek. Borászok, méhészek, fazekasok, fafaragók és más kézművesek kínálják portékáikat, kóstolókkal és kulturális programokkal kísérve a Fő téren és a Jurisics várban.",
+          "en": "Craft fair, outdoor cooking, and cooking competition. This traditional fair has centuries-old roots in Kőszeg, where local artisans and farmers sold their products. Today, winemakers, beekeepers, potters, woodcarvers, and many others present their goods, with tastings and cultural performances in the Main Square and Jurisics Castle.",
+          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb. Der Markt hat jahrhundertealte Traditionen in Kőszeg, wo lokale Handwerker und Bauern ihre Waren anboten. Heute stellen Winzer, Imker, Töpfer, Holzschnitzer und viele andere ihre Produkte aus, begleitet von Verkostungen und kulturellen Darbietungen auf dem Hauptplatz und in der Jurisics-Burg."
         },
         "idopont": "2025-10-25T10:00:00",
         "veg_idopont": "2025-10-25T18:30:00",
         "helyszin": {
-          "lat": 47.38939838353243,
-          "lng": 16.539224213570474, 
+          "lat": 47.390172,
+          "lng": 16.538364,
           "nev": {
             "hu": "Diáksétány",
             "en": "Students' Promenade",
