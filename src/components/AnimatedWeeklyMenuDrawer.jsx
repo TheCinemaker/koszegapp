@@ -168,26 +168,26 @@ export default function AnimatedWeeklyMenuDrawer() {
                     {/* Tartalom */}
           <div className="flex-1 px-4 pb-4 overflow-y-auto space-y-4">
             {loading ? (
+              // --- BETÖLTÉS NÉZET ---
               <div className="flex justify-center items-center h-32">
                 <div className="animate-spin h-8 w-8 border-4 border-blue-300 border-t-blue-600 rounded-full" />
               </div>
             ) : error ? (
+              // --- HIBA NÉZET ---
               <div className="text-center p-4 text-red-500">
                 {error}
-                <button onClick={()=>window.location.reload()} className="mt-2 px-4 py-1 bg-blue-500 text-white rounded">Újrapróbálom</button>
+                <button onClick={() => window.location.reload()} className="mt-2 px-4 py-1 bg-blue-500 text-white rounded">Újrapróbálom</button>
               </div>
             ) : expandedRestaurant ? (
-              {/* --- HETI NÉZET: kiválasztott étterem teljes hete --- */}
+              // --- HETI NÉZET: A TERNARY OPERÁTOR IGAZ ÁGA ( ... ) KÖZÖTT ---
               <div className="bg-white dark:bg-zinc-800 p-3 rounded-lg shadow">
                 <h3 className="text-lg font-bold text-blue-800 dark:text-purple-300">
                   {expandedRestaurant.etterem}
                 </h3>
-
                 <div className="text-xs italic mt-1 text-blue-700 dark:text-purple-400">
                   {expandedRestaurant.kapcsolat && <div>Kapcsolat: {expandedRestaurant.kapcsolat}</div>}
                   {expandedRestaurant.hazhozszallitas && <div>Házhozszállítás: {expandedRestaurant.hazhozszallitas}</div>}
                 </div>
-
                 <div className="mt-4 space-y-3">
                   {weekDays.map(day => {
                     const d = expandedRestaurant.menu?.[day.key] || EMPTY_DAY;
@@ -201,41 +201,46 @@ export default function AnimatedWeeklyMenuDrawer() {
                       </div>
                     );
                   })}
-                  {expandedRestaurant.menu_allando && (
-                    <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700">
-                      <strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}
-                    </p>
-                  )}
                 </div>
+                {expandedRestaurant.menu_allando && (
+                  <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700">
+                    <strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}
+                  </p>
+                )}
               </div>
-            ) : validMenus.length > 0 ? (
-              validMenus.map((menu, index) => (
-                <div key={index} className="bg-white dark:bg-zinc-800 p-3 rounded-lg shadow">
-                  <h3 className="text-lg font-bold text-blue-800 dark:text-purple-300">
-                    {menu.etterem}
-                  </h3>
-                  
-                  <div className="text-xs italic mt-1 text-blue-700 dark:text-purple-400">
-                    {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
-                    {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
-                  </div>
-
-                  <div className="mt-3">
-                    <h4 className="font-bold">{['Vasárnap','Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat'][new Date().getDay()]}</h4>
-                    <MenuCard dayMenu={menu.menu?.[dayKey] || EMPTY_DAY} />
-                  </div>
-
-                  {menu.menu_allando && (
-                    <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700">
-                      <strong>Állandó ajánlat:</strong> {menu.menu_allando}
-                    </p>
-                  )}
-                </div>
-              ))
             ) : (
-              <div className="text-center text-blue-500 dark:text-purple-400 py-8">
-                <p>Ma nincs érvényes napi menü.</p>
-              </div>
+              // --- NAPI LISTA: A TERNARY OPERÁTOR HAMIS ÁGA ( ... ) KÖZÖTT ---
+              <>
+                {validMenus.length > 0 ? (
+                  validMenus.map((menu, idx) => (
+                    <div key={`${menu.etterem}-${idx}`} className="bg-white dark:bg-zinc-800 p-3 rounded-lg shadow">
+                      <div className="text-sm font-semibold text-blue-700 dark:text-purple-400">
+                        {menu.etterem}
+                        <div className="text-xs italic mt-1">
+                          {menu.kapcsolat && <div>Kapcsolat: {menu.kapcsolat}</div>}
+                          {menu.hazhozszallitas && <div>Házhozszállítás: {menu.hazhozszallitas}</div>}
+                        </div>
+                        <div className="text-xs font-normal mt-1">
+                          {menu.arak.a && <span>A: <strong>{menu.arak.a} Ft</strong> </span>}
+                          {menu.arak.b && <span>B: <strong>{menu.arak.b} Ft</strong> </span>}
+                          {menu.arak.c && <span>C: <strong>{menu.arak.c} Ft</strong> </span>}
+                          {menu.arak.allando && <span>Állandó: <strong>{menu.arak.allando} Ft</strong></span>}
+                        </div>
+                      </div>
+                      <MenuCard dayMenu={menu.menu?.[dayKey] || EMPTY_DAY} />
+                      {menu.menu_allando && (
+                        <p className="text-xs mt-2 pt-2 border-t border-gray-200 dark:border-zinc-700">
+                          <strong>Állandó ajánlat:</strong> {menu.menu_allando}
+                        </p>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center text-blue-500 dark:text-purple-400 py-8">
+                    <p>Ma nincs érvényes napi menü.</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
