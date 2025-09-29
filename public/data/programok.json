@@ -17,8 +17,8 @@
         "idopont": "2025-10-24T10:00:00",
         "veg_idopont": "2025-10-25T18:00:00",
         "helyszin": {
-          "lat": 47.390172,
-          "lng": 16.538364,
+          "lat": 47.38940716751321,
+          "lng": 16.53923636761531,
           "nev": {
             "hu": "Diáksétány",
             "en": "Students' Promenade",
@@ -46,8 +46,8 @@
         "idopont": "2025-10-25T10:00:00",
         "veg_idopont": "2025-10-25T18:30:00",
         "helyszin": {
-          "lat": 47.390172,
-          "lng": 16.538364,
+          "lat": 47.38940716751321,
+          "lng": 16.53923636761531,
           "nev": {
             "hu": "Diáksétány",
             "en": "Students' Promenade",
