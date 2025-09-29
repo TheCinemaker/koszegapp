@@ -189,18 +189,20 @@ export default function AnimatedWeeklyMenuDrawer() {
   </div>
 
   <div className="mt-4 space-y-3">
-    {weekDays.map((day) => {
-      const d = expandedRestaurant.menu?.[day.key] || EMPTY_DAY;
-      if (!d || (!d.leves && (!d.foetelek || d.foetelek.length === 0))) return null;
-      return (
-        <div key={day.key}>
-          <h4 className="font-bold">{day.label}</h4>
-          <MenuCard dayMenu={d} />
-        </div>
-      );
-    })}
-  </div>
-
+  {weekDays.map(day => {
+    const d = expandedRestaurant.menu?.[day.key] || EMPTY_DAY;
+    // Az előző javaslatom alapján ezt a sort is egyszerűsítheted:
+    if (!d.leves && d.foetelek.length === 0) {
+      return null;
+    }
+    // A LÉNYEGI JAVÍTÁS ITT VAN:
+    return (
+      <div key={day.key}>
+        <h4 className="font-bold">{day.label}</h4>
+        <MenuCard dayMenu={d} />
+      </div>
+    );
+  })}
   {expandedRestaurant.menu_allando && (
     <p className="text-sm mt-4 pt-2 border-t border-gray-200 dark:border-zinc-700">
       <strong>Állandó ajánlat:</strong> {expandedRestaurant.menu_allando}
