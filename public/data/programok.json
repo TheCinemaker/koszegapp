@@ -26,8 +26,6 @@
           }
         }
       },
-
-      /* --- FŐ TÉR --- */
       {
         "id": 101,
         "nev": { "hu": "ATARU TAIKO", "en": "ATARU TAIKO", "de": "ATARU TAIKO" },
@@ -120,8 +118,6 @@
           "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
         }
       },
-
-      /* --- JURISICS VÁR --- */
       {
         "id": 106,
         "nev": {
@@ -174,8 +170,6 @@
           "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
         }
       },
-
-      /* --- CIVIL ÍZEK UTCÁJA – KÓSTOLÓ --- */
       {
         "id": 109,
         "nev": { "hu": "Civil Főzőverseny – kóstoló", "en": "Civil Cooking Contest – tasting", "de": "Ziviler Kochwettbewerb – Verkostung" },
@@ -194,7 +188,6 @@
       }
     ]
   },
-
   {
     "datum": "2025-10-25",
     "esemenyek": [
@@ -218,8 +211,6 @@
           "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
         }
       },
-
-      /* --- FŐ TÉR --- */
       {
         "id": 201,
         "nev": {
@@ -284,8 +275,6 @@
           "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
         }
       },
-
-      /* --- JURISICS TÉR --- */
       {
         "id": 205,
         "nev": {
@@ -306,8 +295,6 @@
           "nev": { "hu": "Jurisics tér", "en": "Jurisics Square", "de": "Jurisics-Platz" }
         }
       },
-
-      /* --- JURISICS VÁR --- */
       {
         "id": 206,
         "nev": {
@@ -388,8 +375,6 @@
           "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
         }
       },
-
-      /* --- KÖSZHÁZ & NATÚRPARK --- */
       {
         "id": 211,
         "nev": {
@@ -430,8 +415,6 @@
           "nev": { "hu": "Jurisics vár – külső udvar", "en": "Jurisics Castle – outer courtyard", "de": "Burg Jurisics – äußerer Hof" }
         }
       },
-
-      /* --- CIVIL ÍZEK UTCÁJA – KÓSTOLÓ --- */
       {
         "id": 213,
         "nev": { "hu": "Civil Főzőverseny – kóstoló", "en": "Civil Cooking Contest – tasting", "de": "Ziviler Kochwettbewerb – Verkostung" },
@@ -450,7 +433,6 @@
       }
     ]
   },
-
   {
     "datum": "2025-10-26",
     "esemenyek": [
