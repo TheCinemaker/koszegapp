@@ -689,5 +689,56 @@
   "description": "Madármegfigyelés és madárgyűrűzés az Őrségi Nemzeti Park és az MME szervezésében az őszi madárvonulás idején. A szakemberek teleszkópok és függönyhálók segítségével hozzák testközelbe a madarakat. Az esemény része az Európai Madármegfigyelő Napok rendezvénysorozatnak.",
   "tags": ["madárles", "természet", "túra", "családi", "ingyenes", "madárgyűrűzés"],
   "image": "madarles.jpg"
+},
+  {
+  "id": "event-58",
+  "name": "Orsolya-napi Vásár – A Natúrpark ízei Gasztronómiai Fesztivál",
+  "date": "2025-10-24",
+  "end_date": "2025-10-26",
+  "time": "P10:00–V18:00",
+  "location": "Kőszeg belvárosa (Fő tér, Jurisics vár, Diáksétány, KŐSZHÁZ)",
+  "coords": { "lat": 47.3895, "lng": 16.5433 },
+  "description": "Kézműves vásár, szabadtéri főzés, főzőverseny és kulturális programok három napon át Kőszeg történelmi belvárosában. A rendezvény a Natúrpark Ízei Gasztronómiai Fesztivál keretében zajlik, számos fellépővel, helyi termelővel és civil főzőversennyel. A vásár ingyenesen látogatható.",
+  "tags": ["vásár", "gasztronómia", "fesztivál", "családi", "ingyenes", "kultúra"],
+  "image": "orsolya.jpg",
+  "program": [
+    {
+      "date": "2025-10-24",
+      "day": "péntek",
+      "events": [
+        { "time": "14:00", "title": "ATARU TAIKO", "location": "Fő tér" },
+        { "time": "15:00", "title": "Gulyás László Vándormuzsikus: Mátyás mesék", "location": "Fő tér" },
+        { "time": "15:30", "title": "Félnótás Férfi Népdalkör – Gencsapáti", "location": "Fő tér" },
+        { "time": "16:00", "title": "Langaléta Garabonciások – Horagus mester cirkusza", "location": "Fő tér" },
+        { "time": "17:00", "title": "Koprive koncert", "location": "Fő tér" },
+        { "time": "15:00", "title": "Židanske Zvijezdice Gyermek- és Ifjúsági Csoport", "location": "Jurisics vár" },
+        { "time": "16:00", "title": "Vadrózsa Népdalkör", "location": "Jurisics vár" },
+        { "time": "16:30", "title": "Hajnalcsillag és Buccsi Rezedák táncegyüttes – kíséri a Boglya Népzenei Együttes", "location": "Jurisics vár" }
+      ]
+    },
+    {
+      "date": "2025-10-25",
+      "day": "szombat",
+      "events": [
+        { "time": "14:00", "title": "Gulyás László Vándormuzsikus: Egérparádé", "location": "Fő tér" },
+        { "time": "15:00", "title": "Szélforgók Népzenei Együttes", "location": "Fő tér" },
+        { "time": "16:00", "title": "Kőszegi Cimborák Tánccsoport", "location": "Fő tér" },
+        { "time": "17:00", "title": "Bujtás Ervin", "location": "Fő tér" },
+        { "time": "15:30", "title": "Langaléta Garabonciások vásári masírozása", "location": "Jurisics tér" },
+        { "time": "14:00", "title": "Borbarát Hölgyek Egyesülete", "location": "Jurisics vár" },
+        { "time": "14:30", "title": "Kőszegfalvi Német Nemzetiségi Kórus", "location": "Jurisics vár" },
+        { "time": "15:00", "title": "Berecz András", "location": "Jurisics vár" },
+        { "time": "16:00", "title": "Eredményhirdetés", "location": "Jurisics vár" },
+        { "time": "17:00", "title": "Kőszeg Város Fúvószenekara", "location": "Jurisics vár" }
+      ]
+    },
+    {
+      "date": "2025-10-26",
+      "day": "vasárnap",
+      "events": [
+        { "time": "10:00–18:00", "title": "Kézműves vásár – nyitva", "location": "Belváros, Fő tér" }
+      ]
+    }
+  ]
 }
 ]
