@@ -3,19 +3,19 @@
     "datum": "2025-10-24",
     "esemenyek": [
       {
-        "id": 101,
+        "id": 100,
         "nev": {
-          "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál",
-          "en": "Orsolya Fair – Flavours of the Nature Park Gastronomy Festival",
-          "de": "Ursula-Markt – Kulinarisches Festival „Geschmack des Naturparks“"
+          "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál (nyitónap)",
+          "en": "Orsolya Fair – Flavours of the Nature Park (opening day)",
+          "de": "Ursula-Markt – Geschmack des Naturparks (Eröffnungstag)"
         },
         "leiras": {
-          "hu": "Kézműves vásár, szabadtéri főzés és főzőverseny. A hagyományos vásár évszázadok óta ad lehetőséget a helyi kézműveseknek és termelőknek. Borászok, méhészek, fazekasok, fafaragók és más kézművesek kínálják portékáikat, kóstolókkal és kulturális programokkal kísérve a Fő téren és a Jurisics várban.",
-          "en": "Craft fair, outdoor cooking, and cooking competition. This traditional fair has centuries-old roots in Kőszeg, where local artisans and farmers sold their products. Today, winemakers, beekeepers, potters, woodcarvers, and many others present their goods, with tastings and cultural performances in the Main Square and Jurisics Castle.",
-          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb. Der Markt hat jahrhundertealte Traditionen in Kőszeg, wo lokale Handwerker und Bauern ihre Waren anboten. Heute stellen Winzer, Imker, Töpfer, Holzschnitzer und viele andere ihre Produkte aus, begleitet von Verkostungen und kulturellen Darbietungen auf dem Hauptplatz und in der Jurisics-Burg."
+          "hu": "Kézműves vásár, szabadtéri főzés, főzőverseny a belvárosban.",
+          "en": "Craft fair, outdoor cooking and a cooking contest in the historic center.",
+          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb in der Altstadt."
         },
         "idopont": "2025-10-24T10:00:00",
-        "veg_idopont": "2025-10-25T18:00:00",
+        "veg_idopont": "2025-10-24T18:00:00",
         "helyszin": {
           "lat": 47.38940716751321,
           "lng": 16.53923636761531,
@@ -25,34 +25,453 @@
             "de": "Studentenpromenade"
           }
         }
+      },
+
+      /* --- FŐ TÉR --- */
+      {
+        "id": 101,
+        "nev": { "hu": "ATARU TAIKO", "en": "ATARU TAIKO", "de": "ATARU TAIKO" },
+        "leiras": {
+          "hu": "Japán dobshow a vásár nyitónapján.",
+          "en": "Japanese taiko drum show.",
+          "de": "Japanische Taiko-Trommelshow."
+        },
+        "idopont": "2025-10-24T14:00:00",
+        "veg_idopont": "2025-10-24T15:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 102,
+        "nev": {
+          "hu": "Gulyás László Vándormuzsikus: Mátyás mesék",
+          "en": "László Gulyás the Wandering Musician: Tales of King Matthias",
+          "de": "László Gulyás der Wandermusikant: König-Matthias-Geschichten"
+        },
+        "leiras": {
+          "hu": "Zenés-mesés műsor.",
+          "en": "Musical storytelling performance.",
+          "de": "Musikalisches Erzählprogramm."
+        },
+        "idopont": "2025-10-24T15:00:00",
+        "veg_idopont": "2025-10-24T15:30:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 103,
+        "nev": {
+          "hu": "Félnótás Férfi Népdalkör (Gencsapáti)",
+          "en": "Félnótás Férfi Folk Choir (Gencsapáti)",
+          "de": "Félnótás Männer-Volkschor (Gencsapáti)"
+        },
+        "leiras": {
+          "hu": "Népdalcsokor.",
+          "en": "Selection of folk songs.",
+          "de": "Volkslieder-Programm."
+        },
+        "idopont": "2025-10-24T15:30:00",
+        "veg_idopont": "2025-10-24T16:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 104,
+        "nev": {
+          "hu": "Langaléta Garabonciások – Horagus mester cirkusza",
+          "en": "Langaléta Garabonciások – Master Horagus' Circus",
+          "de": "Langaléta Garabonciások – Meister Horagus’ Zirkus"
+        },
+        "leiras": {
+          "hu": "Utcacirkusz, gólyalábas vásári attrakció.",
+          "en": "Street circus and stilt performance.",
+          "de": "Straßenzirkus und Stelzen-Show."
+        },
+        "idopont": "2025-10-24T16:00:00",
+        "veg_idopont": "2025-10-24T16:45:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 105,
+        "nev": { "hu": "Koprive koncert", "en": "Koprive – Concert", "de": "Koprive – Konzert" },
+        "leiras": {
+          "hu": "Koncert a Fő téren.",
+          "en": "Live concert on the Main Square.",
+          "de": "Konzert am Hauptplatz."
+        },
+        "idopont": "2025-10-24T17:00:00",
+        "veg_idopont": "2025-10-24T18:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+
+      /* --- JURISICS VÁR --- */
+      {
+        "id": 106,
+        "nev": {
+          "hu": "Židanske Zvijezdice – Gyermek- és Ifjúsági Csoport",
+          "en": "Židanske Zvijezdice – Children & Youth Ensemble",
+          "de": "Židanske Zvijezdice – Kinder- und Jugendgruppe"
+        },
+        "leiras": {
+          "hu": "Népzenei és táncos műsor.",
+          "en": "Folk music and dance performance.",
+          "de": "Volksmusik- und Tanzdarbietung."
+        },
+        "idopont": "2025-10-24T15:00:00",
+        "veg_idopont": "2025-10-24T16:00:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+      {
+        "id": 107,
+        "nev": { "hu": "Vadrózsa Népdalkör", "en": "Vadrózsa Folk Choir", "de": "Vadrózsa Volkschor" },
+        "leiras": { "hu": "Népdalkoncert.", "en": "Folk choir concert.", "de": "Volkschor-Konzert." },
+        "idopont": "2025-10-24T16:00:00",
+        "veg_idopont": "2025-10-24T16:30:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+      {
+        "id": 108,
+        "nev": {
+          "hu": "Hajnalcsillag & Buccsi Rezedák – kísér a Boglya",
+          "en": "Hajnalcsillag & Buccsi Rezedák – with Boglya Folk Band",
+          "de": "Hajnalcsillag & Buccsi Rezedák – mit Boglya Volksmusik"
+        },
+        "leiras": {
+          "hu": "Néptáncműsor a Boglya Népzenei Együttes kíséretével.",
+          "en": "Folk dance show accompanied by Boglya.",
+          "de": "Volkstanz mit Begleitung der Gruppe Boglya."
+        },
+        "idopont": "2025-10-24T16:30:00",
+        "veg_idopont": "2025-10-24T17:30:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+
+      /* --- CIVIL ÍZEK UTCÁJA – KÓSTOLÓ --- */
+      {
+        "id": 109,
+        "nev": { "hu": "Civil Főzőverseny – kóstoló", "en": "Civil Cooking Contest – tasting", "de": "Ziviler Kochwettbewerb – Verkostung" },
+        "leiras": {
+          "hu": "Délidőben kóstoló a Diáksétányon.",
+          "en": "Midday tasting at the Promenade.",
+          "de": "Mittägliche Verkostung an der Promenade."
+        },
+        "idopont": "2025-10-24T12:00:00",
+        "veg_idopont": "2025-10-24T13:00:00",
+        "helyszin": {
+          "lat": 47.38940716751321,
+          "lng": 16.53923636761531,
+          "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
+        }
       }
     ]
   },
+
   {
     "datum": "2025-10-25",
     "esemenyek": [
       {
-        "id": 201,
+        "id": 200,
         "nev": {
           "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál",
-          "en": "Orsolya Fair – Flavours of the Nature Park Gastronomy Festival",
-          "de": "Ursula-Markt – Kulinarisches Festival „Geschmack des Naturparks“"
+          "en": "Orsolya Fair – Flavours of the Nature Park",
+          "de": "Ursula-Markt – Geschmack des Naturparks"
         },
         "leiras": {
-          "hu": "Kézműves vásár, szabadtéri főzés és főzőverseny. A hagyományos vásár évszázadok óta ad lehetőséget a helyi kézműveseknek és termelőknek. Borászok, méhészek, fazekasok, fafaragók és más kézművesek kínálják portékáikat, kóstolókkal és kulturális programokkal kísérve a Fő téren és a Jurisics várban.",
-          "en": "Craft fair, outdoor cooking, and cooking competition. This traditional fair has centuries-old roots in Kőszeg, where local artisans and farmers sold their products. Today, winemakers, beekeepers, potters, woodcarvers, and many others present their goods, with tastings and cultural performances in the Main Square and Jurisics Castle.",
-          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb. Der Markt hat jahrhundertealte Traditionen in Kőszeg, wo lokale Handwerker und Bauern ihre Waren anboten. Heute stellen Winzer, Imker, Töpfer, Holzschnitzer und viele andere ihre Produkte aus, begleitet von Verkostungen und kulturellen Darbietungen auf dem Hauptplatz und in der Jurisics-Burg."
+          "hu": "Kézműves vásár, szabadtéri főzés és főzőverseny a belvárosban.",
+          "en": "Craft fair, outdoor cooking and cooking contest in the centre.",
+          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb im Zentrum."
         },
         "idopont": "2025-10-25T10:00:00",
         "veg_idopont": "2025-10-25T18:30:00",
         "helyszin": {
           "lat": 47.38940716751321,
           "lng": 16.53923636761531,
-          "nev": {
-            "hu": "Diáksétány",
-            "en": "Students' Promenade",
-            "de": "Studentenpromenade"
-          }
+          "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
+        }
+      },
+
+      /* --- FŐ TÉR --- */
+      {
+        "id": 201,
+        "nev": {
+          "hu": "Gulyás László Vándormuzsikus: Egérparádé",
+          "en": "László Gulyás the Wandering Musician: Mouse Parade",
+          "de": "László Gulyás der Wandermusikant: Mäuseparade"
+        },
+        "leiras": {
+          "hu": "Zenés-mesés családi műsor.",
+          "en": "Family musical storytelling.",
+          "de": "Musikalisches Familien-Erzählprogramm."
+        },
+        "idopont": "2025-10-25T14:00:00",
+        "veg_idopont": "2025-10-25T15:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 202,
+        "nev": {
+          "hu": "Szélforgók Népzenei Együttes",
+          "en": "Szélforgók Folk Ensemble",
+          "de": "Szélforgók Volksmusik-Ensemble"
+        },
+        "leiras": { "hu": "Népzene a Fő téren.", "en": "Folk music on the Main Square.", "de": "Volksmusik am Hauptplatz." },
+        "idopont": "2025-10-25T15:00:00",
+        "veg_idopont": "2025-10-25T16:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 203,
+        "nev": {
+          "hu": "Kőszegi Cimborák Tánccsoport",
+          "en": "Kőszegi Cimborák Dance Group",
+          "de": "Kőszegi Cimborák Tanzgruppe"
+        },
+        "leiras": { "hu": "Táncbemutató.", "en": "Dance performance.", "de": "Tanzvorführung." },
+        "idopont": "2025-10-25T16:00:00",
+        "veg_idopont": "2025-10-25T17:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+      {
+        "id": 204,
+        "nev": { "hu": "Bujtás Ervin", "en": "Ervin Bujtás", "de": "Ervin Bujtás" },
+        "leiras": { "hu": "Élőzene.", "en": "Live music.", "de": "Live-Musik." },
+        "idopont": "2025-10-25T17:00:00",
+        "veg_idopont": "2025-10-25T18:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+        }
+      },
+
+      /* --- JURISICS TÉR --- */
+      {
+        "id": 205,
+        "nev": {
+          "hu": "Langaléta Garabonciások vásári masírozása",
+          "en": "Langaléta Garabonciások – Fair Parade",
+          "de": "Langaléta Garabonciások – Marktumzug"
+        },
+        "leiras": {
+          "hu": "Vándor attrakció a Jurisics téren.",
+          "en": "Roaming parade performance.",
+          "de": "Wandernde Parade-Show."
+        },
+        "idopont": "2025-10-25T15:30:00",
+        "veg_idopont": "2025-10-25T16:15:00",
+        "helyszin": {
+          "lat": 47.3896,
+          "lng": 16.5432,
+          "nev": { "hu": "Jurisics tér", "en": "Jurisics Square", "de": "Jurisics-Platz" }
+        }
+      },
+
+      /* --- JURISICS VÁR --- */
+      {
+        "id": 206,
+        "nev": {
+          "hu": "Borbarát Hölgyek Egyesülete",
+          "en": "Association of Wine-Loving Ladies",
+          "de": "Verein der weinliebenden Damen"
+        },
+        "leiras": { "hu": "Bemutató a várban.", "en": "Presentation in the Castle.", "de": "Präsentation in der Burg." },
+        "idopont": "2025-10-25T14:00:00",
+        "veg_idopont": "2025-10-25T14:30:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+      {
+        "id": 207,
+        "nev": {
+          "hu": "Kőszegfalvi Német Nemzetiségi Kórus",
+          "en": "German Nationality Choir of Kőszegfalva",
+          "de": "Deutscher Nationalitätenchor Kőszegfalva"
+        },
+        "leiras": { "hu": "Kórusműsor.", "en": "Choir performance.", "de": "Chorauftritt." },
+        "idopont": "2025-10-25T14:30:00",
+        "veg_idopont": "2025-10-25T15:00:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+      {
+        "id": 208,
+        "nev": { "hu": "Berecz András", "en": "András Berecz", "de": "András Berecz" },
+        "leiras": {
+          "hu": "Előadóest.",
+          "en": "Performance by András Berecz.",
+          "de": "Auftritt von András Berecz."
+        },
+        "idopont": "2025-10-25T15:00:00",
+        "veg_idopont": "2025-10-25T16:00:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+      {
+        "id": 209,
+        "nev": { "hu": "Eredményhirdetés", "en": "Awards Ceremony", "de": "Siegerehrung" },
+        "leiras": {
+          "hu": "Civil és gasztro versenyek eredményei.",
+          "en": "Results of the civil & gastronomy contests.",
+          "de": "Ergebnisse der zivilen & Gastro-Wettbewerbe."
+        },
+        "idopont": "2025-10-25T16:00:00",
+        "veg_idopont": "2025-10-25T16:30:00",
+        "helyszin": {
+          "lat": 47.3901,
+          "lng": 16.5449,
+          "nev": { "hu": "Jurisics vár – belső udvar", "en": "Jurisics Castle – inner courtyard", "de": "Burg Jurisics – Innenhof" }
+        }
+      },
+      {
+        "id": 210,
+        "nev": {
+          "hu": "Kőszeg Város Fúvószenekara",
+          "en": "Kőszeg Town Wind Orchestra",
+          "de": "Blasorchester der Stadt Kőszeg"
+        },
+        "leiras": { "hu": "Koncert.", "en": "Concert.", "de": "Konzert." },
+        "idopont": "2025-10-25T17:00:00",
+        "veg_idopont": "2025-10-25T18:00:00",
+        "helyszin": {
+          "lat": 47.3899,
+          "lng": 16.5445,
+          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+        }
+      },
+
+      /* --- KÖSZHÁZ & NATÚRPARK --- */
+      {
+        "id": 211,
+        "nev": {
+          "hu": "„Ízek az Alpokaljáról, Ízek az Írottkő Natúrparkban” – Nevezés",
+          "en": "Flavours of the Alpokalja – Registration",
+          "de": "Geschmäcker der Alpokalja – Anmeldung"
+        },
+        "leiras": {
+          "hu": "Nevezés a KÖSZHÁZ-ban (Jurisics vár külső udvar).",
+          "en": "Registration at KÖSZHÁZ (outer courtyard).",
+          "de": "Anmeldung im KÖSZHÁZ (äußerer Burghof)."
+        },
+        "idopont": "2025-10-25T10:00:00",
+        "veg_idopont": "2025-10-25T12:00:00",
+        "helyszin": {
+          "lat": 47.3903,
+          "lng": 16.545,
+          "nev": { "hu": "KÖSZHÁZ", "en": "KÖSZHÁZ", "de": "KÖSZHÁZ" }
+        }
+      },
+      {
+        "id": 212,
+        "nev": {
+          "hu": "Kóstoló – támogatói jeggyel",
+          "en": "Tasting – with supporter ticket",
+          "de": "Verkostung – mit Unterstützer-Ticket"
+        },
+        "leiras": {
+          "hu": "Kóstoló az Írottkő Natúrpark standjánál (külső várudvar).",
+          "en": "Tasting at the Írottkő Nature Park stand (outer courtyard).",
+          "de": "Verkostung am Stand des Írottkő-Naturparks (äußerer Burghof)."
+        },
+        "idopont": "2025-10-25T14:00:00",
+        "veg_idopont": "2025-10-25T16:00:00",
+        "helyszin": {
+          "lat": 47.39,
+          "lng": 16.5447,
+          "nev": { "hu": "Jurisics vár – külső udvar", "en": "Jurisics Castle – outer courtyard", "de": "Burg Jurisics – äußerer Hof" }
+        }
+      },
+
+      /* --- CIVIL ÍZEK UTCÁJA – KÓSTOLÓ --- */
+      {
+        "id": 213,
+        "nev": { "hu": "Civil Főzőverseny – kóstoló", "en": "Civil Cooking Contest – tasting", "de": "Ziviler Kochwettbewerb – Verkostung" },
+        "leiras": {
+          "hu": "Délidőben kóstoló a Diáksétányon.",
+          "en": "Midday tasting at the Promenade.",
+          "de": "Mittägliche Verkostung an der Promenade."
+        },
+        "idopont": "2025-10-25T12:00:00",
+        "veg_idopont": "2025-10-25T13:00:00",
+        "helyszin": {
+          "lat": 47.38940716751321,
+          "lng": 16.53923636761531,
+          "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
+        }
+      }
+    ]
+  },
+
+  {
+    "datum": "2025-10-26",
+    "esemenyek": [
+      {
+        "id": 300,
+        "nev": {
+          "hu": "Kézműves vásár – nyitva",
+          "en": "Craft fair – open",
+          "de": "Handwerksmarkt – geöffnet"
+        },
+        "leiras": {
+          "hu": "A vásár október 26-án is nyitva.",
+          "en": "The fair is open on Sunday, 26 October as well.",
+          "de": "Der Markt ist auch am Sonntag, 26. Oktober geöffnet."
+        },
+        "idopont": "2025-10-26T09:00:00",
+        "veg_idopont": "2025-10-26T18:00:00",
+        "helyszin": {
+          "lat": 47.3891,
+          "lng": 16.542,
+          "nev": { "hu": "Fő tér és környéke", "en": "Main Square & area", "de": "Hauptplatz & Umgebung" }
         }
       }
     ]
