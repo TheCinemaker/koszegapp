@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 import App from './App';
 import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
+import { HeroUIProvider } from '@heroui/react';
 
 import './index.css';
 import './i18n';
