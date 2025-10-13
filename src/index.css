@@ -1,8 +1,6 @@
 /* --- FÁJL: index.css --- */
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* Egyedi, újrafelhasználható komponens stílusok */
 @layer components {
