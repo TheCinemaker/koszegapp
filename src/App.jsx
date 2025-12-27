@@ -1,11 +1,12 @@
 // src/App.jsx
-import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useContext, useMemo, Suspense } from 'react';
 import { Link, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
 import { DarkModeContext } from './contexts/DarkModeContext';
 import { useFavorites } from './contexts/FavoritesContext.jsx';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels, fetchParking } from './api';
+import { AuthProvider } from './contexts/AuthContext';
 import { parseISO, endOfDay } from 'date-fns';
 
 import Home from './pages/Home';
@@ -38,7 +39,19 @@ import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
 import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 import LiveCityMap from './components/LiveCityMap';
 
+const Admin = React.lazy(() => import('./pages/Admin.jsx'));
+
+// A LÉNYEG: A FŐ APP KOMPONENS CSAK A PROVIDERT ÁLLÍTJA BE
 export default function App() {
+  return (
+    <AuthProvider>
+      <MainAppContent />
+    </AuthProvider>
+  );
+}
+
+// AZ ÖSSZES TÖBBI LOGIKA ÉS JSX ÁTKÖLTÖZIK IDE, EZ A KOMPONENS MÁR A PROVIDEREN BELÜL VAN
+function MainAppContent() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,7 +77,7 @@ export default function App() {
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
   // Adatbetöltés + globális kedvenc-prune (egyszer)
-useEffect(() => {
+  useEffect(() => {
     Promise.all([
       fetchAttractions(),
       fetchEvents(),
@@ -76,21 +89,21 @@ useEffect(() => {
       .then(([attractions, eventsData, leisure, restaurants, hotels, parking]) => {
 
         const normalizedEvents = eventsData.map(evt => {
-            let s, e;
-            // A dátumfeldolgozás a megbízható parseISO-val
-            if (evt.startDate) {
-              s = parseISO(evt.startDate);
-              e = evt.endDate ? parseISO(evt.endDate) : s;
-            } else if (evt.date?.includes('/')) {
-              const p = evt.date.split('/');
-              s = parseISO(p[0]);
-              e = parseISO(p[1] || p[0]);
-            } else {
-              s = parseISO(evt.date);
-              e = evt.end_date ? parseISO(evt.end_date) : s;
-            }
-            return { ...evt, _s: s, _e: e };
-          });
+          let s, e;
+          // A dátumfeldolgozás a megbízható parseISO-val
+          if (evt.startDate) {
+            s = parseISO(evt.startDate);
+            e = evt.endDate ? parseISO(evt.endDate) : s;
+          } else if (evt.date?.includes('/')) {
+            const p = evt.date.split('/');
+            s = parseISO(p[0]);
+            e = parseISO(p[1] || p[0]);
+          } else {
+            s = parseISO(evt.date);
+            e = evt.end_date ? parseISO(evt.end_date) : s;
+          }
+          return { ...evt, _s: s, _e: e };
+        });
 
         setAppData({
           attractions,
@@ -122,7 +135,7 @@ useEffect(() => {
       .then(res => res.json())
       .then(data => data && setWeather({ icon: data.weather[0].icon, temp: Math.round(data.main.temp) }))
       .catch(console.error);
-}, [pruneFavorites]);
+  }, [pruneFavorites]);
 
   // kedvencek panel kinti kattintásra záródjon
   useEffect(() => {
@@ -273,6 +286,12 @@ useEffect(() => {
           <Route path="/parking/:id" element={<ParkingDetail />} />
           <Route path="/parking-map" element={<ParkingMap />} />
 
+
+          <Route path="/admin/*" element={
+            <Suspense fallback={<div className="p-6">Admin betöltése…</div>}>
+              <Admin />
+            </Suspense>
+          } />
           <Route path="/weather" element={<WeatherDetail />} />
           <Route path="/info" element={<Info />} />
           <Route path="/info/:id" element={<AboutDetail />} />
@@ -284,14 +303,14 @@ useEffect(() => {
           <Route path="/game/gem/:id" element={<GemDetail />} />
           <Route path="/game/treasure-chest" element={<MyGems />} />
           <Route path="/live-map" element={<div className="container mx-auto px-4 py-6">
-              <h1 className="text-2xl font-bold mb-4">Élő várostérkép</h1>
-                <LiveCityMap
-                  events={appData.events}
-                  attractions={appData.attractions}
-                  leisure={appData.leisure}
-                  restaurants={appData.restaurants}
-              />
-            </div>
+            <h1 className="text-2xl font-bold mb-4">Élő várostérkép</h1>
+            <LiveCityMap
+              events={appData.events}
+              attractions={appData.attractions}
+              leisure={appData.leisure}
+              restaurants={appData.restaurants}
+            />
+          </div>
           }
           />
         </Routes>
@@ -316,7 +335,7 @@ useEffect(() => {
           <FloatingButtons />
           <OstromDrawerFullAnimated />
           <AnimatedWeeklyMenuDrawer />
-          
+
           {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />}
 
           {isHome && !showProgramModal && (

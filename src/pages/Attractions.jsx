@@ -47,16 +47,16 @@ export default function Attractions() {
     if (items.length === 0) return;
 
     let availableCategories = ['Minden', ...new Set(items.map(item => item.category))];
-    
+
     if (favorites.length > 0) {
       // Csak akkor szúrjuk be, ha még nincs benne (megelőzi a duplikálást)
       if (!availableCategories.includes('Kedvenceim')) {
         availableCategories.splice(1, 0, 'Kedvenceim');
       }
     }
-    
+
     setCategories(availableCategories);
-    
+
   }, [items, favorites]); // Függ az item-ektől és a kedvencektől is
 
   // --- JAVÍTOTT RÉSZ VÉGE ---
@@ -97,7 +97,7 @@ export default function Attractions() {
       }
     );
   };
-  
+
   if (loading) return <p className="p-4 text-center">Látnivalók betöltése...</p>;
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;
 
@@ -105,7 +105,7 @@ export default function Attractions() {
   return (
     <div className="p-4 relative">
       {/* ... Keresőmező, kategória sáv, nézetváltó ... */}
-       <div className="mb-6 px-4">
+      <div className="mb-6 px-4">
         <input
           type="text"
           value={searchQuery}
@@ -119,11 +119,10 @@ export default function Attractions() {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full transition-transform transform active:scale-95 ${
-              selectedCategory === category
+            className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full transition-transform transform active:scale-95 ${selectedCategory === category
                 ? 'bg-indigo-600 text-white shadow-lg'
                 : 'bg-white/30 text-indigo-900 hover:bg-white/50 backdrop-blur-sm'
-            }`}
+              }`}
           >
             {category}
           </button>
@@ -156,18 +155,23 @@ export default function Attractions() {
           )}
           {filteredItems.map(item => (
             <div key={item.id} className="bg-white/20 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden flex flex-col">
-              <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-48 object-cover"
+                onError={(e) => { e.target.onerror = null; e.target.src = '/images/koeszeg_logo_nobg.png'; }}
+              />
               <div className="p-4 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-xl font-semibold text-indigo-500 dark:text-indigo-700 pr-2">{item.name}</h3>
-                  <button 
-                    onClick={() => isFavorite(item.id) ? removeFavorite(item.id) : addFavorite(item.id)} 
+                  <button
+                    onClick={() => isFavorite(item.id) ? removeFavorite(item.id) : addFavorite(item.id)}
                     className="text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90" // MÓDOSÍTOTT
                     aria-label={isFavorite(item.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
                   >
-                    {isFavorite(item.id) 
-                    ? <FaHeart size={24} className="animate-heart-pop" /> 
-                    : <FaRegHeart size={24} />
+                    {isFavorite(item.id)
+                      ? <FaHeart size={24} className="animate-heart-pop" />
+                      : <FaRegHeart size={24} />
                     }
                   </button>
                 </div>
@@ -188,14 +192,14 @@ export default function Attractions() {
         </div>
       )}
       {modalAttractionId && (
-    <AttractionDetailModal 
-      attractionId={modalAttractionId}
-      onClose={() => setModalAttractionId(null)}
-      // EZT A 3 SORT ADD HOZZÁ:
-      isFavorite={isFavorite}
-      addFavorite={addFavorite}
-      removeFavorite={removeFavorite}
-      />
+        <AttractionDetailModal
+          attractionId={modalAttractionId}
+          onClose={() => setModalAttractionId(null)}
+          // EZT A 3 SORT ADD HOZZÁ:
+          isFavorite={isFavorite}
+          addFavorite={addFavorite}
+          removeFavorite={removeFavorite}
+        />
       )}
     </div>
   );

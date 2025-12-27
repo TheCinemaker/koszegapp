@@ -6,17 +6,13 @@ import { hu, enUS, de } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import ProgramDetailsSheet from './ProgramDetailsSheet';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 const localeMap = { hu, en: enUS, de };
 
 // ---- Helpers ----
 function safeParseISO(s) { if (!s) return null; try { const d = parseISO(s); return isValid(d) ? d : null; } catch { return null; } }
-function useFavorites() {
-  const [favorites, setFavorites] = useState(() => { try { return JSON.parse(localStorage.getItem('programFavorites') || '[]'); } catch { return []; } });
-  useEffect(() => { try { localStorage.setItem('programFavorites', JSON.stringify(favorites)); } catch {} }, [favorites]);
-  const toggleFavorite = (id) => setFavorites((p) => (p.includes(id) ? p.filter(x => x !== id) : [...p, id]));
-  return { favorites, toggleFavorite };
-}
+
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
@@ -46,6 +42,7 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
     </div>
   );
 }
+
 function InfoModal({ onClose }) {
   const { t } = useTranslation();
   return (
@@ -65,7 +62,7 @@ function InfoModal({ onClose }) {
   );
 }
 
-// ---- Countdown widgets (változatlan) ----
+// ---- Countdown widgets ----
 function CountdownToNext({ targetDate }) {
   const { t } = useTranslation();
   const calc = useCallback(() => {
@@ -92,6 +89,7 @@ function CountdownToNext({ targetDate }) {
     </div>
   );
 }
+
 function InlineCountdown({ targetDate }) {
   const { t } = useTranslation();
   const calc = useCallback(() => {
@@ -116,6 +114,7 @@ export default function ProgramModal({ onClose }) {
   const locale = localeMap[lang] || hu;
 
   const [view, setView] = useState('today');
+  // Use global useFavorites hook
   const { favorites, toggleFavorite } = useFavorites();
   const [notificationPermission, setNotificationPermission] = useState(typeof window !== 'undefined' && window.Notification ? Notification.permission : 'unsupported');
   const [weatherData, setWeatherData] = useState(null);
@@ -180,8 +179,8 @@ export default function ProgramModal({ onClose }) {
         fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
           .then(r => r.json())
           .then(d => { if (d.cod === 200) setWeatherData({ temp: Math.round(d.main.temp), description: d.weather[0].description, icon: d.weather[0].icon }); })
-          .catch(() => {});
-        
+          .catch(() => { });
+
         // Induló visszaszámláló célpont beállítása az első eseményhez
         const start = computeFestivalStart(parsed);
         if (start) {
@@ -212,7 +211,7 @@ export default function ProgramModal({ onClose }) {
       pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
       err => console.warn('Helymeghatározás hiba:', err.message)
     );
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js').catch(() => { });
     return () => { if (typeof cleanup === 'function') cleanup(); };
   }, [computeFestivalStart]);
 
@@ -224,13 +223,17 @@ export default function ProgramModal({ onClose }) {
 
   useEffect(() => {
     if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-      const favDetails = events.filter(e => favorites.includes(e.id));
+      const favDetails = events.filter(e => favorites.includes(String(e.id)));
       navigator.serviceWorker.controller.postMessage({ type: 'UPDATE_FAVORITES', favorites: favDetails });
     }
   }, [favorites, events]);
 
   const handleNotificationPermission = () => { if (window.Notification) Notification.requestPermission().then(setNotificationPermission); };
-  const favoriteEvents = useMemo(() => events.filter(e => favorites.includes(e.id)).sort((a,b) => a.start - b.start), [events, favorites]);
+
+  // Safe comparison with String(e.id)
+  const isFavoriteProgram = (id) => favorites.includes(String(id));
+  const favoriteEvents = useMemo(() => events.filter(e => isFavoriteProgram(e.id)).sort((a, b) => a.start - b.start), [events, favorites]);
+
   const fullProgramGrouped = useMemo(() => events.reduce((acc, e) => {
     const key = startOfDay(e.start).getTime();
     if (!acc[key]) acc[key] = { date: e.start, events: [] };
@@ -318,7 +321,7 @@ export default function ProgramModal({ onClose }) {
                         <div className="animate-fadein">
                           <h3 className="section-title border-purple-300 dark:border-purple-700 text-purple-800 dark:text-purple-200">🎬 {t('programModal.currentlyRunning')} ({currentEvents.length})</h3>
                           {currentEvents.map(e => (
-                            <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />
+                            <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={isFavoriteProgram(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />
                           ))}
                         </div>
                       ) : nextEvents.length > 0 && (
@@ -337,13 +340,13 @@ export default function ProgramModal({ onClose }) {
                           {isSameDay(nextEvents[0].start, new Date())
                             ? <InlineCountdown targetDate={nextEvents[0].start} />
                             : <span className="text-sm font-normal">
-                                {/* következő nap infója egyszerűsítve */}
-                                {format(nextEvents[0].start, "PPPPp", { locale })}
-                              </span>
+                              {/* következő nap infója egyszerűsítve */}
+                              {format(nextEvents[0].start, "PPPPp", { locale })}
+                            </span>
                           }
                         </h3>
                         {nextEvents.map(e => (
-                          <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={favorites.includes(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />
+                          <EventCard key={e.id} event={e} onSelect={setSelectedProgram} isFavorite={isFavoriteProgram(e.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />
                         ))}
                       </div>
                     )}
@@ -367,12 +370,12 @@ export default function ProgramModal({ onClose }) {
                             <Marker position={[userLocation.lat, userLocation.lng]}><Popup>📍 Itt vagy</Popup></Marker>
                             {currentEvents.map(e => (
                               <Marker key={`map-curr-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]}>
-                                <Popup><strong>{e.nev?.[lang] || e.nev?.hu}</strong><br/>{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup>
+                                <Popup><strong>{e.nev?.[lang] || e.nev?.hu}</strong><br />{format(e.start, 'HH:mm')} - {format(e.end, 'HH:mm')}</Popup>
                               </Marker>
                             ))}
                             {nextEvents.map(e => !currentEvents.some(c => c.id === e.id) && (
                               <Marker key={`map-next-${e.id}`} position={[e.helyszin.lat, e.helyszin.lng]} icon={blueIcon}>
-                                <Popup><strong>{e.nev?.[lang] || e.nev?.hu}</strong><br/>{t('programModal.startsAt')} {format(e.start, 'HH:mm')}</Popup>
+                                <Popup><strong>{e.nev?.[lang] || e.nev?.hu}</strong><br />{t('programModal.startsAt')} {format(e.start, 'HH:mm')}</Popup>
                               </Marker>
                             ))}
                           </MapContainer>
@@ -392,7 +395,7 @@ export default function ProgramModal({ onClose }) {
                             {format(date, 'MMMM d. (eeee)', { locale })}
                           </h3>
                           {dayEvents.sort((a, b) => a.start - b.start).map(event => (
-                            <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={favorites.includes(event.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />
+                            <EventCard key={event.id} event={event} onSelect={setSelectedProgram} isFavorite={isFavoriteProgram(event.id)} onToggleFavorite={toggleFavorite} userLocation={userLocation} />
                           ))}
                         </div>
                       ))}
@@ -407,7 +410,7 @@ export default function ProgramModal({ onClose }) {
                       ))
                     ) : (
                       <p className="text-center text-lg text-purple-700 dark:text-purple-200 italic py-6">
-                        {t('programModal.favoritesEmptyTitle')}<br/>{t('programModal.favoritesEmptySubtitle')}
+                        {t('programModal.favoritesEmptyTitle')}<br />{t('programModal.favoritesEmptySubtitle')}
                       </p>
                     )}
                   </div>
