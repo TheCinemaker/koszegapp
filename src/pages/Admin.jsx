@@ -152,8 +152,8 @@ const SidebarItem = ({ icon: Icon, label, active, onClick }) => (
   <button
     onClick={onClick}
     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${active
-        ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
-        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-indigo-600 dark:hover:text-indigo-400"
+      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
+      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-indigo-600 dark:hover:text-indigo-400"
       }`}
   >
     <Icon className={`text-lg ${active ? "text-white" : "text-gray-400 group-hover:text-indigo-500"}`} />
@@ -251,7 +251,7 @@ const FormModal = ({ title, children, onCancel }) => {
 
 // ---- LOGIN ----
 function Login() {
-  const [selectedUser, setSelectedUser] = useState(Object.keys(USER_DISPLAY_NAMES)[0]);
+  const [selectedUser, setSelectedUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
