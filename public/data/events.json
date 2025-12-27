@@ -1265,5 +1265,20 @@
     "tags": [],
     "image": "tuzijatek-1766871512089.webp",
     "createdBy": "admin"
+  },
+  {
+    "id": "new_1766871732314",
+    "name": "teszt_2",
+    "date": "2026-01-02",
+    "time": "00:01",
+    "location": "varos",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "tesztesemeny",
+    "tags": [],
+    "image": "tv.jpeg",
+    "createdBy": "admin"
   }
 ]
