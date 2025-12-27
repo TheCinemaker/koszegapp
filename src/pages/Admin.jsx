@@ -288,15 +288,14 @@ function Login() {
             <label className="block text-xs font-semibold uppercase text-gray-500 mb-1 ml-1">Felhasználó</label>
             <div className="relative">
               <FaUserCircle className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <select
-                className={`${inputClasses} pl-10 cursor-pointer appearance-none`}
+              <input
+                type="text"
+                className={`${inputClasses} pl-10`}
                 value={selectedUser}
                 onChange={(e) => setSelectedUser(e.target.value)}
-              >
-                {Object.entries(USER_DISPLAY_NAMES).map(([id, displayName]) => (
-                  <option key={id} value={id}>{displayName}</option>
-                ))}
-              </select>
+                required
+                placeholder="pl. admin"
+              />
             </div>
           </div>
           <div>
