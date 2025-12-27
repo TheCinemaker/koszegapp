@@ -40,6 +40,7 @@ import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 import LiveCityMap from './components/LiveCityMap';
 
 const Admin = React.lazy(() => import('./pages/Admin.jsx'));
+const MaintenancePage = React.lazy(() => import('./pages/Maintenance.jsx'));
 
 // A LÉNYEG: A FŐ APP KOMPONENS CSAK A PROVIDERT ÁLLÍTJA BE
 export default function App() {
@@ -75,6 +76,25 @@ function MainAppContent() {
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const isHome = location.pathname === '/';
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
+
+  // --- MAINTENANCE MODE LOGIC ---
+  const [maintenanceMode, setMaintenanceMode] = useState(true); // Alapból bekapcsolva
+
+  useEffect(() => {
+    // 1. Ellenőrizzük, hogy van-e bypass kulcs a localStorage-ban
+    const isBypassed = localStorage.getItem('maintenance_bypass') === 'true';
+
+    // 2. Ellenőrizzük az URL query paramétert (pl. ?dev=1234)
+    const params = new URLSearchParams(location.search);
+    if (params.get('dev') === 'start' || isBypassed) {
+      if (!isBypassed) {
+        localStorage.setItem('maintenance_bypass', 'true');
+        window.history.replaceState({}, document.title, "/");
+      }
+      setMaintenanceMode(false);
+    }
+  }, [location.search]);
+  // --- END MAINTENANCE LOGIC ---
 
   // Adatbetöltés + globális kedvenc-prune (egyszer)
   useEffect(() => {
@@ -193,6 +213,16 @@ function MainAppContent() {
       favoriteRestaurants.length,
     [favoriteAttractions, favoriteEvents, favoriteLeisure, favoriteRestaurants]
   );
+
+  // Loading állapot
+  if (!appData || appData.loading) {
+    return <div className="flex h-screen items-center justify-center bg-beige-50 dark:bg-gray-900"><div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div></div>;
+  }
+
+  // MAINTENANCE PAGE RENDER
+  if (maintenanceMode) {
+    return <Suspense fallback={<div>...</div>}><MaintenancePage /></Suspense>;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
