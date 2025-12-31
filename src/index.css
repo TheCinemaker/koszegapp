@@ -4,24 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 transition-colors duration-300;
+  }
+
+  .dark body {
+    /* Deep Oled-like Black for Gigatrendy feel */
+    background-color: rgb(5, 5, 10);
+    color: #e2e8f0;
+  }
+}
+
 /* Egyedi, újrafelhasználható komponens stílusok */
 @layer components {
   .section-title {
     @apply text-lg font-semibold mb-3 pb-2 border-b-2;
   }
+
   .flip-card-container {
     perspective: 1500px;
   }
+
   .flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Selymesebb forgás */
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Selymesebb forgás */
   }
+
   .flip-card-inner.flipped {
     transform: rotateY(180deg);
   }
+
   .flip-card-front,
   .flip-card-back {
     position: absolute;
@@ -32,9 +49,181 @@
     overflow: hidden;
     border-radius: 1rem;
   }
+
   .flip-card-back {
     transform: rotateY(180deg);
   }
+}
+
+/* Bento Grid Utilities */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.bento-item {
+  @apply relative overflow-hidden rounded-3xl border border-white/10 bg-white/10 backdrop-blur-md transition-all duration-500;
+}
+
+.bento-item:hover {
+  @apply -translate-y-1 border-white/30 bg-white/20;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 12%);
+}
+
+/* Span utilities */
+.col-span-2 {
+  grid-column: span 2;
+}
+
+.row-span-2 {
+  grid-row: span 2;
+}
+
+/* Spatial 3D hover effect */
+.spatial-card {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.spatial-card:hover {
+  transform: perspective(1000px) rotateX(2deg) translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Gigatrendy 2026 Gradients (Mesh & Aurora) */
+.gradient-cosmic {
+  background: radial-gradient(circle at top left, #a855f7, #3b82f6, #06b6d4);
+}
+
+.gradient-sunset {
+  background: radial-gradient(circle at bottom right, #f43f5e, #f59e0b, #ec4899);
+}
+
+.gradient-nature {
+  background: radial-gradient(circle at center, #10b981, #3b82f6, #06b6d4);
+}
+
+.gradient-ocean {
+  background: radial-gradient(circle at top right, #0ea5e9, #6366f1, #8b5cf6);
+}
+
+.gradient-luxury {
+  background: radial-gradient(circle at bottom left, #d946ef, #8b5cf6, #4f46e5);
+}
+
+.gradient-fire {
+  background: radial-gradient(circle at top, #f97316, #ef4444, #db2777);
+}
+
+.gradient-metal {
+  background: radial-gradient(circle at bottom, #64748b, #94a3b8, #cbd5e1);
+}
+
+.gradient-mystic {
+  background: radial-gradient(circle at center, #4f46e5, #9333ea, #c026d3);
+}
+
+.gradient-gold {
+  background: radial-gradient(circle at top left, #fbbf24, #d97706, #b45309);
+}
+
+/* 2026 Vibrant Gradients (Apple-Style) */
+.gradient-vibrant-primary {
+  background: linear-gradient(135deg, #00C6FF, #0072FF);
+}
+
+.gradient-vibrant-warm {
+  background: linear-gradient(135deg, #FF9A9E, #FECFEF);
+}
+
+.gradient-vibrant-fresh {
+  background: linear-gradient(135deg, #84fab0, #8fd3f4);
+}
+
+.mesh-bg-vibrant {
+  background:
+    radial-gradient(at 0% 0%, rgba(0, 198, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 154, 158, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(132, 250, 176, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(0, 114, 255, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+.dark .mesh-bg-vibrant {
+  background:
+    radial-gradient(at 0% 0%, rgba(0, 198, 255, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 154, 158, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(132, 250, 176, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(0, 114, 255, 0.1) 0px, transparent 50%);
+  background-color: #0f172a;
+  /* Slate 900 base */
+}
+
+/* 2026 Glass Effect - Dark Mode optimized */
+.glass-2026 {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass-2026 {
+    background: rgba(17, 24, 39, 0.6);
+    /* Gray-900 with opacity */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Neon Glow Overlay for Cards */
+  .bento-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    /* mask for border gradient logic if needed, but simple overlay works well for depth */
+    pointer-events: none;
+  }
+}
+
+/* Animated Mesh Background Helper */
+.mesh-bg-animated {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Text Highlights */
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Noise texture overlay */
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes scale-in {
@@ -42,11 +231,13 @@
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
 }
+
 .animate-scale-in {
   animation: scale-in 0.3s ease-out forwards;
 }
@@ -56,11 +247,13 @@
     opacity: 0;
     transform: translateY(32px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 .animate-fadein {
   animation: fadein 0.7s cubic-bezier(.19, 1, .22, 1) both;
 }
@@ -69,26 +262,32 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
-.animate-border-rainbow > div {
+
+.animate-border-rainbow>div {
   animation: gradientShift 6s ease infinite;
 }
 
 @keyframes floating {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-4px);
   }
 }
+
 .animate-floating {
   animation: floating 3s ease-in-out infinite;
 }
@@ -97,9 +296,12 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 
@@ -108,15 +310,18 @@
     transform: scale(1);
     opacity: 0.5;
   }
+
   50% {
     transform: scale(3);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     opacity: 0;
   }
 }
+
 .leaflet-pulse-marker {
   transform-origin: center;
   animation: pulse 2s infinite;
@@ -127,33 +332,32 @@
   0% {
     transform: scale(0.9);
   }
+
   50% {
     transform: scale(1.25);
   }
+
   100% {
     transform: scale(1);
   }
 }
+
 .animate-heart-pop {
   animation: heart-pop 0.3s ease-in-out;
 }
 
 /* görgetési maszk */
 .scroll-mask {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 20%,
-    black 80%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 20%,
-    black 80%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 20%,
+      black 80%,
+      transparent 100%);
+  mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 20%,
+      black 80%,
+      transparent 100%);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -163,24 +367,27 @@
 /* holografikus plakátfal */
 .holo-wall {
   background: linear-gradient(270deg,
-    #ff00ff,
-    #00ffff,
-    #ffff00,
-    #ff6600,
-    #ff00ff);
+      #ff00ff,
+      #00ffff,
+      #ffff00,
+      #ff6600,
+      #ff00ff);
   background-size: 800% 800%;
   animation: holo-shift 12s ease infinite;
   border-radius: 1rem;
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.5),
-              0 0 40px rgba(0, 255, 255, 0.3);
+    0 0 40px rgba(0, 255, 255, 0.3);
 }
+
 @keyframes holo-shift {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -190,6 +397,7 @@
 .map-marker-glow {
   position: relative;
 }
+
 .map-marker-glow::after {
   content: "";
   position: absolute;
@@ -203,15 +411,18 @@
   background: rgba(0, 200, 255, 0.5);
   animation: marker-pulse 2s infinite;
 }
+
 @keyframes marker-pulse {
   0% {
     transform: scale(1);
     opacity: 0.7;
   }
+
   50% {
     transform: scale(2.5);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     opacity: 0;
@@ -223,22 +434,28 @@
   0% {
     text-shadow: 2px 0 red, -2px 0 cyan;
   }
+
   20% {
     text-shadow: -2px 0 lime, 2px 0 blue;
   }
+
   40% {
     text-shadow: 2px 2px magenta, -2px -2px yellow;
   }
+
   60% {
     text-shadow: -2px -2px red, 2px 2px cyan;
   }
+
   80% {
     text-shadow: 2px 0 yellow, -2px 0 lime;
   }
+
   100% {
     text-shadow: none;
   }
 }
+
 .text-glitch {
   animation: glitch 1s infinite;
 }
@@ -248,7 +465,7 @@
   border: 2px solid transparent;
   border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.6),
-              0 0 20px rgba(0, 255, 255, 0.4);
+    0 0 20px rgba(0, 255, 255, 0.4);
 }
 
 /* pulzáló esemény pötty gyűrű */
@@ -257,23 +474,27 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 12px;   /* A kezdő méret legyen ugyanaz, mint a pötté */
+  width: 12px;
+  /* A kezdő méret legyen ugyanaz, mint a pötté */
   height: 12px;
   border-radius: 50%;
   box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
   animation: pulse-dot 1.8s ease-out infinite;
 }
+
 @keyframes pulse-dot {
   0% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
     opacity: 1;
   }
+
   70% {
     transform: scale(2.8);
     box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
@@ -286,11 +507,11 @@
   .flip-card-container {
     perspective: 1000px;
   }
-  
+
   .section-title {
     @apply text-base;
   }
-  
+
   .holo-wall {
     border-radius: 0.5rem;
   }
@@ -300,12 +521,13 @@
 @media (prefers-color-scheme: dark) {
   .neon-border {
     box-shadow: 0 0 15px rgba(255, 0, 255, 0.8),
-                0 0 30px rgba(0, 255, 255, 0.6);
+      0 0 30px rgba(0, 255, 255, 0.6);
   }
 }
 
 /* Nyomtatási stílusok */
 @media print {
+
   .holo-wall,
   .neon-border,
   .text-glitch {
@@ -314,11 +536,11 @@
     background: white !important;
     color: black !important;
   }
-  
+
   .flip-card-inner {
     transform: none !important;
   }
-  
+
   .flip-card-front,
   .flip-card-back {
     position: relative;

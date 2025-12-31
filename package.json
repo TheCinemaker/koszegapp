@@ -2,13 +2,14 @@
   "name": "koeszegapp",
   "version": "0.2.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "cheerio": "^1.1.0",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.26",
     "fuse.js": "^7.1.0",
     "google-it": "^1.6.4",
     "googlethis": "^1.8.0",

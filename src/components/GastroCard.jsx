@@ -1,78 +1,105 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useFavorites } from '../contexts/FavoritesContext'; // <<< ÚJ
-import { FaHeart, FaRegHeart } from 'react-icons/fa';         // <<< ÚJ
+import { useFavorites } from '../contexts/FavoritesContext';
+import { IoHeart, IoHeartOutline, IoRestaurantOutline, IoBeerOutline, IoCafeOutline } from 'react-icons/io5';
+import GhostImage from './GhostImage';
 
-// Fontos: a prefixelt, string ID-t használjuk!
+// Prefixelt ID-k
 const featuredIds = ['gastro-10'];
 
+const getIconForType = (type) => {
+  const t = type?.toLowerCase() || '';
+  if (t.includes('kávé') || t.includes('cukrász')) return <IoCafeOutline />;
+  if (t.includes('bár') || t.includes('pub')) return <IoBeerOutline />;
+  return <IoRestaurantOutline />;
+};
+
 export default function GastroCard({ restaurant }) {
-  // <<< ÚJ: Kedvencek hook behívása >>>
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const isFeatured = featuredIds.includes(restaurant.id);
+  const typeIcon = getIconForType(restaurant.type);
 
   return (
-    <div
+    <Link
+      to={`/gastronomy/${restaurant.id}`}
       className={`
-        relative rounded-xl shadow-lg overflow-hidden flex flex-col
-        transition-transform duration-300 hover:-translate-y-1
+        group relative flex flex-col
+        rounded-[2rem] overflow-hidden
+        border transition-all duration-500 ease-out
+        hover:scale-[1.02] active:scale-[0.98]
         ${isFeatured
-          ? 'ring-4 ring-yellow-500 bg-white/50 dark:bg-gray-800'
-          : 'bg-white/20 dark:bg-gray-800 backdrop-blur-sm'
+          ? 'bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-amber-500/30'
+          : 'bg-white/40 dark:bg-[#1a1c2e]/40 border-white/50 dark:border-white/10'
         }
+        backdrop-blur-[20px] backdrop-saturate-[1.8]
+        shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.2)]
       `}
     >
-      <div className="relative">
+      {/* Image Container with Diagonal Cut */}
+      <div className="relative h-48 w-full overflow-hidden">
         {isFeatured && (
-          <div className="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
-            Kiemelt
+          <div className="absolute top-3 left-3 z-20">
+            <span className="px-3 py-1 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1">
+              ★ Kiemelt
+            </span>
           </div>
         )}
-        {restaurant.image && (
+
+        {/* Favorite Button (Floating) */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            isFavorite(restaurant.id) ? removeFavorite(restaurant.id) : addFavorite(restaurant.id);
+          }}
+          className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-rose-500 hover:scale-110 active:scale-95 transition-all shadow-sm"
+        >
+          {isFavorite(restaurant.id) ? <IoHeart /> : <IoHeartOutline />}
+        </button>
+
+        {restaurant.image ? (
           <img
             src={`/images/gastro/${restaurant.image}`}
             alt={restaurant.name}
-            className="w-full h-40 object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
           />
+        ) : (
+          <GhostImage className="w-full h-full" />
         )}
+
+        {/* Gradient Overlay for Text readability if needed, usually not with card separate content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
 
-      <div className="p-4 flex flex-col flex-grow">
-        {/* <<< ÚJ: Cím és szív ikon egy sorban >>> */}
-        <div className="flex justify-between items-start mb-1">
-          <h3 className="text-xl font-semibold text-purple-800 dark:text-purple-300 pr-2 flex-grow">{restaurant.name}</h3>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();      // ne kövessen linket
-              e.stopPropagation();     // ne buborékozzon fel a kártyára
-                isFavorite(restaurant.id)
-                ? removeFavorite(restaurant.id)
-                : addFavorite(restaurant.id);
-        }}
-        className="text-rose-500 flex-shrink-0 p-1 transition-transform active:scale-90"
-        aria-label={isFavorite(restaurant.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
-          >
-  {isFavorite(restaurant.id)
-    ? <FaHeart size={22} className="animate-heart-pop" />
-    : <FaRegHeart size={22} />}
-</button>
+      {/* Content */}
+      <div className="p-5 flex flex-col grow relative">
+        {/* Decorative Type Icon Background */}
+        <div className="absolute -top-6 right-6 w-12 h-12 bg-white dark:bg-gray-800 rounded-2xl shadow-lg flex items-center justify-center text-2xl text-indigo-500 rotate-12 group-hover:rotate-0 transition-transform duration-500 border border-white/20">
+          {typeIcon}
         </div>
 
-        <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
-          {restaurant.tags.join(' • ')}
-        </p>
-        <Link
-          to={`/gastronomy/${restaurant.id}`}
-          className="
-            inline-block bg-purple-600 text-white mt-auto
-            px-4 py-2 rounded-lg hover:bg-purple-700 transition
-            text-center font-semibold self-start
-          "
-        >
-          Részletek
-        </Link>
+        <div className="mb-1">
+          <span className="inline-block px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-[10px] font-bold uppercase tracking-wider">
+            {restaurant.type}
+          </span>
+        </div>
+
+        <h3 className="text-xl font-black text-gray-900 dark:text-gray-100 leading-tight mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+          {restaurant.name}
+        </h3>
+
+        <div className="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-white/5">
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest group-hover:text-indigo-500 transition-colors">
+            Részletek
+          </span>
+          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

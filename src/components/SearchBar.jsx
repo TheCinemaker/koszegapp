@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 const SOURCES = [
-  { url: "/data/attractions.json", label: "Látnivalók",   key: "attractions",   route: "/attractions" },
-  { url: "/data/events.json",      label: "Események",    key: "events",        route: "/events" },
-  { url: "/data/hotels.json",      label: "Szállások",    key: "hotels",        route: "/hotels" },
-  { url: "/data/restaurants.json", label: "Vendéglátás",  key: "restaurants",   route: "/gastronomy" },
-  { url: "/data/parking.json",     label: "Parkolás",     key: "parking",       route: "/parking" },
-  { url: "/data/info.json",        label: "Info",         key: "info",          route: "/info" }
+  { url: "/data/attractions.json", label: "Látnivalók", key: "attractions", route: "/attractions" },
+  { url: "/data/events.json", label: "Események", key: "events", route: "/events" },
+  { url: "/data/hotels.json", label: "Szállások", key: "hotels", route: "/hotels" },
+  { url: "/data/restaurants.json", label: "Vendéglátás", key: "restaurants", route: "/gastronomy" },
+  { url: "/data/parking.json", label: "Parkolás", key: "parking", route: "/parking" },
+  { url: "/data/info.json", label: "Info", key: "info", route: "/info" }
 ];
 
 export default function SearchBar() {
@@ -82,44 +83,50 @@ export default function SearchBar() {
 
   return (
     <div className="relative" ref={ref}>
-      <form onSubmit={handleFormSubmit} className="flex mb-2">
+      <form onSubmit={handleFormSubmit} className="flex gap-4">
         <input
           type="search"
           value={q}
           onChange={e => setQ(e.target.value)}
           onFocus={() => { if (q.trim().length > 1) setShowResults(true); }}
-          placeholder="Keresés: étterem, esemény, látnivaló…"
-          className="border px-3 py-2 rounded-l w-full
-                     border-gray-300 dark:border-gray-600
-                     bg-white dark:bg-gray-700
-                     text-gray-900 dark:text-gray-100
+          placeholder="Keress bármire..."
+          className="flex-1 h-9 px-4 rounded-xl
+                     bg-white/80 dark:bg-gray-800/80
+                     backdrop-blur-md
+                     border border-white/20 dark:border-gray-700/50
+                     text-sm text-gray-900 dark:text-gray-100
                      placeholder-gray-500 dark:placeholder-gray-400
-                     focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                     transition-all duration-300
+                     hover:bg-white/90 dark:hover:bg-gray-800/90"
         />
         <button
           type="submit"
-          className="bg-indigo-500 text-white px-4 rounded-r
-                     hover:bg-indigo-600
-                     dark:bg-indigo-500 dark:hover:bg-indigo-600
-                     transition-colors duration-150
-                     focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          className="w-9 h-9 rounded-xl flex items-center justify-center
+                     bg-gradient-to-br from-indigo-500 to-purple-600
+                     text-white shadow-lg
+                     hover:from-indigo-600 hover:to-purple-700
+                     transition-all duration-300
+                     hover:scale-105 active:scale-95
+                     focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
         >
-          Keres
+          <FaSearch className="text-xs" />
         </button>
       </form>
 
       {showResults && (
-        <div className="absolute z-50 w-full max-h-80 overflow-auto
-                         bg-white dark:bg-gray-800
-                         border border-gray-200 dark:border-gray-700
-                         rounded shadow-md dark:shadow-lg">
-          {loading && <div className="p-3 text-gray-500 dark:text-gray-400">Keresés…</div>}
+        <div className="absolute z-50 w-full max-h-80 overflow-auto mt-2
+                         bg-white/90 dark:bg-gray-800/90
+                         backdrop-blur-xl
+                         border border-white/20 dark:border-gray-700/50
+                         rounded-2xl shadow-2xl">
+          {loading && <div className="p-4 text-gray-500 dark:text-gray-400">Keresés…</div>}
           {Object.keys(results).length === 0 && !loading && q.length > 1 && (
-            <div className="p-3 text-gray-500 dark:text-gray-400">Nincs találat.</div>
+            <div className="p-4 text-gray-500 dark:text-gray-400">Nincs találat.</div>
           )}
           {Object.entries(results).map(([cat, { label, items, route }]) => (
             <div key={cat}>
-              <div className="px-3 pt-2 pb-1 text-xs font-bold text-indigo-600 dark:text-indigo-400">
+              <div className="px-4 pt-3 pb-2 text-xs font-bold text-indigo-600 dark:text-indigo-400">
                 {label}
               </div>
               <ul>
@@ -128,9 +135,10 @@ export default function SearchBar() {
                     <button
                       type="button"
                       onClick={() => handleItemClick(item, route)}
-                      className="w-full text-left px-3 py-2
-                                 rounded transition-colors duration-150
-                                 hover:bg-indigo-50 dark:hover:bg-gray-700
+                      className="w-full text-left px-4 py-3
+                                 rounded-xl mx-2 my-1
+                                 transition-all duration-200
+                                 hover:bg-indigo-50/80 dark:hover:bg-gray-700/80
                                  text-gray-900 dark:text-gray-100"
                     >
                       <span className="font-semibold">{item.name}</span>
