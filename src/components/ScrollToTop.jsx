@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaArrowUp } from 'react-icons/fa';
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
@@ -16,14 +17,26 @@ export default function ScrollToTop() {
   };
 
   return (
-    visible && (
-      <button
-        onClick={scrollToTop}
-        className="w-12 h-12 rounded-full bg-[#52a5dd] shadow-xl flex items-center justify-center text-white text-2xl
-                   transition-all duration-300 hover:scale-110 active:scale-95 animate-floating backdrop-blur-sm"
-      >
-        ⬆️
-      </button>
-    )
+    <>
+      {visible && (
+        <button
+          onClick={scrollToTop}
+          className="w-10 h-10 sm:w-12 sm:h-12
+                     bg-gradient-to-br from-indigo-500/50 to-purple-600/50
+                     hover:from-indigo-600 hover:to-purple-700
+                     text-white rounded-xl
+                     flex items-center justify-center
+                     shadow-lg hover:shadow-xl
+                     transition-all duration-300
+                     hover:scale-105 active:scale-95
+                     backdrop-blur-sm
+                     border border-white/20
+                     z-50"
+          aria-label="Vissza a tetejére"
+        >
+          <FaArrowUp className="text-sm sm:text-lg" />
+        </button>
+      )}
+    </>
   );
 }

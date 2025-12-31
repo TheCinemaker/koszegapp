@@ -1,19 +1,30 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchEventById } from '../api';
 import { format, parseISO, isValid, addHours } from 'date-fns';
-import EventImageCard from '../components/EventImageCard'; 
+import { hu } from 'date-fns/locale';
+import {
+  IoArrowBack,
+  IoTimeOutline,
+  IoLocationOutline,
+  IoGlobeOutline,
+  IoMapOutline,
+  IoCalendarOutline,
+  IoTicketOutline,
+  IoShareSocialOutline
+} from 'react-icons/io5';
+import { motion } from 'framer-motion';
+
+import GhostImage from '../components/GhostImage';
+import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
 function parseDateRange(evt) {
-  // 1) preferált séma: date + end_date (ISO yyyy-MM-dd)
   if (evt?.date) {
     const s = parseISO(evt.date);
     const e = parseISO(evt.end_date || evt.date);
 
-    // időablak finomítása, ha van time mező
     if (evt.time && typeof evt.time === 'string') {
       const t = evt.time.replace(/\s/g, '');
-      // "HH:mm-HH:mm"
       if (/^\d{2}:\d{2}-\d{2}:\d{2}$/.test(t)) {
         const [ts, te] = t.split('-');
         const [hs, ms] = ts.split(':').map(Number);
@@ -24,38 +35,32 @@ function parseDateRange(evt) {
         e2.setHours(he, me ?? 0, 0, 0);
         return { s: s2, e: e2 };
       }
-      // "HH:mm"
       if (/^\d{2}:\d{2}$/.test(t)) {
         const [h, m] = t.split(':').map(Number);
         const s2 = new Date(s);
         s2.setHours(h, m ?? 0, 0, 0);
-        // ha csak kezdőidő van, tegyünk +2 óra véget ésszerű alapértelmezésként
         const e2 = addHours(s2, 2);
         return { s: s2, e: e2 };
       }
     }
-    // nincs értelmezhető time → egész nap
     const sDay = new Date(s);
-    sDay.setHours(0,0,0,0);
+    sDay.setHours(0, 0, 0, 0);
     const eDay = new Date(e);
-    eDay.setHours(23,59,59,999);
+    eDay.setHours(23, 59, 59, 999);
     return { s: sDay, e: eDay };
   }
-
-  // 2) régi fallback: "date" tartalmazhat "start/end" formátumot
   if (evt?.date && evt.date.includes('/')) {
     const [a, b] = evt.date.split('/');
     const s = parseISO(a);
     const e = parseISO(b);
     return { s, e };
   }
-
-  // 3) teljesen ismeretlen
   return { s: null, e: null };
 }
 
 export default function EventDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [evt, setEvt] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -74,85 +79,200 @@ export default function EventDetail() {
   const { s, e } = useMemo(() => parseDateRange(evt || {}), [evt]);
   const isMultiDay = !!(evt?.end_date && evt.end_date !== evt.date);
 
-  const dateText = useMemo(() => {
-    if (!s || !e || !isValid(s) || !isValid(e)) return 'Dátum ismeretlen';
-    const sf = format(s, 'yyyy.MM.dd');
-    const ef = format(e, 'yyyy.MM.dd');
-    return +s !== +e ? `${sf} – ${ef}` : sf;
-  }, [s, e]);
+  // Formatting for "Apple Calendar" Icon
+  const monthName = s && isValid(s) ? format(s, 'MMM', { locale: hu }).toUpperCase().replace('.', '') : '???';
+  const dayNumber = s && isValid(s) ? format(s, 'd') : '?';
 
-  if (loading) return <p className="p-4 text-center">Esemény betöltése...</p>;
-  if (error) return <p className="p-4 text-center text-red-500">Hiba: {error}</p>;
-  if (!evt) {
+  // Time logic
+  const timeText = useMemo(() => {
+    if (!s || !isValid(s)) return '';
+    if (evt?.time) return evt.time; // Use raw string if available and simple
+    return format(s, 'HH:mm');
+  }, [s, evt]);
+
+  if (loading) {
     return (
-      <div className="text-center p-4">
-        <p className="mb-4">Az esemény nem található, vagy már nem aktuális.</p>
-        <Link to="/events" className="text-purple-600 underline">Vissza az eseményekhez</Link>
+      <div className="flex items-center justify-center min-h-screen text-indigo-600">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-current"></div>
+      </div>
+    );
+  }
+
+  if (error || !evt) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <p className="text-red-500 mb-6 text-lg font-medium">Hiba: {error || "Az esemény nem található."}</p>
+        <button
+          onClick={() => navigate('/events')}
+          className="px-6 py-3 bg-purple-600 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
+        >
+          Vissza az eseményekhez
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto my-6 p-6 bg-white/20 backdrop-blur-md rounded-2xl shadow-xl">
-      <div className="mb-6 flex items-center justify-between gap-3">
-        <Link to="/events" className="inline-block text-purple-600 dark:text-purple-400 hover:underline font-semibold">
-          ← Vissza az eseményekhez
-        </Link>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-purple-500 selection:text-white">
 
-        <div className="flex items-center gap-2">
-          {isMultiDay && (
-            <span className="text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800">
-              többnapos
-            </span>
-          )}
-          {evt.link && (
-            <a
-              href={evt.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200"
-            >
-              hivatalos oldal
-            </a>
-          )}
-        </div>
-      </div>
+      {/* GLOBAL BACKGROUND NOISE */}
+      <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
-      {evt.image && (
-        <div className="mb-6 shadow-lg rounded-xl overflow-hidden">
-          <EventImageCard 
+      {/* --- HERO IMAGE SECTION --- */}
+      <div className="relative h-[65vh] w-full overflow-hidden">
+        {evt.image ? (
+          <ParallaxImage
             src={`/images/events/${evt.image}`}
-            alt={evt.name}
+            className="w-full h-full"
+            scale={1.15}
           />
+        ) : (
+          <GhostImage className="w-full h-full" />
+        )}
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 z-10" />
+
+        {/* --- NAVIGATION --- */}
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/events')}
+            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/40 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group"
+          >
+            <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
+          </button>
         </div>
-      )}
 
-      <h1 className="text-3xl font-bold mb-2 text-purple-800 dark:text-purple-300">{evt.name}</h1>
+        {/* Hero Title (Parallaxed) */}
+        <motion.div
+          className="absolute bottom-16 left-6 right-6 z-20"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="flex gap-4 items-end mb-6">
+            {/* Giant Calendar Date */}
+            <div className="shrink-0 w-24 h-24 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden flex flex-col text-center shadow-2xl">
+              <div className="bg-red-500 text-white text-xs font-bold uppercase py-1.5 tracking-widest">
+                {monthName}
+              </div>
+              <div className="flex-1 flex items-center justify-center text-4xl font-black text-white">
+                {dayNumber}
+              </div>
+            </div>
+            <div>
+              {isMultiDay && (
+                <span className="px-3 py-1 rounded-full bg-amber-500/80 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest mb-2 inline-block shadow-lg">
+                  Többnapos
+                </span>
+              )}
+            </div>
+          </div>
 
-      <div className="text-gray-700 dark:text-gray-400 mb-6 space-y-1">
-        <p><strong>Dátum:</strong> {dateText}{evt.time ? ` • ${evt.time}` : ''}</p>
-        {evt.location && <p><strong>Helyszín:</strong> {evt.location}</p>}
+          <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl tracking-tighter leading-none max-w-4xl">
+            {evt.name}
+          </h1>
+        </motion.div>
       </div>
 
-      <section className="space-y-2">
-        <h2 className="text-2xl font-semibold text-purple-800 dark:text-purple-300 border-b pb-1">Leírás</h2>
-        <p className="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap pt-2">{evt.description}</p>
-      </section>
+      {/* --- CONTENT SHEET (GLASS CARD) --- */}
+      <div className="relative -mt-10 px-4 z-20 max-w-7xl mx-auto">
+        <FadeUp duration={1}>
+          <div className="
+              bg-white/80 dark:bg-[#1a1c2e]/90
+              backdrop-blur-[50px]
+              rounded-[3rem]
+              border border-white/40 dark:border-white/5
+              shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.3)]
+              p-8 sm:p-12
+              min-h-[50vh]
+          ">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-      {evt.coords && (
-        <section className="mt-8 pt-6 border-t border-purple-200 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold mb-4 text-purple-800 dark:text-purple-300">Helyszín a Térképen</h2>
-          <div className="w-full h-72 rounded-lg overflow-hidden shadow-md">
-            <iframe
-              title="Esemény helyszíne"
-              src={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}&z=16&output=embed`}
-              className="w-full h-full border-0"
-              allowFullScreen
-              loading="lazy"
-            />
+              {/* LEFT COLUMN: Main Info */}
+              <div className="lg:col-span-8 space-y-8">
+                {/* Info Pills */}
+                <div className="flex flex-wrap gap-4">
+                  {timeText && (
+                    <div className="px-5 py-3 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center gap-3 text-purple-700 dark:text-purple-300">
+                      <IoTimeOutline className="text-xl" />
+                      <span className="font-bold text-lg">{timeText}</span>
+                    </div>
+                  )}
+                  {evt.location && (
+                    <div className="px-5 py-3 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                      <IoLocationOutline className="text-xl" />
+                      <span className="font-medium text-lg truncate max-w-[200px] md:max-w-none">{evt.location}</span>
+                    </div>
+                  )}
+                </div>
+
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Leírás</h2>
+                <div className="prose dark:prose-invert prose-lg max-w-none">
+                  <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium whitespace-pre-wrap">
+                    {evt.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: Sidebar Actions */}
+              <div className="lg:col-span-4 space-y-6">
+                {/* Action Card */}
+                <FadeUp delay={0.1}>
+                  <div className="bg-gray-100 dark:bg-black/30 p-8 rounded-[2.5rem] border border-gray-200 dark:border-white/10 text-center">
+                    <IoTicketOutline className="text-5xl text-purple-500 mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Részt veszel?</h3>
+                    <p className="text-gray-500 dark:text-gray-400 mb-8">Ne felejtsd el később!</p>
+
+                    <div className="space-y-3">
+                      {evt.link && (
+                        <motion.a
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          href={evt.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transition-all"
+                        >
+                          <IoGlobeOutline className="text-xl" />
+                          Hivatalos Oldal
+                        </motion.a>
+                      )}
+                      <button className="w-full bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-300 dark:hover:bg-white/20 transition-all">
+                        <IoShareSocialOutline className="text-xl" />
+                        Megosztás
+                      </button>
+                    </div>
+                  </div>
+                </FadeUp>
+              </div>
+
+            </div>
+
+            {/* Map Section */}
+            {evt.coords && (
+              <FadeUp delay={0.3} className="mt-16">
+                <div className="overflow-hidden rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-xl relative group h-80">
+                  <iframe
+                    title="Térkép"
+                    src={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}&z=16&output=embed`}
+                    className="w-full h-full border-0 grayscale-[50%] group-hover:grayscale-0 transition-all duration-700"
+                    loading="lazy"
+                    allowFullScreen
+                  />
+                  <div className="absolute bottom-6 left-6 bg-white/90 dark:bg-black/80 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20 shadow-lg">
+                    <span className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
+                      <IoMapOutline /> Helyszín
+                    </span>
+                  </div>
+                </div>
+              </FadeUp>
+            )}
+
           </div>
-        </section>
-      )}
+        </FadeUp>
+      </div>
+
     </div>
   );
 }

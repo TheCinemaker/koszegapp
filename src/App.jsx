@@ -8,6 +8,14 @@ import { useFavorites } from './contexts/FavoritesContext.jsx';
 import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels, fetchParking } from './api';
 import { AuthProvider } from './contexts/AuthContext';
 import { parseISO, endOfDay } from 'date-fns';
+import {
+  IoCloudyNightOutline,
+  IoMapOutline,
+  IoHeartOutline,
+  IoHeart,
+  IoMoonOutline,
+  IoSunnyOutline
+} from 'react-icons/io5';
 
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
@@ -34,10 +42,15 @@ import ProgramModal from './components/ProgramModal';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import WeatherModal from './components/WeatherModal';
+import FloatingNavbar from './components/FloatingNavbar';
 import FloatingButtons from './components/FloatingButtons';
 import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
 import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
 import LiveCityMap from './components/LiveCityMap';
+
+import AnimatedRoutes from './components/AnimatedRoutes';
+
+
 
 const Admin = React.lazy(() => import('./pages/Admin.jsx'));
 const MaintenancePage = React.lazy(() => import('./pages/Maintenance.jsx'));
@@ -78,7 +91,7 @@ function MainAppContent() {
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
   // --- MAINTENANCE MODE LOGIC ---
-  const [maintenanceMode, setMaintenanceMode] = useState(true); // Alapból bekapcsolva
+  const [maintenanceMode, setMaintenanceMode] = useState(!import.meta.env.DEV); // Devben nyitva, élesben karbantartás
 
   useEffect(() => {
     // 1. Ellenőrizzük, hogy van-e bypass kulcs a localStorage-ban
@@ -225,45 +238,99 @@ function MainAppContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
+    <div className="min-h-screen flex flex-col mesh-bg-vibrant text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500">
       {!isInGameMode && (
         <>
-          <header className="fixed inset-x-0 top-0 bg-beige-100/40 backdrop-blur-md border-b border-beige-200 z-50">
-            <div className="container mx-auto flex items-center justify-between px-4 py-3">
-              <div className="flex items-center space-x-2">
+          <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
+            <div className="
+              pointer-events-auto
+              w-full max-w-5xl
+              h-full
+              flex items-center justify-between px-3 sm:px-6
+              bg-white/40 dark:bg-[#1a1c2e]/40 
+              backdrop-blur-[25px] 
+              backdrop-saturate-[1.8]
+              backdrop-brightness-[1.1]
+              rounded-[2rem] 
+              border border-white/50 dark:border-white/20 
+              shadow-[0_10px_40px_rgba(0,0,0,0.1)]
+              relative overflow-hidden
+            ">
+              {/* Subtle Gradient Accent (Top Lip) */}
+              <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
+
+              <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                 <img
                   onClick={() => navigate('/')}
                   src="/images/koeszeg_logo_nobg.png"
                   alt="KőszegAPP logo"
-                  className="w-8 h-8 cursor-pointer"
+                  className="w-8 h-8 sm:w-10 sm:h-10 hover:rotate-12 transition-transform duration-500 cursor-pointer drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]"
                 />
-                <span
+                <div
                   onClick={() => navigate('/')}
-                  className="text-base sm:text-lg font-bold text-purple-700 cursor-pointer"
+                  className="flex items-center gap-0.5 cursor-pointer whitespace-nowrap"
                 >
-                  KőszegAPP
-                </span>
+                  <span className="text-sm sm:text-lg font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+                    Kőszeg
+                  </span>
+                  <span className="text-sm sm:text-lg font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight">
+                    APP
+                  </span>
+                </div>
               </div>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                {/* Weather Button (Compact) */}
                 <button
                   onClick={() => setShowWeatherModal(true)}
-                  className="flex items-center space-x-1 text-gray-500 dark:text-white bg-beige-200/50 dark:bg-gray-700 backdrop-blur-sm px-2 py-1 rounded-full transition hover:scale-105"
+                  className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
                 >
-                  <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="weather" className="w-5 h-5" />
-                  <span className="text-sm">{weather.temp}°C</span>
+                  <IoCloudyNightOutline className="text-base sm:text-lg" />
+                  <span className="text-[10px] sm:text-xs font-bold">{weather.temp}°</span>
                 </button>
-                <Link to="/live-map" className="px-3 py-1 rounded text-white text-sm hover:bg-indigo-700" aria-label="Térkép"> 🗺️ </Link>
 
+                {/* Map Button */}
+                <Link
+                  to="/live-map"
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                  aria-label="Térkép"
+                >
+                  <IoMapOutline className="text-lg sm:text-xl" />
+                </Link>
+
+                {/* Favorites Button */}
                 <div className="relative" ref={favoritesRef}>
                   <button
                     onClick={() => setShowFavorites(!showFavorites)}
-                    className="relative flex items-center px-2 py-1 rounded hover:bg-beige-200/50 dark:hover:bg-gray-700 transition"
+                    className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                               bg-white/20 dark:bg-black/20
+                               backdrop-blur-md
+                               text-gray-700 dark:text-gray-200
+                               border border-white/20
+                               hover:bg-white/40 dark:hover:bg-black/40
+                               transition-all duration-300 hover:scale-105 active:scale-95 group"
                     aria-label="Kedvencek megnyitása"
                   >
-                    <span className="text-xl text-rose-500">❤️</span>
+                    {favoritesCount > 0 ? (
+                      <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
+                    ) : (
+                      <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
+                    )}
+
                     {favoritesCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
                         {favoritesCount}
                       </span>
                     )}
@@ -280,11 +347,19 @@ function MainAppContent() {
                   )}
                 </div>
 
+                {/* Dark Mode Toggle */}
                 <button
                   onClick={toggleDark}
-                  className="px-2 py-1 rounded bg-beige-200/50 dark:bg-gray-700 text-sm transition"
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             border border-white/20
+                             text-gray-700 dark:text-yellow-300
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                  aria-label="Sötét mód váltása"
                 >
-                  {dark ? '🌙' : '☀️'}
+                  {dark ? <IoSunnyOutline className="text-lg sm:text-xl" /> : <IoMoonOutline className="text-lg sm:text-xl" />}
                 </button>
               </div>
             </div>
@@ -293,57 +368,8 @@ function MainAppContent() {
         </>
       )}
 
-      <main className={`flex-1 container mx-auto ${isInGameMode ? '' : 'px-4 py-6'}`}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-
-          <Route path="/attractions" element={<Attractions attractions={appData.attractions} loading={appData.loading} />} />
-          <Route path="/attractions/:id" element={<AttractionDetail />} />
-
-          <Route path="/events" element={<Events events={appData.events} loading={appData.loading} />} />
-          <Route path="/events/:id" element={<EventDetail />} />
-
-          <Route path="/gastronomy" element={<Gastronomy restaurants={appData.restaurants} loading={appData.loading} />} />
-          <Route path="/gastronomy/:id" element={<RestaurantDetail />} />
-
-          <Route path="/hotels" element={<Hotels hotels={appData.hotels} loading={appData.loading} />} />
-          <Route path="/hotels/:id" element={<HotelDetail />} />
-
-          <Route path="/leisure" element={<Leisure leisure={appData.leisure} loading={appData.loading} />} />
-          <Route path="/leisure/:id" element={<LeisureDetail />} />
-
-          <Route path="/parking" element={<Parking parking={appData.parking} loading={appData.loading} />} />
-          <Route path="/parking/:id" element={<ParkingDetail />} />
-          <Route path="/parking-map" element={<ParkingMap />} />
-
-
-          <Route path="/admin/*" element={
-            <Suspense fallback={<div className="p-6">Admin betöltése…</div>}>
-              <Admin />
-            </Suspense>
-          } />
-          <Route path="/weather" element={<WeatherDetail />} />
-          <Route path="/info" element={<Info />} />
-          <Route path="/info/:id" element={<AboutDetail />} />
-          <Route path="/adatvedelem" element={<Adatvedelem />} />
-
-          <Route path="/gem/:id" element={<GemDetail />} />
-          <Route path="/my-gems" element={<MyGems />} />
-          <Route path="/game/intro" element={<GameIntro />} />
-          <Route path="/game/gem/:id" element={<GemDetail />} />
-          <Route path="/game/treasure-chest" element={<MyGems />} />
-          <Route path="/live-map" element={<div className="container mx-auto px-4 py-6">
-            <h1 className="text-2xl font-bold mb-4">Élő várostérkép</h1>
-            <LiveCityMap
-              events={appData.events}
-              attractions={appData.attractions}
-              leisure={appData.leisure}
-              restaurants={appData.restaurants}
-            />
-          </div>
-          }
-          />
-        </Routes>
+      <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
+        <AnimatedRoutes appData={appData} />
       </main>
 
       {!isInGameMode && (
@@ -351,24 +377,17 @@ function MainAppContent() {
           <Toaster position="bottom-center" />
           {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
 
-          <footer className="mt-6 bg-beige-100/40 backdrop-blur-md text-center py-4">
-            <p className="text-xs text-gray-600">© 2025 AS Software & Network Solutions Version: 1.9.2</p>
-            <p className="text-xs text-gray-600">© Design: Hidalmasi Erik</p>
-            <p className="text-xs text-gray-600">
-              Email: <a href="mailto:koszegapp@gmail.com" className="underline">koszegapp@gmail.com</a>
-            </p>
-            <p className="text-xs text-gray-600 mt-2">
-              <Link to="/adatvedelem" className="underline hover:text-indigo-600">Adatkezelési tájékoztató</Link>
-            </p>
-          </footer>
+          {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
-          <FloatingButtons />
+          <FloatingNavbar />
+          {/* <FloatingButtons /> - Replaced by FloatingNavbar */}
           <OstromDrawerFullAnimated />
           <AnimatedWeeklyMenuDrawer />
 
-          {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />}
+          {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}
+          {/* {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />} */}
 
-          {isHome && !showProgramModal && (
+          {/* {isHome && !showProgramModal && (
             <button
               onClick={() => setShowProgramModal(true)}
               className="w-14 h-14 fixed bottom-20 right-4 bg-purple-700 text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-purple-800 transition transform hover:scale-110 z-50"
@@ -376,7 +395,7 @@ function MainAppContent() {
             >
               🍇
             </button>
-          )}
+          )} */}
         </>
       )}
     </div>

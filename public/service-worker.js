@@ -1,14 +1,14 @@
 
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
-let sentEmergencyMessageIds = new Set(); 
+let sentEmergencyMessageIds = new Set();
 const NOTIFICATION_LEAD_TIME_MINUTES = 10;
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'UPDATE_FAVORITES') {
     favoriteEvents = event.data.favorites.map(e => ({
       ...e,
-      start: new Date(e.start) 
+      start: new Date(e.start)
     }));
   }
 });
@@ -38,7 +38,7 @@ async function checkEmergencyMessage() {
       sentEmergencyMessageIds.add(data.messageId);
     }
   } catch (error) {
-    console.error('Hiba a vészhelyzeti üzenet ellenőrzésekor:', error);
+    // console.log('Silent fail on emergency check to avoid spam');
   }
 }
 
@@ -53,7 +53,7 @@ function checkFavoriteNotifications() {
       self.registration.showNotification('Hamarosan kezdődik a kedvenced!', {
         body: `"${event.nev}" ${NOTIFICATION_LEAD_TIME_MINUTES} percen belül kezdődik itt: ${event.helyszin.nev}`,
         icon: '/images/koeszeg_logo_nobg.png', // A hiányzó ikonjaid helyett a logót használjuk
-        badge: '/images/koeszeg_logo_nobg.png' 
+        badge: '/images/koeszeg_logo_nobg.png'
       });
       notifiedEventIds.add(event.id);
     }
