@@ -380,7 +380,7 @@ export default function AboutDetail() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <a
-                  href="mailto:contact@sasoftware.hu"
+                  href="mailto:koszegapp@gmail.com"
                   className="px-12 py-6 rounded-full bg-white text-black font-bold text-xl hover:scale-105 transition-transform duration-300 shadow-[0_0_40px_rgba(255,255,255,0.3)]"
                 >
                   Írj Nekünk
