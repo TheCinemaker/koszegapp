@@ -435,7 +435,7 @@ function EventCard({ item: ev, onClick }) {
 
 function EventForm({ initial, onCancel, onSave, onDelete }) {
   const { user, token, hasPermission } = useAuth();
-  const empty = { id: "", name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id };
+  const empty = { id: "", name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
 
   const [v, setV] = useState({ ...empty, ...initial });
@@ -514,6 +514,29 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
             <FormField label="ID"><TextInput value={v.id} onChange={(e) => setV({ ...v, id: e.target.value })} /></FormField>
             <FormField label="Név"><TextInput value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></FormField>
           </FormRow>
+
+          {/* --- SMART SPOTLIGHT BEÁLLÍTÁSOK --- */}
+          <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-xl border border-indigo-100 dark:border-indigo-500/30">
+            <FormField label="Smart Spotlight (Kiemelés)">
+              <Checkbox
+                label="Megjelenjen kiemeltként a főoldalon?"
+                checked={v.highlight || false}
+                onChange={(e) => setV({ ...v, highlight: e.target.checked })}
+              />
+            </FormField>
+            {v.highlight && (
+              <div className="mt-3 animate-in fade-in slide-in-from-top-2">
+                <FormField label="Kiemelés Címkéje (pl. '✨ Újévi Koncert')">
+                  <TextInput
+                    value={v.highlightLabel || ""}
+                    onChange={(e) => setV({ ...v, highlightLabel: e.target.value })}
+                    placeholder="Ha üres, az alapértelmezett szöveg jelenik meg."
+                  />
+                </FormField>
+              </div>
+            )}
+          </div>
+
           <FormRow>
             <FormField label="Dátum"><input type="date" value={v.date} onChange={(e) => setV({ ...v, date: e.target.value })} className={inputClasses} /></FormField>
             <FormField label="Idő"><input type="time" value={v.time} onChange={(e) => setV({ ...v, time: e.target.value })} className={inputClasses} /></FormField>
