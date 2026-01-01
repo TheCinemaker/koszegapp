@@ -104,7 +104,7 @@ export default function SmartSpotlight({ appData }) {
               bg-[#1c1c1e]/90 dark:bg-black/80
               backdrop-blur-xl backdrop-saturate-150
               border border-white/20 dark:border-white/10
-              pl-3 pr-2 py-2.5 rounded-full
+              pl-1.5 pr-2 py-2 rounded-full
               shadow-[0_8px_32px_rgba(0,0,0,0.3)]
               group
             "
@@ -112,36 +112,36 @@ export default function SmartSpotlight({ appData }) {
                         {/* Clickable Area for Navigation */}
                         <div
                             onClick={() => navigate(`/events/${activeHighlight.id}`)}
-                            className="flex items-center gap-2 md:gap-3 cursor-pointer"
+                            className="flex items-center gap-1.5 md:gap-3 cursor-pointer"
                         >
                             {/* Icon Box */}
                             <div className="
-                w-10 h-10 rounded-full flex items-center justify-center shrink-0
+                w-8 h-8 rounded-full flex items-center justify-center shrink-0
                 bg-gradient-to-br from-indigo-500 to-purple-600
                 shadow-lg shadow-purple-500/20
               ">
-                                <IoSparkles className="text-white text-lg" />
+                                <IoSparkles className="text-white text-sm" />
                             </div>
 
                             {/* Text Content */}
-                            <div className="flex flex-col min-w-[110px] max-w-[200px] sm:max-w-xs">
-                                <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-purple-300">
-                                    {activeHighlight.highlightLabel || "Kiemelt Esemény"}
+                            <div className="flex flex-col min-w-[80px] max-w-[160px] sm:max-w-xs">
+                                <span className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-purple-300 leading-none mb-0.5">
+                                    {activeHighlight.highlightLabel || "Kiemelt"}
                                 </span>
-                                <span className="text-sm md:text-base font-bold text-white truncate leading-tight">
+                                <span className="text-xs md:text-base font-bold text-white truncate leading-none">
                                     {activeHighlight.name}
                                 </span>
                             </div>
 
-                            {/* Separator */}
-                            <div className="w-px h-8 bg-white/10 mx-1 hidden sm:block"></div>
+                            {/* Separator - Hidden on mobile, visible on tablet+ */}
+                            <div className="w-px h-6 bg-white/10 mx-0.5 hidden sm:block"></div>
 
                             {/* Status Badge */}
-                            <div className="flex items-center bg-white/10 px-2 py-1 rounded-full border border-white/5 shrink-0 group-hover:bg-white/20 transition-colors">
-                                <span className="text-xs font-bold text-white whitespace-nowrap">
+                            <div className="flex items-center bg-white/5 px-2 py-0.5 rounded-full border border-white/5 shrink-0 group-hover:bg-white/10 transition-colors">
+                                <span className="text-[10px] sm:text-xs font-bold text-white whitespace-nowrap">
                                     {statusText}
                                 </span>
-                                <IoChevronForward className="text-white/50 ml-1 text-sm group-hover:translate-x-0.5 transition-transform" />
+                                <IoChevronForward className="text-white/50 ml-0.5 text-xs group-hover:translate-x-0.5 transition-transform" />
                             </div>
                         </div>
 
