@@ -60,7 +60,7 @@ export default function ParkingDetail() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-indigo-600">
+      <div className="flex items-center justify-center min-h-screen text-zinc-600">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-current"></div>
       </div>
     );
@@ -72,7 +72,7 @@ export default function ParkingDetail() {
         <p className="text-red-500 mb-6 text-lg font-medium">Hiba: {error || "A parkoló nem található."}</p>
         <button
           onClick={() => navigate('/parking')}
-          className="px-6 py-3 bg-purple-600 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
+          className="px-6 py-3 bg-zinc-600 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
         >
           Vissza a listához
         </button>
@@ -92,9 +92,9 @@ export default function ParkingDetail() {
       <div className="relative h-[65vh] w-full overflow-hidden">
         {park.image ? (
           <ParallaxImage
-            src={`/images/${park.image}`}
-            className="w-full h-full"
-            scale={1.15}
+            src={`/images/parking/${park.image}`}
+            className="w-full h-full object-cover"
+            scale={1.05} // Consistent with HotelDetail change
           />
         ) : (
           <GhostImage className="w-full h-full" />
@@ -153,11 +153,11 @@ export default function ParkingDetail() {
                 {/* Map Section */}
                 <FadeUp delay={0.2}>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-6">
-                    <IoMapOutline className="text-indigo-500" />
+                    <IoMapOutline className="text-zinc-500" />
                     Térkép
                     <button
                       onClick={handleLocateMe}
-                      className="ml-auto text-xs font-bold bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-gray-200 transition-colors"
+                      className="ml-auto text-xs font-bold bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-gray-200 transition-colors"
                     >
                       Hol vagyok?
                     </button>
@@ -179,7 +179,7 @@ export default function ParkingDetail() {
                           <Marker key={machine.id} position={[machine.coords.lat, machine.coords.lng]}>
                             <Popup>
                               <div className="text-center">
-                                <strong className="block mb-1 text-indigo-600">Parkolóautomata</strong>
+                                <strong className="block mb-1 text-zinc-600">Parkolóautomata</strong>
                                 <span>{machine.address}</span>
                               </div>
                             </Popup>
@@ -213,18 +213,18 @@ export default function ParkingDetail() {
                 {/* Info Grid */}
                 <FadeUp delay={0.1}>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-indigo-50 dark:bg-indigo-900/20 p-5 rounded-3xl border border-indigo-100 dark:border-indigo-800/30 flex flex-col items-center justify-center text-center gap-2">
-                      <IoCarSportOutline className="text-3xl text-indigo-600 dark:text-indigo-400" />
+                    <div className="bg-zinc-50 dark:bg-zinc-900/20 p-5 rounded-3xl border border-zinc-100 dark:border-zinc-800/30 flex flex-col items-center justify-center text-center gap-2">
+                      <IoCarSportOutline className="text-3xl text-zinc-600 dark:text-zinc-400" />
                       <div className="flex flex-col">
-                        <span className="text-xl font-black text-indigo-800 dark:text-indigo-200">{park.capacity || 'N/A'}</span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-300 opacity-80">Kapacitás</span>
+                        <span className="text-xl font-black text-zinc-800 dark:text-zinc-200">{park.capacity || 'N/A'}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-300 opacity-80">Kapacitás</span>
                       </div>
                     </div>
-                    <div className="bg-purple-50 dark:bg-purple-900/20 p-5 rounded-3xl border border-purple-100 dark:border-purple-800/30 flex flex-col items-center justify-center text-center gap-2">
-                      <IoWalletOutline className="text-3xl text-purple-600 dark:text-purple-400" />
+                    <div className="bg-zinc-50 dark:bg-zinc-900/20 p-5 rounded-3xl border border-zinc-100 dark:border-zinc-800/30 flex flex-col items-center justify-center text-center gap-2">
+                      <IoWalletOutline className="text-3xl text-zinc-600 dark:text-zinc-400" />
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-purple-800 dark:text-purple-200 leading-tight">{park.price || 'Ingyenes'}</span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-300 opacity-80 decoration-slice">Ár / Óra</span>
+                        <span className="text-sm font-bold text-zinc-800 dark:text-zinc-200 leading-tight">{park.price || 'Ingyenes'}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-300 opacity-80 decoration-slice">Ár / Óra</span>
                       </div>
                     </div>
                   </div>
@@ -234,7 +234,7 @@ export default function ParkingDetail() {
                 <FadeUp delay={0.2}>
                   <div className="bg-gray-100 dark:bg-black/30 rounded-3xl p-6 border border-gray-200 dark:border-white/10">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                      <IoTimeOutline className="text-indigo-500" />
+                      <IoTimeOutline className="text-zinc-500" />
                       Részletek
                     </h3>
                     <div className="space-y-4">
@@ -263,7 +263,7 @@ export default function ParkingDetail() {
                       href={`https://www.google.com/maps/dir/?api=1&destination=${park.coords.lat},${park.coords.lng}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-2xl flex items-center justify-center gap-3 transition-colors group shadow-lg shadow-blue-500/30"
+                      className="w-full bg-zinc-800 hover:bg-zinc-700 text-white p-4 rounded-2xl flex items-center justify-center gap-3 transition-colors group shadow-lg shadow-zinc-500/30"
                     >
                       <IoNavigateOutline className="text-2xl group-hover:scale-110 transition-transform" />
                       <span className="font-bold text-lg">Odaút Tervezése</span>

@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 /**
  * Slow, cinematic fade up effect for sections/cards
  */
-export const FadeUp = ({ children, delay = 0, duration = 1.2, className = "" }) => {
+export const FadeUp = ({ children, delay = 0, duration = 1.6, className = "" }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
 

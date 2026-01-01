@@ -150,8 +150,8 @@ export default function Attractions() {
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`flex-shrink-0 px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 border ${selectedCategory === category
-                      ? 'bg-gray-900 dark:bg-white text-white dark:text-black border-transparent shadow-lg scale-105'
-                      : 'bg-white/40 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-white/30 hover:bg-white/60 dark:hover:bg-white/10'
+                    ? 'bg-gray-900 dark:bg-white text-white dark:text-black border-transparent shadow-lg scale-105'
+                    : 'bg-white/40 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-white/30 hover:bg-white/60 dark:hover:bg-white/10'
                     }`}
                 >
                   {category}
@@ -196,8 +196,8 @@ export default function Attractions() {
               {filteredItems.map((item, idx) => (
                 <FadeUp
                   key={item.id}
-                  delay={idx * 0.1} // Staggered delay
-                  duration={1.2}
+                  delay={idx * 0.15} // Staggered delay
+                  duration={1.6}
                   className="group relative"
                 >
                   <div className="

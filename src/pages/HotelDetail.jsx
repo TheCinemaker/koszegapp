@@ -9,8 +9,7 @@ import {
   IoMapOutline,
   IoLocationOutline,
   IoWifi,
-  IoBedOutline,
-  IoStar
+  IoBedOutline
 } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import GhostImage from '../components/GhostImage';
@@ -37,7 +36,7 @@ export default function HotelDetail() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-indigo-600">
+      <div className="flex items-center justify-center min-h-screen text-violet-600">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-current"></div>
       </div>
     );
@@ -49,7 +48,7 @@ export default function HotelDetail() {
         <p className="text-red-500 mb-6 text-lg font-medium">Hiba: {error || "A szállás nem található."}</p>
         <button
           onClick={() => navigate('/hotels')}
-          className="px-6 py-3 bg-indigo-600 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
+          className="px-6 py-3 bg-violet-600 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
         >
           Vissza a listához
         </button>
@@ -58,7 +57,7 @@ export default function HotelDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-violet-500 selection:text-white">
 
       {/* GLOBAL BACKGROUND NOISE */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
@@ -68,8 +67,8 @@ export default function HotelDetail() {
         {hotel.image ? (
           <ParallaxImage
             src={`/images/hotels/${hotel.image}`}
-            className="w-full h-full"
-            scale={1.15}
+            className="w-full h-full object-cover"
+            scale={1.05}
           />
         ) : (
           <GhostImage className="w-full h-full" />
@@ -96,14 +95,9 @@ export default function HotelDetail() {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex flex-wrap gap-2 mb-4">
-            <span className="px-4 py-1.5 rounded-full bg-blue-500/80 backdrop-blur-md text-white text-xs font-bold uppercase tracking-widest shadow-lg">
+            <span className="px-4 py-1.5 rounded-full bg-violet-500/80 backdrop-blur-md text-white text-xs font-bold uppercase tracking-widest shadow-lg">
               {hotel.type || "Szállás"}
             </span>
-            {hotel.rating && (
-              <span className="px-4 py-1.5 rounded-full bg-yellow-500/80 backdrop-blur-md text-white text-xs font-bold uppercase tracking-widest shadow-lg flex items-center gap-1">
-                {hotel.rating} <IoStar />
-              </span>
-            )}
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl tracking-tighter leading-none max-w-4xl">
             {hotel.name}
@@ -143,8 +137,8 @@ export default function HotelDetail() {
                 )}
 
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                  <IoBedOutline className="text-blue-500" />
-                  A szállásról
+                  <IoBedOutline className="text-violet-500" />
+                  Rövid leírás
                 </h2>
 
                 <div className="prose dark:prose-invert prose-lg max-w-none">
@@ -157,14 +151,14 @@ export default function HotelDetail() {
               {/* RIGHT COLUMN: Sidebar */}
               <div className="lg:col-span-4 space-y-6">
 
-                {/* Price / Address Card */}
+                {/* Address Card */}
                 <FadeUp delay={0.1}>
                   <div className="bg-gray-100 dark:bg-black/30 p-6 rounded-3xl border border-gray-200 dark:border-white/10 space-y-6">
 
                     {/* Address */}
                     <div>
                       <div className="flex items-center gap-4 mb-2">
-                        <div className="p-3 rounded-2xl bg-blue-500/20 text-blue-500">
+                        <div className="p-3 rounded-2xl bg-violet-500/20 text-violet-500">
                           <IoLocationOutline className="text-2xl" />
                         </div>
                         <h3 className="font-bold text-gray-900 dark:text-white">Cím</h3>
@@ -174,15 +168,7 @@ export default function HotelDetail() {
                       </p>
                     </div>
 
-                    {/* Price */}
-                    {hotel.price_from && (
-                      <div className="pt-6 border-t border-gray-200 dark:border-white/10">
-                        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Ár / Éj</h3>
-                        <div className="text-3xl font-black text-gray-900 dark:text-white">
-                          {hotel.price_from} <span className="text-lg text-gray-500 font-medium">{hotel.currency}</span>
-                        </div>
-                      </div>
-                    )}
+                    {/* NOTE: Prices REMOVED as per user request */}
                   </div>
                 </FadeUp>
 
@@ -194,7 +180,7 @@ export default function HotelDetail() {
                         href={hotel.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-2xl flex items-center justify-start gap-4 shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.02]"
+                        className="bg-violet-600 hover:bg-violet-500 text-white p-4 rounded-2xl flex items-center justify-start gap-4 shadow-lg shadow-violet-600/20 transition-all hover:scale-[1.02]"
                       >
                         <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><IoGlobeOutline className="text-xl" /></div>
                         <span className="font-bold">Hivatalos Weboldal</span>

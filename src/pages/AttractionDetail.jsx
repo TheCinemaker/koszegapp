@@ -61,7 +61,7 @@ export default function AttractionDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-indigo-500 selection:text-white relative">
 
       {/* GLOBAL BACKGROUND NOISE (Subtle) */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
@@ -127,7 +127,7 @@ export default function AttractionDetail() {
               <div className="lg:col-span-8 space-y-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                   <IoDiamond className="text-indigo-500" />
-                  Áttekintés
+                  Rövid leírás
                 </h2>
                 <div className="prose dark:prose-invert prose-lg max-w-none">
                   <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium text-justify">

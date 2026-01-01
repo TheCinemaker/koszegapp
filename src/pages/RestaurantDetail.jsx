@@ -159,7 +159,7 @@ export default function RestaurantDetail() {
 
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                   <IoRestaurantOutline className="text-orange-500" />
-                  A konyháról
+                  Rövid leírás
                 </h2>
 
                 {rest.description ? (
@@ -181,7 +181,7 @@ export default function RestaurantDetail() {
                   <FadeUp delay={0.1}>
                     <div className="bg-gray-100 dark:bg-black/30 p-6 rounded-3xl border border-gray-200 dark:border-white/10">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-2xl bg-indigo-500/20 text-indigo-500">
+                        <div className="p-3 rounded-2xl bg-orange-100 dark:bg-orange-900/40 text-orange-600">
                           <IoLocationOutline className="text-2xl" />
                         </div>
                         <h3 className="font-bold text-gray-900 dark:text-white">Cím</h3>
@@ -193,16 +193,22 @@ export default function RestaurantDetail() {
                   </FadeUp>
                 )}
 
-                {/* Contact Actions Grid */}
+                {/* Contact Actions List (Apple Style) */}
                 <FadeUp delay={0.2}>
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="bg-gray-100 dark:bg-black/30 rounded-3xl overflow-hidden shadow-sm border border-gray-200 dark:border-white/10">
+
                     {rest.phone && (
                       <a
                         href={`tel:${rest.phone}`}
-                        className="bg-indigo-600 hover:bg-indigo-500 text-white p-4 rounded-2xl flex items-center justify-start gap-4 shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02]"
+                        className="flex items-center justify-between p-5 bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 transition-colors border-b border-gray-200 dark:border-white/5 last:border-0 group"
                       >
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><IoCallOutline className="text-xl" /></div>
-                        <span className="font-bold">Asztalfoglalás</span>
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-md">
+                            <IoCallOutline className="text-xl" />
+                          </div>
+                          <span className="font-bold text-gray-900 dark:text-white">Hívás</span>
+                        </div>
+                        <span className="text-orange-500 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">Hívás indítása</span>
                       </a>
                     )}
 
@@ -211,10 +217,15 @@ export default function RestaurantDetail() {
                         href={rest.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 p-4 rounded-2xl flex items-center justify-start gap-4 hover:bg-sky-100 dark:hover:bg-sky-900/30 transition-all border border-sky-200 dark:border-sky-800"
+                        className="flex items-center justify-between p-5 bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 transition-colors border-b border-gray-200 dark:border-white/5 last:border-0 group"
                       >
-                        <div className="w-10 h-10 rounded-full bg-sky-500/20 flex items-center justify-center"><IoGlobeOutline className="text-xl" /></div>
-                        <span className="font-bold">Weboldal</span>
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                            <IoGlobeOutline className="text-xl" />
+                          </div>
+                          <span className="font-bold text-gray-900 dark:text-white">Weboldal</span>
+                        </div>
+                        <span className="text-gray-400 text-sm group-hover:text-orange-500 transition-colors">Megnyitás</span>
                       </a>
                     )}
 
@@ -223,21 +234,33 @@ export default function RestaurantDetail() {
                         href={rest.facebook}
                         target="_blank"
                         rel="noreferrer"
-                        className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-4 rounded-2xl flex items-center justify-start gap-4 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all border border-blue-200 dark:border-blue-800"
+                        className="flex items-center justify-between p-5 bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 transition-colors border-b border-gray-200 dark:border-white/5 last:border-0 group"
                       >
-                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><IoLogoFacebook className="text-xl" /></div>
-                        <span className="font-bold">Facebook</span>
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                            <IoLogoFacebook className="text-xl" />
+                          </div>
+                          <span className="font-bold text-gray-900 dark:text-white">Facebook</span>
+                        </div>
+                        <span className="text-gray-400 text-sm group-hover:text-orange-500 transition-colors">Megnyitás</span>
                       </a>
                     )}
+
                     {rest.email && (
                       <a
                         href={`mailto:${rest.email}`}
-                        className="bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 p-4 rounded-2xl flex items-center justify-start gap-4 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all border border-purple-200 dark:border-purple-800"
+                        className="flex items-center justify-between p-5 bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 transition-colors border-b border-gray-200 dark:border-white/5 last:border-0 group"
                       >
-                        <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><IoMailOutline className="text-xl" /></div>
-                        <span className="font-bold">Email írása</span>
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                            <IoMailOutline className="text-xl" />
+                          </div>
+                          <span className="font-bold text-gray-900 dark:text-white">Email</span>
+                        </div>
+                        <span className="text-gray-400 text-sm group-hover:text-orange-500 transition-colors">Levélírás</span>
                       </a>
                     )}
+
                   </div>
                 </FadeUp>
 

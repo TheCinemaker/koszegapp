@@ -75,25 +75,25 @@ export default function GastroCard({ restaurant }) {
       {/* Content */}
       <div className="p-5 flex flex-col grow relative">
         {/* Decorative Type Icon Background */}
-        <div className="absolute -top-6 right-6 w-12 h-12 bg-white dark:bg-gray-800 rounded-2xl shadow-lg flex items-center justify-center text-2xl text-indigo-500 rotate-12 group-hover:rotate-0 transition-transform duration-500 border border-white/20">
+        <div className="absolute -top-6 right-6 w-12 h-12 bg-white dark:bg-gray-800 rounded-2xl shadow-lg flex items-center justify-center text-2xl text-orange-500 rotate-12 group-hover:rotate-0 transition-transform duration-500 border border-white/20">
           {typeIcon}
         </div>
 
         <div className="mb-1">
-          <span className="inline-block px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 text-[10px] font-bold uppercase tracking-wider">
+          <span className="inline-block px-2 py-0.5 rounded-md bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-300 text-[10px] font-bold uppercase tracking-wider">
             {restaurant.type}
           </span>
         </div>
 
-        <h3 className="text-xl font-black text-gray-900 dark:text-gray-100 leading-tight mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+        <h3 className="text-xl font-black text-gray-900 dark:text-gray-100 leading-tight mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
           {restaurant.name}
         </h3>
 
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-gray-100 dark:border-white/5">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest group-hover:text-indigo-500 transition-colors">
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest group-hover:text-orange-500 transition-colors">
             Részletek
           </span>
-          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:to-red-600 group-hover:text-white transition-all duration-300">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>

@@ -44,8 +44,7 @@ import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import WeatherModal from './components/WeatherModal';
 import FloatingNavbar from './components/FloatingNavbar';
 import FloatingButtons from './components/FloatingButtons';
-import OstromDrawerFullAnimated from './components/OstromDrawerFullAnimated';
-import AnimatedWeeklyMenuDrawer from './components/AnimatedWeeklyMenuDrawer';
+import SmartSpotlight from './components/SmartSpotlight';
 import LiveCityMap from './components/LiveCityMap';
 
 import AnimatedRoutes from './components/AnimatedRoutes';
@@ -91,7 +90,7 @@ function MainAppContent() {
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
   // --- MAINTENANCE MODE LOGIC ---
-  const [maintenanceMode, setMaintenanceMode] = useState(!import.meta.env.DEV); // Devben nyitva, élesben karbantartás
+  const [maintenanceMode, setMaintenanceMode] = useState(false); // Devben nyitva, élesben karbantartás
 
   useEffect(() => {
     // 1. Ellenőrizzük, hogy van-e bypass kulcs a localStorage-ban
@@ -254,7 +253,7 @@ function MainAppContent() {
               rounded-[2rem] 
               border border-white/50 dark:border-white/20 
               shadow-[0_10px_40px_rgba(0,0,0,0.1)]
-              relative overflow-hidden
+              relative
             ">
               {/* Subtle Gradient Accent (Top Lip) */}
               <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
@@ -270,10 +269,10 @@ function MainAppContent() {
                   onClick={() => navigate('/')}
                   className="flex items-center gap-0.5 cursor-pointer whitespace-nowrap"
                 >
-                  <span className="text-sm sm:text-lg font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+                  <span className="text-base sm:text-xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
                     Kőszeg
                   </span>
-                  <span className="text-sm sm:text-lg font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight">
+                  <span className="text-base sm:text-xl font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight">
                     APP
                   </span>
                 </div>
@@ -379,10 +378,10 @@ function MainAppContent() {
 
           {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
+
           <FloatingNavbar />
-          {/* <FloatingButtons /> - Replaced by FloatingNavbar */}
-          <OstromDrawerFullAnimated />
-          <AnimatedWeeklyMenuDrawer />
+          <SmartSpotlight appData={appData} />
+
 
           {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}
           {/* {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />} */}

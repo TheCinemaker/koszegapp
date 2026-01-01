@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
 const SOURCES = [
@@ -11,13 +11,13 @@ const SOURCES = [
   { url: "/data/info.json", label: "Info", key: "info", route: "/info" }
 ];
 
-export default function SearchBar() {
+export default function SearchBar() { // Refreshed
   const [q, setQ] = useState("");
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [modal, setModal] = useState(null);
   const ref = useRef();
+  const navigate = useNavigate(); // Hook for navigation
 
   // "Élő" keresés useEffect-fel, ami a 'q' (keresőszó) változását figyeli
   useEffect(() => {
@@ -73,12 +73,10 @@ export default function SearchBar() {
   };
 
   function handleItemClick(item, route) {
-    setModal({ ...item, route });
+    // Navigate immediately to the detail page
+    navigate(`${route}/${item.id}`);
     setShowResults(false);
-  }
-
-  function closeModal() {
-    setModal(null);
+    setQ(""); // Optional: Clear search after navigation
   }
 
   return (
@@ -115,11 +113,10 @@ export default function SearchBar() {
       </form>
 
       {showResults && (
-        <div className="absolute z-50 w-full max-h-80 overflow-auto mt-2
-                         bg-white/90 dark:bg-gray-800/90
-                         backdrop-blur-xl
-                         border border-white/20 dark:border-gray-700/50
-                         rounded-2xl shadow-2xl">
+        <div className="absolute z-[100] w-full max-h-80 overflow-auto mt-2
+                         bg-white dark:bg-gray-800
+                         border border-gray-200 dark:border-gray-700
+                         rounded-2xl shadow-xl">
           {loading && <div className="p-4 text-gray-500 dark:text-gray-400">Keresés…</div>}
           {Object.keys(results).length === 0 && !loading && q.length > 1 && (
             <div className="p-4 text-gray-500 dark:text-gray-400">Nincs találat.</div>
@@ -153,58 +150,6 @@ export default function SearchBar() {
               </ul>
             </div>
           ))}
-        </div>
-      )}
-
-      {modal && (
-        <div
-          className="fixed inset-0 bg-black/40 z-[100] flex items-center justify-center"
-          onClick={closeModal}
-        >
-          <div
-            className="bg-white dark:bg-gray-800 rounded-xl
-                       shadow-lg dark:shadow-xl
-                       max-w-sm w-full p-5
-                       text-gray-900 dark:text-gray-100
-                       relative"
-            onClick={e => e.stopPropagation()}
-          >
-            <button
-              onClick={closeModal}
-              aria-label="Bezár"
-              className="absolute top-2 right-2 text-gray-400 dark:text-gray-500
-                         hover:text-gray-700 dark:hover:text-gray-200 text-xl"
-            >×</button>
-            <div className="text-lg font-bold mb-1">{modal.name}</div>
-            {modal.tags && <div className="mb-2 text-xs text-gray-500 dark:text-gray-400">{modal.tags.join(", ")}</div>}
-            {modal.address && <div className="mb-1"><b>Cím:</b> {modal.address}</div>}
-            {modal.date && <div className="mb-1"><b>Dátum:</b> {modal.date} {modal.time || ""}</div>}
-            {modal.description && <div className="mb-2">{modal.description}</div>}
-            {modal.website && (
-              <div>
-                <a
-                  href={modal.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline text-indigo-500 dark:text-indigo-300"
-                >Weboldal megnyitása</a>
-              </div>
-            )}
-            {modal.route && modal.id && (
-              <div className="mt-4">
-                {/* A Link komponens használata a belső navigációhoz */}
-                <Link
-                  to={`${modal.route}/${modal.id}`}
-                  className="bg-indigo-600 dark:bg-indigo-500
-                             text-white px-4 py-2 rounded
-                             hover:bg-indigo-500 dark:hover:bg-indigo-600
-                             transition-colors duration-150"
-                >
-                  Részletek oldal →
-                </Link>
-              </div>
-            )}
-          </div>
         </div>
       )}
     </div>

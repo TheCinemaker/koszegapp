@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { format } from 'date-fns';
 import { hu } from 'date-fns/locale';
 import { WiHumidity, WiStrongWind, WiRaindrop, WiSunrise, WiSunset, WiBarometer, WiThermometer } from 'react-icons/wi';
-import { FaTimes } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
 
 const API_KEY = 'ebe4857b9813fcfd39e7ce692e491045';
 
@@ -56,146 +56,160 @@ export default function WeatherModal({ onClose }) {
     return { city: fullData.city, now, hourly, daily };
   }, [fullData]);
 
-  // Dinamikus háttér a várható időjárás alapján
-  const getGradient = (weatherDesc) => {
+  // Apple Weather Style Gradients (Vibrant & Deep)
+  const getGradient = (weatherDesc, icon) => {
     if (!weatherDesc) return 'bg-gradient-to-br from-blue-500 to-cyan-400';
     const desc = weatherDesc.toLowerCase();
-    if (desc.includes('clear') || desc.includes('tiszta') || desc.includes('nap')) return 'bg-gradient-to-br from-orange-400 via-amber-300 to-blue-400';
-    if (desc.includes('cloud') || desc.includes('felhő')) return 'bg-gradient-to-br from-slate-400 via-gray-300 to-blue-200';
-    if (desc.includes('rain') || desc.includes('eső')) return 'bg-gradient-to-br from-indigo-600 via-blue-700 to-purple-800';
-    if (desc.includes('storm') || desc.includes('zivatar')) return 'bg-gradient-to-br from-gray-900 via-gray-800 to-purple-900';
-    if (desc.includes('snow') || desc.includes('hó')) return 'bg-gradient-to-br from-blue-100 via-white to-blue-200';
-    return 'bg-gradient-to-br from-blue-500 to-cyan-400'; // Fallback
+    const isNight = icon && icon.includes('n');
+
+    if (desc.includes('clear') || desc.includes('tiszta') || desc.includes('nap')) {
+      return isNight
+        ? 'bg-gradient-to-b from-[#1c1c35] to-[#4343bf]' // Deep Night Blue
+        : 'bg-gradient-to-b from-[#2980b9] to-[#6dd5fa]'; // Vibrant Day Blue
+    }
+    if (desc.includes('cloud') || desc.includes('felhő')) {
+      return isNight
+        ? 'bg-gradient-to-b from-[#232526] to-[#414345]' // Dark Gray Night
+        : 'bg-gradient-to-b from-[#567a98] to-[#99aabb]'; // Blue-Gray Cloudy
+    }
+    if (desc.includes('rain') || desc.includes('eső')) {
+      return 'bg-gradient-to-b from-[#203a43] to-[#2c5364]'; // Deep Rainy Slate
+    }
+    if (desc.includes('storm') || desc.includes('zivatar')) {
+      return 'bg-gradient-to-b from-[#0f2027] to-[#203a43]'; // Stormy Dark
+    }
+    if (desc.includes('snow') || desc.includes('hó')) {
+      return 'bg-gradient-to-b from-[#83a4d4] to-[#b6fbff]'; // Icy Blue
+    }
+    return 'bg-gradient-to-br from-blue-500 to-cyan-400'; // Default Vivid Blue
   };
 
-  const gradientClass = processedData ? getGradient(processedData.now.weather[0].main) : 'bg-gradient-to-br from-gray-200 to-gray-400';
+  const gradientClass = processedData
+    ? getGradient(processedData.now.weather[0].main, processedData.now.weather[0].icon)
+    : 'bg-gradient-to-br from-blue-500 to-cyan-500'; // Default loading vibrant
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-500"
+        className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-500"
         onClick={onClose}
       />
 
       {/* Main Card */}
       <div
         className={`
-          relative w-full max-w-lg max-h-[85vh] flex flex-col overflow-hidden rounded-[32px] 
-          shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]
-          transition-all duration-500 ease-out transform
+          relative w-full max-w-sm flex flex-col overflow-hidden rounded-[40px] 
+          shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]
+          transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] transform
           ${animate ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-8'}
           ${gradientClass}
+          border border-white/20 ring-1 ring-white/10
         `}
       >
-        {/* Glass Overlay for depth */}
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px] pointer-events-none" />
 
-        {/* Noise Texture */}
-        <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none" />
-
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 text-white transition-colors backdrop-blur-md"
+          className="absolute top-5 right-5 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/30 text-white transition-colors backdrop-blur-md"
         >
-          <FaTimes />
+          <IoClose className="text-xl" />
         </button>
 
         {loading || !processedData ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-white relative z-10 min-h-[300px]">
+          <div className="flex-1 flex flex-col items-center justify-center text-white relative z-10 min-h-[400px]">
             <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mb-4" />
-            <p className="font-medium tracking-wide">Meteorológia indítása...</p>
           </div>
         ) : (
-          <div className="relative z-10 text-white overflow-y-auto scrollbar-hide">
+          <div className="relative z-10 text-white overflow-y-auto scrollbar-hide max-h-[80vh]">
 
-            {/* Top Section: Big Temp */}
-            <div className="pt-8 px-6 text-center">
-              <h2 className="text-lg font-medium opacity-90 tracking-widest uppercase mb-1">{processedData.city.name}</h2>
-              <p className="text-sm opacity-70 mb-4">{capitalize(processedData.now.weather[0].description)}</p>
+            {/* Top Section: City & Big Temp */}
+            <div className="pt-10 px-6 flex flex-col items-center text-center">
+              <h2 className="text-3xl font-semibold tracking-tight mb-0 drop-shadow-md">{processedData.city.name}</h2>
+              <p className="text-lg font-medium opacity-90 mb-4 drop-shadow-sm">{capitalize(processedData.now.weather[0].description)}</p>
 
-              <div className="relative flex items-center justify-center h-32">
-                <span className="text-7xl sm:text-9xl leading-none font-black tracking-tighter drop-shadow-lg">
+              <div className="relative flex items-center justify-center -my-2">
+                <span className="text-[7rem] leading-none font-thin tracking-tighter drop-shadow-xl ml-4">
                   {Math.round(processedData.now.main.temp)}°
                 </span>
-                <img
-                  src={`https://openweathermap.org/img/wn/${processedData.now.weather[0].icon}@4x.png`}
-                  alt="icon"
-                  className="w-24 h-24 sm:w-32 sm:h-32 absolute -right-2 -top-2 drop-shadow-2xl"
-                />
               </div>
 
-              <div className="flex justify-center gap-6 mt-2 opacity-90 text-sm font-medium">
-                <span className="bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">H: {Math.round(processedData.now.main.temp_max)}°</span>
-                <span className="bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">L: {Math.round(processedData.now.main.temp_min)}°</span>
+              <div className="flex justify-center gap-4 mt-2 text-base font-medium opacity-100">
+                <span className="drop-shadow-md">H: {Math.round(processedData.now.main.temp_max)}°</span>
+                <span className="drop-shadow-md">L: {Math.round(processedData.now.main.temp_min)}°</span>
               </div>
             </div>
 
-            {/* Middle Section: Hourly Scroller */}
-            <div className="mt-6 mb-6">
-              <div className="flex gap-3 overflow-x-auto px-6 pb-2 scrollbar-hide">
+            {/* Hourly Scroller (Glass Strip) */}
+            <div className="mt-8 mb-6 border-y border-white/20 bg-white/10 backdrop-blur-md">
+              <div className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide">
                 {processedData.hourly.map((period, i) => (
-                  <div key={i} className="flex-shrink-0 flex flex-col items-center bg-white/10 hover:bg-white/20 transition-colors rounded-xl p-2 w-[60px] backdrop-blur-md border border-white/10">
-                    <span className="text-xs opacity-80">{format(new Date(period.dt * 1000), 'HH')}h</span>
-                    <img src={`https://openweathermap.org/img/wn/${period.weather[0].icon}@2x.png`} className="w-8 h-8 my-1 drop-shadow-md" alt="" />
-                    <span className="font-bold text-sm">{Math.round(period.main.temp)}°</span>
+                  <div key={i} className="flex-shrink-0 flex flex-col items-center gap-1 w-[50px]">
+                    <span className="text-xs font-semibold opacity-90">{format(new Date(period.dt * 1000), 'HH')}</span>
+                    <img src={`https://openweathermap.org/img/wn/${period.weather[0].icon}.png`} className="w-8 h-8 drop-shadow-sm" alt="" />
+                    <span className="font-bold text-lg leading-none">{Math.round(period.main.temp)}°</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Bottom Section: Bento Grid Details */}
-            <div className="px-6 pb-6 space-y-4">
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-black/20 rounded-2xl p-3 flex items-center gap-2 backdrop-blur-md border border-white/5">
-                  <WiStrongWind className="text-3xl opacity-80" />
-                  <div>
-                    <p className="text-[10px] opacity-60 uppercase tracking-wider">Szél</p>
-                    <p className="text-sm font-bold">{Math.round(processedData.now.wind.speed * 3.6)} km/h</p>
-                  </div>
-                </div>
-                <div className="bg-black/20 rounded-2xl p-3 flex items-center gap-2 backdrop-blur-md border border-white/5">
-                  <WiHumidity className="text-3xl opacity-80" />
-                  <div>
-                    <p className="text-[10px] opacity-60 uppercase tracking-wider">Pára</p>
-                    <p className="text-sm font-bold">{processedData.now.main.humidity}%</p>
-                  </div>
-                </div>
-                <div className="bg-black/20 rounded-2xl p-3 flex items-center gap-2 backdrop-blur-md border border-white/5">
-                  <WiSunrise className="text-3xl opacity-80" />
-                  <div>
-                    <p className="text-[10px] opacity-60 uppercase tracking-wider">Napkelte</p>
-                    <p className="text-sm font-bold">{format(new Date(processedData.city.sunrise * 1000), 'HH:mm')}</p>
-                  </div>
-                </div>
-                <div className="bg-black/20 rounded-2xl p-3 flex items-center gap-2 backdrop-blur-md border border-white/5">
-                  <WiSunset className="text-3xl opacity-80" />
-                  <div>
-                    <p className="text-[10px] opacity-60 uppercase tracking-wider">Napnyugta</p>
-                    <p className="text-sm font-bold">{format(new Date(processedData.city.sunset * 1000), 'HH:mm')}</p>
-                  </div>
-                </div>
-              </div>
+            {/* Bottom Section: Details & Daily */}
+            <div className="px-5 pb-8 space-y-4">
 
-              {/* 5 Day Forecast List */}
-              <div className="bg-white/10 rounded-3xl p-4 backdrop-blur-lg border border-white/10">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-2">5 Napos Előrejelzés</h3>
-                <div className="space-y-2 text-sm">
+              {/* 5 Day Forecast List (IOS List Style) */}
+              <div className="bg-black/20 rounded-2xl p-4 backdrop-blur-md border border-white/10">
+                <div className="space-y-3 text-sm">
                   {processedData.daily.map((day, i) => (
-                    <div key={i} className="flex items-center justify-between">
-                      <span className="w-20 font-medium text-xs">{day.dayName}</span>
+                    <div key={i} className="flex items-center justify-between border-b border-white/10 last:border-0 pb-2 last:pb-0">
+                      <span className="w-20 font-semibold text-base">{day.dayName}</span>
                       <div className="flex-1 flex items-center justify-center">
-                        <img src={`https://openweathermap.org/img/wn/${day.icon}@2x.png`} className="w-6 h-6 opacity-90" alt="" />
+                        <img src={`https://openweathermap.org/img/wn/${day.icon}.png`} className="w-8 h-8 opacity-100 drop-shadow-sm" alt="" />
                       </div>
-                      <div className="flex gap-2 text-right w-16 justify-end">
-                        <span className="font-bold">{day.maxTemp}°</span>
-                        <span className="opacity-50 text-xs">{day.minTemp}°</span>
+                      <div className="flex gap-3 text-right w-20 justify-end font-medium">
+                        <span className="opacity-60">{day.minTemp}°</span>
+                        //
+                        <span className="opacity-100">{day.maxTemp}°</span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-black/20 rounded-2xl p-3 pl-4 flex flex-col justify-center backdrop-blur-md border border-white/10 min-h-[100px]">
+                  <div className="flex items-center gap-1 opacity-70 mb-1">
+                    <WiStrongWind className="text-xl" />
+                    <span className="text-xs font-semibold uppercase">Szél</span>
+                  </div>
+                  <p className="text-2xl font-semibold">{Math.round(processedData.now.wind.speed * 3.6)} <span className="text-sm font-normal">km/h</span></p>
+                </div>
+
+                <div className="bg-black/20 rounded-2xl p-3 pl-4 flex flex-col justify-center backdrop-blur-md border border-white/10">
+                  <div className="flex items-center gap-1 opacity-70 mb-1">
+                    <WiHumidity className="text-xl" />
+                    <span className="text-xs font-semibold uppercase">Pára</span>
+                  </div>
+                  <p className="text-2xl font-semibold">{processedData.now.main.humidity}%</p>
+                </div>
+
+                <div className="bg-black/20 rounded-2xl p-3 pl-4 flex flex-col justify-center backdrop-blur-md border border-white/10">
+                  <div className="flex items-center gap-1 opacity-70 mb-1">
+                    <WiSunrise className="text-xl" />
+                    <span className="text-xs font-semibold uppercase">Napkelte</span>
+                  </div>
+                  <p className="text-xl font-semibold">{format(new Date(processedData.city.sunrise * 1000), 'HH:mm')}</p>
+                </div>
+
+                <div className="bg-black/20 rounded-2xl p-3 pl-4 flex flex-col justify-center backdrop-blur-md border border-white/10">
+                  <div className="flex items-center gap-1 opacity-70 mb-1">
+                    <WiSunset className="text-xl" />
+                    <span className="text-xs font-semibold uppercase">Napnyugta</span>
+                  </div>
+                  <p className="text-xl font-semibold">{format(new Date(processedData.city.sunset * 1000), 'HH:mm')}</p>
+                </div>
+              </div>
+
             </div>
 
           </div>

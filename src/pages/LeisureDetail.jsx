@@ -147,7 +147,7 @@ export default function LeisureDetail() {
 
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                   <IoInformationCircleOutline className="text-teal-500" />
-                  A programról
+                  Rövid leírás
                 </h2>
 
                 {item.shortDescription && (

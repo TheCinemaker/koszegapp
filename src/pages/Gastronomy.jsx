@@ -2,6 +2,9 @@ import React, { useState, useMemo, useCallback, useRef } from 'react';
 import GastroCard from '../components/GastroCard';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { FaSearch } from 'react-icons/fa';
+import { FadeUp } from '../components/AppleMotion';
+
+import { useNavigate } from 'react-router-dom';
 
 const featuredIds = ['gastro-10'];
 
@@ -19,6 +22,7 @@ function makeStableWeightFn(salt) {
 }
 
 export default function Gastronomy({ restaurants = [], loading }) {
+  const navigate = useNavigate();
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const { favorites, isFavorite } = useFavorites();
@@ -59,7 +63,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
       </div>
     );
   }
@@ -69,7 +73,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
       {/* 1. HEADER section wrapper matching Attractions */}
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-4 pt-2">
-          <button onClick={() => window.history.back()} className="w-9 h-9 rounded-full bg-white/50 dark:bg-white/10 backdrop-blur-md flex items-center justify-center shadow-sm hover:scale-105 transition-transform">
+          <button onClick={() => navigate('/')} className="w-9 h-9 rounded-full bg-white/50 dark:bg-white/10 backdrop-blur-md flex items-center justify-center shadow-sm hover:scale-105 transition-transform">
             <svg className="w-5 h-5 text-gray-700 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
           </button>
           <h1 className="text-xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">
@@ -92,15 +96,15 @@ export default function Gastronomy({ restaurants = [], loading }) {
                        border border-white/40 dark:border-gray-700/50
                        text-xs font-medium text-gray-900 dark:text-gray-100
                        placeholder-gray-500 dark:placeholder-gray-400
-                       focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                       focus:outline-none focus:ring-2 focus:ring-orange-500/30
                        shadow-sm transition-all duration-300
                        hover:bg-white/80 dark:hover:bg-gray-800/80"
             />
             <button
               className="w-8 h-8 rounded-lg flex items-center justify-center
-                       bg-gradient-to-br from-indigo-500 to-purple-600
+                       bg-gradient-to-br from-orange-500 to-red-600
                        text-white shadow-sm
-                       hover:from-indigo-600 hover:to-purple-700
+                       hover:from-orange-600 hover:to-red-700
                        transition-all duration-300
                        hover:scale-105 active:scale-95"
             >
@@ -118,7 +122,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
               className={`
                  flex-shrink-0 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wide transition-transform active:scale-95 border
                  ${(filterType === type || (filterType === 'all' && type === 'Minden'))
-                  ? 'bg-indigo-600 text-white border-transparent shadow-md'
+                  ? 'bg-orange-600 text-white border-transparent shadow-md'
                   : 'bg-white/50 dark:bg-white/10 text-gray-600 dark:text-gray-400 border-white/40 dark:border-white/10 hover:bg-white/80'
                 }
                `}
@@ -132,16 +136,17 @@ export default function Gastronomy({ restaurants = [], loading }) {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {finalList.length > 0 ? (
-            finalList.map(restaurant => (
-              <GastroCard
-                key={restaurant.id}
-                restaurant={restaurant}
-              />
+            finalList.map((restaurant, index) => (
+              <FadeUp key={restaurant.id} delay={index * 0.15} duration={1.6}>
+                <GastroCard
+                  restaurant={restaurant}
+                />
+              </FadeUp>
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-60">
               <p className="text-sm font-bold text-gray-500">Nincs találat...</p>
-              <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-indigo-500 text-xs font-bold hover:underline">
+              <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-orange-500 text-xs font-bold hover:underline">
                 Szűrők törlése
               </button>
             </div>

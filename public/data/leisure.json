@@ -132,7 +132,7 @@
     "name": "Testvérvárosi Park",
     "shortDescription": "Kisebb közösségi park a Balog‑iskola előtt, testvérvárosi emlékhely",
     "description": "Ez a park közvetlenül a Béri Balog Ádám Általános Iskola előtt található, a 2020-as Zöld Városka projekt részeként épült. Térköves és kavicsos sétányokkal, pergolával, információs gúlával, padokkal, facsemetékkel (japán díszcseresznye, csüngő nyír) és hulladékgyűjtőkkel része lett a helyi közösségi életnek. Gyerekek és felnőttek is használják iskolai és kulturális programokra — például térzenékre és iskolai eseményekre.",
-    "image": "testvervarosi-park-koszeg.jpg",
+    "image": "",
     "coords": {
       "lat": 47.3815,
       "lng": 16.54496
@@ -196,7 +196,7 @@
     "name": "Várárok Játszótér",
     "shortDescription": "Kisebb játszótér a Jurisics-vár vizesárok melletti parkjában",
     "description": "A várárok játszótér a Jurisics-vár védelmi árok részénél, a vár tövében található, ideális gyerekeknek. Játszóeszközökkel, padokkal, biztonságos burkolattal felszerelt helyszín, amelyet a Kőszegi Ostromnapok programjai is gyakran használanak gyermekostrom és interaktív bemutatók színhelyeként :contentReference[oaicite:1]{index=1}.",
-    "image": "játszi.jpg",
+    "image": "jatszi.jpg",
     "coords": {
       "lat": 47.3883341,
       "lng": 16.5388965
@@ -262,7 +262,7 @@
     "description": "A Királyvölgy legendás pihenőhelye, ahol egykor három pad állt körben egy kis tisztáson – ezért nevezték Hármaspadnak. A helyi fiatalok kedvelt 'randihelye' volt, ma is pihenőpont turistautakon. Része a Királyvölgy–Szikla-forrás túraútvonalnak, ahol vezetett túrák programjai is érintik ezt a pontot :contentReference[oaicite:1]{index=1}.",
     "image": "kirv.webp",
     "coords": {
-      "lat": 47.39044509100016, 
+      "lat": 47.39044509100016,
       "lng": 16.529360223776383
     },
     "lengthKm": 0.05,
@@ -320,7 +320,7 @@
     "gpxUrl": null
   },
   {
-    "id": "leisure-18",
+    "id": "leisure-22",
     "name": "Királyvölgyi Tanösvény",
     "shortDescription": "1,5 km séta, 34 állomás – bemutatja az Írottkő Natúrpark növény- és állatvilágát",
     "description": "Ez Magyarország első tanösvénye Kőszeg belterületén, amely 34 háromszög alakú információs táblán mutatja be a környék gazdag növény- és állatvilágát. A táblák festményekkel és két nyelvű (magyar–latin) feliratokkal vannak ellátva, a séta kb. 1 óra, mindössze 30‑40 méternyi szintkülönbséggel. A kirándulás Árpád térről indul, követi a K+ turistajelzést, majd a Királyvölgy aszfaltozott útján ér véget. A tanösvényt a Kőszeg Város Önkormányzata tartja karban, a művészi kivitelezés Németh János munkája. Ajánlott kényelmes cipő és jó idő, szakvezetés igényelhető.",

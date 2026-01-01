@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { fetchEvents } from '../api';
 import UniversalNav from '../components/UniversalNav'; // ADDED IMPORT
@@ -39,6 +40,8 @@ import EventImageCard from '../components/EventImageCard'; // Using logic, but c
 
 const MONTH_NAMES = ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'];
 const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+import GhostImage from '../components/GhostImage'; // ADDED IMPORT
+import { FadeUp } from '../components/AppleMotion';
 
 // --- Helper Logic (Same as before) ---
 function computeRange(evt) {
@@ -100,18 +103,21 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
 
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden">
-        {evt.image ? (
+        {evt.image && evt.image !== 'balkep_default.jpg' ? (
           <img
             src={`/images/events/${evt.image}`}
             alt={evt.name}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
+            onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-            <FaCalendarPlus className="text-4xl text-indigo-200" />
-          </div>
+          <GhostImage className="w-full h-full" />
         )}
+        {/* Fallback for onError (hidden by default) */}
+        <div className="hidden w-full h-full absolute inset-0">
+          <GhostImage className="w-full h-full" />
+        </div>
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
@@ -308,69 +314,57 @@ export default function Events() {
         </div>
 
         {/* 3. FILTERS (Compact Pills - Native iOS Feel) */}
-        <div className="grid grid-cols-4 gap-2 mb-6">
-          {/* WEEK */}
-          <button
-            onClick={() => setFilter('week')}
-            className={`px-1 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border flex flex-col sm:flex-row items-center justify-center gap-1 ${filter === 'week'
-                ? 'gradient-vibrant-primary text-white border-transparent shadow-sm'
-                : 'bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm text-gray-600 dark:text-gray-400 border-white/40 dark:border-gray-700 hover:bg-white/80 dark:hover:bg-gray-700'
-              }`}
-          >
-            <FaCalendarWeek className="text-[10px]" />
-            <span>HETI</span>
-          </button>
-
-          {/* MONTH */}
-          <button
-            onClick={() => setFilter('month')}
-            className={`px-1 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border flex flex-col sm:flex-row items-center justify-center gap-1 ${filter === 'month'
-                ? 'gradient-vibrant-primary text-white border-transparent shadow-sm'
-                : 'bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm text-gray-600 dark:text-gray-400 border-white/40 dark:border-gray-700 hover:bg-white/80 dark:hover:bg-gray-700'
-              }`}
-          >
-            <FaCalendarPlus className="text-[10px]" />
-            <span>HAVI</span>
-          </button>
-
-          {/* DATE PICKER */}
-          <button
-            onClick={() => setOpenPicker(true)}
-            className={`px-1 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border flex flex-col sm:flex-row items-center justify-center gap-1 ${filter === 'byMonth'
-                ? 'gradient-vibrant-primary text-white border-transparent shadow-sm'
-                : 'bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm text-gray-600 dark:text-gray-400 border-white/40 dark:border-gray-700 hover:bg-white/80 dark:hover:bg-gray-700'
-              }`}
-          >
-            <FaCalendarAlt className="text-[10px]" />
-            <span className="truncate max-w-full uppercase">
-              {filter === 'byMonth' ? MONTH_SHORT[selectedMonth - 1] + '.' : 'DÁTUM'}
-            </span>
-          </button>
-
-          {/* ALL */}
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-1 py-1.5 rounded-md text-[11px] font-semibold tracking-wide transition-all border flex flex-col sm:flex-row items-center justify-center gap-1 ${filter === 'all'
-                ? 'gradient-vibrant-primary text-white border-transparent shadow-sm'
-                : 'bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm text-gray-600 dark:text-gray-400 border-white/40 dark:border-gray-700 hover:bg-white/80 dark:hover:bg-gray-700'
-              }`}
-          >
-            <FaList className="text-[10px]" />
-            <span>MIND</span>
-          </button>
+        {/* 3. FILTERS (iOS Segmented Control Style) */}
+        <div className="mb-8 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex p-1 bg-gray-200/50 dark:bg-white/10 backdrop-blur-xl rounded-full relative w-full sm:w-auto sm:inline-flex min-w-min">
+            {[
+              { id: 'week', label: 'HETI', icon: FaCalendarWeek },
+              { id: 'month', label: 'HAVI', icon: FaCalendarPlus },
+              // Special case for Picker is handled in logic below, but we can treat it as a tab ID 'byMonth'
+              { id: 'byMonth', label: filter === 'byMonth' ? MONTH_SHORT[selectedMonth - 1] + '.' : 'DÁTUM', icon: FaCalendarAlt, onClick: () => setOpenPicker(true) },
+              { id: 'all', label: 'MIND', icon: FaList }
+            ].map((tab) => {
+              const isActive = filter === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    if (tab.onClick) tab.onClick();
+                    else setFilter(tab.id);
+                  }}
+                  className={`
+                    relative z-10 flex items-center justify-center gap-1.5 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-colors duration-200 flex-1 sm:flex-none whitespace-nowrap
+                    ${isActive ? 'text-gray-900 dark:text-gray-900' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}
+                  `}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeFilter"
+                      className="absolute inset-0 bg-white shadow-sm rounded-full pointer-events-none"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                  {/* Icon & Text relative z-index higher than background */}
+                  <span className="relative z-10 text-[10px] sm:text-xs"><tab.icon /></span>
+                  <span className="relative z-10">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* 4. EVENT GRID */}
         {upcoming.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {upcoming.map((evt, idx) => (
-              <div key={evt.id} className="animate-fade-in-up" style={{ animationDelay: `${idx * 50}ms` }}>
+              <FadeUp key={evt.id} delay={idx * 0.15} duration={1.6}>
                 <GigatrendyCard
                   evt={evt}
                   isFavorite={isFavorite(evt.id)}
                   toggleFavorite={isFavorite(evt.id) ? removeFavorite : addFavorite}
                 />
-              </div>
+              </FadeUp>
             ))}
           </div>
         ) : (

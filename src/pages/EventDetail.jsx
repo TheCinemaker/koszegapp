@@ -113,14 +113,14 @@ export default function EventDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-purple-500 selection:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-purple-500 selection:text-white relative">
 
       {/* GLOBAL BACKGROUND NOISE */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       {/* --- HERO IMAGE SECTION --- */}
       <div className="relative h-[65vh] w-full overflow-hidden">
-        {evt.image ? (
+        {evt.image && evt.image !== 'balkep_default.jpg' ? (
           <ParallaxImage
             src={`/images/events/${evt.image}`}
             className="w-full h-full"
@@ -207,7 +207,7 @@ export default function EventDetail() {
                   )}
                 </div>
 
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Leírás</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Rövid leírás</h2>
                 <div className="prose dark:prose-invert prose-lg max-w-none">
                   <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium whitespace-pre-wrap">
                     {evt.description}
@@ -238,7 +238,22 @@ export default function EventDetail() {
                           Hivatalos Oldal
                         </motion.a>
                       )}
-                      <button className="w-full bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-300 dark:hover:bg-white/20 transition-all">
+                      <button
+                        onClick={() => {
+                          if (navigator.share) {
+                            navigator.share({
+                              title: evt.name,
+                              text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
+                              url: window.location.href,
+                            }).catch(console.error);
+                          } else {
+                            // Fallback for browsers that don't support Web Share API
+                            navigator.clipboard.writeText(window.location.href);
+                            alert('Link másolva a vágólapra!');
+                          }
+                        }}
+                        className="w-full bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-300 dark:hover:bg-white/20 transition-all"
+                      >
                         <IoShareSocialOutline className="text-xl" />
                         Megosztás
                       </button>
