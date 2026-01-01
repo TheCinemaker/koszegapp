@@ -1,4 +1,4 @@
-```javascript
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { fetchInfo } from '../api';
 import { Link } from 'react-router-dom';
@@ -38,7 +38,7 @@ const linkifyPhones = (text) => {
       return (
         <a
           key={i}
-          href={`tel:${ part.replace(/\s/g, '') } `}
+          href={`tel:${part.replace(/\s/g, '')} `}
           className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:bg-indigo-100 dark:hover:bg-indigo-500/30 mt-2 border border-indigo-200 dark:border-indigo-500/30"
         >
           <IoCallOutline className="text-sm" />
@@ -115,7 +115,7 @@ export default function Info() {
               <section key={key} className="relative">
                 {/* Section Title */}
                 <FadeUp delay={0.1} className="flex items-center gap-3 mb-5 pl-2">
-                  <div className={`w - 8 h - 8 rounded - lg bg - gradient - to - br ${ color } flex items - center justify - center text - white shadow - lg`}>
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg`}>
                     <CatIcon className="text-lg" />
                   </div>
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">{title}</h2>
@@ -180,9 +180,9 @@ export default function Info() {
                           <div className="flex items-start gap-4">
                             {/* Icon Box */}
                             <div className={`
-w - 12 h - 12 rounded - 2xl flex items - center justify - center text - white shadow - md shrink - 0
-bg - gradient - to - br ${ color } group - hover: scale - 110 group - hover: rotate - 6 transition - all duration - 500
-  `}>
+                              w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-md shrink-0
+                              bg-gradient-to-br ${color} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500
+                            `}>
                               <IconComponent className="text-xl" />
                             </div>
 
@@ -208,4 +208,4 @@ bg - gradient - to - br ${ color } group - hover: scale - 110 group - hover: rot
     </div>
   );
 }
-```
+

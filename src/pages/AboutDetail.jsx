@@ -120,7 +120,7 @@ export default function AboutDetail() {
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                 <span className="relative text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-gray-300 border border-white/10 px-6 py-2 rounded-full backdrop-blur-md bg-black/50">
-                  White-Label Smart City Platform
+                  The Ultimate City Experience
                 </span>
               </div>
             </motion.div>
@@ -140,8 +140,8 @@ export default function AboutDetail() {
               transition={{ duration: 2, delay: 0.8 }}
               className="text-2xl md:text-4xl font-medium text-gray-400 max-w-3xl mx-auto tracking-tight leading-snug"
             >
-              Nem csak egy alkalmazás.<br />
-              <span className="text-white">Egy digitális ökoszisztéma.</span>
+              Ahol a történelem találkozik<br />
+              <span className="text-white">a digitális jövővel.</span>
             </motion.p>
           </motion.div>
 
@@ -149,15 +149,16 @@ export default function AboutDetail() {
         </section>
 
 
-        {/* --- [SECTION 2] B2B MARKETING / THE PLATFORM --- */}
+        {/* --- [SECTION 2] FEATURES & EXPERIENCE --- */}
         <section className="py-40 px-6 max-w-[100rem] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
             <div className="relative">
-              {/* Visual for Smart City */}
+              {/* Visual for City Life */}
               <FadeUp>
                 <div className="aspect-square rounded-[3rem] overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-white/10 relative shadow-2xl">
-                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+                  {/* Image: Beautiful Kőszeg street or abstract city representation */}
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2064&auto=format&fit=crop')] bg-cover bg-center opacity-50 mix-blend-overlay"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
 
                   {/* Floating UI Elements Simulation */}
@@ -165,18 +166,24 @@ export default function AboutDetail() {
                     <motion.div
                       animate={{ y: [0, -10, 0] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      className="p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center gap-4"
+                      className="p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center gap-4 shadow-lg shadow-black/20"
                     >
-                      <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><IoSunny className="text-blue-400" /></div>
-                      <div className="h-2 w-32 bg-white/20 rounded-full"></div>
+                      <div className="w-12 h-12 rounded-full bg-orange-500/80 flex items-center justify-center text-white text-xl shadow-lg"><IoSunny /></div>
+                      <div className="flex-1">
+                        <div className="h-2 w-24 bg-white/40 rounded-full mb-2"></div>
+                        <div className="h-2 w-16 bg-white/20 rounded-full"></div>
+                      </div>
                     </motion.div>
                     <motion.div
                       animate={{ y: [0, -15, 0] }}
                       transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                      className="p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center gap-4 translate-x-8"
+                      className="p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center gap-4 translate-x-12 shadow-lg shadow-black/20"
                     >
-                      <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><IoMap className="text-purple-400" /></div>
-                      <div className="h-2 w-24 bg-white/20 rounded-full"></div>
+                      <div className="w-12 h-12 rounded-full bg-indigo-500/80 flex items-center justify-center text-white text-xl shadow-lg"><IoMap /></div>
+                      <div className="flex-1">
+                        <div className="h-2 w-32 bg-white/40 rounded-full mb-2"></div>
+                        <div className="h-2 w-20 bg-white/20 rounded-full"></div>
+                      </div>
                     </motion.div>
                   </div>
                 </div>
@@ -185,34 +192,38 @@ export default function AboutDetail() {
 
             <div className="space-y-16">
               <FadeUp delay={0.2}>
-                <span className="text-sm font-bold uppercase tracking-[0.3em] text-blue-500 mb-6 block">Ready to Deploy</span>
+                <span className="text-sm font-bold uppercase tracking-[0.3em] text-blue-500 mb-6 block">Élmény mindenkinek</span>
                 <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white leading-tight mb-8">
-                  Városod.<br />
-                  <span className="text-gray-500">Digitális Szíve.</span>
+                  Több, mint<br />
+                  <span className="text-gray-500">útikönyv.</span>
                 </h2>
                 <div className="space-y-8 text-xl text-gray-400 leading-relaxed font-medium">
                   <p>
-                    Ezt az élményt nem csak Kőszeg érdemli meg. Rendszerünk egy moduláris, <b className="text-white">White-Label keretrendszer</b>, amely készen áll arra, hogy bármely település digitális infrastruktúrájává váljon.
+                    A KőszegApp nem egyszerűen felsorolja a látnivalókat. <b className="text-white">Érzi a város lüktetését.</b> Valós idejű adatokkal, interaktív térképekkel és személyre szabott ajánlókkal segít felfedezni az ékszerdoboz minden rejtett kincsét.
                   </p>
                   <p>
-                    Felejtsd el a milliós fejlesztési költségeket és az éveken át tartó kísérletezést. A KőszegApp motorja egy kulcsrakész megoldás, amely azonnal integrálható.
+                    Legyen szó egy hirtelen jött zivatar előli menekülésről, a legközelebbi szabad parkoló megtalálásáról vagy az esti koncert programjáról – minden válasz ott lapul a zsebedben.
                   </p>
                 </div>
               </FadeUp>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <FadeUp delay={0.3}>
-                  <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
-                    <IoServerOutline className="text-3xl text-indigo-400 mb-4" />
-                    <h3 className="text-white font-bold text-lg mb-2">Felhő Alapú</h3>
-                    <p className="text-sm text-gray-500">Skálázható Supabase backend, ami 100 vagy 100.000 felhasználót is kiszolgál.</p>
+                  <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors duration-300">
+                    <IoGlobeOutline className="text-3xl text-indigo-400 mb-4" />
+                    <h3 className="text-white font-bold text-lg mb-2">Parkolás Élőben</h3>
+                    <p className="text-sm text-gray-500">
+                      Ne körözz feleslegesen. Látod, hol van hely, még mielőtt odaérnél.
+                    </p>
                   </div>
                 </FadeUp>
                 <FadeUp delay={0.4}>
-                  <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                  <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors duration-300">
                     <IoConstructOutline className="text-3xl text-emerald-400 mb-4" />
-                    <h3 className="text-white font-bold text-lg mb-2">Moduláris</h3>
-                    <p className="text-sm text-gray-500">Válassz modulokat: Parkolás, Hírek, Turizmus, Menetrendek.</p>
+                    <h3 className="text-white font-bold text-lg mb-2">Offline Mód</h3>
+                    <p className="text-sm text-gray-500">
+                      Nincs térerő a hegyekben? Nem gond. A térkép és az infók internet nélkül is veled vannak.
+                    </p>
                   </div>
                 </FadeUp>
               </div>
@@ -229,22 +240,22 @@ export default function AboutDetail() {
             {/* Visual Side */}
             <div className="lg:col-span-7 h-[85vh] rounded-[3rem] overflow-hidden bg-[#0a0a0a] relative border border-white/5 shadow-2xl order-last lg:order-first">
               <ParallaxImage
-                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop"
-                className="w-full h-full opacity-50 block"
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop"
+                className="w-full h-full opacity-60 block"
                 speed={0.5}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
 
               <div className="absolute bottom-10 left-10 p-8 glass-panel rounded-3xl border border-white/10 backdrop-blur-xl bg-black/40 max-w-sm">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">AS</div>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-inner">AS</div>
                   <div>
                     <h4 className="text-white font-bold text-lg leading-none">Avar Szilveszter</h4>
-                    <span className="text-indigo-300 text-xs font-mono uppercase tracking-wider">Founder / Lead Dev</span>
+                    <span className="text-indigo-300 text-xs font-mono uppercase tracking-wider">Dreamer & Creator</span>
                   </div>
                 </div>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  "A cél nem egy újabb app volt. Hanem egy eszköz, ami láthatatlanná válik használat közben, és csak az élmény marad."
+                <p className="text-gray-400 text-sm leading-relaxed italic">
+                  "Nem egy újabb szoftvert akartam írni. Egy olyan társat akartam adni a turisták és a helyiek kezébe, ami méltó ehhez a gyönyörű városhoz."
                 </p>
               </div>
             </div>
@@ -254,22 +265,21 @@ export default function AboutDetail() {
               <FadeUp>
                 <div className="flex items-center gap-3 mb-8">
                   <div className="h-px w-10 bg-purple-500"></div>
-                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-purple-400">Vision & Execution</span>
+                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-purple-400">Passsion Project</span>
                 </div>
                 <h2 className="text-5xl md:text-6xl font-semibold tracking-tight mb-10 text-white leading-[1.1]">
-                  A vízió<br />kódolása.
+                  Szívvel. Lélekkel.<br />Kóddal.
                 </h2>
               </FadeUp>
               <div className="space-y-10 text-lg md:text-xl text-gray-400 font-medium leading-relaxed">
                 <FadeUp delay={0.1}>
                   <p>
-                    Amikor az <b>SA Software</b> csapata nekilátott a tervezésnek, egyetlen kérdést tettünk fel:
-                    <i className="text-white"> "Milyen lenne egy városi alkalmazás, ha az Apple építené?"</i>
+                    Ez az alkalmazás nem egy multinacionális cég futószalagján készült. Ez egy <b className="text-white">szerelemprojekt</b>. Minden pixelt, minden animációt és minden sort azért írtunk meg, hogy Kőszeg digitális élménye felérjen a történelmi belváros hangulatához.
                   </p>
                 </FadeUp>
                 <FadeUp delay={0.2}>
                   <p>
-                    Nem sablonokat használtunk. Nem spóroltunk az animációkon. Hónapokat töltöttünk a mikor-interakciók csiszolásával, hogy minden érintés, minden görgetés természetesnek hatjon. Ez a precizitás az, ami megkülönbözteti a jó szoftvert a kivételes élménytől.
+                    A célunk egyszerű volt: elfeledtetni veled, hogy egy gépet tartasz a kezedben. Az alkalmazás nem eszköz, hanem egy ablak a városra. Gyors, gyönyörű és láthatatlan.
                   </p>
                 </FadeUp>
               </div>
@@ -278,7 +288,7 @@ export default function AboutDetail() {
         </section>
 
 
-        {/* --- [SECTION 4] TECH SPECS & PHILOSOPHY --- */}
+        {/* --- [SECTION 4] TECH MEETS ART --- */}
         <section className="py-40 bg-[#050505] relative overflow-hidden border-t border-white/5">
           {/* Decorative Background */}
           <div className="absolute top-[20%] left-[-10%] w-[100vw] h-[100vw] bg-purple-900/5 rounded-full blur-[200px] pointer-events-none" />
@@ -286,10 +296,10 @@ export default function AboutDetail() {
           <div className="max-w-[90vw] mx-auto text-center lg:text-left lg:px-20 mb-32">
             <FadeUp>
               <h2 className="text-7xl md:text-[120px] font-bold tracking-tighter text-white mb-6 leading-[0.9]">
-                Craftsmanship.
+                Művészet.
               </h2>
               <p className="text-2xl text-gray-500 max-w-2xl font-medium">
-                A technológia, ami a felszín alatt dolgozik.
+                Amikor a mérnöki precizitás találkozik a designnal.
               </p>
             </FadeUp>
           </div>
@@ -298,12 +308,14 @@ export default function AboutDetail() {
 
             {/* Card 1 */}
             <FadeUp delay={0.1}>
-              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500">
-                <IoWater className="text-5xl text-cyan-400" />
+              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500 group">
+                <div className="w-16 h-16 rounded-full bg-cyan-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <IoWater className="text-4xl text-cyan-400" />
+                </div>
                 <div>
                   <h3 className="text-3xl font-bold text-white mb-4">60 FPS Flow</h3>
                   <p className="text-gray-400 leading-relaxed">
-                    Nincs akadozás. Nincs várakozás. Fizikailag szimulált rugókat (spring physics) használunk minden animációhoz a természetes hatásért.
+                    Nincs akadozás. Nincs várakozás. Az app úgy mozog, mint a folyadék. Fizikai rugók (spring physics) vezérelnek minden mozdulatot, hogy az élmény természetes legyen, ne digitális.
                   </p>
                 </div>
               </div>
@@ -311,12 +323,14 @@ export default function AboutDetail() {
 
             {/* Card 2 */}
             <FadeUp delay={0.2}>
-              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500">
-                <IoDiamond className="text-5xl text-purple-400" />
+              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500 group">
+                <div className="w-16 h-16 rounded-full bg-purple-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <IoDiamond className="text-4xl text-purple-400" />
+                </div>
                 <div>
-                  <h3 className="text-3xl font-bold text-white mb-4">Liquid Glass</h3>
+                  <h3 className="text-3xl font-bold text-white mb-4">Liquid Ház</h3>
                   <p className="text-gray-400 leading-relaxed">
-                    A <b>Hidalmási Erik</b> által megálmodott UI design a transzparenciára és a mélységre épít. A tartalmak lebegnek a térben.
+                    A <b>Hidalmási Erik</b> által megálmodott design nem csak szép, hanem funkcionális. A "Liquid Glass" esztétika nem takarja ki a tartalmat, hanem keretbe foglalja azt.
                   </p>
                 </div>
               </div>
@@ -324,12 +338,14 @@ export default function AboutDetail() {
 
             {/* Card 3 */}
             <FadeUp delay={0.3}>
-              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500">
-                <IoRocket className="text-5xl text-orange-400" />
+              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500 group">
+                <div className="w-16 h-16 rounded-full bg-orange-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <IoRocket className="text-4xl text-orange-400" />
+                </div>
                 <div>
-                  <h3 className="text-3xl font-bold text-white mb-4">Instant Sync</h3>
+                  <h3 className="text-3xl font-bold text-white mb-4">Azonnali Szinkron</h3>
                   <p className="text-gray-400 leading-relaxed">
-                    A Supabase Realtime motornak köszönhetően az adatok (időjárás, foglaltság) ezredmásodpercek alatt frissülnek minden eszközön.
+                    A háttérben a Supabase Realtime motorja dolgozik, hogy ha valahol felszabadul egy parkolóhely, vagy változik egy program, Te azonnal tudd.
                   </p>
                 </div>
               </div>
@@ -345,36 +361,35 @@ export default function AboutDetail() {
               <div className="mb-12 inline-block p-1 rounded-full bg-gradient-to-r from-gray-800 to-gray-900 border border-white/10">
                 <div className="px-6 py-2 rounded-full bg-black">
                   <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 uppercase tracking-widest">
-                    Partnerség
+                    Közösség & Jövő
                   </span>
                 </div>
               </div>
 
               <h2 className="text-6xl md:text-[90px] font-bold text-white mb-12 tracking-tighter leading-none">
-                Építsük együtt<br />
-                a jövő városát.
+                Ez még csak<br />
+                a kezdet.
               </h2>
             </FadeUp>
 
             <FadeUp delay={0.3}>
               <p className="text-2xl text-gray-400 mb-20 max-w-2xl mx-auto font-medium leading-relaxed">
-                Készen állunk, hogy a Te városodra szabjuk a rendszert.
-                Keress minket egyedi ajánlatért.
+                Folyamatosan fejlesztünk, és hallgatunk a visszajelzéseitekre. Ha van ötleted, vagy csak elmondanád a véleményed, írj nekünk!
               </p>
 
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <a
                   href="mailto:contact@sasoftware.hu"
-                  className="px-12 py-6 rounded-full bg-white text-black font-bold text-xl hover:scale-105 transition-transform duration-300"
+                  className="px-12 py-6 rounded-full bg-white text-black font-bold text-xl hover:scale-105 transition-transform duration-300 shadow-[0_0_40px_rgba(255,255,255,0.3)]"
                 >
-                  Kapcsolatfelvétel
+                  Írj Nekünk
                 </a>
                 <button
                   onClick={() => navigate('/')}
                   className="px-12 py-6 rounded-full bg-[#1c1c1e] text-white border border-white/10 font-bold text-xl hover:bg-[#2c2c2e] transition-colors duration-300"
                 >
-                  Vissza az Appba
+                  Vissza a Főoldalra
                 </button>
               </div>
 

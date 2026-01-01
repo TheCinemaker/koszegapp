@@ -96,6 +96,7 @@ export default function AnimatedRoutes({ appData }) {
         <Route path="/info" element={<PageWrapper><Info /></PageWrapper>} />
         <Route path="/info/:id" element={<PageWrapper><AboutDetail /></PageWrapper>} />
         <Route path="/adatvedelem" element={<PageWrapper><Adatvedelem /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><AboutDetail /></PageWrapper>} />
 
         <Route path="/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
         <Route path="/my-gems" element={<PageWrapper><MyGems /></PageWrapper>} />
