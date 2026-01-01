@@ -112,7 +112,7 @@ export default function SmartSpotlight({ appData }) {
                         {/* Clickable Area for Navigation */}
                         <div
                             onClick={() => navigate(`/events/${activeHighlight.id}`)}
-                            className="flex items-center gap-3 md:gap-4 cursor-pointer"
+                            className="flex items-center gap-2 md:gap-3 cursor-pointer"
                         >
                             {/* Icon Box */}
                             <div className="
@@ -124,7 +124,7 @@ export default function SmartSpotlight({ appData }) {
                             </div>
 
                             {/* Text Content */}
-                            <div className="flex flex-col min-w-[140px] max-w-[200px] sm:max-w-xs">
+                            <div className="flex flex-col min-w-[110px] max-w-[200px] sm:max-w-xs">
                                 <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-purple-300">
                                     {activeHighlight.highlightLabel || "Kiemelt Esemény"}
                                 </span>
@@ -137,7 +137,7 @@ export default function SmartSpotlight({ appData }) {
                             <div className="w-px h-8 bg-white/10 mx-1 hidden sm:block"></div>
 
                             {/* Status Badge */}
-                            <div className="flex items-center bg-white/10 px-3 py-1 rounded-full border border-white/5 shrink-0 group-hover:bg-white/20 transition-colors">
+                            <div className="flex items-center bg-white/10 px-2 py-1 rounded-full border border-white/5 shrink-0 group-hover:bg-white/20 transition-colors">
                                 <span className="text-xs font-bold text-white whitespace-nowrap">
                                     {statusText}
                                 </span>
