@@ -352,5 +352,24 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767775970015",
+    "name": "Farsangfarka",
+    "date": "2026-02-17",
+    "time": "08:00",
+    "location": "Fő tér, városi intézmények és üzletek",
+    "coords": {
+      "lat": 47.38823957625676,
+      "lng": 16.54194868682723
+    },
+    "description": "🎭 Farsangfarka Kőszegen 🎭\nJelmezes farsangbúcsúztató egész napos programokkal\n\nKőszeg városa ismét színes forgataggá alakul, amikor elérkezik a farsang zárónapja. A Farsangfarka a tél búcsúztatásának és a vidámság ünnepének hagyományos alkalma, ahol jelmezek, mosolyok és közösségi élmények töltik meg a várost.\n\n🗓 Időpont: 2026. február 17. (kedd) | 08:00–18:00\n📍 Helyszín: Kőszeg – Fő tér, városi intézmények és üzletek\n🎉 Belépés: ingyenes\n\nEgész napos jelmezes programok, farsangi hangulat, meglepetések és közös ünneplés várja a kicsiket és nagyokat – méltó búcsút intve a farsang időszakának.",
+    "tags": [
+      "mulatság"
+    ],
+    "image": "farsangfarka.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
