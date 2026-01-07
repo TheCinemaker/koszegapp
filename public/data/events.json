@@ -333,5 +333,24 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767775724183",
+    "name": "Iparosbál",
+    "date": "2026-02-07",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterme",
+    "coords": {
+      "lat": 47.389411806185876,
+      "lng": 16.538244651042913
+    },
+    "description": "A Kőszeg és Vidéke Vállalkozók Ipartestülete tisztelettel meghívja Önt és kísérőjét\na hagyományos jótékonysági Kőszegi Iparosbálra,\nahol a közösség, az összefogás és az elegancia találkozik.\n\n✨ Időpont: 2026. február 7. (szombat), 19:00\n🏰 Helyszín: a Jurisics vár patinás lovagterme\n\nEgy est, ahol a hagyományok életre kelnek,\na jó ügyek támogatást kapnak,\nés a bál valódi ünneppé válik.",
+    "tags": [
+      "bál"
+    ],
+    "image": "ipartestulet.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
