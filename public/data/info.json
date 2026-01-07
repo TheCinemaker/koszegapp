@@ -1,10 +1,10 @@
 [
   {
     "id": "info-1",
+    "title": "Orvosi ügyelet, Kőszeg, Rákóczi Ferenc u. 19",
+    "content": "Kőszeg, Rákóczi Ferenc u. 19, 9730. Tel: 1830. H–P 16:00–22:00, Szo–V 8:00–14:00.",
     "category": "emergency",
-    "icon": "FaAmbulance",
-    "title": "Orvosi ügyelet",
-    "content": "Kőszeg, Rákóczi Ferenc u. 19, 9730. Tel: 1830. H–P 16:00–22:00, Szo–V 8:00–14:00."
+    "icon": "FaAmbulance"
   },
   {
     "id": "info-2",
@@ -71,9 +71,9 @@
   },
   {
     "id": "info-99",
-    "category": "app",
-    "icon": "FaMobileAlt",
     "title": "KőszegAPP",
-    "content": "Nem csak egy app. Kőszeg digitális szövetének része. Offline térkép, Valós idejű események, Intelligens városirányítás. A jövő megérkezett."
+    "content": "Nem csak egy app. Kőszeg digitális szövetének része. Offline térkép, Valós idejű események, Intelligens városirányítás. A jövő megérkezett'",
+    "category": "app",
+    "icon": "FaMobileAlt"
   }
 ]
