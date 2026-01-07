@@ -294,5 +294,25 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767775182154",
+    "name": "Réteskészítő Workshop",
+    "date": "2026-01-17",
+    "time": "09:00",
+    "location": "Kőszeg, Napostető Borterasz",
+    "coords": {
+      "lat": 47.394469587765116,
+      "lng": 16.527880676174583
+    },
+    "description": "Ha érdekel a leheletvékony tésztájú, roppanós, gazdagon töltött, békebeli házi húzott rétes készítése, akkor itt a helyed!☺️\n▶️ Hogy épül fel a kurzus?\nDagasztunk, tésztát pihentetünk, közben elkészítjük a töltelékeket, aztán húzunk, tekerünk, sütünk, végül pedig kóstolunk és jóllakunk.😊\nTöbbféle (édes-és sós) ízzel készülök, melyekből haza is tudtok majd vinni egy jókora dobozzal, hogy a család is megkóstolhassa a műveiteket.😊\n▶️Helyszín: Kőszeg, Napostető Borterasz\n▶️Időtartam: 9:00-14:00\n▶️ Amit hozz magaddal:\n- minden alapanyagot, eszközt én biztosítok\n▶️ Részvételi díj:\nA tanfolyam ára 25.000,- Ft, mely magában foglalja a helyben és otthon fogyasztott réteseket, az írásos jegyzetet a tészta- és töltelékreceptekkel, elkészítési útmutatókkal, valamint a kávé-és vízfogyasztást.\n▶️ Jelentkezés:\nKüldj e-mailt a tanfolyam időpontjával és a számlázási adataiddal (név,cím) a horvath.flora.anna@gmail.com címre!\nVálaszul elküldöm a számlaszámot. Az utalással tudod biztosítani a helyed a kurzusra. A helyek befizetési sorrendben telnek be!\nVárlak szeretettel! 😊\nFlóra ",
+    "tags": [
+      "Sütemény",
+      "Kikapcsolódás"
+    ],
+    "image": "retesworkshop.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
