@@ -274,5 +274,25 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767774974121",
+    "name": "ASVÖ-Burgenland Kids-Cup",
+    "date": "2026-01-10",
+    "time": "09:30",
+    "location": "Jégcsarnok, Deák Ferenc utca 6",
+    "coords": {
+      "lat": 47.381322684589236,
+      "lng": 16.547666188486307
+    },
+    "description": "2026. január 10-én, szombaton az EHV Stegersbach és az ASVÖ Burgenland szeretettel meghív minden 18 év alatti gyermeket és fiatalt a Kids-Cupra.\n\nA rendezvény a kőszegi jégcsarnokban kerül megrendezésre\n(Deák Ferenc utca, 9730 Kőszeg, Magyarország).\n\nA rendezvény részletei:\n\nTalálkozó: 9:30\n\nKezdés: 10:00\n\nIdőtartam: kb. 3 óra\n\nAz ASVÖ Burgenland Kids-Cup kiváló lehetőség a fiatal jégkorongozók számára, hogy tornaformátumban próbálják ki tudásukat, és első versenytapasztalataikat szerezzék meg.\n\nAmit hozni kell:\n\njégkorongfelszerelés\n\nÉljen át izgalmas mérkőzéseket, és támogassa a jégkorong-tehetségek következő generációját!\n\n🔗 https://sites.google.com/view/asvoekidscup/startseite\n\nAm Samstag, den 10. Jänner 2026, lädt der EHV Stegersbach und der ASVÖ Burgenland alle Kinder und Jugendlichen bis 18 Jahre herzlich zum Kids-Cup ein!\nDie Veranstaltung findet in der Eishalle Köszeg (Deak Ferenc u., 9730 Ungarn) statt.\nVeranstaltungsdetails:\nTreffpunkt: 9:30 Uhr\nBeginn: 10:00 Uhr\nDauer: ca. 3 Stunden\nDer ASVÖ-Burgenland Kids-Cup ist eine großartige Gelegenheit für junge Eishockeyspieler, ihre Fähigkeiten in einem Turnierformat zu erproben und erste Wettkampferfahrungen zu sammeln.\nWas mitzubringen ist:\nEishockeyausrüstung\nErleben Sie spannende Spiele und unterstützen Sie die nächste Generation von Eishockey-Talenten.\nhttps://sites.google.com/view/asvoekidscup/startseite",
+    "tags": [
+      "jéghoki",
+      "sport"
+    ],
+    "image": "asvo.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
