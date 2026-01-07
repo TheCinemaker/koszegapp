@@ -110,7 +110,7 @@
     "location": "Árpád-házi Szent Margit Iskola",
     "coords": {
       "lat": 47.3915,
-      "lng": 16.5420
+      "lng": 16.542
     },
     "description": "Az Árpád-házi Szent Margit Óvoda, Általános Iskola, Gimnázium és Kollégium jótékonysági bálja.",
     "tags": [
@@ -246,7 +246,7 @@
     "location": "Balog Iskola Sportcsarnok",
     "coords": {
       "lat": 47.3835,
-      "lng": 16.5350
+      "lng": 16.535
     },
     "description": "A város fúvószenekarának hagyományos bálja. Élőzene, tánc és fergeteges hangulat a sportcsarnokban.",
     "tags": [
@@ -255,5 +255,24 @@
       "tánc"
     ],
     "image": "fuvos_bal.jpg"
+  },
+  {
+    "id": "new_1767771798997",
+    "name": "Promenád 2",
+    "date": "2026-01-15",
+    "time": "17:00",
+    "location": "Jurisics vár lovagterem",
+    "coords": {
+      "lat": 47.38938300664955,
+      "lng": 16.53832773319626
+    },
+    "description": "A Kőszegi Művészeti Egyesület alkotóinak kiállításmegnyitója 2026. január 15-én, csütörtökön, 17.00 órakor a vár lovagtermében. \nA belépés ingyenes",
+    "tags": [
+      "kiállítás"
+    ],
+    "image": "promenad.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
