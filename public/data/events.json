@@ -371,5 +371,24 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767776071453",
+    "name": "Agócs Julianna és Balog Benjámin népdalos estje",
+    "date": "2026-02-18",
+    "time": "17:00",
+    "location": "Zsinagóga",
+    "coords": {
+      "lat": 47.39140841063045,
+      "lng": 16.54151370919492
+    },
+    "description": "Agócs Julianna és Balog Benjámin népdalos estje",
+    "tags": [
+      "zenés est"
+    ],
+    "image": "agocs.png",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
