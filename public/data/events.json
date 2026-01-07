@@ -314,5 +314,24 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767775465876",
+    "name": "Tevan család- és nyomdatörténeti vándorkiállítás",
+    "date": "2026-01-08",
+    "time": "17:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389591491147485,
+      "lng": 16.542480681373817
+    },
+    "description": "A Tevan Interaktív Vándorkiállítást 2008 óta 52 helyszínen (50 magyar és két határon kívüli helyszínen) tekinthették meg a látogatók. A kiállítás a Tevan Nyomda kulturális örökségén kívül, a nácizmus áldozatainak kíván emléket állítani egy közép-európai történelmi metszeten keresztül. Jelenleg a kiállítás Békéscsabán a Békéscsabai Zsinagóga állandó kiállításaként látható. A kiállítás anyagából készült roll-upokat és a hozzátartozó interaktív anyagot fogjuk bemutatni Kőszegen is.\nTevan Adolf 1903-ban Békéscsabán alapította meg a nemzetközi hírnevű Tevan Nyomdát, amelyet fia, Tevan Andor korszerű üzemmé fejlesztett. Az 1910-es években elindította a 83 kötetes Tevan Könyvtár Sorozatot, majd a Tevan Amatőrsorozatot, amelyek igényes és szép kivitelezésű könyveikkel méltán lettek népszerűek. A könyvek mellett a nyomda egy saját lapot adott ki, emellett hét folyóiratot nyomtatott. A család mindezeken túl aktívan részt vett Békéscsaba társadalmi és kulturális életében, alapítója volt az Auróra Körnek, amely többek között Bartók Béla hangversenyének is helyet adott. A nyomdaipari tevékenységen túl a család tagjai több művészeti ágban is kiemelkedőt alkottak: Tevan Margit Munkácsy-díjas ötvösművész, Engel Tevan István grafikus, továbbá Kolozsváry Sándor és Zsigmond elismert képzőművész volt. Az anyag hiteles forrásokból, a megjelent Tevan-publikációk egészén túl, a családi emlékekből, hagyatékokból és fényképgyűjteményekből, levéltári dokumentumokból, anyakönyvekből, aprónyomtatvány-gyűjteményekből, fotótárakból, valamint a korabeli folyóiratokból és a szakforrásokból származik.",
+    "tags": [
+      "kiállítás"
+    ],
+    "image": "tevan.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
