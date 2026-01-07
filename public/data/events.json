@@ -390,5 +390,24 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1767776343828",
+    "name": "Zsuffa Tünde író-olvasó találkozó",
+    "date": "2026-02-19",
+    "time": "17:00",
+    "location": "Városi könyvtár",
+    "coords": {
+      "lat": 47.389592464332196,
+      "lng": 16.54242965691677
+    },
+    "description": "író-olvasó találkozó",
+    "tags": [
+      "találkozó"
+    ],
+    "image": "zsuffa.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
