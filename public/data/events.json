@@ -143,21 +143,24 @@
     "id": "event-2026-008",
     "name": "Magyar Kultúra Napja – Déryné naplója",
     "date": "2026-01-22",
-    "end_date": "2026-01-22",
     "time": "18:00",
     "location": "Jurisics vár – Lovagterem",
     "coords": {
       "lat": 47.389582,
       "lng": 16.538988
     },
-    "description": "Ünnepi műsor a Magyar Kultúra Napja alkalmából. Déryné naplója – színházi előadás. Ingyenes!",
+    "description": "ÉLETJELENETEK két színésznő életéből\nDéryné Széppataki Róza naplója alapján\nEgyszemélyes színpadi játék - One woman show -\naz Avignoni Fesztivál OFF 1995 francia nyelvű előadásának magyar nyelvű felújítása\n\nVarga Kata-Lina\nmagyar-francia színésznő magyar nyelvű előadásában\n\n42 színpadi jelenet, kb másfél órában, Déryné Széppataki Róza – az Osztrák-Magyar Monarchia magyar színésznője és operaénekesnője – XIX. századi naplójából. Varga Kata-Lina Dérynét és Déryné életének több mint 30 korabeli személyiségét kelti életre ebben az egyszemélyes sziporkázó kavalkádban, néhány jelenetben saját XX.-XXI. századi karrierjét is megidézve. A 27 zenés, énekes bejátszás, „hab a tortán”.\nAz előadás Kőszeg Város Önkormányzata és a Kőszegi Várszínház ajándéka az ünnep alkalmából.\n\na belépés ingyenes!",
     "tags": [
       "színház",
       "kultúra",
       "ünnep",
       "ingyenes"
     ],
-    "image": "kultura_napja.jpg"
+    "image": "kultura_napja.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "end_date": "2026-01-22"
   },
   {
     "id": "event-2026-009",
