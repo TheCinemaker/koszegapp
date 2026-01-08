@@ -23,6 +23,9 @@ export function useGyroTilt(maxTilt = 15) {
         const x = Math.max(-maxTilt, Math.min(maxTilt, gamma)) / maxTilt;
         const y = Math.max(-maxTilt, Math.min(maxTilt, beta - 45)) / maxTilt;
 
+        // Debug logging (remove after testing)
+        console.log('Gyro values:', { beta, gamma, x, y });
+
         setTilt({ x, y });
     };
 
@@ -30,12 +33,16 @@ export function useGyroTilt(maxTilt = 15) {
         if (permissionRequested) return;
         setPermissionRequested(true);
 
+        console.log('Requesting gyro permission...');
+
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
             try {
                 const permissionState = await DeviceOrientationEvent.requestPermission();
+                console.log('Permission state:', permissionState);
                 if (permissionState === 'granted') {
                     setHasPermission(true);
                     window.addEventListener('deviceorientation', handleOrientation);
+                    console.log('Gyro listener attached!');
                 }
             } catch (e) {
                 console.error("Gyro permission failed", e);
@@ -44,12 +51,16 @@ export function useGyroTilt(maxTilt = 15) {
             // Non-iOS or older devices usually don't need explicit permission prompt
             setHasPermission(true);
             window.addEventListener('deviceorientation', handleOrientation);
+            console.log('Gyro listener attached (non-iOS)!');
         }
     };
 
     useEffect(() => {
         // Check if DeviceOrientationEvent is supported
-        if (!window.DeviceOrientationEvent) return;
+        if (!window.DeviceOrientationEvent) {
+            console.log('DeviceOrientationEvent not supported');
+            return;
+        }
 
         // Auto-request for non-iOS devices
         if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
