@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
  * Returns tilt values { x, y } based on device orientation.
  * Range: -1 to 1 (clamped for subtle effect)
  */
-export function useGyroTilt(maxTilt = 15) {
+export function useGyroTilt(maxTilt = 45) {
     const [tilt, setTilt] = useState({ x: 0, y: 0 });
     const [hasPermission, setHasPermission] = useState(false);
     const [permissionRequested, setPermissionRequested] = useState(false);
@@ -20,8 +20,11 @@ export function useGyroTilt(maxTilt = 15) {
         // x: gamma (left-right tilt)
         // y: beta (front-back tilt) - subtract 45deg as "neutral" holding position
 
-        const x = Math.max(-maxTilt, Math.min(maxTilt, gamma)) / maxTilt;
-        const y = Math.max(-maxTilt, Math.min(maxTilt, beta - 45)) / maxTilt;
+        // Amplified sensitivity for "Liquid" feel
+        // We allow up to maxTilt degrees, but map it to -1...1 range
+        // Multiplier 1.5 makes it reach 1.0 faster (more reactive)
+        const x = Math.max(-1, Math.min(1, (gamma / maxTilt) * 1.5));
+        const y = Math.max(-1, Math.min(1, ((beta - 45) / maxTilt) * 1.5));
 
         // Debug logging (remove after testing)
         console.log('Gyro values:', { beta, gamma, x, y });
