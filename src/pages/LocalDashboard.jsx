@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { Link } from 'react-router-dom';
+import { useGyroTilt } from '../hooks/useGyroTilt';
 import { format, parseISO, isAfter, isSameDay, addDays, getDay, startOfDay } from 'date-fns';
 import { hu } from 'date-fns/locale';
 import scheduleData from '../data/wasteSchedule.json';
@@ -28,6 +29,9 @@ export default function LocalDashboard() {
     const [showCityServicesModal, setShowCityServicesModal] = useState(false);
     const [showShopsModal, setShowShopsModal] = useState(false);
     const [showTransportModal, setShowTransportModal] = useState(false);
+
+    // Gyro tilt effect for 3D parallax
+    const { tilt } = useGyroTilt(15);
 
     const getNextDayOfWeek = (dayName) => {
         if (!dayName) return '-';
@@ -392,6 +396,10 @@ export default function LocalDashboard() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowDoctorsModal(true)}
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 5}deg) rotateY(${tilt.x * 5}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
                         className="cursor-pointer bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8 flex flex-col justify-between group h-full"
                     >
                         <div className="flex items-center gap-4 mb-4">
@@ -416,6 +424,10 @@ export default function LocalDashboard() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowShopsModal(true)}
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 5}deg) rotateY(${tilt.x * 5}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
                         className="cursor-pointer bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8 flex flex-col justify-between group h-full"
                     >
                         <div className="flex items-center gap-4 mb-4">
@@ -440,6 +452,10 @@ export default function LocalDashboard() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowCityServicesModal(true)}
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 5}deg) rotateY(${tilt.x * 5}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
                         className="cursor-pointer bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8 flex flex-col justify-between group h-full"
                     >
                         <div className="flex items-center gap-4 mb-4">
@@ -464,6 +480,10 @@ export default function LocalDashboard() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowTransportModal(true)}
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 5}deg) rotateY(${tilt.x * 5}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
                         className="cursor-pointer bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8 flex flex-col justify-between group h-full"
                     >
                         <div className="flex items-center gap-4 mb-4">
