@@ -26,6 +26,8 @@ import MyGems from '../pages/MyGems';
 import GameIntro from '../pages/GameIntro';
 import LiveCityMap from './LiveCityMap';
 import LocalDashboard from '../pages/LocalDashboard';
+import AuthPage from '../pages/AuthPage';
+import BusinessDashboard from '../pages/BusinessDashboard';
 import Footer from './Footer';
 
 const Admin = React.lazy(() => import('../pages/Admin.jsx'));
@@ -117,6 +119,8 @@ export default function AnimatedRoutes({ appData }) {
         }
         />
         <Route path="/local" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
+        <Route path="/auth" element={<PageWrapper><AuthPage /></PageWrapper>} />
+        <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );

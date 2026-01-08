@@ -1,67 +1,119 @@
 // src/contexts/AuthContext.jsx
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { supabase } from '../lib/supabaseClient';
 
 const AuthContext = createContext(null);
 
-// -- A MEGJELENÍTÉSI NEVEKET ITT, EGY HELYEN TÁROLJUK --
-const USER_DISPLAY_NAMES = {
-  'admin': 'Admin',
-  'varos': 'Kőszeg Város',
-  'var': 'Vár',
-  'tourinform': 'Tourinform',
-  'kulsos': 'Külsős Partner',
-};
-
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    try {
-      const storedUser = sessionStorage.getItem('kozseg-user');
-      return storedUser ? JSON.parse(storedUser) : null;
-    } catch (e) { return null; }
-  });
-  
-  const [token, setToken] = useState(() => sessionStorage.getItem('kozseg-token'));
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = async (userId, password) => {
-    const res = await fetch('/.netlify/functions/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, password }),
+  useEffect(() => {
+    // 1. Get initial session
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        await fetchProfile(session.user);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getSession();
+
+    // 2. Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user) {
+        await fetchProfile(session.user);
+      } else {
+        setUser(null);
+        setLoading(false);
+      }
     });
 
-    if (!res.ok) {
-      const { error } = await res.json().catch(() => ({ error: 'Ismeretlen hiba' }));
-      throw new Error(error || 'Sikertelen bejelentkezés.');
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchProfile = async (authUser) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', authUser.id)
+        .single();
+
+      if (data) {
+        setUser({ ...authUser, ...data }); // Combine Auth user + Profile data
+      } else {
+        // Fallback if profile doesn't exist yet (e.g. slight delay in trigger)
+        setUser(authUser);
+      }
+    } catch (error) {
+      console.error("Profile fetch error:", error);
+      setUser(authUser);
+    } finally {
+      setLoading(false);
     }
-    
-    const { token: newToken, user: userData } = await res.json();
-    
-    // A szerver csak az ID-t és a jogokat adja vissza, a megjelenítési nevet itt adjuk hozzá
-    const fullUserData = { ...userData, displayName: USER_DISPLAY_NAMES[userData.id] || userData.id };
-
-    setUser(fullUserData);
-    setToken(newToken);
-    sessionStorage.setItem('kozseg-user', JSON.stringify(fullUserData));
-    sessionStorage.setItem('kozseg-token', newToken);
   };
-  
-  const logout = () => {
+
+  const login = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    if (error) throw error;
+    return data;
+  };
+
+  const register = async (email, password, fullName, nickname) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          nickname: nickname // Passed to metadata, can be used in trigger if needed
+        }
+      }
+    });
+
+    if (error) throw error;
+
+    // If trigger is slow, we might want to manually insert/update profile here as a fail-safe,
+    // but for now we rely on the DB trigger `handle_new_user`.
+    // However, the trigger currently only inserts full_name. 
+    // We should manually update nickname since the trigger logic I wrote only used full_name.
+    if (data.user) {
+      await supabase.from('profiles').update({ nickname }).eq('id', data.user.id);
+    }
+
+    return data;
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    setToken(null);
-    sessionStorage.removeItem('kozseg-user');
-    sessionStorage.removeItem('kozseg-token');
-    window.location.replace('/admin');
   };
 
-  const hasPermission = (requiredPermission) => {
-    if (!user || !user.permissions) return false;
-    if (user.permissions.includes('*')) return true;
-    return user.permissions.includes(requiredPermission);
+  // Helper for role-based access
+  const hasRole = (role) => {
+    return user?.role === role;
   };
 
-  const value = { user, token, login, logout, hasPermission };
-  
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const value = {
+    user,
+    login,
+    register,
+    logout,
+    hasRole,
+    loading
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
