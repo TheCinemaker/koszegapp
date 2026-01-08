@@ -1,0 +1,1315 @@
+{
+  "generatedAt": "2026-01-08T10:33:42.046Z",
+  "schedule": {
+    "2026-04-01": [
+      "SZ3"
+    ],
+    "2026-05-01": [
+      "Z1"
+    ],
+    "2026-09-01": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-10-01": [
+      "SZ4"
+    ],
+    "2026-02-02": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-03-02": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-04-02": [
+      "SZ4"
+    ],
+    "2026-09-02": [
+      "SZ3"
+    ],
+    "2026-10-02": [
+      "Z1"
+    ],
+    "2026-02-03": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-03-03": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-04-03": [
+      "Z1"
+    ],
+    "2026-07-03": [
+      "Z2"
+    ],
+    "2026-08-03": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-09-03": [
+      "SZ4"
+    ],
+    "2026-02-04": [
+      "SZ3"
+    ],
+    "2026-03-04": [
+      "SZ3"
+    ],
+    "2026-08-04": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-09-04": [
+      "Z1"
+    ],
+    "2026-01-05": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-02-05": [
+      "SZ4"
+    ],
+    "2026-03-05": [
+      "SZ4"
+    ],
+    "2026-06-05": [
+      "Z2"
+    ],
+    "2026-08-05": [
+      "SZ3"
+    ],
+    "2026-01-06": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-03-06": [
+      "Z1"
+    ],
+    "2026-07-06": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-08-06": [
+      "SZ4"
+    ],
+    "2026-11-06": [
+      "Z2"
+    ],
+    "2026-01-07": [
+      "SZ3"
+    ],
+    "2026-07-07": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-08-07": [
+      "Z1"
+    ],
+    "2026-12-07": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-01-08": [
+      "SZ4"
+    ],
+    "2026-05-08": [
+      "Z2"
+    ],
+    "2026-06-08": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-07-08": [
+      "SZ3"
+    ],
+    "2026-12-08": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-01-09": [
+      "K1"
+    ],
+    "2026-06-09": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-07-09": [
+      "SZ4"
+    ],
+    "2026-10-09": [
+      "Z2"
+    ],
+    "2026-11-09": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-12-09": [
+      "SZ3"
+    ],
+    "2026-04-10": [
+      "Z2"
+    ],
+    "2026-06-10": [
+      "SZ3"
+    ],
+    "2026-07-10": [
+      "Z1"
+    ],
+    "2026-11-10": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-12-10": [
+      "SZ4"
+    ],
+    "2026-05-11": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-06-11": [
+      "SZ4"
+    ],
+    "2026-09-11": [
+      "Z2"
+    ],
+    "2026-11-11": [
+      "SZ3"
+    ],
+    "2026-05-12": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-06-12": [
+      "Z1"
+    ],
+    "2026-10-12": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-11-12": [
+      "SZ4"
+    ],
+    "2026-03-13": [
+      "Z2"
+    ],
+    "2026-04-13": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-05-13": [
+      "SZ3"
+    ],
+    "2026-10-13": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-11-13": [
+      "Z1"
+    ],
+    "2026-04-14": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-05-14": [
+      "SZ4"
+    ],
+    "2026-08-14": [
+      "Z2"
+    ],
+    "2026-09-14": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-10-14": [
+      "SZ3"
+    ],
+    "2026-04-15": [
+      "SZ3"
+    ],
+    "2026-05-15": [
+      "Z1"
+    ],
+    "2026-09-15": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-10-15": [
+      "SZ4"
+    ],
+    "2026-01-16": [
+      "K2"
+    ],
+    "2026-02-16": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-03-16": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-04-16": [
+      "SZ4"
+    ],
+    "2026-09-16": [
+      "SZ3"
+    ],
+    "2026-10-16": [
+      "Z1"
+    ],
+    "2026-02-17": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-03-17": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-04-17": [
+      "Z1"
+    ],
+    "2026-07-17": [
+      "Z2"
+    ],
+    "2026-08-17": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-09-17": [
+      "SZ4"
+    ],
+    "2026-02-18": [
+      "SZ3"
+    ],
+    "2026-03-18": [
+      "SZ3"
+    ],
+    "2026-08-18": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-09-18": [
+      "Z1"
+    ],
+    "2026-01-19": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-02-19": [
+      "SZ4"
+    ],
+    "2026-03-19": [
+      "SZ4"
+    ],
+    "2026-06-19": [
+      "Z2"
+    ],
+    "2026-08-19": [
+      "SZ3"
+    ],
+    "2026-01-20": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-03-20": [
+      "Z1"
+    ],
+    "2026-07-20": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-08-20": [
+      "SZ4"
+    ],
+    "2026-11-20": [
+      "Z2"
+    ],
+    "2026-01-21": [
+      "SZ3"
+    ],
+    "2026-07-21": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-08-21": [
+      "Z1"
+    ],
+    "2026-12-21": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-01-22": [
+      "SZ4"
+    ],
+    "2026-05-22": [
+      "Z2"
+    ],
+    "2026-06-22": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-07-22": [
+      "SZ3"
+    ],
+    "2026-12-22": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-01-23": [
+      "K1"
+    ],
+    "2026-06-23": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-07-23": [
+      "SZ4"
+    ],
+    "2026-10-23": [
+      "Z2"
+    ],
+    "2026-11-23": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-12-23": [
+      "SZ3"
+    ],
+    "2026-04-24": [
+      "Z2"
+    ],
+    "2026-06-24": [
+      "SZ3"
+    ],
+    "2026-07-24": [
+      "Z1"
+    ],
+    "2026-11-24": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-12-24": [
+      "SZ4"
+    ],
+    "2026-05-25": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-06-25": [
+      "SZ4"
+    ],
+    "2026-09-25": [
+      "Z2"
+    ],
+    "2026-11-25": [
+      "SZ3"
+    ],
+    "2026-05-26": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-06-26": [
+      "Z1"
+    ],
+    "2026-10-26": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-11-26": [
+      "SZ4"
+    ],
+    "2026-03-27": [
+      "Z2"
+    ],
+    "2026-04-27": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-05-27": [
+      "SZ3"
+    ],
+    "2026-10-27": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-11-27": [
+      "Z1"
+    ],
+    "2026-04-28": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-05-28": [
+      "SZ4"
+    ],
+    "2026-08-28": [
+      "Z2"
+    ],
+    "2026-09-28": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-10-28": [
+      "SZ3"
+    ],
+    "2026-03-29": [
+      "SZ3"
+    ],
+    "2026-04-29": [
+      "Z1"
+    ],
+    "2026-08-29": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-09-29": [
+      "SZ4"
+    ],
+    "2026-01-30": [
+      "K2"
+    ],
+    "2026-02-30": [
+      "SZ1",
+      "Z1"
+    ],
+    "2026-03-30": [
+      "SZ4"
+    ],
+    "2026-08-30": [
+      "SZ3"
+    ],
+    "2026-09-30": [
+      "Z1"
+    ],
+    "2026-02-31": [
+      "SZ2",
+      "Z2"
+    ],
+    "2026-04-31": [
+      "Z2"
+    ],
+    "2026-05-31": [
+      "SZ1",
+      "Z1"
+    ]
+  },
+  "streets": {
+    "Ady E. u": {
+      "yellow": "SZ1",
+      "black": "Kedd"
+    },
+    "Arborétum u. (Freh Alfonz utcáig)": {
+      "yellow": "SZ1"
+    },
+    "Bechtold u": {
+      "yellow": "SZ1",
+      "green": "Z2"
+    },
+    "Bercsényi u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Berkenye u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Bersek J. u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Bormonostori u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Borostyánkő u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Diófa u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Fenyő u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Festetich I. u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Freh A. u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Gyöp u": {
+      "yellow": "SZ1",
+      "black": "Kedd"
+    },
+    "Győry J. u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Hadik A. u. (Bechtold István utcáig)": {
+      "yellow": "SZ1"
+    },
+    "Hermann O. u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Hermina u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Hunyadi u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Károlyi M. u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Kastélykert. Kethelyi út": {
+      "yellow": "SZ1"
+    },
+    "Királyvölgyi u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Köböl dűlő": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Kökény u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Lékai u": {
+      "yellow": "SZ1",
+      "green": "Z2"
+    },
+    "Park u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Pék u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Rohonci u": {
+      "yellow": "SZ3",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Rómer Flóris u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Rőti völgyi u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Schey Fülöp u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Sigray J. u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Sörgyár u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Szabóhegyi u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Szeder u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Szt. Imre herceg u": {
+      "yellow": "SZ1",
+      "green": "Z1"
+    },
+    "Temető u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Űrhajósok útja": {
+      "yellow": "SZ3",
+      "green": "Z1",
+      "black": "Szerda"
+    },
+    "Vaihingen u": {
+      "yellow": "SZ1",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Vámház u": {
+      "yellow": "SZ1",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Alsó krt": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Péntek"
+    },
+    "Bem József u": {
+      "yellow": "SZ2",
+      "green": "Z1"
+    },
+    "Cáki u": {
+      "yellow": "SZ2",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Chernel u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Faludi F u": {
+      "yellow": "SZ2"
+    },
+    "Forintos M. u": {
+      "yellow": "SZ2",
+      "green": "Z1"
+    },
+    "Forrás u": {
+      "yellow": "SZ2",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Fő tér": {
+      "yellow": "SZ2",
+      "black": "Kedd"
+    },
+    "Gábor Áron u": {
+      "yellow": "SZ2",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Írottkő Szálló": {
+      "yellow": "SZ2",
+      "green": "Z2"
+    },
+    "Írottkő u. 1-5": {
+      "yellow": "SZ2",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Jurisics tér": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Kelcz A. u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Kórház u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Péntek"
+    },
+    "Kossuth Lajos u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Péntek"
+    },
+    "Köböl út": {
+      "yellow": "SZ2",
+      "green": "Z2"
+    },
+    "Kőszeg szigetek": {
+      "yellow": "SZ2"
+    },
+    "Liszt F. u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Munkácsy Mihály u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Petőfi tér": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Piac": {
+      "yellow": "SZ2",
+      "green": "Z1"
+    },
+    "Pogányi u": {
+      "yellow": "SZ2",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Posztó u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Posztógyár u": {
+      "yellow": "SZ2",
+      "green": "Z2"
+    },
+    "Rajnis u": {
+      "yellow": "SZ2",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Rákóczi Ferenc u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Sánc u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Sáncárok u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Schneller I. u": {
+      "yellow": "SZ2",
+      "green": "Z1"
+    },
+    "Strand sétány": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Péntek"
+    },
+    "Szombathelyi u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Péntek"
+    },
+    "Szt. Lénárd u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Szűk u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Táblaház u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Kedd"
+    },
+    "Táncsics M. u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Téglás köz": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Péntek"
+    },
+    "Tüskevár u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Városház u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Várkör": {
+      "yellow": "SZ2",
+      "black": "Kedd"
+    },
+    "Velemi u": {
+      "yellow": "SZ3",
+      "green": "Z1"
+    },
+    "Árpád tér": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Bajcsy Zs. u": {
+      "yellow": "SZ3"
+    },
+    "Bertalan E. u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Bezerédy I. u": {
+      "yellow": "SZ3"
+    },
+    "Deák F. u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Dózsa Gy. U": {
+      "yellow": "SZ3"
+    },
+    "Dr. Ambró Gy. u. (kivéve a Feketeföldi dűlő)": {
+      "yellow": "SZ3"
+    },
+    "Erdészház u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Péntek"
+    },
+    "Fehér Sáfrány u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Felső krt": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Gyöngyös u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Írottkő": {
+      "yellow": "SZ3"
+    },
+    "Kálvária u. (parkolóig)": {
+      "yellow": "SZ3"
+    },
+    "Kárpáti S. u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Kőszegfalva": {
+      "yellow": "SZ3"
+    },
+    "Kőszegfalvi u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Péntek"
+    },
+    "Lakótelep (társasházak)": {
+      "yellow": "SZ3",
+      "green": "Z2"
+    },
+    "Lehmann G. u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Mecséry F. u": {
+      "yellow": "SZ3",
+      "green": "Z2"
+    },
+    "Meskó u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Munkás u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Puskapor u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Rohonci u. 50-felfelé": {
+      "yellow": "SZ3"
+    },
+    "Sziget u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Tanító képző u": {
+      "yellow": "SZ3",
+      "green": "Z2"
+    },
+    "Vadvirág u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Péntek"
+    },
+    "Vasút u": {
+      "yellow": "SZ3",
+      "green": "Z2",
+      "black": "Péntek"
+    },
+    "Arborétum u. (Freh Alfonz utcától)": {
+      "yellow": "SZ4"
+    },
+    "Auguszt J. u": {
+      "yellow": "SZ4",
+      "black": "Szerda"
+    },
+    "Ciklámen tér": {
+      "yellow": "SZ4",
+      "black": "Hétfő"
+    },
+    "Csőszház út": {
+      "yellow": "SZ4",
+      "green": "Z2"
+    },
+    "Erdő u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Dr Ambró Gy. u. (Feketeföldi dűlő)": {
+      "yellow": "SZ4"
+    },
+    "Felsőerdő u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Gesztenyefa u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Gyári major": {
+      "yellow": "SZ4"
+    },
+    "Hadik A. (Bechtold István utcától)": {
+      "yellow": "SZ4"
+    },
+    "Hegyalja u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Kankalin u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Kálvária utca (parkolótól felfelé) Kenyérhegyi u": {
+      "yellow": "SZ4"
+    },
+    "Kiss J. u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Libaszöllő u": {
+      "yellow": "SZ4"
+    },
+    "Lócserélő dűlő": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Lóránt Gy. u": {
+      "yellow": "SZ4",
+      "green": "Z2"
+    },
+    "Malomárok u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Mélyút u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Mohás u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Napsugár u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Nemezgyári major": {
+      "yellow": "SZ4",
+      "green": "Z2"
+    },
+    "Óház u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Ólmodi u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Panoráma krt": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Postásrét u": {
+      "yellow": "SZ4",
+      "black": "Hétfő"
+    },
+    "Szelestey L. u": {
+      "yellow": "SZ4",
+      "black": "Hétfő"
+    },
+    "Szent Anna u": {
+      "yellow": "SZ4",
+      "black": "Hétfő"
+    },
+    "Szent György u": {
+      "yellow": "SZ4",
+      "black": "Hétfő"
+    },
+    "Szőlőskert u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Tölgyes u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Tömbbelső": {
+      "yellow": "SZ4"
+    },
+    "Vízmű u": {
+      "yellow": "SZ4",
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Arborétum u": {
+      "green": "Z1",
+      "black": "Hétfő"
+    },
+    "Faludi F. u": {
+      "green": "Z1"
+    },
+    "Fő tér Gyöp u": {
+      "green": "Z1"
+    },
+    "Kethelyi út": {
+      "green": "Z1"
+    },
+    "Várkör + Ady E. u": {
+      "green": "Z1"
+    },
+    "Auguszt J": {
+      "green": "Z2"
+    },
+    "Bajcsy-Zsilinszky u": {
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Bezerédy u": {
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Dózsa Gy. u": {
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Dr. Ambró Gy. u": {
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Feketeföldi-dűlő": {
+      "green": "Z2"
+    },
+    "Hadik A. u": {
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Írottkő u": {
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "József forrás u": {
+      "green": "Z2"
+    },
+    "Kálvária u": {
+      "green": "Z2",
+      "black": "Szerda"
+    },
+    "Kastélykert": {
+      "green": "Z2",
+      "black": "Kedd"
+    },
+    "Kenyérhegyi u": {
+      "green": "Z2"
+    },
+    "Libaszőlő u": {
+      "green": "Z2",
+      "black": "Hétfő"
+    },
+    "Postarét u": {
+      "green": "Z2"
+    },
+    "Szelestey u": {
+      "green": "Z2"
+    },
+    "Szt. Anna u": {
+      "green": "Z2"
+    },
+    "Szt. György u": {
+      "green": "Z2"
+    },
+    "Csepregi u": {
+      "black": "Hétfő"
+    },
+    "Csőszház u": {
+      "black": "Hétfő"
+    },
+    "Forintos Mátyás u": {
+      "black": "Hétfő"
+    },
+    "Hosszúnemes dűlő": {
+      "black": "Hétfő"
+    },
+    "Kenyérhegyi u. (Kövi dűlő)": {
+      "black": "Hétfő"
+    },
+    "Kövi-dűlő": {
+      "black": "Hétfő"
+    },
+    "Ördögárok dűlő": {
+      "black": "Hétfő"
+    },
+    "Posztógyári u": {
+      "black": "Hétfő"
+    },
+    "Bechtold I. u": {
+      "black": "Kedd"
+    },
+    "Bem J. u": {
+      "black": "Kedd"
+    },
+    "Bercsényi M. u": {
+      "black": "Kedd"
+    },
+    "Borsmonostori u": {
+      "black": "Kedd"
+    },
+    "Faludi u": {
+      "black": "Kedd"
+    },
+    "Hermann u": {
+      "black": "Kedd"
+    },
+    "Kethelyi u": {
+      "black": "Kedd"
+    },
+    "Kormányhivatal": {
+      "black": "Kedd"
+    },
+    "Köböl u": {
+      "black": "Kedd"
+    },
+    "Lékai.u": {
+      "black": "Kedd"
+    },
+    "Rómer F. u": {
+      "black": "Kedd"
+    },
+    "Rőti-völgyi u": {
+      "black": "Kedd"
+    },
+    "Schneller u": {
+      "black": "Kedd"
+    },
+    "Szent Imre herceg u": {
+      "black": "Kedd"
+    },
+    "Abért tó": {
+      "black": "Szerda"
+    },
+    "Feketeföld-dűlő": {
+      "black": "Szerda"
+    },
+    "Gulner- Malom": {
+      "black": "Szerda"
+    },
+    "Gyógy-major": {
+      "black": "Szerda"
+    },
+    "Határ u": {
+      "black": "Szerda"
+    },
+    "Jurisics tér 8": {
+      "black": "Szerda"
+    },
+    "Lóránt Gy u": {
+      "black": "Szerda"
+    },
+    "Mecséry F.u": {
+      "black": "Szerda"
+    },
+    "Nemezgyári-major": {
+      "black": "Szerda"
+    },
+    "Rohonci u 50": {
+      "black": "Szerda"
+    },
+    "Tanítóképző u": {
+      "black": "Szerda"
+    },
+    "Velemi út": {
+      "black": "Szerda"
+    },
+    "Hunyadi u. 13": {
+      "black": "Péntek"
+    },
+    "Kiss J. 31(Nagy László EGYMI. Konténerek)": {
+      "black": "Péntek"
+    },
+    "Kossuth L. u. 8. (Piac)": {
+      "black": "Péntek"
+    },
+    "Tangazdaság": {
+      "black": "Péntek"
+    },
+    "Várkör 20": {
+      "black": "Péntek"
+    }
+  }
+}

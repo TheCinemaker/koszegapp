@@ -25,6 +25,7 @@ import GemDetail from '../pages/GemDetail';
 import MyGems from '../pages/MyGems';
 import GameIntro from '../pages/GameIntro';
 import LiveCityMap from './LiveCityMap';
+import LocalDashboard from '../pages/LocalDashboard';
 import Footer from './Footer';
 
 const Admin = React.lazy(() => import('../pages/Admin.jsx'));
@@ -115,6 +116,7 @@ export default function AnimatedRoutes({ appData }) {
           </PageWrapper>
         }
         />
+        <Route path="/local" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );

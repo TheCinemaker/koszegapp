@@ -1,0 +1,51 @@
+{
+    "postOffice": {
+        "title": "Kőszeg 1-es Posta",
+        "address": "Várkör 65.",
+        "phone": "+36 94 360 068",
+        "hours": [
+            "Hétfő: 08:00 – 18:00",
+            "Kedd – Péntek: 08:00 – 16:00",
+            "Hétvége: Zárva"
+        ]
+    },
+    "government": {
+        "title": "Kormányablak Kőszeg",
+        "address": "Jurisics tér 6.",
+        "phone": "1818",
+        "hours": [
+            "Hétfő: 8:00 – 18:00",
+            "Kedd: 8:00 – 16:00",
+            "Szerda: 8:00 – 18:00",
+            "Csütörtök: 8:00 – 16:00",
+            "Péntek: 8:00 – 12:00"
+        ],
+        "note": "NAV ügyfélszolgálat: Kedd és Csütörtök ügyfélfogadási időben."
+    },
+    "market": {
+        "title": "Termelői Piac",
+        "address": "Kossuth Lajos utca 3.",
+        "hours": [
+            "Szerda: 06:00 – 12:00 (kb.)",
+            "Szombat: 06:00 – 12:00 (kb.)"
+        ],
+        "description": "Zöldség, gyümölcs, virág, helyi termékek."
+    },
+    "utilities": [
+        {
+            "name": "E.ON Áram (Hibabejelentő)",
+            "phone": "+36 80 533 533",
+            "description": "Folyamatosan hívható (Életveszély/Zavar)"
+        },
+        {
+            "name": "Vasivíz (Hibabejelentő)",
+            "phone": "+36 80 201 232",
+            "description": "Víz és szennyvíz hibák. Ingyenes zöld szám."
+        },
+        {
+            "name": "Kéményseprők (Katasztrófavédelem)",
+            "phone": "1818",
+            "description": "Mellék: 9, majd 1. (Időpontfoglalás)"
+        }
+    ]
+}

@@ -14,7 +14,8 @@ import {
   IoHeartOutline,
   IoHeart,
   IoMoonOutline,
-  IoSunnyOutline
+  IoSunnyOutline,
+  IoHomeOutline
 } from 'react-icons/io5';
 
 import Home from './pages/Home';
@@ -46,6 +47,7 @@ import FloatingNavbar from './components/FloatingNavbar';
 import FloatingButtons from './components/FloatingButtons';
 import SmartSpotlight from './components/SmartSpotlight';
 import LiveCityMap from './components/LiveCityMap';
+import ResidentCheckModal from './components/ResidentCheckModal';
 
 import AnimatedRoutes from './components/AnimatedRoutes';
 
@@ -85,7 +87,9 @@ function MainAppContent() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
   const [showProgramModal, setShowProgramModal] = useState(true);
+
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
+  const [showResidentModal, setShowResidentModal] = useState(false);
   const isHome = location.pathname === '/';
   const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
 
@@ -279,6 +283,22 @@ function MainAppContent() {
               </div>
 
               <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                {/* Local Resident Info Button */}
+                <button
+                  onClick={() => setShowResidentModal(true)}
+                  className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                  aria-label="Lakossági infók"
+                >
+                  <IoHomeOutline className="text-base sm:text-lg" />
+                  <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
+                </button>
+
                 {/* Weather Button (Compact) */}
                 <button
                   onClick={() => setShowWeatherModal(true)}
@@ -375,6 +395,7 @@ function MainAppContent() {
         <>
           <Toaster position="bottom-center" />
           {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
+          {showResidentModal && <ResidentCheckModal onClose={() => setShowResidentModal(false)} />}
 
           {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 

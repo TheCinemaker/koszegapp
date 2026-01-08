@@ -1,0 +1,165 @@
+{
+    "onCall": {
+        "title": "Orvosi Ügyelet (Központi)",
+        "phone": "1830",
+        "address": "9730 Kőszeg, Rákóczi F. u. 19.",
+        "description": "Felnőtt és gyermekorvosi ügyelet. Életveszély esetén: 112",
+        "hours": [
+            {
+                "days": "Hétköznap",
+                "time": "16:00 - 22:00"
+            },
+            {
+                "days": "Hétvége, Ünnepnap",
+                "time": "08:00 - 14:00"
+            }
+        ],
+        "note": "22:00 után a szombathelyi ügyelet (11-es Huszár u. 6.) látja el a feladatot."
+    },
+    "gps": [
+        {
+            "name": "Dr. Nedeczky Veronika",
+            "district": "1. számú körzet",
+            "address": "Munkácsy Mihály utca 17.",
+            "hours": [
+                "Hétfő: 7:30 – 12:00",
+                "Kedd: 12:30 – 17:00",
+                "Szerda: 7:30 – 12:00",
+                "Csütörtök: 12:30 – 17:00",
+                "Péntek: 7:30 – 12:00"
+            ]
+        },
+        {
+            "name": "Dr. Pusztai Gergő / Dr. Pusztai Szilveszter",
+            "district": "2. számú körzet",
+            "address": "Kőszeg",
+            "hours": [
+                "Hétfő: 7:30 – 12:00",
+                "Kedd: 12:30 – 17:00",
+                "Szerda: 7:30 – 12:00",
+                "Csütörtök: 12:30 – 17:00",
+                "Péntek: 7:30 – 12:00"
+            ]
+        },
+        {
+            "name": "Dr. Varga István",
+            "district": "3. számú körzet",
+            "address": "Gábor Áron utca 1.",
+            "hours": [
+                "Hétfő: 7:30 – 12:30",
+                "Kedd: 12:00 – 17:00",
+                "Szerda: 12:00 – 15:00",
+                "Csütörtök: 7:30 – 12:30",
+                "Péntek: 10:00 – 13:00"
+            ]
+        },
+        {
+            "name": "Dr. Prugberger-Németh Lilla",
+            "district": "4. számú körzet",
+            "address": "Gábor Áron utca 1.",
+            "hours": [
+                "Hétfő: 12:30 – 16:00",
+                "Kedd: 8:30 – 12:00",
+                "Szerda: 12:30 – 16:00",
+                "Csütörtök: 8:30 – 12:00",
+                "Péntek: 8:30 – 13:00"
+            ]
+        }
+    ],
+    "pediatrics": [
+        {
+            "name": "Dr. Masát Péter (Helyettes: Dr. Szalados Katalin)",
+            "district": "1. számú gyermekkörzet",
+            "phone": "94/360-191",
+            "hours": [
+                "Hétfő: 13:30 – 16:30",
+                "Szerda: 13:30 – 16:30",
+                "Péntek: 8:00 – 12:00"
+            ],
+            "consultation": [
+                "Hétfő: 12:30 – 13:30",
+                "Szerda: 12:30 – 13:30"
+            ]
+        },
+        {
+            "name": "Dr. Garda Károly (Helyettes: Dr. Szalados Katalin)",
+            "district": "2. számú gyermekkörzet",
+            "phone": "94/360-148",
+            "hours": [
+                "Kedd: 14:30 – 17:30",
+                "Csütörtök: 10:00 – 13:00"
+            ],
+            "consultation": [
+                "Kedd: 13:30 – 14:30",
+                "Csütörtök: 9:00 – 10:00"
+            ]
+        }
+    ],
+    "pharmacies": [
+        {
+            "name": "Ügyeletes Gyógyszertár Kereső",
+            "address": "Online elérhető (naponta változik)",
+            "phone": "-",
+            "hours": "Lásd a linken",
+            "link": "https://www.patikavilag.hu/vas-varmegye-gyogyszertar-ugyelet",
+            "isOnline": true
+        },
+        {
+            "name": "BENU Gyógyszertár (Küttel)",
+            "address": "Pogányi út 7. (Tesco mellett)",
+            "phone": "+36 94 360 038",
+            "hours": [
+                "Hétfő-Szerda: 8:00 – 18:00",
+                "Csütörtök-Péntek: 8:00 – 19:00",
+                "Szombat: 8:00 – 16:00"
+            ]
+        },
+        {
+            "name": "Szent Benedek Gyógyszertár",
+            "address": "Kossuth Lajos utca 9.",
+            "phone": "+36 94 361 450",
+            "hours": [
+                "Hétfő-Péntek: 8:00 – 17:00",
+                "Szombat: 8:00 – 12:00"
+            ]
+        },
+        {
+            "name": "Szerecsen Patika",
+            "address": "Rohonci u. 21.",
+            "phone": "+36 94 360 118",
+            "hours": [
+                "Hétfő-Péntek: 8:00 – 16:30",
+                "Szombat: 8:00 – 12:00"
+            ]
+        }
+    ],
+    "dentists": [
+        {
+            "name": "Fara-Gom Kft. (Dr. Gombár René)",
+            "address": "Várkör 35-37.",
+            "phone": "94/361-008",
+            "hours": [
+                "Hétfő - Szerda: 09:30 – 15:00",
+                "Csütörtök: 14:00 – 18:00"
+            ]
+        },
+        {
+            "name": "Kőszeg Dental",
+            "address": "Várkör 35-37.",
+            "phone": "+36 30 428-2858",
+            "hours": [
+                "Hétfő - Szerda: 09:30 – 15:00",
+                "Csütörtök: 14:00 – 18:00"
+            ]
+        },
+        {
+            "name": "Dr. Szalkai Kft.",
+            "address": "Rohonci u. 40.",
+            "phone": "+36 94 360 333",
+            "hours": [
+                "Hétfő, Szerda: 12:00 – 18:00",
+                "Kedd, Csütörtök, Péntek: 07:00 – 13:00"
+            ]
+        }
+    ]
+}
