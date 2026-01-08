@@ -47,5 +47,50 @@
             "phone": "1818",
             "description": "Mellék: 9, majd 1. (Időpontfoglalás)"
         }
+    ],
+    "shops": [
+        {
+            "name": "Tesco Szupermarket",
+            "address": "Pogányi út 7.",
+            "hours": [
+                "Hétfő-Szombat: 07:00 – 21:00",
+                "Vasárnap: 07:00 – 19:00"
+            ]
+        },
+        {
+            "name": "Penny Market",
+            "address": "Pogányi út 1.",
+            "hours": [
+                "Hétfő-Szombat: 07:00 – 20:00",
+                "Vasárnap: 07:00 – 18:00"
+            ]
+        },
+        {
+            "name": "SPAR Szupermarket",
+            "address": "Rákóczi Ferenc utca 80-82.",
+            "hours": [
+                "Hétfő-Péntek: 06:30 – 20:00",
+                "Szombat: 06:30 – 17:00",
+                "Vasárnap: 07:00 – 13:00"
+            ]
+        },
+        {
+            "name": "Coop (Rohonci út)",
+            "address": "Rohonci u. 37-39.",
+            "hours": [
+                "Hétfő-Péntek: 06:00 – 19:00",
+                "Szombat: 06:00 – 18:00",
+                "Vasárnap: Zárva"
+            ]
+        },
+        {
+            "name": "Coop (Pék utca)",
+            "address": "Pék u. 20.",
+            "hours": [
+                "Hétfő: 06:00 – 18:00",
+                "Kedd-Péntek: 06:00 – 19:00",
+                "Szombat: 06:00 – 15:00"
+            ]
+        }
     ]
 }

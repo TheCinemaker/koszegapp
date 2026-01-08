@@ -8,6 +8,8 @@ import scheduleData from '../data/wasteSchedule.json';
 import newsData from '../data/news.json';
 import DoctorsModal from '../components/DoctorsModal';
 import CityServicesModal from '../components/CityServicesModal';
+import ShopsModal from '../components/ShopsModal';
+import TransportModal from '../components/TransportModal';
 
 const DAY_MAP_HU = {
     'Vasárnap': 0,
@@ -24,6 +26,8 @@ export default function LocalDashboard() {
     const [showTomorrowDetails, setShowTomorrowDetails] = useState(false);
     const [showDoctorsModal, setShowDoctorsModal] = useState(false);
     const [showCityServicesModal, setShowCityServicesModal] = useState(false);
+    const [showShopsModal, setShowShopsModal] = useState(false);
+    const [showTransportModal, setShowTransportModal] = useState(false);
 
     const getNextDayOfWeek = (dayName) => {
         if (!dayName) return '-';
@@ -407,6 +411,30 @@ export default function LocalDashboard() {
                         </div>
                     </motion.div>
 
+                    {/* Shops Card - Inserted here */}
+                    <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setShowShopsModal(true)}
+                        className="cursor-pointer bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8 flex flex-col justify-between group h-full"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                                <span>🛒</span>
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors">Boltok & Üzletek</h2>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-auto pt-4">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Tesco, Spar, Penny, Coop</p>
+                            <div className="w-10 h-10 rounded-full bg-white/50 dark:bg-white/10 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all">
+                                <IoArrowForward className="text-xl" />
+                            </div>
+                        </div>
+                    </motion.div>
+
                     {/* City Services & Utility */}
                     <motion.div
                         whileHover={{ scale: 1.02 }}
@@ -430,42 +458,33 @@ export default function LocalDashboard() {
                             </div>
                         </div>
                     </motion.div>
+
+                    {/* Transport Card - Moved to grid as 4th item */}
+                    <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setShowTransportModal(true)}
+                        className="cursor-pointer bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8 flex flex-col justify-between group h-full"
+                    >
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                                <span>🚌</span>
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-green-500 transition-colors">Menetrendek</h2>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-auto pt-4">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">MÁV, Volán, Helyi busz</p>
+                            <div className="w-10 h-10 rounded-full bg-white/50 dark:bg-white/10 flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-all">
+                                <IoArrowForward className="text-xl" />
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
 
-                {/* Transport / Timetables */}
-                <div className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8">
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-2xl shadow-lg">
-                            <span>🚌</span>
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Menetrendek</h2>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <a href="https://jegy.mav.hu/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white/40 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/40 transition-colors group">
-                            <div className="text-2xl grayscale group-hover:grayscale-0 transition-all">🚆</div>
-                            <div>
-                                <div className="font-bold text-gray-900 dark:text-white text-sm">MÁV</div>
-                                <div className="text-xs text-gray-500">Vonat</div>
-                            </div>
-                        </a>
-                        <a href="https://utas.hu/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white/40 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/40 transition-colors group">
-                            <div className="text-2xl grayscale group-hover:grayscale-0 transition-all">🚌</div>
-                            <div>
-                                <div className="font-bold text-gray-900 dark:text-white text-sm">Utas.hu</div>
-                                <div className="text-xs text-gray-500">Busz/Helyi</div>
-                            </div>
-                        </a>
-                        <a href="https://www.volanbusz.hu/hu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white/40 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/40 transition-colors group">
-                            <div className="text-2xl grayscale group-hover:grayscale-0 transition-all">🗓️</div>
-                            <div>
-                                <div className="font-bold text-gray-900 dark:text-white text-sm">Volán</div>
-                                <div className="text-xs text-gray-500">Menetrend</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+
 
                 {/* News Feed - Moved to bottom (full width) */}
                 <div className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-[25px] rounded-[2rem] border border-white/50 dark:border-white/10 shadow-xl p-6 sm:p-8">
@@ -503,6 +522,8 @@ export default function LocalDashboard() {
 
             <DoctorsModal isOpen={showDoctorsModal} onClose={() => setShowDoctorsModal(false)} />
             <CityServicesModal isOpen={showCityServicesModal} onClose={() => setShowCityServicesModal(false)} />
+            <ShopsModal isOpen={showShopsModal} onClose={() => setShowShopsModal(false)} />
+            <TransportModal isOpen={showTransportModal} onClose={() => setShowTransportModal(false)} />
         </motion.div>
     );
 }
