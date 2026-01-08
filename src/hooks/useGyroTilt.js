@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
  * Returns tilt values { x, y } based on device orientation.
  * Range: -1 to 1 (clamped for subtle effect)
  */
-export function useGyroTilt(maxTilt = 25) {
+export function useGyroTilt(maxTilt = 30) {
     const [tilt, setTilt] = useState({ x: 0, y: 0 });
     const [hasPermission, setHasPermission] = useState(false);
     const [permissionRequested, setPermissionRequested] = useState(false);

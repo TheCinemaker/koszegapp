@@ -27,7 +27,7 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
         style={{
-            transform: `perspective(1000px) rotateX(${tilt.y * 30}deg) rotateY(${tilt.x * 30}deg)`,
+            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
             transition: 'transform 0.1s ease-out'
         }}
         className="
@@ -38,9 +38,9 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
             rounded-[2.5rem] 
             border border-white/60 dark:border-white/10 
             shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]
-            p-6 sm:p-6
+            p-5
             flex flex-col justify-between 
-            h-full min-h-[160px]
+            h-full min-h-[110px]
             group
         "
     >
@@ -48,13 +48,13 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
         <div className={`absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br ${colorFrom} ${colorTo} opacity-20 blur-[50px] rounded-full group-hover:opacity-30 transition-opacity duration-500`} />
 
         <div className="relative z-10">
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white text-3xl shadow-lg mb-4 transform group-hover:scale-110 transition-transform duration-500`}>
+            <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white text-2xl shadow-lg mb-3 transform group-hover:scale-110 transition-transform duration-500`}>
                 {icon}
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white leading-tight mb-2">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight mb-1">
                 {title}
             </h3>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
                 {subtitle}
             </p>
         </div>
@@ -217,7 +217,7 @@ export default function LocalDashboard() {
                             shadow-2xl shadow-zinc-200/50 dark:shadow-black/50
                         "
                         style={{
-                            transform: `perspective(1000px) rotateX(${tilt.y * 25}deg) rotateY(${tilt.x * 25}deg)`,
+                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
                             transition: 'transform 0.1s ease-out'
                         }}
                     >
