@@ -3,12 +3,30 @@
     "id": 1,
     "name": "Ibrahim Boutique Hotel",
     "type": "hotel",
-    "tags": ["hotel", "szálloda", "boutique"],
+    "tags": [
+      "hotel",
+      "szálloda",
+      "boutique"
+    ],
     "address": "9730 Kőszeg, Fő tér 17",
-    "coords": {"lat": 47.39025, "lng": 16.53997},
+    "coords": {
+      "lat": 47.39025,
+      "lng": 16.53997
+    },
     "image": "ibrahim.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "klíma", "étterem", "bar", "családbarát", "luggage storage", "ebike charging", "room safe", "room service"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "klíma",
+      "étterem",
+      "bar",
+      "családbarát",
+      "luggage storage",
+      "ebike charging",
+      "room safe",
+      "room service"
+    ],
     "rating": 9.7,
     "reviews_count": 359,
     "price_from": 95,
@@ -24,12 +42,26 @@
     "id": 2,
     "name": "Harangtorony Szálló",
     "type": "panzió",
-    "tags": ["szálló", "panzió", "szoba"],
+    "tags": [
+      "szálló",
+      "panzió",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Várkör 44",
-    "coords": {"lat": 47.3890, "lng": 16.5377},
+    "coords": {
+      "lat": 47.3890,
+      "lng": 16.5377
+    },
     "image": "harangtorony.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "reggeli", "luggage storage", "shared kitchen", "bicycle parking"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "reggeli",
+      "luggage storage",
+      "shared kitchen",
+      "bicycle parking"
+    ],
     "rating": 9.1,
     "reviews_count": 315,
     "price_from": 105,
@@ -45,12 +77,26 @@
     "id": 3,
     "name": "Hotel Benedict",
     "type": "hotel",
-    "tags": ["hotel", "szálloda"],
+    "tags": [
+      "hotel",
+      "szálloda"
+    ],
     "address": "9730 Kőszeg, Rajnis utca 2",
-    "coords": {"lat": 47.38998, "lng": 16.54005},
+    "coords": {
+      "lat": 47.38998,
+      "lng": 16.54005
+    },
     "image": "benedict.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "reggeli", "bar", "luggage storage", "meeting room", "lift"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "reggeli",
+      "bar",
+      "luggage storage",
+      "meeting room",
+      "lift"
+    ],
     "rating": 8.7,
     "reviews_count": 181,
     "price_from": 95,
@@ -66,12 +112,26 @@
     "id": 4,
     "name": "Hotel Írottkő",
     "type": "hotel",
-    "tags": ["hotel", "szálloda"],
+    "tags": [
+      "hotel",
+      "szálloda"
+    ],
     "address": "9730 Kőszeg, Fő tér 4",
-    "coords": {"lat": 47.38837, "lng": 16.54249},
+    "coords": {
+      "lat": 47.38837,
+      "lng": 16.54249
+    },
     "image": "irottko.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "reggeli", "wellness", "étterem", "lift", "kerékpárkölcsönzés"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "reggeli",
+      "wellness",
+      "étterem",
+      "lift",
+      "kerékpárkölcsönzés"
+    ],
     "rating": 8.3,
     "reviews_count": 2052,
     "price_from": 95,
@@ -87,12 +147,28 @@
     "id": 5,
     "name": "Portré Étterem és Hotel",
     "type": "panzió",
-    "tags": ["panzió", "vendégház", "szoba"],
+    "tags": [
+      "panzió",
+      "vendégház",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Fő tér 7",
-    "coords": {"lat": 47.39010, "lng": 16.53985},
+    "coords": {
+      "lat": 47.39010,
+      "lng": 16.53985
+    },
     "image": "portre.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló (közeli)", "reggeli", "étterem", "bár", "wellness (szauna)", "terasz", "kávézó"],
+    "amenities": [
+      "wifi",
+      "parkoló (közeli)",
+      "reggeli",
+      "étterem",
+      "bár",
+      "wellness (szauna)",
+      "terasz",
+      "kávézó"
+    ],
     "rating": 9.6,
     "reviews_count": 234,
     "price_from": 95,
@@ -108,12 +184,24 @@
     "id": 6,
     "name": "Rapszódia Apartmanház",
     "type": "apartman",
-    "tags": ["apartman", "szoba"],
+    "tags": [
+      "apartman",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Fő tér 9",
-    "coords": {"lat": 47.39000, "lng": 16.53990},
+    "coords": {
+      "lat": 47.39000,
+      "lng": 16.53990
+    },
     "image": "rapszodia.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló (közeli)", "konyha", "napi takarítás", "családbarát"],
+    "amenities": [
+      "wifi",
+      "parkoló (közeli)",
+      "konyha",
+      "napi takarítás",
+      "családbarát"
+    ],
     "rating": 9.8,
     "reviews_count": 48,
     "price_from": 60,
@@ -129,12 +217,24 @@
     "id": 8,
     "name": "Kuckó Pihenőház",
     "type": "vendégház",
-    "tags": ["vendégház", "pihenőház", "szoba"],
+    "tags": [
+      "vendégház",
+      "pihenőház",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Szabó-hegy",
-    "coords": {"lat": 47.39800, "lng": 16.54500},
+    "coords": {
+      "lat": 47.39800,
+      "lng": 16.54500
+    },
     "image": "kucko.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "erdő melletti"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "erdő melletti"
+    ],
     "rating": 9.9,
     "reviews_count": 99,
     "price_from": 70,
@@ -150,12 +250,24 @@
     "id": 7,
     "name": "Gábriel Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Várkör 67",
-    "coords": {"lat": 47.38990, "lng": 16.54000},
+    "coords": {
+      "lat": 47.38990,
+      "lng": 16.54000
+    },
     "image": "gabriel.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "mosógép", "kerthelyiség", "síkképernyős TV"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "mosógép",
+      "kerthelyiség",
+      "síkképernyős TV"
+    ],
     "rating": 9.9,
     "reviews_count": 7,
     "price_from": 60,
@@ -171,12 +283,27 @@
     "id": 9,
     "name": "Centrum Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Munkácsy Mihály utca 8-10.",
-    "coords": {"lat": 47.38950, "lng": 16.53950},
+    "coords": {
+      "lat": 47.38950,
+      "lng": 16.53950
+    },
     "image": "centrum.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "légkondicionálás", "erkély", "konyha", "mosógép", "gyerekbarát", "klíma", "teherlift"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "légkondicionálás",
+      "erkély",
+      "konyha",
+      "mosógép",
+      "gyerekbarát",
+      "klíma",
+      "teherlift"
+    ],
     "rating": 10.0,
     "reviews_count": 50,
     "price_from": 75,
@@ -192,12 +319,24 @@
     "id": 10,
     "name": "Mohás Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "szálló"],
+    "tags": [
+      "vendégház",
+      "szálló"
+    ],
     "address": "9730 Kőszeg, Mohás út 107",
-    "coords": {"lat": 47.37872, "lng": 16.55010},
+    "coords": {
+      "lat": 47.37872,
+      "lng": 16.55010
+    },
     "image": "mohas.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz", "grill"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz",
+      "grill"
+    ],
     "rating": 9.2,
     "reviews_count": 48,
     "price_from": 60,
@@ -213,12 +352,25 @@
     "id": 11,
     "name": "Liszt Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "panzió", "szoba"],
+    "tags": [
+      "vendégház",
+      "panzió",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Liszt Ferenc utca 14.",
-    "coords": {"lat": 47.38930, "lng": 16.53880},
+    "coords": {
+      "lat": 47.38930,
+      "lng": 16.53880
+    },
     "image": "liszt.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "reggeli", "bicikli tároló"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "reggeli",
+      "bicikli tároló"
+    ],
     "rating": 9.5,
     "reviews_count": 55,
     "price_from": 60,
@@ -234,12 +386,25 @@
     "id": 12,
     "name": "Sziget Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "pihenőház", "szoba"],
+    "tags": [
+      "vendégház",
+      "pihenőház",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Sziget utca 3.",
-    "coords": {"lat": 47.38780, "lng": 16.53820},
+    "coords": {
+      "lat": 47.38780,
+      "lng": 16.53820
+    },
     "image": "sziget.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "reggeli", "játszótér"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "reggeli",
+      "játszótér"
+    ],
     "rating": 9.7,
     "reviews_count": 33,
     "price_from": 60,
@@ -255,12 +420,26 @@
     "id": 13,
     "name": "Alpokalja Panzió & Étterem",
     "type": "panzió",
-    "tags": ["panzió", "vendégház", "étterem"],
+    "tags": [
+      "panzió",
+      "vendégház",
+      "étterem"
+    ],
     "address": "9730 Kőszeg, Szombathelyi út 8‑10",
-    "coords": {"lat": 47.39600, "lng": 16.54000},
+    "coords": {
+      "lat": 47.39600,
+      "lng": 16.54000
+    },
     "image": "alpok.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "étterem", "wellness (szauna)", "játszótér", "kerékpárkölcsönzés"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "étterem",
+      "wellness (szauna)",
+      "játszótér",
+      "kerékpárkölcsönzés"
+    ],
     "rating": 8.0,
     "reviews_count": 1000,
     "price_from": 65,
@@ -276,12 +455,27 @@
     "id": 14,
     "name": "Csikar Csárda és Panzió",
     "type": "panzió",
-    "tags": ["panzió", "vendégház", "étterem"],
+    "tags": [
+      "panzió",
+      "vendégház",
+      "étterem"
+    ],
     "address": "9730 Kőszeg, Alsó körút 12",
-    "coords": {"lat": 47.38350, "lng": 16.54300},
+    "coords": {
+      "lat": 47.38350,
+      "lng": 16.54300
+    },
     "image": "csikar.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "étterem", "reggeli", "kerékpártároló", "játszótér", "klíma"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "étterem",
+      "reggeli",
+      "kerékpártároló",
+      "játszótér",
+      "klíma"
+    ],
     "rating": 8.9,
     "reviews_count": 261,
     "price_from": 70,
@@ -293,16 +487,31 @@
     "notes": "Családias hangulatú étteremmel rendelkező panzió, nagy terasszal és rendezvényközponttal – 2025-ös vendégértékelés: 8,9.",
     "description": "A történelmi Kőszeg közelében, 16 perces sétával elérhető Csikar Csárda és Panzió saját étteremmel, terasszal, klímás szobákkal, játszótérrel és rendezvényhelyszínnel várja a vendégeket. Ideális családi túrázásokhoz és kisebb eseményekhez. :contentReference[oaicite:2]{index=2}"
   },
-   {
+  {
     "id": 15,
     "name": "Tölgyes Villa",
     "type": "villa",
-    "tags": ["villa", "apartman"],
+    "tags": [
+      "villa",
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Tölgyes út 55",
-    "coords": {"lat": 47.40210, "lng": 16.54650},
+    "coords": {
+      "lat": 47.40210,
+      "lng": 16.54650
+    },
     "image": "tolgyes.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz", "konyha", "mosógép", "légkondicionálás", "mosogató"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz",
+      "konyha",
+      "mosógép",
+      "légkondicionálás",
+      "mosogató"
+    ],
     "rating": 10.0,
     "reviews_count": 1,
     "price_from": 80,
@@ -318,12 +527,27 @@
     "id": 16,
     "name": "Arany Strucc Szálloda",
     "type": "hotel",
-    "tags": ["hotel", "szálloda"],
+    "tags": [
+      "hotel",
+      "szálloda"
+    ],
     "address": "9730 Kőszeg, Várkör 124",
-    "coords": {"lat": 47.39050, "lng": 16.54050},
+    "coords": {
+      "lat": 47.39050,
+      "lng": 16.54050
+    },
     "image": "strucc.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "étterem", "bár", "fodrászat", "kozmetika", "cukrászda", "24h recepció"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "étterem",
+      "bár",
+      "fodrászat",
+      "kozmetika",
+      "cukrászda",
+      "24h recepció"
+    ],
     "rating": 8.6,
     "reviews_count": 210,
     "price_from": 75,
@@ -339,12 +563,30 @@
     "id": 17,
     "name": "Blues Ryokan",
     "type": "panzió",
-    "tags": ["panzió", "motel", "szoba"],
+    "tags": [
+      "panzió",
+      "motel",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Rákóczi Ferenc utca 22",
-    "coords": {"lat": 47.38980, "lng": 16.54100},
+    "coords": {
+      "lat": 47.38980,
+      "lng": 16.54100
+    },
     "image": "blues.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "konyhasarok", "mosogatógép", "hűtő", "mikrohullámú", "TV", "24h recepció", "állatbarát"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "konyhasarok",
+      "mosogatógép",
+      "hűtő",
+      "mikrohullámú",
+      "TV",
+      "24h recepció",
+      "állatbarát"
+    ],
     "rating": 9.4,
     "reviews_count": 63,
     "price_from": 65,
@@ -360,12 +602,24 @@
     "id": 18,
     "name": "Kőkert Pihenőház",
     "type": "pihenőház",
-    "tags": ["pihenőház", "apartman"],
+    "tags": [
+      "pihenőház",
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Puskapor utca 12.",
-    "coords": {"lat": 47.38100, "lng": 16.54650},
+    "coords": {
+      "lat": 47.38100,
+      "lng": 16.54650
+    },
     "image": "kokert.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "grill", "természetközeli"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "grill",
+      "természetközeli"
+    ],
     "rating": 9.4,
     "reviews_count": 25,
     "price_from": 70,
@@ -381,12 +635,24 @@
     "id": 19,
     "name": "Alpok Tava Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "apartman"],
+    "tags": [
+      "vendégház",
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Vasút utca 24.",
-    "coords": {"lat": 47.37900, "lng": 16.55600},
+    "coords": {
+      "lat": 47.37900,
+      "lng": 16.55600
+    },
     "image": "alpokt.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "tóparti", "faház"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "tóparti",
+      "faház"
+    ],
     "rating": 9.8,
     "reviews_count": 33,
     "price_from": 85,
@@ -402,12 +668,24 @@
     "id": 20,
     "name": "Mónika Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "szoba"],
+    "tags": [
+      "vendégház",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Csőszház utca 12-14",
-    "coords": {"lat": 47.38300, "lng": 16.55000},
+    "coords": {
+      "lat": 47.38300,
+      "lng": 16.55000
+    },
     "image": "monika.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "reggeli", "játszótér"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "reggeli",
+      "játszótér"
+    ],
     "rating": 9.6,
     "reviews_count": 18,
     "price_from": 68,
@@ -423,12 +701,24 @@
     "id": 21,
     "name": "Rohonci Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "pihenőház"],
+    "tags": [
+      "vendégház",
+      "pihenőház"
+    ],
     "address": "9730 Kőszeg, Rohonci utca 24",
-    "coords": {"lat": 47.38720, "lng": 16.54700},
+    "coords": {
+      "lat": 47.38720,
+      "lng": 16.54700
+    },
     "image": "rohonci.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "grill", "családbarát"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "grill",
+      "családbarát"
+    ],
     "rating": 9.3,
     "reviews_count": 14,
     "price_from": 65,
@@ -444,12 +734,25 @@
     "id": 22,
     "name": "Belvárosi Apartman",
     "type": "apartman",
-    "tags": ["apartman", "szoba"],
+    "tags": [
+      "apartman",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Szűk utca 1/A",
-    "coords": {"lat": 47.38960, "lng": 16.54010},
+    "coords": {
+      "lat": 47.38960,
+      "lng": 16.54010
+    },
     "image": "belv.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "mosógép", "légkondicionálás", "erkély"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "mosógép",
+      "légkondicionálás",
+      "erkély"
+    ],
     "rating": 9.7,
     "reviews_count": 30,
     "price_from": 75,
@@ -465,12 +768,24 @@
     "id": 23,
     "name": "Akácos Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "pihenőház"],
+    "tags": [
+      "vendégház",
+      "pihenőház"
+    ],
     "address": "9730 Kőszeg, Pogányok",
-    "coords": {"lat":47.3691353, "lng": 16.5243788},
+    "coords": {
+      "lat": 47.3691353,
+      "lng": 16.5243788
+    },
     "image": "akacos.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "játszótér", "szalonnasütő"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "játszótér",
+      "szalonnasütő"
+    ],
     "rating": 9.8,
     "reviews_count": 25,
     "price_from": 70,
@@ -483,15 +798,27 @@
     "description": "Hangulatos vendégház saját kerttel, játszótérrel és szalonnasütő hellyel. Ingyenes wifi, parkolás, és önellátásra alkalmas konyha is rendelkezésre áll. (Forrás: szallas.hu, saját honlap)"
   },
   {
-   "id": 23,
+    "id": 23,
     "name": "Akácos Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "pihenőház"],
+    "tags": [
+      "vendégház",
+      "pihenőház"
+    ],
     "address": "9730 Kőszeg, Pogányok",
-    "coords": {"lat":47.3691353, "lng": 16.5243788},
+    "coords": {
+      "lat": 47.3691353,
+      "lng": 16.5243788
+    },
     "image": "akacos.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "játszótér", "szalonnasütő"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "játszótér",
+      "szalonnasütő"
+    ],
     "rating": 9.8,
     "reviews_count": 25,
     "price_from": 70,
@@ -507,12 +834,23 @@
     "id": 25,
     "name": "Kőszeg Levendula Apartmanház",
     "type": "apartmanház",
-    "tags": ["apartman", "ház"],
+    "tags": [
+      "apartman",
+      "ház"
+    ],
     "address": " Kőszeg, Forintos Mátyás u. 8.",
-    "coords": {"lat": 47.38161634949537, "lng": 16.551307411058524},
+    "coords": {
+      "lat": 47.38161634949537,
+      "lng": 16.551307411058524
+    },
     "image": "leve.jpg",
     "gallery": [],
-    "amenities": ["wifi", "zárt parkoló", "kert", "amerikai konyha"],
+    "amenities": [
+      "wifi",
+      "zárt parkoló",
+      "kert",
+      "amerikai konyha"
+    ],
     "rating": 9.9,
     "reviews_count": 40,
     "price_from": 46.000,
@@ -528,12 +866,23 @@
     "id": 26,
     "name": "Bak-lak Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Kastélykert lakópark 21/c",
-    "coords": {"lat": 47.38450, "lng": 16.54710},
+    "coords": {
+      "lat": 47.38450,
+      "lng": 16.54710
+    },
     "image": "bak.webp",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "terasz", "mosógép"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "terasz",
+      "mosógép"
+    ],
     "rating": 9.6,
     "reviews_count": 22,
     "price_from": 68,
@@ -549,12 +898,24 @@
     "id": 27,
     "name": "Pékapartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Pékapart utca 25",
-    "coords": {"lat": 47.38680, "lng": 16.54620},
+    "coords": {
+      "lat": 47.38680,
+      "lng": 16.54620
+    },
     "image": "pek.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "tó", "grill", "terasz"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "tó",
+      "grill",
+      "terasz"
+    ],
     "rating": 9.9,
     "reviews_count": 14,
     "price_from": 80,
@@ -570,12 +931,23 @@
     "id": 28,
     "name": "Csücsök Pihenőház",
     "type": "pihenőház",
-    "tags": ["pihenőház"],
+    "tags": [
+      "pihenőház"
+    ],
     "address": "9730 Kőszeg, Felsőerdő utca 19.",
-    "coords": {"lat": 47.38420, "lng": 16.54580},
+    "coords": {
+      "lat": 47.38420,
+      "lng": 16.54580
+    },
     "image": "csucsok.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz", "grill"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz",
+      "grill"
+    ],
     "rating": 9.3,
     "reviews_count": 17,
     "price_from": 65,
@@ -591,12 +963,23 @@
     "id": 29,
     "name": "Kastélykert Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Sigray Jakab u.",
-    "coords": {"lat": 47.38390, "lng": 16.54690},
+    "coords": {
+      "lat": 47.38390,
+      "lng": 16.54690
+    },
     "image": "kastelykert.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "konyha", "légkondicionálás"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "konyha",
+      "légkondicionálás"
+    ],
     "rating": 9.7,
     "reviews_count": 21,
     "price_from": 78,
@@ -612,12 +995,23 @@
     "id": 30,
     "name": "Fortuna Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Rőti Völgy u. 51-b",
-    "coords": {"lat": 47.38550, "lng": 16.54730},
+    "coords": {
+      "lat": 47.38550,
+      "lng": 16.54730
+    },
     "image": "fortuna.png",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "terasz", "mosógép"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "terasz",
+      "mosógép"
+    ],
     "rating": 9.6,
     "reviews_count": 18,
     "price_from": 70,
@@ -633,12 +1027,23 @@
     "id": 31,
     "name": "Hősök Tornya Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Városház utca 3.",
-    "coords": {"lat": 47.38910, "lng": 16.54080},
+    "coords": {
+      "lat": 47.38910,
+      "lng": 16.54080
+    },
     "image": "hosok.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "lift", "erkély"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "lift",
+      "erkély"
+    ],
     "rating": 9.5,
     "reviews_count": 16,
     "price_from": 70,
@@ -654,12 +1059,23 @@
     "id": 32,
     "name": "Corner Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Temető u. 2.",
-    "coords": {"lat": 47.39020, "lng": 16.54030},
+    "coords": {
+      "lat": 47.39020,
+      "lng": 16.54030
+    },
     "image": "corner.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "erkély", "mosógép"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "erkély",
+      "mosógép"
+    ],
     "rating": 9.7,
     "reviews_count": 23,
     "price_from": 72,
@@ -675,12 +1091,24 @@
     "id": 34,
     "name": "Bem Villa Apartmanház",
     "type": "villa",
-    "tags": ["villa", "apartman"],
+    "tags": [
+      "villa",
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Bem József utca 3",
-    "coords": {"lat": 47.38790, "lng": 16.54240},
+    "coords": {
+      "lat": 47.38790,
+      "lng": 16.54240
+    },
     "image": "bem.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "játszótér", "konyha"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "játszótér",
+      "konyha"
+    ],
     "rating": 9.8,
     "reviews_count": 14,
     "price_from": 85,
@@ -696,12 +1124,24 @@
     "id": 35,
     "name": "Vadvirág Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "panzió"],
+    "tags": [
+      "vendégház",
+      "panzió"
+    ],
     "address": "9730 Kőszeg, Vadvirág utca 4",
-    "coords": {"lat": 47.38410, "lng": 16.54670},
+    "coords": {
+      "lat": 47.38410,
+      "lng": 16.54670
+    },
     "image": "vadv.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "grill", "terasz"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "grill",
+      "terasz"
+    ],
     "rating": 9.6,
     "reviews_count": 20,
     "price_from": 68,
@@ -717,12 +1157,24 @@
     "id": 36,
     "name": "Dóra Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "pihenőház"],
+    "tags": [
+      "vendégház",
+      "pihenőház"
+    ],
     "address": "9730 Kőszeg, Várkör 67.",
-    "coords": {"lat": 47.38490, "lng": 16.54630},
+    "coords": {
+      "lat": 47.38490,
+      "lng": 16.54630
+    },
     "image": "dora.webp",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz", "konyha"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz",
+      "konyha"
+    ],
     "rating": 9.7,
     "reviews_count": 18,
     "price_from": 70,
@@ -738,12 +1190,23 @@
     "id": 37,
     "name": "Kordé Apartman",
     "type": "apartman",
-    "tags": ["apartman", "szoba"],
+    "tags": [
+      "apartman",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Chernel u. 3.",
-    "coords": {"lat": 47.38530, "lng": 16.54690},
+    "coords": {
+      "lat": 47.38530,
+      "lng": 16.54690
+    },
     "image": "korde.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "terasz"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "terasz"
+    ],
     "rating": 9.5,
     "reviews_count": 22,
     "price_from": 72,
@@ -759,12 +1222,22 @@
     "id": 38,
     "name": "Csokoládé Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg,Rákóczi F. u. 14",
-    "coords": {"lat": 47.38460, "lng": 16.54720},
+    "coords": {
+      "lat": 47.38460,
+      "lng": 16.54720
+    },
     "image": "csoki.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "kert"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "kert"
+    ],
     "rating": 9.6,
     "reviews_count": 21,
     "price_from": 70,
@@ -780,12 +1253,23 @@
     "id": 39,
     "name": "Pisztácia Apartman",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Rákóczi F. u. 14.",
-    "coords": {"lat": 47.38410, "lng": 16.54750},
+    "coords": {
+      "lat": 47.38410,
+      "lng": 16.54750
+    },
     "image": "pisztacia.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "konyha", "légkondicionálás"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "konyha",
+      "légkondicionálás"
+    ],
     "rating": 9.7,
     "reviews_count": 19,
     "price_from": 68,
@@ -801,12 +1285,24 @@
     "id": 40,
     "name": "Villa Eitner Apartman",
     "type": "apartman",
-    "tags": ["apartman", "ház"],
+    "tags": [
+      "apartman",
+      "ház"
+    ],
     "address": "9730 Kőszeg, Kalvaria u. 16.",
-    "coords": {"lat": 47.38600, "lng": 16.54590},
+    "coords": {
+      "lat": 47.38600,
+      "lng": 16.54590
+    },
     "image": "eitner.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz", "konyha"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz",
+      "konyha"
+    ],
     "rating": 9.8,
     "reviews_count": 23,
     "price_from": 85,
@@ -822,12 +1318,22 @@
     "id": 41,
     "name": "Komló Apartman Mátyás",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Chernel u. 4.",
-    "coords": {"lat": 47.38570, "lng": 16.54660},
+    "coords": {
+      "lat": 47.38570,
+      "lng": 16.54660
+    },
     "image": "matyas.webp",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "kert"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "kert"
+    ],
     "rating": 9.7,
     "reviews_count": 20,
     "price_from": 72,
@@ -843,12 +1349,22 @@
     "id": 42,
     "name": "Komló Apartman Mátyás",
     "type": "apartman",
-    "tags": ["apartman"],
+    "tags": [
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Chernel u. 4.",
-    "coords": {"lat": 47.38570, "lng": 16.54660},
+    "coords": {
+      "lat": 47.38570,
+      "lng": 16.54660
+    },
     "image": "matyas.webp",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "konyha", "kert"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "kert"
+    ],
     "rating": 9.7,
     "reviews_count": 20,
     "price_from": 72,
@@ -864,12 +1380,25 @@
     "id": 43,
     "name": "Kóczián Pihenőház",
     "type": "pihenőház",
-    "tags": ["pihenőház", "ház", "apartman"],
+    "tags": [
+      "pihenőház",
+      "ház",
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Várkör 70/A.",
-    "coords": {"lat": 47.389983, "lng": 16.537756},
+    "coords": {
+      "lat": 47.389983,
+      "lng": 16.537756
+    },
     "image": "koczian.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "grill", "terasz"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "grill",
+      "terasz"
+    ],
     "rating": 9.8,
     "reviews_count": 14,
     "price_from": 75,
@@ -885,12 +1414,24 @@
     "id": 44,
     "name": "Kasper Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "panzió"],
+    "tags": [
+      "vendégház",
+      "panzió"
+    ],
     "address": "9730 Kőszeg Királyvölgyi u. 26.",
-    "coords": {"lat": 47.38370, "lng": 16.54790},
+    "coords": {
+      "lat": 47.38370,
+      "lng": 16.54790
+    },
     "image": "kasper.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz", "reggeli"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz",
+      "reggeli"
+    ],
     "rating": 9.4,
     "reviews_count": 18,
     "price_from": 68,
@@ -906,12 +1447,23 @@
     "id": 45,
     "name": "Gül Baba Ház",
     "type": "vendégház",
-    "tags": ["vendégház", "panzió"],
+    "tags": [
+      "vendégház",
+      "panzió"
+    ],
     "address": "9730 Kőszeg, Rajnis utca 6",
-    "coords": {"lat": 47.390178, "lng": 16.539302},
+    "coords": {
+      "lat": 47.390178,
+      "lng": 16.539302
+    },
     "image": "gul.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "terasz"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "terasz"
+    ],
     "rating": 9.5,
     "reviews_count": 15,
     "price_from": 70,
@@ -927,12 +1479,23 @@
     "id": 46,
     "name": "Andalgó Hold Vendégház",
     "type": "vendégház",
-    "tags": ["vendégház", "szoba"],
+    "tags": [
+      "vendégház",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Rákóczi F. u. 22.",
-    "coords": {"lat": 47.38380, "lng": 16.54850},
+    "coords": {
+      "lat": 47.38380,
+      "lng": 16.54850
+    },
     "image": "hold.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "grill"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "grill"
+    ],
     "rating": 9.6,
     "reviews_count": 13,
     "price_from": 68,
@@ -948,12 +1511,30 @@
     "id": 47,
     "name": "Blues Ryokan II.",
     "type": "panzió",
-    "tags": ["panzió", "motel", "szoba"],
+    "tags": [
+      "panzió",
+      "motel",
+      "szoba"
+    ],
     "address": "9730 Kőszeg, Rákóczi Ferenc utca 22",
-    "coords": {"lat": 47.38980, "lng": 16.54100},
+    "coords": {
+      "lat": 47.38980,
+      "lng": 16.54100
+    },
     "image": "blues.jpg",
     "gallery": [],
-    "amenities": ["wifi", "parkoló", "kert", "konyhasarok", "mosogatógép", "hűtő", "mikrohullámú", "TV", "24h recepció", "állatbarát"],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "kert",
+      "konyhasarok",
+      "mosogatógép",
+      "hűtő",
+      "mikrohullámú",
+      "TV",
+      "24h recepció",
+      "állatbarát"
+    ],
     "rating": 9.4,
     "reviews_count": 63,
     "price_from": 65,
@@ -969,12 +1550,26 @@
     "id": 49,
     "name": "Tó-Part Panzió & Rendezvényközpont",
     "type": "panzió",
-    "tags": ["panzió", "vendégház", "apartman"],
+    "tags": [
+      "panzió",
+      "vendégház",
+      "apartman"
+    ],
     "address": "9730 Kőszeg, Malom utca 4.",
-    "coords": {"lat": 47.38630, "lng": 16.54450},
+    "coords": {
+      "lat": 47.38630,
+      "lng": 16.54450
+    },
     "image": "topart.png",
     "gallery": [],
-    "amenities": ["apartman", "rendezvényterem", "önellátás", "terasz", "kert", "nyugalom"],
+    "amenities": [
+      "apartman",
+      "rendezvényterem",
+      "önellátás",
+      "terasz",
+      "kert",
+      "nyugalom"
+    ],
     "rating": 9.3,
     "reviews_count": 20,
     "price_from": 88,
@@ -986,26 +1581,73 @@
     "notes": "A Tó-Part Panzió & Rendezvényközpont az Alpokalja mesebeli kisvárosának határán, Kőszegen található, 15 perc kellemes sétányira a belvárostól. A békés, romantikus tópart és a nyugodt környezet kiemelten alkalmas a pihenésre minden évszakban.",
     "description": "Az apartmanház az osztrák határtól néhány száz méterre, a hegy lábánál, a gyönyörű Csónakázó-tó partján helyezkedik el. A környezet kimondottan alkalmas pároknak, baráti társaságoknak, csoportoknak, ugyanis annak ellenére, hogy a történelmi kisváros fő tere gyalog is kényelmesen elérhető, mégis távol esik a mindennapok zajától.  A tónál csónak- és vizibicikli-kölcsönzésre, igény esetén horgászásra is van lehetőség.  Az apartmanok önellátással, reggelivel és félpanziós ellátással is választhatóak. A reggelit és a büfévacsorát (illetve létszámtól függően a menü-alapú négyfogásos vacsorát) a kőszegi Hotel*** Írottkő éttermében, mely mindössze 15 perces sétával érhető el.  Kapcsolódjon ki és felejtse el a rohanó világot! Találjon rá újra a csendre és békére, az ország páratlan hangulatú kisvárosában."
   },
-  
   {
-  "id": 50,
-  "name": "Keresztkúti Erdei Pihenőhely - Szabó hegy",
-  "type": "ház",
-  "tags": ["villa", "apartman", "pihenőhely"],
-  "address": "9730 Kőszeg, Szabó hegy",
-  "coords": {"lat": 47.38790, "lng": 16.54240},
-  "image": "kerkut.jpg",
-  "gallery": [],
-  "amenities": ["apartman", "állatsimogató", "bográcsozóhely", "erdei szállás", "önellátás"],
-  "rating": 9.8,
-  "reviews_count": 14,
-  "price_from": 85,
-  "currency": "EUR",
-  "phone": "+36 94360373",
-  "email": "info@irottko.hu",
-  "website": "https://www.keresztkut.hu/",
-  "open_all_year": true,
-  "notes": "A Kőszegi-hegység szívében, érintetlen erdőségek ölelésében, a Vasfüggöny volt határőrbázisának misztikumát, s örökségét őrző erdei pihenőhelyen 3 kényelmes apartmanház és egy 18 férőhelyes egy légterű, osztrák mintára épült matracos turistaház; összesen 33 férőhely áll Vendégeink rendelkezésére.",
-  "description": "Erdei pihenőpark, a nyugalom szigete. A pihenőhelyhez tartozó 1 hektárnyi területű parkban a gyönyörű természeti környezeten és a panorámán kívül erdei kápolna, játszótér, dísztó halakkal és szépen gondozott vízinövényekkel, állatsimogató és madárház, langallósütő kemence és szabadtéri grillezőhelyek (tüzifa egyénileg) állnak vendégeink rendelkezésére."
-}
+    "id": 50,
+    "name": "Keresztkúti Erdei Pihenőhely - Szabó hegy",
+    "type": "ház",
+    "tags": [
+      "villa",
+      "apartman",
+      "pihenőhely"
+    ],
+    "address": "9730 Kőszeg, Szabó hegy",
+    "coords": {
+      "lat": 47.38790,
+      "lng": 16.54240
+    },
+    "image": "kerkut.jpg",
+    "gallery": [],
+    "amenities": [
+      "apartman",
+      "állatsimogató",
+      "bográcsozóhely",
+      "erdei szállás",
+      "önellátás"
+    ],
+    "rating": 9.8,
+    "reviews_count": 14,
+    "price_from": 85,
+    "currency": "EUR",
+    "phone": "+36 94360373",
+    "email": "info@irottko.hu",
+    "website": "https://www.keresztkut.hu/",
+    "open_all_year": true,
+    "notes": "A Kőszegi-hegység szívében, érintetlen erdőségek ölelésében, a Vasfüggöny volt határőrbázisának misztikumát, s örökségét őrző erdei pihenőhelyen 3 kényelmes apartmanház és egy 18 férőhelyes egy légterű, osztrák mintára épült matracos turistaház; összesen 33 férőhely áll Vendégeink rendelkezésére.",
+    "description": "Erdei pihenőpark, a nyugalom szigete. A pihenőhelyhez tartozó 1 hektárnyi területű parkban a gyönyörű természeti környezeten és a panorámán kívül erdei kápolna, játszótér, dísztó halakkal és szépen gondozott vízinövényekkel, állatsimogató és madárház, langallósütő kemence és szabadtéri grillezőhelyek (tüzifa egyénileg) állnak vendégeink rendelkezésére."
+  },
+  {
+    "id": 100,
+    "name": "Kőszeg Panzió",
+    "type": "panzió",
+    "tags": [
+      "panzió",
+      "vendégház",
+      "szoba"
+    ],
+    "address": "9730 Kőszeg, Kiss János u. 3",
+    "coords": {
+      "lat": 47.3905226,
+      "lng": 16.5438848
+    },
+    "image": "koszegpanzio.jpg",
+    "gallery": [],
+    "amenities": [
+      "wifi",
+      "parkoló",
+      "konyha",
+      "TV",
+      "törülköző/ágynemű",
+      "hűtő"
+    ],
+    "rating": 9.5,
+    "reviews_count": 50,
+    "price_from": 65,
+    "currency": "EUR",
+    "phone": null,
+    "email": null,
+    "website": "https://koszegpanzio.hu",
+    "open_all_year": true,
+    "notes": "Újonnan felújított panzió a belvárosban, 2 felszerelt konyhával, ingyenes parkolással és biztonsági kamerákkal. Check-in: 14:00, Check-out: 10:00.",
+    "description": "Kellemes környezetben, a belvárosban található panzió tiszta szobákkal, kényelmes ágyakkal és új berendezésekkel. Két színvonalasan felszerelt konyha, ingyenes wifi és parkolás az udvarban. Félpanzió vagy teljes ellátás igényelhető partnervendéglátóknál. Különleges ajánlatok: nyári akció ingyen éjszakával és strandbelépővel."
+  }
 ]
