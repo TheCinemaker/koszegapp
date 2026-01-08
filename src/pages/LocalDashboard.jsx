@@ -27,7 +27,7 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
         style={{
-            transform: `perspective(1000px) rotateX(${tilt.y * 10}deg) rotateY(${tilt.x * 10}deg)`,
+            transform: `perspective(1000px) rotateX(${tilt.y * 30}deg) rotateY(${tilt.x * 30}deg)`,
             transition: 'transform 0.1s ease-out'
         }}
         className="
@@ -38,9 +38,9 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
             rounded-[2.5rem] 
             border border-white/60 dark:border-white/10 
             shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]
-            p-6 sm:p-8 
+            p-6 sm:p-6
             flex flex-col justify-between 
-            h-full min-h-[220px]
+            h-full min-h-[160px]
             group
         "
     >
@@ -217,7 +217,7 @@ export default function LocalDashboard() {
                             shadow-2xl shadow-zinc-200/50 dark:shadow-black/50
                         "
                         style={{
-                            transform: `perspective(1000px) rotateX(${tilt.y * 5}deg) rotateY(${tilt.x * 5}deg)`,
+                            transform: `perspective(1000px) rotateX(${tilt.y * 25}deg) rotateY(${tilt.x * 25}deg)`,
                             transition: 'transform 0.1s ease-out'
                         }}
                     >
