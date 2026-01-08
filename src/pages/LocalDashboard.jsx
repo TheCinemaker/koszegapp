@@ -78,7 +78,7 @@ export default function LocalDashboard() {
     const [showTransportModal, setShowTransportModal] = useState(false);
 
     // Gyro tilt effect for 3D parallax (Max 45deg for stronger effect)
-    const { tilt, hasPermission, requestPermission } = useGyroTilt(45);
+    const { tilt, hasPermission, requestPermission, enabled, toggleEffect } = useGyroTilt(30);
 
     // --- WASTE LOGIC ---
     const getNextDayOfWeek = (dayName) => { /* Reuse existing logic if needed, but simplified below */ return dayName; };
@@ -172,13 +172,23 @@ export default function LocalDashboard() {
                         </div>
                     </div>
 
-                    {/* iOS Permission Button (Visible ALWAYS if needed) */}
-                    {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' && (
+                    {/* 3D Toggle / Permission Button */}
+                    {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' ? (
                         <button
                             onClick={requestPermission}
                             className="flex px-4 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30"
                         >
                             <span>✨ 3D Mozgás Be</span>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={toggleEffect}
+                            className={`flex px-4 py-2 rounded-full text-xs font-bold items-center gap-2 transition-colors shadow-lg ${enabled
+                                ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30'
+                                : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-700'
+                                }`}
+                        >
+                            <span>{enabled ? '✨ 3D Mozgás Be' : '🚫 3D Mozgás Ki'}</span>
                         </button>
                     )}
                 </div>
@@ -191,6 +201,10 @@ export default function LocalDashboard() {
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
                         className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl flex items-center justify-between gap-4"
                     >
                         <div>
@@ -416,7 +430,13 @@ export default function LocalDashboard() {
 
                 {/* --- NEWS FEED --- */}
                 <FadeUp delay={0.6} className="pb-8">
-                    <div className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-xl rounded-[2.5rem] border border-white/50 dark:border-white/10 p-8 shadow-xl">
+                    <motion.div
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
+                        className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-xl rounded-[2.5rem] border border-white/50 dark:border-white/10 p-8 shadow-xl"
+                    >
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center dark:bg-blue-400/10 dark:text-blue-400">
@@ -444,7 +464,7 @@ export default function LocalDashboard() {
                                 <p className="text-zinc-500 text-sm">Nincsenek friss hírek.</p>
                             )}
                         </div>
-                    </div>
+                    </motion.div>
                 </FadeUp>
 
             </div>

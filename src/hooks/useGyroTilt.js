@@ -10,27 +10,26 @@ export function useGyroTilt(maxTilt = 30) {
     const [hasPermission, setHasPermission] = useState(false);
     const [permissionRequested, setPermissionRequested] = useState(false);
 
+    const [enabled, setEnabled] = useState(true);
+
     const handleOrientation = (event) => {
+        if (!enabled) {
+            setTilt({ x: 0, y: 0 });
+            return;
+        }
+
         const { beta, gamma } = event; // beta: front-back (-180 to 180), gamma: left-right (-90 to 90)
 
         if (beta === null || gamma === null) return;
 
         // Normalize and clamp values
-        // We want subtle movement, so we clamp beta/gamma
-        // x: gamma (left-right tilt)
-        // y: beta (front-back tilt) - subtract 45deg as "neutral" holding position
-
-        // Amplified sensitivity for "Liquid" feel
-        // We allow up to maxTilt degrees, but map it to -1...1 range
-        // Multiplier 1.5 makes it reach 1.0 faster (more reactive)
         const x = Math.max(-1, Math.min(1, (gamma / maxTilt) * 1.5));
         const y = Math.max(-1, Math.min(1, ((beta - 45) / maxTilt) * 1.5));
 
-        // Debug logging (remove after testing)
-        console.log('Gyro values:', { beta, gamma, x, y });
-
         setTilt({ x, y });
     };
+
+    const toggleEffect = () => setEnabled(prev => !prev);
 
     const requestPermission = async () => {
         if (permissionRequested) return;
@@ -75,5 +74,5 @@ export function useGyroTilt(maxTilt = 30) {
         };
     }, [maxTilt]);
 
-    return { tilt, hasPermission, requestPermission };
+    return { tilt, hasPermission, requestPermission, enabled, toggleEffect };
 }
