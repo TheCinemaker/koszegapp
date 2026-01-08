@@ -31,7 +31,7 @@ export default function LocalDashboard() {
     const [showTransportModal, setShowTransportModal] = useState(false);
 
     // Gyro tilt effect for 3D parallax
-    const { tilt } = useGyroTilt(15);
+    const { tilt, hasPermission, requestPermission } = useGyroTilt(15);
 
     const getNextDayOfWeek = (dayName) => {
         if (!dayName) return '-';
@@ -210,6 +210,28 @@ export default function LocalDashboard() {
                         </h1>
                     </div>
                 </div>
+
+                {/* iOS Gyro Permission Request */}
+                {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl p-4 shadow-lg"
+                    >
+                        <div className="flex items-center justify-between gap-4">
+                            <div className="flex-1">
+                                <h3 className="text-white font-bold text-sm mb-1">🎯 3D Effekt Engedélyezése</h3>
+                                <p className="text-white/80 text-xs">Döntsd meg a telefonodat, és a kártyák lebegni fognak!</p>
+                            </div>
+                            <button
+                                onClick={requestPermission}
+                                className="px-4 py-2 bg-white text-purple-600 rounded-xl font-bold text-sm hover:bg-purple-50 transition-all shadow-md whitespace-nowrap"
+                            >
+                                Engedélyezem
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
 
                 {/* Waste Schedule Card */}
                 <motion.div
