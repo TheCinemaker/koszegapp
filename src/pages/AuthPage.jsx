@@ -33,6 +33,12 @@ export default function AuthPage() {
                 if (!nickname) throw new Error('A becenév megadása kötelező!');
                 await register(null, password, fullName, nickname, isProvider);
                 toast.success('Sikeres regisztráció!');
+
+                // Redirect to provider setup if provider, otherwise to main page
+                if (isProvider) {
+                    navigate('/provider-setup', { replace: true });
+                    return;
+                }
             }
             navigate(from, { replace: true });
         } catch (error) {

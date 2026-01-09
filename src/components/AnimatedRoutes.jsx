@@ -28,6 +28,7 @@ import LiveCityMap from './LiveCityMap';
 import LocalDashboard from '../pages/LocalDashboard';
 import AuthPage from '../pages/AuthPage';
 import BusinessDashboard from '../pages/BusinessDashboard';
+import ProviderSetup from '../pages/ProviderSetup';
 import Footer from './Footer';
 
 const Admin = React.lazy(() => import('../pages/Admin.jsx'));
@@ -118,9 +119,10 @@ export default function AnimatedRoutes({ appData }) {
           </PageWrapper>
         }
         />
-        <Route path="/local" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
+        <Route path="/koszegieknek" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
         <Route path="/auth" element={<PageWrapper><AuthPage /></PageWrapper>} />
-        <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
+        <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
+        <Route path="/business-dashboard" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
