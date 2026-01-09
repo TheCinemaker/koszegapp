@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (nickname, password) => {
     // Auto-generate email from nickname
-    const generatedEmail = `${nickname.toLowerCase().trim()}@koszeg.app`;
+    const generatedEmail = `${nickname.toLowerCase().trim()}@gmail.com`;
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: generatedEmail,
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password, fullName, nickname, isProvider = false) => {
     // Auto-generate email from nickname
-    const generatedEmail = `${nickname.toLowerCase().trim()}@koszeg.app`;
+    const generatedEmail = `${nickname.toLowerCase().trim()}@gmail.com`;
 
     const { data, error } = await supabase.auth.signUp({
       email: generatedEmail,

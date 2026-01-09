@@ -4,7 +4,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { IoArrowBack, IoPerson, IoKey, IoHappy, IoBriefcase } from 'react-icons/io5';
+import { IoArrowBack, IoPerson, IoKey, IoHappy, IoBriefcase, IoLogoGoogle } from 'react-icons/io5';
+import { supabase } from '../lib/supabaseClient';
 
 export default function AuthPage() {
     const { login, register } = useAuth();
@@ -20,6 +21,21 @@ export default function AuthPage() {
     const [fullName, setFullName] = useState('');
     const [nickname, setNickname] = useState('');
     const [isProvider, setIsProvider] = useState(false);
+
+    const handleGoogleSignIn = async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: `${window.location.origin}/koszegieknek`
+                }
+            });
+            if (error) throw error;
+        } catch (error) {
+            console.error(error);
+            toast.error('Google bejelentkezés sikertelen!');
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,6 +94,22 @@ export default function AuthPage() {
                     </p>
                 </div>
 
+                {/* Google Sign In Button */}
+                <button
+                    onClick={handleGoogleSignIn}
+                    type="button"
+                    className="w-full h-12 flex items-center justify-center gap-3 bg-white dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-blue-500 dark:hover:border-blue-500 transition-all font-bold text-zinc-700 dark:text-white shadow-sm"
+                >
+                    <IoLogoGoogle className="text-xl text-red-500" />
+                    {isLogin ? 'Bejelentkezés Google-lel' : 'Regisztráció Google-lel'}
+                </button>
+
+                <div className="flex items-center gap-3 my-4">
+                    <div className="flex-1 h-px bg-zinc-200 dark:bg-zinc-700"></div>
+                    <span className="text-xs text-zinc-400 dark:text-zinc-500 font-medium">VAGY</span>
+                    <div className="flex-1 h-px bg-zinc-200 dark:bg-zinc-700"></div>
+                </div>
+
                 <form onSubmit={handleSubmit} className="space-y-4">
 
                     {!isLogin && (
@@ -106,7 +138,7 @@ export default function AuthPage() {
                             onChange={e => setNickname(e.target.value)}
                             className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-blue-500 focus:outline-none transition-all dark:text-white"
                         />
-                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">@koszeg.app</span>
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">@gmail.com</span>
                     </div>
 
                     <div className="relative">
