@@ -5,25 +5,27 @@ import { toast } from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import {
-    IoStorefront,
-    IoLocation,
-    IoText,
-    IoAdd,
     IoCheckmark,
     IoArrowForward,
     IoArrowBack,
+    IoText,
+    IoCalendar,
     IoTime,
-    IoCash,
-    IoClose
+    IoCall,
+    IoLocation
 } from 'react-icons/io5';
 
-const CATEGORIES = [
-    { id: 'fodraszat', label: 'Fodrászat', icon: '💇', color: 'from-pink-500 to-rose-600' },
-    { id: 'kormos', label: 'Körmös', icon: '💅', color: 'from-purple-500 to-indigo-600' },
-    { id: 'kozmetikus', label: 'Kozmetikus', icon: '✨', color: 'from-blue-500 to-cyan-600' },
-    { id: 'masszazs', label: 'Masszázs', icon: '💆', color: 'from-green-500 to-emerald-600' },
-    { id: 'egyeb', label: 'Egyéb', icon: '🎨', color: 'from-orange-500 to-amber-600' },
+const DAYS = [
+    { id: 'monday', label: 'Hétfő' },
+    { id: 'tuesday', label: 'Kedd' },
+    { id: 'wednesday', label: 'Szerda' },
+    { id: 'thursday', label: 'Csütörtök' },
+    { id: 'friday', label: 'Péntek' },
+    { id: 'saturday', label: 'Szombat' },
+    { id: 'sunday', label: 'Vasárnap' },
 ];
+
+const SLOT_DURATIONS = [15, 30, 45, 60];
 
 export default function ProviderSetup() {
     const { user } = useAuth();
@@ -31,74 +33,63 @@ export default function ProviderSetup() {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    // Step 1: Business Details
-    const [businessName, setBusinessName] = useState('');
-    const [category, setCategory] = useState('');
+    // Step 1: Welcome Message
+    const [welcomeMessage, setWelcomeMessage] = useState('');
 
-    // Step 2: Location & Description
+    // Step 2: Availability
+    const [workingDays, setWorkingDays] = useState(['monday', 'tuesday', 'wednesday', 'thursday', 'friday']);
+    const [startTime, setStartTime] = useState('09:00');
+    const [endTime, setEndTime] = useState('17:00');
+    const [slotDuration, setSlotDuration] = useState(30);
+
+    // Step 3: Optional Details
+    const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
-    const [description, setDescription] = useState('');
 
-    // Step 3: Initial Services
-    const [services, setServices] = useState([]);
-    const [showServiceForm, setShowServiceForm] = useState(false);
-    const [newService, setNewService] = useState({ name: '', duration: 30, price: 0 });
-
-    const addService = () => {
-        if (!newService.name || newService.price <= 0) {
-            toast.error('Adj meg nevet és árat!');
-            return;
+    const toggleDay = (dayId) => {
+        if (workingDays.includes(dayId)) {
+            setWorkingDays(workingDays.filter(d => d !== dayId));
+        } else {
+            setWorkingDays([...workingDays, dayId]);
         }
-        setServices([...services, { ...newService, id: Date.now() }]);
-        setNewService({ name: '', duration: 30, price: 0 });
-        setShowServiceForm(false);
-        toast.success('Szolgáltatás hozzáadva!');
-    };
-
-    const removeService = (id) => {
-        setServices(services.filter(s => s.id !== id));
     };
 
     const handleSubmit = async () => {
-        if (!businessName || !category) {
-            toast.error('Töltsd ki a kötelező mezőket!');
+        if (!welcomeMessage) {
+            toast.error('Írj egy üdvözlő üzenetet!');
+            return;
+        }
+
+        if (workingDays.length === 0) {
+            toast.error('Válassz legalább egy munkanapot!');
             return;
         }
 
         setLoading(true);
         try {
-            // 1. Create Provider
-            const { data: provider, error: providerError } = await supabase
+            // Get business details from user metadata
+            const { data: { user: authUser } } = await supabase.auth.getUser();
+            const businessName = authUser?.user_metadata?.business_name;
+            const category = authUser?.user_metadata?.category;
+
+            // Create provider entry
+            const { error } = await supabase
                 .from('providers')
                 .insert({
                     user_id: user.id,
                     business_name: businessName,
                     category,
-                    location_address: address,
-                    description
-                })
-                .select()
-                .single();
+                    welcome_message: welcomeMessage,
+                    working_days: workingDays,
+                    working_hours: { start: startTime, end: endTime },
+                    slot_duration: slotDuration,
+                    phone,
+                    location_address: address
+                });
 
-            if (providerError) throw providerError;
+            if (error) throw error;
 
-            // 2. Create Services (if any)
-            if (services.length > 0) {
-                const servicesData = services.map(s => ({
-                    provider_id: provider.id,
-                    name: s.name,
-                    duration_min: s.duration,
-                    price: s.price
-                }));
-
-                const { error: servicesError } = await supabase
-                    .from('services')
-                    .insert(servicesData);
-
-                if (servicesError) throw servicesError;
-            }
-
-            toast.success('Üzlet sikeresen létrehozva! 🎉');
+            toast.success('Üzlet sikeresen beállítva! 🎉');
             navigate('/business-dashboard');
         } catch (error) {
             console.error(error);
@@ -108,14 +99,7 @@ export default function ProviderSetup() {
         }
     };
 
-    const nextStep = () => {
-        if (step === 1 && (!businessName || !category)) {
-            toast.error('Töltsd ki a kötelező mezőket!');
-            return;
-        }
-        setStep(step + 1);
-    };
-
+    const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
 
     return (
@@ -131,9 +115,9 @@ export default function ProviderSetup() {
                         Üzlet Beállítása
                     </h1>
                     <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-                        {step === 1 && 'Alapadatok'}
-                        {step === 2 && 'Helyszín és leírás'}
-                        {step === 3 && 'Szolgáltatások (opcionális)'}
+                        {step === 1 && 'Üdvözlő üzenet'}
+                        {step === 2 && 'Nyitvatartás és időbeosztás'}
+                        {step === 3 && 'Opcionális adatok'}
                     </p>
                 </div>
 
@@ -163,33 +147,17 @@ export default function ProviderSetup() {
                             className="space-y-4"
                         >
                             <div className="relative">
-                                <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                <input
-                                    type="text"
-                                    placeholder="Üzlet neve *"
-                                    required
-                                    value={businessName}
-                                    onChange={e => setBusinessName(e.target.value)}
-                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none transition-all dark:text-white"
+                                <IoText className="absolute left-4 top-4 text-zinc-400" />
+                                <textarea
+                                    placeholder="Pl: Szia! Üdv a Juli Szalonban! 💇 Várlak szeretettel!"
+                                    value={welcomeMessage}
+                                    onChange={e => setWelcomeMessage(e.target.value)}
+                                    rows={5}
+                                    maxLength={500}
+                                    className="w-full pl-12 pr-4 pt-3 pb-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none transition-all dark:text-white resize-none"
                                 />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Kategória *</label>
-                                <div className="grid grid-cols-2 gap-3">
-                                    {CATEGORIES.map(cat => (
-                                        <button
-                                            key={cat.id}
-                                            onClick={() => setCategory(cat.id)}
-                                            className={`p-4 rounded-xl border-2 transition-all ${category === cat.id
-                                                    ? `border-purple-500 bg-gradient-to-br ${cat.color} text-white`
-                                                    : 'border-zinc-200 dark:border-zinc-700 hover:border-purple-300'
-                                                }`}
-                                        >
-                                            <div className="text-3xl mb-1">{cat.icon}</div>
-                                            <div className="font-bold text-sm">{cat.label}</div>
-                                        </button>
-                                    ))}
+                                <div className="text-right text-xs text-zinc-400 mt-1">
+                                    {welcomeMessage.length}/500
                                 </div>
                             </div>
                         </motion.div>
@@ -201,28 +169,77 @@ export default function ProviderSetup() {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
-                            className="space-y-4"
+                            className="space-y-6"
                         >
-                            <div className="relative">
-                                <IoLocation className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                <input
-                                    type="text"
-                                    placeholder="Cím (pl. Kőszeg, Fő tér 1.)"
-                                    value={address}
-                                    onChange={e => setAddress(e.target.value)}
-                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none transition-all dark:text-white"
-                                />
+                            {/* Working Days */}
+                            <div>
+                                <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                                    <IoCalendar /> Munkanapok
+                                </label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    {DAYS.map(day => (
+                                        <button
+                                            key={day.id}
+                                            type="button"
+                                            onClick={() => toggleDay(day.id)}
+                                            className={`p-3 rounded-xl border-2 transition-all font-medium ${workingDays.includes(day.id)
+                                                    ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300'
+                                                    : 'border-zinc-200 dark:border-zinc-700 hover:border-purple-300'
+                                                }`}
+                                        >
+                                            {day.label}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="relative">
-                                <IoText className="absolute left-4 top-4 text-zinc-400" />
-                                <textarea
-                                    placeholder="Rövid leírás az üzletről..."
-                                    value={description}
-                                    onChange={e => setDescription(e.target.value)}
-                                    rows={4}
-                                    className="w-full pl-12 pr-4 pt-3 pb-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none transition-all dark:text-white resize-none"
-                                />
+                            {/* Working Hours */}
+                            <div>
+                                <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                                    <IoTime /> Nyitvatartás
+                                </label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className="text-xs text-zinc-500 mb-1 block">Nyitás</label>
+                                        <input
+                                            type="time"
+                                            value={startTime}
+                                            onChange={e => setStartTime(e.target.value)}
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-zinc-500 mb-1 block">Zárás</label>
+                                        <input
+                                            type="time"
+                                            value={endTime}
+                                            onChange={e => setEndTime(e.target.value)}
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Slot Duration */}
+                            <div>
+                                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3 block">
+                                    Időintervallum (perc)
+                                </label>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {SLOT_DURATIONS.map(duration => (
+                                        <button
+                                            key={duration}
+                                            type="button"
+                                            onClick={() => setSlotDuration(duration)}
+                                            className={`p-3 rounded-xl border-2 transition-all font-bold ${slotDuration === duration
+                                                    ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300'
+                                                    : 'border-zinc-200 dark:border-zinc-700 hover:border-purple-300'
+                                                }`}
+                                        >
+                                            {duration}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </motion.div>
                     )}
@@ -235,77 +252,27 @@ export default function ProviderSetup() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-4"
                         >
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-zinc-900 dark:text-white">Szolgáltatások</h3>
-                                <button
-                                    onClick={() => setShowServiceForm(true)}
-                                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all"
-                                >
-                                    <IoAdd /> Hozzáad
-                                </button>
+                            <div className="relative">
+                                <IoCall className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                <input
+                                    type="tel"
+                                    placeholder="Telefonszám (opcionális)"
+                                    value={phone}
+                                    onChange={e => setPhone(e.target.value)}
+                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                />
                             </div>
 
-                            {services.length === 0 && !showServiceForm && (
-                                <p className="text-center text-zinc-400 py-8">Még nincs szolgáltatás hozzáadva</p>
-                            )}
-
-                            {services.map(service => (
-                                <div key={service.id} className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl">
-                                    <div>
-                                        <div className="font-bold text-zinc-900 dark:text-white">{service.name}</div>
-                                        <div className="text-sm text-zinc-500">{service.duration} perc • {service.price} Ft</div>
-                                    </div>
-                                    <button onClick={() => removeService(service.id)} className="text-red-500 hover:text-red-700">
-                                        <IoClose size={24} />
-                                    </button>
-                                </div>
-                            ))}
-
-                            {showServiceForm && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl space-y-3"
-                                >
-                                    <input
-                                        type="text"
-                                        placeholder="Szolgáltatás neve"
-                                        value={newService.name}
-                                        onChange={e => setNewService({ ...newService, name: e.target.value })}
-                                        className="w-full h-10 px-4 bg-white dark:bg-zinc-800 rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
-                                    />
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="relative">
-                                            <IoTime className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                            <input
-                                                type="number"
-                                                placeholder="Időtartam"
-                                                value={newService.duration}
-                                                onChange={e => setNewService({ ...newService, duration: parseInt(e.target.value) })}
-                                                className="w-full h-10 pl-10 pr-4 bg-white dark:bg-zinc-800 rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
-                                            />
-                                        </div>
-                                        <div className="relative">
-                                            <IoCash className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                            <input
-                                                type="number"
-                                                placeholder="Ár (Ft)"
-                                                value={newService.price}
-                                                onChange={e => setNewService({ ...newService, price: parseInt(e.target.value) })}
-                                                className="w-full h-10 pl-10 pr-4 bg-white dark:bg-zinc-800 rounded-lg border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <button onClick={addService} className="flex-1 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-                                            Hozzáad
-                                        </button>
-                                        <button onClick={() => setShowServiceForm(false)} className="px-4 py-2 bg-zinc-200 dark:bg-zinc-700 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600">
-                                            Mégse
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            )}
+                            <div className="relative">
+                                <IoLocation className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Cím (opcionális)"
+                                    value={address}
+                                    onChange={e => setAddress(e.target.value)}
+                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                />
+                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>

@@ -78,7 +78,8 @@ export const AuthProvider = ({ children }) => {
       options: {
         data: {
           full_name: fullName,
-          nickname: nickname
+          nickname: nickname,
+          role: isProvider ? 'provider' : 'client'
         }
       }
     });
