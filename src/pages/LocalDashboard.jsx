@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle } from "react-icons/io5";
+import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle, IoLogIn, IoLogOut, IoPerson } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { useGyroTilt } from '../hooks/useGyroTilt';
+import { useAuth } from '../contexts/AuthContext';
 import { format, parseISO, isAfter, isSameDay, addDays, getDay, startOfDay } from 'date-fns';
 import { hu } from 'date-fns/locale';
 import scheduleData from '../data/wasteSchedule.json';
@@ -191,6 +192,15 @@ export default function LocalDashboard() {
                             <span>{enabled ? '✨ 3D Mozgás Be' : '🚫 3D Mozgás Ki'}</span>
                         </button>
                     )}
+
+                    {/* Login/Logout Button */}
+                    <Link
+                        to="/auth"
+                        className="flex px-4 py-2 bg-blue-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30"
+                    >
+                        <IoLogIn className="text-sm" />
+                        <span>Bejelentkezés</span>
+                    </Link>
                 </div>
             </div>
 
