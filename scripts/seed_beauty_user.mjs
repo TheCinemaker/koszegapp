@@ -25,7 +25,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 async function seedUser() {
     console.log('Creating Provider User: TheCinemaker...');
 
-    const email = 'thecinemaker@koszeg.app';
+    const email = 'thecinemaker.koszeg@gmail.com';
     const password = 'Nyanyuska_0169';
     const fullName = 'TheCinemaker';
     const nickname = 'Baba';

@@ -192,14 +192,8 @@ export default function LocalDashboard() {
                             <span>{enabled ? '✨ 3D Mozgás Be' : '🚫 3D Mozgás Ki'}</span>
                         </button>
                     )}
-
-                    {/* Login/Logout Button */}
-                    <Link
-                        to="/auth"
-                        className="flex px-4 py-2 bg-blue-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30"
-                    >
-                        <IoLogIn className="text-sm" />
-                        <span>Bejelentkezés</span>
+                    <Link to="/auth" className="ml-2 flex px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full text-xs font-bold items-center gap-2 hover:scale-105 transition-transform shadow-lg">
+                        <span>🔐 Login</span>
                     </Link>
                 </div>
             </div>
@@ -484,6 +478,6 @@ export default function LocalDashboard() {
             <CityServicesModal isOpen={showCityServicesModal} onClose={() => setShowCityServicesModal(false)} />
             <ShopsModal isOpen={showShopsModal} onClose={() => setShowShopsModal(false)} />
             <TransportModal isOpen={showTransportModal} onClose={() => setShowTransportModal(false)} />
-        </div>
+        </div >
     );
 }
