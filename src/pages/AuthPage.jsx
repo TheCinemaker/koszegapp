@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { IoArrowBack, IoPerson, IoMail, IoKey, IoHappy } from 'react-icons/io5';
+import { IoArrowBack, IoPerson, IoKey, IoHappy, IoBriefcase } from 'react-icons/io5';
 
 export default function AuthPage() {
     const { login, register } = useAuth();
@@ -16,10 +16,10 @@ export default function AuthPage() {
     const [loading, setLoading] = useState(false);
 
     // Form States
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
     const [nickname, setNickname] = useState('');
+    const [isProvider, setIsProvider] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,11 +27,11 @@ export default function AuthPage() {
 
         try {
             if (isLogin) {
-                await login(email, password);
+                await login(nickname, password);
                 toast.success('Sikeres bejelentkezés!');
             } else {
                 if (!nickname) throw new Error('A becenév megadása kötelező!');
-                await register(email, password, fullName, nickname);
+                await register(null, password, fullName, nickname, isProvider);
                 toast.success('Sikeres regisztráció!');
             }
             navigate(from, { replace: true });
@@ -87,30 +87,20 @@ export default function AuthPage() {
                                     className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-blue-500 focus:outline-none transition-all dark:text-white"
                                 />
                             </div>
-                            <div className="relative">
-                                <IoHappy className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                <input
-                                    type="text"
-                                    placeholder="Becenév (szolgáltatók így látnak)"
-                                    required
-                                    value={nickname}
-                                    onChange={e => setNickname(e.target.value)}
-                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-blue-500 focus:outline-none transition-all dark:text-white"
-                                />
-                            </div>
                         </>
                     )}
 
                     <div className="relative">
-                        <IoMail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                        <IoHappy className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                         <input
-                            type="email"
-                            placeholder="Email cím"
+                            type="text"
+                            placeholder={isLogin ? "Becenév" : "Becenév (ezzel fogsz belépni)"}
                             required
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            value={nickname}
+                            onChange={e => setNickname(e.target.value)}
                             className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-blue-500 focus:outline-none transition-all dark:text-white"
                         />
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">@koszeg.app</span>
                     </div>
 
                     <div className="relative">
@@ -124,6 +114,22 @@ export default function AuthPage() {
                             className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-blue-500 focus:outline-none transition-all dark:text-white"
                         />
                     </div>
+
+                    {!isLogin && (
+                        <div className="flex items-center gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+                            <input
+                                type="checkbox"
+                                id="isProvider"
+                                checked={isProvider}
+                                onChange={e => setIsProvider(e.target.checked)}
+                                className="w-5 h-5 rounded border-2 border-purple-400 text-purple-600 focus:ring-2 focus:ring-purple-500 cursor-pointer"
+                            />
+                            <label htmlFor="isProvider" className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 cursor-pointer">
+                                <IoBriefcase className="text-purple-600" />
+                                Szolgáltató vagyok (fodrász, körmös, kozmetikus, stb.)
+                            </label>
+                        </div>
+                    )}
 
                     <button
                         type="submit"

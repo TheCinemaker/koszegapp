@@ -56,35 +56,43 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (nickname, password) => {
+    // Auto-generate email from nickname
+    const generatedEmail = `${nickname.toLowerCase().trim()}@koszeg.app`;
+
     const { data, error } = await supabase.auth.signInWithPassword({
-      email,
+      email: generatedEmail,
       password
     });
     if (error) throw error;
     return data;
   };
 
-  const register = async (email, password, fullName, nickname) => {
+  const register = async (email, password, fullName, nickname, isProvider = false) => {
+    // Auto-generate email from nickname
+    const generatedEmail = `${nickname.toLowerCase().trim()}@koszeg.app`;
+
     const { data, error } = await supabase.auth.signUp({
-      email,
+      email: generatedEmail,
       password,
       options: {
         data: {
           full_name: fullName,
-          nickname: nickname // Passed to metadata, can be used in trigger if needed
+          nickname: nickname
         }
       }
     });
 
     if (error) throw error;
 
-    // If trigger is slow, we might want to manually insert/update profile here as a fail-safe,
-    // but for now we rely on the DB trigger `handle_new_user`.
-    // However, the trigger currently only inserts full_name. 
-    // We should manually update nickname since the trigger logic I wrote only used full_name.
+    // Update profile with nickname and role
     if (data.user) {
-      await supabase.from('profiles').update({ nickname }).eq('id', data.user.id);
+      await supabase.from('profiles').update({
+        nickname,
+        role: isProvider ? 'provider' : 'client',
+        email: generatedEmail,
+        full_name: fullName
+      }).eq('id', data.user.id);
     }
 
     return data;
