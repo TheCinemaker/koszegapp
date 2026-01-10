@@ -1,6 +1,12 @@
 {
-  "updatedAt": "2026-01-09T11:18:26.393Z",
+  "updatedAt": "2026-01-10T11:15:51.565Z",
   "items": [
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958",
+      "date": "2026. Január 9.",
+      "title": "Hirdetmények",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958"
+    },
     {
       "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15301",
       "date": "2026. Január 8.",
@@ -30,12 +36,6 @@
       "date": "2025. November 24.",
       "title": "Tájékoztatás gyermekorvosi rendelés 2025. decemberi változásairól",
       "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14779"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=10013",
-      "date": "2025. November 10.",
-      "title": "Címkezelés",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=10013"
     }
   ]
 }
