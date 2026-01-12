@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-08T10:33:42.046Z",
+  "generatedAt": "2026-01-12T10:50:07.669Z",
   "schedule": {
     "2026-04-01": [
       "SZ3"
@@ -650,10 +650,6 @@
       "green": "Z1",
       "black": "Kedd"
     },
-    "Szt. Imre herceg u": {
-      "yellow": "SZ1",
-      "green": "Z1"
-    },
     "Temető u": {
       "yellow": "SZ1",
       "green": "Z1",
@@ -816,11 +812,6 @@
       "yellow": "SZ2",
       "green": "Z1",
       "black": "Péntek"
-    },
-    "Szt. Lénárd u": {
-      "yellow": "SZ2",
-      "green": "Z1",
-      "black": "Hétfő"
     },
     "Szűk u": {
       "yellow": "SZ2",
@@ -1258,7 +1249,9 @@
       "black": "Kedd"
     },
     "Szent Imre herceg u": {
-      "black": "Kedd"
+      "black": "Kedd",
+      "yellow": "SZ1",
+      "green": "Z1"
     },
     "Abért tó": {
       "black": "Szerda"
@@ -1310,6 +1303,20 @@
     },
     "Várkör 20": {
       "black": "Péntek"
+    },
+    "Gulner-Malom": {
+      "black": "Szerda"
+    },
+    "Űrhajós u": {
+      "black": "Szerda"
+    },
+    "Heti 2 ürítéses ügyfelek 2. ürítési napja": {
+      "black": "Péntek"
+    },
+    "Szent Lénárd u": {
+      "yellow": "SZ2",
+      "green": "Z1",
+      "black": "Hétfő"
     }
   }
 }

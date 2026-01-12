@@ -8,12 +8,19 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // 1. Get initial session
+  // Helper: Normalize inputs to ensure consistency between Register and Login
+  // "Fodrász Jani" -> "fodraszani" (lowercase, no spaces) purely for the email generation
+  const normalizeIdentifier = (raw) => {
+    return raw.toLowerCase().trim().replace(/\s+/g, '');
+  };
+
+  useEffect(() => {// 1. Get initial session - INSTANTLY set user if present
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        await fetchProfile(session.user);
+        setUser(session.user); // Immediate auth state
+        setLoading(false);     // Unblock UI immediately
+        fetchProfile(session.user); // Fetch profile in background
       } else {
         setLoading(false);
       }
@@ -21,10 +28,12 @@ export const AuthProvider = ({ children }) => {
 
     getSession();
 
-    // 2. Listen for auth changes
+    // 2. Listen for auth changes - INSTANTLY update state
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
-        await fetchProfile(session.user);
+        setUser(session.user); // Immediate auth state
+        setLoading(false);     // Unblock UI immediately
+        fetchProfile(session.user); // Fetch profile in background
       } else {
         setUser(null);
         setLoading(false);
@@ -36,41 +45,70 @@ export const AuthProvider = ({ children }) => {
 
   const fetchProfile = async (authUser) => {
     try {
+      // Use maybeSingle() instead of single() to avoid error logs if missing
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', authUser.id)
-        .single();
+        .maybeSingle();
+
+      if (error) {
+        console.error("Profile fetch error (bg):", error);
+      }
 
       if (data) {
-        setUser({ ...authUser, ...data }); // Combine Auth user + Profile data
-      } else {
-        // Fallback if profile doesn't exist yet (e.g. slight delay in trigger)
-        setUser(authUser);
+        // Update user state with profile data when it arrives
+        setUser(prev => ({ ...prev, ...data }));
       }
+      // If no data, we already have certain authUser info, so no need to "unset" anything
     } catch (error) {
-      console.error("Profile fetch error:", error);
-      setUser(authUser);
-    } finally {
-      setLoading(false);
+      console.error("Profile fetch unexpected error:", error);
     }
   };
 
-  const login = async (nickname, password) => {
-    // Auto-generate email from nickname
-    const generatedEmail = `${nickname.toLowerCase().trim()}@gmail.com`;
+  /* 
+     Unified Login for Clients and Providers
+     - Clients use 'nickname'
+     - Providers use 'username' (which we map to email)
+  */
+  const login = async (identifier, password, type = 'client') => {
+    // Generate internal email based on type
+    const prefix = type === 'provider' ? 'provider' : 'client';
+    const safeId = normalizeIdentifier(identifier);
+    const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
+
+    console.log(`[AuthDebug] Login Attempt:`);
+    console.log(`  Type: ${type}`);
+    console.log(`  Raw ID: "${identifier}"`);
+    console.log(`  Safe ID: "${safeId}"`);
+    console.log(`  Gen Email: "${generatedEmail}"`);
+    console.log(`  Password Len: ${password?.length}`);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: generatedEmail,
       password
     });
-    if (error) throw error;
+
+    if (error) {
+      console.error("[AuthDebug] Login Error:", error);
+      throw error;
+    }
+    console.log("[AuthDebug] Login Success:", data.user?.id);
     return data;
   };
 
-  const register = async (email, password, fullName, nickname, isProvider = false) => {
-    // Auto-generate email from nickname
-    const generatedEmail = `${nickname.toLowerCase().trim()}@gmail.com`;
+  const register = async (identifier, password, fullName, role) => {
+    const isProvider = role === 'provider';
+    const prefix = isProvider ? 'provider' : 'client';
+
+    const safeId = normalizeIdentifier(identifier);
+    const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
+
+    console.log(`[AuthDebug] Register Attempt:`);
+    console.log(`  Role: ${role}`);
+    console.log(`  Raw ID: "${identifier}"`);
+    console.log(`  Safe ID: "${safeId}"`);
+    console.log(`  Gen Email: "${generatedEmail}"`);
 
     const { data, error } = await supabase.auth.signUp({
       email: generatedEmail,
@@ -78,24 +116,16 @@ export const AuthProvider = ({ children }) => {
       options: {
         data: {
           full_name: fullName,
-          nickname: nickname,
-          role: isProvider ? 'provider' : 'client'
+          nickname: identifier, // Store original identifier
+          role: role
         }
       }
     });
 
-    if (error) throw error;
-
-    // Update profile with nickname and role
-    if (data.user) {
-      await supabase.from('profiles').update({
-        nickname,
-        role: isProvider ? 'provider' : 'client',
-        email: generatedEmail,
-        full_name: fullName
-      }).eq('id', data.user.id);
+    if (error) {
+      console.error("[AuthDebug] Register Error:", error);
+      throw error;
     }
-
     return data;
   };
 
@@ -105,8 +135,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Helper for role-based access
+  // Checks both the merged profile 'role' and the auth metadata 'role' as fallback
   const hasRole = (role) => {
-    return user?.role === role;
+    return (user?.role === role) || (user?.user_metadata?.role === role);
   };
 
   const value = {

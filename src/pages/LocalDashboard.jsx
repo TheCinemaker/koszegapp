@@ -1,17 +1,23 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle, IoLogIn, IoLogOut, IoPerson } from "react-icons/io5";
+import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle, IoLogIn, IoLogOut, IoPerson, IoCalendar } from "react-icons/io5";
 import { Link } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
+import toast from 'react-hot-toast';
 import { useGyroTilt } from '../hooks/useGyroTilt';
 import { useAuth } from '../contexts/AuthContext';
 import { format, parseISO, isAfter, isSameDay, addDays, getDay, startOfDay } from 'date-fns';
 import { hu } from 'date-fns/locale';
+
 import scheduleData from '../data/wasteSchedule.json';
 import newsData from '../data/news.json';
+
 import DoctorsModal from '../components/DoctorsModal';
+import ProvidersModal from '../components/ProvidersModal';
 import CityServicesModal from '../components/CityServicesModal';
 import ShopsModal from '../components/ShopsModal';
 import TransportModal from '../components/TransportModal';
+import MassScheduleModal from '../components/MassScheduleModal';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
 const DAY_MAP_HU = {
@@ -71,19 +77,30 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
 export default function LocalDashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [showTomorrowDetails, setShowTomorrowDetails] = useState(false);
+    const [providers, setProviders] = useState([]);
+
+    useEffect(() => {
+        const fetchProviders = async () => {
+            const { data, error } = await supabase.from('providers').select('*');
+            if (error) console.error("Error fetching providers:", error);
+            else setProviders(data || []);
+        };
+        fetchProviders();
+    }, []);
 
     // Modals
+    const [isProvidersModalOpen, setIsProvidersModalOpen] = useState(false);
     const [showDoctorsModal, setShowDoctorsModal] = useState(false);
     const [showCityServicesModal, setShowCityServicesModal] = useState(false);
     const [showShopsModal, setShowShopsModal] = useState(false);
     const [showTransportModal, setShowTransportModal] = useState(false);
+    const [showMassModal, setShowMassModal] = useState(false);
 
     // Gyro tilt effect for 3D parallax (Max 45deg for stronger effect)
     const { tilt, hasPermission, requestPermission, enabled, toggleEffect } = useGyroTilt(30);
 
     // --- WASTE LOGIC ---
-    const getNextDayOfWeek = (dayName) => { /* Reuse existing logic if needed, but simplified below */ return dayName; };
-    const getNextDateForZone = (code) => { /* Reuse existing logic */
+    const getNextDateForZone = (code) => {
         if (!code) return null;
         const today = startOfDay(new Date());
         const dates = Object.keys(scheduleData.schedule).sort();
@@ -148,7 +165,7 @@ export default function LocalDashboard() {
             .slice(0, 30)
             .map(([name, codes]) => ({
                 street: name,
-                nextBlack: codes.black, // Just day name is fine
+                nextBlack: codes.black,
                 nextYellow: formatDate(getNextDateForZone(codes.yellow)),
                 nextGreen: formatDate(getNextDateForZone(codes.green)),
                 yellowCode: codes.yellow,
@@ -173,25 +190,18 @@ export default function LocalDashboard() {
                         </div>
                     </div>
 
-                    {/* 3D Toggle / Permission Button */}
+                    {/* iOS Permission Button */}
                     {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' ? (
-                        <button
-                            onClick={requestPermission}
-                            className="flex px-4 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30"
-                        >
+                        <button onClick={requestPermission} className="flex px-4 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
                             <span>✨ 3D Mozgás Be</span>
                         </button>
                     ) : (
-                        <button
-                            onClick={toggleEffect}
-                            className={`flex px-4 py-2 rounded-full text-xs font-bold items-center gap-2 transition-colors shadow-lg ${enabled
-                                ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30'
-                                : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-700'
-                                }`}
-                        >
-                            <span>{enabled ? '✨ 3D Mozgás Be' : '🚫 3D Mozgás Ki'}</span>
+                        <button onClick={toggleEffect} className={`flex px-4 py-2 rounded-full text-xs font-bold items-center gap-2 transition-colors shadow-lg ${enabled ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'}`}>
+                            <span>{enabled ? '✨ 3D Be' : '🚫 3D Ki'}</span>
                         </button>
                     )}
+
+                    {/* Temp Auth Link */}
                     <Link to="/auth" className="ml-2 flex px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full text-xs font-bold items-center gap-2 hover:scale-105 transition-transform shadow-lg">
                         <span>🔐 Login</span>
                     </Link>
@@ -385,6 +395,45 @@ export default function LocalDashboard() {
                     </motion.div>
                 </FadeUp>
 
+                {/* --- APPOINTMENT BOOKING HERO CARD --- */}
+                <FadeUp delay={0.15}>
+                    <motion.div
+                        onClick={() => setIsProvidersModalOpen(true)}
+                        style={{
+                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
+                            transition: 'transform 0.1s ease-out'
+                        }}
+                        className="
+                            relative cursor-pointer group mb-12
+                            bg-gradient-to-r from-purple-600 to-blue-600
+                            rounded-[2.5rem] p-8 sm:p-10
+                            shadow-2xl shadow-purple-500/30
+                            overflow-hidden
+                            text-white
+                        "
+                    >
+                        {/* Abstract Bubbles */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 group-hover:scale-110 transition-transform duration-700" />
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-pink-500 opacity-20 rounded-full blur-3xl -translate-x-1/4 translate-y-1/4" />
+
+                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="text-center md:text-left">
+                                <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-2">
+                                    Online Foglalás
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl font-black mb-2">Időpontfoglaló</h2>
+                                <p className="text-white/80 max-w-sm mx-auto md:mx-0 font-medium">
+                                    Fodrász, körmös, kozmetikus? Foglalj időpontot a legjobb kőszegi szakemberekhez, sorban állás nélkül! 💇‍♂️💅
+                                </p>
+                            </div>
+
+                            <div className="shrink-0 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl text-purple-600 text-3xl group-hover:scale-110 transition-transform duration-300">
+                                <IoCalendar />
+                            </div>
+                        </div>
+                    </motion.div>
+                </FadeUp>
+
                 {/* --- SERVICES GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FeatureCard
@@ -396,6 +445,17 @@ export default function LocalDashboard() {
                         tilt={tilt}
                         delay={0.2}
                         onClick={() => setShowDoctorsModal(true)}
+                    />
+
+                    <FeatureCard
+                        title="Templomok & Hitélet"
+                        subtitle="Miserendek és egyházi hírek"
+                        icon={<span>⛪</span>}
+                        colorFrom="from-orange-400"
+                        colorTo="to-amber-600"
+                        tilt={tilt}
+                        delay={0.25}
+                        onClick={() => setShowMassModal(true)}
                     />
 
                     <FeatureCard
@@ -478,6 +538,17 @@ export default function LocalDashboard() {
             <CityServicesModal isOpen={showCityServicesModal} onClose={() => setShowCityServicesModal(false)} />
             <ShopsModal isOpen={showShopsModal} onClose={() => setShowShopsModal(false)} />
             <TransportModal isOpen={showTransportModal} onClose={() => setShowTransportModal(false)} />
+            <MassScheduleModal isOpen={showMassModal} onClose={() => setShowMassModal(false)} />
+
+            {/* Providers Selection Modal */}
+            <AnimatePresence>
+                {isProvidersModalOpen && (
+                    <ProvidersModal
+                        isOpen={isProvidersModalOpen}
+                        onClose={() => setIsProvidersModalOpen(false)}
+                    />
+                )}
+            </AnimatePresence>
         </div >
     );
 }

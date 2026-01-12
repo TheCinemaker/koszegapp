@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { toast } from 'react-hot-toast';
-import { IoArrowBack, IoLogoGoogle, IoPerson, IoKey, IoStorefront, IoBriefcase } from 'react-icons/io5';
-import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabaseClient';
+import { IoLogoGoogle, IoPerson, IoKey, IoStorefront, IoArrowBack } from 'react-icons/io5';
+import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const CATEGORIES = [
     { id: 'fodraszat', label: 'Fodrászat', icon: '💇' },
@@ -15,23 +15,29 @@ const CATEGORIES = [
 ];
 
 export default function AuthPage() {
-    const { login } = useAuth();
+    const { login, register } = useAuth(); // Added register to context usage
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/koszegieknek';
 
     const [activeTab, setActiveTab] = useState('client'); // 'client' or 'provider'
-    const [isProviderLogin, setIsProviderLogin] = useState(false); // Toggle between provider reg/login
+    const [isProviderLogin, setIsProviderLogin] = useState(true); // Toggle between provider reg/login
+    const [isClientLogin, setIsClientLogin] = useState(true); // Toggle between client reg/login
     const [loading, setLoading] = useState(false);
+
+    // Client Form
+    const [clientName, setClientName] = useState('');
+    const [clientNick, setClientNick] = useState('');
+    const [clientPass, setClientPass] = useState('');
 
     // Provider Registration Form
     const [businessName, setBusinessName] = useState('');
     const [category, setCategory] = useState('');
-    const [email, setEmail] = useState('');
+    const [customCategory, setCustomCategory] = useState(''); // For 'egyeb'
+    const [providerUsername, setProviderUsername] = useState(''); // Username instead of email
     const [password, setPassword] = useState('');
 
     // Provider Login Form
-    const [loginEmail, setLoginEmail] = useState('');
+    const [loginUsername, setLoginUsername] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
 
     const handleGoogleSignIn = async () => {
@@ -49,35 +55,135 @@ export default function AuthPage() {
         }
     };
 
+    const handleClientLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            // 1. Try Client Login
+            await login(clientNick, clientPass, 'client');
+
+            // --- DUALITY CHECK ---
+            // Even if Client login succeeds, check if this is actually a Provider using the wrong tab.
+            try {
+                console.log("Client success. Checking for hidden Provider account...");
+                await login(clientNick, clientPass, 'provider');
+
+                // If we are here, Provider login ALSO succeeded!
+                // Prioritize Business Dashboard for owners.
+                toast.success('Szia Partner! (Szolgáltató fiók észlelve)');
+                navigate('/business', { replace: true });
+                return; // Stop here, don't go to client dashboard
+            } catch (ignoreProviderError) {
+                // Provider login failed, so they are just a client.
+                // Continue as normal.
+                console.log("No provider account found. Proceeding as client.");
+            }
+
+            toast.success('Szia ' + clientNick + '!');
+            navigate('/koszegieknek'); // Client Dashboard
+        } catch (clientError) {
+            console.log("Client login failed, trying provider fallback...");
+            try {
+                // 2. Fallback: Try Provider Login (if client failed entirely)
+                await login(clientNick, clientPass, 'provider');
+                toast.success('Sikeres bejelentkezés (Partner)!');
+                navigate('/business', { replace: true }); // Provider Dashboard
+            } catch (providerError) {
+                // Both failed
+                console.error(clientError);
+                if (providerError.message && providerError.message.includes("Invalid login")) {
+                    toast.error('Hibás felhasználónév vagy jelszó!');
+                } else {
+                    toast.error('Hiba: ' + (providerError.message || "Ismeretlen hiba"));
+                }
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleClientRegister = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await register(clientNick, clientPass, clientName, 'client');
+            toast.success('Sikeres regisztráció!');
+            // Auto login after reg
+            await login(clientNick, clientPass, 'client');
+            navigate('/koszegieknek');
+        } catch (error) {
+            console.error(error);
+            toast.error('Hiba: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        // Debug: Check which Supabase project we are connecting to
+        const sbUrl = import.meta.env.VITE_SUPABASE_URL;
+        console.log("Connected to Supabase Project:", sbUrl ? sbUrl.substring(8, 28) + "..." : "Unknown");
+    }, []);
+
     const handleProviderRegister = async (e) => {
         e.preventDefault();
-        if (!businessName || !category || !email || !password) {
+        const finalCategory = category === 'egyeb' ? customCategory : category;
+
+        if (!businessName || !finalCategory || !providerUsername || !password) {
             toast.error('Töltsd ki az összes mezőt!');
             return;
         }
 
         setLoading(true);
+        console.log("Starting registration process...");
         try {
-            // Register user with Supabase Auth
-            const { data, error } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                    data: {
-                        business_name: businessName,
-                        category,
-                        role: 'provider'
-                    }
+            // 1. Register logic
+            const authData = await register(providerUsername, password, businessName, 'provider');
+            console.log("Registration API returned:", authData);
+
+            if (authData?.user) {
+                const userId = authData.user.id;
+                console.log("User created with ID:", userId);
+
+                // 2. Ensuring Profile Exists
+                console.log("Upserting profile...");
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .upsert({
+                        id: userId,
+                        role: 'provider',
+                        nickname: providerUsername
+                    });
+
+                if (profileError) console.error("Profile upsert warn:", profileError);
+                else console.log("Profile upsert success.");
+
+                // 3. CHECK SESSION
+                if (authData.session) {
+                    console.log("Session received. Navigating to Business Dashboard...");
+                    toast.success('Sikeres regisztráció! Üdv a csapatban! 🚀');
+                    navigate('/business', { replace: true });
+                } else {
+                    console.log("No session. Logging in manually...");
+                    await login(providerUsername, password, 'provider');
+                    console.log("Manual login success. Navigating to Business Dashboard...");
+                    toast.success('Sikeres regisztráció! Üdv a csapatban! 🚀');
+                    navigate('/business', { replace: true });
                 }
-            });
+            } else {
+                console.warn("Registration returned no user object.");
+                toast.error("Hiba: A regisztráció nem tért vissza felhasználóval.");
+            }
 
-            if (error) throw error;
-
-            toast.success('Sikeres regisztráció!');
-            navigate('/provider-setup', { replace: true });
         } catch (error) {
-            console.error(error);
-            toast.error(error.message || 'Regisztráció sikertelen!');
+            console.error("Auth Loop Error:", error);
+            if (error.message.includes("Email logins are disabled")) {
+                toast.error('HIBA: A Supabase-ben az "Email Provider" nincs engedélyezve!');
+            } else if (error.message.includes("User already registered")) {
+                toast.error('Ez a felhasználónév már foglalt!');
+            } else {
+                toast.error(error.message || 'Hiba történt!');
+            }
         } finally {
             setLoading(false);
         }
@@ -85,25 +191,35 @@ export default function AuthPage() {
 
     const handleProviderLogin = async (e) => {
         e.preventDefault();
-        if (!loginEmail || !loginPassword) {
-            toast.error('Add meg az email-t és jelszót!');
+        if (!loginUsername || !loginPassword) {
+            toast.error('Hiányzó adatok!');
             return;
         }
 
         setLoading(true);
         try {
-            const { error } = await supabase.auth.signInWithPassword({
-                email: loginEmail,
-                password: loginPassword
-            });
-
-            if (error) throw error;
-
+            // 1. Try Provider Login
+            await login(loginUsername, loginPassword, 'provider');
             toast.success('Sikeres bejelentkezés!');
-            navigate('/business-dashboard', { replace: true });
-        } catch (error) {
-            console.error(error);
-            toast.error(error.message || 'Bejelentkezés sikertelen!');
+            navigate('/business', { replace: true });
+        } catch (providerError) {
+            console.log("Provider login failed, trying client fallback...", providerError);
+
+            try {
+                // 2. Fallback: Try Client Login
+                // Note: We use the same inputs (loginUsername/loginPassword)
+                await login(loginUsername, loginPassword, 'client');
+                toast.success('Sikeres bejelentkezés (Vendég)!');
+                navigate('/koszegieknek');
+            } catch (clientError) {
+                console.error("Client fallback failed:", clientError);
+                // Show the original provider error if likely relevant, or a generic one
+                if (providerError.message.includes("Invalid login")) {
+                    toast.error('Hibás felhasználónév vagy jelszó!');
+                } else {
+                    toast.error('Hiba: ' + providerError.message);
+                }
+            }
         } finally {
             setLoading(false);
         }
@@ -129,12 +245,12 @@ export default function AuthPage() {
                     {/* Header */}
                     <div className="text-center mb-6">
                         <h1 className="text-3xl font-black text-zinc-900 dark:text-white mb-2">
-                            {activeTab === 'client' ? 'Bejelentkezés' : 'Szolgáltató'}
+                            {activeTab === 'client' ? 'Vendég Belépés' : 'Partner Portál'}
                         </h1>
                         <p className="text-zinc-500 dark:text-zinc-400 text-sm">
                             {activeTab === 'client'
-                                ? 'Foglalj időpontot egyszerűen'
-                                : isProviderLogin ? 'Jelentkezz be' : 'Regisztrálj szolgáltatóként'}
+                                ? 'Kezeld foglalásaidat és kedvenceidet'
+                                : isProviderLogin ? 'Jelentkezz be a pultba' : 'Regisztráld vállalkozásod'}
                         </p>
                     </div>
 
@@ -143,8 +259,8 @@ export default function AuthPage() {
                         <button
                             onClick={() => setActiveTab('client')}
                             className={`flex-1 py-2 px-4 rounded-lg font-bold text-sm transition-all ${activeTab === 'client'
-                                    ? 'bg-white dark:bg-zinc-700 text-blue-600 dark:text-blue-400 shadow-md'
-                                    : 'text-zinc-500 dark:text-zinc-400'
+                                ? 'bg-white dark:bg-zinc-700 text-blue-600 dark:text-blue-400 shadow-md'
+                                : 'text-zinc-500 dark:text-zinc-400'
                                 }`}
                         >
                             Vendég
@@ -152,119 +268,109 @@ export default function AuthPage() {
                         <button
                             onClick={() => setActiveTab('provider')}
                             className={`flex-1 py-2 px-4 rounded-lg font-bold text-sm transition-all ${activeTab === 'provider'
-                                    ? 'bg-white dark:bg-zinc-700 text-purple-600 dark:text-purple-400 shadow-md'
-                                    : 'text-zinc-500 dark:text-zinc-400'
+                                ? 'bg-white dark:bg-zinc-700 text-purple-600 dark:text-purple-400 shadow-md'
+                                : 'text-zinc-500 dark:text-zinc-400'
                                 }`}
                         >
                             Szolgáltató
                         </button>
                     </div>
 
-                    {/* Client Tab */}
-                    {activeTab === 'client' && (
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="space-y-4"
-                        >
-                            <button
-                                onClick={handleGoogleSignIn}
-                                className="w-full h-12 flex items-center justify-center gap-3 bg-white dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-blue-500 dark:hover:border-blue-500 transition-all font-bold text-zinc-700 dark:text-white shadow-sm"
-                            >
-                                <IoLogoGoogle className="text-xl text-red-500" />
-                                Bejelentkezés Google-lel
-                            </button>
-                        </motion.div>
-                    )}
 
-                    {/* Provider Tab */}
-                    {activeTab === 'provider' && (
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                        >
-                            {!isProviderLogin ? (
-                                /* Provider Registration */
-                                <form onSubmit={handleProviderRegister} className="space-y-4">
-                                    <div className="relative">
-                                        <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+
+                    {/* CLIENT TAB */}
+                    {activeTab === 'client' && (
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                            {isClientLogin ? (
+                                /* Client Login */
+                                <form onSubmit={handleClientLogin}>
+                                    <div className="space-y-3">
+                                        <p className="text-center text-xs text-zinc-400">Jelentkezz be a fiókodba.</p>
                                         <input
                                             type="text"
-                                            placeholder="Szalon neve *"
-                                            value={businessName}
-                                            onChange={e => setBusinessName(e.target.value)}
-                                            className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                            placeholder="Becenév (Felhasználónév)"
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
+                                            value={clientNick}
+                                            onChange={e => setClientNick(e.target.value)}
                                         />
-                                    </div>
-
-                                    <div>
-                                        <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2 block">Kategória *</label>
-                                        <select
-                                            value={category}
-                                            onChange={e => setCategory(e.target.value)}
-                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
-                                            required
-                                        >
-                                            <option value="">Válassz...</option>
-                                            {CATEGORIES.map(cat => (
-                                                <option key={cat.id} value={cat.id}>
-                                                    {cat.icon} {cat.label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-
-                                    <div className="relative">
-                                        <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
-                                            type="email"
-                                            placeholder="Email *"
-                                            value={email}
-                                            onChange={e => setEmail(e.target.value)}
-                                            className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                            type="password"
+                                            placeholder="Jelszó"
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
+                                            value={clientPass}
+                                            onChange={e => setClientPass(e.target.value)}
                                         />
+                                        <button type="submit" disabled={loading} className="w-full h-12 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition lg:hover:scale-105 active:scale-95">
+                                            {loading ? 'Belépés...' : 'Bejelentkezés'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsClientLogin(false)}
+                                            className="w-full text-sm text-blue-600 dark:text-blue-400 hover:underline pt-2"
+                                        >
+                                            Nincs fiókom, regisztrálok
+                                        </button>
                                     </div>
-
-                                    <div className="relative">
-                                        <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                </form>
+                            ) : (
+                                /* Client Registration */
+                                <form onSubmit={handleClientRegister}>
+                                    <div className="space-y-3">
+                                        <p className="text-center text-xs text-zinc-400">Vendégként csak egy becenév kell.</p>
+                                        <input
+                                            type="text"
+                                            placeholder="Teljes Név (Opcionális)"
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
+                                            value={clientName}
+                                            onChange={e => setClientName(e.target.value)}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Becenév (Felhasználónév) *"
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
+                                            required
+                                            value={clientNick}
+                                            onChange={e => setClientNick(e.target.value)}
+                                        />
                                         <input
                                             type="password"
                                             placeholder="Jelszó *"
-                                            value={password}
-                                            onChange={e => setPassword(e.target.value)}
-                                            className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
+                                            value={clientPass}
+                                            onChange={e => setClientPass(e.target.value)}
                                         />
+                                        <button type="submit" disabled={loading} className="w-full h-12 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition lg:hover:scale-105 active:scale-95">
+                                            {loading ? 'Fiók létrehozása...' : 'Regisztráció'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsClientLogin(true)}
+                                            className="w-full text-sm text-blue-600 dark:text-blue-400 hover:underline pt-2"
+                                        >
+                                            Már van fiókom, belépek
+                                        </button>
                                     </div>
-
-                                    <button
-                                        type="submit"
-                                        disabled={loading}
-                                        className="w-full h-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50"
-                                    >
-                                        {loading ? 'Folyamatban...' : 'Regisztráció'}
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsProviderLogin(true)}
-                                        className="w-full text-sm text-purple-600 dark:text-purple-400 hover:underline"
-                                    >
-                                        Már regisztráltam
-                                    </button>
                                 </form>
-                            ) : (
+                            )}
+                        </motion.div>
+                    )}
+
+                    {/* PROVIDER TAB */}
+                    {activeTab === 'provider' && (
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                            {isProviderLogin ? (
                                 /* Provider Login */
                                 <form onSubmit={handleProviderLogin} className="space-y-4">
                                     <div className="relative">
                                         <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
-                                            type="email"
-                                            placeholder="Email"
-                                            value={loginEmail}
-                                            onChange={e => setLoginEmail(e.target.value)}
+                                            type="text"
+                                            placeholder="Felhasználónév"
+                                            value={loginUsername}
+                                            onChange={e => setLoginUsername(e.target.value)}
                                             className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
                                             required
                                         />
@@ -285,17 +391,105 @@ export default function AuthPage() {
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className="w-full h-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50"
+                                        className="w-full h-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 shadow-lg shadow-purple-500/30"
                                     >
-                                        {loading ? 'Folyamatban...' : 'Bejelentkezés'}
+                                        {loading ? 'Belépés...' : 'Bejelentkezés'}
                                     </button>
 
                                     <button
                                         type="button"
                                         onClick={() => setIsProviderLogin(false)}
-                                        className="w-full text-sm text-purple-600 dark:text-purple-400 hover:underline"
+                                        className="w-full text-sm text-purple-600 dark:text-purple-400 hover:underline pt-2"
                                     >
-                                        Még nincs fiókom
+                                        Még nincs fiókom, regisztrálok
+                                    </button>
+                                </form>
+                            ) : (
+                                /* Provider Registration */
+                                <form onSubmit={handleProviderRegister} className="space-y-4">
+                                    <div className="relative">
+                                        <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                        <input
+                                            type="text"
+                                            placeholder="Cégnév / Szalon neve *"
+                                            value={businessName}
+                                            onChange={e => setBusinessName(e.target.value)}
+                                            className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <div className="relative">
+                                            <select
+                                                value={category}
+                                                onChange={e => setCategory(e.target.value)}
+                                                className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white appearance-none"
+                                                required
+                                            >
+                                                <option value="">Válassz kategóriát...</option>
+                                                {CATEGORIES.map(cat => (
+                                                    <option key={cat.id} value={cat.id}>
+                                                        {cat.icon} {cat.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">▼</div>
+                                        </div>
+
+                                        {/* Custom Category Input */}
+                                        {category === 'egyeb' && (
+                                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="mt-2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Írd be a tevékenységet..."
+                                                    value={customCategory}
+                                                    onChange={e => setCustomCategory(e.target.value)}
+                                                    className="w-full h-10 px-4 bg-white dark:bg-zinc-700 rounded-lg border border-zinc-200 dark:border-zinc-600 focus:border-purple-500 outline-none text-sm dark:text-white"
+                                                    required
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </div>
+
+                                    <div className="relative">
+                                        <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                        <input
+                                            type="text"
+                                            placeholder="Felhasználónév (Belépéshez) *"
+                                            value={providerUsername}
+                                            onChange={e => setProviderUsername(e.target.value)}
+                                            className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="relative">
+                                        <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                        <input
+                                            type="password"
+                                            placeholder="Jelszó *"
+                                            value={password}
+                                            onChange={e => setPassword(e.target.value)}
+                                            className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border-2 border-transparent focus:border-purple-500 focus:outline-none dark:text-white"
+                                            required
+                                        />
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        className="w-full h-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 shadow-lg shadow-purple-500/30"
+                                    >
+                                        {loading ? 'Fiók létrehozása...' : 'Regisztráció és Tovább'}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsProviderLogin(true)}
+                                        className="w-full text-sm text-purple-600 dark:text-purple-400 hover:underline pt-2"
+                                    >
+                                        Már van partner fiókom, belépek
                                     </button>
                                 </form>
                             )}
