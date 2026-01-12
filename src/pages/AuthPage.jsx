@@ -294,6 +294,7 @@ export default function AuthPage() {
                                 <form onSubmit={handleClientLogin}>
                                     <div className="space-y-3">
                                         <p className="text-center text-xs text-zinc-400">Jelentkezz be a fiókodba.</p>
+                                        <label htmlFor="client-login-username" className="sr-only">Felhasználónév</label>
                                         <input
                                             type="text"
                                             name="username"
@@ -305,6 +306,7 @@ export default function AuthPage() {
                                             value={clientNick}
                                             onChange={e => setClientNick(e.target.value)}
                                         />
+                                        <label htmlFor="client-login-password" className="sr-only">Jelszó</label>
                                         <input
                                             type="password"
                                             name="password"
@@ -333,6 +335,7 @@ export default function AuthPage() {
                                 <form onSubmit={handleClientRegister}>
                                     <div className="space-y-3">
                                         <p className="text-center text-xs text-zinc-400">Vendégként csak egy becenév kell.</p>
+                                        <label htmlFor="client-register-name" className="sr-only">Teljes Név</label>
                                         <input
                                             type="text"
                                             name="name"
@@ -343,6 +346,7 @@ export default function AuthPage() {
                                             value={clientName}
                                             onChange={e => setClientName(e.target.value)}
                                         />
+                                        <label htmlFor="client-register-username" className="sr-only">Felhasználónév</label>
                                         <input
                                             type="text"
                                             name="username"
@@ -354,6 +358,7 @@ export default function AuthPage() {
                                             value={clientNick}
                                             onChange={e => setClientNick(e.target.value)}
                                         />
+                                        <label htmlFor="client-register-password" className="sr-only">Jelszó</label>
                                         <input
                                             type="password"
                                             name="password"
@@ -388,6 +393,7 @@ export default function AuthPage() {
                                 /* Provider Login */
                                 <form onSubmit={handleProviderLogin} className="space-y-4">
                                     <div className="relative">
+                                        <label htmlFor="provider-login-username" className="sr-only">Felhasználónév</label>
                                         <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="text"
@@ -403,6 +409,7 @@ export default function AuthPage() {
                                     </div>
 
                                     <div className="relative">
+                                        <label htmlFor="provider-login-password" className="sr-only">Jelszó</label>
                                         <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="password"
@@ -482,6 +489,7 @@ export default function AuthPage() {
                                     </div>
 
                                     <div className="relative">
+                                        <label htmlFor="provider-register-username" className="sr-only">Felhasználónév</label>
                                         <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="text"
@@ -497,6 +505,7 @@ export default function AuthPage() {
                                     </div>
 
                                     <div className="relative">
+                                        <label htmlFor="provider-register-password" className="sr-only">Jelszó</label>
                                         <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="password"
