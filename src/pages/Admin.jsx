@@ -853,10 +853,10 @@ function AdminApp() {
           <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
             <div className="flex items-center gap-3 mb-3 px-2">
               <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
-                {user.displayName.charAt(0)}
+                {(user.displayName || user.email || "?").charAt(0).toUpperCase()}
               </div>
               <div className="overflow-hidden">
-                <p className="text-sm font-medium truncate text-gray-900 dark:text-white">{user.displayName}</p>
+                <p className="text-sm font-medium truncate text-gray-900 dark:text-white">{user.displayName || user.email}</p>
                 <p className="text-xs text-gray-400 truncate">Adminisztrátor</p>
               </div>
             </div>

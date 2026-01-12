@@ -33,7 +33,7 @@ export default function SmartSpotlight({ appData }) {
             const startDate = event._s || parseISO(event.date);
             const endDate = event._e || parseISO(event.end_date || event.date);
 
-            const showFromDate = addDays(startDate, -10);
+            const showFromDate = addDays(startDate, -21);
             const hideAfterDate = addDays(endDate, 1);
 
             return isAfter(today, showFromDate) && isBefore(today, hideAfterDate);

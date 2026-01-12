@@ -39,6 +39,7 @@ import Adatvedelem from './pages/Adatvedelem';
 import GemDetail from './pages/GemDetail';
 import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
+import AuthPage from './pages/AuthPage';
 import ProgramModal from './components/ProgramModal';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
@@ -230,10 +231,11 @@ function MainAppContent() {
     [favoriteAttractions, favoriteEvents, favoriteLeisure, favoriteRestaurants]
   );
 
-  // Loading állapot
-  if (!appData || appData.loading) {
-    return <div className="flex h-screen items-center justify-center bg-beige-50 dark:bg-gray-900"><div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div></div>;
-  }
+  // Loading állapot REMOVED to allow non-dependent pages (like Auth, Home) to load instantly.
+  // Individual pages handle loading state via the 'loading' prop.
+  // if (!appData || appData.loading) {
+  //   return <div className="flex h-screen items-center justify-center bg-beige-50 dark:bg-gray-900"><div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div></div>;
+  // }
 
   // MAINTENANCE PAGE RENDER
   if (maintenanceMode) {
