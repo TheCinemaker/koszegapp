@@ -4,7 +4,7 @@ import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOu
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
-import { useGyroTilt } from '../hooks/useGyroTilt';
+
 import { useAuth } from '../contexts/AuthContext';
 import { format, parseISO, isAfter, isSameDay, addDays, getDay, startOfDay } from 'date-fns';
 import { hu } from 'date-fns/locale';
@@ -18,6 +18,8 @@ import CityServicesModal from '../components/CityServicesModal';
 import ShopsModal from '../components/ShopsModal';
 import TransportModal from '../components/TransportModal';
 import MassScheduleModal from '../components/MassScheduleModal';
+import UserBookingsRibbon from '../components/UserBookingsRibbon';
+import UserMessageRibbon from '../components/UserMessageRibbon';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
 const DAY_MAP_HU = {
@@ -25,7 +27,7 @@ const DAY_MAP_HU = {
 };
 
 // --- HELPER COMPONENT: Feature Card ---
-const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt, delay }) => (
+const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -33,10 +35,6 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, tilt,
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
-        style={{
-            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
-            transition: 'transform 0.1s ease-out'
-        }}
         className="
             cursor-pointer 
             relative overflow-hidden
@@ -78,6 +76,7 @@ export default function LocalDashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [showTomorrowDetails, setShowTomorrowDetails] = useState(false);
     const [providers, setProviders] = useState([]);
+    const { user, logout } = useAuth(); // Destructure logout here
 
     useEffect(() => {
         const fetchProviders = async () => {
@@ -95,9 +94,6 @@ export default function LocalDashboard() {
     const [showShopsModal, setShowShopsModal] = useState(false);
     const [showTransportModal, setShowTransportModal] = useState(false);
     const [showMassModal, setShowMassModal] = useState(false);
-
-    // Gyro tilt effect for 3D parallax (Max 45deg for stronger effect)
-    const { tilt, hasPermission, requestPermission, enabled, toggleEffect } = useGyroTilt(30);
 
     // --- WASTE LOGIC ---
     const getNextDateForZone = (code) => {
@@ -179,60 +175,45 @@ export default function LocalDashboard() {
 
             {/* --- HERO SECTION --- */}
             <div className="relative pt-12 pb-8 px-6">
-                <div className="max-w-5xl mx-auto flex items-center justify-between">
+                <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                     <div className="flex items-center gap-4">
-                        <Link to="/" className="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform">
+                        <Link to="/" className="w-12 h-12 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform">
                             <IoArrowBack className="text-xl text-zinc-900 dark:text-white" />
                         </Link>
                         <div>
                             <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-white tracking-tight">Kőszegieknek</h1>
-                            <p className="text-zinc-500 dark:text-zinc-400 font-medium">Helyi információk és szolgáltatások</p>
+                            {user ? (
+                                <p className="text-indigo-600 dark:text-indigo-400 font-bold flex flex-wrap items-center gap-1 leading-tight">
+                                    <span>Szia, {user.user_metadata?.nickname || user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('.')[1]?.split('@')[0] || 'Vendég'}! 👋</span>
+                                    <span className="text-zinc-500 font-normal dark:text-zinc-400 text-sm">Jó, hogy itt vagy!</span>
+                                </p>
+                            ) : (
+                                <p className="text-zinc-500 dark:text-zinc-400 font-medium">Helyi információk és szolgáltatások</p>
+                            )}
                         </div>
                     </div>
 
-                    {/* iOS Permission Button */}
-                    {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' ? (
-                        <button onClick={requestPermission} className="flex px-4 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
-                            <span>✨ 3D Mozgás Be</span>
-                        </button>
-                    ) : (
-                        <button onClick={toggleEffect} className={`flex px-4 py-2 rounded-full text-xs font-bold items-center gap-2 transition-colors shadow-lg ${enabled ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'}`}>
-                            <span>{enabled ? '✨ 3D Be' : '🚫 3D Ki'}</span>
-                        </button>
-                    )}
-
-                    {/* Temp Auth Link */}
-                    <Link to="/auth" className="ml-2 flex px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full text-xs font-bold items-center gap-2 hover:scale-105 transition-transform shadow-lg">
-                        <span>🔐 Login</span>
-                    </Link>
+                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                        {/* Auth Button */}
+                        {user ? (
+                            <button
+                                onClick={logout}
+                                className="flex px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full text-xs font-bold items-center gap-2 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors shadow-lg border border-red-200 dark:border-red-900/50"
+                            >
+                                <IoLogOut className="text-lg" />
+                                <span>Kilépés</span>
+                            </button>
+                        ) : (
+                            <Link to="/auth" className="flex px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full text-xs font-bold items-center gap-2 hover:scale-105 transition-transform shadow-lg">
+                                <IoLogIn className="text-lg" />
+                                <span>Belépés</span>
+                            </Link>
+                        )}
+                    </div>
                 </div>
             </div>
 
             <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-12">
-
-                {/* PROMINENT PERMISSION CARD for iOS */}
-                {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        style={{
-                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
-                            transition: 'transform 0.1s ease-out'
-                        }}
-                        className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl flex items-center justify-between gap-4"
-                    >
-                        <div>
-                            <h3 className="font-bold text-lg mb-1">Engedélyezd a 3D Élményt! 📱</h3>
-                            <p className="text-white/80 text-sm">A legszebb látványhoz szükségünk van a mozgásérzékelőre.</p>
-                        </div>
-                        <button
-                            onClick={requestPermission}
-                            className="px-6 py-3 bg-white text-indigo-600 font-bold rounded-xl shadow-md hover:bg-indigo-50 transition-colors whitespace-nowrap"
-                        >
-                            Bekapcsolás
-                        </button>
-                    </motion.div>
-                )}
 
                 {/* --- WASTE MONITOR SECTION (FEATURED) --- */}
                 <FadeUp delay={0.1}>
@@ -244,10 +225,6 @@ export default function LocalDashboard() {
                             border border-zinc-100 dark:border-white/10
                             shadow-2xl shadow-zinc-200/50 dark:shadow-black/50
                         "
-                        style={{
-                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
-                            transition: 'transform 0.1s ease-out'
-                        }}
                     >
                         {/* Decorative background blob */}
                         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-orange-100/50 to-transparent dark:from-orange-900/10 pointer-events-none blur-3xl rounded-full translate-x-1/3 -translate-y-1/3" />
@@ -395,57 +372,36 @@ export default function LocalDashboard() {
                     </motion.div>
                 </FadeUp>
 
-                {/* --- APPOINTMENT BOOKING HERO CARD --- */}
-                <FadeUp delay={0.15}>
-                    <motion.div
-                        onClick={() => setIsProvidersModalOpen(true)}
-                        style={{
-                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
-                            transition: 'transform 0.1s ease-out'
-                        }}
-                        className="
-                            relative cursor-pointer group mb-12
-                            bg-gradient-to-r from-purple-600 to-blue-600
-                            rounded-[2.5rem] p-8 sm:p-10
-                            shadow-2xl shadow-purple-500/30
-                            overflow-hidden
-                            text-white
-                        "
-                    >
-                        {/* Abstract Bubbles */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 group-hover:scale-110 transition-transform duration-700" />
-                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-pink-500 opacity-20 rounded-full blur-3xl -translate-x-1/4 translate-y-1/4" />
-
-                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                            <div className="text-center md:text-left">
-                                <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-2">
-                                    Online Foglalás
-                                </span>
-                                <h2 className="text-3xl sm:text-4xl font-black mb-2">Időpontfoglaló</h2>
-                                <p className="text-white/80 max-w-sm mx-auto md:mx-0 font-medium">
-                                    Fodrász, körmös, kozmetikus? Foglalj időpontot a legjobb kőszegi szakemberekhez, sorban állás nélkül! 💇‍♂️💅
-                                </p>
-                            </div>
-
-                            <div className="shrink-0 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl text-purple-600 text-3xl group-hover:scale-110 transition-transform duration-300">
-                                <IoCalendar />
-                            </div>
-                        </div>
-                    </motion.div>
-                </FadeUp>
-
                 {/* --- SERVICES GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    {/* NEW: Booking Card moved to grid */}
+                    <FeatureCard
+                        title="Időpontfoglaló"
+                        subtitle="Fodrász, körmös, kozmetikus időpontok"
+                        icon={<span>📅</span>}
+                        colorFrom="from-purple-500"
+                        colorTo="to-blue-600"
+                        delay={0.15}
+                        onClick={() => {
+                            if (user) {
+                                setIsProvidersModalOpen(true);
+                            } else {
+                                toast.error("A foglaláshoz kérlek jelentkezz be!", { icon: '🔐' });
+                            }
+                        }}
+                    />
+
                     <FeatureCard
                         title="Orvosi Rendelők"
                         subtitle="Háziorvosok, szakrendelések és ügyeleti információk"
                         icon={<span>🏥</span>}
                         colorFrom="from-red-400"
                         colorTo="to-pink-600"
-                        tilt={tilt}
                         delay={0.2}
                         onClick={() => setShowDoctorsModal(true)}
                     />
+
 
                     <FeatureCard
                         title="Templomok & Hitélet"
@@ -453,7 +409,6 @@ export default function LocalDashboard() {
                         icon={<span>⛪</span>}
                         colorFrom="from-orange-400"
                         colorTo="to-amber-600"
-                        tilt={tilt}
                         delay={0.25}
                         onClick={() => setShowMassModal(true)}
                     />
@@ -464,7 +419,6 @@ export default function LocalDashboard() {
                         icon={<span>🛒</span>}
                         colorFrom="from-yellow-400"
                         colorTo="to-orange-500"
-                        tilt={tilt}
                         delay={0.3}
                         onClick={() => setShowShopsModal(true)}
                     />
@@ -475,7 +429,6 @@ export default function LocalDashboard() {
                         icon={<span>🏙️</span>}
                         colorFrom="from-purple-400"
                         colorTo="to-indigo-600"
-                        tilt={tilt}
                         delay={0.4}
                         onClick={() => setShowCityServicesModal(true)}
                     />
@@ -486,7 +439,6 @@ export default function LocalDashboard() {
                         icon={<span>🚌</span>}
                         colorFrom="from-green-400"
                         colorTo="to-emerald-600"
-                        tilt={tilt}
                         delay={0.5}
                         onClick={() => setShowTransportModal(true)}
                     />
@@ -495,10 +447,6 @@ export default function LocalDashboard() {
                 {/* --- NEWS FEED --- */}
                 <FadeUp delay={0.6} className="pb-8">
                     <motion.div
-                        style={{
-                            transform: `perspective(1000px) rotateX(${tilt.y * 12}deg) rotateY(${tilt.x * 12}deg)`,
-                            transition: 'transform 0.1s ease-out'
-                        }}
                         className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-xl rounded-[2.5rem] border border-white/50 dark:border-white/10 p-8 shadow-xl"
                     >
                         <div className="flex items-center justify-between mb-6">
@@ -549,6 +497,9 @@ export default function LocalDashboard() {
                     />
                 )}
             </AnimatePresence>
+
+            <UserBookingsRibbon />
+            <UserMessageRibbon />
         </div >
     );
 }

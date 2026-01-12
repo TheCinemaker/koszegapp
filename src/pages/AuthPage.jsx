@@ -66,7 +66,7 @@ export default function AuthPage() {
             // Even if Client login succeeds, check if this is actually a Provider using the wrong tab.
             try {
                 console.log("Client success. Checking for hidden Provider account...");
-                await login(clientNick, clientPass, 'provider');
+                await login(clientNick, clientPass, 'provider', true);
 
                 // If we are here, Provider login ALSO succeeded!
                 // Prioritize Business Dashboard for owners.
@@ -199,12 +199,16 @@ export default function AuthPage() {
         setLoading(true);
         try {
             // 1. Try Provider Login
-            await login(loginUsername, loginPassword, 'provider');
-            toast.success('Sikeres bejelentkezés!');
-            navigate('/business', { replace: true });
+            const { user } = await login(loginUsername, loginPassword, 'provider');
+            if (user) {
+                toast.success('Sikeres bejelentkezés!');
+                navigate('/business', { replace: true });
+                return;
+            }
         } catch (providerError) {
             console.log("Provider login failed, trying client fallback...", providerError);
 
+            // Only try fallback if it was a credential error, not an API error
             try {
                 // 2. Fallback: Try Client Login
                 // Note: We use the same inputs (loginUsername/loginPassword)
@@ -214,14 +218,18 @@ export default function AuthPage() {
             } catch (clientError) {
                 console.error("Client fallback failed:", clientError);
                 // Show the original provider error if likely relevant, or a generic one
-                if (providerError.message.includes("Invalid login")) {
+                if (providerError.message && providerError.message.includes("Invalid login")) {
                     toast.error('Hibás felhasználónév vagy jelszó!');
                 } else {
-                    toast.error('Hiba: ' + providerError.message);
+                    toast.error('Hiba: ' + (providerError.message || "Ismeretlen hiba"));
                 }
             }
         } finally {
-            setLoading(false);
+            // Only stop loading if we are NOT navigating (to prevent flash)
+            // But React handles unmount cleanup, so just ensuring we don't block.
+            if (window.location.pathname.includes('/auth')) {
+                setLoading(false);
+            }
         }
     };
 

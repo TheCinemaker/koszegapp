@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose, IoCalendar, IoTime, IoCheckmark } from 'react-icons/io5';
-import { format, addDays, startOfToday, addMinutes, isAfter, isBefore, set } from 'date-fns';
+import { format, addDays, startOfToday, addMinutes, isAfter, isBefore, set, isSameDay } from 'date-fns';
 import { hu } from 'date-fns/locale';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
@@ -14,16 +15,33 @@ export default function BookingModal({ isOpen, onClose, provider }) {
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // Manual login state for checking
-    const [guestName, setGuestName] = useState('');
-    const [guestPhone, setGuestPhone] = useState('');
+    const [notes, setNotes] = useState('');
 
     useEffect(() => {
         if (isOpen && provider) {
             fetchSlots(selectedDate);
-            if (user?.user_metadata?.full_name) {
-                setGuestName(user.user_metadata.full_name);
-            }
+
+            // Realtime subscription to update slots immediately if Provider deletes/adds booking
+            const subscription = supabase
+                .channel(`booking-modal-${provider.id}`)
+                .on(
+                    'postgres_changes',
+                    {
+                        event: '*',
+                        schema: 'public',
+                        table: 'bookings',
+                        filter: `provider_id=eq.${provider.id}`
+                    },
+                    (payload) => {
+                        console.log("Slot update detected:", payload);
+                        fetchSlots(selectedDate);
+                    }
+                )
+                .subscribe();
+
+            return () => {
+                supabase.removeChannel(subscription);
+            };
         }
     }, [isOpen, provider, selectedDate, user]);
 
@@ -32,11 +50,29 @@ export default function BookingModal({ isOpen, onClose, provider }) {
         setAvailableSlots([]);
 
         try {
-            // 1. Get Provider's constraints
-            // Default to 9-17 if not set
-            const startStr = provider.opening_start || '09:00';
-            const endStr = provider.opening_end || '17:00';
-            const duration = provider.slot_duration_min || 30;
+            // 1. Fetch fresh Provider settings (to avoid stale props)
+            const { data: latestProvider } = await supabase
+                .from('providers')
+                .select('schedule_settings, opening_start, opening_end, slot_duration_min')
+                .eq('id', provider.id)
+                .single();
+
+            const liveProvider = latestProvider || provider;
+            const schedule = liveProvider.schedule_settings || {};
+
+            const dayOfWeek = selectedDate.getDay().toString(); // 0 = Sunday, 1 = Monday
+            const dayConfig = schedule[dayOfWeek];
+
+            // If no config or closed, return empty
+            if (!dayConfig || !dayConfig.active) {
+                setAvailableSlots([]);
+                setLoading(false);
+                return;
+            }
+
+            const startStr = dayConfig.start || liveProvider.opening_start || '09:00';
+            const endStr = dayConfig.end || liveProvider.opening_end || '17:00';
+            const duration = liveProvider.slot_duration_min || 30;
 
             const [startHour, startMin] = startStr.split(':').map(Number);
             const [endHour, endMin] = endStr.split(':').map(Number);
@@ -44,13 +80,28 @@ export default function BookingModal({ isOpen, onClose, provider }) {
             const dayStart = set(date, { hours: startHour, minutes: startMin, seconds: 0 });
             const dayEnd = set(date, { hours: endHour, minutes: endMin, seconds: 0 });
 
-            // 2. Fetch existing bookings for this provider on this date
+            // Lunch setup
+            let lunchStart = null;
+            let lunchEnd = null;
+            if (dayConfig.hasLunch) {
+                const lStartStr = dayConfig.lunchStart || "12:00";
+                const lEndStr = dayConfig.lunchEnd || "12:30";
+
+                const [lStartH, lStartM] = lStartStr.split(':').map(Number);
+                const [lEndH, lEndM] = lEndStr.split(':').map(Number);
+
+                lunchStart = set(date, { hours: lStartH, minutes: lStartM, seconds: 0 });
+                lunchEnd = set(date, { hours: lEndH, minutes: lEndM, seconds: 0 });
+            }
+
+            // 2. Fetch existing bookings
             const { data: bookings } = await supabase
                 .from('bookings')
-                .select('start_time, end_time')
+                .select('start_time, end_time, client_id, type') // Added type
                 .eq('provider_id', provider.id)
-                .gte('start_time', dayStart.toISOString())
-                .lte('start_time', dayEnd.toISOString());
+                .neq('status', 'cancelled')
+                .lt('start_time', dayEnd.toISOString())
+                .gt('end_time', dayStart.toISOString());
 
             // 3. Generate slots
             const slots = [];
@@ -58,25 +109,48 @@ export default function BookingModal({ isOpen, onClose, provider }) {
             const now = new Date();
 
             while (isBefore(current, dayEnd)) {
-                // Check if slot is in the past (for today)
+                const slotEnd = addMinutes(current, duration);
+
+                // Stop if slot goes beyond closing time
+                if (isAfter(slotEnd, dayEnd)) break;
+
+                // Check past
                 if (isBefore(current, now)) {
                     current = addMinutes(current, duration);
                     continue;
                 }
 
-                const slotEnd = addMinutes(current, duration);
+                // Check Lunch Collision
+                if (lunchStart && lunchEnd) {
+                    // Overlap check: (StartA < EndB) and (EndA > StartB)
+                    if (current < lunchEnd && slotEnd > lunchStart) {
+                        current = addMinutes(current, duration);
+                        continue; // Skip this slot
+                    }
+                }
 
-                // Check collision
-                const isTaken = bookings?.some(b => {
+                // Check Booking Collision
+                const booking = bookings?.find(b => {
                     const bStart = new Date(b.start_time);
                     const bEnd = new Date(b.end_time);
-                    // Simple overlap check
                     return (current < bEnd && slotEnd > bStart);
                 });
 
-                if (!isTaken) {
-                    slots.push(new Date(current));
+                let status = 'available';
+                if (booking) {
+                    if (user && booking.client_id === user.id) {
+                        status = 'own';
+                    } else if (booking.type === 'blocked') {
+                        status = 'booked'; // Treat blocked as booked
+                    } else {
+                        status = 'booked';
+                    }
                 }
+
+                slots.push({
+                    date: new Date(current),
+                    status: status
+                });
 
                 current = addMinutes(current, duration);
             }
@@ -102,21 +176,25 @@ export default function BookingModal({ isOpen, onClose, provider }) {
         setLoading(true);
         try {
             // 1. Create Booking
-            const endTime = addMinutes(selectedSlot, provider.slot_duration_min || 30);
+            const endTime = addMinutes(selectedSlot.date, provider.slot_duration_min || 30);
 
             const { error } = await supabase.from('bookings').insert({
                 provider_id: provider.id,
                 client_id: user.id, // Authenticated user
-                start_time: selectedSlot.toISOString(),
+                start_time: selectedSlot.date.toISOString(),
                 end_time: endTime.toISOString(),
                 status: 'confirmed',
-                notes: `Vendég: ${guestName || user.email}`
+                notes: notes // Use the state variable
             });
 
             if (error) throw error;
 
             toast.success('Foglalás sikeresen rögzítve! 🎉');
-            onClose();
+            // Refresh slots to show the new status immediately
+            // Instead of closing, we might want to let them see it became Yellow
+            fetchSlots(selectedDate);
+            setSelectedSlot(null);
+            setNotes(''); // Clear notes
 
         } catch (err) {
             console.error(err);
@@ -128,8 +206,8 @@ export default function BookingModal({ isOpen, onClose, provider }) {
 
     if (!isOpen) return null;
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center pointer-events-none">
+    return createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-none">
             {/* Backdrop */}
             <motion.div
                 initial={{ opacity: 0 }}
@@ -173,6 +251,7 @@ export default function BookingModal({ isOpen, onClose, provider }) {
                             <h2 className="text-2xl font-black text-zinc-900 dark:text-white leading-none">{provider.business_name}</h2>
                             <p className="text-sm text-zinc-500 mt-1 flex items-center gap-1">
                                 <IoCacheOutline className="inline" />
+                                <IoTime className="inline" />
                                 {provider.location_address || 'Kőszeg'}
                             </p>
                         </div>
@@ -214,19 +293,31 @@ export default function BookingModal({ isOpen, onClose, provider }) {
                     ) : availableSlots.length > 0 ? (
                         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                             {availableSlots.map((slot, i) => {
-                                const isSelected = selectedSlot && slot.getTime() === selectedSlot.getTime();
+                                const isSelected = selectedSlot && slot.date.getTime() === selectedSlot.date.getTime();
+
+                                let statusClasses = '';
+                                if (slot.status === 'own') {
+                                    statusClasses = 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700 opacity-80 cursor-not-allowed';
+                                } else if (slot.status === 'booked') {
+                                    statusClasses = 'bg-red-50 text-red-400 border-red-100 dark:bg-red-900/10 dark:text-red-500 dark:border-red-900/30 opacity-60 cursor-not-allowed decoration-slice line-through';
+                                } else {
+                                    // Available
+                                    statusClasses = isSelected
+                                        ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-500 text-blue-700 dark:text-blue-300 ring-2 ring-blue-500/20'
+                                        : 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 hover:border-green-400 dark:hover:border-green-600 shadow-sm';
+                                }
+
                                 return (
                                     <button
                                         key={i}
-                                        onClick={() => setSelectedSlot(slot)}
+                                        onClick={() => slot.status === 'available' && setSelectedSlot(slot)}
+                                        disabled={slot.status !== 'available'}
                                         className={`
                                             py-3 rounded-xl text-sm font-bold border transition-all
-                                            ${isSelected
-                                                ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-500 text-blue-700 dark:text-blue-300 ring-2 ring-blue-500/20'
-                                                : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-blue-300'}
+                                            ${statusClasses}
                                         `}
                                     >
-                                        {format(slot, 'HH:mm')}
+                                        {format(slot.date, 'HH:mm')}
                                     </button>
                                 );
                             })}
@@ -237,6 +328,25 @@ export default function BookingModal({ isOpen, onClose, provider }) {
                             <p className="text-xs mt-1">Próbálj másik napot választani!</p>
                         </div>
                     )}
+                </div>
+                {/* Notes Input */}
+                <div className="px-6 py-2 shrink-0">
+                    <label className="text-xs font-bold uppercase text-zinc-500 dark:text-zinc-400 ml-1 mb-1 block">
+                        Megjegyzés (opcionális)
+                    </label>
+                    <textarea
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        placeholder="Pl. Hosszú hajam van, hozom a kutyámat is..."
+                        className="
+                            w-full h-20 p-3 rounded-xl 
+                            bg-white dark:bg-black/20 
+                            border border-zinc-200 dark:border-zinc-700 
+                            text-sm font-medium text-zinc-900 dark:text-white 
+                            placeholder-zinc-400 
+                            focus:outline-none focus:ring-2 focus:ring-purple-500/50 resize-none
+                        "
+                    />
                 </div>
 
                 {/* Footer Action */}
@@ -268,7 +378,8 @@ export default function BookingModal({ isOpen, onClose, provider }) {
                 </div>
 
             </motion.div>
-        </div>
+        </div>,
+        document.body
     );
 }
 
