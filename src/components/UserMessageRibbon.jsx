@@ -102,7 +102,7 @@ export default function UserMessageRibbon() {
     return (
         <>
             {/* Ribbon */}
-            <div className="fixed bottom-[230px] left-1/2 -translate-x-1/2 z-[45] w-full max-w-[95vw] sm:max-w-md pointer-events-none flex justify-center px-4">
+            <div className="fixed bottom-40 left-0 right-0 z-[45] pointer-events-none flex justify-center px-4">
                 <motion.div
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
