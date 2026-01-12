@@ -49,7 +49,7 @@ export default function ProvidersModal({ isOpen, onClose }) {
 
     return (
         <>
-            <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center pointer-events-none">
+            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none">
                 {/* Backdrop - Heavier Blur/Darkness for specific aesthetics */}
                 <motion.div
                     initial={{ opacity: 0 }}
