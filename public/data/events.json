@@ -431,5 +431,24 @@
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🎭🎶 JELMEZES FÚVÓS FARSANG – 90’s HANGULATBAN! 🎶🎭"
+  },
+  {
+    "id": "new_1768217058371",
+    "name": "Boros Ferenc - Téli filmklub",
+    "date": "2026-01-22",
+    "time": "17:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.38957957467325,
+      "lng": 16.54246485948845
+    },
+    "description": "Szeretettel várunk minden kedves érdeklődőt új tematikus sorozatunk, a Téli filmklub első előadására, melyet Boros Ferenc filmes szakember tart A magyar hangosfilm kezdetei címmel 2026. január 22-én csütörtökön 17 órakor rendezvénytermünkben!\nKilencvenöt évvel ezelőtt, 1931. szeptember 25-én mutatták be a Royal Apollo moziban A kék bálványt, az első magyar hangosfilmet Jávor Pál főszereplésével.\nAz igazi áttörést csak a második magyar hangosfilm, a magyar helyszínt és magyar karaktereket felvonultató Hyppolit, a lakáj hozta meg Kabos Gyula és Csortos Gyula feledhetetlen alakításával.\nBoros Ferenc filmes szakember előadása kulisszatitkokkal, érdekességekkel, kultikus filmes jelenetekkel a magyar filmtörténet virágzó korszakáról, mely alatt többek között olyan klasszikusok születtek, mint a Hyppolit, a lakáj, a Meseautó, vagy a korszakot lezáró Halálos tavasz. ",
+    "tags": [
+      "filmklub"
+    ],
+    "image": "filmklub.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
