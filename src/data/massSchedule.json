@@ -1,0 +1,145 @@
+{
+    "churches": [
+        {
+            "id": "jezus-szive",
+            "name": "Jézus Szíve Plébániatemplom",
+            "address": "Kőszeg, Jurisics tér",
+            "image": "/images/jezus_szive.jpg",
+            "schedule": [
+                {
+                    "day": "Vasárnap",
+                    "times": [
+                        {
+                            "time": "08:00",
+                            "note": "német nyelvű",
+                            "period": "all"
+                        },
+                        {
+                            "time": "09:30",
+                            "note": "magyar nyelvű",
+                            "period": "all"
+                        }
+                    ]
+                },
+                {
+                    "day": "Szombat",
+                    "times": [
+                        {
+                            "time": "19:00",
+                            "note": "előesti mise",
+                            "period": "summer, winter"
+                        }
+                    ]
+                }
+            ],
+            "info": "A város legnagyobb temploma, a Fő téren található."
+        },
+        {
+            "id": "szent-imre-jakab",
+            "name": "Szent Jakab / Szent Imre Templom",
+            "address": "Kőszeg, Jurisics tér / Jurisics vár",
+            "image": "/images/szent_jakab.jpg",
+            "schedule": [
+                {
+                    "day": "Hétfő",
+                    "times": [
+                        {
+                            "time": "18:00",
+                            "note": "",
+                            "period": "all"
+                        }
+                    ]
+                },
+                {
+                    "day": "Kedd",
+                    "times": [
+                        {
+                            "time": "18:00",
+                            "note": "",
+                            "period": "all"
+                        }
+                    ]
+                },
+                {
+                    "day": "Szerda",
+                    "times": [
+                        {
+                            "time": "18:00",
+                            "note": "",
+                            "period": "all"
+                        }
+                    ]
+                },
+                {
+                    "day": "Péntek",
+                    "times": [
+                        {
+                            "time": "18:00",
+                            "note": "",
+                            "period": "all"
+                        }
+                    ]
+                }
+            ],
+            "info": "Téli időszakban (október végétől virágvasárnapig) a szentmisék a Szent Imre templomban, nyári időszakban a Szent Jakab templomban vannak."
+        },
+        {
+            "id": "evangelikus",
+            "name": "Evangélikus Templom",
+            "address": "Kőszeg, Gyöngyös u. 29.",
+            "image": "/images/evangelikus.jpg",
+            "schedule": [
+                {
+                    "day": "Vasárnap",
+                    "times": [
+                        {
+                            "time": "09:00",
+                            "note": "Istentisztelet",
+                            "period": "all"
+                        },
+                        {
+                            "time": "10:30",
+                            "note": "Családi istentisztelet (tanévben)",
+                            "period": "school_year"
+                        }
+                    ]
+                }
+            ],
+            "info": "Minden hónap első vasárnapján úrvacsorás istentisztelet. Gyülekezeti bibliaóra keddenként 15:00-kor."
+        },
+        {
+            "id": "reformatus",
+            "name": "Református Egyházközség",
+            "address": "Kőszeg, Kálvária u. 13.",
+            "image": "/images/reformatus.jpg",
+            "schedule": [
+                {
+                    "day": "Vasárnap",
+                    "times": [
+                        {
+                            "time": "10:00",
+                            "note": "Istentisztelet",
+                            "period": "all"
+                        },
+                        {
+                            "time": "10:00",
+                            "note": "Gyermek-istentisztelet",
+                            "period": "school_year"
+                        }
+                    ]
+                },
+                {
+                    "day": "Kedd",
+                    "times": [
+                        {
+                            "time": "18:00",
+                            "note": "Bibliaóra",
+                            "period": "all"
+                        }
+                    ]
+                }
+            ],
+            "info": "Iskolaidőben vasárnaponként gyermek-istentisztelet is van."
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle } from "react-icons/io5";
+import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle, IoCalendar } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { useGyroTilt } from '../hooks/useGyroTilt';
 import { format, parseISO, isAfter, isSameDay, addDays, getDay, startOfDay } from 'date-fns';
@@ -11,6 +11,7 @@ import DoctorsModal from '../components/DoctorsModal';
 import CityServicesModal from '../components/CityServicesModal';
 import ShopsModal from '../components/ShopsModal';
 import TransportModal from '../components/TransportModal';
+import MassScheduleModal from '../components/MassScheduleModal';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
 const DAY_MAP_HU = {
@@ -76,12 +77,12 @@ export default function LocalDashboard() {
     const [showCityServicesModal, setShowCityServicesModal] = useState(false);
     const [showShopsModal, setShowShopsModal] = useState(false);
     const [showTransportModal, setShowTransportModal] = useState(false);
+    const [showMassModal, setShowMassModal] = useState(false);
 
     // Gyro tilt effect for 3D parallax (Max 45deg for stronger effect)
     const { tilt, hasPermission, requestPermission, enabled, toggleEffect } = useGyroTilt(30);
 
     // --- WASTE LOGIC ---
-    const getNextDayOfWeek = (dayName) => { /* Reuse existing logic if needed, but simplified below */ return dayName; };
     const getNextDateForZone = (code) => { /* Reuse existing logic */
         if (!code) return null;
         const today = startOfDay(new Date());
@@ -172,25 +173,32 @@ export default function LocalDashboard() {
                         </div>
                     </div>
 
-                    {/* 3D Toggle / Permission Button */}
-                    {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' ? (
-                        <button
-                            onClick={requestPermission}
-                            className="flex px-4 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30"
-                        >
-                            <span>✨ 3D Mozgás Be</span>
+                    <div className="flex items-center gap-2">
+                        {/* 3D Toggle / Permission Button */}
+                        {!hasPermission && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function' ? (
+                            <button
+                                onClick={requestPermission}
+                                className="flex px-4 py-2 bg-indigo-600 text-white rounded-full text-xs font-bold items-center gap-2 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30"
+                            >
+                                <span>✨ 3D Mozgás Be</span>
+                            </button>
+                        ) : (
+                            <button
+                                onClick={toggleEffect}
+                                className={`flex px-4 py-2 rounded-full text-xs font-bold items-center gap-2 transition-colors shadow-lg ${enabled
+                                    ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30'
+                                    : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-700'
+                                    }`}
+                            >
+                                <span>{enabled ? '✨ 3D Mozgás Be' : '🚫 3D Mozgás Ki'}</span>
+                            </button>
+                        )}
+
+                        {/* Disabled Auth Button */}
+                        <button disabled className="ml-2 flex px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-600 rounded-full text-xs font-bold items-center gap-2 cursor-not-allowed">
+                            <span>🔐 Login</span>
                         </button>
-                    ) : (
-                        <button
-                            onClick={toggleEffect}
-                            className={`flex px-4 py-2 rounded-full text-xs font-bold items-center gap-2 transition-colors shadow-lg ${enabled
-                                ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-500/30'
-                                : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-700'
-                                }`}
-                        >
-                            <span>{enabled ? '✨ 3D Mozgás Be' : '🚫 3D Mozgás Ki'}</span>
-                        </button>
-                    )}
+                    </div>
                 </div>
             </div>
 
@@ -381,6 +389,40 @@ export default function LocalDashboard() {
                     </motion.div>
                 </FadeUp>
 
+                {/* --- APPOINTMENT BOOKING HERO CARD (DISABLED) --- */}
+                <FadeUp delay={0.15}>
+                    <motion.div
+                        className="
+                            relative mb-12
+                            bg-gradient-to-r from-zinc-300 to-zinc-400 dark:from-zinc-800 dark:to-zinc-700
+                            rounded-[2.5rem] p-8 sm:p-10
+                            shadow-xl
+                            overflow-hidden
+                            text-white grayscale opacity-80 cursor-not-allowed
+                        "
+                    >
+                        {/* Abstract Bubbles */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" />
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-black opacity-10 rounded-full blur-3xl -translate-x-1/4 translate-y-1/4" />
+
+                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="text-center md:text-left">
+                                <span className="inline-block px-3 py-1 rounded-full bg-black/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-2">
+                                    Hamarosan...
+                                </span>
+                                <h2 className="text-3xl sm:text-4xl font-black mb-2">Időpontfoglaló</h2>
+                                <p className="text-white/80 max-w-sm mx-auto md:mx-0 font-medium">
+                                    Fodrász, körmös, kozmetikus? Hamarosan itt foglalhatsz időpontot online!
+                                </p>
+                            </div>
+
+                            <div className="shrink-0 w-20 h-20 bg-white/20 rounded-full flex items-center justify-center shadow-inner text-white text-3xl">
+                                <IoCalendar />
+                            </div>
+                        </div>
+                    </motion.div>
+                </FadeUp>
+
                 {/* --- SERVICES GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FeatureCard
@@ -392,6 +434,17 @@ export default function LocalDashboard() {
                         tilt={tilt}
                         delay={0.2}
                         onClick={() => setShowDoctorsModal(true)}
+                    />
+
+                    <FeatureCard
+                        title="Templomok & Hitélet"
+                        subtitle="Miserendek és egyházi hírek"
+                        icon={<span>⛪</span>}
+                        colorFrom="from-orange-400"
+                        colorTo="to-amber-600"
+                        tilt={tilt}
+                        delay={0.25}
+                        onClick={() => setShowMassModal(true)}
                     />
 
                     <FeatureCard
@@ -474,6 +527,7 @@ export default function LocalDashboard() {
             <CityServicesModal isOpen={showCityServicesModal} onClose={() => setShowCityServicesModal(false)} />
             <ShopsModal isOpen={showShopsModal} onClose={() => setShowShopsModal(false)} />
             <TransportModal isOpen={showTransportModal} onClose={() => setShowTransportModal(false)} />
+            <MassScheduleModal isOpen={showMassModal} onClose={() => setShowMassModal(false)} />
         </div>
     );
 }
