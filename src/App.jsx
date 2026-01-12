@@ -403,8 +403,8 @@ function MainAppContent() {
 
 
           <FloatingNavbar />
-          {/* Hide SmartSpotlight on Dashboards */}
-          {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && (
+          {/* Hide SmartSpotlight on Dashboards & Auth */}
+          {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && !location.pathname.startsWith('/auth') && (
             <SmartSpotlight appData={appData} />
           )}
 
