@@ -404,10 +404,10 @@ function MainAppContent() {
 
 
           <FloatingNavbar />
-          {/* Hide SmartSpotlight on Dashboards & Auth -> TEMPORARILY DISABLED GLOBALLY */}
-          {/* {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && !location.pathname.startsWith('/auth') && (
+          {/* Hide SmartSpotlight on Dashboards & Auth */}
+          {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && !location.pathname.startsWith('/auth') && (
             <SmartSpotlight appData={appData} />
-          )} */}
+          )}
 
 
           {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}

@@ -197,7 +197,8 @@ export default function LocalDashboard() {
 
                     <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
                         {/* Auth Button */}
-                        {user ? (
+                        {/* Auth Button - DISABLED */}
+                        {/* {user ? (
                             <button
                                 onClick={logout}
                                 className="flex px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full text-xs font-bold items-center gap-2 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors shadow-lg border border-red-200 dark:border-red-900/50"
@@ -210,7 +211,7 @@ export default function LocalDashboard() {
                                 <IoLogIn className="text-lg" />
                                 <span>Belépés</span>
                             </Link>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </div>
@@ -378,7 +379,8 @@ export default function LocalDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     {/* NEW: Booking Card moved to grid */}
-                    <FeatureCard
+                    {/* NEW: Booking Card moved to grid - DISABLED */}
+                    {/* <FeatureCard
                         title="Időpontfoglaló"
                         subtitle="Fodrász, körmös, kozmetikus időpontok"
                         icon={<span>📅</span>}
@@ -424,7 +426,7 @@ export default function LocalDashboard() {
                                 ), { position: 'top-center', duration: 4000 });
                             }
                         }}
-                    />
+                    /> */}
 
                     <FeatureCard
                         title="Orvosi Rendelők"
