@@ -296,6 +296,9 @@ export default function AuthPage() {
                                         <p className="text-center text-xs text-zinc-400">Jelentkezz be a fiókodba.</p>
                                         <input
                                             type="text"
+                                            name="username"
+                                            id="client-login-username"
+                                            autoComplete="username"
                                             placeholder="Becenév (Felhasználónév)"
                                             className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
@@ -304,6 +307,9 @@ export default function AuthPage() {
                                         />
                                         <input
                                             type="password"
+                                            name="password"
+                                            id="client-login-password"
+                                            autoComplete="current-password"
                                             placeholder="Jelszó"
                                             className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
@@ -329,6 +335,9 @@ export default function AuthPage() {
                                         <p className="text-center text-xs text-zinc-400">Vendégként csak egy becenév kell.</p>
                                         <input
                                             type="text"
+                                            name="name"
+                                            id="client-register-name"
+                                            autoComplete="name"
                                             placeholder="Teljes Név (Opcionális)"
                                             className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             value={clientName}
@@ -336,6 +345,9 @@ export default function AuthPage() {
                                         />
                                         <input
                                             type="text"
+                                            name="username"
+                                            id="client-register-username"
+                                            autoComplete="username"
                                             placeholder="Becenév (Felhasználónév) *"
                                             className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
@@ -344,6 +356,9 @@ export default function AuthPage() {
                                         />
                                         <input
                                             type="password"
+                                            name="password"
+                                            id="client-register-password"
+                                            autoComplete="new-password"
                                             placeholder="Jelszó *"
                                             className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-transparent focus:border-blue-500 outline-none dark:text-white"
                                             required
@@ -376,6 +391,9 @@ export default function AuthPage() {
                                         <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="text"
+                                            name="username"
+                                            id="provider-login-username"
+                                            autoComplete="username"
                                             placeholder="Felhasználónév"
                                             value={loginUsername}
                                             onChange={e => setLoginUsername(e.target.value)}
@@ -388,6 +406,9 @@ export default function AuthPage() {
                                         <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="password"
+                                            name="password"
+                                            id="provider-login-password"
+                                            autoComplete="current-password"
                                             placeholder="Jelszó"
                                             value={loginPassword}
                                             onChange={e => setLoginPassword(e.target.value)}
@@ -464,6 +485,9 @@ export default function AuthPage() {
                                         <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="text"
+                                            name="username"
+                                            id="provider-register-username"
+                                            autoComplete="username"
                                             placeholder="Felhasználónév (Belépéshez) *"
                                             value={providerUsername}
                                             onChange={e => setProviderUsername(e.target.value)}
@@ -476,6 +500,9 @@ export default function AuthPage() {
                                         <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                         <input
                                             type="password"
+                                            name="password"
+                                            id="provider-register-password"
+                                            autoComplete="new-password"
                                             placeholder="Jelszó *"
                                             value={password}
                                             onChange={e => setPassword(e.target.value)}
