@@ -389,7 +389,39 @@ export default function LocalDashboard() {
                             if (user) {
                                 setIsProvidersModalOpen(true);
                             } else {
-                                toast.error("A foglaláshoz kérlek jelentkezz be!", { icon: '🔐' });
+                                toast.custom((t) => (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -20, scale: 0.9 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                                        className={`${t.visible ? 'animate-enter' : 'animate-leave'
+                                            } max-w-sm w-full bg-white/80 dark:bg-[#1c1c1e]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-3xl pointer-events-auto flex ring-1 ring-black/5 dark:ring-white/10`}
+                                    >
+                                        <div className="flex-1 w-0 p-5 flex items-center gap-4">
+                                            <div className="flex-shrink-0 pt-0.5">
+                                                <div className="h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                                                    <span className="text-2xl">🔐</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="text-[17px] font-semibold text-gray-900 dark:text-white leading-tight">
+                                                    Jelentkezz be!
+                                                </p>
+                                                <p className="mt-1 text-[15px] text-gray-500 dark:text-gray-400 leading-snug">
+                                                    A foglaláshoz szükséges a belépés.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex border-l border-gray-200 dark:border-white/10">
+                                            <button
+                                                onClick={() => toast.dismiss(t.id)}
+                                                className="w-full border border-transparent rounded-none rounded-r-3xl p-4 flex items-center justify-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                            >
+                                                OK
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                ), { position: 'top-center', duration: 4000 });
                             }
                         }}
                     />
