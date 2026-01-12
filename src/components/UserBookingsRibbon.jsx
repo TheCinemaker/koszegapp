@@ -92,7 +92,7 @@ export default function UserBookingsRibbon() {
     return (
         <>
             {/* Positioned exactly like the navbar but higher up */}
-            <div className="fixed bottom-[115px] left-1/2 -translate-x-1/2 z-[60] w-full max-w-[95vw] sm:max-w-md pointer-events-none flex justify-center">
+            <div className="fixed bottom-[170px] left-1/2 -translate-x-1/2 z-[70] w-full max-w-[95vw] sm:max-w-md pointer-events-none flex justify-center">
                 <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
