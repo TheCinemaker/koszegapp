@@ -117,6 +117,7 @@ export default function AnimatedRoutes({ appData }) {
         }
         />
         <Route path="/local" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
+        <Route path="/koszegieknek" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
