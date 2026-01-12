@@ -286,8 +286,7 @@ function MainAppContent() {
 
               <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                 {/* Local Resident Info Button */}
-                {/* Local Resident Info Button - DISABLED */}
-                {/* <button
+                <button
                   onClick={() => setShowResidentModal(true)}
                   className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
                              bg-white/20 dark:bg-black/20
@@ -300,7 +299,7 @@ function MainAppContent() {
                 >
                   <IoHomeOutline className="text-base sm:text-lg" />
                   <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
-                </button> */}
+                </button>
 
                 {/* Weather Button (Compact) */}
                 <button
