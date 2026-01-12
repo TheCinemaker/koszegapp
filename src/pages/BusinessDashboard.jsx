@@ -518,14 +518,14 @@ export default function BusinessDashboard() {
                             <IoSettings className="text-xl text-zinc-600 dark:text-zinc-300" />
                         </button>
                         <div className="relative">
-                            <button onClick={() => datePickerRef.current?.showPicker()} className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 transition-colors">
+                            <button className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 transition-colors pointer-events-none">
                                 <IoCalendar className="text-xl text-zinc-600 dark:text-zinc-300" />
                             </button>
                             <input
                                 type="date"
                                 ref={datePickerRef}
                                 onChange={handleDateChange}
-                                className="absolute inset-0 opacity-0 pointer-events-none w-0 h-0"
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                             />
                         </div>
                         <button onClick={handleLogout} className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 transition-colors">
