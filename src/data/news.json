@@ -1,6 +1,24 @@
 {
-  "updatedAt": "2026-01-12T11:19:30.608Z",
+  "updatedAt": "2026-01-13T11:19:07.657Z",
   "items": [
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15308",
+      "date": "2026. Január 13.",
+      "title": "Tájékoztatás a hulladékudvarok 2026. évi működéséről",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15308"
+    },
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15307",
+      "date": "2026. Január 13.",
+      "title": "Zöldhulladék átvétel - Kőszeg",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15307"
+    },
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13540",
+      "date": "2026. Január 13.",
+      "title": "LOMILOTTÓ SORSOLÁS DECEMBERI NYERTESEK!",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13540"
+    },
     {
       "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958",
       "date": "2026. Január 9.",
@@ -18,24 +36,6 @@
       "date": "2026. Január 7.",
       "title": "Pályázat_Rákóczi F. u. 91. Fsz.5._szociális",
       "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15300"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15290",
-      "date": "2025. December 19.",
-      "title": "STKH - Hulladéknaptár 2026. -  I. félév",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15290"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15285",
-      "date": "2025. December 15.",
-      "title": "Pályázati felhívás – FŐIGAZGATÓ beosztás betöltésére",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15285"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14779",
-      "date": "2025. November 24.",
-      "title": "Tájékoztatás gyermekorvosi rendelés 2025. decemberi változásairól",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14779"
     }
   ]
 }
