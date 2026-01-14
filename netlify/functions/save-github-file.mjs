@@ -12,7 +12,7 @@ export async function handler(event) {
     const JWT_SECRET = process.env.JWT_SECRET;
     const BUILD_HOOK = process.env.NETLIFY_BUILD_HOOK || "";
 
-    // ---- JWT HITELESÍTÉS START ----
+    // ---- SUPABASE HITELESÍTÉS START ----
     const authHeader = event.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return resp(401, { error: 'Auth failed: No token provided' });
@@ -20,13 +20,28 @@ export async function handler(event) {
 
     const token = authHeader.split(' ')[1];
     let decodedUser;
-    try {
-      decodedUser = jwt.verify(token, JWT_SECRET);
-    } catch (err) {
-      console.error("JWT Verify Error:", err.message);
+
+    // Initialize Supabase Client
+    // Ensure you have @supabase/supabase-js installed and process.env.VITE_SUPABASE_URL / ANON_KEY set
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabaseUrl = process.env.VITE_SUPABASE_URL;
+    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+
+    if (authError || !user) {
+      console.error("Supabase Auth Verify Error:", authError?.message);
       return resp(401, { error: 'Auth failed: Invalid or expired token' });
     }
-    // ---- JWT HITELESÍTÉS END ----
+
+    // Map Supabase user to the structure expected by the rest of the function (mainly for logging/ID)
+    // We use user metadata or fallback to 'user' role
+    decodedUser = {
+      id: user.user_metadata?.nickname || user.email || user.id, // Use nickname (from legacy migration) or email as ID
+      role: user.user_metadata?.role || 'client'
+    };
+    // ---- SUPABASE HITELESÍTÉS END ----
 
     let { filename, contentBase64, dir = "public/images/events", overwrite = false } =
       JSON.parse(event.body || "{}");
