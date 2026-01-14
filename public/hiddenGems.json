@@ -1,0 +1,217 @@
+[
+    {
+        "id": "hosok-tornya",
+        "name": "Hősök Tornya",
+        "image": "hosok_tornya.jpg",
+        "description": "Üdvözöllek, utazó! Én, Jurisics Miklós szólok hozzád az idők távolából. Ez a torony a város kapuja, melyet a dicsőséges 1532-es ostrom 400. évfordulójára emeltek az utódok. Helyén egykor a Déli-kapu állt, melyen át oly sokszor próbált betörni az ellenség, de mi, kőszegiek, mindannyiszor visszavertük őket!",
+        "question": {
+            "text": "Milyen alkalomból épült a ma látható Hősök Tornya?",
+            "options": [
+                {
+                    "text": "A honfoglalás 1000. évfordulójára",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Az 1532-es ostrom 400. évfordulójára",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Jurisics Miklós születésnapjára",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "question_child": {
+            "text": "Kiknek állít emléket a torony neve?",
+            "options": [
+                {
+                    "text": "A pékeknek",
+                    "isCorrect": false
+                },
+                {
+                    "text": "A Hősöknek",
+                    "isCorrect": true
+                },
+                {
+                    "text": "A madaraknak",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "next_hint": "Ahol a patikáriusok arany állata őrzi a titkokat, ott keresd a következő jelet. Nem ló, de patás, és csak egy szarva van.",
+        "next_hint_child": "Keress egy régi gyógyszertárat a közelben! A cégére egy mesebeli egyszarvú ló.",
+        "code": "START123"
+    },
+    {
+        "id": "arany-egyszarvu",
+        "name": "Arany Egyszarvú Patika",
+        "image": "arany_egyszarvu.jpg",
+        "description": "Lépj be e falak közé, ahol a gyógyítássi tudomány évszázadok óta lakozik! Ez a patika a jezsuita atyák tudását őrzi. A bútorok, melyeket látsz, tölgyfából faragott remekművek, és a fiókok mélye egykor gyógyfüveket és titkos elixíreket rejtett.",
+        "question": {
+            "text": "Melyik szerzetesrend alapította az eredeti patikát?",
+            "options": [
+                {
+                    "text": "Bencések",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Jezsuiták",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Ferencesek",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "question_child": {
+            "text": "Milyen állat van a patika nevében?",
+            "options": [
+                {
+                    "text": "Oroszlán",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Egyszarvú",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Sas",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "next_hint": "Lépj tovább a térre, ahol a városatyák tanácskoztak. A legrégebbi 'háza' ez a városnak, falai közt évszázadok döntései születtek.",
+        "next_hint_child": "Menj a Városházához a téren! Keresd a színes címereket az elején!",
+        "code": "UNICORN456"
+    },
+    {
+        "id": "varoshaza",
+        "name": "Városháza",
+        "image": "varoshaza.jpg",
+        "description": "Ez az épület a város szíve. Falai között döntöttek sorsunkról békében és háborúban egyaránt. Évszázadok óta itt ülnek össze a város vezetői, hogy Kőszeg javát szolgálják. Nézz fel rá büszkén, hisz ez az ország egyik legrégebbi városháza!",
+        "question": {
+            "text": "Mióta működik folyamatosan városházaként ez az épület?",
+            "options": [
+                {
+                    "text": "A 14. század óta",
+                    "isCorrect": true
+                },
+                {
+                    "text": "1848 óta",
+                    "isCorrect": false
+                },
+                {
+                    "text": "A török kiűzése óta",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "question_child": {
+            "text": "Hány címert látsz az épület elején?",
+            "options": [
+                {
+                    "text": "Egyet sem",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Háromat",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Százat",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "next_hint": "A hit bástyája következik, de nem a váré. A Szent Jakab templom mellett áll, gótikus ablakai a múltba néznek.",
+        "next_hint_child": "Keresd meg a nagy, régi templomot a tér végén! (Szent Jakab templom)",
+        "code": "CITYHALL789"
+    },
+    {
+        "id": "szent-jakab",
+        "name": "Szent Jakab-templom",
+        "image": "szent_jakab.jpg",
+        "description": "Csendesedj el egy percre. Ez a város legősibb temploma. Gótikus falai sok imát hallottak már, és padlója alatt, a mélyben, az én gyermekeim is örök álmukat alusszák. A történelem itt nem csak könyvekben, de a kövekben is él.",
+        "question": {
+            "text": "Kik nyugszanak a templom sírboltjában a hagyomány szerint?",
+            "options": [
+                {
+                    "text": "Jurisics Miklós gyermekei",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Mátyás király",
+                    "isCorrect": false
+                },
+                {
+                    "text": "A török szultán",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "question_child": {
+            "text": "Milyen a templom ablakainak alakja (gótikus)?",
+            "options": [
+                {
+                    "text": "Kerek, mint egy labda",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Csúcsos (mint egy nyílhegy)",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Négyzet alakú",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "next_hint": "Most irány a Vár! De vigyázz, a kaput hős védi. Keresd a kapitány szobrát!",
+        "next_hint_child": "Sétálj el a nagy Várhoz! Keresd meg Jurisics bácsi szobrát a kapuban!",
+        "code": "CHURCH101"
+    },
+    {
+        "id": "jurisics-var",
+        "name": "Jurisics Vár",
+        "image": "jurisics_var.jpg",
+        "description": "Megérkeztél! Ez az én váram, Kőszeg büszkesége. Itt álltunk helyt 1532 augusztusában, maroknyian a hatalmas Oszmán Birodalom ellen. A falak még őrzik az ágyúk dörgésének emlékét, de a szabadság szellemét is!",
+        "question": {
+            "text": "Hány napig tartott az 1532-es híres ostrom?",
+            "options": [
+                {
+                    "text": "100 napig",
+                    "isCorrect": false
+                },
+                {
+                    "text": "25 napig",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Egy évig",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "question_child": {
+            "text": "Hogy hívták a vár hős kapitányát?",
+            "options": [
+                {
+                    "text": "Dobó István",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Jurisics Miklós",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Zrínyi Miklós",
+                    "isCorrect": false
+                }
+            ]
+        },
+        "next_hint": "Gratulálunk! Teljesítetted a küldetést! Nyisd ki a kincsesládádat a jutalomért!",
+        "next_hint_child": "Ügyes vagy! Megtaláltad az összes kincset! Nézd meg a jutalmadat!",
+        "code": "CASTLE202"
+    }
+]

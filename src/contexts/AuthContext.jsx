@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Helper: Normalize inputs to ensure consistency between Register and Login
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
         setUser(session.user); // Immediate auth state
+        setToken(session.access_token);
         setLoading(false);     // Unblock UI immediately
         fetchProfile(session.user); // Fetch profile in background
       } else {
@@ -32,10 +34,12 @@ export const AuthProvider = ({ children }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         setUser(session.user); // Immediate auth state
+        setToken(session.access_token);
         setLoading(false);     // Unblock UI immediately
         fetchProfile(session.user); // Fetch profile in background
       } else {
         setUser(null);
+        setToken(null);
         setLoading(false);
       }
     });
@@ -132,6 +136,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setToken(null);
   };
 
   // Helper for role-based access
@@ -140,12 +145,39 @@ export const AuthProvider = ({ children }) => {
     return (user?.role === role) || (user?.user_metadata?.role === role);
   };
 
+  // Implemented specifically for Admin.jsx requirements
+  const hasPermission = (permission) => {
+    if (!user) return false;
+    const role = user.role || user.user_metadata?.role || 'client';
+
+    // Admin has full access
+    if (role === 'admin') return true;
+
+    // Provider access logic
+    if (role === 'provider' || role === 'partner' || role === 'var' || role === 'varos' || role === 'tourinform') {
+      // Allow operations on their own content
+      if (permission.endsWith('_own')) return true;
+      // Allow creation
+      if (permission.includes(':create')) return true;
+      // Deny view_all (forces filter to own content only)
+      if (permission.includes(':view_all')) return false;
+      // Allow generic view if not view_all
+      if (permission.split(':')[1] === 'view') return true;
+
+      return false;
+    }
+
+    return false;
+  };
+
   const value = {
     user,
+    token,
     login,
     register,
     logout,
     hasRole,
+    hasPermission,
     loading
   };
 

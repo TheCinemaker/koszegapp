@@ -31,6 +31,7 @@ const AuthPage = React.lazy(() => import('../pages/AuthPage'));
 const ProviderSetup = React.lazy(() => import('../pages/ProviderSetup'));
 const BusinessDashboard = React.lazy(() => import('../pages/BusinessDashboard'));
 const Admin = React.lazy(() => import('../pages/Admin.jsx'));
+const CityPass = React.lazy(() => import('../pages/CityPass'));
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
 
@@ -113,6 +114,17 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/game/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
           <Route path="/game/treasure-chest" element={<PageWrapper><MyGems /></PageWrapper>} />
 
+          {/* <Route path="/kronoszkop" element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] pointer-events-none"
+            >
+              
+            </motion.div>
+          } /> */}
+
           <Route path="/live-map" element={
             <PageWrapper>
               <LiveCityMap
@@ -127,8 +139,10 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/koszegieknek" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
           <Route path="/auth" element={<PageWrapper><AuthPage /></PageWrapper>} />
           <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
+          <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
           <Route path="/business-dashboard" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
+          <Route path="/city-pass" element={<PageWrapper><CityPass /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>

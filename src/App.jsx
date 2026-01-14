@@ -56,6 +56,8 @@ import AnimatedRoutes from './components/AnimatedRoutes';
 
 const Admin = React.lazy(() => import('./pages/Admin.jsx'));
 const MaintenancePage = React.lazy(() => import('./pages/Maintenance.jsx'));
+const ARView = React.lazy(() => import('./pages/ARView.jsx'));
+const CityPass = React.lazy(() => import('./pages/CityPass.jsx'));
 
 // A LÉNYEG: A FŐ APP KOMPONENS CSAK A PROVIDERT ÁLLÍTJA BE
 export default function App() {
@@ -390,6 +392,13 @@ function MainAppContent() {
       )}
 
       <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
+        <Routes>
+          {/* <Route path="/kronoszkop" element={
+            <Suspense fallback={<div className="flex h-screen items-center justify-center bg-black"><div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div></div>}>
+              <ARView />
+            </Suspense>
+          } /> */}
+        </Routes>
         <AnimatedRoutes appData={appData} />
       </main>
 

@@ -11,6 +11,16 @@ const getInitialGems = () => {
 };
 
 export function useGame() {
+  const [gameMode, setGameMode] = useState(() => {
+    try {
+      return window.localStorage.getItem('koszeg-game-mode') || 'adult';
+    } catch { return 'adult'; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('koszeg-game-mode', gameMode);
+  }, [gameMode]);
+
   const [foundGems, setFoundGems] = useState(getInitialGems);
 
   useEffect(() => {
@@ -25,11 +35,13 @@ export function useGame() {
 
   const resetGame = useCallback(() => {
     setFoundGems([]);
+    setGameMode('adult');
     window.localStorage.removeItem(HAS_PLAYED_KEY);
+    window.localStorage.removeItem('koszeg-game-mode');
   }, []);
-  
+
   const hasPlayedBefore = useCallback(() => !!window.localStorage.getItem(HAS_PLAYED_KEY), []);
   const markAsPlayed = useCallback(() => window.localStorage.setItem(HAS_PLAYED_KEY, 'true'), []);
 
-  return { foundGems, addFoundGem, isGemFound, resetGame, hasPlayedBefore, markAsPlayed };
+  return { foundGems, addFoundGem, isGemFound, resetGame, hasPlayedBefore, markAsPlayed, gameMode, setGameMode };
 }
