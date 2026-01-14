@@ -7,34 +7,55 @@ export async function handler(event) {
   try {
     console.log('[save-github-json.mjs] JWT_SECRET:', process.env.JWT_SECRET ? `Létezik, hossza: ${process.env.JWT_SECRET.length}` : '!!! HIÁNYZIK !!!');
     if (event.httpMethod === "OPTIONS") return resp(200, { ok: true });
-    if (event.httpMethod !== "POST")   return resp(405, { error: "Method Not Allowed" });
+    if (event.httpMethod !== "POST") return resp(405, { error: "Method Not Allowed" });
 
-    const GH_TOKEN  = process.env.GITHUB_TOKEN;
-    const GH_OWNER  = process.env.GITHUB_OWNER;
-    const GH_REPO   = process.env.GITHUB_REPO;
+    const GH_TOKEN = process.env.GITHUB_TOKEN;
+    const GH_OWNER = process.env.GITHUB_OWNER;
+    const GH_REPO = process.env.GITHUB_REPO;
     const GH_BRANCH = process.env.GITHUB_BRANCH || "main";
-    const HOOK      = process.env.NETLIFY_BUILD_HOOK || "";
-    const JWT_SECRET = process.env.JWT_SECRET; // <-- ÚJ KÖRNYEZETI VÁLTOZÓ
-
-    // ---- ÚJ, TOKEN ALAPÚ HITELESÍTÉS ----
+    const HOOK = process.env.NETLIFY_BUILD_HOOK || "";
+    // ---- SUPABASE HITELESÍTÉS START ----
     const authHeader = event.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return resp(401, { error: 'Auth failed: No token provided' });
     }
 
     const token = authHeader.split(' ')[1];
-    let decodedUser;
-    try {
-      // Ellenőrizzük a tokent a titkos kulccsal
-      decodedUser = jwt.verify(token, JWT_SECRET);
-    } catch (err) {
-      // Ha a token lejárt vagy érvénytelen, hibát dobunk
+
+    // Initialize Supabase Client
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabaseUrl = process.env.VITE_SUPABASE_URL;
+    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+
+    if (authError || !user) {
       return resp(401, { error: 'Auth failed: Invalid or expired token' });
     }
 
+    // Role -> Permissions Mapping
+    const role = user.user_metadata?.role || 'client';
+    let perms = [];
+
+    if (role === 'admin') {
+      perms = ['*'];
+    } else if (['provider', 'varos', 'var', 'tourinform', 'partner'].includes(role)) {
+      // Grant general write permissions like we did for image upload
+      perms = ['events:create', 'events:edit', 'events:delete', 'attractions:create', 'attractions:edit', 'page:save'];
+    }
+
+    const decodedUser = {
+      id: user.user_metadata?.nickname || user.email || user.id,
+      role: role,
+      permissions: perms
+    };
+    // ---- SUPABASE HITELESÍTÉS END ----
+
     const userPermissions = decodedUser.permissions || [];
-    if (!userPermissions.includes('*') && !userPermissions.includes('event:edit') && !userPermissions.includes('event:create') && !userPermissions.includes('event:delete')) {
-        return resp(403, { error: 'Forbidden: You do not have permission to save content.' });
+    // Fixed typo: event:edit -> events:edit (checked plural to match standard)
+    if (!userPermissions.includes('*') && !userPermissions.includes('events:edit') && !userPermissions.includes('events:create') && !userPermissions.includes('events:delete')) {
+      return resp(403, { error: 'Forbidden: You do not have permission to save content.' });
     }
 
     const { path, content } = JSON.parse(event.body || "{}");
@@ -77,7 +98,7 @@ export async function handler(event) {
     }
 
     if (HOOK) {
-      try { await fetch(HOOK, { method: "POST" }); } catch {}
+      try { await fetch(HOOK, { method: "POST" }); } catch { }
     }
 
     return resp(200, { ok: true, path, triggeredBuild: !!HOOK });
