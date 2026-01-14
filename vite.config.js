@@ -13,5 +13,20 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['fuse.js']
+  },
+  build: {
+    rollupOptions: {
+      external: [
+        'node-fetch',
+        'openai',
+        'cheerio',
+        'google-it',
+        'googlethis',
+        'pdf-parse',
+        'fs',
+        'path',
+        'os'
+      ]
+    }
   }
 });
