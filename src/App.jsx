@@ -392,13 +392,7 @@ function MainAppContent() {
       )}
 
       <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
-        <Routes>
-          {/* <Route path="/kronoszkop" element={
-            <Suspense fallback={<div className="flex h-screen items-center justify-center bg-black"><div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div></div>}>
-              <ARView />
-            </Suspense>
-          } /> */}
-        </Routes>
+        {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
         <AnimatedRoutes appData={appData} />
       </main>
 
