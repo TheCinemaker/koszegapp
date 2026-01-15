@@ -99,7 +99,7 @@
       "dráma",
       "ingyenes"
     ],
-    "image": "florian_zeller_a_fiu.png"
+    "image": "afiu.jpg"
   },
   {
     "id": "event-2026-006",
@@ -137,7 +137,7 @@
       "iskola",
       "közösség"
     ],
-    "image": "balkep_default.jpg"
+    "image": "bersekbal.jpg"
   },
   {
     "id": "event-2026-008",
@@ -156,7 +156,7 @@
       "ünnep",
       "ingyenes"
     ],
-    "image": "kultura_napja.jpg",
+    "image": "kulturanapja.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
