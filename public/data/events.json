@@ -450,5 +450,22 @@
     "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1768486493481",
+    "name": "Dicsőítés",
+    "date": "2026-01-17",
+    "time": "16:00",
+    "location": "Kőszegi Református Templom – Csillagterem",
+    "coords": {
+      "lat": 47.39017399208686,
+      "lng": 16.544275215183585
+    },
+    "description": "Szűcs László lelkész és zenész barátai",
+    "tags": [],
+    "image": "dicsoites-1768486604097.jpg",
+    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
