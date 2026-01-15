@@ -467,5 +467,27 @@
     "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1768500320153",
+    "name": "Balog SZM bál",
+    "date": "2026-02-14",
+    "time": "19:30",
+    "location": "Béri Balog Ádám Általános Iskola tornacsarnoka",
+    "coords": {
+      "lat": 47.38173980859436,
+      "lng": 16.5461608612826
+    },
+    "description": "✨ Helyszín: Balog Iskola Sportcsarnoka, Kőszeg\n✨ Büfé: Kékfény étterem\n✨ Zene: Spektrum Band\n✨ Tombola, szelfigép, köszöntőital\n\n✨ HOLLYWOODI CSILLOGÁS ✨\nKőszegi hangulat\n\nBALOG SZM BEMUTATJA\n\n📅 2026.02.14. Szombat\n🕢 Kapunyitás: 19:30\n\n✨ Ragyogj a vörös szőnyegen, ma este te vagy a főszereplő! ✨\n\n🎟 Jegyárak:\n\nElővételben (asztalfoglalással): 4000 Ft\n\nHelyszínen: 4500 Ft\n\n💛 A bevétellel az iskola és a gyerekek programjait támogatjuk.\n\n🎫 Jegyek kaphatók:\n\naz iskola titkárságán (munkaidőben)\n\na Kékfény étteremben\n\nilletve a szervezőknél:\n\n📞 Berzlánovich Enikő: +36 20 490 4322\n📞 Lepold – Bíró Szilvia: +36 70 408 1476",
+    "tags": [
+      "bál",
+      "SZM",
+      "Balog",
+      "Csillogás"
+    ],
+    "image": "szmbal.jpg",
+    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
+    "highlight": true,
+    "highlightLabel": "Hollywoody csillogás"
   }
 ]
