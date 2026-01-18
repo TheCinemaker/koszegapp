@@ -37,9 +37,8 @@ import AboutDetail from './pages/AboutDetail';
 import WeatherDetail from './pages/WeatherDetail';
 import Adatvedelem from './pages/Adatvedelem';
 import GemDetail from './pages/GemDetail';
-import MyGems from './pages/MyGems';
 import GameIntro from './pages/GameIntro';
-import AuthPage from './pages/AuthPage';
+import IntroExperience from './pages/IntroExperience';
 import ProgramModal from './components/ProgramModal';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';

@@ -25,6 +25,10 @@ const Adatvedelem = React.lazy(() => import('../pages/Adatvedelem'));
 const GemDetail = React.lazy(() => import('../pages/GemDetail'));
 const MyGems = React.lazy(() => import('../pages/MyGems'));
 const GameIntro = React.lazy(() => import('../pages/GameIntro'));
+const IntroExperience = React.lazy(() => import('../pages/IntroExperience'));
+const SoftStart = React.lazy(() => import('../pages/SoftStart'));
+const ScanIntro = React.lazy(() => import('../pages/ScanIntro'));
+const ScanLive = React.lazy(() => import('../pages/ScanLive'));
 const LiveCityMap = React.lazy(() => import('./LiveCityMap'));
 const LocalDashboard = React.lazy(() => import('../pages/LocalDashboard'));
 const AuthPage = React.lazy(() => import('../pages/AuthPage'));
@@ -112,8 +116,13 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
           <Route path="/my-gems" element={<PageWrapper><MyGems /></PageWrapper>} />
           <Route path="/game/intro" element={<PageWrapper><GameIntro /></PageWrapper>} />
+          <Route path="/game/intro-experience" element={<PageWrapper><IntroExperience /></PageWrapper>} />
+          <Route path="/game/start" element={<PageWrapper><SoftStart /></PageWrapper>} />
+          <Route path="/game/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
           <Route path="/game/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
           <Route path="/game/treasure-chest" element={<PageWrapper><MyGems /></PageWrapper>} />
+          <Route path="/game/scan" element={<PageWrapper><ScanIntro /></PageWrapper>} />
+          <Route path="/game/scan/live" element={<ScanLive />} />
 
           {/* <Route path="/kronoszkop" element={
             <motion.div

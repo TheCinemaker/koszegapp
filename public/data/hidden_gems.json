@@ -1,72 +1,509 @@
 [
-  {
-  "id": "gem-1",
-  "name": "Sgraffitós-ház Oroszlánja",
-  "image": "gem-1.jpg",
-  "description": "A Jurisics tér 7. számú háza, a Sgraffitos ház. Maga a sgraffitó szó azt jelenti, kaparni. A díszítési eljárás lényege az, hogy a falra legalább két réteg vakolatot hordtak fel, amelyek közül a felső volt a világosabb, ebbe karcolták be a mintákat. A Sgraffitós-ház reneszánsz eredetű. 1560 környékén építették emeletessé, ekkor kaparták ki jellegzetes díszítéseit. A 18-19. században udvari szárnnyal is bővítették, és barokk stílusban alakították át homlokzatát. Emeleti helyiségének mennyezetét freskó díszíti, mely a Szegény Lázár és a gazdag ember lakomája bibliai történet ábrázolja. Tulajdonosai között szerepeltek a malommal is bíró Salamonok, és két sebész család (Haász és Baumann család). Az épület oromfalában lévő kis szoborfülke van, benne barokk Mária szobor látható, alatta pedig latin nyelvű idézetet olvashatunk Szent Pál egyik leveléből (\"Non est volentis neque currentis, sed miserentis Dei.\" Jelentése: Tehát nem azon múlik, aki erőlködik, vagy aki törtet, hanem az Irgalmas Istenen 1668.). Ez a mondat adja az Iskola a határon című regény két fejezetének címét. Ottlik Géza 1923 és 1926 között volt kőszegi diák, az itt töltött három esztendő emlékét (is) megörökíti Európa-hírű regényében. Az épület földszintjén egy vendéglő, a Garabonciás Pizzéria üzemel, az emeleten a Felsőbbfokú Tanulmányok Intézetéhez tartozó, gyönyörűen berendezett könyvtár és kutatóközpont működik, ahol magyar és külföldi diákok végzik tudományos munkájukat.",
-  "coords": { "lat": 47.38955, "lng": 16.54181 },
-  "question": "A ház falán egy oroszlán látható. Melyik híres kőszegi család címerében szerepelt még ez az állat?",
-  "options": [
-    { "text": "A Jurisics család", "isCorrect": false },
-    { "text": "A Chernel család", "isCorrect": true, "next_gem_id": "gem-2" },
-    { "text": "A Nádasdy család", "isCorrect": false }
-  ],
-  "hint": "A család nevét viseli a híres kőszegi arborétum is."
-},
-  {
-    "id": "gem-2",
-    "name": "A Városkút (Mária-kút)",
-    "image": "gem-2.jpg",
-    "description": "Ez a barokk stílusú kút 1766-ban készült el. Tetején Mária, a magyarok védasszonyának szobra áll, amint a földgömbön állva eltapossa a kígyót, a bűn jelképét. A kút egykor a város legfontosabb vízvételi helye volt.",
-    "coords": { "lat": 47.38933, "lng": 16.54145 },
-    "question": "A kút tetején Mária szobra áll. Mit tapos el a lábával a szobor a földgömbön?",
-    "options": [
-      { "text": "Egy sárkányt", "isCorrect": false },
-      { "text": "Egy oroszlánt", "isCorrect": false },
-      { "text": "Egy kígyót", "isCorrect": true, "next_gem_id": "gem-3" }
-    ],
-    "hint": "A bűn jelképét keresd."
-  },
-  {
-    "id": "gem-3",
-    "name": "Páduai Szent Antal Szobra",
-    "image": "gem-3.jpg",
-    "description": "A Jurisics tér egyik házának falfülkéjében rejtőzik Páduai Szent Antal 18. századi szobra. A szent a ferences rend híres prédikátora volt, és gyakran ábrázolják a gyermek Jézussal a karján. A szobor a ház egykori tulajdonosának vallásosságáról tanúskodik.",
-    "coords": { "lat": 47.38912, "lng": 16.54158 },
-    "question": "Melyik híres ostrom vezérének a nevét viseli a tér, ahol ez a szobor áll?",
-    "options": [
-      { "text": "Szulejmán szultán", "isCorrect": false },
-      { "text": "Jurisics Miklós", "isCorrect": true, "next_gem_id": "gem-4" },
-      { "text": "Zrínyi Miklós", "isCorrect": false }
-    ],
-    "hint": "A kőszegi vár kapitánya volt 1532-ben."
-  },
-  {
-    "id": "gem-4",
-    "name": "A Lábasház Aranycsizmás Cégére",
-    "image": "gem-4.jpg",
-    "description": "A Lábasház (az árkádos épület) sarkán lévő cégér a kőszegi csizmadiacéh jelképe volt. A 18. században készült aranyozott csizma messziről hirdette a mesterek ügyességét. A Lábasház egykor a város legfontosabb kereskedelmi központja volt.",
-    "coords": { "lat": 47.38883, "lng": 16.54221 },
-    "question": "Az épület nevét az árkádos, 'lábakon' álló szerkezetéről kapta. Hány ilyen 'lábat' (oszlopot) számolsz meg a ház alatt?",
-    "options": [
-      { "text": "Hét (7)", "isCorrect": true, "next_gem_id": "gem-5" },
-      { "text": "Öt (5)", "isCorrect": false },
-      { "text": "Kilenc (9)", "isCorrect": false }
-    ],
-    "hint": "Nem páratlan szám."
-  },
-  {
-    "id": "gem-5",
-    "name": "A Gályarabok Emléktáblája",
-    "image": "gem-5.jpg",
-    "description": "Az evangélikus templom bejárata mellett található ez a tábla, amely annak a 26 magyar protestáns lelkésznek állít emléket, akiket a 17. századi ellenreformáció idején gályarabságra ítéltek. Történetük a vallásszabadságért vívott harc jelképévé vált.",
-    "coords": { "lat": 47.38791, "lng": 16.54344 },
-    "question": "Melyik holland admirális szabadította ki a gályarabságra ítélt magyar lelkészeket?",
-    "options": [
-      { "text": "Willem van Oranje", "isCorrect": false },
-      { "text": "Michiel de Ruyter", "isCorrect": true, "next_gem_id": null },
-      { "text": "Maarten Tromp", "isCorrect": false }
-    ],
-    "hint": "Az ő nevét viseli a holland haditengerészet több hajója is."
-  }
+    {
+        "id": "varoshaza",
+        "name": "1. Városháza",
+        "lat": 47.3892,
+        "lng": 16.5410,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Town_Hall_Koszeg.jpg/800px-Town_Hall_Koszeg.jpg",
+        "description": "Kőszeg, 1532. A Városháza nem csak falakból áll. Itt születtek meg azok a döntések, amelyek megmentették a várost. A bíró, a tanács, a polgárok... szavak, amik erősebbek voltak a kardnál.",
+        "question": {
+            "adult": "Ahol nem kard döntött, hanem szó. (Mi látható a homlokzaton, ami a város címerét tartja?)",
+            "child": "Keress egy épületet, ahol a város vezetői dolgoznak! Mit tartanak az angyalok a magasban?"
+        },
+        "options": {
+            "adult": [
+                "Angyalok",
+                "Oroszlánok",
+                "Griffmadarak",
+                "Sassok"
+            ],
+            "child": [
+                "Címert",
+                "Kardot",
+                "Könyvet",
+                "Virágot"
+            ]
+        },
+        "answer": {
+            "adult": "Angyalok",
+            "child": "Címert"
+        },
+        "hint": {
+            "adult": "Irány a tér közepe, ahol a legtöbb ember fordul meg.",
+            "child": "Menjünk a tér közepére!"
+        },
+        "keyFragment": "A Döntés Pecsétje",
+        "moment": {
+            "visual": "Az időkapu megnyílik. Nem látsz arcokat tisztán – csak mozgó árnyékokat. Pergamen csúszik az asztalon. Viasz olvad. Egy kéz megáll a levegőben, mielőtt lecsapna a pecséttel. A döntés még nem történt meg, de már nincs visszaút.",
+            "feeling": "A levegő megfeszül. Mintha a tér várná, mit mondanak ki.",
+            "action": "A viasz fénye megremeg, majd kifakul. A helyén egy törött, hideg fémdarab jelenik meg – nem leesik, hanem ott volt mindig is, csak eddig nem látszott.",
+            "quote": "„Egy város sorsa nem a csatatéren dől el először.”"
+        }
+    },
+    {
+        "id": "jurisics-ter",
+        "name": "2. Jurisics tér",
+        "lat": 47.3896,
+        "lng": 16.5406,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Jurisics_Square%2C_K%C5%91szeg.jpg/800px-Jurisics_Square%2C_K%C5%91szeg.jpg",
+        "description": "A piac és a találkozások helye. 1532-ben itt gyűltek össze a hírek, és itt oszlott el a remény – vagy épp itt éledt újjá. A civilek harca itt zajlott, fegyverek nélkül.",
+        "question": {
+            "adult": "Ahol sokan voltak, de senki sem volt biztonságban. (Melyik szobor őrzi a teret a közepén?)",
+            "child": "Hol árulták régen a zöldséget és a kenyeret? (Keress egy nagy oszlopot a téren!)"
+        },
+        "options": {
+            "adult": [
+                "Mária-szobor",
+                "Szentháromság-szobor (Pestis-oszlop)",
+                "Szent Flórián",
+                "Jurisics-szobor"
+            ],
+            "child": [
+                "A kútnál",
+                "A nagy szobornál",
+                "A kapuban",
+                "A templomban"
+            ]
+        },
+        "answer": {
+            "adult": "Szentháromság-szobor (Pestis-oszlop)",
+            "child": "A nagy szobornál"
+        },
+        "hint": {
+            "adult": "Keressük meg a város határait. Hol vannak a régi falak?",
+            "child": "Keressünk egy régi, leomlott falat!"
+        },
+        "keyFragment": "A Közösség Lánca"
+    },
+    {
+        "id": "ovaros-falak",
+        "name": "3. Óváros falmaradványai",
+        "lat": 47.3908,
+        "lng": 16.5385,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/K%C5%91szeg_Zwinger.jpg/800px-K%C5%91szeg_Zwinger.jpg",
+        "description": "A kőfalak. Némák, de emlékeznek. Minden repedés egy-egy ágyúgolyó, minden moha egy-egy eltelt évszázad.",
+        "question": {
+            "adult": "Ahol a kő emlékszik a csapásra. (Melyik bástya a legöregebb a védműben?)",
+            "child": "Melyik fal a legvastagabb? (Keress egy kerek épületet!)"
+        },
+        "options": {
+            "adult": [
+                "Öreg-bástya (Zwinger)",
+                "Várkapu",
+                "Hősök Tornya",
+                "Sarokbástya"
+            ],
+            "child": [
+                "A kerek bástya",
+                "A templom fala",
+                "A ház fala",
+                "A kerítés"
+            ]
+        },
+        "answer": {
+            "adult": "Öreg-bástya (Zwinger)",
+            "child": "A kerek bástya"
+        },
+        "hint": {
+            "adult": "Menjünk a Várkörre, ahol az élet keringett.",
+            "child": "Sétáljunk ki a körútra!"
+        },
+        "keyFragment": "A Kitartás Köve",
+        "moment": {
+            "visual": "A fal nem omlik, de él. Apró rezgések futnak végig a köveken. Por hullik alá, lassan, mintha az idő is félne sietni. Nem látod az ellenséget. Csak azt érzed, hogy itt tartják fel.",
+            "feeling": "A fal emlékszik minden ütésre. Nem a hang a legerősebb – hanem a kitartás.",
+            "action": "Egy repedésben fény gyűlik össze. A kő nem törik tovább – inkább elenged valamit. Egy rozsdás kulcsdarab csúszik elő, mintha mindig is ott várt volna.",
+            "quote": "„A fal nem azért áll, mert erős. Hanem mert nem adja fel.”"
+        }
+    },
+    {
+        "id": "varkor",
+        "name": "4. Várkör",
+        "lat": 47.3885,
+        "lng": 16.5420,
+        "image": "https://koszeg.hu/images/varkor.jpg",
+        "description": "A Várkör nem csak egy utca. Ez volt a város 'vérkeringése'. Futárok, szekerek, menekülők. Itt nem állt meg az élet egy percre sem.",
+        "question": {
+            "adult": "Ahol minden nap elindult valaki, de nem mindenki tért vissza. (Mi vette körül régen a várost itt?)",
+            "child": "Hol jártak a lovasfutárok? (Mi volt itt régen út helyett?)"
+        },
+        "options": {
+            "adult": [
+                "Vizesárok",
+                "Erdő",
+                "Piac",
+                "Temető"
+            ],
+            "child": [
+                "Vizesárok",
+                "Verseny-pálya",
+                "Játszótér",
+                "Folyó"
+            ]
+        },
+        "answer": {
+            "adult": "Vizesárok",
+            "child": "Vizesárok"
+        },
+        "hint": {
+            "adult": "Keress egy házat, ahol a parancsnokok laktak.",
+            "child": "Keressünk egy katonás házat!"
+        },
+        "keyFragment": "A Futár Jelvénye"
+    },
+    {
+        "id": "tabornokhaz",
+        "type": "extra",
+        "name": "5. Tábornokház (Idő-Kilátó)",
+        "lat": 47.3895,
+        "lng": 16.5408,
+        "image": "https://koszeg.hu/images/tabornokhaz.jpg",
+        "description": "Bár e falak 1532-ben még nem emelkedtek a tér fölé, a hely szelleme már itt figyelt. Innen, a magasból rálátni az egykori nyüzsgő piactérre, a Jurisics térre. Ez az épület egy későbbi kor őre, amely azért született, hogy emlékezzen. A falai ma a Múzeumot rejtik, és magukba szívták évszázadok csendjét és titkait. Ez nem a csata sűrűje, hanem egy kilátó az időben, ahonnan a múlt nem elveszett, hanem tisztán látható.",
+        "question": {
+            "adult": "Ahol a későbbi korok őrzik az ősök emlékét. (Mi található ma az épületben?)",
+            "child": "Ez a ház egy óriási távcső a múltba! (Milyen színű ez az épület?)"
+        },
+        "options": {
+            "adult": [
+                "Városi Múzeum / Panoptikum",
+                "Étterem",
+                "Iskola",
+                "Könyvtár"
+            ],
+            "child": [
+                "Sárga",
+                "Kék",
+                "Piros",
+                "Zöld"
+            ]
+        },
+        "answer": {
+            "adult": "Városi Múzeum / Panoptikum",
+            "child": "Sárga"
+        },
+        "hint": {
+            "adult": "Ez a helyszín a megfigyelésről szól. Keressünk most egy 1532-es kulcsot!",
+            "child": "Ez a ház a múzeum! Menjünk tovább keresni!"
+        },
+        "keyFragment": null
+    },
+    {
+        "id": "labashaz",
+        "name": "6. Lábasház",
+        "lat": 47.3894,
+        "lng": 16.5409,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/K%C5%91szeg%2C_L%C3%A1bas_H%C3%A1z.jpg/800px-K%C5%91szeg%2C_L%C3%A1bas_H%C3%A1z.jpg",
+        "description": "Nem csak iratok voltak itt. Élelem. Remény. A város teste itt éhezett először, amikor a készletek fogyni kezdtek.",
+        "question": {
+            "adult": "Ahol a város teste először éhezett. (Mire használták a piac idején az árkádokat?)",
+            "child": "Hol bújtak el az eső elől a piacon? (Mi van a ház alján?)"
+        },
+        "options": {
+            "adult": [
+                "Árusításra / Raktározásra",
+                "Istállónak",
+                "Börtönnek",
+                "Kórháznak"
+            ],
+            "child": [
+                "Oszlopok / Árkádok",
+                "Pince",
+                "Padlás",
+                "Erkély"
+            ]
+        },
+        "answer": {
+            "adult": "Árusításra / Raktározásra",
+            "child": "Oszlopok / Árkádok"
+        },
+        "hint": {
+            "adult": "Keress egy házat, ami egy családról (Chernel) kapta a nevét.",
+            "child": "Keressünk egy házat, aminek madaras neve van!"
+        },
+        "keyFragment": "Az Utolsó Cipó"
+    },
+    {
+        "id": "chernel-haz",
+        "name": "7. Chernel-ház",
+        "lat": 47.3902,
+        "lng": 16.5395,
+        "image": "https://koszeg.hu/images/chernel.jpg",
+        "description": "Egy család csendje, elrejtett értékek. Az ostrom nem csak a katonákat éri el, hanem a hálószobákat és az eldugott pincéket is.",
+        "question": {
+            "adult": "Ahol a város nem védekezett, hanem kitartott. (Milyen stílusú az épület?)",
+            "child": "Hol lakott a madaras bácsi? (Mi van az épület falán?)"
+        },
+        "options": {
+            "adult": [
+                "Késő barokk / Rokokó",
+                "Gótikus",
+                "Modern",
+                "Román"
+            ],
+            "child": [
+                "Díszes kapu",
+                "Madárfészek",
+                "Piros ablak",
+                "Semmi"
+            ]
+        },
+        "answer": {
+            "adult": "Késő barokk / Rokokó",
+            "child": "Díszes kapu"
+        },
+        "hint": {
+            "adult": "Irány a Szent Jakab templom. A hit ereje vár.",
+            "child": "Menjünk a templomhoz!"
+        },
+        "keyFragment": "Az Elrejtett Ékszer"
+    },
+    {
+        "id": "szent-jakab",
+        "name": "8. Szent Jakab Templom",
+        "lat": 47.3900,
+        "lng": 16.5402,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Szent_Jakab-templom.JPG/800px-Szent_Jakab-templom.JPG",
+        "description": "Halk imák, eskük, lehajtott fejek. Itt nem a fegyverek csörömpölése hallatszik, hanem a remény suttogása.",
+        "question": {
+            "adult": "Ahol nem harcoltak, mégis imádkoztak. (Kiknek a temetkezési helye volt eredetileg?)",
+            "child": "Kihez imádkoztak az emberek? (Kiről nevezték el a templomot?)"
+        },
+        "options": {
+            "adult": [
+                "Nemesi családok / Jurisics gyermekei",
+                "Törökök",
+                "Királyok",
+                "Kereskedők"
+            ],
+            "child": [
+                "Szent Jakab",
+                "Szent Péter",
+                "Mária",
+                "Jézus"
+            ]
+        },
+        "answer": {
+            "adult": "Nemesi családok / Jurisics gyermekei",
+            "child": "Szent Jakab"
+        },
+        "hint": {
+            "adult": "Nézzük meg a Sgraffitós házat!",
+            "child": "Nézzük meg a karcolt házat!"
+        },
+        "keyFragment": "Az Ima Ereje",
+        "moment": {
+            "visual": "A templom belseje nem fényes. Gyertyák pislákolnak, de nem világítanak be mindent. Nincs tömeg – csak lehajtott fejek. Nem kérnek győzelmet. Nem kérnek csodát.",
+            "feeling": "Az idő itt nem rohan. Mintha egyetlen pillanat napokig tartana.",
+            "action": "A gyertyaláng kékesre vált, egy szívdobbanásnyi időre. Alatta megjelenik egy tiszta, simára kopott kulcsdarab. Nem hideg. Nem meleg. Megnyugtató.",
+            "quote": "„Nem a győzelem tartotta meg Kőszeget. Hanem az, hogy nem futottak el.”"
+        }
+    },
+    {
+        "id": "sgraffitos-haz",
+        "name": "9. Sgraffitós-ház",
+        "lat": 47.3893,
+        "lng": 16.5409,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/K%C5%91szeg%2C_Sgraffit%C3%B3s_h%C3%A1z_2021_02.jpg/800px-K%C5%91szeg%2C_Sgraffit%C3%B3s_h%C3%A1z_2021_02.jpg",
+        "description": "Későbbi korok lenyomata. A falak már emlékeznek arra, ami itt történt. A művészet az élet diadala a pusztítás felett.",
+        "question": {
+            "adult": "Ahol nem az ostrom idején történt a fontos. (Mikor készült a híres díszítés?)",
+            "child": "Mi van a falon? (Rajz vagy karcolás?)"
+        },
+        "options": {
+            "adult": [
+                "1668 (későbbi, mint az ostrom)",
+                "1532",
+                "1900",
+                "1242"
+            ],
+            "child": [
+                "Karcolás (Sgraffito)",
+                "Festmény",
+                "Matrica",
+                "Mozaik"
+            ]
+        },
+        "answer": {
+            "adult": "1668 (későbbi, mint az ostrom)",
+            "child": "Karcolás (Sgraffito)"
+        },
+        "hint": {
+            "adult": "A Jézus Szíve templom felé vesszük az irányt.",
+            "child": "Menjünk a nagy templomhoz!"
+        },
+        "keyFragment": "A Művészet Ékköve"
+    },
+    {
+        "id": "jezus-szive",
+        "name": "10. Jézus Szíve Templom",
+        "lat": 47.3889,
+        "lng": 16.5417,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/K%C5%91szeg%2C_J%C3%A9zus_Sz%C3%ADve-templom.jpg/800px-K%C5%91szeg%2C_J%C3%A9zus_Sz%C3%ADve-templom.jpg",
+        "description": "Nem az ostrom ideje, hanem az utóélet. Az időkapu itt visszanéz, nem belép. A harangszó, ami ma is szól.",
+        "question": {
+            "adult": "Ahol az ostrom már véget ért, de mégis tovább él. (Hány órakor szól a harangszó az ostrom emlékére?)",
+            "child": "Mikor harangoznak a győzelem miatt? (Délelőtt...)"
+        },
+        "options": {
+            "adult": [
+                "11 órakor",
+                "Délben",
+                "Este 8-kor",
+                "Reggel 6-kor"
+            ],
+            "child": [
+                "11-kor",
+                "12-kor",
+                "Este",
+                "Reggel"
+            ]
+        },
+        "answer": {
+            "adult": "11 órakor",
+            "child": "11-kor"
+        },
+        "hint": {
+            "adult": "Keressük meg, hol volt régen a Városkapu!",
+            "child": "Hol mentek be régen a várba?"
+        },
+        "keyFragment": "Az Emlékezet Harangja"
+    },
+    {
+        "id": "egykori-varoskapu",
+        "name": "11. Egykori Városkapu",
+        "lat": 47.3890,
+        "lng": 16.5411,
+        "image": "https://koszeg.hu/images/varoskapu_helye.jpg",
+        "description": "Gerendák, láncok, záródó átjáró. Itt válik a város zárttá a külvilág felé. Aki itt belép, az a sorsát választja.",
+        "question": {
+            "adult": "Ahol a város befelé zárult. (Mi áll ma a régi kapu helyén?)",
+            "child": "Hogyan zárták be a kaput? (Kulccsal vagy...)"
+        },
+        "options": {
+            "adult": [
+                "Hősök Kapuja (torony)",
+                "Semmi",
+                "Egy híd",
+                "Egy szobor"
+            ],
+            "child": [
+                "Láncokkal és gerendákkal",
+                "Távirányítóval",
+                "Kilicccsel",
+                "Varázslattal"
+            ]
+        },
+        "answer": {
+            "adult": "Hősök Kapuja (torony)",
+            "child": "Láncokkal és gerendákkal"
+        },
+        "hint": {
+            "adult": "Vissza a VÁRHOZ! (Jurisics Vár)",
+            "child": "Fussunk a várhoz!"
+        },
+        "keyFragment": "A Záródó Kapu"
+    },
+    {
+        "id": "jurisics-var",
+        "name": "12. Jurisics Vár (VÉGCÉL)",
+        "lat": 47.3905,
+        "lng": 16.5397,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jurisics_mikl%C3%B3s_v%C3%A1r.jpg/800px-Jurisics_mikl%C3%B3s_v%C3%A1r.jpg",
+        "description": "A kapu nyitva vagy zárva. Nem itt törik a kulcs – itt derül ki, elég volt-e. Tedd a kulcsot a zárba.",
+        "question": {
+            "adult": "Ahol a kulcs nem volt, de ott lesz teljes. (Kész vagy bezárni az időkaput?)",
+            "child": "Kész vagy bezárni az időkaput?"
+        },
+        "options": {
+            "adult": [
+                "Igen, a kulcs teljes.",
+                "Még nem."
+            ],
+            "child": [
+                "Igen!",
+                "Nem."
+            ]
+        },
+        "answer": {
+            "adult": "Igen, a kulcs teljes.",
+            "child": "Igen!"
+        },
+        "hint": {
+            "adult": "Játék Vége.",
+            "child": "Játék Vége."
+        },
+        "keyFragment": "Vitézi Oklevél"
+    },
+    {
+        "id": "koronaorzo-bunker",
+        "type": "extra",
+        "name": "Koronaőrző Bunker",
+        "lat": 47.391500,
+        "lng": 16.532000,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Szent_Korona_eml%C3%A9khely_%28K%C5%91szeg%29.jpg/800px-Szent_Korona_eml%C3%A9khely_%28K%C5%91szeg%29.jpg",
+        "description": "EXTRA HELYSZÍN: Ez egy titkos bunker a Kálvária lábánál. Tudtad, hogy 1944-45 telén itt őrizték a magyar Szent Koronát? Bár ez jóval az 1532-es ostrom után történt, a hely szelleme a magyar történelem egyik legfontosabb ereklyéjét óvta.",
+        "question": {
+            "adult": "Melyik évben őrizték itt a Szent Koronát?",
+            "child": "Mit őriztek ebben a bunkerben?"
+        },
+        "options": {
+            "adult": [
+                "1944-45",
+                "1532",
+                "1848",
+                "1956"
+            ],
+            "child": [
+                "A Szent Koronát",
+                "Aranyat",
+                "Fegyvereket",
+                "Élelmiszert"
+            ]
+        },
+        "answer": {
+            "adult": "1944-45",
+            "child": "A Szent Koronát"
+        },
+        "hint": {
+            "adult": "Kövesd az eredeti küldetést! Ez csak egy kitérő volt a történelemben.",
+            "child": "Menjünk vissza a fő útvonalra!"
+        },
+        "keyFragment": null
+    },
+    {
+        "id": "chernel-kert",
+        "type": "extra",
+        "name": "Chernel-kert Arborétum",
+        "lat": 47.398000,
+        "lng": 16.545000,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Chernel-kert_Arbor%C3%A9tum.jpg/800px-Chernel-kert_Arbor%C3%A9tum.jpg",
+        "description": "EXTRA HELYSZÍN: Ez a csodás kert Chernel István ornitológus hagyatéka. Itt gyógyítják a sérült madarakat. Bár a török időkben ez még csak erdő volt, a természet védelme ma is hősi cselekedet!",
+        "question": {
+            "adult": "Milyen állatokat mentenek itt?",
+            "child": "Kik laknak a kertben (akiket gyógyítanak)?"
+        },
+        "options": {
+            "adult": [
+                "Madarakat",
+                "Lovakat",
+                "Oroszlánokat",
+                "Halakat"
+            ],
+            "child": [
+                "Madarak",
+                "Cicák",
+                "Kutyák",
+                "Elefántok"
+            ]
+        },
+        "answer": {
+            "adult": "Madarakat",
+            "child": "Madarak"
+        },
+        "hint": {
+            "adult": "Kövesd az eredeti küldetést! A madarak is ezt csicsergik.",
+            "child": "Menjünk vissza a játékba!"
+        },
+        "keyFragment": null
+    }
 ]

@@ -1,47 +1,144 @@
 import { useState, useEffect, useCallback } from 'react';
+import { getRandomRiddle } from '../data/riddles';
 
-const GAME_STATE_KEY = 'koszeg-city-game-state';
+const GAME_STATE_KEY = 'koszeg-city-game-state-v2';
 const HAS_PLAYED_KEY = 'has-played-koszeg-game';
 
-const getInitialGems = () => {
+// Helper to load initial state
+const getInitialState = () => {
   try {
     const item = window.localStorage.getItem(GAME_STATE_KEY);
-    return item ? JSON.parse(item) : [];
-  } catch { return []; }
+    if (item) {
+      return JSON.parse(item);
+    }
+  } catch (e) { console.error("Load failed", e); }
+
+  return {
+    gameStarted: false,
+    entryStation: null,
+    foundGems: [], // Array of IDs
+    visitedStations: [], // Array of IDs
+    gateClosed: false,
+    assignedRiddles: {}, // Map: gemId -> riddleId
+    gameMode: 'adult' // Default mode
+  };
 };
 
 export function useGame() {
-  const [gameMode, setGameMode] = useState(() => {
-    try {
-      return window.localStorage.getItem('koszeg-game-mode') || 'adult';
-    } catch { return 'adult'; }
-  });
+  const [gameState, setGameState] = useState(getInitialState);
 
+  // Sync to LocalStorage
   useEffect(() => {
-    localStorage.setItem('koszeg-game-mode', gameMode);
-  }, [gameMode]);
+    window.localStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
+  }, [gameState]);
 
-  const [foundGems, setFoundGems] = useState(getInitialGems);
+  // --- ACTIONS (State Transitions) ---
 
-  useEffect(() => {
-    localStorage.setItem(GAME_STATE_KEY, JSON.stringify(foundGems));
-  }, [foundGems]);
+  const startGame = useCallback((stationId, mode = 'adult') => {
+    setGameState(prev => {
+      if (prev.gameStarted) return prev; // Already started
+      return {
+        ...prev,
+        gameStarted: true,
+        entryStation: stationId,
+        visitedStations: [stationId],
+        gameMode: mode
+      };
+    });
+    window.localStorage.setItem(HAS_PLAYED_KEY, 'true');
+  }, []);
 
   const addFoundGem = useCallback((gemId) => {
-    setFoundGems((prev) => (prev.includes(gemId) ? prev : [...prev, gemId]));
+    setGameState(prev => {
+      // 2B: Already found check
+      if (prev.foundGems.includes(gemId)) return prev;
+
+      // 2A: New Key Found -> Assign Random Riddle (State 3)
+      const usedRiddleIds = Object.values(prev.assignedRiddles);
+      const newRiddle = getRandomRiddle(usedRiddleIds);
+
+      const newAssignedRiddles = { ...prev.assignedRiddles };
+      if (newRiddle) {
+        newAssignedRiddles[gemId] = newRiddle.id;
+      }
+
+      const newFoundGems = [...prev.foundGems, gemId];
+
+      return {
+        ...prev,
+        foundGems: newFoundGems,
+        assignedRiddles: newAssignedRiddles
+      };
+    });
   }, []);
 
-  const isGemFound = useCallback((gemId) => foundGems.includes(gemId), [foundGems]);
+  const visitStation = useCallback((stationId) => {
+    setGameState(prev => {
+      if (prev.visitedStations.includes(stationId)) return prev;
+      return {
+        ...prev,
+        visitedStations: [...prev.visitedStations, stationId]
+      };
+    });
+  }, []);
+
+  const closeGate = useCallback(() => {
+    setGameState(prev => ({ ...prev, gateClosed: true }));
+  }, []);
+
+  const setGameMode = useCallback((mode) => {
+    setGameState(prev => ({ ...prev, gameMode: mode }));
+  }, []);
+
 
   const resetGame = useCallback(() => {
-    setFoundGems([]);
-    setGameMode('adult');
+    const freshState = {
+      gameStarted: false,
+      entryStation: null,
+      foundGems: [],
+      visitedStations: [],
+      gateClosed: false,
+      assignedRiddles: {},
+      gameMode: 'adult'
+    };
+    setGameState(freshState);
     window.localStorage.removeItem(HAS_PLAYED_KEY);
-    window.localStorage.removeItem('koszeg-game-mode');
+    window.localStorage.setItem(GAME_STATE_KEY, JSON.stringify(freshState));
   }, []);
 
-  const hasPlayedBefore = useCallback(() => !!window.localStorage.getItem(HAS_PLAYED_KEY), []);
-  const markAsPlayed = useCallback(() => window.localStorage.setItem(HAS_PLAYED_KEY, 'true'), []);
+  // --- SELECTORS ---
+  const isGemFound = useCallback((id) => gameState.foundGems.includes(id), [gameState.foundGems]);
+  const getAssignedRiddle = useCallback((gemId) => gameState.assignedRiddles[gemId], [gameState.assignedRiddles]);
 
-  return { foundGems, addFoundGem, isGemFound, resetGame, hasPlayedBefore, markAsPlayed, gameMode, setGameMode };
+  // Total Main Keys (Hardcoded for now based on data knowledge: 11)
+  const REQUIRED_KEYS = 11;
+
+  const checkCastleStatus = useCallback(() => {
+    if (gameState.gateClosed) return 'closed'; // State 7
+    if (gameState.foundGems.length >= REQUIRED_KEYS) return 'ready'; // State 5B
+    return 'early'; // State 5A
+  }, [gameState.gateClosed, gameState.foundGems.length]);
+
+  return {
+    // State
+    gameState,
+    gameMode: gameState.gameMode,
+    foundGems: gameState.foundGems,
+    visitedStations: gameState.visitedStations,
+    gateClosed: gameState.gateClosed,
+
+    // Actions
+    startGame,
+    addFoundGem,
+    visitStation,
+    closeGate,
+    resetGame,
+    setGameMode,
+
+    // Helpers
+    isGemFound,
+    getAssignedRiddle,
+    checkCastleStatus,
+    REQUIRED_KEYS
+  };
 }

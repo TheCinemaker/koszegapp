@@ -1,280 +1,142 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
-import ScanHelpModal from '../components/ScanHelpModal';
+import { useGemFlow } from '../hooks/useGemFlow';
+import { RIDDLES } from '../data/riddles';
 
-const ScanButton = ({ onClick }) => (
-  <button onClick={onClick} className="w-full sm:w-auto bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold shadow-lg text-lg text-center">
-    📷 Keress egy új kincset!
-  </button>
-);
+import {
+  LoadingScreen,
+  IntroScreen,
+  KeyScene,
+  RiddleScreen,
+  InfoScene,
+  CastleCheckScreen,
+  FinalScreen,
+  GameCompleteScreen
+} from '../screens/game';
 
-export default function GemDetail() {
+// --- MAIN ORCHESTRATOR COMPONENT ---
+
+export default function StationResolver() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { addFoundGem, isGemFound, hasPlayedBefore } = useGame();
+  const { gameMode, REQUIRED_KEYS } = useGame();
+
+  // Custom Flow Hook manages state machine
+  const flow = useGemFlow(id, gameMode || 'adult');
 
   const [gem, setGem] = useState(null);
-  const [gameState, setGameState] = useState('loading');
-  const [error, setError] = useState(null);
-  const [showScanHelp, setShowScanHelp] = useState(false);
 
-  // Ellenőrizzük, hogy a gyűjtemény nézetből jöttünk-e
-  const cameFromMyGems = location.state?.fromMyGems === true;
-
+  // Data Fetching Logic (kept here for now, could be moved to hook too)
   useEffect(() => {
-    if (!hasPlayedBefore()) {
-      // Ha még nem játszott, átirányítjuk az intróba, majd onnan vissza erre az oldalra
-      navigate(
-        '/game/intro',
-        { state: { redirectTo: location.pathname }, replace: true }
-      );
-      return;
-    }
-
     let isMounted = true;
-    setGameState('loading');
+    fetchHiddenGems().then(data => {
+      if (!isMounted) return;
+      const found = data.find(g => g.id === id);
+      if (found) {
+        setGem(found);
+      } else {
+        navigate('/game/treasure-chest');
+      }
+    });
+    return () => { isMounted = false; };
+  }, [id, navigate]);
 
-    fetchHiddenGems()
-      .then(data => {
-        if (!isMounted) return;
-        const found = data.find(g => g.id === id);
-        if (!found) {
-          setError('Ez a kincs nem található az adatbázisban.');
-        } else {
-          setGem(found);
-          if (cameFromMyGems) {
-            setGameState('read_only');
-          } else if (isGemFound(id)) {
-            setGameState('already_found');
-          } else {
-            setGameState('intro');
-          }
-        }
-      })
-      .catch(err => {
-        if (isMounted) setError(err.message);
-      });
 
-    return () => {
-      isMounted = false;
-    };
-  }, [
-    id,
-    hasPlayedBefore,
-    isGemFound,
-    navigate,
-    location.pathname,
-    cameFromMyGems
-  ]);
+  // --- ROUTING LOGIC ---
 
-  const handleAnswer = (option) => {
-    if (option.isCorrect) {
-      addFoundGem(gem.id);
-      setGameState('correct');
-    } else {
-      setGameState('wrong_answer');
-      setTimeout(() => setGameState('question'), 1500);
-    }
-  };
+  if (!gem) return <div className="min-h-screen bg-black" />; // Fallback / Loading Data
 
-  const renderContent = () => {
-    if (gameState === 'loading') {
+  // 1. Loading
+  if (flow.screen === 'loading') {
+    return <LoadingScreen onComplete={flow.onLoadingDone} />;
+  }
+
+  // 2. Intro (First time visit)
+  if (flow.screen === 'intro') {
+    return <IntroScreen onStart={flow.onStartGame} />;
+  }
+
+  // 3. Finale (The End)
+  if (flow.screen === 'finale') {
+    return <FinalScreen />;
+  }
+
+  // 4. Complete (Post-Finale)
+  if (flow.screen === 'complete') {
+    return <GameCompleteScreen onExplore={flow.onExploreEnd} />;
+  }
+
+  // 5. Riddle (After finding a key)
+  if (flow.screen === 'riddle') {
+    const assignedId = flow.gameState?.assignedRiddles?.[gem.id] || null; // Use safe access
+    // If logic in useGame/addFoundGem assigns immediately, it should be there.
+    // If not, we might need a direct helper from useGame hooks.
+    // For now, let's use the helper from useGame linked to flow:
+    const assignedIdFromHook = flow.gameState.assignedRiddles[gem.id];
+
+    const riddleObj = assignedIdFromHook ? RIDDLES.find(r => r.id === assignedIdFromHook) : null;
+    const text = riddleObj ? riddleObj.text[gameMode || 'adult'] : "Még egy titok maradt...";
+    return <RiddleScreen riddleText={text} onConfirm={flow.onRiddleConfirmed} />;
+  }
+
+  // 6. MAIN RESOLVER (The Station Logic)
+  if (flow.screen === 'resolve') {
+
+    // CASTLE LOGIC
+    if (gem.id === 'jurisics-var') {
+      const status = flow.checkCastleStatus(); // early, ready, closed
+
+      if (status === 'closed') {
+        return <GameCompleteScreen onExplore={flow.onExploreEnd} />;
+      }
+
+      if (status === 'ready') {
+        // Auto trigger effect handled in Effect below usually, or we can just render a placeholder
+        // The hook handles the timeout transition to 'finale'.
+        return <div className="bg-black h-screen w-full"></div>;
+      }
+
       return (
-        <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
-          <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-3xl font-medium text-amber-900">Keresem a kincset...</p>
-        </div>
+        <CastleCheckScreen
+          status="early"
+          keysFound={flow.gameState.foundGems.length}
+          requiredKeys={REQUIRED_KEYS}
+          onBack={flow.onBackToCity}
+        />
       );
     }
 
-    if (error) {
-      return (
-        <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
-          <h1 className="text-4xl font-bold text-red-600">Hiba történt</h1>
-          <p className="text-2xl">{error}</p>
-          <Link
-            to="/"
-            className="inline-block mt-6 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all shadow-lg"
-          >
-            Vissza a főoldalra
-          </Link>
-        </div>
-      );
+    // EXTRA LOCATION
+    if (gem.type === 'extra') {
+      return <InfoScene gem={gem} onClose={flow.onClose} />;
     }
 
-    if (!gem) {
-      return (
-        <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
-          <h1 className="text-4xl font-bold">Kincs nem található</h1>
-          <p className="text-2xl">Ez a kincs nem létezik az adatbázisban.</p>
-          <Link
-            to="/"
-            className="inline-block mt-6 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold py-3 px-6 rounded-lg hover:from-amber-700 hover:to-amber-800 transition-all shadow-lg"
-          >
-            Vissza a főoldalra
-          </Link>
-        </div>
-      );
+    // KEY LOCATION
+    const isFound = flow.gameState.foundGems.includes(gem.id);
+    return (
+      <KeyScene
+        gem={gem}
+        isNewKey={!isFound}
+        mode={gameMode || 'adult'}
+        onNext={flow.onKeyStabilized}
+        onClose={flow.onClose}
+        foundCount={flow.gameState.foundGems.length}
+        totalCount={REQUIRED_KEYS}
+      />
+    );
+  }
+
+  // Effect specifically for triggering the Castle Finale Sequence if 'ready'
+  useEffect(() => {
+    if (gem?.id === 'jurisics-var' && flow.screen === 'resolve') {
+      const status = flow.checkCastleStatus();
+      if (status === 'ready') {
+        flow.onFinaleSequence();
+      }
     }
+  }, [gem, flow.screen, flow]); // Added flow dependency
 
-    if (gameState === 'read_only') {
-      return (
-        <div className="animate-scale-in">
-          <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
-            <h1 className="text-4xl sm:text-5xl font-bold">
-              A(z) {gem.name} Története
-            </h1>
-            <img
-              src={`/images/${gem.image}`}
-              alt={gem.name}
-              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md"
-            />
-            <div>
-              <p className="whitespace-pre-line">{gem.description}</p>
-            </div>
-            <Link
-              to="/game/treasure-chest"
-              className="inline-block mt-6 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all shadow-lg"
-            >
-              Vissza a gyűjteményhez
-            </Link>
-          </div>
-        </div>
-      );
-    }
-
-    if (gameState === 'intro') {
-      return (
-        <div className="animate-scale-in">
-          <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
-            <h1 className="text-4xl sm:text-5xl font-bold">
-              Felfedeztél egy újabb kincset!
-            </h1>
-            <img
-              src={`/images/gmae/${gem.image}`}
-              alt={gem.name}
-              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-md"
-            />
-            <div>
-              <h2 className="text-3xl sm:text-4xl mb-4">{gem.name}</h2>
-              <p className="whitespace-pre-line">{gem.description}</p>
-            </div>
-            <p className="text-3xl sm:text-4xl font-bold">
-              Készen állsz a következő kihívásra?
-            </p>
-            <button
-              onClick={() => setGameState('question')}
-              className="mt-6 w-full bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg text-lg"
-            >
-              Induljon a kihívás! 💎
-            </button>
-          </div>
-        </div>
-      );
-    }
-
-    if (gameState === 'question') {
-      return (
-        <div className="animate-fadein font-zeyada text-amber-900 text-2xl leading-relaxed text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-bold">{gem.question}</h2>
-          <div className="space-y-4">
-            {gem.options.map((opt, i) => (
-              <button
-                key={i}
-                onClick={() => handleAnswer(opt)}
-                className="w-full text-center p-4 rounded-lg bg-amber-100/50 hover:bg-amber-100 transition border-2 border-amber-700/30 text-2xl font-semibold"
-              >
-                {opt.text}
-              </button>
-            ))}
-          </div>
-          {gem.hint && (
-            <div className="bg-amber-100/50 p-3 rounded-lg border-l-4 border-amber-500 text-left">
-              <p className="text-xl">
-                <span className="font-semibold">Segítség:</span> {gem.hint}
-              </p>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    if (gameState === 'correct') {
-      return (
-        <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
-          <h1 className="text-4xl font-bold text-green-600">Helyes Válasz!</h1>
-          <p className="text-3xl">A következő kincshez vezető utat megnyitottad.</p>
-          <Link
-            to={`/game/gem/${gem.options.find(o => o.isCorrect).next_gem_id}`}
-            className="inline-block mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-3 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg"
-          >
-            Irány a következő kincs! &rarr;
-          </Link>
-        </div>
-      );
-    }
-
-    if (gameState === 'already_found') {
-      return (
-        <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
-          <h1 className="text-4xl font-bold">Ezt a kincset már megtaláltad!</h1>
-          <p className="text-3xl">Folytatod a kalandot, vagy megnézed az eddigi zsákmányt?</p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link
-              to="/game/treasure-chest"
-              className="w-full sm:w-auto bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition"
-            >
-              Megtalált kincseim
-            </Link>
-            <ScanButton onClick={() => setShowScanHelp(true)} />
-          </div>
-        </div>
-      );
-    }
-
-    if (gameState === 'wrong_answer') {
-      return (
-        <div className="animate-fadein text-center font-zeyada text-amber-900 text-2xl leading-relaxed space-y-6">
-          <h1 className="text-4xl font-bold text-red-600">Sajnos nem ez a helyes válasz!</h1>
-          <p className="text-3xl">De ne add fel, próbáld újra!</p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
-  return (
-
-    <>
-      <div
-        className="fixed inset-0 bg-black/90 flex items-center justify-center p-4"
-        style={{
-          backgroundImage: "radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('/images/game/terkep.webp')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div
-          className="max-w-md w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
-          style={{
-            backgroundImage: "url('/images/game/pergamen.jpeg')",
-            backgroundSize: 'contain',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
-          <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-16 pb-16">
-            {/* A renderContent függvény gondoskodik a helyes tartalomról */}
-            {renderContent()}
-          </div>
-        </div>
-      </div>
-      
-      {showScanHelp && <ScanHelpModal onClose={() => setShowScanHelp(false)} />}
-    </>
-  );
+  return <div className="min-h-screen bg-black"></div>;
 }

@@ -1,74 +1,204 @@
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGame } from '../hooks/useGame';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function GameIntro() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { markAsPlayed } = useGame();
+  const { startGame, setGameMode } = useGame();
 
-  const handleStartGame = () => {
-    markAsPlayed();
-    const redirectTo = location.state?.redirectTo || '/';
-    navigate(redirectTo, { replace: true });
+  const [year, setYear] = useState(2025);
+  const [phase, setPhase] = useState('counting'); // counting, intro, rules, choice
+  const [mode, setMode] = useState(null);
+
+  /* ===== IDŐSZÁMLÁLÓ ===== */
+  useEffect(() => {
+    const start = 2025;
+    const end = 1532;
+    const duration = 2800; // Gyors pörgetés
+    const frames = 60;
+    let f = 0;
+
+    const timer = setInterval(() => {
+      f++;
+      const t = f / frames;
+      const eased = 1 - Math.pow(1 - t, 4); // Ease-out quartic
+      setYear(Math.floor(start - (start - end) * eased));
+
+      if (f >= frames) {
+        clearInterval(timer);
+        setYear(end);
+        // Várunk kicsit a pörgetés után, mielőtt jön a szöveg
+        setTimeout(() => setPhase('intro'), 400);
+      }
+    }, duration / frames);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  /* ===== FÁZISOK LÉPTETÉSE ===== */
+  useEffect(() => {
+    if (phase === 'intro') {
+      const t = setTimeout(() => setPhase('rules'), 3500); // Intro olvasási idő
+      return () => clearTimeout(t);
+    }
+    if (phase === 'rules') {
+      const t = setTimeout(() => setPhase('choice'), 5000); // Lore olvasási idő
+      return () => clearTimeout(t);
+    }
+  }, [phase]);
+
+  const handleEnter = () => {
+    // 1. Game Mode beállítás
+    setGameMode(mode);
+    // 2. Játék indítása (Intro kapuval)
+    startGame('intro_1532', mode);
+    // 3. Navigáció a SoftStart-ra
+    navigate('/game/start', { replace: true });
   };
 
-return (
-  <div
-    className="fixed inset-0 bg-black/90 flex items-center justify-center p-4"
-    style={{
-      backgroundImage:
-        "radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('/images/game/terkep.webp')",
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    }}
-  >
-    <div
-      className="max-w-md w-full max-h-[90vh] flex flex-col rounded-2xl shadow-lg border-2 border-amber-700/40 animate-fadein-slow relative overflow-hidden"
-      style={{
-        backgroundImage: "url('/images/game/pergamen.jpeg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      <div className="scroll-mask flex-1 overflow-y-auto relative z-10 px-[12.5%] pt-24 pb-24">
-        <div className="font-zeyada text-amber-900 text-2xl sm:text-3xl leading-relaxed text-center space-y-8 font-bold">
+  return (
+    <div className="min-h-screen bg-[#0b0b0c] text-neutral-100 relative overflow-hidden flex flex-col items-center px-6 selection:bg-white/20">
 
-          <h1 className="text-4xl sm:text-5xl font-bold">
-            Megtaláltad a város kincsesládájának egyik darabját!
-          </h1>
-
-          <p>
-            A kezedben tartott <strong>titkos nagyító</strong> nem csupán eszköz – hanem egy kulcs, ami Kőszeg rejtett múltját és nem ismert kincseit fedi fel előtted.
-          </p>
-
-          <ul className="text-left space-y-4 list-none">
-            <li>📍 Keresd a QR kódokat a város eldugott pontjain</li>
-            <li>🧠 Oldd meg a rejtvényeket, hogy továbbjuthass</li>
-            <li>💎 Csak a legkitartóbbak találják meg az összes kincset</li>
-          </ul>
-
-          <p className="text-3xl sm:text-4xl font-bold">
-            ⚠️ A játék elindult. Nincs visszaút! Most már játszanod kell.
-          </p>
-
-          <p className="text-2xl sm:text-3xl font-bold">
-            A kezdéshez kattints a pecsétre!
-          </p>
-
-          <div className="flex justify-center">
-            <img
-              src="/images/game/waxseal.jpeg"
-              alt="Pecsét – kezdés"
-              onClick={handleStartGame}
-              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover cursor-pointer shadow-lg hover:scale-105 transition-transform duration-300 animate-float"
-            />
-          </div>
+      {/* ===== ÉVSZÁM – 30px FENTRŐL ===== */}
+      <div className="absolute top-[30px] left-0 right-0 flex justify-center pointer-events-none">
+        <div className="font-serif text-7xl md:text-8xl tracking-widest text-neutral-100/70">
+          {year}
         </div>
       </div>
-    </div>
-  </div>
-);
 
+      {/* ===== TARTALMI RÉTEG ===== */}
+      <div className="relative z-10 w-full max-w-md flex flex-col items-center justify-start pt-[20vh] space-y-10 text-center">
+
+        <AnimatePresence>
+          {/* 1. FÁZIS: INTRO (SOFTSTART DESIGN) */}
+          {(phase === 'intro' || phase === 'rules' || phase === 'choice') && (
+            <motion.div
+              key="intro"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, ease: 'easeOut', delay: 0.2 }}
+              className="space-y-4"
+            >
+              <h1 className="text-3xl font-serif text-white/90 leading-tight">
+                Az idő nem egyenes vonal.
+              </h1>
+              <p className="text-white/60 leading-relaxed font-light mt-4 space-y-2">
+                <span>
+                  A város nem csak épült. Megmaradt.
+                </span>
+                <span>
+                  Falai nem csupán kövek. Emlékeket hordoznak.
+                </span>
+              </p>
+            </motion.div>
+          )}
+
+          {/* 2. FÁZIS: LORE (MÚLT) */}
+          {(phase === 'rules' || phase === 'choice') && (
+            <motion.div
+              key="rules"
+              initial={{ opacity: 0, y: 35 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, ease: 'easeOut' }}
+              className="mt-4 text-white/60 leading-relaxed font-light max-w-sm mx-auto"
+            >
+              <p>
+                Vannak helyek, ahol a múlt nem tűnt el, csak csendben figyel.
+              </p>
+              <p className="mt-4 font-serif italic text-white/80">
+                Ezek a helyek mesélnek. Nem mindenkinek egyszerre.
+              </p>
+              <p className="mt-4">
+                A város őrzi, ami akkor számított.
+              </p>
+            </motion.div>
+          )}
+
+          {/* 3. FÁZIS: VÁLASZTÁS */}
+          {phase === 'choice' && (
+            <motion.div
+              key="choice"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="mt-8 space-y-8"
+            >
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.4em] text-white/40">
+                  Két út nyílik meg előtted.
+                </p>
+                <p className="text-sm font-serif italic text-white/60">
+                  Mindkettő ugyanoda vezet —<br />
+                  de mást enged közel.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-left">
+                <button
+                  onClick={() => setMode('child')}
+                  className={`w-full pb-3 border-b transition-all duration-300
+                    ${mode === 'child'
+                      ? 'border-white/80 text-white'
+                      : 'border-white/10 text-white/40 hover:text-white/70'}
+                  `}
+                >
+                  <div className="font-serif text-lg">Felfedező</div>
+                  <div className="text-xs uppercase tracking-widest opacity-60">
+                    Könnyedebb megértés
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setMode('adult')}
+                  className={`w-full pb-3 border-b transition-all duration-300
+                    ${mode === 'adult'
+                      ? 'border-amber-200/60 text-amber-50'
+                      : 'border-white/10 text-neutral-100/40 hover:text-neutral-100/70'}
+                  `}
+                >
+                  <div className="font-serif text-lg">Történész</div>
+                  <div className="text-xs uppercase tracking-widest opacity-60">
+                    Mélyebb összefüggések
+                  </div>
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* VÉGSŐ BELÉPÉS GOMB (CSAK HA VAN MODE) */}
+          <AnimatePresence>
+            {mode && (
+              <motion.div
+                key="enter-button"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="mt-8"
+              >
+                <button
+                  onClick={handleEnter}
+                  className="
+                    text-xs
+                    uppercase
+                    tracking-[0.4em]
+                    text-blue-300
+                    opacity-80
+                    hover:opacity-100
+                    border-b border-transparent
+                    hover:border-blue-300/40
+                    pb-2
+                    transition-all
+                  "
+                >
+                  Belépek az időkapun →
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+        </AnimatePresence>
+      </div>
+    </div>
+  );
 }
