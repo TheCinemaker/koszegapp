@@ -35,6 +35,22 @@ export default function ScanIntro() {
                 >
                     Indíthatom →
                 </button>
+
+                <div className="pt-8">
+                    <button
+                        onClick={() => navigate('/game/treasure-chest')}
+                        className="
+              text-[10px]
+              uppercase
+              tracking-[0.3em]
+              text-white/30
+              hover:text-white/60
+              transition-colors
+            "
+                    >
+                        Vissza a Naplóhoz
+                    </button>
+                </div>
             </motion.div>
         </div>
     );

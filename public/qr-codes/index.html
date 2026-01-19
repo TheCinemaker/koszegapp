@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kőszeg Játék - QR Kódok</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0b0b0c;
+            color: #fff;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: #1a1a1c;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #2a2a2c;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .card.extra {
+            opacity: 0.6;
+            border-color: #3a3a3c;
+        }
+        .qr-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto 15px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .gem-name {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .gem-id {
+            font-size: 0.75rem;
+            color: #666;
+            font-family: monospace;
+            margin-bottom: 10px;
+        }
+        .gem-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+        }
+        .type-main {
+            background: #1e3a8a;
+            color: #93c5fd;
+        }
+        .type-extra {
+            background: #374151;
+            color: #9ca3af;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+        .info-box {
+            background: #1a1a1c;
+            border: 1px solid #2a2a2c;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .info-box h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+        .info-box p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .stat {
+            flex: 1;
+            background: #0b0b0c;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #3b82f6;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Kőszeg Játék - QR Kódok</h1>
+        <p class="subtitle">1532-es ostrom kincsvadászat</p>
+        
+        <div class="info-box">
+            <h2>📱 Használat</h2>
+            <p>
+                Ezek a QR kódok a Kőszeg játék helyszíneihez tartoznak. 
+                Minden QR kód egy adott történelmi helyszínre navigál.
+                Szkenneld be őket a játék során, vagy kattints a letöltés gombra a kinyomtatáshoz.
+            </p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">11</div>
+                    <div class="stat-label">Fő Helyszín</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Extra Helyszín</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">14</div>
+                    <div class="stat-label">Összesen</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            
+                <div class="card ">
+                    <img src="varoshaza.png" alt="1. Városháza" class="qr-image">
+                    <div class="gem-name">1. Városháza</div>
+                    <div class="gem-id">varoshaza</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="varoshaza.png" download="varoshaza.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="jurisics-ter.png" alt="2. Jurisics tér" class="qr-image">
+                    <div class="gem-name">2. Jurisics tér</div>
+                    <div class="gem-id">jurisics-ter</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="jurisics-ter.png" download="jurisics-ter.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="ovaros-falak.png" alt="3. Óváros falmaradványai" class="qr-image">
+                    <div class="gem-name">3. Óváros falmaradványai</div>
+                    <div class="gem-id">ovaros-falak</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="ovaros-falak.png" download="ovaros-falak.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="varkor.png" alt="4. Várkör" class="qr-image">
+                    <div class="gem-name">4. Várkör</div>
+                    <div class="gem-id">varkor</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="varkor.png" download="varkor.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card extra">
+                    <img src="tabornokhaz.png" alt="5. Tábornokház (Idő-Kilátó)" class="qr-image">
+                    <div class="gem-name">5. Tábornokház (Idő-Kilátó)</div>
+                    <div class="gem-id">tabornokhaz</div>
+                    <span class="gem-type type-extra">
+                        Extra
+                    </span>
+                    <br>
+                    <a href="tabornokhaz.png" download="tabornokhaz.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="labashaz.png" alt="6. Lábasház" class="qr-image">
+                    <div class="gem-name">6. Lábasház</div>
+                    <div class="gem-id">labashaz</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="labashaz.png" download="labashaz.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="chernel-haz.png" alt="7. Chernel-ház" class="qr-image">
+                    <div class="gem-name">7. Chernel-ház</div>
+                    <div class="gem-id">chernel-haz</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="chernel-haz.png" download="chernel-haz.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="szent-jakab.png" alt="8. Szent Jakab Templom" class="qr-image">
+                    <div class="gem-name">8. Szent Jakab Templom</div>
+                    <div class="gem-id">szent-jakab</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="szent-jakab.png" download="szent-jakab.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="sgraffitos-haz.png" alt="9. Sgraffitós-ház" class="qr-image">
+                    <div class="gem-name">9. Sgraffitós-ház</div>
+                    <div class="gem-id">sgraffitos-haz</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="sgraffitos-haz.png" download="sgraffitos-haz.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="jezus-szive.png" alt="10. Jézus Szíve Templom" class="qr-image">
+                    <div class="gem-name">10. Jézus Szíve Templom</div>
+                    <div class="gem-id">jezus-szive</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="jezus-szive.png" download="jezus-szive.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="egykori-varoskapu.png" alt="11. Egykori Városkapu" class="qr-image">
+                    <div class="gem-name">11. Egykori Városkapu</div>
+                    <div class="gem-id">egykori-varoskapu</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="egykori-varoskapu.png" download="egykori-varoskapu.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card ">
+                    <img src="jurisics-var.png" alt="12. Jurisics Vár (VÉGCÉL)" class="qr-image">
+                    <div class="gem-name">12. Jurisics Vár (VÉGCÉL)</div>
+                    <div class="gem-id">jurisics-var</div>
+                    <span class="gem-type type-main">
+                        Fő Helyszín
+                    </span>
+                    <br>
+                    <a href="jurisics-var.png" download="jurisics-var.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card extra">
+                    <img src="koronaorzo-bunker.png" alt="Koronaőrző Bunker" class="qr-image">
+                    <div class="gem-name">Koronaőrző Bunker</div>
+                    <div class="gem-id">koronaorzo-bunker</div>
+                    <span class="gem-type type-extra">
+                        Extra
+                    </span>
+                    <br>
+                    <a href="koronaorzo-bunker.png" download="koronaorzo-bunker.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+                <div class="card extra">
+                    <img src="chernel-kert.png" alt="Chernel-kert Arborétum" class="qr-image">
+                    <div class="gem-name">Chernel-kert Arborétum</div>
+                    <div class="gem-id">chernel-kert</div>
+                    <span class="gem-type type-extra">
+                        Extra
+                    </span>
+                    <br>
+                    <a href="chernel-kert.png" download="chernel-kert.png" class="download-btn">
+                        ⬇ Letöltés
+                    </a>
+                </div>
+            
+        </div>
+    </div>
+</body>
+</html>

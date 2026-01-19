@@ -103,6 +103,45 @@ export default function ScanLive() {
                 </button>
             </div>
 
+            {/* DEBUG / HTTP FALLBACK SZIMULÁTOR */}
+            {/* Csak akkor jelenjen meg, ha nem tudjuk elérni a kamerát biztonsági okokból, vagy dev módban vagyunk */}
+            <div className="absolute top-20 left-4 right-4 z-40 flex flex-col items-center gap-2 pointer-events-auto">
+                <div className="bg-black/80 backdrop-blur-md p-4 rounded-xl border border-white/10 text-center w-full max-w-sm">
+                    <p className="text-[10px] text-red-300 uppercase tracking-widest mb-3">
+                        ⚠️ Teszt Mód (Kamera Szimulátor)
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                        <button
+                            onClick={() => handleScan({ text: 'https://koszeg.hu/game/gem/varoshaza' })}
+                            className="bg-white/10 hover:bg-white/20 text-white text-[10px] uppercase py-2 rounded border border-white/10"
+                        >
+                            QR: Városháza
+                        </button>
+                        <button
+                            onClick={() => handleScan({ text: 'https://koszeg.hu/game/gem/jurisics-ter' })}
+                            className="bg-white/10 hover:bg-white/20 text-white text-[10px] uppercase py-2 rounded border border-white/10"
+                        >
+                            QR: Jurisics Tér
+                        </button>
+                        <button
+                            onClick={() => handleScan({ text: 'https://koszeg.hu/game/gem/ovaros-falak' })}
+                            className="bg-white/10 hover:bg-white/20 text-white text-[10px] uppercase py-2 rounded border border-white/10"
+                        >
+                            QR: Falak
+                        </button>
+                        <button
+                            onClick={() => handleScan({ text: 'https://koszeg.hu/game/gem/varkor' })}
+                            className="bg-white/10 hover:bg-white/20 text-white text-[10px] uppercase py-2 rounded border border-white/10"
+                        >
+                            QR: Várkör
+                        </button>
+                    </div>
+                    <p className="text-[9px] text-white/30 mt-2">
+                        (Mivel HTTP-n a böngésző tiltja a kamerát)
+                    </p>
+                </div>
+            </div>
+
             {/* HALK SZÖVEG */}
             <div className="absolute bottom-16 left-0 right-0 text-center pointer-events-none z-20 px-6">
                 <p className="text-white/80 font-serif text-lg leading-relaxed shadow-black drop-shadow-md">

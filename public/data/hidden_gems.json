@@ -4,39 +4,34 @@
         "name": "1. Városháza",
         "lat": 47.3892,
         "lng": 16.5410,
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Town_Hall_Koszeg.jpg/800px-Town_Hall_Koszeg.jpg",
-        "description": "Kőszeg, 1532. A Városháza nem csak falakból áll. Itt születtek meg azok a döntések, amelyek megmentették a várost. A bíró, a tanács, a polgárok... szavak, amik erősebbek voltak a kardnál.",
-        "question": {
-            "adult": "Ahol nem kard döntött, hanem szó. (Mi látható a homlokzaton, ami a város címerét tartja?)",
-            "child": "Keress egy épületet, ahol a város vezetői dolgoznak! Mit tartanak az angyalok a magasban?"
-        },
-        "options": {
-            "adult": [
-                "Angyalok",
-                "Oroszlánok",
-                "Griffmadarak",
-                "Sassok"
-            ],
-            "child": [
-                "Címert",
-                "Kardot",
-                "Könyvet",
-                "Virágot"
-            ]
-        },
-        "answer": {
-            "adult": "Angyalok",
-            "child": "Címert"
-        },
-        "hint": {
-            "adult": "Irány a tér közepe, ahol a legtöbb ember fordul meg.",
-            "child": "Menjünk a tér közepére!"
-        },
-        "keyFragment": "A Döntés Pecsétje",
+        "image": "/images/game/locations/varoshaza.jpg",
+        "details": [
+            {
+                "title": "A „Sosem alvó” épület",
+                "content": "A Városháza alapjai a 14. századig nyúlnak vissza. A legenda szerint az épület pincéiben és titkos járataiban még ma is hallani vélik a védők lépteit. Ha a Városháza órája és a harangszó egyszerre késne, a város védelme megbomlana."
+            },
+            {
+                "title": "A homlokzat „Szemmel tartó” címerei",
+                "content": "A helyi babona szerint a címerek festett alakjai éjszakánként megmozdulnak. Úgy tartják, hogy aki bűnös szándékkal lép a Városháza kapuján belülre, azt a címerek „szeme” megbabonázza."
+            },
+            {
+                "title": "A belső udvar és az időkút",
+                "content": "A régiek azt suttogták, hogy az udvaron egykor egy kút állt, amely nem vizet, hanem „időt” adott. Aki abból ivott, az tisztán látta a város jövőjét."
+            },
+            {
+                "title": "Az „Igazság suttogása”",
+                "content": "A díszterem stukkói visszhangozzák a hazugságot. Ha valaki nem mondott igazat, a stukkók közül suttogás hallatszott. Ezért mondják: „a falnak is füle van, és a stukkónak is nyelve”."
+            },
+            {
+                "title": "A város „élő” emlékezete",
+                "content": "Amíg a Városházán ég a lámpa, addig Kőszeg biztonságban van. Az épület a város kollektív lelke, amely 700 éve őrzi a titkokat."
+            }
+        ],
+        "description": "Kőszeg, 1532. A Városháza nem csak falakból áll. Itt születtek meg azok a döntések, amelyek megmentették a várost.",
         "moment": {
-            "visual": "Az időkapu megnyílik. Nem látsz arcokat tisztán – csak mozgó árnyékokat. Pergamen csúszik az asztalon. Viasz olvad. Egy kéz megáll a levegőben, mielőtt lecsapna a pecséttel. A döntés még nem történt meg, de már nincs visszaút.",
+            "visual": "Az időkapu megnyílik. Nem látsz arcokat tisztán – csak mozgó árnyékokat. Pergamen csúszik az asztalon. Viasz olvad.",
             "feeling": "A levegő megfeszül. Mintha a tér várná, mit mondanak ki.",
-            "action": "A viasz fénye megremeg, majd kifakul. A helyén egy törött, hideg fémdarab jelenik meg – nem leesik, hanem ott volt mindig is, csak eddig nem látszott.",
+            "action": "A viasz fénye megremeg, majd kifakul. A helyén egy törött, hideg fémdarab jelenik meg.",
             "quote": "„Egy város sorsa nem a csatatéren dől el először.”"
         }
     },
