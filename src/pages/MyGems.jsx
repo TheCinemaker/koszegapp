@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 import { motion, AnimatePresence } from 'framer-motion';
-import IntroFlow from '../screens/game/IntroFlow';
 import { storyChapters } from '../data/story_chapters';
 
 // --- ANIMATION VARIANTS ---

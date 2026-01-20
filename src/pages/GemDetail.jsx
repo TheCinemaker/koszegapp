@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useGemFlow } from '../hooks/useGemFlow';
 import { useGame } from '../hooks/useGame';
 
-import IntroFlow from '../screens/game/IntroFlow';
 import LoadingScreen from '../screens/game/LoadingScreen';
 import KeyScene from '../screens/game/KeyScene';
 import InfoScene from '../screens/game/InfoScene';
@@ -30,18 +29,10 @@ export default function StationResolver() {
   // Ha a felhasználó még nem kezdte el a játékot (nincs 'started' flag),
   // akkor először az INTRO + MODE SELECTION jön.
   if (!gameState.gameStarted) {
-    return (
-      <>
-        {/* DEBUG RESET BUTTON */}
-        <button
-          onClick={handleReset}
-          className="fixed top-2 left-2 z-[9999] bg-red-900/50 text-red-200 text-[10px] px-2 py-1 rounded border border-red-500/30 hover:bg-red-800 backdrop-blur-sm transition-colors"
-        >
-          RESET GAME
-        </button>
-        <IntroFlow onComplete={(mode) => startGame(id, mode)} />
-      </>
-    );
+    // Redirect to the canonical INTRO page which handles mode selection
+    // PREVENTING THE "BELÉPEK/CITY NOISE" screen from showing up via IntroFlow inline
+    window.location.href = '/game/intro';
+    return null;
   }
 
   // --- NORMÁL FLOW ---
