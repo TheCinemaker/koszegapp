@@ -6,6 +6,7 @@ import { useGame } from '../hooks/useGame';
 import LoadingScreen from '../screens/game/LoadingScreen';
 import KeyScene from '../screens/game/KeyScene';
 import InfoScene from '../screens/game/InfoScene';
+import TimeAnomaly from '../screens/game/TimeAnomaly';
 
 export default function StationResolver() {
   const { id } = useParams();
@@ -40,11 +41,7 @@ export default function StationResolver() {
 
   if (flow.loading) return <div className="min-h-screen bg-black" />;
 
-  if (!flow.gem) return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <p>Helyszín nem található.</p>
-    </div>
-  );
+  if (!flow.gem) return <TimeAnomaly scannedId={id} />;
 
   return (
     <>
