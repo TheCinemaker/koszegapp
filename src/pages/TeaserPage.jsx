@@ -5,128 +5,130 @@ export default function TeaserPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
-        // 9. Slower, Deeper Fade Sequence
         const sequence = [
-            { delay: 1000, step: 1 },  // A KÖVEK FIGYELNEK
-            { delay: 6000, step: 2 },  // A FALAK EMLÉKEZNEK
-            { delay: 11000, step: 3 }, // A SZOBROK MESÉLNEK
-            { delay: 16000, step: 4 }, // ELMONDJÁK...
-            { delay: 22000, step: 5 }, // KERESD A TITKOKAT
-            { delay: 29000, step: 6 }, // 1532
-            { delay: 34000, step: 7 }, // HAMAROSAN
+            { t: 1000, s: 1 },
+            { t: 6000, s: 2 },
+            { t: 11000, s: 3 },
+            { t: 16500, s: 4 },
+            { t: 22500, s: 5 },
+            { t: 30000, s: 6 },
+            { t: 36000, s: 7 },
         ];
 
-        const timers = sequence.map(item =>
-            setTimeout(() => setStep(item.step), item.delay)
+        const timers = sequence.map(e =>
+            setTimeout(() => setStep(e.s), e.t)
         );
-
         return () => timers.forEach(clearTimeout);
     }, []);
 
-    // Slower, dramatic fade with deeper initial blur
-    const appleVariant = {
-        initial: { opacity: 0, scale: 0.94, y: 15, filter: 'blur(12px)' },
-        animate: { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' },
-        exit: { opacity: 0, scale: 1.05, filter: 'blur(15px)', transition: { duration: 1.5 } },
-        transition: { duration: 2.8, ease: [0.25, 0.1, 0.25, 1] } // Cinematic slow ease
+    const cinematic = {
+        initial: { opacity: 0, y: 40, filter: 'blur(14px)' },
+        animate: {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            transition: { duration: 2.2, ease: [0.22, 1, 0.36, 1] }
+        },
+        exit: {
+            opacity: 0,
+            y: -20,
+            filter: 'blur(20px)',
+            transition: { duration: 1.6 }
+        }
     };
 
     return (
-        <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center overflow-hidden z-[9999] font-sans">
+        <div className="fixed inset-0 z-[9999] overflow-hidden bg-black text-white">
 
-            {/* Content Layer - CENTERED, SAN-SERIF, MONOCHROME */}
-            <div className="relative z-20 w-full max-w-2xl px-6 flex flex-col items-center justify-center text-center h-full">
-                <AnimatePresence mode='wait'>
+            {/* 🎥 CINEMATIC BACKGROUND */}
+            <motion.div
+                className="absolute inset-0 bg-[url('/teaser-bg.jpg')] bg-cover bg-center"
+                initial={{ scale: 1.15 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 40, ease: 'linear' }}
+            />
+            <div className="absolute inset-0 bg-black/70" />
+            <div className="absolute inset-0 film-grain pointer-events-none" />
 
-                    {/* S1 */}
+            {/* 🎞️ CONTENT */}
+            <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
+                <AnimatePresence mode="wait">
+
                     {step === 1 && (
-                        <motion.div key="s1" {...appleVariant}>
-                            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
-                                A KÖVEK<br />FIGYELNEK
-                            </h1>
-                        </motion.div>
+                        <motion.h1 key="s1" {...cinematic}
+                            className="text-6xl sm:text-7xl font-semibold leading-tight">
+                            A kövek<br />
+                            <span className="font-light opacity-70">figyelnek</span>
+                        </motion.h1>
                     )}
 
-                    {/* S2 */}
                     {step === 2 && (
-                        <motion.div key="s2" {...appleVariant}>
-                            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
-                                A FALAK<br />EMLÉKEZNEK
-                            </h1>
-                        </motion.div>
+                        <motion.h1 key="s2" {...cinematic}
+                            className="text-6xl sm:text-7xl font-semibold leading-tight">
+                            A falak<br />
+                            <span className="font-light opacity-70">emlékeznek</span>
+                        </motion.h1>
                     )}
 
-                    {/* S3 */}
                     {step === 3 && (
-                        <motion.div key="s3" {...appleVariant}>
-                            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
-                                A SZOBROK<br />MESÉLNEK
-                            </h1>
-                        </motion.div>
+                        <motion.h1 key="s3" {...cinematic}
+                            className="text-6xl sm:text-7xl font-semibold leading-tight">
+                            A város<br />
+                            <span className="font-light opacity-70">túlélte</span>
+                        </motion.h1>
                     )}
 
-                    {/* S4 */}
                     {step === 4 && (
-                        <motion.div key="s4" {...appleVariant}>
-                            <p className="text-2xl sm:text-4xl font-medium tracking-wide uppercase leading-relaxed text-white">
-                                ELMONDJÁK,<br />MIRE EMLÉKEZNEK
-                            </p>
-                        </motion.div>
+                        <motion.p key="s4" {...cinematic}
+                            className="text-3xl sm:text-4xl font-light tracking-wide">
+                            Amit mások<br />elfelejtettek
+                        </motion.p>
                     )}
 
-                    {/* S5 */}
                     {step === 5 && (
-                        <motion.div key="s5" {...appleVariant}>
-                            <h1 className="text-5xl sm:text-7xl font-black tracking-tight text-white uppercase">
-                                KERESD<br />A TITKOKAT
-                            </h1>
-                        </motion.div>
+                        <motion.h1 key="s5" {...cinematic}
+                            className="text-7xl sm:text-8xl font-bold">
+                            Keresd<br />a nyomokat
+                        </motion.h1>
                     )}
 
-                    {/* THE FINALE (6, 7) */}
                     {step >= 6 && (
-                        <div className="flex flex-col items-center justify-center w-full h-full pb-10">
-
-                            {/* 1532 - Clean, Heavy Sans */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
+                        <motion.div
+                            key="final"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 2 }}
+                            className="flex flex-col items-center"
+                        >
+                            <motion.h1
+                                initial={{ opacity: 0, scale: 0.8, letterSpacing: '0.2em' }}
+                                animate={{ opacity: 1, scale: 1, letterSpacing: '-0.02em' }}
+                                transition={{ duration: 3, ease: [0.19, 1, 0.22, 1] }}
+                                className="text-[160px] sm:text-[200px] font-black leading-none"
                             >
-                                <h1 className="text-[120px] sm:text-[180px] leading-none font-bold text-white tracking-tighter">
-                                    1532
-                                </h1>
-                            </motion.div>
+                                1532
+                            </motion.h1>
 
-                            {/* SUBTITLE */}
-                            {step >= 6 && (
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 1.5, delay: 1.0 }}
-                                    className="mt-6"
-                                >
-                                    <p className="text-sm sm:text-lg text-white font-semibold uppercase tracking-[0.2em]">
-                                        VAN, AMIT CSAK A FALAK TUDNAK
-                                    </p>
-                                </motion.div>
-                            )}
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 1.5, duration: 1.5 }}
+                                className="mt-6 text-sm tracking-[0.4em] uppercase opacity-80"
+                            >
+                                Van, amit csak a falak tudnak
+                            </motion.p>
 
-                            {/* HAMAROSAN - Apple Style */}
                             {step >= 7 && (
-                                <motion.div
+                                <motion.h2
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ duration: 2.0, delay: 0.5 }}
-                                    className="mt-24 sm:mt-32"
+                                    transition={{ delay: 3, duration: 2 }}
+                                    className="mt-28 text-4xl tracking-[0.3em] font-light"
                                 >
-                                    <h2 className="text-4xl sm:text-6xl font-light text-white tracking-[0.15em] uppercase">
-                                        HAMAROSAN
-                                    </h2>
-                                </motion.div>
+                                    Hamarosan
+                                </motion.h2>
                             )}
-
-                        </div>
+                        </motion.div>
                     )}
 
                 </AnimatePresence>
