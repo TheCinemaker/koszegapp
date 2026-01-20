@@ -74,7 +74,7 @@ export default function LoadingScreen({ onComplete }) {
     }, [onComplete]);
 
     return (
-        <div className="fixed inset-0 bg-slate-900 flex flex-col items-center justify-center z-50 p-6 overflow-hidden">
+        <div className="fixed inset-0 bg-[#0b0b0c] flex flex-col items-center justify-center z-50 p-6 overflow-hidden">
 
             {/* --- FADE TO BLACK OVERLAY --- */}
             <AnimatePresence>
@@ -90,8 +90,8 @@ export default function LoadingScreen({ onComplete }) {
 
             {/* --- HÁTTÉR --- */}
             <div className="absolute inset-0 pointer-events-none">
-                {/* Finom kék Gradiens */}
-                <div className="absolute inset-0 bg-radial-gradient from-indigo-900/40 via-slate-900 to-black opacity-60" />
+                {/* Finom Gradiens - Most már Dark / Gold tónus */}
+                <div className="absolute inset-0 bg-radial-gradient from-amber-900/10 via-[#0b0b0c] to-black opacity-80" />
             </div>
 
             <div className="relative z-10 flex flex-col items-center max-w-sm w-full">
@@ -101,14 +101,14 @@ export default function LoadingScreen({ onComplete }) {
 
                     {/* 1. Külső Gyűrű (Lassan forog visszafelé) */}
                     <motion.div
-                        className="absolute inset-0 border border-indigo-500/20 rounded-full"
+                        className="absolute inset-0 border border-white/10 rounded-full"
                         animate={{ rotate: -360 }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     />
 
                     {/* 2. Skála Gyűrű (Tick marks) */}
                     <motion.svg
-                        className="absolute inset-2 w-full h-full text-indigo-400/30"
+                        className="absolute inset-2 w-full h-full text-white/20"
                         viewBox="0 0 100 100"
                         animate={{ rotate: -360 }}
                         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -129,15 +129,15 @@ export default function LoadingScreen({ onComplete }) {
 
                     {/* 3. Belső "Mechanika" (Gyorsabban forog visszafelé) */}
                     <motion.div
-                        className="absolute w-40 h-40 border-2 border-dashed border-indigo-500/40 rounded-full"
+                        className="absolute w-40 h-40 border-2 border-dashed border-white/20 rounded-full"
                         animate={{ rotate: -360 }}
                         transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                     />
 
                     {/* 4. Központi Évszám Kijelző */}
-                    <div className="absolute flex flex-col items-center justify-center bg-slate-900/80 backdrop-blur-sm rounded-full w-24 h-24 border border-indigo-500/30 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-                        <span className="text-xs text-indigo-300/60 uppercase tracking-widest mb-1">Év</span>
-                        <span className="text-3xl font-mono font-bold text-white tabular-nums tracking-tighter">
+                    <div className="absolute flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm rounded-full w-24 h-24 border border-white/10 shadow-[0_0_30px_rgba(251,191,36,0.1)]">
+                        <span className="text-xs text-amber-500/60 uppercase tracking-widest mb-1">Év</span>
+                        <span className="text-3xl font-mono font-bold text-amber-100 tabular-nums tracking-tighter">
                             {Math.max(year, 1532)}
                         </span>
                     </div>
@@ -147,7 +147,7 @@ export default function LoadingScreen({ onComplete }) {
                         <circle
                             cx="50%" cy="50%" r="48%"
                             fill="none"
-                            stroke="#6366f1" // Indigo-500
+                            stroke="#f59e0b" // Amber-500
                             strokeWidth="1"
                             strokeDasharray="301" // 2 * PI * r (approx)
                             strokeDashoffset={301 * (1 - (2026 - year) / (2026 - 1532))}
@@ -163,7 +163,7 @@ export default function LoadingScreen({ onComplete }) {
                     transition={{ delay: 0.5, duration: 1 }}
                     className="text-center"
                 >
-                    <p className="text-lg font-medium text-indigo-100/90 drop-shadow-md">
+                    <p className="text-lg font-medium text-white/80 drop-shadow-md">
                         {message}
                     </p>
                     <motion.div
@@ -172,9 +172,9 @@ export default function LoadingScreen({ onComplete }) {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
                     >
-                        <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
-                        <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                        <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                        <span className="w-1.5 h-1.5 bg-amber-500/50 rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
+                        <span className="w-1.5 h-1.5 bg-amber-500/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                        <span className="w-1.5 h-1.5 bg-amber-500/50 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
                     </motion.div>
                 </motion.div>
 

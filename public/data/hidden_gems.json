@@ -63,7 +63,7 @@
         "name": "2. Jurisics tér",
         "lat": 47.3896,
         "lng": 16.5406,
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Jurisics_Square%2C_K%C5%91szeg.jpg/800px-Jurisics_Square%2C_K%C5%91szeg.jpg",
+        "image": "/images/game/locations/jurisics-ter.jpg",
         "description": "A piac és a találkozások helye. 1532-ben itt gyűltek össze a hírek, és itt oszlott el a remény – vagy épp itt éledt újjá. A civilek harca itt zajlott, fegyverek nélkül.",
         "details": [
             {
@@ -112,7 +112,7 @@
         "name": "3. Óváros falmaradványai",
         "lat": 47.3908,
         "lng": 16.5385,
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/K%C5%91szeg_Zwinger.jpg/800px-K%C5%91szeg_Zwinger.jpg",
+        "image": "/images/game/locations/ovaros-falak.jpg",
         "description": "A kőfalak. Némák, de emlékeznek. Minden repedés egy-egy ágyúgolyó, minden moha egy-egy eltelt évszázad.",
         "details": [
             {
@@ -163,49 +163,239 @@
         }
     },
     {
-        "id": "varkor",
-        "name": "4. Várkör",
-        "lat": 47.3885,
-        "lng": 16.5420,
-        "image": "https://koszeg.hu/images/varkor.jpg",
-        "description": "A Várkör nem csak egy utca. Ez volt a város 'vérkeringése'. Futárok, szekerek, menekülők. Itt nem állt meg az élet egy percre sem.",
+        "id": "forintos-bastya",
+        "name": "Forintos-bástya",
+        "lat": 47.3902,
+        "lng": 16.5380,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/K%C5%91szeg_V%C3%A1rfal_a_V%C3%A1rk%C3%B6r_fel%C5%91l.jpg/800px-K%C5%91szeg_V%C3%A1rfal_a_V%C3%A1rk%C3%B6r_fel%C5%91l.jpg",
+        "description": "A föld alatt is dúlt a harc. Nem karddal, hanem puskaporral és hallgatózással. Itt állította meg Forintos Mátyás a török aknászokat.",
         "details": [
             {
-                "title": "A Vizesárok Emléke",
-                "content": "Ahol ma autók járnak és fák nőnek, ott 1532-ben mély vizesárok húzódott, amit a Gyöngyös-patak vize táplált. Ez volt a város első védvonala, ami elnyelte a török aknászok próbálkozásait."
+                "title": "A Tűz Mestere",
+                "content": "Forintos Mátyás lőmester zsenialitása mentette meg a várat. Vízzel telt edényeket és kifeszített dobokat használt, hogy meghallja, hol ásnak a törökök a föld alatt, majd ellenaknákkal robbantotta rájuk a járatokat."
             },
             {
-                "title": "Lovpatkók Éjszakája",
-                "content": "Helyiek szerint ködös hajnalokon még hallani a siető lovasfutárok patkóinak dobogását a Várkörön, akik a királyhoz vágtattak segítségért – ami sosem érkezett meg időben."
+                "title": "A Védők Füle",
+                "content": "Ez a bástya volt a 'fül', amivel a város hallgatózott. Ha itt elbuktak volna, a törökök berobbantják a falat. A csend itt nem nyugalmat, hanem koncentrációt jelentett."
+            },
+            {
+                "title": "A Diáksétány Őre",
+                "content": "A bástya ma a Diáksétány fölé magasodik, de 1532-ben ez volt a frontvonal legveszélyesebb pontja, ahol a föld bármikor megnyílhatott a védők lába alatt."
             }
         ],
         "question": {
-            "adult": "Ahol minden nap elindult valaki, de nem mindenki tért vissza. (Mi vette körül régen a várost itt?)",
-            "child": "Hol jártak a lovasfutárok? (Mi volt itt régen út helyett?)"
+            "adult": "Hogyan detektálták a török aknászokat? (Mi volt Forintos Mátyás trükkje?)",
+            "child": "Mit csinált a bácsi a pincében? (Hogyan fülelt?)"
         },
         "options": {
             "adult": [
-                "Vizesárok",
-                "Erdő",
-                "Piac",
-                "Temető"
+                "Vizes edényekkel / Dobokkal",
+                "Varázsgömbbel",
+                "Kutyákkal",
+                "Röntgennel"
             ],
             "child": [
-                "Vizesárok",
-                "Verseny-pálya",
-                "Játszótér",
-                "Folyó"
+                "Dobokat és vizet figyelt",
+                "Aludt",
+                "Kiabált",
+                "Zenélt"
             ]
         },
         "answer": {
-            "adult": "Vizesárok",
-            "child": "Vizesárok"
+            "adult": "Vizes edényekkel / Dobokkal",
+            "child": "Dobokat és vizet figyelt"
         },
         "hint": {
-            "adult": "Keress egy házat, ahol a parancsnokok laktak.",
-            "child": "Keressünk egy katonás házat!"
+            "adult": "A víz felszíne megremeg, ha ásnak alattad.",
+            "child": "A víz remeg a pohárban, ha jön a dínó (vagy a török)!"
         },
-        "keyFragment": "A Futár Jelvénye"
+        "keyFragment": "A Lőmester Kanóca",
+        "moment": {
+            "visual": "Sötét van. Csak egy gyertya lángja remeg. A földpadlón egy tál víz. A víz tükre megrezzen. Apró körök indulnak a közepe felé.",
+            "feeling": "A föld alatt valami mozog. Nem látod, de érzed. A tenyered izzad, ahogy a kanóchoz nyúlsz.",
+            "action": "A vízrezgés erősödik. Meggyújtod a tüzet. Tompa dörrenés a mélyből, aztán csend. A víz tükre kisimul.",
+            "quote": "„Aki a földet uralja, azé a vár.”"
+        }
+    },
+    {
+        "id": "szent-imre",
+        "name": "Szent Imre Templom",
+        "lat": 47.3898,
+        "lng": 16.5404,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/K%C5%91szeg_Szent_Imre-templom.jpg/800px-K%C5%91szeg_Szent_Imre-templom.jpg",
+        "description": "A hit vitája. Miközben a falakon a török dörömbölt, itt a lelkekért folyt a harc. Katolikusok és protestánsok, magyarok és németek. De az ima nyelve a félelem óráján közös.",
+        "details": [
+            {
+                "title": "A Magyarok Temploma",
+                "content": "Míg a Szent Jakab templomot a német polgárság használta, ez volt a 'magyarok temploma'. A két épület közelsége jelzi: a város ereje a sokszínűségében rejlett, még ha néha vitáztak is."
+            },
+            {
+                "title": "A Walzing-ház Rejtélye",
+                "content": "A templom mellett álló ház (Walzing-ház) falai egy középkori lakótornyot rejtenek. Úgy tartják, innen figyelték a város minden mozdulatát, még a templomba igyekvőket is."
+            }
+        ],
+        "question": {
+            "adult": "Kik használták főként ezt a templomot a történelem során? (Hogy hívták a népnyelvben?)",
+            "child": "Milyen nyelven imádkoztak itt régen? (Kiknek a temploma volt?)"
+        },
+        "options": {
+            "adult": [
+                "A magyarok temploma",
+                "A németek temploma",
+                "A törökök mecsetje",
+                "A király magánkápolnája"
+            ],
+            "child": [
+                "Magyarok",
+                "Törökök",
+                "Kínaiak",
+                "Marslakók"
+            ]
+        },
+        "answer": {
+            "adult": "A magyarok temploma",
+            "child": "Magyarok"
+        },
+        "hint": {
+            "adult": "Szent Imre magyar herceg volt.",
+            "child": "Ez a mi templomunk!"
+        },
+        "keyFragment": "Az Összefogás Ostyája"
+    },
+    {
+        "id": "patikamuzeum",
+        "name": "Patikamúzeum (Arany Egyszarvú)",
+        "lat": 47.3895,
+        "lng": 16.5402,
+        "image": "https://koszeg.hu/images/patikamuzeum.jpg",
+        "description": "Fűszerek, mérgek és gyógyírek. Az ostrom alatt itt keverték a reményt és a felejtést. A patikus tudása néha többet ért, mint egy kard.",
+        "details": [
+            {
+                "title": "Az Egyszarvú Titka",
+                "content": "A patika címerállata az unikornis. A középkori hiedelem szerint az egyszarvú szarva minden mérget semlegesít. Kőszegen úgy tartották: amíg az Egyszarvú figyeli a teret, nem törhet be a 'fekete halál' (pestis)."
+            },
+            {
+                "title": "A Jezsuiták Tudása",
+                "content": "Az épület később a jezsuitáké lett, akik híresek voltak gyógyító tudományukról. A szárítópadláson ma is érezni a több száz éves gyógynövények illatát."
+            }
+        ],
+        "question": {
+            "adult": "Mi a patika címerállata, ami a legenda szerint semlegesíti a mérget?",
+            "child": "Milyen varázslatos állat van a patika felett?"
+        },
+        "options": {
+            "adult": [
+                "Egyszarvú (Unikornis)",
+                "Oroszlán",
+                "Sas",
+                "Sárkány"
+            ],
+            "child": [
+                "Egyszarvú (Ló szarvval)",
+                "Dinó",
+                "Zsiráf",
+                "Elefánt"
+            ]
+        },
+        "answer": {
+            "adult": "Egyszarvú (Unikornis)",
+            "child": "Egyszarvú (Ló szarvval)"
+        },
+        "hint": {
+            "adult": "Lóhoz hasonlít, de van egy szarva.",
+            "child": "Olyan mint egy ló, de van szarva!"
+        },
+        "keyFragment": "Az Élet Elixírje"
+    },
+    {
+        "id": "maria-szobor",
+        "name": "Mária-szobor",
+        "lat": 47.38965,
+        "lng": 16.54065,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/K%C5%91szeg_M%C3%A1ria-szobor.jpg/800px-K%C5%91szeg_M%C3%A1ria-szobor.jpg",
+        "description": "Az Őrző. A tér közepén áll, és mindent lát. A piac zaját, a katonák vonulását, a szerelmesek találkozását. Ő a csendes tanú.",
+        "details": [
+            {
+                "title": "A Fogadalom",
+                "content": "A szobrot sokszor tévesztik össze a Pestis-oszloppal, de ez a Mária-szobor régebbi hagyományokon alapul. A város népe hozzá fohászkodott, amikor emberi erővel már nem tudták megállítani a bajt."
+            },
+            {
+                "title": "A Tekintet Ereje",
+                "content": "Úgy tartják, Mária tekintete követi azokat, akik tisztességes szándékkal járnak a téren, de elfordul azoktól, akik árulásra készülnek."
+            }
+        ],
+        "question": {
+            "adult": "Kinek a szobra áll a tér közepén, mint a város védelmezője?",
+            "child": "Kinek a szobra ez? (Egy anyuka a kisbabával)"
+        },
+        "options": {
+            "adult": [
+                "Szűz Mária",
+                "Szent Erzsébet",
+                "Jeanne d'Arc",
+                "Viktória Királynő"
+            ],
+            "child": [
+                "Mária és Jézus",
+                "Hófehérke",
+                "Barbie",
+                "Egy tündér"
+            ]
+        },
+        "answer": {
+            "adult": "Szűz Mária",
+            "child": "Mária és Jézus"
+        },
+        "hint": {
+            "adult": "Az égi édesanya.",
+            "child": "Jézus anyukája."
+        },
+        "keyFragment": "Az Oltalom Palástja"
+    },
+    {
+        "id": "varoskut",
+        "name": "Városkút",
+        "lat": 47.38960,
+        "lng": 16.54055,
+        "image": "https://koszeg.hu/images/varoskut.jpg",
+        "description": "Az Élet Forrása. Ostrom idején a víz drágább az aranynál. Ha a kút kiszárad, a város elesik. De ez a kút sosem apadt el.",
+        "details": [
+            {
+                "title": "A Mérgezés Félelme",
+                "content": "1532-ben a legnagyobb félelem nem a kard volt, hanem a méreg. A kutat éjjel-nappal fegyveres őrök védték, nehogy a törökök ügynökei megmérgezzék a vizet. Minden vödör vízért felelősséget kellett vállalni."
+            },
+            {
+                "title": "A Piac Szíve",
+                "content": "Itt mosták az árut, itt itatták a lovakat, itt cseréltek gazdát a pletykák. A kút kávája (széle) annyi titkot hallott már, amennyit egyetlen könyvtár sem őriz."
+            }
+        ],
+        "question": {
+            "adult": "Miért őrizték fegyverrel a kutat az ostrom idején?",
+            "child": "Miért kellett vigyázni a kút vizére?"
+        },
+        "options": {
+            "adult": [
+                "Féltek a mérgezéstől",
+                "Mert arany volt benne",
+                "Mert szörny lakott benne",
+                "Mert fizetős volt"
+            ],
+            "child": [
+                "Hogy senki ne tegyen bele rosszat (mérget)",
+                "Mert a halaknak kellett",
+                "Mert a királyé volt",
+                "Mert meleg víz jött belőle"
+            ]
+        },
+        "answer": {
+            "adult": "Féltek a mérgezéstől",
+            "child": "Hogy senki ne tegyen bele rosszat (mérget)"
+        },
+        "hint": {
+            "adult": "Ha nincs víz, nincs élet.",
+            "child": "Mit iszunk, ha szomjasak vagyunk?"
+        },
+        "keyFragment": "A Tisztaság Cseppje"
     },
     {
         "id": "tabornokhaz",
