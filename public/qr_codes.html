@@ -90,11 +90,16 @@
     <h1>Kőszeg Kincsvadász - Helyszín QR Kódok</h1>
 
     <div class="controls">
-        <label>Cél url:</label>
-        <select id="baseUrl" onchange="generateQRs()">
+        <label>Bázis URL:</label>
+        <select id="baseUrlSelect" onchange="updateBaseUrl()">
             <option value="https://koszegapp.netlify.app">ÉLES (koszegapp.netlify.app)</option>
-            <option value="http://localhost:5173">HELYI (localhost:5173)</option>
+            <option value="http://localhost:3000">HELYI (localhost:3000)</option>
+            <option value="custom">Egyéni (pl. 192.168.x.x:3000)</option>
         </select>
+
+        <input type="text" id="customUrlInput" placeholder="http://192.168.1.10:3000"
+            style="display:none; width: 200px;" onkeyup="generateQRs()">
+
         <button onclick="window.print()">🖨️ Nyomtatás / PDF mentés</button>
     </div>
 
@@ -119,9 +124,32 @@
             { id: "chernel-kert", name: "EXTRA: Chernel-kert" }
         ];
 
+        function updateBaseUrl() {
+            const select = document.getElementById('baseUrlSelect');
+            const input = document.getElementById('customUrlInput');
+
+            if (select.value === 'custom') {
+                input.style.display = 'inline-block';
+                input.focus();
+            } else {
+                input.style.display = 'none';
+                generateQRs();
+            }
+        }
+
         function generateQRs() {
             const grid = document.getElementById('grid');
-            const baseUrl = document.getElementById('baseUrl').value;
+            const select = document.getElementById('baseUrlSelect');
+            let baseUrl = select.value;
+
+            if (baseUrl === 'custom') {
+                baseUrl = document.getElementById('customUrlInput').value;
+                if (!baseUrl) return; // Ne generáljon, ha üres
+            }
+
+            // Remove trailing slash if present
+            if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
+
             grid.innerHTML = '';
 
             locations.forEach(loc => {
