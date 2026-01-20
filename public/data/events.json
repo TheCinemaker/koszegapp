@@ -489,5 +489,24 @@
     "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
     "highlight": true,
     "highlightLabel": "Hollywoody csillogás"
+  },
+  {
+    "id": "new_1768893910346",
+    "name": "III. Hagyományőrző Mulatság",
+    "date": "2026-04-18",
+    "time": "18:00",
+    "location": "Dr. Nagy László Egységes Gyógypedagógiai Módszertani Intézmény",
+    "coords": {
+      "lat": 47.39325634095981,
+      "lng": 16.549946901927246
+    },
+    "description": "Az idei évben immár 3. alkalommal rendezzük meg Hagyományőrző Mulatságunkat. A helyszín ugyan változik, de a jó hangulat marad a megszokottak szerint. Mindenkit várunk szeretettel. Részletekkel később jelentkezünk!",
+    "tags": [
+      "mulatság"
+    ],
+    "image": "hagyomany-1768894148547.jpg",
+    "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
