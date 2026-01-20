@@ -4,6 +4,7 @@ import { fetchHiddenGems } from '../api';
 import { useGame } from '../hooks/useGame';
 import { motion, AnimatePresence } from 'framer-motion';
 import { storyChapters } from '../data/story_chapters';
+import GameCompleteScreen from '../screens/game/GameCompleteScreen';
 
 // --- ANIMATION VARIANTS ---
 const containerVariants = {
@@ -73,52 +74,52 @@ const StoryOverlay = ({ chapter, onClose }) => {
   );
 };
 
-const StatusRow = ({ gem, isFound, onClick }) => {
+const GemCard = ({ gem, isFound, onClick }) => {
   return (
     <motion.div
       variants={itemVariants}
-      className={`
-        w-full py-4 border-b border-white/5 flex items-center justify-between group
-        ${isFound ? 'opacity-100 cursor-pointer' : 'opacity-30 cursor-default'}
-      `}
+      whileTap={{ scale: 0.95 }}
       onClick={() => isFound && onClick(gem.id)}
+      className={`
+        aspect-square rounded-xl flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300
+        ${isFound
+          ? 'bg-amber-900/20 border border-amber-500/30 cursor-pointer shadow-[0_0_15px_rgba(245,158,11,0.1)] hover:bg-amber-900/40 hover:border-amber-500/60'
+          : 'bg-white/5 border border-white/5 opacity-40 cursor-default'}
+      `}
     >
-      <div className="flex items-center gap-4 text-left">
-        {/* Status Dot */}
+      {/* GLOW EFFECT (FOUND) */}
+      {isFound && (
+        <div className="absolute inset-0 bg-amber-500/10 blur-xl animate-pulse" />
+      )}
+
+      {/* ICON / CONTENT */}
+      <div className="relative z-10 flex flex-col items-center gap-1">
+        {/* Simple Dot for now, or could use an icon if available */}
         <div className={`
-          w-1.5 h-1.5 rounded-full transition-all duration-500
-          ${isFound ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] scale-110' : 'bg-transparent border border-white/50'}
+          w-2 h-2 rounded-full transition-all duration-500 mb-1
+          ${isFound ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]' : 'bg-white/20'}
         `} />
 
-        <div className="flex flex-col gap-1">
-          <span className={`
-            font-serif text-lg leading-none tracking-wide text-white transition-all
-            ${isFound ? '' : 'font-mono text-xs uppercase tracking-[0.2em] opacity-80'}
-          `}>
-            {isFound ? gem.name.replace(/\(.*\)/, '') : 'ZÁROLT ADAT'}
-          </span>
-
-          {isFound && (
-            <span className="text-[10px] uppercase tracking-widest font-mono opacity-50">
-              STABILIZÁLVA
-            </span>
-          )}
+        {/* SHORT ID or NAME TRUNCATED */}
+        <div className="text-[9px] uppercase font-mono tracking-widest text-white/60 text-center px-1">
+          {isFound ? (gem.shortName || 'KAPU') : 'XXX'}
         </div>
       </div>
 
+      {/* CORNER DECOR */}
       {isFound && (
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-widest text-white/40 transform translate-x-2 group-hover:translate-x-0 duration-300">
-          →
-        </div>
+        <>
+          <div className="absolute top-1 left-1 w-1.5 h-1.5 border-t border-l border-amber-500/50" />
+          <div className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b border-r border-amber-500/50" />
+        </>
       )}
+
     </motion.div>
   );
 };
 
-import GameCompleteScreen from '../screens/game/GameCompleteScreen';
-
 export default function MyGems() {
-  const { foundGems, resetGame, isGemFound, REQUIRED_KEYS, gameState, startGame } = useGame();
+  const { foundGems, isGemFound, REQUIRED_KEYS, gameState } = useGame();
   const navigate = useNavigate();
   const [allGems, setAllGems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -128,7 +129,6 @@ export default function MyGems() {
   const [activeStory, setActiveStory] = useState(null);
 
   // --- GATEKEEPER LOGIKA ---
-  // Ha nem kezdte el a játékot, irányítsuk át a teljes képernyős Intróra
   useEffect(() => {
     if (!gameState.gameStarted) {
       navigate('/game/intro');
@@ -160,21 +160,17 @@ export default function MyGems() {
     setActiveStory(null);
   };
 
-  if (!gameState.gameStarted) return null;
-
   useEffect(() => {
     fetchHiddenGems()
       .then(data => setAllGems(data))
       .finally(() => setLoading(false));
   }, []);
 
-
+  if (!gameState.gameStarted) return null;
+  if (loading) return null;
 
   const foundCount = foundGems.length;
-  // Check if ALL main keys are found (assuming REQUIRED_KEYS tracks the main story count)
   const isGameComplete = foundCount >= REQUIRED_KEYS;
-
-  if (loading) return null;
 
   return (
     <div className="min-h-screen bg-[#0b0b0c] text-neutral-100 relative overflow-hidden flex flex-col items-center px-6 selection:bg-white/20">
@@ -221,15 +217,15 @@ export default function MyGems() {
           </div>
         </motion.div>
 
-        {/* List - Staggered */}
+        {/* Grid - Staggered */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="w-full space-y-2 mb-20"
+          className="w-full grid grid-cols-4 gap-3 px-4 mb-20"
         >
           {allGems.map(gem => (
-            <StatusRow
+            <GemCard
               key={gem.id}
               gem={gem}
               isFound={isGemFound(gem.id)}
@@ -238,7 +234,7 @@ export default function MyGems() {
           ))}
         </motion.div>
 
-        {/* Footer / Future Button Area */}
+        {/* Footer / Buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -276,7 +272,6 @@ export default function MyGems() {
           >
             QR Kód Beolvasása
           </button>
-
 
         </motion.div>
 

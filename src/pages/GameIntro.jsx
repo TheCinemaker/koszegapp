@@ -38,8 +38,13 @@ export default function GameIntro() {
     return () => clearInterval(timer);
   }, []);
 
-  /* ===== FÁZISOK LÉPTETÉSE (KÉZI) ===== */
-  // Az auto-timer törölve, gombbal lépünk tovább.
+  /* ===== FÁZISOK LÉPTETÉSE ===== */
+  useEffect(() => {
+    if (phase === 'intro') {
+      const t = setTimeout(() => setPhase('rules'), 4000); // 4mp olvasási idő az első tömbhöz
+      return () => clearTimeout(t);
+    }
+  }, [phase]);
 
   const handleNameSubmit = (name) => {
     setPlayerName(name);
@@ -109,36 +114,12 @@ export default function GameIntro() {
             </motion.div>
           )}
 
-          {/* NEXT GOMBOK (Intro / Rules) */}
-          {phase === 'intro' && (
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2 }} // Hagyunk időt az olvasásra
-              onClick={() => setPhase('rules')}
-              className="
-                mt-12
-                text-xs
-                uppercase
-                tracking-[0.4em]
-                text-blue-300
-                opacity-80
-                hover:opacity-100
-                border-b border-transparent
-                hover:border-blue-300/40
-                pb-2
-                transition-all
-              "
-            >
-              Következő Lépés →
-            </motion.button>
-          )}
-
+          {/* EGYETLEN TOVÁBBLÉPÉS GOMB (Csak a Rules végén) */}
           {phase === 'rules' && (
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2 }}
+              transition={{ delay: 2.5 }} // Hagyunk időt az olvasásra
               onClick={() => setPhase('choice')}
               className="
                  mt-12
@@ -154,7 +135,7 @@ export default function GameIntro() {
                  transition-all
                "
             >
-              Válaszd ki az utad →
+              Induljon a kaland →
             </motion.button>
           )}
 
