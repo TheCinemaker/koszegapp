@@ -174,10 +174,9 @@ export default function MyGems() {
 
   const handleReset = () => {
     if (window.confirm("Valóban alaphelyzetbe állítod az időkaput?")) {
-      resetGame();
       // Reset story progress too
       localStorage.removeItem('koszeg_seen_stories');
-      navigate('/game/intro');
+      resetGame();
     }
   };
 

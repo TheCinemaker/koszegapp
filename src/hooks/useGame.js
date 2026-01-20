@@ -104,6 +104,9 @@ export function useGame() {
     setGameState(freshState);
     window.localStorage.removeItem(HAS_PLAYED_KEY);
     window.localStorage.setItem(GAME_STATE_KEY, JSON.stringify(freshState));
+
+    // Hard Reload to ensure clean state and correct routing to true Intro
+    window.location.href = '/game/intro';
   }, []);
 
   // --- SELECTORS ---
