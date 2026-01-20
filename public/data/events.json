@@ -508,5 +508,25 @@
     "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1768895081935",
+    "name": "2026. évi Magyar Snapszerbajnokság 1. selejtezőverseny",
+    "date": "2026-01-31",
+    "time": "10:00",
+    "location": "Corner söröző, Liszt Ferenc utca 1.",
+    "coords": {
+      "lat": 47.38729300528711,
+      "lng": 16.544162694943665
+    },
+    "description": "A 2026. évi Magyar Snapszerbajnokság 1. selejtezőversenyére Kőszegen kerül sor, a Corner sörözőben. A versenyhez helyszíni nevezéssel bárki csatlakozhat. További információ az eseményen belül hozzászólásként vagy privát üzenetben.",
+    "tags": [
+      "kártya",
+      "verseny"
+    ],
+    "image": "snapszer.jpg",
+    "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
