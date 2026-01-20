@@ -33,7 +33,30 @@
             "feeling": "A levegő megfeszül. Mintha a tér várná, mit mondanak ki.",
             "action": "A viasz fénye megremeg, majd kifakul. A helyén egy törött, hideg fémdarab jelenik meg.",
             "quote": "„Egy város sorsa nem a csatatéren dől el először.”"
-        }
+        },
+        "question": {
+            "adult": "Miért harangoznak Kőszegen 11 órakor dél helyett?",
+            "child": "Hány órakor szólal meg a „déli” harangszó Kőszegen?"
+        },
+        "options": {
+            "adult": [
+                "Mert a török sereg ekkor vonult el.",
+                "Mert Jurisics ekkor halt meg.",
+                "Mert így csapták be a törököket a határidővel.",
+                "Mert a toronyóra elromlott az ostrom alatt."
+            ],
+            "child": [
+                "10 órakor",
+                "11 órakor",
+                "12 órakor",
+                "1 órakor"
+            ]
+        },
+        "answer": {
+            "adult": "Mert így csapták be a törököket a határidővel.",
+            "child": "11 órakor"
+        },
+        "hint": "Az időt néha előre lehet pörgetni a túlélés érdekében..."
     },
     {
         "id": "jurisics-ter",
