@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KőszegAPP - Játék QR Kódok</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            width: 220px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: white;
+            page-break-inside: avoid;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            height: 40px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .url {
+            font-size: 10px;
+            color: #666;
+            word-break: break-all;
+        }
+
+        select,
+        button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media print {
+            .controls {
+                display: none;
+            }
+
+            body {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Kőszeg Kincsvadász - Helyszín QR Kódok</h1>
+
+    <div class="controls">
+        <label>Cél url:</label>
+        <select id="baseUrl" onchange="generateQRs()">
+            <option value="https://koszegapp.netlify.app">ÉLES (koszegapp.netlify.app)</option>
+            <option value="http://localhost:5173">HELYI (localhost:5173)</option>
+        </select>
+        <button onclick="window.print()">🖨️ Nyomtatás / PDF mentés</button>
+    </div>
+
+    <div id="grid" class="grid"></div>
+
+    <script>
+        // Adatok a hidden_gems.json alapján
+        const locations = [
+            { id: "varoshaza", name: "1. Városháza" },
+            { id: "jurisics-ter", name: "2. Jurisics tér" },
+            { id: "ovaros-falak", name: "3. Óváros falmaradványai" },
+            { id: "varkor", name: "4. Várkör" },
+            { id: "tabornokhaz", name: "5. Tábornokház" },
+            { id: "labashaz", name: "6. Lábasház" },
+            { id: "chernel-haz", name: "7. Chernel-ház" },
+            { id: "szent-jakab", name: "8. Szent Jakab Templom" },
+            { id: "sgraffitos-haz", name: "9. Sgraffitós-ház" },
+            { id: "jezus-szive", name: "10. Jézus Szíve Templom" },
+            { id: "egykori-varoskapu", name: "11. Hősök Tornya (Városkapu)" },
+            { id: "jurisics-var", name: "12. Jurisics Vár (VÉGCÉL)" },
+            { id: "koronaorzo-bunker", name: "EXTRA: Koronaőrző Bunker" },
+            { id: "chernel-kert", name: "EXTRA: Chernel-kert" }
+        ];
+
+        function generateQRs() {
+            const grid = document.getElementById('grid');
+            const baseUrl = document.getElementById('baseUrl').value;
+            grid.innerHTML = '';
+
+            locations.forEach(loc => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Játék útvonal URL: /game/gem/{id}
+                const fullUrl = `${baseUrl}/game/gem/${loc.id}`;
+
+                const title = document.createElement('h3');
+                title.innerText = loc.name;
+
+                const qrContainer = document.createElement('div');
+                qrContainer.className = 'qr-container';
+                const qrDiv = document.createElement('div');
+                qrContainer.appendChild(qrDiv);
+
+                const urlText = document.createElement('div');
+                urlText.className = 'url';
+                urlText.innerText = `/game/gem/${loc.id}`;
+
+                card.appendChild(title);
+                card.appendChild(qrContainer);
+                card.appendChild(urlText);
+                grid.appendChild(card);
+
+                // QR kód generálás
+                new QRCode(qrDiv, {
+                    text: fullUrl,
+                    width: 128,
+                    height: 128,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            });
+        }
+
+        // Indítás
+        generateQRs();
+    </script>
+
+</body>
+
+</html>

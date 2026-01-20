@@ -42,6 +42,20 @@
         "lng": 16.5406,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Jurisics_Square%2C_K%C5%91szeg.jpg/800px-Jurisics_Square%2C_K%C5%91szeg.jpg",
         "description": "A piac és a találkozások helye. 1532-ben itt gyűltek össze a hírek, és itt oszlott el a remény – vagy épp itt éledt újjá. A civilek harca itt zajlott, fegyverek nélkül.",
+        "details": [
+            {
+                "title": "Jurisics és a Pasa",
+                "content": "Egy ősrégi monda szerint Ibrahim pasa és Jurisics fiatalkorukban barátok voltak. Amikor a pasa meglátta a várvédő kapitányt a falon, állítólag a régi barátság emléke késztette arra, hogy ne pusztítsa el teljesen a várost, hanem megelégedjen a jelképes 'zászlókitűzéssel'."
+            },
+            {
+                "title": "A Lada-ház titka",
+                "content": "A tér egyik legrégebbi, rózsaszínes épülete, a Lada-ház. Úgy tartják, Mátyás király is megszállt itt álruhában, hogy kihallgassa, mit beszélnek a kőszegi polgárok a piacon."
+            },
+            {
+                "title": "A Remény Piaca",
+                "content": "Az ostrom alatt itt nem pénzért adtak ételt, hanem reményért. A nők és öregek itt gyűltek össze imádkozni, miközben a férfiak a falakon harcoltak. A kövezetet a könnyek és a vér szentelte fel."
+            }
+        ],
         "question": {
             "adult": "Ahol sokan voltak, de senki sem volt biztonságban. (Melyik szobor őrzi a teret a közepén?)",
             "child": "Hol árulták régen a zöldséget és a kenyeret? (Keress egy nagy oszlopot a téren!)"
@@ -77,6 +91,20 @@
         "lng": 16.5385,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/K%C5%91szeg_Zwinger.jpg/800px-K%C5%91szeg_Zwinger.jpg",
         "description": "A kőfalak. Némák, de emlékeznek. Minden repedés egy-egy ágyúgolyó, minden moha egy-egy eltelt évszázad.",
+        "details": [
+            {
+                "title": "A Zwinger Csapdája",
+                "content": "A 'Zwinger' név két fal közötti szűk teret jelent. Ez egy halálos csapda volt: ha az ellenség áttörte az első falat, itt rekedt, és a védők fentről könnyedén legyőzhették őket."
+            },
+            {
+                "title": "A Legöregebb Kő",
+                "content": "Az Öreg-bástya (Zwinger) alapjai a 13. századból származnak. Ez a város legidősebb katonai építménye. Falai látták az összes ostromot, amit Kőszeg valaha elszenvedett."
+            },
+            {
+                "title": "Börtön és Jégverem",
+                "content": "Békeidőben a bástya nem katonákat, hanem jeget és bort őrzött, de volt, hogy börtönként is szolgált. A falak még emlékeznek a rabok sóhajaira."
+            }
+        ],
         "question": {
             "adult": "Ahol a kő emlékszik a csapásra. (Melyik bástya a legöregebb a védműben?)",
             "child": "Melyik fal a legvastagabb? (Keress egy kerek épületet!)"
@@ -118,6 +146,16 @@
         "lng": 16.5420,
         "image": "https://koszeg.hu/images/varkor.jpg",
         "description": "A Várkör nem csak egy utca. Ez volt a város 'vérkeringése'. Futárok, szekerek, menekülők. Itt nem állt meg az élet egy percre sem.",
+        "details": [
+            {
+                "title": "A Vizesárok Emléke",
+                "content": "Ahol ma autók járnak és fák nőnek, ott 1532-ben mély vizesárok húzódott, amit a Gyöngyös-patak vize táplált. Ez volt a város első védvonala, ami elnyelte a török aknászok próbálkozásait."
+            },
+            {
+                "title": "Lovpatkók Éjszakája",
+                "content": "Helyiek szerint ködös hajnalokon még hallani a siető lovasfutárok patkóinak dobogását a Várkörön, akik a királyhoz vágtattak segítségért – ami sosem érkezett meg időben."
+            }
+        ],
         "question": {
             "adult": "Ahol minden nap elindult valaki, de nem mindenki tért vissza. (Mi vette körül régen a várost itt?)",
             "child": "Hol jártak a lovasfutárok? (Mi volt itt régen út helyett?)"
@@ -153,7 +191,17 @@
         "lat": 47.3895,
         "lng": 16.5408,
         "image": "https://koszeg.hu/images/tabornokhaz.jpg",
-        "description": "Bár e falak 1532-ben még nem emelkedtek a tér fölé, a hely szelleme már itt figyelt. Innen, a magasból rálátni az egykori nyüzsgő piactérre, a Jurisics térre. Ez az épület egy későbbi kor őre, amely azért született, hogy emlékezzen. A falai ma a Múzeumot rejtik, és magukba szívták évszázadok csendjét és titkait. Ez nem a csata sűrűje, hanem egy kilátó az időben, ahonnan a múlt nem elveszett, hanem tisztán látható.",
+        "description": "Bár e falak 1532-ben még nem emelkedtek a tér fölé, a hely szelleme már itt figyelt. Innen, a magasból rálátni az egykori nyüzsgő piactérre.",
+        "details": [
+            {
+                "title": "A Céhek Titkai",
+                "content": "Az épület ma a Városi Múzeumnak ad otthont, ahol a kőszegi céhek kincseit őrzik. A legenda szerint a céhládák titkos rekeszei még mindig rejtik azokat a mesterfogásokat, amiket sosem vetettek papírra."
+            },
+            {
+                "title": "Az Idő Kilátója",
+                "content": "A Tábornokház loggiájáról (erkélyéről) a legjobb a kilátás a 'Múltra'. Ez az a pont, ahonnan a város vezetői évszázadokon át figyelték a piactér életét és a közeledő veszélyeket."
+            }
+        ],
         "question": {
             "adult": "Ahol a későbbi korok őrzik az ősök emlékét. (Mi található ma az épületben?)",
             "child": "Ez a ház egy óriási távcső a múltba! (Milyen színű ez az épület?)"
@@ -189,6 +237,20 @@
         "lng": 16.5409,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/K%C5%91szeg%2C_L%C3%A1bas_H%C3%A1z.jpg/800px-K%C5%91szeg%2C_L%C3%A1bas_H%C3%A1z.jpg",
         "description": "Nem csak iratok voltak itt. Élelem. Remény. A város teste itt éhezett először, amikor a készletek fogyni kezdtek.",
+        "details": [
+            {
+                "title": "Szellemek Keringője",
+                "content": "Az épület eredetileg bálháznak épült a 18. században. Éjszakánként, ha csend van, állítólag még hallani a régi bálok zenéjét és a selyemszoknyák suhogását az emeleti ablakokból."
+            },
+            {
+                "title": "A Zenész Háza",
+                "content": "Bittner Jakab építette, aki a Toronyzenészek vezetője volt. A házat úgy tervezték, hogy akusztikája emlékeztessen a zene tisztaságára."
+            },
+            {
+                "title": "Mészárszékből Levéltár",
+                "content": "A mai árkádok alatt régen mészárszék működött – az élet és halál körforgása ezen a helyen mindig is jelen volt. Ma a Levéltár őrzi itt a város minden írott emlékét."
+            }
+        ],
         "question": {
             "adult": "Ahol a város teste először éhezett. (Mire használták a piac idején az árkádokat?)",
             "child": "Hol bújtak el az eső elől a piacon? (Mi van a ház alján?)"
@@ -224,6 +286,16 @@
         "lng": 16.5395,
         "image": "https://koszeg.hu/images/chernel.jpg",
         "description": "Egy család csendje, elrejtett értékek. Az ostrom nem csak a katonákat éri el, hanem a hálószobákat és az eldugott pincéket is.",
+        "details": [
+            {
+                "title": "A Madarak Védelmezője",
+                "content": "A ház a Chernel családról kapta nevét, akik közül Chernel István híres ornitológus származik. A legenda szerint a kert madarai ostrom idején is énekeltek, reményt adva a rejtőzködőknek."
+            },
+            {
+                "title": "Festetics Örökség",
+                "content": "Az épület homlokzata a Festetics család címerét is viseli, jelezve a nemesi összefonódásokat, melyek nemcsak vagyonban, hanem a haza védelmében is egyesítették a családokat."
+            }
+        ],
         "question": {
             "adult": "Ahol a város nem védekezett, hanem kitartott. (Milyen stílusú az épület?)",
             "child": "Hol lakott a madaras bácsi? (Mi van az épület falán?)"
@@ -259,6 +331,20 @@
         "lng": 16.5402,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Szent_Jakab-templom.JPG/800px-Szent_Jakab-templom.JPG",
         "description": "Halk imák, eskük, lehajtott fejek. Itt nem a fegyverek csörömpölése hallatszik, hanem a remény suttogása.",
+        "details": [
+            {
+                "title": "Jurisics Gyermekei",
+                "content": "Ez a templom őrzi Jurisics Miklós személyes tragédiáját is. Itt helyezték örök nyugalomra gyermekeit, Ádámot és Annát, akik a pestisjárvány és a megpróbáltatások áldozatai lettek."
+            },
+            {
+                "title": "A Rejtőzködő Madonna",
+                "content": "A templom falain évszázadokig mészréteg fedte a középkori freskókat. A 'Köpönyeges Madonna' képe - aki palástja alatt óvja a híveket - csak 1937-ben került ismét napvilágra, mintha maga is bujkált volna."
+            },
+            {
+                "title": "A Vallások Várfoglalása",
+                "content": "A templom volt katolikus, majd protestáns, aztán újra katolikus. A falakba ivódott imák nyelve változott, de a könyörgés a békéért ugyanaz maradt."
+            }
+        ],
         "question": {
             "adult": "Ahol nem harcoltak, mégis imádkoztak. (Kiknek a temetkezési helye volt eredetileg?)",
             "child": "Kihez imádkoztak az emberek? (Kiről nevezték el a templomot?)"
@@ -300,6 +386,20 @@
         "lng": 16.5409,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/K%C5%91szeg%2C_Sgraffit%C3%B3s_h%C3%A1z_2021_02.jpg/800px-K%C5%91szeg%2C_Sgraffit%C3%B3s_h%C3%A1z_2021_02.jpg",
         "description": "Későbbi korok lenyomata. A falak már emlékeznek arra, ami itt történt. A művészet az élet diadala a pusztítás felett.",
+        "details": [
+            {
+                "title": "A Karcolt Igazság",
+                "content": "A 'sgraffito' technika lényege, hogy a felső vakolatréteget visszakaparják, hogy előtűnjön az alsó. Ez a ház is ilyen: a szépsége abban rejlik, amit 'lekapartak' róla, feltárva a mélyben rejlő mintákat."
+            },
+            {
+                "title": "A Fal Beszél",
+                "content": "A latin felirat a homlokzaton: 'Nem azé, aki akarja, sem nem azé, aki fut, hanem a könyörülő Istené.' Ez az idézet ihlette Ottlik Gézát is, aki szerint az emberi igyekezet kevés a sorssal szemben."
+            },
+            {
+                "title": "Iskola a Határon",
+                "content": "Ottlik Géza világhírű regényének szellemisége áthatja ezt a teret. Az író diákként éveket töltött Kőszegen, és ez a ház, a felirattal, örökre belevésődött az emlékezetébe."
+            }
+        ],
         "question": {
             "adult": "Ahol nem az ostrom idején történt a fontos. (Mikor készült a híres díszítés?)",
             "child": "Mi van a falon? (Rajz vagy karcolás?)"
@@ -335,6 +435,16 @@
         "lng": 16.5417,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/K%C5%91szeg%2C_J%C3%A9zus_Sz%C3%ADve-templom.jpg/800px-K%C5%91szeg%2C_J%C3%A9zus_Sz%C3%ADve-templom.jpg",
         "description": "Nem az ostrom ideje, hanem az utóélet. Az időkapu itt visszanéz, nem belép. A harangszó, ami ma is szól.",
+        "details": [
+            {
+                "title": "A 11 Órai Harangszó",
+                "content": "Kőszegen nem délben, hanem 11 órakor szólal meg a 'déli' harangszó. Ez nem hiba: a hagyomány szerint ekkor vonult el az utolsó török katona a város alól 1532 augusztusában."
+            },
+            {
+                "title": "Üvegbe Zárt Szentek",
+                "content": "A templom színes üvegablakai nemcsak díszek. A fény, ami átjut rajtuk, 'megszínezi' a benti levegőt. A régiek szerint a szentek alakjai a napfényen keresztül lépnek be a térbe."
+            }
+        ],
         "question": {
             "adult": "Ahol az ostrom már véget ért, de mégis tovább él. (Hány órakor szól a harangszó az ostrom emlékére?)",
             "child": "Mikor harangoznak a győzelem miatt? (Délelőtt...)"
@@ -365,11 +475,25 @@
     },
     {
         "id": "egykori-varoskapu",
-        "name": "11. Egykori Városkapu",
+        "name": "11. Hősök Tornya (Városkapu)",
         "lat": 47.3890,
         "lng": 16.5411,
         "image": "https://koszeg.hu/images/varoskapu_helye.jpg",
-        "description": "Gerendák, láncok, záródó átjáró. Itt válik a város zárttá a külvilág felé. Aki itt belép, az a sorsát választja.",
+        "description": "Gerendák, láncok, záródó átjáró. Itt válik a város zárttá a külvilág felé. Aki itt belép, az a sorsát választja. A Hősök Tornya, ami ma itt áll, az 1932-es évfordulóra épült, de a régi Alsókapu helyén.",
+        "details": [
+            {
+                "title": "A Toronyzene",
+                "content": "Régen a toronyőr nemcsak figyelt, hanem zenélt is. Meghatározott órákban fújták a kürtöt, jelezve, hogy a város éber. Ma is hallani innen zenét ünnepnapokon."
+            },
+            {
+                "title": "A Visszatérés Kapuja",
+                "content": "Ez volt a határ a biztonság és a veszély között. Aki katonaként kilépett ezen a kapun, nem tudta, átlépheti-e még valaha visszafelé."
+            },
+            {
+                "title": "Iskola a Határon",
+                "content": "Ottlik Géza regényének címadó helyszíne nem csak metafora. Ez a torony és a mellette lévő épületek valóban a 'határon' álltak – földrajzilag és lélekben is."
+            }
+        ],
         "question": {
             "adult": "Ahol a város befelé zárult. (Mi áll ma a régi kapu helyén?)",
             "child": "Hogyan zárták be a kaput? (Kulccsal vagy...)"
@@ -405,6 +529,16 @@
         "lng": 16.5397,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jurisics_mikl%C3%B3s_v%C3%A1r.jpg/800px-Jurisics_mikl%C3%B3s_v%C3%A1r.jpg",
         "description": "A kapu nyitva vagy zárva. Nem itt törik a kulcs – itt derül ki, elég volt-e. Tedd a kulcsot a zárba.",
+        "details": [
+            {
+                "title": "A Nagy Blöff",
+                "content": "A legenda szerint Jurisicsnek már alig volt puspora, amikor a török elvonult. Úgy tartják, a kapitány elhitette a hatalmas oszmán sereggel, hogy a vár bevehetetlen, miközben már alig maradt védő a falakon."
+            },
+            {
+                "title": "Asszonyok és Gyermekek a Falon",
+                "content": "Nemcsak katonák védték a várat. Az omladozó falakat éjszakánként kőszegi asszonyok és gyerekek építették újjá tégláról téglára, hogy reggelre a törökök sértetlennek lássák az erődöt."
+            }
+        ],
         "question": {
             "adult": "Ahol a kulcs nem volt, de ott lesz teljes. (Kész vagy bezárni az időkaput?)",
             "child": "Kész vagy bezárni az időkaput?"
