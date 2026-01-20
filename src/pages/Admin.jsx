@@ -262,9 +262,17 @@ function Login() {
     setError("");
     setIsLoggingIn(true);
     try {
-      await login(selectedUser, password);
+      // 1. Try default 'client' login (Admin, Varos, etc.)
+      try {
+        await login(selectedUser, password, 'client');
+      } catch (clientError) {
+        // 2. If failed, try 'provider' login (External Partners)
+        console.log("Client login failed, trying provider...", clientError);
+        await login(selectedUser, password, 'provider');
+      }
     } catch (err) {
-      setError(err.message || "Sikertelen bejelentkezés.");
+      // If both fail
+      setError("Hibás felhasználónév vagy jelszó. (Próbáltuk: client és provider módban is)");
     } finally {
       setIsLoggingIn(false);
     }
@@ -482,6 +490,20 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
     onSave({ ...v, tags, createdBy: v.createdBy || user.id });
   };
 
+  // Permission Check
+  const canEdit = hasPermission("events:edit") || (hasPermission("events:edit_own") && initial.createdBy === user.id) || (!initial.id && hasPermission("events:create"));
+
+  if (!canEdit && initial.id) {
+    return (
+      <FormModal title="Esemény részletei (Csak olvasás)" onCancel={onCancel}>
+        <div className="p-8 text-center">
+          <p className="text-red-500 mb-4">Nincs jogosultságod ezt az elemet szerkeszteni.</p>
+          <button onClick={onCancel} className="btn-secondary">Bezárás</button>
+        </div>
+      </FormModal>
+    )
+  }
+
   const uploadImage = async () => {
     if (!file) { setUploadMsg("Válassz egy képfájlt!"); return; }
     setUploading(true); setUploadMsg(""); setErr("");
@@ -580,7 +602,20 @@ function AttractionForm({ initial, onCancel, onSave, onDelete }) {
   const [v, setV] = useState({ id: "", name: "", category: "", description: "", details: "", tags: [], coordinates: { lat: 0, lng: 0 }, ...initial });
   const [tagsInput, setTagsInput] = useState((v.tags || []).join(", "));
   const [coordsInput, setCoordsInput] = useState(v.coordinates ? `${v.coordinates.lat}, ${v.coordinates.lng}` : "");
+
   const canDelete = hasPermission("attractions:delete") || (hasPermission("attractions:delete_own") && v.createdBy === user.id);
+  const canEdit = hasPermission("attractions:edit") || (hasPermission("attractions:edit_own") && v.createdBy === user.id) || (!initial.id && hasPermission("attractions:create"));
+
+  if (!canEdit && initial.id) {
+    return (
+      <FormModal title="Részletek (Csak olvasás)" onCancel={onCancel}>
+        <div className="p-8 text-center">
+          <p className="text-red-500 mb-4">Nincs jogosultságod ezt az elemet szerkeszteni.</p>
+          <button onClick={onCancel} className="btn-secondary">Bezárás</button>
+        </div>
+      </FormModal>
+    )
+  }
 
   const handleSave = () => {
     if (!v.name || !v.id) return alert("Hiányos adatok!");

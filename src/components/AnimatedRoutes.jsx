@@ -31,6 +31,7 @@ const AuthPage = React.lazy(() => import('../pages/AuthPage'));
 const ProviderSetup = React.lazy(() => import('../pages/ProviderSetup'));
 const BusinessDashboard = React.lazy(() => import('../pages/BusinessDashboard'));
 const Admin = React.lazy(() => import('../pages/Admin.jsx'));
+const SecretRegister = React.lazy(() => import('../pages/SecretRegister.jsx'));
 const CityPass = React.lazy(() => import('../pages/CityPass'));
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
@@ -142,6 +143,7 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
           <Route path="/business-dashboard" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
+          <Route path="/secret-setup" element={<PageWrapper><SecretRegister /></PageWrapper>} />
           <Route path="/city-pass" element={<PageWrapper><CityPass /></PageWrapper>} />
         </Routes>
       </Suspense>
