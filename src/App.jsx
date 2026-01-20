@@ -93,7 +93,7 @@ function MainAppContent() {
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const [showResidentModal, setShowResidentModal] = useState(false);
   const isHome = location.pathname === '/';
-  const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
+  const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/') || location.pathname === '/teaser';
 
   // --- MAINTENANCE MODE LOGIC ---
   const [maintenanceMode, setMaintenanceMode] = useState(false); // Devben nyitva, élesben karbantartás

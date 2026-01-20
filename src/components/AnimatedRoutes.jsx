@@ -39,6 +39,7 @@ const SecretRegister = React.lazy(() => import('../pages/SecretRegister.jsx'));
 const CityPass = React.lazy(() => import('../pages/CityPass'));
 const LegalNotice = React.lazy(() => import('../pages/LegalNotice'));
 const GameRules = React.lazy(() => import('../pages/GameRules'));
+const TeaserPage = React.lazy(() => import('../pages/TeaserPage'));
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
 
@@ -127,6 +128,7 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/game/scan/live" element={<ScanLive />} />
           <Route path="/game/legal" element={<PageWrapper><LegalNotice /></PageWrapper>} />
           <Route path="/game/rules" element={<PageWrapper><GameRules /></PageWrapper>} />
+          <Route path="/teaser" element={<TeaserPage />} />
 
           {/* <Route path="/kronoszkop" element={
             <motion.div
