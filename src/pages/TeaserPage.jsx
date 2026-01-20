@@ -5,17 +5,15 @@ export default function TeaserPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
-        // 6. Final "Essence" Script
+        // 7. Minimalist & Correct Narrative Script (ALL CAPS)
         const sequence = [
-            { delay: 1000, step: 1 },  // "A város, amit ismersz..."
-            { delay: 4500, step: 2 },  // "...tele van titkokkal."
-            { delay: 8000, step: 3 },  // "Lépj át az időkapun." (Mechanika)
-            { delay: 12000, step: 4 }, // "Keresd a jeleket." (Gameplay)
-            { delay: 16000, step: 5 }, // "Hallgasd a falakat." (Story)
-            { delay: 20000, step: 6 }, // "Éld át az ostromot." (Téma)
-            { delay: 26000, step: 7 }, // TITLE: 1532
-            { delay: 29000, step: 8 }, // SUBTITLE
-            { delay: 33000, step: 9 }, // HUGE COMING SOON
+            { delay: 1500, step: 1 },  // A KÖVEK FIGYELNEK
+            { delay: 5000, step: 2 },  // A FALAK EMLÉKEZNEK
+            { delay: 9000, step: 3 },  // A SZOBROK MESÉLNEK
+            { delay: 13000, step: 4 }, // ELMONDJÁK, MIRE EMLÉKEZNEK (vagy TITOK)
+            { delay: 18000, step: 5 }, // KERESD A TITKOKAT
+            { delay: 24000, step: 6 }, // 1532
+            { delay: 28000, step: 7 }, // HAMAROSAN
         ];
 
         const timers = sequence.map(item =>
@@ -25,124 +23,106 @@ export default function TeaserPage() {
         return () => timers.forEach(clearTimeout);
     }, []);
 
-    // Stable, Slow Fade Variant (NO BLINKING)
-    const stableVariant = {
-        initial: { opacity: 0, y: 30 },
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -30 },
-        transition: { duration: 1.5, ease: "easeOut" }
+    // Pure Text Variant - No decorations
+    const textVariant = {
+        initial: { opacity: 0, scale: 0.95 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 1.05, filter: 'blur(10px)' },
+        transition: { duration: 2.0, ease: "easeInOut" }
     };
 
     return (
-        <div className="fixed inset-0 bg-[#050505] text-white flex flex-col items-center justify-center overflow-hidden z-[9999]">
+        <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center overflow-hidden z-[9999]">
 
-            {/* Subtle Texture - Static, NO PULSE */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1a1a1a_0%,#000000_100%)] z-0" />
-
-            {/* Content Layer */}
-            <div className="relative z-20 w-full max-w-xl px-6 flex flex-col items-center justify-center text-center h-full">
+            {/* Content Layer - CENTERED, PURE TYPOGRAPHY */}
+            <div className="relative z-20 w-full max-w-2xl px-6 flex flex-col items-center justify-center text-center h-full">
                 <AnimatePresence mode='wait'>
 
                     {/* S1 */}
                     {step === 1 && (
-                        <motion.div key="s1" {...stableVariant}>
-                            <p className="text-3xl font-serif text-neutral-400 font-light">
-                                A város, amit ismersz...
-                            </p>
+                        <motion.div key="s1" {...textVariant}>
+                            <h1 className="text-4xl sm:text-6xl font-serif font-bold tracking-widest leading-tight text-neutral-400">
+                                A KÖVEK<br /><span className="text-white">FIGYELNEK</span>
+                            </h1>
                         </motion.div>
                     )}
 
                     {/* S2 */}
                     {step === 2 && (
-                        <motion.div key="s2" {...stableVariant}>
-                            <p className="text-4xl font-serif text-white font-light">
-                                ...tele van titkokkal.
-                            </p>
+                        <motion.div key="s2" {...textVariant}>
+                            <h1 className="text-4xl sm:text-6xl font-serif font-bold tracking-widest leading-tight text-neutral-400">
+                                A FALAK<br /><span className="text-white">EMLÉKEZNEK</span>
+                            </h1>
                         </motion.div>
                     )}
 
                     {/* S3 */}
                     {step === 3 && (
-                        <motion.div key="s3" {...stableVariant}>
-                            <div className="bg-amber-500/10 border border-amber-500/20 px-6 py-4 rounded-lg">
-                                <p className="text-2xl font-light text-amber-100 font-sans tracking-wide">
-                                    Lépj át az időkapun.
-                                </p>
-                            </div>
+                        <motion.div key="s3" {...textVariant}>
+                            <h1 className="text-4xl sm:text-6xl font-serif font-bold tracking-widest leading-tight text-neutral-400">
+                                A SZOBROK<br /><span className="text-white">MESÉLNEK</span>
+                            </h1>
                         </motion.div>
                     )}
 
                     {/* S4 */}
                     {step === 4 && (
-                        <motion.div key="s4" {...stableVariant}>
-                            <p className="text-3xl font-serif text-neutral-200">
-                                Keresd a jeleket.
+                        <motion.div key="s4" {...textVariant}>
+                            <p className="text-2xl sm:text-4xl font-light tracking-[0.2em] uppercase leading-relaxed text-neutral-300">
+                                ELMONDJÁK,<br />MIRE EMLÉKEZNEK
                             </p>
                         </motion.div>
                     )}
 
                     {/* S5 */}
                     {step === 5 && (
-                        <motion.div key="s5" {...stableVariant}>
-                            <p className="text-3xl font-serif text-neutral-300 italic">
-                                "Hallgasd a falakat."
-                            </p>
+                        <motion.div key="s5" {...textVariant}>
+                            <h1 className="text-5xl sm:text-7xl font-serif font-black tracking-widest text-amber-500/90 uppercase">
+                                KERESD<br />A TITKOKAT
+                            </h1>
                         </motion.div>
                     )}
 
-                    {/* S6 */}
-                    {step === 6 && (
-                        <motion.div key="s6" {...stableVariant}>
-                            <p className="text-4xl font-serif text-red-100 font-bold tracking-widest uppercase">
-                                Éld át az ostromot.
-                            </p>
-                        </motion.div>
-                    )}
+                    {/* THE FINALE (6, 7) */}
+                    {step >= 6 && (
+                        <div className="flex flex-col items-center justify-center w-full h-full pb-10">
 
-                    {/* THE FINALE (7, 8, 9) */}
-                    {step >= 7 && (
-                        <div className="flex flex-col items-center justify-center w-full h-full pb-16">
-
-                            {/* 1532 - STABLE, NO FLICKER */}
+                            {/* 1532 */}
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 2.5, ease: 'easeOut' }}
-                                className="relative z-30"
                             >
-                                <h1 className="text-[120px] sm:text-[160px] leading-none font-serif font-bold text-white tracking-tighter">
+                                <h1 className="text-[120px] sm:text-[180px] leading-none font-serif font-bold text-white tracking-tighter">
                                     1532
                                 </h1>
                             </motion.div>
 
                             {/* SUBTITLE */}
-                            {step >= 8 && (
+                            {step >= 6 && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 1.5 }}
-                                    className="mt-6"
+                                    transition={{ duration: 1.5, delay: 1.5 }}
+                                    className="mt-4 sm:mt-8"
                                 >
-                                    <p className="text-lg sm:text-xl text-amber-500 font-medium uppercase tracking-[0.2em]">
-                                        Van, amit falak tudnak
+                                    <p className="text-sm sm:text-xl text-neutral-400 font-bold uppercase tracking-[0.4em]">
+                                        VAN, AMIT CSAK A FALAK TUDNAK
                                     </p>
                                 </motion.div>
                             )}
 
-                            {/* COMING SOON - HUGE & VISIBLE */}
-                            {step >= 9 && (
+                            {/* HAMAROSAN - HUGE, CLEAN */}
+                            {step >= 7 && (
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ duration: 1.5, delay: 0.5 }}
-                                    className="mt-16 bg-white/5 border border-white/10 px-8 py-4 rounded-xl backdrop-blur-sm"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 2, delay: 0.5 }}
+                                    className="mt-20 sm:mt-32"
                                 >
-                                    <p className="text-4xl sm:text-5xl font-serif font-bold text-white tracking-widest uppercase drop-shadow-xl">
+                                    <h2 className="text-5xl sm:text-7xl font-sans font-black text-white tracking-widest uppercase">
                                         HAMAROSAN
-                                    </p>
-                                    <p className="text-xs text-neutral-400 font-sans tracking-[0.5em] mt-2 uppercase text-center">
-                                        2025 tavasz
-                                    </p>
+                                    </h2>
                                 </motion.div>
                             )}
 
