@@ -4,21 +4,23 @@ import ModeSelection from './ModeSelection';
 import PlayerNameInput from './PlayerNameInput';
 
 export default function IntroFlow({ onComplete }) {
-    const [step, setStep] = useState('intro'); // 'intro' | 'name' | 'mode'
+    const [step, setStep] = useState('intro'); // 'intro' | 'mode' | 'name'
     const [playerName, setPlayerName] = useState('');
+    const [selectedMode, setSelectedMode] = useState(null);
 
     const handleIntroDone = () => {
+        setStep('mode');
+    };
+
+    const handleModeSelected = (mode) => {
+        setSelectedMode(mode);
         setStep('name');
     };
 
     const handleNameSubmit = (name) => {
         setPlayerName(name);
-        setStep('mode');
-    };
-
-    const handleModeSelected = (mode) => {
         // Átadja a módot ÉS a nevet a szülőnek
-        onComplete(mode, playerName);
+        onComplete(selectedMode, name);
     };
 
     if (step === 'intro') {

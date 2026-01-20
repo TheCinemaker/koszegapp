@@ -168,12 +168,7 @@ export default function MyGems() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleReset = () => {
-    if (window.confirm("Valóban alaphelyzetbe állítod az időkaput?")) {
-      localStorage.removeItem('koszeg_seen_stories');
-      resetGame();
-    }
-  };
+
 
   const foundCount = foundGems.length;
   // Check if ALL main keys are found (assuming REQUIRED_KEYS tracks the main story count)
@@ -282,12 +277,7 @@ export default function MyGems() {
             QR Kód Beolvasása
           </button>
 
-          <button
-            onClick={handleReset}
-            className="text-[10px] uppercase tracking-[0.2em] opacity-30 hover:opacity-100 hover:text-red-400 transition-all border border-white/10 px-4 py-2 rounded"
-          >
-            Rendszer Újraindítása (RESET)
-          </button>
+
         </motion.div>
 
       </div>
