@@ -11,7 +11,7 @@ export default function SilentFallback() {
 
         // 10 minutes
         const t2 = setTimeout(() => {
-            setMessage('Ha elindulnál, a vár környéke jó kezdet.');
+            setMessage('Ha elindulnál, a Főtér környéke jó kezdet.');
         }, 10 * 60 * 1000);
 
         return () => {

@@ -128,7 +128,7 @@ export default function SoftStart() {
                     >
                         <p>
                             Ha most indulsz el először,
-                            a vár környéke jó kezdet.
+                            a Főtér környéke jó kezdet.
                         </p>
                         <p className="mt-2 text-neutral-100/50 font-serif italic">
                             A falakon keresd a jelet.

@@ -38,17 +38,8 @@ export default function GameIntro() {
     return () => clearInterval(timer);
   }, []);
 
-  /* ===== FÁZISOK LÉPTETÉSE ===== */
-  useEffect(() => {
-    if (phase === 'intro') {
-      const t = setTimeout(() => setPhase('rules'), 3500); // Intro olvasási idő
-      return () => clearTimeout(t);
-    }
-    if (phase === 'rules') {
-      const t = setTimeout(() => setPhase('choice'), 5000); // Lore olvasási idő -> VÁLASZTÁS
-      return () => clearTimeout(t);
-    }
-  }, [phase]);
+  /* ===== FÁZISOK LÉPTETÉSE (KÉZI) ===== */
+  // Az auto-timer törölve, gombbal lépünk tovább.
 
   const handleNameSubmit = (name) => {
     setPlayerName(name);
@@ -116,6 +107,31 @@ export default function GameIntro() {
                 Ezek a helyek mesélnek.
               </p>
             </motion.div>
+          )}
+
+          {/* NEXT GOMBOK (Intro / Rules) */}
+          {phase === 'intro' && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }} // Kis késleltetés, hogy ne nyomják el azonnal
+              onClick={() => setPhase('rules')}
+              className="mt-8 px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs uppercase tracking-[0.2em] transition-all"
+            >
+              Tovább
+            </motion.button>
+          )}
+
+          {phase === 'rules' && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              onClick={() => setPhase('choice')}
+              className="mt-8 px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs uppercase tracking-[0.2em] transition-all"
+            >
+              Tovább
+            </motion.button>
           )}
 
           {/* 3. FÁZIS: VÁLASZTÁS */}

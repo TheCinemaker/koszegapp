@@ -14,8 +14,13 @@ export default function ScanIntro() {
                 className="max-w-sm space-y-8"
             >
                 <p className="text-sm text-white/50 leading-relaxed font-light">
-                    Ha egy helyen időkaput találsz,<br />
-                    tartsd fölé a kamerát.
+                    Megtaláltad az <strong>Időkapu Horgonyát</strong>.
+                </p>
+                <p className="text-sm font-serif italic text-white/80 leading-relaxed">
+                    Ha készen állsz megismerni a történelem és a legendák egy darabkáját...
+                </p>
+                <p className="text-xs uppercase tracking-widest text-amber-500/80">
+                    Nyomd meg a gombot.
                 </p>
 
                 <button
