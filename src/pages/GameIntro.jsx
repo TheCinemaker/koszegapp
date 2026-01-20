@@ -64,9 +64,12 @@ export default function GameIntro() {
     <div className="min-h-screen bg-[#0b0b0c] text-neutral-100 relative overflow-hidden flex flex-col items-center px-6 selection:bg-white/20">
 
       {/* ===== ÉVSZÁM – 30px FENTRŐL ===== */}
-      <div className="absolute top-[30px] left-0 right-0 flex justify-center pointer-events-none">
-        <div className="font-serif text-7xl md:text-8xl tracking-widest text-neutral-100/70">
+      <div className="absolute top-[30px] left-0 right-0 flex flex-col items-center pointer-events-none z-0">
+        <div className="font-serif text-7xl md:text-8xl tracking-widest text-neutral-100/70 leading-none">
           {year}
+        </div>
+        <div className="mt-2 text-[10px] md:text-xs uppercase tracking-[0.3em] text-neutral-100/30 font-sans">
+          Van, amit csak a falak tudnak.
         </div>
       </div>
 

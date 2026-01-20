@@ -195,9 +195,12 @@ export default function MyGems() {
       </AnimatePresence>
 
       {/* ===== ÉVSZÁM – FIX HELYEN (15% MAGASAN) ===== */}
-      <div className="absolute top-[30px] left-0 right-0 flex justify-center pointer-events-none z-0">
-        <div className="font-serif text-7xl md:text-8xl tracking-widest text-neutral-100/70">
+      <div className="absolute top-[30px] left-0 right-0 flex flex-col items-center pointer-events-none z-0">
+        <div className="font-serif text-7xl md:text-8xl tracking-widest text-neutral-100/70 leading-none">
           1532
+        </div>
+        <div className="mt-2 text-[10px] md:text-xs uppercase tracking-[0.3em] text-neutral-100/30 font-sans">
+          Van, amit csak a falak tudnak.
         </div>
       </div>
 
