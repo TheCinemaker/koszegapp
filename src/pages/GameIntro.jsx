@@ -211,6 +211,22 @@ export default function GameIntro() {
 
         </AnimatePresence>
       </div>
+
+      {/* ===== LÁBLÉC: JOGI & SZABÁLYOK (Fixen alul) ===== */}
+      <div className="absolute bottom-6 left-0 right-0 px-6 flex justify-between z-20">
+        <button
+          onClick={() => window.open('/game/rules', '_blank')}
+          className="text-xs text-blue-400/70 hover:text-blue-300 uppercase tracking-wider transition-colors"
+        >
+          Játékszabályok
+        </button>
+        <button
+          onClick={() => window.open('/game/legal', '_blank')}
+          className="text-xs text-blue-400/70 hover:text-blue-300 uppercase tracking-wider transition-colors"
+        >
+          Jogi Nyilatkozat
+        </button>
+      </div>
     </div>
   );
 }
