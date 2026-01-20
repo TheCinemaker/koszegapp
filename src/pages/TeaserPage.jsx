@@ -5,15 +5,15 @@ export default function TeaserPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
-        // 8. Apple Style Script (Clean, Fast, Precise)
+        // 9. Slower, Deeper Fade Sequence
         const sequence = [
             { delay: 1000, step: 1 },  // A KÖVEK FIGYELNEK
-            { delay: 4500, step: 2 },  // A FALAK EMLÉKEZNEK
-            { delay: 8000, step: 3 },  // A SZOBROK MESÉLNEK
-            { delay: 11500, step: 4 }, // ELMONDJÁK...
-            { delay: 16000, step: 5 }, // KERESD A TITKOKAT
-            { delay: 21000, step: 6 }, // 1532
-            { delay: 24000, step: 7 }, // HAMAROSAN
+            { delay: 6000, step: 2 },  // A FALAK EMLÉKEZNEK
+            { delay: 11000, step: 3 }, // A SZOBROK MESÉLNEK
+            { delay: 16000, step: 4 }, // ELMONDJÁK...
+            { delay: 22000, step: 5 }, // KERESD A TITKOKAT
+            { delay: 29000, step: 6 }, // 1532
+            { delay: 34000, step: 7 }, // HAMAROSAN
         ];
 
         const timers = sequence.map(item =>
@@ -23,12 +23,12 @@ export default function TeaserPage() {
         return () => timers.forEach(clearTimeout);
     }, []);
 
-    // Apple-style clean motion: smooth, slight scale, ease-out-quart
+    // Slower, dramatic fade with deeper initial blur
     const appleVariant = {
-        initial: { opacity: 0, scale: 0.96, y: 10 },
-        animate: { opacity: 1, scale: 1, y: 0 },
-        exit: { opacity: 0, scale: 1.04, filter: 'blur(20px)' }, // Cinematic blur out
-        transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } // Apple-like spring/ease
+        initial: { opacity: 0, scale: 0.94, y: 15, filter: 'blur(12px)' },
+        animate: { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' },
+        exit: { opacity: 0, scale: 1.05, filter: 'blur(15px)', transition: { duration: 1.5 } },
+        transition: { duration: 2.8, ease: [0.25, 0.1, 0.25, 1] } // Cinematic slow ease
     };
 
     return (
@@ -91,7 +91,7 @@ export default function TeaserPage() {
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                                transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
                             >
                                 <h1 className="text-[120px] sm:text-[180px] leading-none font-bold text-white tracking-tighter">
                                     1532
@@ -103,7 +103,7 @@ export default function TeaserPage() {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ duration: 1, delay: 0.8 }}
+                                    transition={{ duration: 1.5, delay: 1.0 }}
                                     className="mt-6"
                                 >
                                     <p className="text-sm sm:text-lg text-white font-semibold uppercase tracking-[0.2em]">
@@ -112,12 +112,12 @@ export default function TeaserPage() {
                                 </motion.div>
                             )}
 
-                            {/* HAMAROSAN - Apple Style (San Francisco) */}
+                            {/* HAMAROSAN - Apple Style */}
                             {step >= 7 && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ duration: 1.5, delay: 0.5 }}
+                                    transition={{ duration: 2.0, delay: 0.5 }}
                                     className="mt-24 sm:mt-32"
                                 >
                                     <h2 className="text-4xl sm:text-6xl font-light text-white tracking-[0.15em] uppercase">
