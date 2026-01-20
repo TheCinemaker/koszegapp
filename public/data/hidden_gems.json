@@ -34,6 +34,7 @@
             "action": "A viasz fénye megremeg, majd kifakul. A helyén egy törött, hideg fémdarab jelenik meg.",
             "quote": "„Egy város sorsa nem a csatatéren dől el először.”"
         },
+        "next_clue": "Ahol a város kapuja állt, ott ma a hősök emléke tornyosul. Keresd a zenélő kaput, ami nem fából, hanem emlékekből épült!",
         "question": {
             "adult": "Miért harangoznak Kőszegen 11 órakor dél helyett?",
             "child": "Hány órakor szólal meg a „déli” harangszó Kőszegen?"
@@ -105,7 +106,8 @@
             "adult": "Keressük meg a város határait. Hol vannak a régi falak?",
             "child": "Keressünk egy régi, leomlott falat!"
         },
-        "keyFragment": "A Közösség Lánca"
+        "keyFragment": "A Közösség Lánca",
+        "next_clue": "Indulj el a város széle felé! Keresd a leomlott falakat és a 'Zwinger' öreg bástyáját."
     },
     {
         "id": "ovaros-falak",
@@ -160,7 +162,8 @@
             "feeling": "A fal emlékszik minden ütésre. Nem a hang a legerősebb – hanem a kitartás.",
             "action": "Egy repedésben fény gyűlik össze. A kő nem törik tovább – inkább elenged valamit. Egy rozsdás kulcsdarab csúszik elő, mintha mindig is ott várt volna.",
             "quote": "„A fal nem azért áll, mert erős. Hanem mert nem adja fel.”"
-        }
+        },
+        "next_clue": "A falak mentén keressük a 'Fület', ahol a föld alatti mozgást, az aknászokat figyelték. Forintos Mátyás birodalma."
     },
     {
         "id": "forintos-bastya",
@@ -215,7 +218,8 @@
             "feeling": "A föld alatt valami mozog. Nem látod, de érzed. A tenyered izzad, ahogy a kanóchoz nyúlsz.",
             "action": "A vízrezgés erősödik. Meggyújtod a tüzet. Tompa dörrenés a mélyből, aztán csend. A víz tükre kisimul.",
             "quote": "„Aki a földet uralja, azé a vár.”"
-        }
+        },
+        "next_clue": "Térj vissza a központba, és keresd az épületeket, amelyek az életet (patika) és a hitet (templom) jelképezik."
     },
     {
         "id": "szent-imre",
@@ -490,7 +494,8 @@
             "adult": "Keress egy házat, ami egy családról (Chernel) kapta a nevét.",
             "child": "Keressünk egy házat, aminek madaras neve van!"
         },
-        "keyFragment": "Az Utolsó Cipó"
+        "keyFragment": "Az Utolsó Cipó",
+        "next_clue": "Hagyd el a teret, és indulj a madarak éneke felé. Egy híres ornitológus család háza vár a Chernel utcában."
     },
     {
         "id": "chernel-haz",
@@ -535,7 +540,8 @@
             "adult": "Irány a Szent Jakab templom. A hit ereje vár.",
             "child": "Menjünk a templomhoz!"
         },
-        "keyFragment": "Az Elrejtett Ékszer"
+        "keyFragment": "Az Elrejtett Ékszer",
+        "next_clue": "A paloták mögött húzódik a régi határ. Keresd az öreg bástyát (Zwinger) és a legvastagabb falakat."
     },
     {
         "id": "szent-jakab",
@@ -590,7 +596,8 @@
             "feeling": "Az idő itt nem rohan. Mintha egyetlen pillanat napokig tartana.",
             "action": "A gyertyaláng kékesre vált, egy szívdobbanásnyi időre. Alatta megjelenik egy tiszta, simára kopott kulcsdarab. Nem hideg. Nem meleg. Megnyugtató.",
             "quote": "„Nem a győzelem tartotta meg Kőszeget. Hanem az, hogy nem futottak el.”"
-        }
+        },
+        "next_clue": "Lépj ki a templomból. Keresd a házat, mely lábakon áll, s árkádjai alatt régen mészárosok, ma iratok laknak."
     },
     {
         "id": "sgraffitos-haz",
@@ -639,7 +646,8 @@
             "adult": "A Jézus Szíve templom felé vesszük az irányt.",
             "child": "Menjünk a nagy templomhoz!"
         },
-        "keyFragment": "A Művészet Ékköve"
+        "keyFragment": "A Művészet Ékköve",
+        "next_clue": "A művészet után térj vissza a hithez. Keresd a templomot, mely Jurisics gyermekeit őrzi. Két templom áll a téren, ez az öregebb."
     },
     {
         "id": "jezus-szive",
@@ -721,7 +729,7 @@
             "child": [
                 "Láncokkal és gerendákkal",
                 "Távirányítóval",
-                "Kilicccsel",
+                "Kilinccsel",
                 "Varázslattal"
             ]
         },
@@ -733,7 +741,8 @@
             "adult": "Vissza a VÁRHOZ! (Jurisics Vár)",
             "child": "Fussunk a várhoz!"
         },
-        "keyFragment": "A Záródó Kapu"
+        "keyFragment": "A Záródó Kapu",
+        "next_clue": "A kapu szomszédságában sárgállik egy ház, honnan tábornokok figyelték a teret. Keresd a loggiát a magasban!"
     },
     {
         "id": "jurisics-var",
@@ -813,6 +822,102 @@
         "keyFragment": null
     },
     {
+        "id": "kalvaria-latkep",
+        "name": "Kálvária (Látkép a Toronyból)",
+        "lat": 47.3890,
+        "lng": 16.5411,
+        "image": "https://koszeg.hu/images/kalvaria_tavoli.jpg",
+        "description": "Nem kell felmásznod a hegyre, hogy érezd a súlyát. A Hősök Tornya alól felnézve láthatod a fehér falakat, amelyek némán őrzik a várost fentről.",
+        "details": [
+            {
+                "title": "A Fogadalmi Templom",
+                "content": "Az 1700-as évek elején épült, amikor a pestis pusztított. A lakók megfogadták: ha túlélik, templomot emelnek a hegyen. A fehér falak a város túlélési ösztönét hirdetik."
+            },
+            {
+                "title": "A Három Kereszt",
+                "content": "Bár innen csak apró pontnak tűnnek, a templom előtt három kereszt áll. Régen a tüzet is innen figyelték: ha fent baj volt, füsttel jeleztek a lentieknek."
+            }
+        ],
+        "question": {
+            "adult": "Miért épült a Kálvária-templom a hegytetőre?",
+            "child": "Milyen színű a templom a hegy tetején?"
+        },
+        "options": {
+            "adult": [
+                "Pestis-fogadalomból",
+                "Védelmi bástyának",
+                "Csillagvizsgálónak",
+                "Börtönnek"
+            ],
+            "child": [
+                "Fehér",
+                "Fekete",
+                "Zöld",
+                "Lila"
+            ]
+        },
+        "answer": {
+            "adult": "Pestis-fogadalomból",
+            "child": "Fehér"
+        },
+        "hint": {
+            "adult": "A betegség utáni hála jelképe.",
+            "child": "Olyan fehér, mint a hó."
+        },
+        "keyFragment": "A Hegyi Oltár",
+        "moment": {
+            "visual": "Felnézel a hegyre. A távolság eltűnik. Látod az építők izzadságát, ahogy hordják fel a köveket.",
+            "feeling": "Tisztelet ébred benned. Ők felmentek, hogy te ma itt állhass.",
+            "action": "A látkép megremeg, mintha hőhullámon át néznéd. Egy pillanatra hallod a déli harangszót fentről.",
+            "quote": "„A hit hegyeket mozgat – vagy templomot épít rájuk.”"
+        }
+    },
+    {
+        "id": "szulejman-kilato",
+        "name": "Szulejmán-kilátó (A Szultán Szeme)",
+        "lat": 47.3950,
+        "lng": 16.5350,
+        "image": "https://koszeg.hu/images/szulejman.jpg",
+        "description": "A legenda szerint innen nézte a Szultán az égő várost. Ő sosem lépett be a kapun. Te most itt állsz bent, ő pedig kint maradt örökre.",
+        "details": [
+            {
+                "title": "Az Arany Sátor",
+                "content": "Itt állt Szulejmán pompás sátra. Míg lent a sárban és vérben harcoltak, ő innen, biztonságból szemlélte a 'játékot'. De a sakkpartit végül nem ő nyerte."
+            },
+            {
+                "title": "A Hely, ahová nem kell felmenni",
+                "content": "Ez a kilátó emlékeztet arra, hogy a túlerő nem minden. A hatalmas sereg vezére csak távolról nézhette a kis várost, ami nem adta meg magát."
+            }
+        ],
+        "question": {
+            "adult": "Belépett-e valaha Szulejmán szultán Kőszeg városába?",
+            "child": "Bement a gonosz szultán a várba?"
+        },
+        "options": {
+            "adult": [
+                "Soha, csak kívülről nézte.",
+                "Igen, elfoglalta.",
+                "Igen, teázott a várkapitánnyal.",
+                "Igen, ott lakott."
+            ],
+            "child": [
+                "Nem, kint maradt.",
+                "Igen, bement.",
+                "Ott aludt.",
+                "Bement fagyizni."
+            ]
+        },
+        "answer": {
+            "adult": "Soha, csak kívülről nézte.",
+            "child": "Nem, kint maradt."
+        },
+        "hint": {
+            "adult": "Ez a történet arról szól, hogy NEM jutott be.",
+            "child": "Nem sikerült neki bemenni."
+        },
+        "keyFragment": "A Legyőzött Óriás"
+    },
+    {
         "id": "chernel-kert",
         "type": "extra",
         "name": "Chernel-kert Arborétum",
@@ -820,6 +925,12 @@
         "lng": 16.545000,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Chernel-kert_Arbor%C3%A9tum.jpg/800px-Chernel-kert_Arbor%C3%A9tum.jpg",
         "description": "EXTRA HELYSZÍN: Ez a csodás kert Chernel István ornitológus hagyatéka. Itt gyógyítják a sérült madarakat. Bár a török időkben ez még csak erdő volt, a természet védelme ma is hősi cselekedet!",
+        "details": [
+            {
+                "title": "Madarak",
+                "content": "Madarak védelme."
+            }
+        ],
         "question": {
             "adult": "Milyen állatokat mentenek itt?",
             "child": "Kik laknak a kertben (akiket gyógyítanak)?"
@@ -845,6 +956,52 @@
         "hint": {
             "adult": "Kövesd az eredeti küldetést! A madarak is ezt csicsergik.",
             "child": "Menjünk vissza a játékba!"
+        },
+        "keyFragment": null
+    },
+    {
+        "id": "kiralyvolgy",
+        "type": "extra",
+        "name": "Királyvölgy (Gesztenyés)",
+        "lat": 47.3955,
+        "lng": 16.5250,
+        "image": "https://koszeg.hu/images/kiralyvolgy.jpg",
+        "description": "EXTRA HELYSZÍN: Ahol a város véget ér, és a hegyek kezdődnek. Az óriás gesztenyefák alatt állítólag maga a király is megpihent. Ez a béke völgye, távol a csatazajtól.",
+        "details": [
+            {
+                "title": "A Király Kútja",
+                "content": "A legenda szerint IV. Béla király a tatárjárás idején ebből a forrásból ivott, és a víz íze annyira megtetszett neki, hogy elnevezte a völgyet Királyvölgynek."
+            },
+            {
+                "title": "Az Óriások Kertje",
+                "content": "Kőszeg híres a szelídgesztenyéiről. Ezek a hatalmas fák több száz évesek, némelyikük már akkor is itt állhatott, amikor a török sereg elvonult."
+            }
+        ],
+        "question": {
+            "adult": "Melyik királyról kapta nevét a völgy a legenda szerint?",
+            "child": "Milyen finom termése van az itteni óriás fáknak?"
+        },
+        "options": {
+            "adult": [
+                "IV. Béla",
+                "Mátyás király",
+                "Szent István",
+                "Nagy Lajos"
+            ],
+            "child": [
+                "Gesztenye (Szelídgesztenye)",
+                "Alma",
+                "Dió",
+                "Banán"
+            ]
+        },
+        "answer": {
+            "adult": "IV. Béla",
+            "child": "Gesztenye (Szelídgesztenye)"
+        },
+        "hint": {
+            "adult": "A tatárok elől menekült.",
+            "child": "Télen sütve a legfinomabb!"
         },
         "keyFragment": null
     }

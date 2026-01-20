@@ -16,6 +16,7 @@ const getInitialState = () => {
   return {
     gameStarted: false,
     entryStation: null,
+    playerName: '', // Player's name for certificate
     foundGems: [], // Array of IDs
     visitedStations: [], // Array of IDs
     gateClosed: false,
@@ -34,7 +35,7 @@ export function useGame() {
 
   // --- ACTIONS (State Transitions) ---
 
-  const startGame = useCallback((stationId, mode = 'adult') => {
+  const startGame = useCallback((stationId, mode = 'adult', playerName = '') => {
     setGameState(prev => {
       if (prev.gameStarted) return prev; // Already started
       return {
@@ -42,7 +43,8 @@ export function useGame() {
         gameStarted: true,
         entryStation: stationId,
         visitedStations: [stationId],
-        gameMode: mode
+        gameMode: mode,
+        playerName: playerName || 'Névtelen Hős'
       };
     });
     window.localStorage.setItem(HAS_PLAYED_KEY, 'true');
@@ -113,8 +115,8 @@ export function useGame() {
   const isGemFound = useCallback((id) => gameState.foundGems.includes(id), [gameState.foundGems]);
   const getAssignedRiddle = useCallback((gemId) => gameState.assignedRiddles[gemId], [gameState.assignedRiddles]);
 
-  // Total Main Keys (Hardcoded for now based on data knowledge: 11)
-  const REQUIRED_KEYS = 11;
+  // Total Main Keys (Updated to actual count: 16)
+  const REQUIRED_KEYS = 16;
 
   const checkCastleStatus = useCallback(() => {
     if (gameState.gateClosed) return 'closed'; // State 7

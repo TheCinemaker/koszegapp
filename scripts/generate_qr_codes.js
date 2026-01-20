@@ -16,7 +16,8 @@ if (!fs.existsSync(outputDir)) {
 }
 
 // Base URL - change this for production
-const BASE_URL = process.env.BASE_URL || 'http://localhost:5173';
+// Base URL - change this for production
+const BASE_URL = process.env.BASE_URL || 'https://visitkoszeg.hu';
 
 // Generate QR codes
 async function generateQRCodes() {

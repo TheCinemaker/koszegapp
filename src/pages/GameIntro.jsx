@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../hooks/useGame';
 import { motion, AnimatePresence } from 'framer-motion';
+import PlayerNameInput from '../screens/game/PlayerNameInput';
 
 export default function GameIntro() {
   const navigate = useNavigate();
   const { startGame, setGameMode } = useGame();
 
   const [year, setYear] = useState(2025);
-  const [phase, setPhase] = useState('counting'); // counting, intro, rules, choice
+  const [phase, setPhase] = useState('counting'); // counting, intro, rules, name, choice
   const [mode, setMode] = useState(null);
+  const [playerName, setPlayerName] = useState('');
 
   /* ===== IDŐSZÁMLÁLÓ ===== */
   useEffect(() => {
@@ -43,16 +45,21 @@ export default function GameIntro() {
       return () => clearTimeout(t);
     }
     if (phase === 'rules') {
-      const t = setTimeout(() => setPhase('choice'), 5000); // Lore olvasási idő
+      const t = setTimeout(() => setPhase('name'), 5000); // Lore olvasási idő -> NÉV BEKÉRÉS
       return () => clearTimeout(t);
     }
   }, [phase]);
 
+  const handleNameSubmit = (name) => {
+    setPlayerName(name);
+    setPhase('choice');
+  };
+
   const handleEnter = () => {
-    // 1. Game Mode beállítás
+    // 1. Game Mode és Név beállítás
     setGameMode(mode);
     // 2. Játék indítása (Intro kapuval)
-    startGame('intro_1532', mode);
+    startGame('intro_1532', mode, playerName);
     // 3. Navigáció a SoftStart-ra
     navigate('/game/start', { replace: true });
   };
@@ -115,7 +122,20 @@ export default function GameIntro() {
             </motion.div>
           )}
 
-          {/* 3. FÁZIS: VÁLASZTÁS */}
+          {/* 3. FÁZIS: NAME INPUT */}
+          {phase === 'name' && (
+            <motion.div
+              key="name-input"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50"
+            >
+              <PlayerNameInput onNameSubmit={handleNameSubmit} />
+            </motion.div>
+          )}
+
+          {/* 4. FÁZIS: VÁLASZTÁS */}
           {phase === 'choice' && (
             <motion.div
               key="choice"
@@ -126,7 +146,7 @@ export default function GameIntro() {
             >
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.4em] text-white/40">
-                  Két út nyílik meg előtted.
+                  Két út nyílik meg előtted, <span className="text-amber-500 font-bold">{playerName}</span>.
                 </p>
                 <p className="text-sm font-serif italic text-white/60">
                   Mindkettő ugyanoda vezet —<br />

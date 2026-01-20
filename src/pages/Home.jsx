@@ -26,7 +26,7 @@ const sections = [
   { to: '/hotels', label: 'Szállás', desc: 'Nyugalom szigete.', icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1', delay: 0.35 },
   { to: '/parking', label: 'Parkolás', desc: 'Célba értél.', icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1', delay: 0.4 },
   { to: '/info', label: 'Infó', desc: 'Hasznos tudás.', icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-1', delay: 0.45 },
-  { to: '/game/intro', label: 'KőszegQuest', desc: 'A te legendád.', icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 sm:col-span-3', special: true, delay: 0.5 },
+  // { to: '/game/intro', label: 'KőszegQuest', desc: 'A te legendád.', icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 sm:col-span-3', special: true, delay: 0.5 },
 ];
 
 export default function Home() {

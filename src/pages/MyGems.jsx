@@ -115,11 +115,14 @@ const StatusRow = ({ gem, isFound, onClick }) => {
   );
 };
 
+import GameCompleteScreen from '../screens/game/GameCompleteScreen';
+
 export default function MyGems() {
   const { foundGems, resetGame, isGemFound, REQUIRED_KEYS, gameState, startGame } = useGame();
   const navigate = useNavigate();
   const [allGems, setAllGems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   // Story State
   const [activeStory, setActiveStory] = useState(null);
@@ -139,14 +142,9 @@ export default function MyGems() {
     const count = foundGems.length;
     const seenStories = JSON.parse(localStorage.getItem('koszeg_seen_stories') || '[]');
 
-    // Find the highest unlocked chapter that hasn't been seen yet
-    // We define logic: Show ONLY the most recent one if multiple triggered? Or show sequentially?
-    // Let's show the one matching the EXACT count or simply the highest unseen <= count.
-
     const unlockedChapters = storyChapters.filter(c => c.unlockAt <= count && !seenStories.includes(c.id));
 
     if (unlockedChapters.length > 0) {
-      // Show the first unseen unlocked chapter
       setActiveStory(unlockedChapters[0]);
     }
 
@@ -155,7 +153,6 @@ export default function MyGems() {
   const handleStoryClose = () => {
     if (!activeStory) return;
 
-    // Mark as seen
     const seenStories = JSON.parse(localStorage.getItem('koszeg_seen_stories') || '[]');
     const newSeen = [...seenStories, activeStory.id];
     localStorage.setItem('koszeg_seen_stories', JSON.stringify(newSeen));
@@ -163,7 +160,7 @@ export default function MyGems() {
     setActiveStory(null);
   };
 
-  if (!gameState.gameStarted) return null; // Amíg átirányít
+  if (!gameState.gameStarted) return null;
 
   useEffect(() => {
     fetchHiddenGems()
@@ -173,18 +170,33 @@ export default function MyGems() {
 
   const handleReset = () => {
     if (window.confirm("Valóban alaphelyzetbe állítod az időkaput?")) {
-      // Reset story progress too
       localStorage.removeItem('koszeg_seen_stories');
       resetGame();
     }
   };
 
   const foundCount = foundGems.length;
+  // Check if ALL main keys are found (assuming REQUIRED_KEYS tracks the main story count)
+  const isGameComplete = foundCount >= REQUIRED_KEYS;
 
   if (loading) return null;
 
   return (
     <div className="min-h-screen bg-[#0b0b0c] text-neutral-100 relative overflow-hidden flex flex-col items-center px-6 selection:bg-white/20">
+
+      {/* CERTIFICATE OVERLAY */}
+      <AnimatePresence>
+        {showCertificate && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100]"
+          >
+            <GameCompleteScreen onExplore={() => setShowCertificate(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* STORY OVERLAY */}
       <AnimatePresence>
@@ -236,10 +248,26 @@ export default function MyGems() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="w-full flex flex-col items-center gap-8"
+          className="w-full flex flex-col items-center gap-4"
         >
-          {/* Placeholder for FUTURE BUTTON */}
-          <div className="w-full h-0"></div>
+
+          {/* CERTIFICATE BUTTON (Visible ONLY if Game Complete) */}
+          {isGameComplete && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setShowCertificate(true)}
+              className="
+                w-full py-4 mb-4
+                bg-amber-900/40 border border-amber-500/50 rounded-lg
+                text-amber-100 font-serif text-sm uppercase tracking-[0.15em]
+                shadow-[0_0_20px_rgba(245,158,11,0.2)]
+                flex items-center justify-center gap-3
+              "
+            >
+              <span>📜</span> Vitézi Oklevél Megtekintése
+            </motion.button>
+          )}
 
           <button
             onClick={() => navigate('/game/scan')}
@@ -248,7 +276,7 @@ export default function MyGems() {
                border border-white/20 rounded-lg
                bg-white/5 hover:bg-white/10 
                text-white text-xs uppercase tracking-[0.2em]
-               transition-all mb-8
+               transition-all mb-4
              "
           >
             QR Kód Beolvasása
