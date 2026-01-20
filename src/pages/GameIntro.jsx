@@ -85,14 +85,16 @@ export default function GameIntro() {
               className="space-y-4"
             >
               <h1 className="text-2xl font-serif text-white/90 leading-tight">
-                Az idő nem egyenes vonal.
+                Az idő nem vonal.
               </h1>
               {phase !== 'choice' && (
-                <p className="text-white/60 leading-relaxed font-light mt-4 space-y-2 text-sm">
-                  <span>A város nem csak épült. Megmaradt.</span>
-                  <br />
-                  <span>Falai emlékeket hordoznak.</span>
-                </p>
+                <div className="text-white/60 leading-relaxed font-light mt-4 space-y-4 text-sm">
+                  <p>Hanem rétegek egymáson.</p>
+                  <p>
+                    A város nem csak épült.<br />
+                    Megmaradt.
+                  </p>
+                </div>
               )}
             </motion.div>
           )}
@@ -105,11 +107,20 @@ export default function GameIntro() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="mt-4 text-white/60 leading-relaxed font-light max-w-sm mx-auto text-sm"
+              className="mt-4 text-white/60 leading-relaxed font-light max-w-sm mx-auto text-sm space-y-4"
             >
-              <p>Vannak helyek, ahol a múlt csendben figyel.</p>
-              <p className="mt-4 font-serif italic text-white/80">
-                Ezek a helyek mesélnek.
+              <p>
+                Falai nem beszélnek hangosan.<br />
+                De emlékeznek.
+              </p>
+              <p>
+                Vannak helyek,<br />
+                ahol a múlt nem mögötted van,<br />
+                hanem körülötted.
+              </p>
+              <p className="font-serif italic text-white/80">
+                Ha jó helyen állsz meg,<br />
+                talán észreveszed.
               </p>
             </motion.div>
           )}
@@ -135,7 +146,7 @@ export default function GameIntro() {
                  transition-all
                "
             >
-              Induljon a kaland →
+              INDULJ EL →
             </motion.button>
           )}
 

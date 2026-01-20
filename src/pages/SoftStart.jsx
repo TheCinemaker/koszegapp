@@ -12,8 +12,8 @@ export default function SoftStart() {
     return (
         <div className="min-h-screen bg-[#0b0b0c] text-neutral-100 relative overflow-hidden flex flex-col items-center px-6">
 
-            {/* ===== ÉVSZÁM – FIX HELYEN (15% MAGASAN) ===== */}
-            <div className="absolute top-[15%] left-0 right-0 flex justify-center pointer-events-none">
+            {/* ===== ÉVSZÁM – FIX HELYEN (30px FENTRŐL) ===== */}
+            <div className="absolute top-[30px] left-0 right-0 flex justify-center pointer-events-none">
                 <div className="font-serif text-7xl md:text-8xl tracking-widest text-neutral-100/70">
                     1532
                 </div>
