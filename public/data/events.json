@@ -528,5 +528,24 @@
     "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1768898996688",
+    "name": "Quizard kupa I. forduló",
+    "date": "2026-01-23",
+    "time": "19:00",
+    "location": "Tóth pincészet",
+    "coords": {
+      "lat": 47.38725760201167,
+      "lng": 16.54182412533522
+    },
+    "description": "2026. januárjában már a tizedik Országos Bajnokságunk veszi kezdetét.\nGyertek el maximum 7 fős csapatotokkal egy hamisítatlan pubkvízre, ahol nem kevesebb, mint 60 kérdés vár rátok 10 különböző játékblokkban, melyet az adott héten az ország hozzávetőlegesen 200 másik csapatával együtt játszhattok le és mérhetitek velük össze a tudásotokat, amellett, hogy minőségi időt töltötök együtt a barátaitokkal.\nMiközben mi a kérdéseinkkel szórakoztatunk benneteket, Ti nyugodtan meg tudtok inni néhány italt, vagy elfogyasztani a vacsorátokat.\nA bajnokságunkba szezon közben is nyugodtan becsatlakozhattok, akár 1-1 fordulóra is eljöhettek, ehhez semmi plusz regisztráció nem szükséges a részetekről.\nA részvétel továbbra is és országos hálózatként egyedüliként ingyenes, de egy nagyjából 3 000 forintos minimális fejenkénti fogyasztást a játék alatt a partnerhelyszíneinkkel együtt elvárunk.\nA győztes csapat továbbra sem távozik egy kvíz után üres kézzel, a nyereményről az adott kvízhelyszín gondoskodik 🙂\nJelentkezni itt az eseménynél tudtok külön posztban, csapatnév és a várható létszám megadásával. A hetedik fő felett 3 pont levonásban részesültök.\nGyertek el, próbáljátok ki, hiszen nálunk egyedül a szórakozás nem kérdés! 🙂",
+    "tags": [
+      "játék"
+    ],
+    "image": "quizard.jpg",
+    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
