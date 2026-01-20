@@ -5,16 +5,16 @@ export default function TeaserPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
-        // 2. Gyorsított, "Vertical Flow" idővonal (Faster pacing)
+        // 3. Cinematic Sequence (Mobile Optimized)
         const sequence = [
-            { delay: 1000, step: 1 },  // "Az idő nem vonal."
-            { delay: 5000, step: 2 },  // "...hanem rétegek egymáson."
-            { delay: 9000, step: 3 },  // "A város nem csak épült."
-            { delay: 13000, step: 4 }, // "Megmaradt."
-            { delay: 17000, step: 5 }, // "Vannak helyek..."
-            { delay: 22000, step: 6 }, // "...ahol a múlt körülötted van."
-            { delay: 27000, step: 7 }, // 1532 (TITLE REVEAL)
-            { delay: 33000, step: 8 }, // Epilogue: Suttogás
+            { delay: 1000, step: 1 },  // "Az idő..."
+            { delay: 5000, step: 2 },  // "...rétegek."
+            { delay: 10000, step: 3 }, // "A város..."
+            { delay: 15000, step: 4 }, // "Megmaradt."
+            { delay: 21000, step: 5 }, // "A falak..."
+            { delay: 27000, step: 6 }, // "...körülötted."
+            { delay: 34000, step: 7 }, // 1532 (TITLE)
+            { delay: 40000, step: 8 }, // COMING SOON (Finale)
         ];
 
         const timers = sequence.map(item =>
@@ -24,120 +24,129 @@ export default function TeaserPage() {
         return () => timers.forEach(clearTimeout);
     }, []);
 
-    // "Lift Up" Effect: Lentről be, Középre, Felfelé ki
-    const textVariant = {
-        initial: { opacity: 0, y: 150, filter: 'blur(8px)' },  // Mélyebbről indul
-        animate: { opacity: 1, y: 0, filter: 'blur(0px)' },    // Középen éles
-        exit: { opacity: 0, y: -150, filter: 'blur(8px)' },    // Felfelé távozik
-        transition: { duration: 2.0, ease: "easeInOut" }       // Folyamatos mozgásérzet
+    // Cinematic Fade & Scale Variant
+    const sceneVariant = {
+        initial: { opacity: 0, scale: 0.9, filter: 'blur(5px)' },
+        animate: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+        exit: { opacity: 0, scale: 1.1, filter: 'blur(10px)' },
+        transition: { duration: 1.5, ease: "easeInOut" }
     };
 
     return (
-        <div className="h-screen w-screen bg-[#050505] text-neutral-100 flex flex-col items-center justify-center overflow-hidden cursor-none selection:bg-amber-500/30">
+        <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center overflow-hidden z-[9999]">
 
-            <AnimatePresence mode='wait'>
+            {/* Cinematic Vignette Overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_120%)] pointer-events-none z-10 opacity-80" />
 
-                {/* STEP 1 */}
-                {step === 1 && (
-                    <motion.div key="s1" {...textVariant} className="max-w-2xl text-center px-6 absolute">
-                        <p className="text-3xl md:text-5xl font-serif font-light text-neutral-300 leading-tight">
-                            "Az idő nem vonal."
-                        </p>
-                    </motion.div>
-                )}
+            {/* Content Layer */}
+            <div className="relative z-20 w-full max-w-lg px-8 flex flex-col items-center justify-center text-center h-full">
+                <AnimatePresence mode='wait'>
 
-                {/* STEP 2 */}
-                {step === 2 && (
-                    <motion.div key="s2" {...textVariant} className="max-w-2xl text-center px-6 absolute">
-                        <p className="text-3xl md:text-5xl font-serif font-light text-amber-50/80 leading-tight">
-                            "Hanem rétegek egymáson."
-                        </p>
-                    </motion.div>
-                )}
+                    {/* S1: Az idő */}
+                    {step === 1 && (
+                        <motion.div key="s1" {...sceneVariant} className="w-full">
+                            <p className="text-3xl font-serif text-neutral-400 tracking-wide font-light">
+                                Az idő nem vonal.
+                            </p>
+                        </motion.div>
+                    )}
 
-                {/* STEP 3 */}
-                {step === 3 && (
-                    <motion.div key="s3" {...textVariant} className="max-w-2xl text-center px-6 absolute">
-                        <p className="text-2xl md:text-4xl font-sans font-light tracking-wide text-neutral-400">
-                            A város nem csak épült.
-                        </p>
-                    </motion.div>
-                )}
+                    {/* S2: Rétegek */}
+                    {step === 2 && (
+                        <motion.div key="s2" {...sceneVariant} className="w-full">
+                            <p className="text-3xl font-serif text-amber-50/90 tracking-wide font-light">
+                                Hanem rétegek.
+                            </p>
+                        </motion.div>
+                    )}
 
-                {/* STEP 4 */}
-                {step === 4 && (
-                    <motion.div key="s4" {...textVariant} className="max-w-2xl text-center px-6 absolute">
-                        <p className="text-4xl md:text-6xl font-serif italic text-white leading-tight">
-                            Megmaradt.
-                        </p>
-                    </motion.div>
-                )}
+                    {/* S3: A város */}
+                    {step === 3 && (
+                        <motion.div key="s3" {...sceneVariant} className="w-full">
+                            <p className="text-sm uppercase tracking-[0.4em] text-neutral-500 mb-4">
+                                Kőszeg
+                            </p>
+                            <p className="text-2xl font-light text-neutral-300">
+                                A város nem csak épült.
+                            </p>
+                        </motion.div>
+                    )}
 
-                {/* STEP 5 */}
-                {step === 5 && (
-                    <motion.div key="s5" {...textVariant} className="max-w-3xl text-center px-6 absolute space-y-4">
-                        <p className="text-xl md:text-3xl font-light text-neutral-300 leading-relaxed">
-                            "Vannak helyek, ahol a múlt nem mögötted van..."
-                        </p>
-                    </motion.div>
-                )}
+                    {/* S4: Megmaradt */}
+                    {step === 4 && (
+                        <motion.div key="s4" {...sceneVariant} className="w-full">
+                            <p className="text-5xl font-serif italic text-white leading-tight drop-shadow-2xl">
+                                Megmaradt.
+                            </p>
+                        </motion.div>
+                    )}
 
-                {/* STEP 6 */}
-                {step === 6 && (
-                    <motion.div key="s6" {...textVariant} className="max-w-3xl text-center px-6 absolute">
-                        <p className="text-2xl md:text-4xl font-serif text-amber-100/90 leading-relaxed">
-                            "...hanem <span className="text-amber-500">körülötted</span>."
-                        </p>
-                    </motion.div>
-                )}
+                    {/* S5: A falak */}
+                    {step === 5 && (
+                        <motion.div key="s5" {...sceneVariant} className="w-full space-y-4">
+                            <div className="h-px w-12 bg-amber-500/50 mx-auto mb-6"></div>
+                            <p className="text-xl font-light text-neutral-300 leading-relaxed">
+                                "Van, amit csak a falak tudnak..."
+                            </p>
+                        </motion.div>
+                    )}
 
-                {/* STEP 7: THE REVEAL (1532) */}
-                {(step === 7 || step === 8) && (
-                    <motion.div
-                        key="reveal"
-                        initial={{ opacity: 0, scale: 0.8, filter: 'blur(20px)' }}
-                        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                        transition={{ duration: 3, ease: 'easeOut' }}
-                        className="flex flex-col items-center relative z-10"
-                    >
-                        <h1 className="text-[120px] md:text-[200px] font-serif font-bold text-white leading-none tracking-tighter mix-blend-overlay opacity-90">
-                            1532
-                        </h1>
+                    {/* S6: Körülötted */}
+                    {step === 6 && (
+                        <motion.div key="s6" {...sceneVariant} className="w-full">
+                            <p className="text-3xl font-serif text-amber-100/90 leading-relaxed">
+                                ...és most <br />
+                                <span className="text-amber-500 font-normal">körülötted van.</span>
+                            </p>
+                        </motion.div>
+                    )}
 
+                    {/* S7: 1532 */}
+                    {step === 7 && (
                         <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 2, delay: 2 }}
-                            className="h-1 bg-amber-600 w-full mb-6"
-                        />
+                            key="title"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 1.2, filter: 'blur(20px)' }}
+                            transition={{ duration: 2.5 }}
+                            className="w-full py-10"
+                        >
+                            <h1 className="text-[100px] leading-none font-serif font-bold text-white tracking-tighter mix-blend-screen opacity-90">
+                                1532
+                            </h1>
+                        </motion.div>
+                    )}
 
-                        <motion.p
+                    {/* S8: COMING SOON - FINALE */}
+                    {step === 8 && (
+                        <motion.div
+                            key="finale"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 3, duration: 2 }}
-                            className="text-sm md:text-lg uppercase tracking-[0.6em] text-amber-500/80 font-medium"
+                            transition={{ duration: 2, delay: 0.5 }}
+                            className="w-full space-y-6"
                         >
-                            Van, amit csak a falak tudnak
-                        </motion.p>
-                    </motion.div>
-                )}
+                            <div className="text-center">
+                                <p className="text-3xl md:text-4xl text-white font-light tracking-[0.2em] uppercase font-serif">
+                                    Coming Soon
+                                </p>
+                            </div>
 
-                {/* PROMPT TO REPLAY (Optional) */}
-                {step === 8 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 5, duration: 2 }}
-                        className="fixed bottom-8 text-neutral-800 text-xs tracking-widest uppercase"
-                    >
-                        hamarosan
-                    </motion.div>
-                )}
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: "60px" }}
+                                transition={{ duration: 1.5, delay: 2 }}
+                                className="h-[2px] bg-amber-600 mx-auto"
+                            />
 
-            </AnimatePresence>
+                            <p className="text-xs text-neutral-500 tracking-[0.5em] font-sans mt-8 uppercase">
+                                Kőszeg Quest
+                            </p>
+                        </motion.div>
+                    )}
 
-            {/* Subtle Texture Overlay */}
-            <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-50 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+                </AnimatePresence>
+            </div>
         </div>
     );
 }
