@@ -114,11 +114,23 @@ export default function GameIntro() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1 }} // Kis késleltetés, hogy ne nyomják el azonnal
+              transition={{ delay: 2 }} // Hagyunk időt az olvasásra
               onClick={() => setPhase('rules')}
-              className="mt-8 px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs uppercase tracking-[0.2em] transition-all"
+              className="
+                mt-12
+                text-xs
+                uppercase
+                tracking-[0.4em]
+                text-blue-300
+                opacity-80
+                hover:opacity-100
+                border-b border-transparent
+                hover:border-blue-300/40
+                pb-2
+                transition-all
+              "
             >
-              Tovább
+              Következő Lépés →
             </motion.button>
           )}
 
@@ -126,11 +138,23 @@ export default function GameIntro() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
+              transition={{ delay: 2 }}
               onClick={() => setPhase('choice')}
-              className="mt-8 px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs uppercase tracking-[0.2em] transition-all"
+              className="
+                 mt-12
+                 text-xs
+                 uppercase
+                 tracking-[0.4em]
+                 text-blue-300
+                 opacity-80
+                 hover:opacity-100
+                 border-b border-transparent
+                 hover:border-blue-300/40
+                 pb-2
+                 transition-all
+               "
             >
-              Tovább
+              Válaszd ki az utad →
             </motion.button>
           )}
 
