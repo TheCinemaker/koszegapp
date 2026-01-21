@@ -5,14 +5,14 @@ export default function TeaserPage() {
     const [step, setStep] = useState(0);
 
     useEffect(() => {
+        // Sequence timing
         const sequence = [
-            { t: 1000, s: 1 },
-            { t: 6000, s: 2 },
-            { t: 11000, s: 3 },
-            { t: 16500, s: 4 },
-            { t: 22500, s: 5 },
-            { t: 30000, s: 6 },
-            { t: 36000, s: 7 },
+            { t: 1000, s: 1 },  // A KÖVEK FIGYELNEK
+            { t: 5000, s: 2 },  // A FALAK EMLÉKEZNEK
+            { t: 9000, s: 3 },  // A SZOBROK MESÉLNEK
+            { t: 13000, s: 4 }, // TITOK...
+            { t: 17000, s: 5 }, // KERESD A TITKOKAT
+            { t: 22000, s: 6 }, // 1532 (FINALE STARTS)
         ];
 
         const timers = sequence.map(e =>
@@ -21,113 +21,112 @@ export default function TeaserPage() {
         return () => timers.forEach(clearTimeout);
     }, []);
 
-    const cinematic = {
-        initial: { opacity: 0, y: 40, filter: 'blur(14px)' },
+    // 2. & 3. Static Fade In/Out, No Movement, Sans-Serif
+    const textVariant = {
+        initial: { opacity: 0 },
         animate: {
             opacity: 1,
-            y: 0,
-            filter: 'blur(0px)',
-            transition: { duration: 2.2, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 0.5, ease: "easeIn" } // "Erőből fade in"
         },
         exit: {
             opacity: 0,
-            y: -20,
-            filter: 'blur(20px)',
-            transition: { duration: 1.6 }
+            transition: { duration: 1.5, ease: "easeOut" } // "Lassan fade out"
         }
     };
 
     return (
-        <div className="fixed inset-0 z-[9999] overflow-hidden bg-black text-white">
+        <div className="fixed inset-0 z-[9999] overflow-hidden bg-black text-white flex flex-col items-center justify-center font-sans">
 
-            {/* 🎥 CINEMATIC BACKGROUND */}
-            <motion.div
-                className="absolute inset-0 bg-[url('/teaser-bg.jpg')] bg-cover bg-center"
-                initial={{ scale: 1.15 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 40, ease: 'linear' }}
-            />
-            <div className="absolute inset-0 bg-black/70" />
-            <div className="absolute inset-0 film-grain pointer-events-none" />
+            {/* 1. Black Background (No image, no grain) */}
 
-            {/* 🎞️ CONTENT */}
-            <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
+            <div className="relative z-10 w-full max-w-4xl px-6 flex flex-col items-center justify-center text-center h-full">
                 <AnimatePresence mode="wait">
 
                     {step === 1 && (
-                        <motion.h1 key="s1" {...cinematic}
-                            className="text-6xl sm:text-7xl font-semibold leading-tight">
-                            A kövek<br />
-                            <span className="font-light opacity-70">figyelnek</span>
+                        <motion.h1 key="s1" {...textVariant}
+                            className="text-5xl sm:text-7xl font-bold tracking-wider uppercase text-white">
+                            A KÖVEK FIGYELNEK
                         </motion.h1>
                     )}
 
                     {step === 2 && (
-                        <motion.h1 key="s2" {...cinematic}
-                            className="text-6xl sm:text-7xl font-semibold leading-tight">
-                            A falak<br />
-                            <span className="font-light opacity-70">emlékeznek</span>
+                        <motion.h1 key="s2" {...textVariant}
+                            className="text-5xl sm:text-7xl font-bold tracking-wider uppercase text-white">
+                            A FALAK EMLÉKEZNEK
                         </motion.h1>
                     )}
 
                     {step === 3 && (
-                        <motion.h1 key="s3" {...cinematic}
-                            className="text-6xl sm:text-7xl font-semibold leading-tight">
-                            A város<br />
-                            <span className="font-light opacity-70">túlélte</span>
+                        <motion.h1 key="s3" {...textVariant}
+                            className="text-5xl sm:text-7xl font-bold tracking-wider uppercase text-white">
+                            A SZOBROK MESÉLNEK
                         </motion.h1>
                     )}
 
+                    {/* Keeping logic consistent with previous steps, assuming S4 is a transition text */}
                     {step === 4 && (
-                        <motion.p key="s4" {...cinematic}
-                            className="text-3xl sm:text-4xl font-light tracking-wide">
-                            Amit mások<br />elfelejtettek
-                        </motion.p>
+                        <motion.h1 key="s4" {...textVariant}
+                            className="text-5xl sm:text-7xl font-bold tracking-wider uppercase text-white">
+                            ELMONDJÁK...
+                        </motion.h1>
                     )}
 
                     {step === 5 && (
-                        <motion.h1 key="s5" {...cinematic}
-                            className="text-7xl sm:text-8xl font-bold">
-                            Keresd<br />a nyomokat
+                        <motion.h1 key="s5" {...textVariant}
+                            className="text-5xl sm:text-7xl font-bold tracking-wider uppercase text-white">
+                            KERESD A TITKOKAT
                         </motion.h1>
                     )}
 
+                    {/* 4. 5. 6. FINALE - 1532 STAYS */}
                     {step >= 6 && (
                         <motion.div
-                            key="final"
+                            key="finale"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 2 }}
-                            className="flex flex-col items-center"
+                            transition={{ duration: 1 }}
+                            className="flex flex-col items-center justify-center h-full relative"
                         >
-                            <motion.h1
-                                initial={{ opacity: 0, scale: 0.8, letterSpacing: '0.2em' }}
-                                animate={{ opacity: 1, scale: 1, letterSpacing: '-0.02em' }}
-                                transition={{ duration: 3, ease: [0.19, 1, 0.22, 1] }}
-                                className="text-[160px] sm:text-[200px] font-black leading-none"
-                            >
-                                1532
-                            </motion.h1>
+                            {/* 1532 - Original Serif Font with visual quirk if possible via alignment */}
+                            <div className="relative mb-2">
+                                <h1 className="text-[140px] sm:text-[200px] leading-none font-serif font-black tracking-tighter text-white relative z-10">
+                                    1532
+                                </h1>
+                            </div>
 
-                            <motion.p
+                            {/* 5. Orange Line & Slogan */}
+                            <div className="relative w-full flex flex-col items-center">
+                                {/* Orange line expanding */}
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    animate={{ width: "300px" }}
+                                    transition={{ duration: 2, ease: "easeOut" }}
+                                    className="h-[2px] bg-orange-500 mb-6"
+                                />
+
+                                {/* Slogan fading in */}
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 0.7 }}
+                                    transition={{ duration: 2, delay: 0.5 }}
+                                    className="text-sm sm:text-lg font-sans uppercase tracking-[0.3em] text-white"
+                                >
+                                    van, amit csak a falak tudnak
+                                </motion.p>
+                            </div>
+
+                            {/* 6. COMING SOON... ANGOLUL */}
+                            <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 1.5, duration: 1.5 }}
-                                className="mt-6 text-sm tracking-[0.4em] uppercase opacity-80"
+                                transition={{ duration: 2, delay: 2.5 }}
+                                className="absolute bottom-16 sm:bottom-24"
                             >
-                                Van, amit csak a falak tudnak
-                            </motion.p>
+                                <p className="text-2xl sm:text-3xl font-sans font-black tracking-[0.2em] uppercase text-white">
+                                    COMING SOON...
+                                </p>
+                            </motion.div>
 
-                            {step >= 7 && (
-                                <motion.h2
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 3, duration: 2 }}
-                                    className="mt-28 text-4xl tracking-[0.3em] font-light"
-                                >
-                                    Hamarosan
-                                </motion.h2>
-                            )}
                         </motion.div>
                     )}
 
