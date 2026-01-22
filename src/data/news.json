@@ -1,6 +1,12 @@
 {
-  "updatedAt": "2026-01-21T11:23:26.366Z",
+  "updatedAt": "2026-01-22T11:22:26.749Z",
   "items": [
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15312",
+      "date": "2026. Január 22.",
+      "title": "Tájékoztatás - Kiegészítő tűzifa",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15312"
+    },
     {
       "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13344",
       "date": "2026. Január 19.",
@@ -30,12 +36,6 @@
       "date": "2026. Január 9.",
       "title": "Hirdetmények",
       "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15301",
-      "date": "2026. Január 8.",
-      "title": "Kérdőív óvodai, iskolai és felnőtt étkezés tárgyában",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15301"
     }
   ]
 }
