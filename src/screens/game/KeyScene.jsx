@@ -125,88 +125,57 @@ export default function KeyScene({ gem, isNewKey, onNext, onClose, mode, foundCo
                     </div>
                 </div>
 
-                {/* IS NEW KEY: KVÍZ RÉSZ */}
-                {isNewKey ? (
-                    <div className="w-full space-y-6">
-
-                        {/* Kérdés Doboz */}
+                {/* JÖVŐBELI ÚTMUTATÁS (REJTVÉNY A KÖVETKEZŐ HELYSZÍNHEZ) */}
+                {isNewKey && gem.next_location_riddle ? (
+                    <div className="w-full space-y-4 pt-4">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 w-full text-left"
+                            transition={{ delay: 0.5 }}
+                            className="bg-gradient-to-br from-amber-900/30 to-black/60 border border-amber-500/20 rounded-xl p-6 relative overflow-hidden"
                         >
-                            <p className="text-white/80 leading-relaxed font-light text-sm">
-                                <span className="text-blue-300 block text-xs font-bold uppercase mb-2">Feladat: {mode === 'child' ? '(Felfedező)' : '(Történész)'}</span>
-                                {observationText}
-                            </p>
+                            {/* Díszítő háttér elem */}
+                            <div className="absolute top-0 right-0 p-4 opacity-5">
+                                <svg width="100" height="100" viewBox="0 0 100 100" fill="currentColor">
+                                    <path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39Z" />
+                                </svg>
+                            </div>
+
+                            <div className="relative z-10 text-center space-y-3">
+                                <p className="text-[10px] uppercase tracking-[0.3em] text-amber-500/80 font-bold">
+                                    A Következő Lépés
+                                </p>
+
+                                <div className="h-px w-16 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mx-auto" />
+
+                                <p className={`text-amber-100/90 leading-relaxed ${mode === 'adult' ? 'font-serif italic text-lg' : 'font-sans text-base'}`}>
+                                    "{gem.next_location_riddle[mode]}"
+                                </p>
+                            </div>
                         </motion.div>
-
-                        {/* Válaszlehetőségek */}
-                        <div className="grid grid-cols-1 gap-3 w-full">
-                            {options.map((option, idx) => {
-                                const isSelected = selectedOption === option;
-                                const isTheCorrectAnswer = option === correctAnswer;
-
-                                let buttonStyle = "border-white/20 bg-white/5 hover:bg-white/10 text-white/70";
-                                if (isSelected) {
-                                    if (isTheCorrectAnswer) {
-                                        buttonStyle = "border-green-500/50 bg-green-900/20 text-green-100 ring-1 ring-green-500/50";
-                                    } else {
-                                        buttonStyle = "border-red-500/50 bg-red-900/20 text-red-100 ring-1 ring-red-500/50";
-                                    }
-                                }
-
-                                return (
-                                    <motion.button
-                                        key={idx}
-                                        whileTap={{ scale: 0.98 }}
-                                        animate={isSelected && !isTheCorrectAnswer && shake ? { x: [-5, 5, -5, 5, 0] } : {}}
-                                        onClick={() => handleOptionClick(option)}
-                                        className={`
-                                            w-full p-4 rounded-lg border text-sm text-left transition-all relative overflow-hidden
-                                            ${buttonStyle}
-                                        `}
-                                    >
-                                        <span className="relative z-10 font-medium">
-                                            {String.fromCharCode(65 + idx)}. {option}
-                                        </span>
-                                        {isSelected && isTheCorrectAnswer && (
-                                            <motion.div
-                                                layoutId="highlight"
-                                                className="absolute inset-0 bg-green-500/10 z-0"
-                                            />
-                                        )}
-                                    </motion.button>
-                                );
-                            })}
-                        </div>
                     </div>
-                ) : (
-                    <div className="text-white/60 text-sm italic font-serif bg-black/40 p-4 rounded-lg border border-white/5">
-                        "Ezt a szálat már elvarrtad. Az idő itt nyugodt."
-                    </div>
-                )}
+                ) : null}
 
-                {/* TOVÁBB GOMB (Csak ha helyes a válasz, vagy ha már megvan a kulcs) */}
+                {/* SIMA TOVÁBB GOMB (Mindig látható új kulcsnál, kvíz nincs) */}
                 <AnimatePresence>
-                    {(isCorrect || !isNewKey) && (
+                    {(isNewKey || !gem.next_location_riddle) && (
                         <motion.button
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ delay: 2 }}
                             onClick={isNewKey ? onNext : onClose}
                             className={`
-                                w-full py-4 mt-6
+                                w-full py-4 mt-8 mb-8
                                 uppercase tracking-[0.2em] font-bold text-sm
                                 rounded-lg transition-all shadow-lg
                                 flex items-center justify-center gap-2
                                 ${isNewKey
-                                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-blue-500/30 border border-blue-400/30"
+                                    ? "bg-gradient-to-r from-amber-700 to-amber-900 text-amber-50 hover:shadow-amber-900/40 border border-amber-500/30"
                                     : "bg-white/10 text-white/60 hover:bg-white/20 border border-white/10"
                                 }
                             `}
                         >
-                            {isNewKey ? "■ Stabilizálás" : "Visszatérés"}
+                            {isNewKey ? "Megértettem" : "Visszatérés"}
                         </motion.button>
                     )}
                 </AnimatePresence>

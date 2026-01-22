@@ -35,29 +35,10 @@
             "quote": "„Egy város sorsa nem a csatatéren dől el először.”"
         },
         "next_clue": "Ahol a város kapuja állt, ott ma a hősök emléke tornyosul. Keresd a zenélő kaput, ami nem fából, hanem emlékekből épült!",
-        "question": {
-            "adult": "Miért harangoznak Kőszegen 11 órakor dél helyett?",
-            "child": "Hány órakor szólal meg a „déli” harangszó Kőszegen?"
-        },
-        "options": {
-            "adult": [
-                "Mert a török sereg ekkor vonult el.",
-                "Mert Jurisics ekkor halt meg.",
-                "Mert így csapták be a törököket a határidővel.",
-                "Mert a toronyóra elromlott az ostrom alatt."
-            ],
-            "child": [
-                "10 órakor",
-                "11 órakor",
-                "12 órakor",
-                "1 órakor"
-            ]
-        },
-        "answer": {
-            "adult": "Mert így csapták be a törököket a határidővel.",
-            "child": "11 órakor"
-        },
-        "hint": "Az időt néha előre lehet pörgetni a túlélés érdekében..."
+        "next_location_riddle": {
+            "adult": "A döntések terméből lépj ki a fényre. Keress egy teret, hol a pestis emléke égbe nyúl, s hol a piac zaját ma csend honolja.",
+            "child": "Irány a nagy tér! Keress egy hatalmas oszlopot a közepén, ahol régen piac volt!"
+        }
     },
     {
         "id": "jurisics-ter",
@@ -80,31 +61,9 @@
                 "content": "Az ostrom alatt itt nem pénzért adtak ételt, hanem reményért. A nők és öregek itt gyűltek össze imádkozni, miközben a férfiak a falakon harcoltak. A kövezetet a könnyek és a vér szentelte fel."
             }
         ],
-        "question": {
-            "adult": "Ahol sokan voltak, de senki sem volt biztonságban. (Melyik szobor őrzi a teret a közepén?)",
-            "child": "Hol árulták régen a zöldséget és a kenyeret? (Keress egy nagy oszlopot a téren!)"
-        },
-        "options": {
-            "adult": [
-                "Mária-szobor",
-                "Szentháromság-szobor (Pestis-oszlop)",
-                "Szent Flórián",
-                "Jurisics-szobor"
-            ],
-            "child": [
-                "A kútnál",
-                "A nagy szobornál",
-                "A kapuban",
-                "A templomban"
-            ]
-        },
-        "answer": {
-            "adult": "Szentháromság-szobor (Pestis-oszlop)",
-            "child": "A nagy szobornál"
-        },
-        "hint": {
-            "adult": "Keressük meg a város határait. Hol vannak a régi falak?",
-            "child": "Keressünk egy régi, leomlott falat!"
+        "next_location_riddle": {
+            "adult": "Hagyd el a nyüzsgő teret. Keress követ, mely öregebb a házaknál. Ahol a Zwinger szelleme őrzi a sarkot.",
+            "child": "Keress egy nagyon régi, vastag kőfalat! Egy kerek bástya is van ott!"
         },
         "keyFragment": "A Közösség Lánca",
         "next_clue": "Indulj el a város széle felé! Keresd a leomlott falakat és a 'Zwinger' öreg bástyáját."
@@ -130,31 +89,9 @@
                 "content": "Békeidőben a bástya nem katonákat, hanem jeget és bort őrzött, de volt, hogy börtönként is szolgált. A falak még emlékeznek a rabok sóhajaira."
             }
         ],
-        "question": {
-            "adult": "Ahol a kő emlékszik a csapásra. (Melyik bástya a legöregebb a védműben?)",
-            "child": "Melyik fal a legvastagabb? (Keress egy kerek épületet!)"
-        },
-        "options": {
-            "adult": [
-                "Öreg-bástya (Zwinger)",
-                "Várkapu",
-                "Hősök Tornya",
-                "Sarokbástya"
-            ],
-            "child": [
-                "A kerek bástya",
-                "A templom fala",
-                "A ház fala",
-                "A kerítés"
-            ]
-        },
-        "answer": {
-            "adult": "Öreg-bástya (Zwinger)",
-            "child": "A kerek bástya"
-        },
-        "hint": {
-            "adult": "Menjünk a Várkörre, ahol az élet keringett.",
-            "child": "Sétáljunk ki a körútra!"
+        "next_location_riddle": {
+            "adult": "A falak mentén haladj. Egy lőmester nevét keresd, ki a föld alatt hallgatózott. A víz rezdülése árulta el neki a titkot.",
+            "child": "Menj tovább a fal mellett! Keress egy helyet, ahol egy bácsi (Forintos Mátyás) hallgatózott a pincében!"
         },
         "keyFragment": "A Kitartás Köve",
         "moment": {
@@ -186,31 +123,9 @@
                 "content": "A bástya ma a Diáksétány fölé magasodik, de 1532-ben ez volt a frontvonal legveszélyesebb pontja, ahol a föld bármikor megnyílhatott a védők lába alatt."
             }
         ],
-        "question": {
-            "adult": "Hogyan detektálták a török aknászokat? (Mi volt Forintos Mátyás trükkje?)",
-            "child": "Mit csinált a bácsi a pincében? (Hogyan fülelt?)"
-        },
-        "options": {
-            "adult": [
-                "Vizes edényekkel / Dobokkal",
-                "Varázsgömbbel",
-                "Kutyákkal",
-                "Röntgennel"
-            ],
-            "child": [
-                "Dobokat és vizet figyelt",
-                "Aludt",
-                "Kiabált",
-                "Zenélt"
-            ]
-        },
-        "answer": {
-            "adult": "Vizes edényekkel / Dobokkal",
-            "child": "Dobokat és vizet figyelt"
-        },
-        "hint": {
-            "adult": "A víz felszíne megremeg, ha ásnak alattad.",
-            "child": "A víz remeg a pohárban, ha jön a dínó (vagy a török)!"
+        "next_location_riddle": {
+            "adult": "A harci zaj elül. A hit ereje hív. Keresd a templomot, melyet a 'magyarok' használtak, s hol Szent Imre herceg neve vigyáz.",
+            "child": "Most keress egy templomot! Azt, amelyiknek Szent Imre a neve."
         },
         "keyFragment": "A Lőmester Kanóca",
         "moment": {
@@ -238,31 +153,9 @@
                 "content": "A templom mellett álló ház (Walzing-ház) falai egy középkori lakótornyot rejtenek. Úgy tartják, innen figyelték a város minden mozdulatát, még a templomba igyekvőket is."
             }
         ],
-        "question": {
-            "adult": "Kik használták főként ezt a templomot a történelem során? (Hogy hívták a népnyelvben?)",
-            "child": "Milyen nyelven imádkoztak itt régen? (Kiknek a temploma volt?)"
-        },
-        "options": {
-            "adult": [
-                "A magyarok temploma",
-                "A németek temploma",
-                "A törökök mecsetje",
-                "A király magánkápolnája"
-            ],
-            "child": [
-                "Magyarok",
-                "Törökök",
-                "Kínaiak",
-                "Marslakók"
-            ]
-        },
-        "answer": {
-            "adult": "A magyarok temploma",
-            "child": "Magyarok"
-        },
-        "hint": {
-            "adult": "Szent Imre magyar herceg volt.",
-            "child": "Ez a mi templomunk!"
+        "next_location_riddle": {
+            "adult": "A lélek után a test gyógyulása következik. Egy mitikus állat őrzi a kaput. Egyszarvú hívogat a szomszeédban.",
+            "child": "Keress egy házat a közelben, aminek a képén egy unikornis (egyszarvú) van!"
         },
         "keyFragment": "Az Összefogás Ostyája"
     },
@@ -283,31 +176,9 @@
                 "content": "Az épület később a jezsuitáké lett, akik híresek voltak gyógyító tudományukról. A szárítópadláson ma is érezni a több száz éves gyógynövények illatát."
             }
         ],
-        "question": {
-            "adult": "Mi a patika címerállata, ami a legenda szerint semlegesíti a mérget?",
-            "child": "Milyen varázslatos állat van a patika felett?"
-        },
-        "options": {
-            "adult": [
-                "Egyszarvú (Unikornis)",
-                "Oroszlán",
-                "Sas",
-                "Sárkány"
-            ],
-            "child": [
-                "Egyszarvú (Ló szarvval)",
-                "Dinó",
-                "Zsiráf",
-                "Elefánt"
-            ]
-        },
-        "answer": {
-            "adult": "Egyszarvú (Unikornis)",
-            "child": "Egyszarvú (Ló szarvval)"
-        },
-        "hint": {
-            "adult": "Lóhoz hasonlít, de van egy szarva.",
-            "child": "Olyan mint egy ló, de van szarva!"
+        "next_location_riddle": {
+            "adult": "Lépj vissza a tér közepére. Egy anya áll ott gyermekével, ki évszázadok óta figyeli a macskaköveket. Nem oszlop, hanem szobor.",
+            "child": "Menj vissza a tér közepére! Keress egy szobrot, ahol egy néni tart egy kisbabát."
         },
         "keyFragment": "Az Élet Elixírje"
     },
@@ -328,31 +199,9 @@
                 "content": "Úgy tartják, Mária tekintete követi azokat, akik tisztességes szándékkal járnak a téren, de elfordul azoktól, akik árulásra készülnek."
             }
         ],
-        "question": {
-            "adult": "Kinek a szobra áll a tér közepén, mint a város védelmezője?",
-            "child": "Kinek a szobra ez? (Egy anyuka a kisbabával)"
-        },
-        "options": {
-            "adult": [
-                "Szűz Mária",
-                "Szent Erzsébet",
-                "Jeanne d'Arc",
-                "Viktória Királynő"
-            ],
-            "child": [
-                "Mária és Jézus",
-                "Hófehérke",
-                "Barbie",
-                "Egy tündér"
-            ]
-        },
-        "answer": {
-            "adult": "Szűz Mária",
-            "child": "Mária és Jézus"
-        },
-        "hint": {
-            "adult": "Az égi édesanya.",
-            "child": "Jézus anyukája."
+        "next_location_riddle": {
+            "adult": "Ha szomjas a vándor, hova lép? A tér szélén áll egy forrás, melyet fegyverrel őriztek, nehogy méreg kerüljön bele.",
+            "child": "Hol ittak régen az emberek? Keress egy szép kutat a téren!"
         },
         "keyFragment": "Az Oltalom Palástja"
     },
@@ -373,31 +222,9 @@
                 "content": "Itt mosták az árut, itt itatták a lovakat, itt cseréltek gazdát a pletykák. A kút kávája (széle) annyi titkot hallott már, amennyit egyetlen könyvtár sem őriz."
             }
         ],
-        "question": {
-            "adult": "Miért őrizték fegyverrel a kutat az ostrom idején?",
-            "child": "Miért kellett vigyázni a kút vizére?"
-        },
-        "options": {
-            "adult": [
-                "Féltek a mérgezéstől",
-                "Mert arany volt benne",
-                "Mert szörny lakott benne",
-                "Mert fizetős volt"
-            ],
-            "child": [
-                "Hogy senki ne tegyen bele rosszat (mérget)",
-                "Mert a halaknak kellett",
-                "Mert a királyé volt",
-                "Mert meleg víz jött belőle"
-            ]
-        },
-        "answer": {
-            "adult": "Féltek a mérgezéstől",
-            "child": "Hogy senki ne tegyen bele rosszat (mérget)"
-        },
-        "hint": {
-            "adult": "Ha nincs víz, nincs élet.",
-            "child": "Mit iszunk, ha szomjasak vagyunk?"
+        "next_location_riddle": {
+            "adult": "Nem messze innen egy ház lábakon áll. Árkádjai alatt mészárosok vágtak, ma iratok pihennek.",
+            "child": "Keress egy házat, aminek lábai vannak (oszlopokon áll)!"
         },
         "keyFragment": "A Tisztaság Cseppje"
     },
@@ -419,31 +246,9 @@
                 "content": "A Tábornokház loggiájáról (erkélyéről) a legjobb a kilátás a 'Múltra'. Ez az a pont, ahonnan a város vezetői évszázadokon át figyelték a piactér életét és a közeledő veszélyeket."
             }
         ],
-        "question": {
-            "adult": "Ahol a későbbi korok őrzik az ősök emlékét. (Mi található ma az épületben?)",
-            "child": "Ez a ház egy óriási távcső a múltba! (Milyen színű ez az épület?)"
-        },
-        "options": {
-            "adult": [
-                "Városi Múzeum / Panoptikum",
-                "Étterem",
-                "Iskola",
-                "Könyvtár"
-            ],
-            "child": [
-                "Sárga",
-                "Kék",
-                "Piros",
-                "Zöld"
-            ]
-        },
-        "answer": {
-            "adult": "Városi Múzeum / Panoptikum",
-            "child": "Sárga"
-        },
-        "hint": {
-            "adult": "Ez a helyszín a megfigyelésről szól. Keressünk most egy 1532-es kulcsot!",
-            "child": "Ez a ház a múzeum! Menjünk tovább keresni!"
+        "next_location_riddle": {
+            "adult": "Irány a Lábasház!",
+            "child": "Irány a Lábasház!"
         },
         "keyFragment": null
     },
@@ -468,31 +273,9 @@
                 "content": "A mai árkádok alatt régen mészárszék működött – az élet és halál körforgása ezen a helyen mindig is jelen volt. Ma a Levéltár őrzi itt a város minden írott emlékét."
             }
         ],
-        "question": {
-            "adult": "Ahol a város teste először éhezett. (Mire használták a piac idején az árkádokat?)",
-            "child": "Hol bújtak el az eső elől a piacon? (Mi van a ház alján?)"
-        },
-        "options": {
-            "adult": [
-                "Árusításra / Raktározásra",
-                "Istállónak",
-                "Börtönnek",
-                "Kórháznak"
-            ],
-            "child": [
-                "Oszlopok / Árkádok",
-                "Pince",
-                "Padlás",
-                "Erkély"
-            ]
-        },
-        "answer": {
-            "adult": "Árusításra / Raktározásra",
-            "child": "Oszlopok / Árkádok"
-        },
-        "hint": {
-            "adult": "Keress egy házat, ami egy családról (Chernel) kapta a nevét.",
-            "child": "Keressünk egy házat, aminek madaras neve van!"
+        "next_location_riddle": {
+            "adult": "Hagyd el a teret a madarak éneke felé. Egy híres ornitológus család otthona vár, rokokó díszekkel.",
+            "child": "Keress egy házat, ahol a madaras bácsi lakott! Szép díszes a fala."
         },
         "keyFragment": "Az Utolsó Cipó",
         "next_clue": "Hagyd el a teret, és indulj a madarak éneke felé. Egy híres ornitológus család háza vár a Chernel utcában."
@@ -514,31 +297,9 @@
                 "content": "Az épület homlokzata a Festetics család címerét is viseli, jelezve a nemesi összefonódásokat, melyek nemcsak vagyonban, hanem a haza védelmében is egyesítették a családokat."
             }
         ],
-        "question": {
-            "adult": "Ahol a város nem védekezett, hanem kitartott. (Milyen stílusú az épület?)",
-            "child": "Hol lakott a madaras bácsi? (Mi van az épület falán?)"
-        },
-        "options": {
-            "adult": [
-                "Késő barokk / Rokokó",
-                "Gótikus",
-                "Modern",
-                "Román"
-            ],
-            "child": [
-                "Díszes kapu",
-                "Madárfészek",
-                "Piros ablak",
-                "Semmi"
-            ]
-        },
-        "answer": {
-            "adult": "Késő barokk / Rokokó",
-            "child": "Díszes kapu"
-        },
-        "hint": {
-            "adult": "Irány a Szent Jakab templom. A hit ereje vár.",
-            "child": "Menjünk a templomhoz!"
+        "next_location_riddle": {
+            "adult": "Vissza a hithez. Keresd az öregebb templomot. Hol Jurisics gyermekei nyugszanak, s hol a Madonna köpenye alá rejt.",
+            "child": "Keress még egy templomot! Ez a régebbi, és Szent Jakab a neve."
         },
         "keyFragment": "Az Elrejtett Ékszer",
         "next_clue": "A paloták mögött húzódik a régi határ. Keresd az öreg bástyát (Zwinger) és a legvastagabb falakat."
@@ -564,31 +325,9 @@
                 "content": "A templom volt katolikus, majd protestáns, aztán újra katolikus. A falakba ivódott imák nyelve változott, de a könyörgés a békéért ugyanaz maradt."
             }
         ],
-        "question": {
-            "adult": "Ahol nem harcoltak, mégis imádkoztak. (Kiknek a temetkezési helye volt eredetileg?)",
-            "child": "Kihez imádkoztak az emberek? (Kiről nevezték el a templomot?)"
-        },
-        "options": {
-            "adult": [
-                "Nemesi családok / Jurisics gyermekei",
-                "Törökök",
-                "Királyok",
-                "Kereskedők"
-            ],
-            "child": [
-                "Szent Jakab",
-                "Szent Péter",
-                "Mária",
-                "Jézus"
-            ]
-        },
-        "answer": {
-            "adult": "Nemesi családok / Jurisics gyermekei",
-            "child": "Szent Jakab"
-        },
-        "hint": {
-            "adult": "Nézzük meg a Sgraffitós házat!",
-            "child": "Nézzük meg a karcolt házat!"
+        "next_location_riddle": {
+            "adult": "A templom mellett a művészet beszél. A falat nem festették, hanem karcolták. Olvasd a latin igét a homlokzaton.",
+            "child": "Keress egy házat, ami tele van karcolt mintákkal! Nagyon híres ház!"
         },
         "keyFragment": "Az Ima Ereje",
         "moment": {
@@ -620,31 +359,9 @@
                 "content": "Ottlik Géza világhírű regényének szellemisége áthatja ezt a teret. Az író diákként éveket töltött Kőszegen, és ez a ház, a felirattal, örökre belevésődött az emlékezetébe."
             }
         ],
-        "question": {
-            "adult": "Ahol nem az ostrom idején történt a fontos. (Mikor készült a híres díszítés?)",
-            "child": "Mi van a falon? (Rajz vagy karcolás?)"
-        },
-        "options": {
-            "adult": [
-                "1668 (későbbi, mint az ostrom)",
-                "1532",
-                "1900",
-                "1242"
-            ],
-            "child": [
-                "Karcolás (Sgraffito)",
-                "Festmény",
-                "Matrica",
-                "Mozaik"
-            ]
-        },
-        "answer": {
-            "adult": "1668 (későbbi, mint az ostrom)",
-            "child": "Karcolás (Sgraffito)"
-        },
-        "hint": {
-            "adult": "A Jézus Szíve templom felé vesszük az irányt.",
-            "child": "Menjünk a nagy templomhoz!"
+        "next_location_riddle": {
+            "adult": "Most emeld tekinteted a legmagasabb toronyra. A Főtér ékköve, hol 11-kor kondul a harang a dél helyett.",
+            "child": "Most menj a legnagyobb templomhoz a városban! Ott, ahol a harang szól."
         },
         "keyFragment": "A Művészet Ékköve",
         "next_clue": "A művészet után térj vissza a hithez. Keresd a templomot, mely Jurisics gyermekeit őrzi. Két templom áll a téren, ez az öregebb."
@@ -666,31 +383,9 @@
                 "content": "A templom színes üvegablakai nemcsak díszek. A fény, ami átjut rajtuk, 'megszínezi' a benti levegőt. A régiek szerint a szentek alakjai a napfényen keresztül lépnek be a térbe."
             }
         ],
-        "question": {
-            "adult": "Ahol az ostrom már véget ért, de mégis tovább él. (Hány órakor szól a harangszó az ostrom emlékére?)",
-            "child": "Mikor harangoznak a győzelem miatt? (Délelőtt...)"
-        },
-        "options": {
-            "adult": [
-                "11 órakor",
-                "Délben",
-                "Este 8-kor",
-                "Reggel 6-kor"
-            ],
-            "child": [
-                "11-kor",
-                "12-kor",
-                "Este",
-                "Reggel"
-            ]
-        },
-        "answer": {
-            "adult": "11 órakor",
-            "child": "11-kor"
-        },
-        "hint": {
-            "adult": "Keressük meg, hol volt régen a Városkapu!",
-            "child": "Hol mentek be régen a várba?"
+        "next_location_riddle": {
+            "adult": "Ahol a város kapuja állt. Ma torony emelkedik helyén. Ez volt a határ a biztonság és a külvilág között.",
+            "child": "Keress egy nagy tornyot, ami régen kapu volt! át lehet menni alatta!"
         },
         "keyFragment": "Az Emlékezet Harangja"
     },
@@ -715,31 +410,9 @@
                 "content": "Ottlik Géza regényének címadó helyszíne nem csak metafora. Ez a torony és a mellette lévő épületek valóban a 'határon' álltak – földrajzilag és lélekben is."
             }
         ],
-        "question": {
-            "adult": "Ahol a város befelé zárult. (Mi áll ma a régi kapu helyén?)",
-            "child": "Hogyan zárták be a kaput? (Kulccsal vagy...)"
-        },
-        "options": {
-            "adult": [
-                "Hősök Kapuja (torony)",
-                "Semmi",
-                "Egy híd",
-                "Egy szobor"
-            ],
-            "child": [
-                "Láncokkal és gerendákkal",
-                "Távirányítóval",
-                "Kilinccsel",
-                "Varázslattal"
-            ]
-        },
-        "answer": {
-            "adult": "Hősök Kapuja (torony)",
-            "child": "Láncokkal és gerendákkal"
-        },
-        "hint": {
-            "adult": "Vissza a VÁRHOZ! (Jurisics Vár)",
-            "child": "Fussunk a várhoz!"
+        "next_location_riddle": {
+            "adult": "Az utolsó lépés a tiéd. A végső erőd, hol a kapitány farkasszemet nézett a szultánnal. Találd meg magad.",
+            "child": "Már csak egy hely van hátra: A VÁR! Keresd meg a nagy várat!"
         },
         "keyFragment": "A Záródó Kapu",
         "next_clue": "A kapu szomszédságában sárgállik egy ház, honnan tábornokok figyelték a teret. Keresd a loggiát a magasban!"
@@ -761,28 +434,7 @@
                 "content": "Nemcsak katonák védték a várat. Az omladozó falakat éjszakánként kőszegi asszonyok és gyerekek építették újjá tégláról téglára, hogy reggelre a törökök sértetlennek lássák az erődöt."
             }
         ],
-        "question": {
-            "adult": "Ahol a kulcs nem volt, de ott lesz teljes. (Kész vagy bezárni az időkaput?)",
-            "child": "Kész vagy bezárni az időkaput?"
-        },
-        "options": {
-            "adult": [
-                "Igen, a kulcs teljes.",
-                "Még nem."
-            ],
-            "child": [
-                "Igen!",
-                "Nem."
-            ]
-        },
-        "answer": {
-            "adult": "Igen, a kulcs teljes.",
-            "child": "Igen!"
-        },
-        "hint": {
-            "adult": "Játék Vége.",
-            "child": "Játék Vége."
-        },
+        "next_location_riddle": null,
         "keyFragment": "Vitézi Oklevél"
     },
     {
