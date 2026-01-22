@@ -146,30 +146,38 @@ export default function AuthPage() {
                 console.log("User created with ID:", userId);
 
                 // 2. Ensuring Profile Exists
-                console.log("Upserting profile...");
+                // Only 'provider' role here
+                const role = 'provider';
+
+                console.log("Upserting profile with role:", role);
                 const { error: profileError } = await supabase
                     .from('profiles')
                     .upsert({
                         id: userId,
-                        role: 'provider',
+                        role: role,
                         nickname: providerUsername
                     });
 
                 if (profileError) console.error("Profile upsert warn:", profileError);
                 else console.log("Profile upsert success.");
 
-                // 3. CHECK SESSION
-                if (authData.session) {
-                    console.log("Session received. Navigating to Business Dashboard...");
-                    toast.success('Sikeres regisztráció! Üdv a csapatban! 🚀');
-                    navigate('/business', { replace: true });
-                } else {
-                    console.log("No session. Logging in manually...");
-                    await login(providerUsername, password, 'provider');
-                    console.log("Manual login success. Navigating to Business Dashboard...");
-                    toast.success('Sikeres regisztráció! Üdv a csapatban! 🚀');
-                    navigate('/business', { replace: true });
+                // 3. Create Appointment Provider Entry
+                const { error: provError } = await supabase
+                    .from('providers')
+                    .insert({
+                        user_id: userId,
+                        business_name: businessName,
+                        category: finalCategory,
+                        slug: businessName.toLowerCase().replace(/ /g, '-')
+                    });
+
+                if (provError && !provError.message.includes('duplicate')) {
+                    console.error("Provider insert error:", provError);
                 }
+
+                toast.success('Sikeres szolgáltató regisztráció! 🚀');
+                navigate('/business', { replace: true });
+
             } else {
                 console.warn("Registration returned no user object.");
                 toast.error("Hiba: A regisztráció nem tért vissza felhasználóval.");
@@ -201,6 +209,7 @@ export default function AuthPage() {
             // 1. Try Provider Login
             const { user } = await login(loginUsername, loginPassword, 'provider');
             if (user) {
+                // Modified: Only redirect to business dashboard
                 toast.success('Sikeres bejelentkezés!');
                 navigate('/business', { replace: true });
                 return;

@@ -18,6 +18,8 @@
     "googlethis": "^1.8.0",
     "i18next": "^22.0.0",
     "jsonwebtoken": "^9.0.3",
+    "jspdf": "^4.0.0",
+    "jspdf-autotable": "^5.0.7",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.562.0",
     "mind-ar": "^1.2.5",

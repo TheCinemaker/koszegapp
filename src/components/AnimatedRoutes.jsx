@@ -2,8 +2,7 @@ import React, { Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// Importing Pages (Same imports as App.jsx)
-// Lazy Load Pages for Performance
+// Importing Pages
 const Home = React.lazy(() => import('../pages/Home'));
 const Attractions = React.lazy(() => import('../pages/Attractions'));
 const AttractionDetail = React.lazy(() => import('../pages/AttractionDetail'));
@@ -40,6 +39,10 @@ const CityPass = React.lazy(() => import('../pages/CityPass'));
 const LegalNotice = React.lazy(() => import('../pages/LegalNotice'));
 const GameRules = React.lazy(() => import('../pages/GameRules'));
 const TeaserPage = React.lazy(() => import('../pages/TeaserPage'));
+const FoodOrderPage = React.lazy(() => import('../pages/FoodOrderPage'));
+const FoodAdmin = React.lazy(() => import('../pages/FoodAdmin'));
+const FoodAuthPage = React.lazy(() => import('../pages/FoodAuthPage'));
+
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
 
@@ -155,11 +158,12 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/koszegieknek" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
           <Route path="/auth" element={<PageWrapper><AuthPage /></PageWrapper>} />
           <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
-          <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
-          <Route path="/business-dashboard" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
           <Route path="/secret-setup" element={<PageWrapper><SecretRegister /></PageWrapper>} />
           <Route path="/city-pass" element={<PageWrapper><CityPass /></PageWrapper>} />
+          <Route path="/food" element={<PageWrapper><FoodOrderPage /></PageWrapper>} />
+          <Route path="/food-admin" element={<PageWrapper><FoodAdmin /></PageWrapper>} />
+          <Route path="/food-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>
@@ -167,7 +171,7 @@ export default function AnimatedRoutes({ appData }) {
 }
 
 // Wrapper to apply animation
-const PageWrapper = ({ children }) => (
+const PageWrapper = ({ children, showFooter = true }) => (
   <motion.div
     initial="initial"
     animate="in"
@@ -189,7 +193,7 @@ const PageWrapper = ({ children }) => (
       <div className="flex-1">
         {children}
       </div>
-      <Footer />
+      {showFooter && <Footer />}
     </div>
   </motion.div>
 );
