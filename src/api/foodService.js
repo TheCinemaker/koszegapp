@@ -20,7 +20,7 @@ export async function getMenu(restaurantId) {
         .from('menu_categories')
         .select('*')
         .eq('restaurant_id', restaurantId)
-        .order('order_index');
+        .order('sort_order');
 
     if (catError) throw catError;
 
@@ -28,7 +28,7 @@ export async function getMenu(restaurantId) {
         .from('menu_items')
         .select('*')
         .eq('restaurant_id', restaurantId)
-        .eq('available', true);
+        .eq('is_available', true);
 
     if (itemError) throw itemError;
 
