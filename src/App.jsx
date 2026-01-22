@@ -93,7 +93,11 @@ function MainAppContent() {
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const [showResidentModal, setShowResidentModal] = useState(false);
   const isHome = location.pathname === '/';
-  const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/') || location.pathname === '/teaser';
+  // Treat food-auth as "game mode" to hide the global header/UI
+  const isInGameMode = location.pathname.startsWith('/game/') ||
+    location.pathname.startsWith('/gem/') ||
+    location.pathname === '/teaser' ||
+    location.pathname === '/food-auth';
 
   // --- MAINTENANCE MODE LOGIC ---
   const [maintenanceMode, setMaintenanceMode] = useState(false); // Devben nyitva, élesben karbantartás
@@ -406,7 +410,7 @@ function MainAppContent() {
 
           <FloatingNavbar />
           {/* Hide SmartSpotlight on Dashboards & Auth */}
-          {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && !location.pathname.startsWith('/auth') && (
+          {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && !location.pathname.startsWith('/auth') && !location.pathname.startsWith('/food') && (
             <SmartSpotlight appData={appData} />
           )}
 

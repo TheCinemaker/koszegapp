@@ -1,0 +1,400 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation } from 'react-icons/io5';
+import { useCart } from '../hooks/useCart';
+import { getMenu, placeOrder, getRestaurants } from '../api/foodService';
+import toast from 'react-hot-toast';
+import { supabase } from '../lib/supabaseClient';
+
+export default function FoodOrderPage() {
+    const [view, setView] = useState('restaurants'); // 'restaurants' | 'menu'
+    const [restaurants, setRestaurants] = useState([]);
+    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    // 1. Éttermek betöltése induláskor
+    // 1. Éttermek betöltése és feliratkozás
+    useEffect(() => {
+        const fetchRestaurants = async () => {
+            const { data, error } = await supabase
+                .from('restaurants')
+                .select('*')
+                .eq('is_open', true)
+                .order('name');
+
+            if (error) {
+                console.error(error);
+                toast.error("Nem sikerült betölteni az éttermeket");
+            } else {
+                setRestaurants(data || []);
+            }
+        };
+
+        fetchRestaurants();
+
+        // Subscribe to changes (e.g. delivery time updates)
+        const channel = supabase.channel('restaurants-updates')
+            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'restaurants' }, (payload) => {
+                setRestaurants(prev => prev.map(r => r.id === payload.new.id ? payload.new : r));
+            })
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, []);
+
+    // 2. Menü betöltése ha éttermet választunk
+    useEffect(() => {
+        if (selectedRestaurant) {
+            setLoading(true);
+            getMenu(selectedRestaurant.id)
+                .then(data => {
+                    setCategories(data);
+                    setView('menu');
+                })
+                .catch(err => {
+                    console.error(err);
+                    toast.error("Nem sikerült betölteni a menüt");
+                    setSelectedRestaurant(null); // Vissza a listához hiba esetén
+                })
+                .finally(() => setLoading(false));
+        }
+    }, [selectedRestaurant]);
+
+    const handleBack = () => {
+        setView('restaurants');
+        setSelectedRestaurant(null);
+        setCategories([]);
+    };
+
+    return (
+        <div className="min-h-screen flex flex-col mesh-bg-vibrant text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 pb-24">
+
+            {/* Header */}
+            <header className="sticky top-0 z-30 backdrop-blur-md bg-white/70 dark:bg-[#1a1c2e]/70 border-b border-white/20 dark:border-white/5 shadow-sm">
+                <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        {view === 'menu' && (
+                            <button onClick={handleBack} className="mr-2 p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full">
+                                <IoArrowBack className="text-xl" />
+                            </button>
+                        )}
+                        <IoRestaurant className="text-amber-500 text-2xl" />
+                        <h1 className="font-bold text-xl tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
+                    </div>
+
+                    <button
+                        onClick={() => setIsCartOpen(true)}
+                        className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                    >
+                        <IoBasket className="text-2xl" />
+                        {count > 0 && (
+                            <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-[#1a1c2e]">
+                                {count}
+                            </span>
+                        )}
+                    </button>
+                </div>
+            </header>
+
+            <main className="container mx-auto px-4 py-8">
+
+                {view === 'restaurants' ? (
+                    /* ÉTTEREM LISTA NÉZET */
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {restaurants.map(rest => (
+                            <motion.div
+                                key={rest.id}
+                                layoutId={`restaurant-${rest.id}`}
+                                onClick={() => setSelectedRestaurant(rest)}
+                                className="relative h-full block rounded-[1.5rem] bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group overflow-hidden"
+                            >
+                                <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden">
+                                    {/* Placeholder image logic - in real app use rest.cover_image */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                                        <h2 className="text-white font-bold text-xl transform group-hover:-translate-y-1 transition-transform">{rest.name}</h2>
+                                    </div>
+                                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
+                                        <IoTime className="text-amber-500 text-sm" />
+                                        <span>{rest.delivery_time || '30-40 perc'}</span>
+                                    </div>
+                                </div>
+                                <div className="p-4">
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-3 line-clamp-2">{rest.description}</p>
+                                    <div className="flex items-center gap-4 text-xs font-medium opacity-70">
+                                        <span className="flex items-center gap-1"><IoLocation /> {rest.address}</span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                ) : (
+                    /* MENÜ NÉZET */
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="space-y-8"
+                    >
+                        {/* Étterem Info Banner */}
+                        <div className="rounded-[2rem] bg-gradient-to-r from-amber-600 to-orange-600 p-8 text-white shadow-xl relative overflow-hidden">
+                            <div className="absolute inset-0 bg-black/10" />
+                            <div className="relative z-10">
+                                <h2 className="text-3xl font-bold mb-2">{selectedRestaurant?.name}</h2>
+                                <p className="opacity-90 max-w-2xl">{selectedRestaurant?.description}</p>
+                            </div>
+                            <div className="absolute -bottom-10 -right-10 text-9xl opacity-20 rotate-12">🍔</div>
+                        </div>
+
+                        {/* Kategóriák és Elemek */}
+                        <div className="space-y-12">
+                            {categories.map(cat => (
+                                <section key={cat.id} id={cat.id}>
+                                    <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 border-l-4 border-amber-500 pl-3">
+                                        {cat.name}
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {cat.items.map(item => (
+                                            <MenuItemCard key={item.id} item={item} onAdd={() => addItem(item)} />
+                                        ))}
+                                    </div>
+                                </section>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Cart Drawer & Modals */}
+                <AnimatePresence>
+                    {isCartOpen && (
+                        <CartDrawer
+                            items={items}
+                            total={total}
+                            onClose={() => setIsCartOpen(false)}
+                            onUpdateQty={updateQuantity}
+                            onRemove={removeItem}
+                            onClear={clearCart}
+                            restaurantId={selectedRestaurant?.id}
+                        />
+                    )}
+                </AnimatePresence>
+
+            </main>
+        </div>
+    );
+}
+
+function MenuItemCard({ item, onAdd }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="group relative bg-white/70 dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-white/60 dark:border-white/10 flex items-center gap-3 p-3 backdrop-blur-md"
+        >
+            {/* Image Thumbnail (Small) */}
+            <div className="w-20 h-20 shrink-0 bg-gray-200 dark:bg-white/5 rounded-xl overflow-hidden relative">
+                {item.image_url ? (
+                    <img src={item.image_url} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                ) : (
+                    <div className="flex items-center justify-center h-full text-2xl opacity-20">🍽️</div>
+                )}
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 min-w-0 flex flex-col justify-center h-full">
+                <div className="flex justify-between items-start gap-2">
+                    <h4 className="font-bold text-base leading-tight dark:text-gray-100">{item.name}</h4>
+                    <span className="font-mono font-bold text-amber-600 shrink-0 dark:text-amber-500">{item.price.toLocaleString('hu-HU')} Ft</span>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">{item.description}</p>
+            </div>
+
+            {/* Add Button */}
+            <button
+                onClick={onAdd}
+                className="w-10 h-10 shrink-0 bg-white dark:bg-amber-600 text-amber-600 dark:text-white rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-transform border border-amber-100 dark:border-amber-500"
+            >
+                <IoAdd className="text-xl font-bold" />
+            </button>
+        </motion.div>
+    )
+}
+
+function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId }) {
+    const [step, setStep] = useState('cart'); // 'cart' | 'checkout'
+    const [form, setForm] = useState({ name: '', phone: '', address: '', note: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            // Group items by restaurant
+            const ordersByRestaurant = items.reduce((acc, item) => {
+                const rId = item.restaurant_id;
+                if (!acc[rId]) acc[rId] = [];
+                acc[rId].push(item);
+                return acc;
+            }, {});
+
+            const restaurantIds = Object.keys(ordersByRestaurant);
+
+            // Demo mode check (simplistic: if passed prop or derived ID matches demo)
+            if (restaurantId === "demo-restaurant-id") {
+                await new Promise(r => setTimeout(r, 1500));
+                console.log("DEMO ORDER:", { customer: form, cartItems: items });
+            } else {
+                // Execute all orders in parallel
+                await Promise.all(restaurantIds.map(rId =>
+                    placeOrder({
+                        restaurantId: rId,
+                        customer: form,
+                        cartItems: ordersByRestaurant[rId]
+                    })
+                ));
+            }
+
+            const isMultiple = restaurantIds.length > 1;
+            toast.success(isMultiple ? `Sikeres rendelés ${restaurantIds.length} helyről! 🍔` : 'Rendelés sikeresen elküldve! 🍔');
+            onClear();
+            onClose();
+        } catch (error) {
+            console.error(error);
+            toast.error('Hiba történt a rendeléskor.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <>
+            <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={onClose}
+                className="fixed inset-0 bg-black/60 z-[90] backdrop-blur-sm"
+            />
+            <motion.div
+                initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white/90 dark:bg-[#1a1c2e]/90 backdrop-blur-xl z-[100] shadow-2xl flex flex-col border-l border-white/20"
+            >
+                <div className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-white/5">
+                    <h2 className="text-xl font-bold">{step === 'cart' ? 'Kosár tartalma' : 'Megrendelés'}</h2>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full"><IoClose className="text-2xl" /></button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-4">
+                    {items.length === 0 ? (
+                        <div className="h-full flex flex-col items-center justify-center text-gray-400 gap-4">
+                            <IoBasket className="text-6xl opacity-20" />
+                            <p>Üres a kosarad.</p>
+                            <button onClick={onClose} className="text-amber-500 font-bold hover:underline">Válassz valamit!</button>
+                        </div>
+                    ) : (
+                        step === 'cart' ? (
+                            <div className="space-y-4">
+                                {items.map(item => (
+                                    <div key={item.id} className="flex gap-4 items-center bg-gray-50 dark:bg-white/5 p-3 rounded-lg">
+                                        <div className="w-16 h-16 bg-gray-200 rounded-md overflow-hidden shrink-0">
+                                            {item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="font-bold truncate">{item.name}</h4>
+                                            <p className="text-sm text-amber-600 font-mono">{item.price} Ft</p>
+                                        </div>
+                                        <div className="flex items-center gap-2 bg-white dark:bg-black/30 rounded-full px-2 py-1 border border-gray-200 dark:border-white/10">
+                                            <button onClick={() => onUpdateQty(item.id, -1)} className="w-6 h-6 flex items-center justify-center hover:text-amber-500"><IoRemove /></button>
+                                            <span className="text-sm font-bold w-4 text-center">{item.quantity}</span>
+                                            <button onClick={() => onUpdateQty(item.id, 1)} className="w-6 h-6 flex items-center justify-center hover:text-amber-500"><IoAdd /></button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <form id="checkout-form" onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Név</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                        value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                                        placeholder="Kovács János"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Telefonszám</label>
+                                    <input
+                                        required
+                                        type="tel"
+                                        className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                        value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                                        placeholder="+36 30 123 4567"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Cím</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                        value={form.address} onChange={e => setForm({ ...form, address: e.target.value })}
+                                        placeholder="Fő tér 1, 2. emelet 3."
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Megjegyzés (opcionális)</label>
+                                    <textarea
+                                        rows={3}
+                                        className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                                        value={form.note} onChange={e => setForm({ ...form, note: e.target.value })}
+                                        placeholder="A kapucsengő rossz, kérem hívjon..."
+                                    />
+                                </div>
+                            </form>
+                        )
+                    )}
+                </div>
+
+                {items.length > 0 && (
+                    <div className="p-4 border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-[#151618]">
+                        <div className="flex justify-between items-end mb-4">
+                            <span className="text-sm opacity-70">Összesen:</span>
+                            <span className="text-2xl font-bold text-amber-500 font-mono">{total.toLocaleString('hu-HU')} Ft</span>
+                        </div>
+                        {step === 'cart' ? (
+                            <button
+                                onClick={() => setStep('checkout')}
+                                className="w-full py-4 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2"
+                            >
+                                Tovább a rendeléshez
+                            </button>
+                        ) : (
+                            <div className="flex gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setStep('cart')}
+                                    className="px-6 py-4 bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 font-bold rounded-xl transition-colors"
+                                >
+                                    Vissza
+                                </button>
+                                <button
+                                    form="checkout-form"
+                                    disabled={isSubmitting}
+                                    className="flex-1 py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                >
+                                    {isSubmitting ? 'Küldés...' : 'Rendelés Leadása'}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </motion.div>
+        </>
+    );
+}

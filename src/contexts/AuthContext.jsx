@@ -10,12 +10,18 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Helper: Normalize inputs to ensure consistency between Register and Login
-  // "Fodrász Jani" -> "fodraszani" (lowercase, no spaces) purely for the email generation
+  // "Fodrász Jani" -> "fodraszjani" (lowercase, no accents, no spaces)
   const normalizeIdentifier = (raw) => {
-    return raw.toLowerCase().trim().replace(/\s+/g, '');
+    return raw
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove accents
+      .trim()
+      .replace(/\s+/g, '') // Remove spaces
+      .replace(/[^a-z0-9]/g, ''); // Remove any other special chars
   };
 
-  useEffect(() => {// 1. Get initial session - INSTANTLY set user if present
+  useEffect(() => {
+    // 1. Get initial session - INSTANTLY set user if present
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
@@ -77,7 +83,10 @@ export const AuthProvider = ({ children }) => {
   */
   const login = async (identifier, password, type = 'client') => {
     // Generate internal email based on type
-    const prefix = type === 'provider' ? 'provider' : 'client';
+    const isProvider = type === 'provider' || type === 'restaurant';
+    const prefix = isProvider ? 'provider' : 'client';
+
+    // Normalize identifier more aggressively
     const safeId = normalizeIdentifier(identifier);
     const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
 
@@ -102,7 +111,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (identifier, password, fullName, role) => {
-    const isProvider = role === 'provider';
+    const isProvider = role === 'provider' || role === 'restaurant';
     const prefix = isProvider ? 'provider' : 'client';
 
     const safeId = normalizeIdentifier(identifier);
@@ -114,6 +123,11 @@ export const AuthProvider = ({ children }) => {
     console.log(`  Safe ID: "${safeId}"`);
     console.log(`  Gen Email: "${generatedEmail}"`);
 
+    // Workaround: Database trigger might reject 'restaurant' role if ENUM is restrictive.
+    // We send 'provider' as the metadata role to satisfy the trigger.
+    // The calling code (FoodAuthPage) is responsible for manually updating the profile to 'restaurant' after registration.
+    const metadataRole = role === 'restaurant' ? 'provider' : role;
+
     const { data, error } = await supabase.auth.signUp({
       email: generatedEmail,
       password,
@@ -121,7 +135,7 @@ export const AuthProvider = ({ children }) => {
         data: {
           full_name: fullName,
           nickname: identifier, // Store original identifier
-          role: role
+          role: metadataRole
         }
       }
     });
