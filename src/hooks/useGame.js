@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getRandomRiddle } from '../data/riddles';
+import { supabase } from '../lib/supabaseClient';
 
 const GAME_STATE_KEY = 'koszeg-city-game-state-v2';
 const HAS_PLAYED_KEY = 'has-played-koszeg-game';
@@ -21,7 +22,8 @@ const getInitialState = () => {
     visitedStations: [], // Array of IDs
     gateClosed: false,
     assignedRiddles: {}, // Map: gemId -> riddleId
-    gameMode: 'adult' // Default mode
+    gameMode: 'adult', // Default mode
+    dbSessionId: null // Supabase ID for stats
   };
 };
 
@@ -35,7 +37,10 @@ export function useGame() {
 
   // --- ACTIONS (State Transitions) ---
 
-  const startGame = useCallback((stationId, mode = 'adult', playerName = '') => {
+  const startGame = useCallback(async (stationId, mode = 'adult', playerName = '') => {
+    const finalName = playerName || 'Névtelen Hős';
+
+    // 1. Local State Update (Optimistic)
     setGameState(prev => {
       if (prev.gameStarted) return prev; // Already started
       return {
@@ -44,11 +49,53 @@ export function useGame() {
         entryStation: stationId,
         visitedStations: [stationId],
         gameMode: mode,
-        playerName: playerName || 'Névtelen Hős'
+        playerName: finalName
       };
     });
     window.localStorage.setItem(HAS_PLAYED_KEY, 'true');
+
+    // 2. Supabase Logging (Fire & Forget)
+    try {
+      const { data, error } = await supabase
+        .from('game_stats')
+        .insert([
+          {
+            player_name: finalName,
+            game_mode: mode,
+            started_at: new Date().toISOString()
+          }
+        ])
+        .select()
+        .single();
+
+      if (data) {
+        console.log("Game session started:", data.id);
+        setGameState(prev => ({ ...prev, dbSessionId: data.id }));
+      }
+      if (error) console.error("Stat logging error:", error);
+    } catch (err) {
+      console.error("Stat logging failed:", err);
+    }
   }, []);
+
+  const completeGame = useCallback(async () => {
+    if (!gameState.dbSessionId) return;
+
+    try {
+      const { error } = await supabase
+        .from('game_stats')
+        .update({
+          completed: true,
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', gameState.dbSessionId);
+
+      if (error) console.error("Completion logging error:", error);
+      else console.log("Game session completed.");
+    } catch (err) {
+      console.error("Completion logging failed:", err);
+    }
+  }, [gameState.dbSessionId]);
 
   const addFoundGem = useCallback((gemId) => {
     setGameState(prev => {
@@ -86,7 +133,9 @@ export function useGame() {
 
   const closeGate = useCallback(() => {
     setGameState(prev => ({ ...prev, gateClosed: true }));
-  }, []);
+    // Log completion when gate closes
+    completeGame();
+  }, [completeGame]);
 
   const setGameMode = useCallback((mode) => {
     setGameState(prev => ({ ...prev, gameMode: mode }));
@@ -101,7 +150,8 @@ export function useGame() {
       visitedStations: [],
       gateClosed: false,
       assignedRiddles: {},
-      gameMode: 'adult'
+      gameMode: 'adult',
+      dbSessionId: null
     };
     setGameState(freshState);
     window.localStorage.removeItem(HAS_PLAYED_KEY);
@@ -139,6 +189,7 @@ export function useGame() {
     closeGate,
     resetGame,
     setGameMode,
+    completeGame,
 
     // Helpers
     isGemFound,
