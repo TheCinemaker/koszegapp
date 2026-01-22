@@ -185,7 +185,6 @@
     "id": "event-2026-010",
     "name": "Vecsei Márton: A menjek országa – könyvbemutató",
     "date": "2026-01-26",
-    "end_date": "2026-01-26",
     "time": "18:00",
     "location": "KÖSZHÁZ (Jurisics vár)",
     "coords": {
@@ -199,7 +198,11 @@
       "kultúra",
       "ingyenes"
     ],
-    "image": "konyvbemutato.jpg"
+    "image": "menjek.jpg",
+    "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
+    "highlight": false,
+    "highlightLabel": "",
+    "end_date": "2026-01-26"
   },
   {
     "id": "event-2026-011",
