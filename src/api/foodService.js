@@ -20,7 +20,7 @@ export async function getMenu(restaurantId) {
         .from('menu_categories')
         .select('*')
         .eq('restaurant_id', restaurantId)
-        .order('order_index');
+        .order('sort_order');
 
     if (catError) throw catError;
 
@@ -28,7 +28,7 @@ export async function getMenu(restaurantId) {
         .from('menu_items')
         .select('*')
         .eq('restaurant_id', restaurantId)
-        .eq('available', true);
+        .eq('is_available', true);
 
     if (itemError) throw itemError;
 
@@ -38,64 +38,37 @@ export async function getMenu(restaurantId) {
     }));
 }
 
-// 2. Rendelés leadása (RLS-safe, anon user)
+// 2. Rendelés leadása (RPC hívás - Biztonságos Transactions)
 export async function placeOrder({ restaurantId, customer, cartItems }) {
-    if (!restaurantId) {
-        throw new Error('Missing restaurantId');
+    if (!restaurantId || !cartItems || cartItems.length === 0) {
+        throw new Error('Érvénytelen rendelési adatok');
     }
 
-    if (!cartItems || cartItems.length === 0) {
-        throw new Error('Empty cart');
-    }
+    const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // 1️⃣ Order insert (NO select!)
-    const { error: orderError } = await supabase
-        .from('orders')
-        .insert({
-            restaurant_id: restaurantId,
-            customer_name: customer.name,
-            customer_phone: customer.phone,
-            customer_address: customer.address,
-            customer_note: customer.note || null,
-            status: 'new',
-            total_price: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-        });
-
-    if (orderError) {
-        console.error('Order insert failed:', orderError);
-        throw orderError;
-    }
-
-    // 2️⃣ Legutóbbi order ID lekérése (SAFE workaround)
-    const { data: orderRow, error: fetchError } = await supabase
-        .from('orders')
-        .select('id')
-        .eq('restaurant_id', restaurantId)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-    if (fetchError) {
-        console.error('Order fetch failed:', fetchError);
-        throw fetchError;
-    }
-
-    // 3️⃣ Order items
-    const orderItems = cartItems.map(item => ({
-        order_id: orderRow.id,
-        menu_item_id: item.id,
-        quantity: item.quantity,
+    // Prepare items for the RPC function
+    const itemsJson = cartItems.map(item => ({
+        id: item.id,
+        name: item.name,
         price: item.price,
+        quantity: item.quantity
     }));
 
-    const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
+    // Call the database function
+    const { data, error } = await supabase.rpc('place_order_full', {
+        p_restaurant_id: restaurantId,
+        p_customer_name: customer.name,
+        p_customer_phone: customer.phone,
+        p_customer_address: customer.address,
+        p_customer_note: customer.note || '',
+        p_total_price: totalPrice,
+        p_items: itemsJson
+    });
 
-    if (itemsError) {
-        console.error('Order items insert failed:', itemsError);
-        throw itemsError;
+    if (error) {
+        console.error('RPC Error:', error);
+        throw error;
     }
 
-    return { id: orderRow.id };
+    return data;
 }
