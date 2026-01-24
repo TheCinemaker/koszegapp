@@ -154,8 +154,8 @@ export default function AuthPage() {
                         <button
                             onClick={() => setActiveTab('client')}
                             className={`flex-1 py-2 px-4 rounded-lg font-bold text-sm transition-all ${activeTab === 'client'
-                                    ? 'bg-white dark:bg-zinc-700 text-blue-600 dark:text-blue-400 shadow-md'
-                                    : 'text-zinc-500 dark:text-zinc-400'
+                                ? 'bg-white dark:bg-zinc-700 text-blue-600 dark:text-blue-400 shadow-md'
+                                : 'text-zinc-500 dark:text-zinc-400'
                                 }`}
                         >
                             Vendég
@@ -163,8 +163,8 @@ export default function AuthPage() {
                         <button
                             onClick={() => setActiveTab('provider')}
                             className={`flex-1 py-2 px-4 rounded-lg font-bold text-sm transition-all ${activeTab === 'provider'
-                                    ? 'bg-white dark:bg-zinc-700 text-purple-600 dark:text-purple-400 shadow-md'
-                                    : 'text-zinc-500 dark:text-zinc-400'
+                                ? 'bg-white dark:bg-zinc-700 text-purple-600 dark:text-purple-400 shadow-md'
+                                : 'text-zinc-500 dark:text-zinc-400'
                                 }`}
                         >
                             Szolgáltató
@@ -325,7 +325,8 @@ export default function AuthPage() {
                                     Már van partner fiókom, belépek
                                 </button>
                             </form>
-                        )}
+                        )
+                    )}
                 </div>
             </motion.div>
         </div>
