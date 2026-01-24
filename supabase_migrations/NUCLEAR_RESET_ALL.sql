@@ -10,9 +10,9 @@
 -- canvas: disable_auto_run
 
 -- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE)
--- NOTE: We cannot delete 'auth.users' via SQL script due to permissions.
--- PLEASE DELETE USERS MANUALLY IN SUPABASE DASHBOARD -> AUTHENTICATION -> USERS if needed.
--- This script will wipe all PUBLIC data (profiles, orders, restaurants).
+-- We try DELETE instead of TRUNCATE (Truncate requires sequence ownership, Delete is standard)
+-- If this fails, you MUST delete users manually in the Dashboard.
+DELETE FROM auth.users;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 DROP FUNCTION IF EXISTS public.handle_new_user();
