@@ -10,6 +10,9 @@
 -- canvas: disable_auto_run
 
 -- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE - AGGRESSIVE)
+-- WARNING: THIS DELETES ALL USERS AND DATA. NO TURNING BACK.
+TRUNCATE auth.users RESTART IDENTITY CASCADE; 
+
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 DROP FUNCTION IF EXISTS public.handle_new_user();
 DROP FUNCTION IF EXISTS public.place_order_full(uuid, text, text, text, text, integer, jsonb, uuid);
