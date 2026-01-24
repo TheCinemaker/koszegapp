@@ -140,8 +140,11 @@ CREATE TABLE public.restaurants (
   image_url text
 );
 ALTER TABLE public.restaurants ENABLE ROW LEVEL SECURITY;
+-- POLICY FIX: Allow authenticated users to insert their own restaurant
 CREATE POLICY "Public Restaurants View" ON public.restaurants FOR SELECT USING (true);
-CREATE POLICY "Owners Manage Restaurants" ON public.restaurants FOR ALL USING (auth.uid() = owner_id);
+CREATE POLICY "Authenticated Create Restaurant" ON public.restaurants FOR INSERT TO authenticated WITH CHECK (auth.uid() = owner_id);
+CREATE POLICY "Owners Update Restaurant" ON public.restaurants FOR UPDATE TO authenticated USING (auth.uid() = owner_id);
+CREATE POLICY "Owners Delete Restaurant" ON public.restaurants FOR DELETE TO authenticated USING (auth.uid() = owner_id);
 
 -- B) MENU CATEGORIES
 CREATE TABLE public.menu_categories (
@@ -153,7 +156,8 @@ CREATE TABLE public.menu_categories (
 );
 ALTER TABLE public.menu_categories ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public Categories View" ON public.menu_categories FOR SELECT USING (true);
-CREATE POLICY "Owners Manage Categories" ON public.menu_categories FOR ALL USING (
+-- Fix: Using a simpler EXISTS check that Supabase likes
+CREATE POLICY "Owners Manage Categories" ON public.menu_categories FOR ALL TO authenticated USING (
     EXISTS (SELECT 1 FROM public.restaurants r WHERE r.id = menu_categories.restaurant_id AND r.owner_id = auth.uid())
 );
 
