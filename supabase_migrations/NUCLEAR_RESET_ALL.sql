@@ -9,21 +9,29 @@
 
 -- canvas: disable_auto_run
 
--- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE)
--- We use CASCADE to kill dependencies automatically.
+-- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE - AGGRESSIVE)
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 DROP FUNCTION IF EXISTS public.handle_new_user();
 DROP FUNCTION IF EXISTS public.place_order_full(uuid, text, text, text, text, integer, jsonb, uuid);
 
+-- Food Tables
 DROP TABLE IF EXISTS public.order_items CASCADE;
 DROP TABLE IF EXISTS public.orders CASCADE;
 DROP TABLE IF EXISTS public.menu_items CASCADE;
 DROP TABLE IF EXISTS public.menu_categories CASCADE;
 DROP TABLE IF EXISTS public.restaurants CASCADE;
 
+-- Auth & Business Tables
 DROP TABLE IF EXISTS public.koszegpass_users CASCADE;
 DROP TABLE IF EXISTS public.providers CASCADE;
 DROP TABLE IF EXISTS public.profiles CASCADE;
+
+-- Potential Module Tables (Just in case they exist from previous installs)
+DROP TABLE IF EXISTS public.appointments CASCADE;
+DROP TABLE IF EXISTS public.services CASCADE;
+DROP TABLE IF EXISTS public.schedules CASCADE;
+DROP TABLE IF EXISTS public.user_gems CASCADE; -- If user tracking exists
+
 
 
 -- =================================================================
