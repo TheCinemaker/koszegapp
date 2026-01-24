@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 // Importing Pages
@@ -42,6 +42,8 @@ const TeaserPage = React.lazy(() => import('../pages/TeaserPage'));
 const FoodOrderPage = React.lazy(() => import('../pages/FoodOrderPage'));
 const FoodAdmin = React.lazy(() => import('../pages/FoodAdmin'));
 const FoodAuthPage = React.lazy(() => import('../pages/FoodAuthPage'));
+const KoszegPassRegister = React.lazy(() => import('../pages/KoszegPassRegister'));
+const KoszegPassProfile = React.lazy(() => import('../pages/KoszegPassProfile'));
 
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
@@ -164,6 +166,11 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/food" element={<PageWrapper><FoodOrderPage /></PageWrapper>} />
           <Route path="/food-admin" element={<PageWrapper><FoodAdmin /></PageWrapper>} />
           <Route path="/food-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
+
+          {/* KőszegPass Routes (Isolated Flow) */}
+          <Route path="/pass" element={<Navigate to="/pass/register" replace />} />
+          <Route path="/pass/register" element={<PageWrapper showFooter={false}><KoszegPassRegister /></PageWrapper>} />
+          <Route path="/pass/profile" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>

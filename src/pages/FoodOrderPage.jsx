@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation } from 'react-icons/io5';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt } from 'react-icons/io5';
 import { useCart } from '../hooks/useCart';
 import { getMenu, placeOrder, getRestaurants } from '../api/foodService';
 import toast from 'react-hot-toast';
@@ -15,6 +15,10 @@ export default function FoodOrderPage() {
 
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
+
+    // Auth & Orders Logic
+    const { user } = useAuth();
+    const [showOrders, setShowOrders] = useState(false);
 
     // 1. Éttermek betöltése induláskor
     // 1. Éttermek betöltése és feliratkozás
@@ -39,7 +43,10 @@ export default function FoodOrderPage() {
         // Subscribe to changes (e.g. delivery time updates)
         const channel = supabase.channel('restaurants-updates')
             .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'restaurants' }, (payload) => {
-                setRestaurants(prev => prev.map(r => r.id === payload.new.id ? payload.new : r));
+                setRestaurants(prev => prev.map(r => r.id === payload.new.id ? { ...r, ...payload.new } : r));
+                if (payload.new.delivery_time) {
+                    toast.success(`Új kiszállítási idő: ${payload.new.delivery_time}`, { icon: '⏱️' });
+                }
             })
             .subscribe();
 
@@ -48,10 +55,11 @@ export default function FoodOrderPage() {
         };
     }, []);
 
-    // 2. Menü betöltése ha éttermet választunk
     useEffect(() => {
         if (selectedRestaurant) {
             setLoading(true);
+
+            // Initial fetch
             getMenu(selectedRestaurant.id)
                 .then(data => {
                     setCategories(data);
@@ -60,9 +68,30 @@ export default function FoodOrderPage() {
                 .catch(err => {
                     console.error(err);
                     toast.error("Nem sikerült betölteni a menüt");
-                    setSelectedRestaurant(null); // Vissza a listához hiba esetén
+                    setSelectedRestaurant(null);
                 })
                 .finally(() => setLoading(false));
+
+            // Realtime Subscription
+            const channel = supabase.channel(`menu-${selectedRestaurant.id}`)
+                .on(
+                    'postgres_changes',
+                    { event: '*', schema: 'public', table: 'menu_items', filter: `restaurant_id=eq.${selectedRestaurant.id}` },
+                    (payload) => {
+                        // Simple strategy: Reload menu on any change (safer for consistency)
+                        // Alternatively, we could update state locally for better performance
+                        getMenu(selectedRestaurant.id).then(setCategories);
+
+                        if (payload.eventType === 'UPDATE' && !payload.new.is_available) {
+                            toast('Egy termék lekerült a menüről', { icon: '⚠️' });
+                        }
+                    }
+                )
+                .subscribe();
+
+            return () => {
+                supabase.removeChannel(channel);
+            };
         }
     }, [selectedRestaurant]);
 
@@ -88,17 +117,29 @@ export default function FoodOrderPage() {
                         <h1 className="font-bold text-xl tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
                     </div>
 
-                    <button
-                        onClick={() => setIsCartOpen(true)}
-                        className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
-                    >
-                        <IoBasket className="text-2xl" />
-                        {count > 0 && (
-                            <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-[#1a1c2e]">
-                                {count}
-                            </span>
+                    <div className="flex items-center gap-3">
+                        {user && (
+                            <button
+                                onClick={() => setShowOrders(true)}
+                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-600 dark:text-gray-300"
+                                title="Rendeléseim"
+                            >
+                                <IoReceipt className="text-2xl" />
+                            </button>
                         )}
-                    </button>
+
+                        <button
+                            onClick={() => setIsCartOpen(true)}
+                            className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                        >
+                            <IoBasket className="text-2xl" />
+                            {count > 0 && (
+                                <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-[#1a1c2e]">
+                                    {count}
+                                </span>
+                            )}
+                        </button>
+                    </div>
                 </div>
             </header>
 
@@ -183,8 +224,19 @@ export default function FoodOrderPage() {
                     )}
                 </AnimatePresence>
 
+                {/* Orders Drawer */}
+                <AnimatePresence>
+                    {showOrders && user && (
+                        <MyOrdersDrawer
+                            user={user}
+                            onClose={() => setShowOrders(false)}
+                        />
+                    )}
+                </AnimatePresence>
+
+                <ActiveOrderTracker />
             </main>
-        </div>
+        </div >
     );
 }
 
@@ -225,10 +277,36 @@ function MenuItemCard({ item, onAdd }) {
     )
 }
 
+import { useAuth } from '../contexts/AuthContext';
+
 function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId }) {
+    const { user } = useAuth(); // Get authenticated user
     const [step, setStep] = useState('cart'); // 'cart' | 'checkout'
     const [form, setForm] = useState({ name: '', phone: '', address: '', note: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Pre-fill form when entering checkout
+    useEffect(() => {
+        if (step === 'checkout' && user) {
+            const fetchUserData = async () => {
+                const { data, error } = await supabase
+                    .from('koszegpass_users')
+                    .select('full_name, phone, address')
+                    .eq('id', user.id)
+                    .single();
+
+                if (data) {
+                    setForm(prev => ({
+                        ...prev,
+                        name: data.full_name || prev.name,
+                        phone: data.phone || prev.phone,
+                        address: data.address || prev.address
+                    }));
+                }
+            };
+            fetchUserData();
+        }
+    }, [step, user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -244,20 +322,14 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
 
             const restaurantIds = Object.keys(ordersByRestaurant);
 
-            // Demo mode check (simplistic: if passed prop or derived ID matches demo)
-            if (restaurantId === "demo-restaurant-id") {
-                await new Promise(r => setTimeout(r, 1500));
-                console.log("DEMO ORDER:", { customer: form, cartItems: items });
-            } else {
-                // Execute all orders in parallel
-                await Promise.all(restaurantIds.map(rId =>
-                    placeOrder({
-                        restaurantId: rId,
-                        customer: form,
-                        cartItems: ordersByRestaurant[rId]
-                    })
-                ));
-            }
+            // Execute all orders in parallel
+            await Promise.all(restaurantIds.map(rId =>
+                placeOrder({
+                    restaurantId: rId,
+                    customer: { ...form, userId: user?.id }, // Attach UserID if logged in
+                    cartItems: ordersByRestaurant[rId]
+                })
+            ));
 
             const isMultiple = restaurantIds.length > 1;
             toast.success(isMultiple ? `Sikeres rendelés ${restaurantIds.length} helyről! 🍔` : 'Rendelés sikeresen elküldve! 🍔');
@@ -394,6 +466,189 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                         )}
                     </div>
                 )}
+            </motion.div>
+        </>
+    );
+}
+
+// --- REALTIME ORDER TRACKER ---
+function ActiveOrderTracker() {
+    const { user } = useAuth();
+    const [activeOrder, setActiveOrder] = useState(null);
+
+    // 1. Fetch initial active order
+    useEffect(() => {
+        if (!user) return;
+
+        const fetchActiveOrder = async () => {
+            // Find latest order that is NOT delivered or rejected
+            const { data } = await supabase
+                .from('orders')
+                .select('*')
+                .eq('user_id', user.id)
+                .in('status', ['new', 'accepted', 'ready'])
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .single();
+
+            if (data) setActiveOrder(data);
+        };
+
+        fetchActiveOrder();
+
+        // 2. Subscribe to my orders
+        const channel = supabase
+            .channel(`my-orders-${user.id}`)
+            .on(
+                'postgres_changes',
+                { event: 'UPDATE', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` },
+                (payload) => {
+                    // Update state if it's the tracked order
+                    if (!activeOrder || payload.new.id === activeOrder.id) {
+                        // If status becomes delivered/rejected, hide it
+                        if (['delivered', 'rejected'].includes(payload.new.status)) {
+                            setActiveOrder(null);
+                            if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
+                        } else {
+                            setActiveOrder(payload.new);
+                        }
+                    }
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [user, activeOrder]);
+
+    if (!activeOrder) return null;
+
+    // Status Config
+    const statusConfig = {
+        'new': { label: 'Rendelés elküldve...', color: 'bg-gray-800', icon: '⏳' },
+        'accepted': { label: 'Készül az ételed!', color: 'bg-amber-500', icon: '👨‍🍳' },
+        'ready': { label: 'Úton feléd! 🚴', color: 'bg-green-600', icon: '💨' }
+    };
+
+    const currentStatus = statusConfig[activeOrder.status] || { label: 'Ismeretlen', color: 'bg-gray-500', icon: '?' };
+
+    return (
+        <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-8 md:w-96 z-40 sm:mb-6"
+        >
+            <div className={`${currentStatus.color} text-white p-4 rounded-2xl shadow-2xl border-2 border-white/20 backdrop-blur-md flex items-center justify-between`}>
+                <div className="flex items-center gap-3">
+                    <div className="text-3xl bg-white/20 w-12 h-12 rounded-full flex items-center justify-center">
+                        {currentStatus.icon}
+                    </div>
+                    <div>
+                        <p className="text-xs font-bold opacity-80 uppercase tracking-wider">Rendelés #{activeOrder.id}</p>
+                        <h3 className="text-xl font-bold">{currentStatus.label}</h3>
+                    </div>
+                </div>
+                <div className="text-right">
+                    <span className="block text-2xl font-black">{activeOrder.total_price} Ft</span>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
+// --- MY ORDERS DRAWER ---
+function MyOrdersDrawer({ user, onClose }) {
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            const { data } = await supabase
+                .from('orders')
+                .select('*, items:order_items(*)')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(20);
+
+            if (data) setOrders(data);
+            setLoading(false);
+        };
+
+        fetchOrders();
+
+        // Realtime updates for my orders list
+        const channel = supabase
+            .channel(`my-orders-list-${user.id}`)
+            .on(
+                'postgres_changes',
+                { event: 'UPDATE', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` },
+                (payload) => {
+                    setOrders(prev => prev.map(o => o.id === payload.new.id ? { ...o, ...payload.new } : o));
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [user]);
+
+    const statusMap = {
+        'new': { label: 'Elküldve', color: 'bg-gray-100 text-gray-600' },
+        'accepted': { label: 'Készül', color: 'bg-amber-100 text-amber-700' },
+        'ready': { label: 'Futárnál', color: 'bg-blue-100 text-blue-700' },
+        'delivered': { label: 'Kiszállítva', color: 'bg-green-100 text-green-700' },
+        'rejected': { label: 'Elutasítva', color: 'bg-red-100 text-red-700' }
+    };
+
+    return (
+        <>
+            <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={onClose}
+                className="fixed inset-0 bg-black/60 z-[90] backdrop-blur-sm"
+            />
+            <motion.div
+                initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white/95 dark:bg-[#1a1c2e]/95 backdrop-blur-xl z-[100] shadow-2xl flex flex-col border-l border-white/20"
+            >
+                <div className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-white/5">
+                    <h2 className="text-xl font-bold flex items-center gap-2"><IoReceipt /> Rendeléseim</h2>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full"><IoClose className="text-2xl" /></button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                    {loading ? (
+                        <div className="text-center py-10 opacity-50">Betöltés...</div>
+                    ) : orders.length === 0 ? (
+                        <div className="text-center py-10 opacity-50">Még nincs rendelésed.</div>
+                    ) : (
+                        orders.map(order => (
+                            <div key={order.id} className="bg-white dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
+                                <div className="flex justify-between items-start mb-2">
+                                    <span className="font-mono text-xs opacity-50">#{order.id.slice(0, 8)}...</span>
+                                    <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${statusMap[order.status]?.color || 'bg-gray-100'}`}>
+                                        {statusMap[order.status]?.label || order.status}
+                                    </span>
+                                </div>
+                                <div className="space-y-1 mb-3">
+                                    {order.items?.map((item, idx) => (
+                                        <div key={idx} className="flex justify-between text-sm">
+                                            <span>{item.quantity}x {item.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-between items-center text-sm pt-2 border-t border-gray-100 dark:border-white/5">
+                                    <span className="opacity-60">{new Date(order.created_at).toLocaleString('hu-HU')}</span>
+                                    <span className="font-bold text-amber-600 dark:text-amber-500">{order.total_price} Ft</span>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
             </motion.div>
         </>
     );

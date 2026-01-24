@@ -104,11 +104,13 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
             <div className="flex-1 overflow-hidden flex flex-col">
                 <main className="flex-1 overflow-y-auto p-4 md:p-8 relative">
                     {/* Tabs */}
-                    <div className="flex justify-center mb-8 gap-2 md:gap-4 overflow-x-auto pb-2">
+                    <div className="flex justify-center mb-4 gap-2 md:gap-4 overflow-x-auto pb-2">
                         <TabButton id="orders" label="Rendelések" icon={<IoFastFood />} active={activeTab} set={setActiveTab} />
                         <TabButton id="menu" label="Étlap" icon={<IoRestaurant />} active={activeTab} set={setActiveTab} />
                         <TabButton id="profile" label="Beállítások" icon={<IoSettings />} active={activeTab} set={setActiveTab} />
                     </div>
+
+
 
                     <div className="max-w-6xl mx-auto">
                         {activeTab === 'orders' && <OrderList restaurantId={restaurantId} />}
@@ -160,6 +162,7 @@ function OrderList({ restaurantId }) {
 
         fetchOrders();
 
+        // Subscribe to Orders
         const channel = supabase
             .channel(`orders-${restaurantId}`)
             .on(
@@ -190,6 +193,7 @@ function OrderList({ restaurantId }) {
         await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
     };
 
+    // ... printReceipt logic ...
     const printReceipt = (order) => {
         try {
             const doc = new jsPDF({
@@ -257,87 +261,94 @@ function OrderList({ restaurantId }) {
 
     if (loading) return <div className="p-10 text-center animate-pulse">Rendelések betöltése...</div>;
 
-    if (orders.length === 0) return (
-        <div className="text-center py-20 opacity-50 flex flex-col items-center">
-            <IoFastFood className="text-6xl mb-4 opacity-20" />
-            <p>Nincs aktív rendelés jelenleg.</p>
-        </div>
-    );
-
     return (
-        <div className="grid gap-4">
-            {orders.map(order => (
-                <div key={order.id} className={`bg-white dark:bg-[#1a1c2e] p-6 rounded-2xl shadow-sm border flex flex-col md:flex-row items-start justify-between gap-4 animate-in slide-in-from-bottom-2 fade-in duration-300 ${order.status === 'new' ? 'border-amber-500 shadow-md ring-1 ring-amber-500/20' : 'border-gray-100 dark:border-white/5'}`}>
-                    <div className="flex-1 w-full">
-                        <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                                <span className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-500 px-2 py-0.5 rounded text-xs font-bold font-mono">#{order.id}</span>
-                                <span className="text-gray-400 text-xs">{new Date(order.created_at).toLocaleTimeString()}</span>
-                                {order.status === 'new' && <span className="text-red-500 text-xs font-bold animate-pulse">● ÚJ</span>}
-                            </div>
-                            <div className="md:hidden">
-                                <span className="font-bold">{order.total_price} Ft</span>
-                            </div>
-                        </div>
+        <div className="space-y-6">
+            <QuickDelivery restaurantId={restaurantId} />
 
-                        <div className="mb-4">
-                            {order.items && order.items.map((item, idx) => (
-                                <div key={idx} className="font-bold text-lg text-gray-800 dark:text-gray-200 border-b border-gray-50 dark:border-white/5 last:border-0 py-1 flex justify-between">
-                                    <span>{item.quantity}x {item.name}</span>
-                                    <span className="text-sm font-normal text-gray-500">{item.price * item.quantity} Ft</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-white/5 mt-2">
-                            <p className="font-bold text-gray-900 dark:text-white uppercase tracking-wide flex items-center gap-2">
-                                {order.customer_name}
-                                <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider border border-gray-200">
-                                    SZÁLLÍTÁS
-                                </span>
-                            </p>
-                            <p className="font-mono text-base text-gray-800 dark:text-gray-300 my-1">{order.customer_address}</p>
-                            <p className="font-mono text-xs">{order.customer_phone}</p>
-                            {order.customer_note && <p className="mt-2 bg-yellow-50 dark:bg-yellow-900/20 p-2 rounded text-amber-700 dark:text-amber-500 italic">"{order.customer_note}"</p>}
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-2 w-full md:w-56 shrink-0 border-t md:border-t-0 md:border-l border-gray-100 dark:border-white/5 pt-4 md:pt-0 md:pl-4">
-                        <div className="text-right hidden md:block mb-4">
-                            <span className="text-2xl font-black text-gray-800 dark:text-white">{order.total_price?.toLocaleString()} <span className="text-sm font-normal text-gray-500">Ft</span></span>
-                        </div>
-
-                        {order.status === 'new' ? (
-                            <>
-                                <button onClick={() => handleStatusChange(order.id, 'accepted')} className="py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl text-lg shadow-lg shadow-amber-500/20 transition-transform active:scale-95 flex items-center justify-center gap-2"><IoFastFood /> Elfogad</button>
-                                <button onClick={() => handleStatusChange(order.id, 'rejected')} className="py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 font-bold rounded-xl text-xs transition-colors text-gray-500">Elutasít</button>
-                            </>
-                        ) : (
-                            <>
-                                <div className={`py-3 text-center font-bold rounded-xl border-2 ${order.status === 'accepted' ? 'border-green-500 text-green-600 bg-green-50 dark:bg-green-900/10' : order.status === 'ready' ? 'border-blue-500 text-blue-600' : 'border-red-200 text-red-400'}`}>
-                                    {order.status === 'accepted' ? 'Készül...' : order.status === 'ready' ? 'Futárnál' : 'Kézbesítve / Lezárva'}
-                                </div>
-
-                                {order.status === 'accepted' && (
-                                    <button onClick={() => handleStatusChange(order.id, 'ready')} className="py-2 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm shadow-lg transition-transform active:scale-95">Futárnak átadva</button>
-                                )}
-
-                                {order.status !== 'rejected' && (
-                                    <button
-                                        onClick={() => printReceipt(order)}
-                                        className="py-2 border-2 border-dashed border-gray-300 hover:border-gray-500 text-gray-500 font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
-                                    >
-                                        <IoPrint /> Blokk Nyomtatása
-                                    </button>
-                                )}
-                            </>
-                        )}
-                    </div>
+            {orders.length === 0 ? (
+                <div className="text-center py-20 opacity-50 flex flex-col items-center">
+                    <IoFastFood className="text-6xl mb-4 opacity-20" />
+                    <p>Nincs aktív rendelés jelenleg.</p>
                 </div>
-            ))}
+            ) : (
+                <div className="grid gap-4">
+                    {orders.map(order => (
+                        <div key={order.id} className={`bg-white dark:bg-[#1a1c2e] p-6 rounded-2xl shadow-sm border flex flex-col md:flex-row items-start justify-between gap-4 animate-in slide-in-from-bottom-2 fade-in duration-300 ${order.status === 'new' ? 'border-amber-500 shadow-md ring-1 ring-amber-500/20' : 'border-gray-100 dark:border-white/5'}`}>
+                            {/* ... Order Card Content (Same as before) ... */}
+                            <div className="flex-1 w-full">
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-500 px-2 py-0.5 rounded text-xs font-bold font-mono">#{order.id}</span>
+                                        <span className="text-gray-400 text-xs">{new Date(order.created_at).toLocaleTimeString()}</span>
+                                        {order.status === 'new' && <span className="text-red-500 text-xs font-bold animate-pulse">● ÚJ</span>}
+                                    </div>
+                                    <div className="md:hidden">
+                                        <span className="font-bold">{order.total_price} Ft</span>
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    {order.items && order.items.map((item, idx) => (
+                                        <div key={idx} className="font-bold text-lg text-gray-800 dark:text-gray-200 border-b border-gray-50 dark:border-white/5 last:border-0 py-1 flex justify-between">
+                                            <span>{item.quantity}x {item.name}</span>
+                                            <span className="text-sm font-normal text-gray-500">{item.price * item.quantity} Ft</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-white/5 mt-2">
+                                    <p className="font-bold text-gray-900 dark:text-white uppercase tracking-wide flex items-center gap-2">
+                                        {order.customer_name}
+                                        <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider border border-gray-200">
+                                            SZÁLLÍTÁS
+                                        </span>
+                                    </p>
+                                    <p className="font-mono text-base text-gray-800 dark:text-gray-300 my-1">{order.customer_address}</p>
+                                    <p className="font-mono text-xs">{order.customer_phone}</p>
+                                    {order.customer_note && <p className="mt-2 bg-yellow-50 dark:bg-yellow-900/20 p-2 rounded text-amber-700 dark:text-amber-500 italic">"{order.customer_note}"</p>}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-2 w-full md:w-56 shrink-0 border-t md:border-t-0 md:border-l border-gray-100 dark:border-white/5 pt-4 md:pt-0 md:pl-4">
+                                <div className="text-right hidden md:block mb-4">
+                                    <span className="text-2xl font-black text-gray-800 dark:text-white">{order.total_price?.toLocaleString()} <span className="text-sm font-normal text-gray-500">Ft</span></span>
+                                </div>
+
+                                {order.status === 'new' ? (
+                                    <>
+                                        <button onClick={() => handleStatusChange(order.id, 'accepted')} className="py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl text-lg shadow-lg shadow-amber-500/20 transition-transform active:scale-95 flex items-center justify-center gap-2"><IoFastFood /> Elfogad</button>
+                                        <button onClick={() => handleStatusChange(order.id, 'rejected')} className="py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 font-bold rounded-xl text-xs transition-colors text-gray-500">Elutasít</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className={`py-3 text-center font-bold rounded-xl border-2 ${order.status === 'accepted' ? 'border-green-500 text-green-600 bg-green-50 dark:bg-green-900/10' : order.status === 'ready' ? 'border-blue-500 text-blue-600' : 'border-red-200 text-red-400'}`}>
+                                            {order.status === 'accepted' ? 'Készül...' : order.status === 'ready' ? 'Futárnál' : 'Kézbesítve / Lezárva'}
+                                        </div>
+
+                                        {order.status === 'accepted' && (
+                                            <button onClick={() => handleStatusChange(order.id, 'ready')} className="py-2 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm shadow-lg transition-transform active:scale-95">Futárnak átadva</button>
+                                        )}
+
+                                        {order.status !== 'rejected' && (
+                                            <button
+                                                onClick={() => printReceipt(order)}
+                                                className="py-2 border-2 border-dashed border-gray-300 hover:border-gray-500 text-gray-500 font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
+                                            >
+                                                <IoPrint /> Blokk Nyomtatása
+                                            </button>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
+
+
 
 // --- 2. MENU TAB ---
 function MenuEditor({ restaurantId }) {
@@ -479,6 +490,8 @@ function MenuEditor({ restaurantId }) {
 
     return (
         <div className="max-w-4xl mx-auto pb-32">
+            <QuickDelivery restaurantId={restaurantId} />
+
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-bold">Menü Szerkesztése</h1>
                 <button onClick={() => openCatModal()} className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg flex items-center gap-2 transition-transform active:scale-95">
@@ -630,6 +643,8 @@ function ProfileEditor({ restaurantId }) {
 
     return (
         <form onSubmit={save} className="max-w-2xl mx-auto space-y-6 pb-20">
+            <QuickDelivery restaurantId={restaurantId} />
+
             {/* Same Basic Info Section */}
             <div className="bg-white dark:bg-[#151618] p-6 rounded-2xl border border-gray-100 dark:border-white/5">
                 <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><IoRestaurant /> Alapadatok</h3>
@@ -738,5 +753,52 @@ function ProfileEditor({ restaurantId }) {
                 }
             `}</style>
         </form>
+    );
+}
+
+// --- REUSABLE QUICK DELIVERY COMPONENT ---
+function QuickDelivery({ restaurantId }) {
+    const [time, setTime] = useState('-');
+
+    useEffect(() => {
+        if (!restaurantId) return;
+        supabase.from('restaurants').select('delivery_time').eq('id', restaurantId).single()
+            .then(({ data }) => setTime(data?.delivery_time || '-'));
+    }, [restaurantId]);
+
+    const handleSet = (val) => {
+        const newVal = val.replace('p', 'perc');
+        setTime(newVal);
+        supabase.from('restaurants').update({ delivery_time: newVal }).eq('id', restaurantId)
+            .then(() => toast.success(`Idő: ${newVal}`, { icon: '⏱️' }));
+    };
+
+    return (
+        <div className="bg-amber-500/10 border-2 border-amber-500/20 rounded-2xl p-4 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+                <div className="bg-amber-500 text-white p-2 rounded-lg">
+                    <IoTime className="text-xl" />
+                </div>
+                <div>
+                    <h3 className="font-bold text-gray-800 dark:text-white text-sm uppercase">Kiszállítási Idő</h3>
+                    <p className="text-2xl font-black text-amber-600 dark:text-amber-500 leading-none">{time}</p>
+                </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 justify-center">
+                {["15 p", "30 p", "45 p", "60 p", "60+ p"].map(opt => (
+                    <button
+                        key={opt}
+                        onClick={() => handleSet(opt)}
+                        className={`px-4 py-3 rounded-xl font-bold text-sm transition-transform active:scale-95 shadow-sm border ${time === opt.replace('p', 'perc')
+                            ? 'bg-amber-500 text-white border-amber-600'
+                            : 'bg-white dark:bg-white/10 text-gray-600 dark:text-gray-200 border-gray-200 dark:border-white/5 hover:bg-gray-50'
+                            }`}
+                    >
+                        {opt}
+                    </button>
+                ))}
+            </div>
+        </div>
     );
 }
