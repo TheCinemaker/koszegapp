@@ -9,9 +9,10 @@
 
 -- canvas: disable_auto_run
 
--- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE - AGGRESSIVE)
--- WARNING: THIS DELETES ALL USERS AND DATA. NO TURNING BACK.
-TRUNCATE auth.users RESTART IDENTITY CASCADE; 
+-- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE)
+-- NOTE: We cannot delete 'auth.users' via SQL script due to permissions.
+-- PLEASE DELETE USERS MANUALLY IN SUPABASE DASHBOARD -> AUTHENTICATION -> USERS if needed.
+-- This script will wipe all PUBLIC data (profiles, orders, restaurants).
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 DROP FUNCTION IF EXISTS public.handle_new_user();
