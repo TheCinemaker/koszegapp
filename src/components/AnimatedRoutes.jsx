@@ -163,7 +163,7 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
           <Route path="/secret-setup" element={<PageWrapper><SecretRegister /></PageWrapper>} />
           <Route path="/city-pass" element={<PageWrapper><CityPass /></PageWrapper>} />
-          <Route path="/food" element={<PageWrapper><FoodOrderPage /></PageWrapper>} />
+          <Route path="/food" element={<PageWrapper showFooter={false}><FoodOrderPage /></PageWrapper>} />
           <Route path="/food-admin" element={<PageWrapper><FoodAdmin /></PageWrapper>} />
           <Route path="/food-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
 
