@@ -288,11 +288,11 @@ BEGIN
     returning id into r_grill;
 
   -- CATEGORIES & ITEMS (Shortened for brevity but complete)
-  insert into menu_categories (restaurant_id, name, order_index) values (r_bella, 'Pizzák', 1) returning id into c_bella_1;
+  insert into menu_categories (restaurant_id, name, sort_order) values (r_bella, 'Pizzák', 1) returning id into c_bella_1;
   insert into menu_items (restaurant_id, category_id, name, description, price, image_url) values 
     (r_bella, c_bella_1, 'Margherita', 'Paradicsom, sajt', 2600, 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002');
     
-  insert into menu_categories (restaurant_id, name, order_index) values (r_burger, 'Burgerek', 1) returning id into c_burger_1;
+  insert into menu_categories (restaurant_id, name, sort_order) values (r_burger, 'Burgerek', 1) returning id into c_burger_1;
   insert into menu_items (restaurant_id, category_id, name, description, price, image_url) values 
     (r_burger, c_burger_1, 'Classic Burger', 'Marhahús, cheddar', 3200, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd');
 END $$;
