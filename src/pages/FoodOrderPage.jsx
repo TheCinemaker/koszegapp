@@ -497,12 +497,17 @@ function ActiveOrderTracker() {
         fetchActiveOrder();
 
         // 2. Subscribe to my orders
+        // Note: Removing server-side filter for debugging. Filtering client-side is safer if RLS/Filter is flaky.
         const channel = supabase
             .channel(`my-orders-tracker-${user.id}`)
             .on(
                 'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` },
+                { event: 'UPDATE', schema: 'public', table: 'orders' },
                 (payload) => {
+                    console.log('Realtime Order Update:', payload);
+                    // Client-side filter: Only care about MY active order
+                    if (payload.new.user_id !== user.id) return;
+
                     setActiveOrder(prev => {
                         // If we are not tracking anything, and this is a relevant order, maybe track it? 
                         // For now, only update if it matches the tracked ID.
@@ -514,11 +519,15 @@ function ActiveOrderTracker() {
                             }
                             return payload.new;
                         }
+                        // Or maybe this IS the active order we were waiting for (if it was just created but polling missed it?)
+                        // For now stick to updating existing tracking.
                         return prev;
                     });
                 }
             )
-            .subscribe();
+            .subscribe((status) => {
+                console.log("Realtime Status:", status);
+            });
 
         return () => {
             supabase.removeChannel(channel);
@@ -586,9 +595,11 @@ function MyOrdersDrawer({ user, onClose }) {
             .channel(`my-orders-list-${user.id}`)
             .on(
                 'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` },
+                { event: 'UPDATE', schema: 'public', table: 'orders' },
                 (payload) => {
-                    setOrders(prev => prev.map(o => o.id === payload.new.id ? { ...o, ...payload.new } : o));
+                    if (payload.new.user_id === user.id) {
+                        setOrders(prev => prev.map(o => o.id === payload.new.id ? { ...o, ...payload.new } : o));
+                    }
                 }
             )
             .subscribe();
