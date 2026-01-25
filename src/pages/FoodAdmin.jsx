@@ -598,17 +598,19 @@ function MenuEditor({ restaurantId }) {
 // --- 3. PROFILE SETTINGS TAB ---
 function ProfileEditor({ restaurantId }) {
     const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false); // NEW
     const [form, setForm] = useState({
         name: '',
+        image_url: '', // NEW
         phone: '',
         address: '',
         description: '',
         news: '',
         promotions: '',
-        daily_menu: '', // NEW
+        daily_menu: '',
         opening_hours: '',
         delivery_time: '',
-        has_delivery: true, // NEW
+        has_delivery: true,
         min_order_value: 0,
         settings: { show_news: true, show_promotions: true, show_daily_menu: true, show_delivery_time: true }
     });
@@ -619,6 +621,7 @@ function ProfileEditor({ restaurantId }) {
             if (data) {
                 setForm({
                     name: data.name || '',
+                    image_url: data.image_url || '', // NEW
                     phone: data.phone || '',
                     address: data.address || '',
                     description: data.description || '',
@@ -627,7 +630,7 @@ function ProfileEditor({ restaurantId }) {
                     daily_menu: data.daily_menu || '',
                     opening_hours: data.opening_hours || '',
                     delivery_time: data.delivery_time || '',
-                    has_delivery: data.has_delivery !== undefined ? data.has_delivery : true, // Handle default
+                    has_delivery: data.has_delivery !== undefined ? data.has_delivery : true,
                     min_order_value: data.min_order_value || 0,
                     settings: data.display_settings || { show_news: true, show_promotions: true, show_daily_menu: true, show_delivery_time: true }
                 });
@@ -637,19 +640,48 @@ function ProfileEditor({ restaurantId }) {
         loadProfile();
     }, [restaurantId]);
 
+    const handleImageUpload = async (event) => {
+        try {
+            setUploading(true);
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random()}.${fileExt}`;
+            const filePath = `${restaurantId}/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('restaurant-images')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data } = supabase.storage.from('restaurant-images').getPublicUrl(filePath);
+
+            setForm(prev => ({ ...prev, image_url: data.publicUrl }));
+            toast.success('Kép feltöltve! (Ne felejts el menteni)');
+        } catch (error) {
+            console.error(error);
+            toast.error('Hiba a képfeltöltéskor');
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const save = async (e) => {
         e.preventDefault();
         const { error } = await supabase.from('restaurants').update({
             name: form.name,
+            image_url: form.image_url, // NEW
             phone: form.phone,
             address: form.address,
             description: form.description,
             news: form.news,
             promotions: form.promotions,
-            daily_menu: form.daily_menu, // NEW
+            daily_menu: form.daily_menu,
             opening_hours: form.opening_hours,
             delivery_time: form.delivery_time,
-            has_delivery: form.has_delivery, // NEW
+            has_delivery: form.has_delivery,
             min_order_value: form.min_order_value,
             display_settings: form.settings
         }).eq('id', restaurantId);
@@ -672,6 +704,36 @@ function ProfileEditor({ restaurantId }) {
             <div className="bg-white dark:bg-[#151618] p-6 rounded-2xl border border-gray-100 dark:border-white/5">
                 <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><IoRestaurant /> Alapadatok</h3>
                 <div className="grid md:grid-cols-2 gap-4">
+
+                    {/* Image Upload UI */}
+                    <div className="md:col-span-2 mb-4">
+                        <label className="text-xs font-bold uppercase text-gray-500 mb-2 block">Borítókép</label>
+                        <div className="relative h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/10 group">
+                            {form.image_url ? (
+                                <img src={form.image_url} alt="Cover" className="w-full h-full object-cover" />
+                            ) : (
+                                <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                                    <span className="text-sm">Nincs kép feltöltve</span>
+                                </div>
+                            )}
+
+                            {/* Overlay & Input */}
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <label className="cursor-pointer bg-white text-black px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-transform flex items-center gap-2">
+                                    {uploading ? 'Feltöltés...' : 'Kép cseréje'}
+                                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
+                                </label>
+                            </div>
+
+                            {/* Loading State */}
+                            {uploading && (
+                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-10">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
                     <div className="space-y-1">
                         <label className="text-xs font-bold uppercase text-gray-500">Étterem Neve</label>
                         <input className="input-field" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />

@@ -13,9 +13,12 @@ export default function FoodOrderPage() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filterType, setFilterType] = useState('delivery'); // 'delivery' | 'pickup'
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
+
+
 
     // Auth & Orders Logic
     const { user } = useAuth();
@@ -144,6 +147,47 @@ export default function FoodOrderPage() {
                 </div>
             </header>
 
+            {/* DYNAMIC CATEGORY BAR */}
+            {view === 'restaurants' && restaurants.length > 0 && (
+                <div className="sticky top-16 z-20 bg-white/80 dark:bg-[#1a1c2e]/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 py-4 overflow-x-auto no-scrollbar">
+                    <div className="container mx-auto px-4 flex gap-4 min-w-max">
+                        <button
+                            onClick={() => setSelectedCategory(null)}
+                            className={`flex flex-col items-center gap-2 min-w-[70px] transition-opacity ${selectedCategory === null ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'}`}
+                        >
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-md ${selectedCategory === null ? 'bg-amber-500 text-white' : 'bg-gray-100 dark:bg-white/10'}`}>
+                                <IoRestaurant className="text-2xl" />
+                            </div>
+                            <span className={`text-xs font-bold ${selectedCategory === null ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>Összes</span>
+                        </button>
+
+                        {[...new Set(restaurants.flatMap(r => [r.cuisine, ...(r.tags || [])].filter(Boolean)))].map(cat => (
+                            <button
+                                key={cat}
+                                onClick={() => setSelectedCategory(cat)}
+                                className={`flex flex-col items-center gap-2 min-w-[70px] transition-opacity ${selectedCategory === cat ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'}`}
+                            >
+                                <div className={`w-14 h-14 rounded-full overflow-hidden shadow-md border-2 ${selectedCategory === cat ? 'border-amber-500' : 'border-transparent'}`}>
+                                    <img
+                                        src={`https://source.unsplash.com/100x100/?${cat === 'Magyaros' ? 'goulash' :
+                                            cat === 'Büfé' ? 'burger' :
+                                                cat === 'Orientális' ? 'kebab' :
+                                                    cat === 'Kávé' ? 'coffee' :
+                                                        cat === 'Hagyományos' ? 'schnitzel' :
+                                                            cat // Fallback to tag name search
+                                            },food`}
+                                        className="w-full h-full object-cover"
+                                        alt={cat}
+                                        onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'; }} // Fallback
+                                    />
+                                </div>
+                                <span className={`text-xs font-bold capitalize ${selectedCategory === cat ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>{cat}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <main className="container mx-auto px-4 py-8">
 
                 {view === 'restaurants' ? (
@@ -181,9 +225,16 @@ export default function FoodOrderPage() {
                         {/* ÉTTEREM LISTA NÉZET */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {restaurants
-                                .filter(r => filterType === 'delivery' ? (r.has_delivery !== false) : true) // Filter if needed, or just show all with badges? User asked for filter/toggle.
-                                // Actually, typical behavior: Delivery tab shows only delivery places. Pickup tab shows all? Or just those explicitly pickup?
-                                // Let's simplify: 'delivery' -> Show has_delivery=true. 'pickup' -> Show all (since you can pickup from anywhere usually).
+                                .filter(r => {
+                                    // 1. Delivery Filter
+                                    const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
+
+                                    // 2. Category Filter
+                                    if (!selectedCategory) return deliveryMatch;
+                                    const categoryMatch = r.cuisine === selectedCategory || (r.tags && r.tags.includes(selectedCategory));
+
+                                    return deliveryMatch && categoryMatch;
+                                })
                                 .map(rest => (
                                     <motion.div
                                         key={rest.id}
