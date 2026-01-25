@@ -242,8 +242,31 @@ export default function FoodOrderPage() {
                                         onClick={() => setSelectedRestaurant(rest)}
                                         className="relative h-full block rounded-[1.5rem] bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group overflow-hidden"
                                     >
-                                        <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden">
-                                            {/* Placeholder image logic - in real app use rest.cover_image */}
+                                        <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden group">
+                                            <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                                                {/* Real Image or Gradient Placeholder */}
+                                                {rest.image_url ? (
+                                                    <img src={rest.image_url} alt={rest.name} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                                                )}
+                                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                            </div>
+
+                                            {/* TOP RIGHT BADGE (Restored) */}
+                                            <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
+                                                {rest.has_delivery === false ? (
+                                                    <div className="bg-gray-900/90 text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 border border-white/10">
+                                                        <IoLocation className="text-amber-500" />
+                                                        <span>CSAK ELVITEL</span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
+                                                        <IoTime className="text-amber-500 text-sm" />
+                                                        <span>{rest.delivery_time || '30-40 perc'}</span>
+                                                    </div>
+                                                )}
+                                            </div>
                                             {/* INFO CAPSULES (Dynamic Content - Bottom Left) */}
                                             <div className="absolute bottom-4 left-4 flex flex-col items-start gap-1.5 max-w-[85%]">
                                                 {rest.display_settings?.show_daily_menu && rest.daily_menu && (
