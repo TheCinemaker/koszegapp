@@ -550,7 +550,7 @@ function ActiveOrderTracker() {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-8 md:w-96 z-40 sm:mb-6"
+            className="fixed bottom-24 left-4 right-4 md:left-auto md:right-8 md:w-96 z-40 sm:mb-6"
         >
             <div className={`${currentStatus.color} text-white p-4 rounded-2xl shadow-2xl border-2 border-white/20 backdrop-blur-md flex items-center justify-between`}>
                 <div className="flex items-center gap-3">
