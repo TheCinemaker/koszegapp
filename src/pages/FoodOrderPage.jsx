@@ -122,24 +122,44 @@ export default function FoodOrderPage() {
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { user } = useAuth();
-    const [activeOrdersCount, setActiveOrdersCount] = useState(0);
+    const [activeOrderStatus, setActiveOrderStatus] = useState(null);
 
-    // ... (Effects same as before) ...
     // Monitor Active Orders
     useEffect(() => {
         if (!user) return;
         const fetchActiveOrders = async () => {
-            const { count, error } = await supabase
+            const { data } = await supabase
                 .from('orders')
-                .select('*', { count: 'exact', head: true })
+                .select('status')
                 .eq('user_id', user.id)
-                .in('status', ['new', 'preparing', 'delivering']);
-            if (!error) setActiveOrdersCount(count || 0);
+                .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering'])
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+            setActiveOrderStatus(data ? data.status : null);
         };
+
         fetchActiveOrders();
-        const chan = supabase.channel('active-orders-monitor').on('postgres_changes', { event: '*', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` }, () => fetchActiveOrders()).subscribe();
+
+        const chan = supabase.channel('active-orders-monitor')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` }, () => fetchActiveOrders())
+            .subscribe();
+
         return () => supabase.removeChannel(chan);
     }, [user]);
+
+    const getStatusText = (status) => {
+        const map = {
+            'new': 'Függőben',
+            'accepted': 'Készül 🍳',
+            'preparing': 'Készül 🔥',
+            'ready': 'Futárnál 🚴',
+            'delivering': 'Futárnál 🚴',
+            'completed': 'Kész ✅'
+        };
+        return map[status] || status;
+    };
 
     // Fetch Restaurants
     useEffect(() => {
@@ -206,9 +226,9 @@ export default function FoodOrderPage() {
                             className="relative flex items-center gap-2 bg-white/60 dark:bg-zinc-800/60 backdrop-blur-xl border border-white/20 shadow-md pl-4 pr-1 py-1 rounded-full hover:scale-105 transition-transform"
                         >
                             <IoBasket className="text-xl text-zinc-800 dark:text-white" />
-                            {activeOrdersCount > 0 && (
-                                <div className="bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">
-                                    {activeOrdersCount} aktív
+                            {activeOrderStatus && (
+                                <div className="bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap">
+                                    {getStatusText(activeOrderStatus)}
                                 </div>
                             )}
                             {count > 0 && (
