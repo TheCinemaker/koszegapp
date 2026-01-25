@@ -193,27 +193,6 @@ export default function FoodOrderPage() {
                                     >
                                         <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden">
                                             {/* Placeholder image logic - in real app use rest.cover_image */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                                                <h2 className="text-white font-bold text-xl transform group-hover:-translate-y-1 transition-transform">{rest.name}</h2>
-                                            </div>
-
-                                            {/* TOP BADGES */}
-                                            <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
-                                                {/* Delivery Time / Pickup Badge */}
-                                                {rest.has_delivery === false ? (
-                                                    <div className="bg-gray-900/90 text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 border border-white/10">
-                                                        <IoLocation className="text-amber-500" />
-                                                        <span>CSAK ELVITEL</span>
-                                                    </div>
-                                                ) : (
-                                                    <div className="bg-white/90 dark:bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
-                                                        <IoTime className="text-amber-500 text-sm" />
-                                                        <span>{rest.delivery_time || '30-40 perc'}</span>
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            {/* INFO CAPSULES (Bottom Left Overlay) */}
                                             {/* INFO CAPSULES (Dynamic Content - Bottom Left) */}
                                             <div className="absolute bottom-4 left-4 flex flex-col items-start gap-1.5 max-w-[85%]">
                                                 {rest.display_settings?.show_daily_menu && rest.daily_menu && (
@@ -247,6 +226,7 @@ export default function FoodOrderPage() {
 
                                         </div>
                                         <div className="p-4">
+                                            <h2 className="font-bold text-xl mb-1 text-gray-900 dark:text-gray-100">{rest.name}</h2>
                                             <p className="text-gray-500 dark:text-gray-400 text-sm mb-3 line-clamp-2">{rest.description}</p>
                                             <div className="flex items-center gap-4 text-xs font-medium opacity-70">
                                                 <span className="flex items-center gap-1"><IoLocation /> {rest.address}</span>
