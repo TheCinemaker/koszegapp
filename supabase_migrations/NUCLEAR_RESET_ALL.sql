@@ -198,10 +198,12 @@ DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.orders; EXCEPTI
 
 -- RLS FOR ORDERS
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users View Own Orders" ON public.orders FOR SELECT TO authenticated USING (auth.uid() = user_id);
-CREATE POLICY "Users Insert Own Orders" ON public.orders FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
--- Restaurant Owners view orders (Simplified: All Auth users can VIEW, but frontend filters by ID)
-CREATE POLICY "Authenticated View All Orders" ON public.orders FOR SELECT TO authenticated USING (true);
+-- Unified Policy: Authenticated users can see ALL orders (filtered by frontend for privacy)
+-- This eliminates the 406 error caused by restrictive row-level filtering rejecting the initial fetch.
+CREATE POLICY "Authenticated View Orders" ON public.orders FOR SELECT TO authenticated USING (true);
+
+-- Users can insert their own orders
+CREATE POLICY "Users Insert Orders" ON public.orders FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
 
 
 -- E) ORDER ITEMS
