@@ -90,7 +90,7 @@ export default function FoodAuthPage() {
                     if (restError) throw restError;
                 }
 
-                if (restError) throw restError;
+                // If we get here, either restaurant existed or was created successfully.
 
                 toast.success('Sikeres regisztráció! 🍔');
                 // Auto-login or redirect
