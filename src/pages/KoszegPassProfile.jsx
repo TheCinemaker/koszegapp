@@ -20,6 +20,9 @@ export default function KoszegPassProfile() {
         address: ''
     });
 
+    // UX State
+    const [showFullId, setShowFullId] = useState(false);
+
     useEffect(() => {
         const fetchKoszegPassProfile = async () => {
             if (!user) return;
@@ -146,10 +149,19 @@ export default function KoszegPassProfile() {
 
                     {/* Bottom Row: ID & Chip */}
                     <div className="flex justify-between items-end">
-                        <div className="flex flex-col">
-                            <span className="text-[9px] text-white/40 uppercase tracking-wider mb-0.5">Kártyaszám</span>
-                            <span className="font-mono text-sm text-white/90 tracking-widest tabular-nums">
-                                {user.id.substring(0, 4)} •••• •••• {user.id.substring(user.id.length - 4).toUpperCase()}
+                        <div
+                            className="flex flex-col cursor-pointer active:opacity-80 transition-opacity"
+                            onClick={() => setShowFullId(!showFullId)}
+                            title="Kattints a teljes azonosítóhoz"
+                        >
+                            <span className="text-[9px] text-white/40 uppercase tracking-wider mb-0.5">
+                                {showFullId ? 'TELJES AZONOSÍTÓ' : 'KÁRTYASZÁM'}
+                            </span>
+                            <span className={`font-mono text-white/90 tracking-widest tabular-nums ${showFullId ? 'text-[10px]' : 'text-sm'}`}>
+                                {showFullId
+                                    ? user.id.toUpperCase()
+                                    : `${user.id.substring(0, 4)} •••• •••• ${user.id.substring(user.id.length - 4).toUpperCase()}`
+                                }
                             </span>
                         </div>
                         {/* Chip Visual */}
