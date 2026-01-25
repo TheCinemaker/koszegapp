@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt } from 'react-icons/io5';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet } from 'react-icons/io5';
 import { useCart } from '../hooks/useCart';
 import { getMenu, placeOrder, getRestaurants } from '../api/foodService';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
+import { useAuth } from '../contexts/AuthContext';
+import KoszegPassProfile from './KoszegPassProfile';
 
 export default function FoodOrderPage() {
-    const [view, setView] = useState('restaurants'); // 'restaurants' | 'menu'
+    // Tab State: 'home', 'orders', 'rewards', 'account'
+    const [activeTab, setActiveTab] = useState('home');
+
+    const [view, setView] = useState('restaurants'); // 'restaurants' | 'menu' (Sub-view within Home)
     const [restaurants, setRestaurants] = useState([]);
     const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [categories, setCategories] = useState([]); // For the specific restaurant menu view
@@ -20,11 +25,9 @@ export default function FoodOrderPage() {
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
 
-
-
     // Auth & Orders Logic
     const { user } = useAuth();
-    const [showOrders, setShowOrders] = useState(false);
+    // const [showOrders, setShowOrders] = useState(false); // Deprecated in favor of 'orders' tab
 
     // 1. Éttermek betöltése induláskor
     // 1. Éttermek betöltése és feliratkozás
@@ -67,7 +70,7 @@ export default function FoodOrderPage() {
         fetchCategories();
 
         // Subscribe to changes (e.g. delivery time updates)
-        const channel = supabase.channel('restaurants-updates')
+        const channelRestaurants = supabase.channel('restaurants-updates')
             .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'restaurants' }, (payload) => {
                 setRestaurants(prev => prev.map(r => r.id === payload.new.id ? { ...r, ...payload.new } : r));
                 if (payload.new.delivery_time) {
@@ -76,8 +79,16 @@ export default function FoodOrderPage() {
             })
             .subscribe();
 
+        // Subscribe to category changes
+        const channelCategories = supabase.channel('categories-updates')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'menu_categories' }, () => {
+                fetchCategories();
+            })
+            .subscribe();
+
         return () => {
-            supabase.removeChannel(channel);
+            supabase.removeChannel(channelRestaurants);
+            supabase.removeChannel(channelCategories);
         };
     }, []);
 
@@ -127,277 +138,375 @@ export default function FoodOrderPage() {
         setCategories([]);
     };
 
+    // Category Icon Mapping
+    const getCategoryIcon = (catName) => {
+        const lower = catName.toLowerCase();
+        if (lower.includes('pizza')) return '/category-icons/pizza.png';
+        if (lower.includes('burger')) return '/category-icons/burger.png';
+        if (lower.includes('hamburger')) return '/category-icons/burger.png';
+        if (lower.includes('kebab')) return '/category-icons/kebab.png';
+        if (lower.includes('gyros')) return '/category-icons/kebab.png';
+        if (lower.includes('tortilla')) return '/category-icons/tortilla.png';
+        if (lower.includes('saláta')) return '/category-icons/salad.png';
+        if (lower.includes('salad')) return '/category-icons/salad.png';
+        if (lower.includes('ital')) return '/category-icons/drinks.png';
+        if (lower.includes('drink')) return '/category-icons/drinks.png';
+        return `https://source.unsplash.com/100x100/?${catName},food`; // Fallback
+    };
+
     return (
-        <div className="min-h-screen flex flex-col mesh-bg-vibrant text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 pb-24">
+        <div className="min-h-screen flex flex-col mesh-bg-vibrant text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500">
 
-            {/* Header */}
-            <header className="sticky top-0 z-30 backdrop-blur-md bg-white/70 dark:bg-[#1a1c2e]/70 border-b border-white/20 dark:border-white/5 shadow-sm">
-                <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        {view === 'menu' && (
-                            <button onClick={handleBack} className="mr-2 p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full">
-                                <IoArrowBack className="text-xl" />
-                            </button>
-                        )}
-                        <IoRestaurant className="text-amber-500 text-2xl" />
-                        <h1 className="font-bold text-xl tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
-                    </div>
+            {/* MAIN CONTENT AREA */}
+            <div className="flex-1 pb-24"> {/* Padding for bottom nav */}
 
-                    <div className="flex items-center gap-3">
-                        {user && (
-                            <button
-                                onClick={() => setShowOrders(true)}
-                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-600 dark:text-gray-300"
-                                title="Rendeléseim"
-                            >
-                                <IoReceipt className="text-2xl" />
-                            </button>
-                        )}
-
-                        <button
-                            onClick={() => setIsCartOpen(true)}
-                            className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
-                        >
-                            <IoBasket className="text-2xl" />
-                            {count > 0 && (
-                                <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-[#1a1c2e]">
-                                    {count}
-                                </span>
-                            )}
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            {/* DYNAMIC CATEGORY BAR (Refined) */}
-            {view === 'restaurants' && realCategories.length > 0 && (
-                <div className="sticky top-16 z-20 bg-white/80 dark:bg-[#1a1c2e]/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 py-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-                    <div className="container mx-auto px-4 flex gap-4 min-w-max">
-                        <button
-                            onClick={() => setSelectedCategory(null)}
-                            className={`flex flex-col items-center gap-2 min-w-[70px] transition-opacity ${selectedCategory === null ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'}`}
-                        >
-                            <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-md ${selectedCategory === null ? 'bg-amber-500 text-white' : 'bg-gray-100 dark:bg-white/10'}`}>
-                                <IoRestaurant className="text-2xl" />
+                {/* --- TAB: HOME --- */}
+                <div className={activeTab === 'home' ? 'block' : 'hidden'}>
+                    {/* Header */}
+                    <header className="sticky top-0 z-30 backdrop-blur-md bg-white/70 dark:bg-[#1a1c2e]/70 border-b border-white/20 dark:border-white/5 shadow-sm">
+                        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                {view === 'menu' && (
+                                    <button onClick={handleBack} className="mr-2 p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full">
+                                        <IoArrowBack className="text-xl" />
+                                    </button>
+                                )}
+                                <IoRestaurant className="text-amber-500 text-2xl" />
+                                <h1 className="font-bold text-xl tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
                             </div>
-                            <span className={`text-xs font-bold ${selectedCategory === null ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>Összes</span>
-                        </button>
 
-                        {realCategories.map(cat => (
-                            <button
-                                key={cat}
-                                onClick={() => setSelectedCategory(cat)}
-                                className={`flex flex-col items-center gap-2 min-w-[70px] transition-opacity ${selectedCategory === cat ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'}`}
-                            >
-                                <div className={`w-14 h-14 rounded-full overflow-hidden shadow-md border-2 ${selectedCategory === cat ? 'border-amber-500' : 'border-transparent'}`}>
-                                    <img
-                                        src={`https://source.unsplash.com/100x100/?${cat === 'Magyaros' ? 'goulash' :
-                                            cat === 'Büfé' ? 'burger' :
-                                                cat === 'Orientális' ? 'kebab' :
-                                                    cat === 'Kávé' ? 'coffee' :
-                                                        cat === 'Hagyományos' ? 'schnitzel' :
-                                                            cat // Fallback to tag name search
-                                            },food`}
-                                        className="w-full h-full object-cover"
-                                        alt={cat}
-                                        onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'; }} // Fallback
-                                    />
-                                </div>
-                                <span className={`text-xs font-bold capitalize ${selectedCategory === cat ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>{cat}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            <main className="container mx-auto px-4 py-8">
-
-                {view === 'restaurants' ? (
-                    <>
-                        {/* TOGGLE FILTER (Lieferando Style) */}
-                        <div className="flex justify-center mb-8">
-                            <div className="bg-white/80 dark:bg-black/40 backdrop-blur-md p-1 rounded-full shadow-lg border border-white/20 flex relative">
-                                {/* Slider Background */}
-                                <motion.div
-                                    className="absolute top-1 bottom-1 bg-amber-500 rounded-full shadow-md z-0"
-                                    initial={false}
-                                    animate={{
-                                        left: filterType === 'delivery' ? '4px' : '50%',
-                                        width: 'calc(50% - 4px)',
-                                        x: filterType === 'pickup' ? 0 : 0
-                                    }}
-                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                />
-
+                            <div className="flex items-center gap-3">
                                 <button
-                                    onClick={() => setFilterType('delivery')}
-                                    className={`relative z-10 px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2 ${filterType === 'delivery' ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`}
+                                    onClick={() => setIsCartOpen(true)}
+                                    className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
                                 >
-                                    <IoTime className="text-lg" /> Kiszállítás
-                                </button>
-                                <button
-                                    onClick={() => setFilterType('pickup')}
-                                    className={`relative z-10 px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2 ${filterType === 'pickup' ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`}
-                                >
-                                    <IoLocation className="text-lg" /> Elvitel / Helyben
+                                    <IoBasket className="text-2xl" />
+                                    {count > 0 && (
+                                        <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-[#1a1c2e]">
+                                            {count}
+                                        </span>
+                                    )}
                                 </button>
                             </div>
                         </div>
+                    </header>
 
-                        {/* ÉTTEREM LISTA NÉZET */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {restaurants
-                                .filter(r => {
-                                    // 1. Delivery Filter
-                                    const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
-
-                                    // 2. Category Filter (Real DB Based)
-                                    if (!selectedCategory) return deliveryMatch;
-
-                                    // Check if this restaurant ID is in the set for the selected category
-                                    const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
-
-                                    return deliveryMatch && categoryMatch;
-                                })
-                                .map(rest => (
-                                    <motion.div
-                                        key={rest.id}
-                                        layoutId={`restaurant-${rest.id}`}
-                                        onClick={() => setSelectedRestaurant(rest)}
-                                        className="relative h-full block rounded-[1.5rem] bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group overflow-hidden"
-                                    >
-                                        <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden group">
-                                            <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                                                {/* Real Image or Gradient Placeholder */}
-                                                {rest.image_url ? (
-                                                    <img src={rest.image_url} alt={rest.name} className="w-full h-full object-cover" />
-                                                ) : (
-                                                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900" />
-                                                )}
-                                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                                            </div>
-
-                                            {/* TOP RIGHT BADGE (Restored) */}
-                                            <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
-                                                {rest.has_delivery === false ? (
-                                                    <div className="bg-gray-900/90 text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 border border-white/10">
-                                                        <IoLocation className="text-amber-500" />
-                                                        <span>CSAK ELVITEL</span>
-                                                    </div>
-                                                ) : (
-                                                    <div className="bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
-                                                        <IoTime className="text-amber-500 text-sm" />
-                                                        <span>{rest.delivery_time || '30-40 perc'}</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                            {/* INFO CAPSULES (Dynamic Content - Bottom Left) */}
-                                            <div className="absolute bottom-4 left-4 flex flex-col items-start gap-1.5 max-w-[85%]">
-                                                {rest.display_settings?.show_daily_menu && rest.daily_menu && (
-                                                    <button
-                                                        onClick={(e) => { e.stopPropagation(); toast(rest.daily_menu, { icon: '🗓️', duration: 4000 }); }}
-                                                        className="bg-orange-500/90 hover:bg-orange-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-sm flex items-center gap-2 max-w-full transition-transform active:scale-95 text-left"
-                                                    >
-                                                        <span className="shrink-0">🗓️</span>
-                                                        <span className="truncate">{rest.daily_menu.split('\n')[0]}</span>
-                                                    </button>
-                                                )}
-                                                {rest.display_settings?.show_promotions && rest.promotions && (
-                                                    <button
-                                                        onClick={(e) => { e.stopPropagation(); toast(rest.promotions, { icon: '🔥', duration: 4000 }); }}
-                                                        className="bg-red-500/90 hover:bg-red-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-sm flex items-center gap-2 max-w-full transition-transform active:scale-95 text-left"
-                                                    >
-                                                        <span className="shrink-0">🔥</span>
-                                                        <span className="truncate">{rest.promotions}</span>
-                                                    </button>
-                                                )}
-                                                {rest.display_settings?.show_news && rest.news && (
-                                                    <button
-                                                        onClick={(e) => { e.stopPropagation(); toast(rest.news, { icon: '📢', duration: 4000 }); }}
-                                                        className="bg-blue-500/90 hover:bg-blue-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-sm flex items-center gap-2 max-w-full transition-transform active:scale-95 text-left"
-                                                    >
-                                                        <span className="shrink-0">📢</span>
-                                                        <span className="truncate">{rest.news}</span>
-                                                    </button>
-                                                )}
-                                            </div>
-
-                                        </div>
-                                        <div className="p-4">
-                                            <h2 className="font-bold text-xl mb-1 text-gray-900 dark:text-gray-100">{rest.name}</h2>
-                                            <p className="text-gray-500 dark:text-gray-400 text-sm mb-3 line-clamp-2">{rest.description}</p>
-                                            <div className="flex items-center gap-4 text-xs font-medium opacity-70">
-                                                <span className="flex items-center gap-1"><IoLocation /> {rest.address}</span>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                        </div>
-                    </>
-                ) : (
-                    /* MENÜ NÉZET */
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="space-y-8"
-                    >
-                        {/* Étterem Info Banner */}
-                        <div className="rounded-[2rem] bg-gradient-to-r from-amber-600 to-orange-600 p-8 text-white shadow-xl relative overflow-hidden">
-                            <div className="absolute inset-0 bg-black/10" />
-                            <div className="relative z-10">
-                                <h2 className="text-3xl font-bold mb-2">{selectedRestaurant?.name}</h2>
-                                <p className="opacity-90 max-w-2xl">{selectedRestaurant?.description}</p>
-                            </div>
-                            <div className="absolute -bottom-10 -right-10 text-9xl opacity-20 rotate-12">🍔</div>
-                        </div>
-
-                        {/* Kategóriák és Elemek */}
-                        <div className="space-y-12">
-                            {categories.map(cat => (
-                                <section key={cat.id} id={cat.id}>
-                                    <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 border-l-4 border-amber-500 pl-3">
-                                        {cat.name}
-                                    </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {cat.items.map(item => (
-                                            <MenuItemCard key={item.id} item={item} onAdd={() => addItem(item)} />
-                                        ))}
+                    {/* Category Bar */}
+                    {view === 'restaurants' && realCategories.length > 0 && (
+                        <div className="sticky top-16 z-20 bg-white/80 dark:bg-[#1a1c2e]/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 py-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+                            <div className="container mx-auto px-4 flex gap-4 min-w-max">
+                                <button
+                                    onClick={() => setSelectedCategory(null)}
+                                    className={`flex flex-col items-center gap-2 min-w-[70px] transition-opacity ${selectedCategory === null ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'}`}
+                                >
+                                    <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-md ${selectedCategory === null ? 'bg-amber-500 text-white' : 'bg-gray-100 dark:bg-white/10'}`}>
+                                        <IoRestaurant className="text-2xl" />
                                     </div>
-                                </section>
-                            ))}
+                                    <span className={`text-xs font-bold ${selectedCategory === null ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>Összes</span>
+                                </button>
+
+                                {realCategories.map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setSelectedCategory(cat)}
+                                        className={`flex flex-col items-center gap-2 min-w-[70px] transition-opacity ${selectedCategory === cat ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'}`}
+                                    >
+                                        <div className={`w-14 h-14 rounded-full overflow-hidden shadow-md border-2 ${selectedCategory === cat ? 'border-amber-500' : 'border-transparent'}`}>
+                                            <img
+                                                src={getCategoryIcon(cat)}
+                                                className="w-full h-full object-cover p-1"
+                                                alt={cat}
+                                                onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100'; }}
+                                            />
+                                        </div>
+                                        <span className={`text-xs font-bold capitalize ${selectedCategory === cat ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>{cat}</span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </motion.div>
+                    )}
+
+                    <main className="container mx-auto px-4 py-8">
+                        {view === 'restaurants' ? (
+                            <>
+                                {/* TOGGLE FILTER */}
+                                <div className="flex justify-center mb-8">
+                                    <div className="bg-white/80 dark:bg-black/40 backdrop-blur-md p-1 rounded-full shadow-lg border border-white/20 flex relative">
+                                        <motion.div
+                                            className="absolute top-1 bottom-1 bg-amber-500 rounded-full shadow-md z-0"
+                                            initial={false}
+                                            animate={{
+                                                left: filterType === 'delivery' ? '4px' : '50%',
+                                                width: 'calc(50% - 4px)',
+                                                x: filterType === 'pickup' ? 0 : 0
+                                            }}
+                                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                        />
+                                        <button
+                                            onClick={() => setFilterType('delivery')}
+                                            className={`relative z-10 px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2 ${filterType === 'delivery' ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`}
+                                        >
+                                            <IoTime className="text-lg" /> Kiszállítás
+                                        </button>
+                                        <button
+                                            onClick={() => setFilterType('pickup')}
+                                            className={`relative z-10 px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2 ${filterType === 'pickup' ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`}
+                                        >
+                                            <IoLocation className="text-lg" /> Elvitel / Helyben
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Restaurant List */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {restaurants
+                                        .filter(r => {
+                                            const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
+                                            if (!selectedCategory) return deliveryMatch;
+                                            const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
+                                            return deliveryMatch && categoryMatch;
+                                        })
+                                        .map(rest => (
+                                            <motion.div
+                                                key={rest.id}
+                                                layoutId={`restaurant-${rest.id}`}
+                                                onClick={() => setSelectedRestaurant(rest)}
+                                                className="relative h-full block rounded-[1.5rem] bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group overflow-hidden"
+                                            >
+                                                <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden group">
+                                                    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                                                        {rest.image_url ? (
+                                                            <img src={rest.image_url} alt={rest.name} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900" />
+                                                        )}
+                                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                                    </div>
+
+                                                    <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
+                                                        {rest.has_delivery === false ? (
+                                                            <div className="bg-gray-900/90 text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 border border-white/10">
+                                                                <IoLocation className="text-amber-500" />
+                                                                <span>CSAK ELVITEL</span>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="bg-white/90 dark:bg-black/60 text-gray-900 dark:text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
+                                                                <IoTime className="text-amber-500 text-sm" />
+                                                                <span>{rest.delivery_time || '30-40 perc'}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="p-4">
+                                                    <h2 className="font-bold text-xl mb-1 text-gray-900 dark:text-gray-100">{rest.name}</h2>
+                                                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-3 line-clamp-2">{rest.description}</p>
+                                                    <div className="flex items-center gap-4 text-xs font-medium opacity-70">
+                                                        <span className="flex items-center gap-1"><IoLocation /> {rest.address}</span>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                </div>
+                            </>
+                        ) : (
+                            /* MENU VIEW */
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="space-y-8"
+                            >
+                                <div className="rounded-[2rem] bg-gradient-to-r from-amber-600 to-orange-600 p-8 text-white shadow-xl relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-black/10" />
+                                    <div className="relative z-10">
+                                        <h2 className="text-3xl font-bold mb-2">{selectedRestaurant?.name}</h2>
+                                        <p className="opacity-90 max-w-2xl">{selectedRestaurant?.description}</p>
+                                    </div>
+                                    <div className="absolute -bottom-10 -right-10 text-9xl opacity-20 rotate-12">🍔</div>
+                                </div>
+
+                                <div className="space-y-12">
+                                    {categories.map(cat => (
+                                        <section key={cat.id} id={cat.id}>
+                                            <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 border-l-4 border-amber-500 pl-3">
+                                                {cat.name}
+                                            </h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {cat.items.map(item => (
+                                                    <MenuItemCard key={item.id} item={item} onAdd={() => addItem(item)} />
+                                                ))}
+                                            </div>
+                                        </section>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+                    </main>
+                </div>
+
+                {/* --- TAB: ORDERS --- */}
+                {activeTab === 'orders' && user && (
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="flex items-center gap-3 mb-6">
+                            <h1 className="text-2xl font-bold">Rendeléseim</h1>
+                        </div>
+                        <MyOrdersList user={user} />
+                    </div>
+                )}
+                {activeTab === 'orders' && !user && (
+                    <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4">
+                        <p className="text-gray-500">Jelentkezz be a rendeléseid megtekintéséhez.</p>
+                    </div>
                 )}
 
-                {/* Cart Drawer & Modals */}
-                <AnimatePresence>
-                    {isCartOpen && (
-                        <CartDrawer
-                            items={items}
-                            total={total}
-                            onClose={() => setIsCartOpen(false)}
-                            onUpdateQty={updateQuantity}
-                            onRemove={removeItem}
-                            onClear={clearCart}
-                            restaurantId={selectedRestaurant?.id}
-                        />
-                    )}
-                </AnimatePresence>
+                {/* --- TAB: REWARDS (KőszegPass Card) --- */}
+                {activeTab === 'rewards' && (
+                    <KoszegPassProfile viewMode="card" />
+                )}
 
-                {/* Orders Drawer */}
-                <AnimatePresence>
-                    {showOrders && user && (
-                        <MyOrdersDrawer
-                            user={user}
-                            onClose={() => setShowOrders(false)}
-                        />
-                    )}
-                </AnimatePresence>
+                {/* --- TAB: ACCOUNT (Settings) --- */}
+                {activeTab === 'account' && (
+                    <KoszegPassProfile viewMode="settings" />
+                )}
 
+            </div>
 
-            </main>
+            {/* FIXED BOTTOM NAVIGATION */}
+            <div className="fixed bottom-0 left-0 right-0 h-[80px] bg-white dark:bg-[#1a1c2e] border-t border-gray-200 dark:border-white/10 pb-5 pt-2 z-50 flex justify-around items-center px-2">
+                <NavButton label="Főoldal" icon={IoHome} active={activeTab === 'home'} onClick={() => setActiveTab('home')} />
+                <NavButton label="Rendelések" icon={IoReceipt} active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} />
+                {/* Center Main Action Button for Pass */}
+                <div className="relative -top-5">
+                    <button
+                        onClick={() => setActiveTab('rewards')}
+                        className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg border-4 border-white dark:border-[#1a1c2e] transition-transform ${activeTab === 'rewards' ? 'bg-amber-500 text-white scale-110' : 'bg-gray-900 text-amber-500'}`}
+                    >
+                        <IoWallet size={28} />
+                    </button>
+                    <span className="absolute -bottom-5 w-full text-center text-[10px] font-bold opacity-70">Jutalmak</span>
+                </div>
+                {/* <NavButton label="Jutalmak" icon={IoGift} active={activeTab === 'rewards'} onClick={() => setActiveTab('rewards')} /> */}
+                <NavButton label="Fiók" icon={IoPerson} active={activeTab === 'account'} onClick={() => setActiveTab('account')} />
+            </div>
+
+            {/* Cart Drawer Modal */}
+            <AnimatePresence>
+                {isCartOpen && (
+                    <CartDrawer
+                        items={items}
+                        total={total}
+                        onClose={() => setIsCartOpen(false)}
+                        onUpdateQty={updateQuantity}
+                        onRemove={removeItem}
+                        onClear={clearCart}
+                        restaurantId={selectedRestaurant?.id}
+                    />
+                )}
+            </AnimatePresence>
+
         </div >
     );
+}
+
+// --- SUB-COMPONENTS ---
+
+function NavButton({ label, icon: Icon, active, onClick }) {
+    return (
+        <button
+            onClick={onClick}
+            className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${active ? 'text-amber-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}
+        >
+            <Icon size={24} className={active ? 'fill-current' : ''} />
+            <span className="text-[10px] font-bold">{label}</span>
+        </button>
+    )
+}
+
+
+// Extracted Orders List Component for 'Orders' Tab
+function MyOrdersList({ user }) {
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            // ... Logic same as before ... 
+            const { data } = await supabase
+                .from('orders')
+                .select('*, restaurants(name), items:order_items(*)')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(20);
+            if (data) setOrders(data);
+            setLoading(false);
+        };
+        fetchOrders();
+        // Subscription logic (Simplified for this view)
+        const channel = supabase.channel(`my-orders-list-tab-${user.id}`)
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, (payload) => {
+                if (payload.new.user_id === user.id) fetchOrders();
+            })
+            .subscribe();
+        return () => { supabase.removeChannel(channel); };
+    }, [user]);
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'pending': return 'bg-yellow-500/20 text-yellow-600';
+            case 'accepted': return 'bg-blue-500/20 text-blue-600';
+            case 'preparing': return 'bg-purple-500/20 text-purple-600';
+            case 'delivering': return 'bg-orange-500/20 text-orange-600';
+            case 'completed': return 'bg-green-500/20 text-green-600';
+            case 'cancelled': return 'bg-red-500/20 text-red-600';
+            default: return 'bg-gray-500/20 text-gray-600';
+        }
+    };
+
+    const getStatusText = (status) => {
+        const map = {
+            'pending': 'Várakozás...',
+            'accepted': 'Étterem elfogadta ✅',
+            'preparing': 'Készül 👨‍🍳',
+            'delivering': 'Futárnál 🚴',
+            'completed': 'Kiszállítva 🏁',
+            'cancelled': 'Elutasítva ❌'
+        };
+        return map[status] || status;
+    };
+
+    if (loading) return <div className="text-center py-10 opacity-50">Betöltés...</div>;
+    if (orders.length === 0) return <div className="text-center py-10 opacity-50">Még nincs rendelésed.</div>;
+
+    return (
+        <div className="space-y-4">
+            {orders.map(order => (
+                <div key={order.id} className="bg-white/50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/5 shadow-sm">
+                    <div className="flex justify-between items-start mb-3">
+                        <div>
+                            <div className="font-bold text-base mb-0.5">{order.restaurants?.name || 'Ismeretlen Étterem'}</div>
+                            <div className="text-xs text-gray-500">
+                                {new Date(order.created_at).toLocaleString('hu-HU', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                        </div>
+                        <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide ${getStatusColor(order.status)}`}>
+                            {getStatusText(order.status)}
+                        </span>
+                    </div>
+                    <div className="space-y-1 mb-3">
+                        {order.items?.map((item, i) => (
+                            <div key={i} className="text-sm flex justify-between opacity-80">
+                                <span>{item.quantity}x {item.name}</span>
+                                <span className="font-mono text-xs">{item.price * item.quantity} Ft</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex justify-between items-center pt-2 border-t border-black/5 dark:border-white/5">
+                        <span className="text-xs font-medium opacity-60">Végösszeg:</span>
+                        <span className="font-bold text-amber-500 font-mono text-lg">{order.total_price} Ft</span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
 }
 
 function MenuItemCard({ item, onAdd }) {
@@ -437,7 +546,7 @@ function MenuItemCard({ item, onAdd }) {
     )
 }
 
-import { useAuth } from '../contexts/AuthContext';
+
 
 function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId }) {
     const { user } = useAuth(); // Get authenticated user
@@ -631,138 +740,6 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
     );
 }
 
-// --- MY ORDERS DRAWER ---
-function MyOrdersDrawer({ user, onClose }) {
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            const { data } = await supabase
-                .from('orders')
-                .select('*, restaurants(name), items:order_items(*)')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(20);
-
-            if (data) setOrders(data);
-            setLoading(false);
-        };
-
-        fetchOrders();
-
-        // Robust Realtime Subscription
-        const channel = supabase
-            .channel(`my-orders-list-${user.id}`)
-            .on(
-                'postgres_changes',
-                { event: '*', schema: 'public', table: 'orders' },
-                (payload) => {
-                    console.log('MyOrders Realtime:', payload);
-
-                    // Handle INSERT (New order)
-                    if (payload.eventType === 'INSERT' && payload.new.user_id === user.id) {
-                        fetchOrders();
-                    }
-
-                    // Handle UPDATE
-                    if (payload.eventType === 'UPDATE') {
-                        setOrders(prev => prev.map(o => {
-                            if (o.id === payload.new.id) {
-                                // We need to keep the joined 'restaurants' data intact! 
-                                // Payload only has raw columns. 
-                                // Ideally we fetchOrders() again to get the name, OR we merge carefully.
-                                // Re-fetching is safer for UI consistency if we need joined data.
-                                // But for status update, we can just merge. The name doesn't change.
-                                return { ...o, ...payload.new };
-                            }
-                            return o;
-                        }));
-                    }
-                }
-            )
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, []);
-
-    // Helper for status colors
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'pending': return 'bg-yellow-500/20 text-yellow-600';
-            case 'accepted': return 'bg-blue-500/20 text-blue-600';
-            case 'preparing': return 'bg-purple-500/20 text-purple-600';
-            case 'delivering': return 'bg-orange-500/20 text-orange-600';
-            case 'completed': return 'bg-green-500/20 text-green-600';
-            case 'cancelled': return 'bg-red-500/20 text-red-600';
-            default: return 'bg-gray-500/20 text-gray-600';
-        }
-    };
-
-    const getStatusText = (status) => {
-        const map = {
-            'pending': 'Várakozás...',
-            'accepted': 'Étterem elfogadta ✅',
-            'preparing': 'Készül 👨‍🍳',
-            'delivering': 'Futárnál 🚴',
-            'completed': 'Kiszállítva 🏁',
-            'cancelled': 'Elutasítva ❌'
-        };
-        return map[status] || status;
-    };
-
-    return (
-        <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white dark:bg-[#151618] shadow-2xl z-50 flex flex-col transform transition-transform border-l border-white/10">
-            <div className="p-4 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-white/50 backdrop-blur-md">
-                <h2 className="font-bold text-lg flex items-center gap-2">
-                    <IoReceipt className="text-amber-500" /> Rendeléseim
-                </h2>
-                <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full">
-                    <IoClose />
-                </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {loading ? (
-                    <div className="text-center py-10 opacity-50">Betöltés...</div>
-                ) : orders.length === 0 ? (
-                    <div className="text-center py-10 opacity-50">Még nincs rendelésed.</div>
-                ) : (
-                    orders.map(order => (
-                        <div key={order.id} className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5">
-                            <div className="flex justify-between items-start mb-3">
-                                <div>
-                                    <div className="font-bold text-sm mb-0.5">{order.restaurants?.name || 'Ismeretlen Étterem'}</div>
-                                    <div className="text-xs text-gray-500">
-                                        {new Date(order.created_at).toLocaleString('hu-HU', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                                    </div>
-                                </div>
-                                <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide ${getStatusColor(order.status)}`}>
-                                    {getStatusText(order.status)}
-                                </span>
-                            </div>
-
-                            <div className="space-y-1 mb-3">
-                                {order.items?.map((item, i) => (
-                                    <div key={i} className="text-sm flex justify-between opacity-80">
-                                        <span>{item.quantity}x {item.name}</span>
-                                        <span className="font-mono text-xs">{item.price * item.quantity} Ft</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="flex justify-between items-center pt-2 border-t border-black/5 dark:border-white/5">
-                                <span className="text-xs font-medium opacity-60">Végösszeg:</span>
-                                <span className="font-bold text-amber-500 font-mono">{order.total_price} Ft</span>
-                            </div>
-                        </div>
-                    ))
-                )}
-            </div>
-        </div>
-    );
-}
 
 
