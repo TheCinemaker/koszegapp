@@ -10,31 +10,30 @@
 -- canvas: disable_auto_run
 
 -- 1. 🗑️ DROP EVERYTHING (CLEAN SLATE)
--- We try DELETE instead of TRUNCATE (Truncate requires sequence ownership, Delete is standard)
--- If this fails, you MUST delete users manually in the Dashboard.
-DELETE FROM auth.users;
-
-DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
-DROP FUNCTION IF EXISTS public.handle_new_user();
-DROP FUNCTION IF EXISTS public.place_order_full(uuid, text, text, text, text, integer, jsonb, uuid);
-
--- Food Tables
+-- DROP TABLES FIRST to remove Foreign Key references to auth.users!
 DROP TABLE IF EXISTS public.order_items CASCADE;
 DROP TABLE IF EXISTS public.orders CASCADE;
 DROP TABLE IF EXISTS public.menu_items CASCADE;
 DROP TABLE IF EXISTS public.menu_categories CASCADE;
 DROP TABLE IF EXISTS public.restaurants CASCADE;
 
--- Auth & Business Tables
 DROP TABLE IF EXISTS public.koszegpass_users CASCADE;
 DROP TABLE IF EXISTS public.providers CASCADE;
 DROP TABLE IF EXISTS public.profiles CASCADE;
 
--- Potential Module Tables (Just in case they exist from previous installs)
 DROP TABLE IF EXISTS public.appointments CASCADE;
 DROP TABLE IF EXISTS public.services CASCADE;
 DROP TABLE IF EXISTS public.schedules CASCADE;
-DROP TABLE IF EXISTS public.user_gems CASCADE; -- If user tracking exists
+DROP TABLE IF EXISTS public.user_gems CASCADE;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+DROP FUNCTION IF EXISTS public.handle_new_user();
+DROP FUNCTION IF EXISTS public.place_order_full(uuid, text, text, text, text, integer, jsonb, uuid);
+
+-- NOW it is safe to delete users
+-- We try DELETE instead of TRUNCATE (Truncate requires sequence ownership)
+-- If this fails with "permission denied", you MUST delete users manually in Dashboard.
+DELETE FROM auth.users;
 
 
 
