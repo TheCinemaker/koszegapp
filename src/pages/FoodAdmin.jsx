@@ -329,6 +329,10 @@ function OrderList({ restaurantId }) {
                                             <button onClick={() => handleStatusChange(order.id, 'ready')} className="py-2 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm shadow-lg transition-transform active:scale-95">Futárnak átadva</button>
                                         )}
 
+                                        {order.status === 'ready' && (
+                                            <button onClick={() => handleStatusChange(order.id, 'delivered')} className="py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-sm shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2"><IoCheckmarkCircle className="text-lg" /> Sikeres Kézbesítés</button>
+                                        )}
+
                                         {order.status !== 'rejected' && (
                                             <button
                                                 onClick={() => printReceipt(order)}
