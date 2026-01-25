@@ -48,10 +48,10 @@ export default function KoszegPassRegister() {
                     const userId = authData.user.id;
 
                     // 2. Insert into ISOLATED koszegpass_users table
-                    // Now includes Phone and Address!
+                    // We use UPSERT to avoid race conditions with the Auth Trigger which also creates this row.
                     const { error: dbError } = await supabase
                         .from('koszegpass_users')
-                        .insert({
+                        .upsert({
                             id: userId,
                             username: form.username,
                             full_name: form.fullName,
