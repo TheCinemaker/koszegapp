@@ -10,7 +10,9 @@ export default function FoodOrderPage() {
     const [view, setView] = useState('restaurants'); // 'restaurants' | 'menu'
     const [restaurants, setRestaurants] = useState([]);
     const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState([]); // For the specific restaurant menu view
+    const [realCategories, setRealCategories] = useState([]); // All available categories across ALL restaurants
+    const [categoryMap, setCategoryMap] = useState({}); // Map<CategoryName, Set<RestaurantID>>
     const [loading, setLoading] = useState(false);
     const [filterType, setFilterType] = useState('delivery'); // 'delivery' | 'pickup'
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -42,7 +44,27 @@ export default function FoodOrderPage() {
             }
         };
 
+        const fetchCategories = async () => {
+            const { data, error } = await supabase
+                .from('menu_categories')
+                .select('name, restaurant_id');
+
+            if (data) {
+                const uniqueCats = [...new Set(data.map(c => c.name))].sort();
+                setRealCategories(uniqueCats);
+
+                // Build Map: "Pizza" -> [restId1, restId2]
+                const map = {};
+                data.forEach(c => {
+                    if (!map[c.name]) map[c.name] = new Set();
+                    map[c.name].add(c.restaurant_id);
+                });
+                setCategoryMap(map);
+            }
+        };
+
         fetchRestaurants();
+        fetchCategories();
 
         // Subscribe to changes (e.g. delivery time updates)
         const channel = supabase.channel('restaurants-updates')
@@ -147,9 +169,9 @@ export default function FoodOrderPage() {
                 </div>
             </header>
 
-            {/* DYNAMIC CATEGORY BAR */}
-            {view === 'restaurants' && restaurants.length > 0 && (
-                <div className="sticky top-16 z-20 bg-white/80 dark:bg-[#1a1c2e]/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 py-4 overflow-x-auto no-scrollbar">
+            {/* DYNAMIC CATEGORY BAR (Refined) */}
+            {view === 'restaurants' && realCategories.length > 0 && (
+                <div className="sticky top-16 z-20 bg-white/80 dark:bg-[#1a1c2e]/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 py-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
                     <div className="container mx-auto px-4 flex gap-4 min-w-max">
                         <button
                             onClick={() => setSelectedCategory(null)}
@@ -161,7 +183,7 @@ export default function FoodOrderPage() {
                             <span className={`text-xs font-bold ${selectedCategory === null ? 'text-amber-500' : 'text-gray-500 dark:text-gray-400'}`}>Összes</span>
                         </button>
 
-                        {[...new Set(restaurants.flatMap(r => [r.cuisine, ...(r.tags || [])].filter(Boolean)))].map(cat => (
+                        {realCategories.map(cat => (
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
@@ -170,11 +192,11 @@ export default function FoodOrderPage() {
                                 <div className={`w-14 h-14 rounded-full overflow-hidden shadow-md border-2 ${selectedCategory === cat ? 'border-amber-500' : 'border-transparent'}`}>
                                     <img
                                         src={`https://source.unsplash.com/100x100/?${cat === 'Magyaros' ? 'goulash' :
-                                            cat === 'Büfé' ? 'burger' :
-                                                cat === 'Orientális' ? 'kebab' :
-                                                    cat === 'Kávé' ? 'coffee' :
-                                                        cat === 'Hagyományos' ? 'schnitzel' :
-                                                            cat // Fallback to tag name search
+                                                cat === 'Büfé' ? 'burger' :
+                                                    cat === 'Orientális' ? 'kebab' :
+                                                        cat === 'Kávé' ? 'coffee' :
+                                                            cat === 'Hagyományos' ? 'schnitzel' :
+                                                                cat // Fallback to tag name search
                                             },food`}
                                         className="w-full h-full object-cover"
                                         alt={cat}
@@ -229,9 +251,11 @@ export default function FoodOrderPage() {
                                     // 1. Delivery Filter
                                     const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
 
-                                    // 2. Category Filter
+                                    // 2. Category Filter (Real DB Based)
                                     if (!selectedCategory) return deliveryMatch;
-                                    const categoryMatch = r.cuisine === selectedCategory || (r.tags && r.tags.includes(selectedCategory));
+
+                                    // Check if this restaurant ID is in the set for the selected category
+                                    const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
 
                                     return deliveryMatch && categoryMatch;
                                 })
