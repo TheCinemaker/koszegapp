@@ -59,11 +59,12 @@ CREATE POLICY "Self Profile Insert" ON public.profiles FOR INSERT WITH CHECK (au
 CREATE TABLE public.koszegpass_users (
   id uuid REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
   username text UNIQUE,
+  email text, -- Contact email (separate from Auth email)
   full_name text,
   phone text,
   address text,
   points int DEFAULT 0,
-  rank text DEFAULT 'Felfedező',
+  card_type text DEFAULT 'bronz' CHECK (card_type IN ('bronz', 'silver', 'gold', 'diamant')),
   created_at timestamptz DEFAULT now()
 );
 ALTER TABLE public.koszegpass_users ENABLE ROW LEVEL SECURITY;
@@ -89,8 +90,16 @@ RETURNS trigger AS $$
 BEGIN
   -- 1. KOSZEGPASS USER
   IF new.raw_user_meta_data->>'role' = 'koszegpass' THEN
-    INSERT INTO public.koszegpass_users (id, username, full_name)
-    VALUES (new.id, new.raw_user_meta_data->>'nickname', new.raw_user_meta_data->>'full_name')
+    INSERT INTO public.koszegpass_users (id, username, full_name, card_type)
+    VALUES (
+      new.id, 
+      new.raw_user_meta_data->>'nickname', 
+      new.raw_user_meta_data->>'full_name',
+      CASE 
+        WHEN new.raw_user_meta_data->>'nickname' = 'TheCinemaker' THEN 'diamant'
+        ELSE 'bronz'
+      END
+    )
     ON CONFLICT DO NOTHING;
     
     INSERT INTO public.profiles (id, username, full_name, role)
