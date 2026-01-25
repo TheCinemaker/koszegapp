@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import KoszegPassProfile from './KoszegPassProfile';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
-// --- RESTAURANT CARD (Thinner + Restored Capsules) ---
+// --- RESTAURANT CARD (Same as good version) ---
 const RestaurantCard = ({ restaurant, onClick, index }) => (
     <FadeUp delay={index * 0.05}>
         <motion.div
@@ -30,83 +30,32 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
                 flex flex-col
             "
         >
-            {/* Abstract Background Gradient */}
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-orange-400 to-amber-600 opacity-10 blur-[40px] rounded-full group-hover:opacity-20 transition-opacity duration-500" />
-
-            {/* Image Section */}
             <div className="h-40 relative overflow-hidden rounded-t-[2rem] m-1.5 mb-0">
-                {restaurant.image_url ? (
-                    <ParallaxImage src={restaurant.image_url} className="w-full h-full" />
-                ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-900" />
-                )}
-
-                {/* Delivery/Pickup Badge */}
+                {restaurant.image_url ? <ParallaxImage src={restaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-900" />}
                 <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5 z-10">
                     {restaurant.has_delivery === false ? (
-                        <div className="bg-black/70 text-white backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-sm flex items-center gap-1 border border-white/10">
-                            <IoLocation className="text-amber-500" />
-                            <span>CSAK ELVITEL</span>
-                        </div>
+                        <div className="bg-black/70 text-white backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-sm flex items-center gap-1 border border-white/10"><IoLocation className="text-amber-500" /><span>CSAK ELVITEL</span></div>
                     ) : (
-                        <div className="bg-white/80 dark:bg-black/60 text-gray-900 dark:text-white backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-sm flex items-center gap-1">
-                            <IoTime className="text-amber-500" />
-                            <span>{restaurant.delivery_time || '30-40 p'}</span>
-                        </div>
+                        <div className="bg-white/80 dark:bg-black/60 text-gray-900 dark:text-white backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-sm flex items-center gap-1"><IoTime className="text-amber-500" /><span>{restaurant.delivery_time || '30-40 p'}</span></div>
                     )}
                 </div>
             </div>
-
-            {/* Content Section */}
             <div className="p-4 relative z-10 flex-1 flex flex-col">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">
-                    {restaurant.name}
-                </h3>
-
-                {/* 3 INFO CAPSULES (Promotions, News, Menu) */}
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">{restaurant.name}</h3>
                 <div className="flex flex-wrap gap-1.5 mb-2 min-h-[20px]">
-
-                    {/* 1. PROMOTIONS (Akciók) */}
-                    {restaurant.promotions && (
-                        <span className="text-[9px] font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-red-100 dark:border-red-900/30">
-                            <IoGift className="text-[10px]" />
-                            <span className="truncate max-w-[120px]">{restaurant.promotions}</span>
-                        </span>
-                    )}
-
-                    {/* 2. DAILY MENU (Napi Menü) */}
-                    {restaurant.daily_menu && (
-                        <span className="text-[9px] font-bold uppercase tracking-wider bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-blue-100 dark:border-blue-900/30">
-                            <IoRestaurant className="text-[10px]" /> Napi Menü
-                        </span>
-                    )}
-
-                    {/* 3. NEWS (Hírek/Infó) */}
-                    {restaurant.news && (
-                        <span className="text-[9px] font-bold uppercase tracking-wider bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-amber-100 dark:border-amber-900/30">
-                            <IoNotifications className="text-[10px]" />
-                            <span className="truncate max-w-[100px]">{restaurant.news}</span>
-                        </span>
-                    )}
-
-                    {/* Fallback Tags if no active capsules */}
-                    {(!restaurant.promotions && !restaurant.daily_menu && !restaurant.news && restaurant.tags) && restaurant.tags.slice(0, 2).map(tag => (
-                        <span key={tag} className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 px-1.5 py-0.5 rounded-md">
-                            {tag}
-                        </span>
-                    ))}
+                    {restaurant.promotions && <span className="text-[9px] font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-red-100 dark:border-red-900/30"><IoGift className="text-[10px]" /> <span className="truncate max-w-[120px]">{restaurant.promotions}</span></span>}
+                    {restaurant.daily_menu && <span className="text-[9px] font-bold uppercase tracking-wider bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-blue-100 dark:border-blue-900/30"><IoRestaurant className="text-[10px]" /> Napi Menü</span>}
+                    {restaurant.news && <span className="text-[9px] font-bold uppercase tracking-wider bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-amber-100 dark:border-amber-900/30"><IoNotifications className="text-[10px]" /> <span className="truncate max-w-[100px]">{restaurant.news}</span></span>}
+                    {(!restaurant.promotions && !restaurant.daily_menu && !restaurant.news && restaurant.tags) && restaurant.tags.slice(0, 2).map(tag => <span key={tag} className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 px-1.5 py-0.5 rounded-md">{tag}</span>)}
                 </div>
-
-                <p className="text-[11px] font-medium text-gray-500 dark:text-gray-400 line-clamp-2 flex-1 leading-relaxed">
-                    {restaurant.description}
-                </p>
+                <p className="text-[11px] font-medium text-gray-500 dark:text-gray-400 line-clamp-2 flex-1 leading-relaxed">{restaurant.description}</p>
             </div>
         </motion.div>
     </FadeUp>
 );
 
 export default function FoodOrderPage() {
-    // ... (State logic same as before) ...
     const [activeTab, setActiveTab] = useState('home');
     const [view, setView] = useState('restaurants');
     const [restaurants, setRestaurants] = useState([]);
@@ -118,50 +67,27 @@ export default function FoodOrderPage() {
     const [filterType, setFilterType] = useState('delivery');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { user } = useAuth();
     const [activeOrderStatus, setActiveOrderStatus] = useState(null);
 
-    // Monitor Active Orders
     useEffect(() => {
         if (!user) return;
         const fetchActiveOrders = async () => {
-            const { data } = await supabase
-                .from('orders')
-                .select('status')
-                .eq('user_id', user.id)
-                .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering'])
-                .order('created_at', { ascending: false })
-                .limit(1)
-                .maybeSingle();
-
+            const { data } = await supabase.from('orders').select('status').eq('user_id', user.id).in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering']).order('created_at', { ascending: false }).limit(1).maybeSingle();
             setActiveOrderStatus(data ? data.status : null);
         };
-
         fetchActiveOrders();
-
-        const chan = supabase.channel('active-orders-monitor')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` }, () => fetchActiveOrders())
-            .subscribe();
-
+        const chan = supabase.channel('active-orders-monitor').on('postgres_changes', { event: '*', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` }, () => fetchActiveOrders()).subscribe();
         return () => supabase.removeChannel(chan);
     }, [user]);
 
     const getStatusText = (status) => {
-        const map = {
-            'new': 'Függőben',
-            'accepted': 'Készül 🍳',
-            'preparing': 'Készül 🔥',
-            'ready': 'Futárnál 🚴',
-            'delivering': 'Futárnál 🚴',
-            'completed': 'Kész ✅'
-        };
+        const map = { 'new': 'Függőben', 'accepted': 'Készül 🍳', 'preparing': 'Készül 🔥', 'ready': 'Futárnál 🚴', 'delivering': 'Futárnál 🚴', 'completed': 'Kész ✅' };
         return map[status] || status;
     };
 
-    // Fetch Restaurants
     useEffect(() => {
         const fetchRestaurants = async () => {
             const { data } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
@@ -185,7 +111,6 @@ export default function FoodOrderPage() {
         return () => supabase.removeChannel(sub);
     }, []);
 
-    // Load Menu
     useEffect(() => {
         if (selectedRestaurant) {
             setLoading(true);
@@ -206,36 +131,20 @@ export default function FoodOrderPage() {
                 <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-4 self-start sm:self-center">
                         {view === 'menu' ? (
-                            <button onClick={handleBack} className="w-10 h-10 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform">
-                                <IoArrowBack className="text-lg text-zinc-900 dark:text-white" />
-                            </button>
+                            <button onClick={handleBack} className="w-10 h-10 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform"><IoArrowBack className="text-lg text-zinc-900 dark:text-white" /></button>
                         ) : (
-                            <Link to="/" className="w-10 h-10 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform">
-                                <IoHome className="text-lg text-zinc-900 dark:text-white" />
-                            </Link>
+                            <Link to="/" className="w-10 h-10 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform"><IoHome className="text-lg text-zinc-900 dark:text-white" /></Link>
                         )}
                         <div>
                             <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
                             {user && <p className="text-xs font-bold text-amber-600 dark:text-amber-400">Szia, {user.user_metadata?.nickname || 'Vendég'}!</p>}
                         </div>
                     </div>
-                    {/* Header Controls */}
                     <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-                        <button
-                            onClick={() => setIsCartOpen(true)}
-                            className="relative flex items-center gap-2 bg-white/60 dark:bg-zinc-800/60 backdrop-blur-xl border border-white/20 shadow-md pl-4 pr-1 py-1 rounded-full hover:scale-105 transition-transform"
-                        >
+                        <button onClick={() => setIsCartOpen(true)} className="relative flex items-center gap-2 bg-white/60 dark:bg-zinc-800/60 backdrop-blur-xl border border-white/20 shadow-md pl-4 pr-1 py-1 rounded-full hover:scale-105 transition-transform">
                             <IoBasket className="text-xl text-zinc-800 dark:text-white" />
-                            {activeOrderStatus && (
-                                <div className="bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap">
-                                    {getStatusText(activeOrderStatus)}
-                                </div>
-                            )}
-                            {count > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-black shadow-sm">
-                                    {count}
-                                </span>
-                            )}
+                            {activeOrderStatus && <div className="bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap">{getStatusText(activeOrderStatus)}</div>}
+                            {count > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-black shadow-sm">{count}</span>}
                         </button>
                     </div>
                 </div>
@@ -246,14 +155,10 @@ export default function FoodOrderPage() {
                 <div className={activeTab === 'home' ? 'block' : 'hidden'}>
                     {view === 'restaurants' && (
                         <>
-                            {/* Search & Filter */}
                             <div className="flex flex-row items-center justify-between gap-4 mb-6 mt-4">
                                 <div className="relative flex-1 group max-w-lg">
                                     <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors text-lg" />
-                                    <input
-                                        type="text" placeholder="Keress éttermet..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full h-12 pl-12 pr-4 rounded-2xl bg-white dark:bg-zinc-800/50 border border-transparent focus:border-amber-500/50 text-sm text-zinc-900 dark:text-white font-medium placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 transition-all shadow-sm"
-                                    />
+                                    <input type="text" placeholder="Keress éttermet..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full h-12 pl-12 pr-4 rounded-2xl bg-white dark:bg-zinc-800/50 border border-transparent focus:border-amber-500/50 text-sm text-zinc-900 dark:text-white font-medium placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 transition-all shadow-sm" />
                                 </div>
                                 <div className="flex flex-col items-end gap-1">
                                     <span className="text-[9px] font-bold uppercase text-zinc-400">{filterType === 'delivery' ? 'Kiszállítás' : 'Elvitel'}</span>
@@ -262,8 +167,6 @@ export default function FoodOrderPage() {
                                     </button>
                                 </div>
                             </div>
-
-                            {/* Categories */}
                             {realCategories.length > 0 && (
                                 <div className="mb-8 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
                                     <div className="flex gap-2 min-w-max">
@@ -274,25 +177,18 @@ export default function FoodOrderPage() {
                                     </div>
                                 </div>
                             )}
-
-                            {/* Restaurants */}
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-24">
-                                {restaurants
-                                    .filter(r => {
-                                        const termMatch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
-                                        const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
-                                        if (!selectedCategory) return termMatch && deliveryMatch;
-                                        const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
-                                        return termMatch && deliveryMatch && categoryMatch;
-                                    })
-                                    .map((rest, idx) => (
-                                        <RestaurantCard key={rest.id} restaurant={rest} index={idx} onClick={() => setSelectedRestaurant(rest)} />
-                                    ))
+                                {restaurants.filter(r => {
+                                    const termMatch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
+                                    const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
+                                    if (!selectedCategory) return termMatch && deliveryMatch;
+                                    const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
+                                    return termMatch && deliveryMatch && categoryMatch;
+                                }).map((rest, idx) => <RestaurantCard key={rest.id} restaurant={rest} index={idx} onClick={() => setSelectedRestaurant(rest)} />)
                                 }
                             </div>
                         </>
                     )}
-
                     {view === 'menu' && selectedRestaurant && (
                         <div className="pb-24">
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/60 dark:bg-[#1a1c2e]/60 backdrop-blur-[30px] rounded-[2rem] p-5 border border-white/60 dark:border-white/10 shadow-xl mb-6 relative overflow-hidden">
@@ -303,41 +199,21 @@ export default function FoodOrderPage() {
                                     </div>
                                     <div className="flex-1">
                                         <h2 className="text-2xl font-black mb-2 text-gray-900 dark:text-white">{selectedRestaurant.name}</h2>
-
-                                        {/* DETAIL VIEW INFO CAPSULES */}
                                         <div className="flex flex-wrap gap-2 mb-3">
-                                            <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5">
-                                                <IoLocation className="text-amber-500" /> {selectedRestaurant.address}
-                                            </div>
-                                            <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5">
-                                                <IoTime className="text-amber-500" /> {selectedRestaurant.delivery_time || '30-40p'}
-                                            </div>
-                                            {selectedRestaurant.promotions && (
-                                                <div className="px-2 py-1 rounded-lg bg-red-100 dark:bg-red-900/30 text-[10px] font-bold flex items-center gap-1 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50">
-                                                    <IoGift /> {selectedRestaurant.promotions}
-                                                </div>
-                                            )}
+                                            <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5"><IoLocation className="text-amber-500" /> {selectedRestaurant.address}</div>
+                                            <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5"><IoTime className="text-amber-500" /> {selectedRestaurant.delivery_time || '30-40p'}</div>
+                                            {selectedRestaurant.promotions && <div className="px-2 py-1 rounded-lg bg-red-100 dark:bg-red-900/30 text-[10px] font-bold flex items-center gap-1 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50"><IoGift /> {selectedRestaurant.promotions}</div>}
                                         </div>
                                         <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed max-w-xl">{selectedRestaurant.description}</p>
                                     </div>
                                 </div>
                             </motion.div>
-
-                            {loading ? (
-                                <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div>
-                            ) : (
+                            {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
                                 <div className="space-y-8">
                                     {categories.map((category) => (
                                         <div key={category.id} id={`cat-${category.id}`}>
-                                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1">
-                                                <span className="w-1 h-6 bg-amber-500 rounded-full"></span>
-                                                {category.name}
-                                            </h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {category.items.map(item => (
-                                                    <MenuItemCard key={item.id} item={item} onAdd={() => addItem({ ...item, restaurant_id: selectedRestaurant.id })} />
-                                                ))}
-                                            </div>
+                                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{category.items.map(item => <MenuItemCard key={item.id} item={item} onAdd={() => addItem({ ...item, restaurant_id: selectedRestaurant.id })} />)}</div>
                                         </div>
                                     ))}
                                     {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
@@ -346,13 +222,10 @@ export default function FoodOrderPage() {
                         </div>
                     )}
                 </div>
-
                 {activeTab === 'orders' && (
                     <div className="pb-32">
                         <div className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-xl p-6 rounded-[2rem] border border-white/50 dark:border-white/10 shadow-lg mb-8 flex items-center gap-4">
-                            <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30">
-                                <IoReceipt className="text-xl" />
-                            </div>
+                            <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30"><IoReceipt className="text-xl" /></div>
                             <h1 className="text-xl font-black text-gray-900 dark:text-white">Rendelések</h1>
                         </div>
                         {user ? <MyOrdersList user={user} /> : <div className="text-center py-20 text-zinc-500">Jelentkezz be a rendeléseidhez.</div>}
@@ -362,14 +235,28 @@ export default function FoodOrderPage() {
                 {activeTab === 'account' && <div className="pb-32"><KoszegPassProfile viewMode="settings" /></div>}
             </div>
 
-            {/* FLOATING NAV (Same) */}
-            <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none px-6">
-                <div className="pointer-events-auto bg-white/70 dark:bg-[#1a1c2e]/70 backdrop-blur-[40px] saturate-150 border border-white/40 dark:border-white/10 shadow-2xl rounded-[2rem] px-6 py-4 flex items-center gap-6 md:gap-8 transition-transform hover:scale-[1.02]">
+            {/* FLOATING NAV (UPDATED TO GLASS STYLE) */}
+            <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] sm:max-w-md pointer-events-none">
+                <div className="
+                    pointer-events-auto
+                    flex items-center justify-between
+                    px-6 py-2
+                    bg-white/40 dark:bg-[#1a1c2e]/40 
+                    backdrop-blur-[25px] 
+                    backdrop-saturate-[1.8]
+                    backdrop-brightness-[1.1]
+                    rounded-[30px] 
+                    border border-white/50 dark:border-white/20 
+                    shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
+                    transition-all duration-300
+                ">
                     <NavButton label="Főoldal" icon={IoHome} active={activeTab === 'home'} onClick={() => setActiveTab('home')} />
                     <NavButton label="Rendelések" icon={IoReceipt} active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} />
-                    <button onClick={() => setActiveTab('rewards')} className={`group relative -mt-12 w-14 h-14 rounded-2xl flex items-center justify-center shadow-md border border-white/20 transition-all duration-300 ${activeTab === 'rewards' ? 'bg-amber-500 scale-110 -rotate-3 shadow-amber-500/40 text-white' : 'bg-gray-900 dark:bg-white text-amber-500 dark:text-black hover:scale-110'}`}>
+
+                    <button onClick={() => setActiveTab('rewards')} className={`relative -mt-8 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-2 border-white/20 transition-all duration-300 ${activeTab === 'rewards' ? 'bg-amber-500 scale-110 shadow-amber-500/40 text-white' : 'bg-gray-900 dark:bg-white text-amber-500 dark:text-black hover:scale-105'}`}>
                         <IoWallet size={24} />
                     </button>
+
                     <NavButton label="Fiók" icon={IoPerson} active={activeTab === 'account'} onClick={() => setActiveTab('account')} />
                 </div>
             </div>
@@ -381,12 +268,30 @@ export default function FoodOrderPage() {
     );
 }
 
-// --- SUB COMPONENTS (Reuse previous code but compactified) ---
+// --- SUB COMPONENTS ---
 function NavButton({ label, icon: Icon, active, onClick }) {
     return (
-        <button onClick={onClick} className={`relative flex flex-col items-center justify-center w-10 h-10 transition-all duration-300 group ${active ? 'text-amber-600 dark:text-amber-400' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}>
-            <Icon size={24} className={`transition-transform duration-300 ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
-            {active && <motion.div layoutId="nav-dot" className="absolute -bottom-2 w-1.5 h-1.5 bg-amber-500 rounded-full" />}
+        <button
+            onClick={onClick}
+            className={`
+              relative group flex flex-col items-center justify-center
+              h-12 w-12 rounded-[1rem]
+              transition-all duration-200 ease-out
+              active:scale-90
+              ${active
+                    ? 'text-amber-600 dark:text-amber-500'
+                    : 'text-[#1d1d1f] dark:text-gray-300 hover:text-black dark:hover:text-white'
+                }
+            `}
+        >
+            <Icon className={`
+                text-[24px] mb-0.5 z-10 transition-transform duration-300
+                ${active ? 'scale-110 filter drop-shadow-sm' : 'group-hover:scale-110'}
+            `} />
+            <span className="text-[9px] font-medium tracking-tight z-10 transition-opacity duration-300 leading-none whitespace-nowrap">
+                {label}
+            </span>
+            {active && <div className="absolute -bottom-1 w-1 h-1 bg-current rounded-full opacity-60" />}
         </button>
     )
 }
