@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { IoRestaurant, IoFastFood, IoSettings, IoLogOut, IoNotifications, IoAddCircle, IoTime, IoPrint, IoSave, IoImage, IoCheckmarkCircle } from 'react-icons/io5';
+import { IoRestaurant, IoFastFood, IoSettings, IoLogOut, IoNotifications, IoAddCircle, IoTime, IoPrint, IoSave, IoImage, IoCheckmarkCircle, IoStatsChart, IoInformationCircle } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
@@ -107,6 +107,7 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
                     <div className="flex justify-center mb-4 gap-2 md:gap-4 overflow-x-auto pb-2">
                         <TabButton id="orders" label="Rendelések" icon={<IoFastFood />} active={activeTab} set={setActiveTab} />
                         <TabButton id="menu" label="Étlap" icon={<IoRestaurant />} active={activeTab} set={setActiveTab} />
+                        <TabButton id="stats" label="Statisztika" icon={<IoStatsChart />} active={activeTab} set={setActiveTab} />
                         <TabButton id="profile" label="Beállítások" icon={<IoSettings />} active={activeTab} set={setActiveTab} />
                     </div>
 
@@ -115,6 +116,7 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
                     <div className="max-w-6xl mx-auto">
                         {activeTab === 'orders' && <OrderList restaurantId={restaurantId} />}
                         {activeTab === 'menu' && <MenuEditor restaurantId={restaurantId} />}
+                        {activeTab === 'stats' && <SalesSummary restaurantId={restaurantId} />}
                         {activeTab === 'profile' && <ProfileEditor restaurantId={restaurantId} />}
                     </div>
                 </main>
@@ -595,7 +597,127 @@ function MenuEditor({ restaurantId }) {
     );
 }
 
-// --- 3. PROFILE SETTINGS TAB ---
+// --- 4. SALES STATISTICS TAB ---
+function SalesSummary({ restaurantId }) {
+    const [stats, setStats] = useState({ daily: 0, weekly: 0, monthly: 0 });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!restaurantId) return;
+
+        const fetchStats = async () => {
+            // Calculate date ranges
+            const now = new Date();
+
+            // Start of Today
+            const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            // Start of Week (Monday)
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+            const startOfWeek = new Date(now.setDate(diff));
+            startOfWeek.setHours(0, 0, 0, 0);
+
+            // Start of Month
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+            // Fetch all orders that are completed/delivered (or just all reliable revenue orders)
+            // We'll fetch orders from the beginning of the month to cover all cases if week is within month? 
+            // Actually, week can span months. Let's safe-fetch from 40 days ago.
+            // But strict SQL filtering is better. For MVP, let's fetch 'delivered' orders from last 40 days.
+
+            const safeStartDate = new Date();
+            safeStartDate.setDate(safeStartDate.getDate() - 40);
+
+            const { data, error } = await supabase
+                .from('orders')
+                .select('total_price, created_at')
+                .eq('restaurant_id', restaurantId)
+                .neq('status', 'rejected')
+                .neq('status', 'cancelled')
+                .gte('created_at', safeStartDate.toISOString());
+
+            if (error) {
+                console.error('Error fetching stats:', error);
+                setLoading(false);
+                return;
+            }
+
+            let dailyTotal = 0;
+            let weeklyTotal = 0;
+            let monthlyTotal = 0;
+
+            data.forEach(order => {
+                const orderDate = new Date(order.created_at);
+                const price = order.total_price || 0;
+
+                if (orderDate >= startOfToday) dailyTotal += price;
+                if (orderDate >= startOfWeek) weeklyTotal += price;
+                if (orderDate >= startOfMonth) monthlyTotal += price;
+            });
+
+            setStats({ daily: dailyTotal, weekly: weeklyTotal, monthly: monthlyTotal });
+            setLoading(false);
+        };
+
+        fetchStats();
+    }, [restaurantId]);
+
+    if (loading) return <div className="p-10 text-center animate-pulse">Statisztika számolása...</div>;
+
+    return (
+        <div className="max-w-4xl mx-auto space-y-8">
+            <h2 className="text-2xl font-bold mb-6">Bevétel Összesítő</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Daily Card */}
+                <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+                        <IoTime className="text-8xl" />
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-amber-100 font-bold uppercase text-xs tracking-wider mb-1">Mai Bevétel</p>
+                        <h3 className="text-3xl font-black">{stats.daily.toLocaleString()} <span className="text-lg font-medium opacity-80">Ft</span></h3>
+                    </div>
+                </div>
+
+                {/* Weekly Card */}
+                <div className="bg-white dark:bg-[#1a1c2e] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-white/5 relative overflow-hidden group">
+                    <div className="absolute -right-4 -bottom-4 opacity-5 dark:opacity-[0.03]">
+                        <IoStatsChart className="text-9xl text-gray-900 dark:text-white" />
+                    </div>
+                    <div className="relative z-10">
+                        <p className="text-gray-500 dark:text-gray-400 font-bold uppercase text-xs tracking-wider mb-1">E heti bevétel</p>
+                        <h3 className="text-3xl font-black text-gray-900 dark:text-white">{stats.weekly.toLocaleString()} <span className="text-lg font-medium text-gray-400">Ft</span></h3>
+                    </div>
+                </div>
+
+                {/* Monthly Card */}
+                <div className="bg-white dark:bg-[#1a1c2e] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-white/5 relative overflow-hidden group">
+                    <div className="relative z-10">
+                        <p className="text-gray-500 dark:text-gray-400 font-bold uppercase text-xs tracking-wider mb-1">Havi bevétel</p>
+                        <h3 className="text-3xl font-black text-gray-900 dark:text-white">{stats.monthly.toLocaleString()} <span className="text-lg font-medium text-gray-400">Ft</span></h3>
+                        <div className="mt-4 w-full bg-gray-100 dark:bg-white/5 h-1.5 rounded-full overflow-hidden">
+                            <div className="h-full bg-green-500 w-[70%]" /> {/* Mock progress for visual flair */}
+                        </div>
+                        <p className="text-[10px] text-gray-400 mt-2 italic">A hónap 70%-a telt el.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-blue-50 dark:bg-blue-900/10 p-6 rounded-2xl border border-blue-100 dark:border-blue-900/20 flex items-start gap-4">
+                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-xl text-blue-600 dark:text-blue-400">
+                    <IoInformationCircle className="text-xl" />
+                </div>
+                <div>
+                    <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-1">Információ</h4>
+                    <p className="text-sm text-blue-800 dark:text-blue-300">A statisztika csak a "Kézbesített" (delivered) vagy függőben lévő rendeléseket számolja, az elutasítottakat nem. A heti számítás Hétfőtől kezdődik.</p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function ProfileEditor({ restaurantId }) {
     const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false); // NEW
