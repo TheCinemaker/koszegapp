@@ -214,21 +214,34 @@ export default function FoodOrderPage() {
                                             </div>
 
                                             {/* INFO CAPSULES (Bottom Left Overlay) */}
-                                            <div className="absolute top-4 left-4 flex flex-col items-start gap-1.5">
+                                            {/* INFO CAPSULES (Dynamic Content - Bottom Left) */}
+                                            <div className="absolute bottom-4 left-4 flex flex-col items-start gap-1.5 max-w-[85%]">
                                                 {rest.display_settings?.show_daily_menu && rest.daily_menu && (
-                                                    <span className="bg-orange-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-md backdrop-blur-sm shadow-sm flex items-center gap-1">
-                                                        🗓️ NAPI MENÜ
-                                                    </span>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); toast(rest.daily_menu, { icon: '🗓️', duration: 4000 }); }}
+                                                        className="bg-orange-500/90 hover:bg-orange-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-sm flex items-center gap-2 max-w-full transition-transform active:scale-95 text-left"
+                                                    >
+                                                        <span className="shrink-0">🗓️</span>
+                                                        <span className="truncate">{rest.daily_menu.split('\n')[0]}</span>
+                                                    </button>
                                                 )}
                                                 {rest.display_settings?.show_promotions && rest.promotions && (
-                                                    <span className="bg-red-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-md backdrop-blur-sm shadow-sm flex items-center gap-1">
-                                                        🔥 AKCIÓ
-                                                    </span>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); toast(rest.promotions, { icon: '🔥', duration: 4000 }); }}
+                                                        className="bg-red-500/90 hover:bg-red-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-sm flex items-center gap-2 max-w-full transition-transform active:scale-95 text-left"
+                                                    >
+                                                        <span className="shrink-0">🔥</span>
+                                                        <span className="truncate">{rest.promotions}</span>
+                                                    </button>
                                                 )}
                                                 {rest.display_settings?.show_news && rest.news && (
-                                                    <span className="bg-blue-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-md backdrop-blur-sm shadow-sm flex items-center gap-1">
-                                                        📢 HÍR
-                                                    </span>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); toast(rest.news, { icon: '📢', duration: 4000 }); }}
+                                                        className="bg-blue-500/90 hover:bg-blue-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-sm flex items-center gap-2 max-w-full transition-transform active:scale-95 text-left"
+                                                    >
+                                                        <span className="shrink-0">📢</span>
+                                                        <span className="truncate">{rest.news}</span>
+                                                    </button>
                                                 )}
                                             </div>
 
