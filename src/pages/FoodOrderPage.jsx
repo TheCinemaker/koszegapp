@@ -502,27 +502,37 @@ function ActiveOrderTracker() {
             .channel(`my-orders-tracker-${user.id}`)
             .on(
                 'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'orders' },
+                { event: '*', schema: 'public', table: 'orders' },
                 (payload) => {
-                    console.log('Realtime Order Update:', payload);
-                    // Client-side filter: Only care about MY active order
-                    if (payload.new.user_id !== user.id) return;
+                    console.log('Realtime Event:', payload);
 
-                    setActiveOrder(prev => {
-                        // If we are not tracking anything, and this is a relevant order, maybe track it? 
-                        // For now, only update if it matches the tracked ID.
-                        if (prev && prev.id === payload.new.id) {
-                            // If status becomes delivered/rejected, hide it
-                            if (['delivered', 'rejected'].includes(payload.new.status)) {
-                                if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
-                                return null;
+                    // Client-side filter: Only care about MY orders
+                    if ((payload.new && payload.new.user_id !== user.id) && (payload.old && payload.old.user_id !== user.id)) return;
+
+                    // Handle INSERT (New order placed by me, or visible to me)
+                    if (payload.eventType === 'INSERT' && payload.new.user_id === user.id) {
+                        setActiveOrder(payload.new);
+                        return;
+                    }
+
+                    // Handle UPDATE
+                    if (payload.eventType === 'UPDATE' && payload.new.user_id === user.id) {
+                        setActiveOrder(prev => {
+                            // If we are tracking this specific order, update it
+                            if (prev && prev.id === payload.new.id) {
+                                if (['delivered', 'rejected'].includes(payload.new.status)) {
+                                    if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
+                                    return null; // Stop tracking
+                                }
+                                return payload.new;
                             }
-                            return payload.new;
-                        }
-                        // Or maybe this IS the active order we were waiting for (if it was just created but polling missed it?)
-                        // For now stick to updating existing tracking.
-                        return prev;
-                    });
+                            // If we are NOT tracking anything, or tracking an older order, and this modified order is active...
+                            // Actually, let's keep it simple: If this is a status change for a valid active order, maybe we should switch to it?
+                            // For safety, let's just stick to updating the CURRENT one or adopting a NEW one via Insert.
+                            // If the user has multiple active orders, this UI only shows one.
+                            return prev;
+                        });
+                    }
                 }
             )
             .subscribe((status) => {
