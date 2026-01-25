@@ -68,16 +68,27 @@ export default function FoodAuthPage() {
                 });
 
                 // 3. Create Restaurant Entry
-                // Generate a slug from name
-                const slug = restaurantName.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') + '-' + Math.floor(Math.random() * 1000);
+                // Check if already exists to prevent duplicate/error on retry
+                const { data: existingRestaurant } = await supabase
+                    .from('restaurants')
+                    .select('id')
+                    .eq('owner_id', userId)
+                    .maybeSingle();
 
-                const { error: restError } = await supabase.from('restaurants').insert({
-                    owner_id: userId,
-                    name: restaurantName,
-                    slug: slug,
-                    description: 'Új étterem',
-                    access_code: '0000' // Legacy/Placeholder
-                });
+                if (!existingRestaurant) {
+                    // Generate a slug from name
+                    const slug = restaurantName.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') + '-' + Math.floor(Math.random() * 1000);
+
+                    const { error: restError } = await supabase.from('restaurants').insert({
+                        owner_id: userId,
+                        name: restaurantName,
+                        slug: slug,
+                        description: 'Új étterem',
+                        access_code: '0000' // Legacy/Placeholder
+                    });
+
+                    if (restError) throw restError;
+                }
 
                 if (restError) throw restError;
 
