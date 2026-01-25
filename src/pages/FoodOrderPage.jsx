@@ -12,6 +12,7 @@ export default function FoodOrderPage() {
     const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [filterType, setFilterType] = useState('delivery'); // 'delivery' | 'pickup'
 
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -146,34 +147,102 @@ export default function FoodOrderPage() {
             <main className="container mx-auto px-4 py-8">
 
                 {view === 'restaurants' ? (
-                    /* ÉTTEREM LISTA NÉZET */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {restaurants.map(rest => (
-                            <motion.div
-                                key={rest.id}
-                                layoutId={`restaurant-${rest.id}`}
-                                onClick={() => setSelectedRestaurant(rest)}
-                                className="relative h-full block rounded-[1.5rem] bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group overflow-hidden"
-                            >
-                                <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden">
-                                    {/* Placeholder image logic - in real app use rest.cover_image */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                                        <h2 className="text-white font-bold text-xl transform group-hover:-translate-y-1 transition-transform">{rest.name}</h2>
-                                    </div>
-                                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
-                                        <IoTime className="text-amber-500 text-sm" />
-                                        <span>{rest.delivery_time || '30-40 perc'}</span>
-                                    </div>
-                                </div>
-                                <div className="p-4">
-                                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-3 line-clamp-2">{rest.description}</p>
-                                    <div className="flex items-center gap-4 text-xs font-medium opacity-70">
-                                        <span className="flex items-center gap-1"><IoLocation /> {rest.address}</span>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                    <>
+                        {/* TOGGLE FILTER (Lieferando Style) */}
+                        <div className="flex justify-center mb-8">
+                            <div className="bg-white/80 dark:bg-black/40 backdrop-blur-md p-1 rounded-full shadow-lg border border-white/20 flex relative">
+                                {/* Slider Background */}
+                                <motion.div
+                                    className="absolute top-1 bottom-1 bg-amber-500 rounded-full shadow-md z-0"
+                                    initial={false}
+                                    animate={{
+                                        left: filterType === 'delivery' ? '4px' : '50%',
+                                        width: 'calc(50% - 4px)',
+                                        x: filterType === 'pickup' ? 0 : 0
+                                    }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                />
+
+                                <button
+                                    onClick={() => setFilterType('delivery')}
+                                    className={`relative z-10 px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2 ${filterType === 'delivery' ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`}
+                                >
+                                    <IoTime className="text-lg" /> Kiszállítás
+                                </button>
+                                <button
+                                    onClick={() => setFilterType('pickup')}
+                                    className={`relative z-10 px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2 ${filterType === 'pickup' ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`}
+                                >
+                                    <IoLocation className="text-lg" /> Elvitel / Helyben
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* ÉTTEREM LISTA NÉZET */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {restaurants
+                                .filter(r => filterType === 'delivery' ? (r.has_delivery !== false) : true) // Filter if needed, or just show all with badges? User asked for filter/toggle.
+                                // Actually, typical behavior: Delivery tab shows only delivery places. Pickup tab shows all? Or just those explicitly pickup?
+                                // Let's simplify: 'delivery' -> Show has_delivery=true. 'pickup' -> Show all (since you can pickup from anywhere usually).
+                                .map(rest => (
+                                    <motion.div
+                                        key={rest.id}
+                                        layoutId={`restaurant-${rest.id}`}
+                                        onClick={() => setSelectedRestaurant(rest)}
+                                        className="relative h-full block rounded-[1.5rem] bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group overflow-hidden"
+                                    >
+                                        <div className="h-40 bg-gray-200 dark:bg-white/5 relative overflow-hidden">
+                                            {/* Placeholder image logic - in real app use rest.cover_image */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                                                <h2 className="text-white font-bold text-xl transform group-hover:-translate-y-1 transition-transform">{rest.name}</h2>
+                                            </div>
+
+                                            {/* TOP BADGES */}
+                                            <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+                                                {/* Delivery Time / Pickup Badge */}
+                                                {rest.has_delivery === false ? (
+                                                    <div className="bg-gray-900/90 text-white backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5 border border-white/10">
+                                                        <IoLocation className="text-amber-500" />
+                                                        <span>CSAK ELVITEL</span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="bg-white/90 dark:bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5">
+                                                        <IoTime className="text-amber-500 text-sm" />
+                                                        <span>{rest.delivery_time || '30-40 perc'}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* INFO CAPSULES (Bottom Left Overlay) */}
+                                            <div className="absolute top-4 left-4 flex flex-col items-start gap-1.5">
+                                                {rest.display_settings?.show_daily_menu && rest.daily_menu && (
+                                                    <span className="bg-orange-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-md backdrop-blur-sm shadow-sm flex items-center gap-1">
+                                                        🗓️ NAPI MENÜ
+                                                    </span>
+                                                )}
+                                                {rest.display_settings?.show_promotions && rest.promotions && (
+                                                    <span className="bg-red-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-md backdrop-blur-sm shadow-sm flex items-center gap-1">
+                                                        🔥 AKCIÓ
+                                                    </span>
+                                                )}
+                                                {rest.display_settings?.show_news && rest.news && (
+                                                    <span className="bg-blue-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-md backdrop-blur-sm shadow-sm flex items-center gap-1">
+                                                        📢 HÍR
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                        </div>
+                                        <div className="p-4">
+                                            <p className="text-gray-500 dark:text-gray-400 text-sm mb-3 line-clamp-2">{rest.description}</p>
+                                            <div className="flex items-center gap-4 text-xs font-medium opacity-70">
+                                                <span className="flex items-center gap-1"><IoLocation /> {rest.address}</span>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                        </div>
+                    </>
                 ) : (
                     /* MENÜ NÉZET */
                     <motion.div

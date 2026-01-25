@@ -608,6 +608,7 @@ function ProfileEditor({ restaurantId }) {
         daily_menu: '', // NEW
         opening_hours: '',
         delivery_time: '',
+        has_delivery: true, // NEW
         min_order_value: 0,
         settings: { show_news: true, show_promotions: true, show_daily_menu: true, show_delivery_time: true }
     });
@@ -626,6 +627,7 @@ function ProfileEditor({ restaurantId }) {
                     daily_menu: data.daily_menu || '',
                     opening_hours: data.opening_hours || '',
                     delivery_time: data.delivery_time || '',
+                    has_delivery: data.has_delivery !== undefined ? data.has_delivery : true, // Handle default
                     min_order_value: data.min_order_value || 0,
                     settings: data.display_settings || { show_news: true, show_promotions: true, show_daily_menu: true, show_delivery_time: true }
                 });
@@ -647,6 +649,7 @@ function ProfileEditor({ restaurantId }) {
             daily_menu: form.daily_menu, // NEW
             opening_hours: form.opening_hours,
             delivery_time: form.delivery_time,
+            has_delivery: form.has_delivery, // NEW
             min_order_value: form.min_order_value,
             display_settings: form.settings
         }).eq('id', restaurantId);
@@ -695,9 +698,29 @@ function ProfileEditor({ restaurantId }) {
                         <label className="text-xs font-bold uppercase text-gray-500">Nyitvatartás (Szöveges)</label>
                         <input className="input-field" placeholder="H-V: 10-22" value={form.opening_hours} onChange={e => setForm({ ...form, opening_hours: e.target.value })} />
                     </div>
+                    {/* Delivery Toggle & Time */}
                     <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-gray-500">Kiszállítási idő</label>
-                        <input className="input-field" placeholder="30-45 perc" value={form.delivery_time} onChange={e => setForm({ ...form, delivery_time: e.target.value })} />
+                        <div className="flex justify-between items-center mb-1">
+                            <label className="text-xs font-bold uppercase text-gray-500">Kiszállítás</label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <span className={`text-[10px] font-bold uppercase ${form.has_delivery ? 'text-green-500' : 'text-gray-400'}`}>
+                                    {form.has_delivery ? 'Van' : 'Nincs'}
+                                </span>
+                                <input
+                                    type="checkbox"
+                                    checked={form.has_delivery}
+                                    onChange={e => setForm({ ...form, has_delivery: e.target.checked })}
+                                    className="w-8 h-4 bg-gray-200 rounded-full appearance-none checked:bg-green-500 transition-colors relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:w-3 after:h-3 after:rounded-full after:transition-all checked:after:left-4.5 accent-transparent"
+                                />
+                            </label>
+                        </div>
+                        {form.has_delivery ? (
+                            <input className="input-field" placeholder="30-45 perc" value={form.delivery_time} onChange={e => setForm({ ...form, delivery_time: e.target.value })} />
+                        ) : (
+                            <div className="input-field opacity-50 bg-gray-100 dark:bg-white/5 flex items-center gap-2 text-gray-500 text-sm">
+                                <IoFastFood /> Csak helyben / Elvitel
+                            </div>
+                        )}
                     </div>
                     <div className="space-y-1">
                         <label className="text-xs font-bold uppercase text-gray-500">Min. Rendelés (Ft)</label>
