@@ -489,7 +489,7 @@ function ActiveOrderTracker() {
                 .in('status', ['new', 'accepted', 'ready'])
                 .order('created_at', { ascending: false })
                 .limit(1)
-                .single();
+                .maybeSingle();
 
             if (data) setActiveOrder(data);
         };
@@ -632,7 +632,7 @@ function MyOrdersDrawer({ user, onClose }) {
                         orders.map(order => (
                             <div key={order.id} className="bg-white dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
                                 <div className="flex justify-between items-start mb-2">
-                                    <span className="font-mono text-xs opacity-50">#{order.id.slice(0, 8)}...</span>
+                                    <span className="font-mono text-xs opacity-50">#{order.id}</span>
                                     <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${statusMap[order.status]?.color || 'bg-gray-100'}`}>
                                         {statusMap[order.status]?.label || order.status}
                                     </span>
