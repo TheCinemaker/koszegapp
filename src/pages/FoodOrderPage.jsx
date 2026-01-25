@@ -192,11 +192,11 @@ export default function FoodOrderPage() {
                                 <div className={`w-14 h-14 rounded-full overflow-hidden shadow-md border-2 ${selectedCategory === cat ? 'border-amber-500' : 'border-transparent'}`}>
                                     <img
                                         src={`https://source.unsplash.com/100x100/?${cat === 'Magyaros' ? 'goulash' :
-                                                cat === 'Büfé' ? 'burger' :
-                                                    cat === 'Orientális' ? 'kebab' :
-                                                        cat === 'Kávé' ? 'coffee' :
-                                                            cat === 'Hagyományos' ? 'schnitzel' :
-                                                                cat // Fallback to tag name search
+                                            cat === 'Büfé' ? 'burger' :
+                                                cat === 'Orientális' ? 'kebab' :
+                                                    cat === 'Kávé' ? 'coffee' :
+                                                        cat === 'Hagyományos' ? 'schnitzel' :
+                                                            cat // Fallback to tag name search
                                             },food`}
                                         className="w-full h-full object-cover"
                                         alt={cat}
@@ -640,7 +640,7 @@ function MyOrdersDrawer({ user, onClose }) {
         const fetchOrders = async () => {
             const { data } = await supabase
                 .from('orders')
-                .select('*, items:order_items(*)')
+                .select('*, restaurants(name), items:order_items(*)')
                 .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
                 .limit(20);
@@ -661,10 +661,7 @@ function MyOrdersDrawer({ user, onClose }) {
                     console.log('MyOrders Realtime:', payload);
 
                     // Handle INSERT (New order)
-                    // Check if it belongs to me (safely)
                     if (payload.eventType === 'INSERT' && payload.new.user_id === user.id) {
-                        // Fetch full order with items to display correctly, or just add basic info first
-                        // For now, let's just re-fetch to be clean and get items relation
                         fetchOrders();
                     }
 
@@ -672,7 +669,11 @@ function MyOrdersDrawer({ user, onClose }) {
                     if (payload.eventType === 'UPDATE') {
                         setOrders(prev => prev.map(o => {
                             if (o.id === payload.new.id) {
-                                // Merge updates
+                                // We need to keep the joined 'restaurants' data intact! 
+                                // Payload only has raw columns. 
+                                // Ideally we fetchOrders() again to get the name, OR we merge carefully.
+                                // Re-fetching is safer for UI consistency if we need joined data.
+                                // But for status update, we can just merge. The name doesn't change.
                                 return { ...o, ...payload.new };
                             }
                             return o;
@@ -685,63 +686,83 @@ function MyOrdersDrawer({ user, onClose }) {
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [user]);
+    }, []);
 
-    const statusMap = {
-        'new': { label: 'Elküldve', color: 'bg-gray-100 text-gray-600' },
-        'accepted': { label: 'Készül', color: 'bg-amber-100 text-amber-700' },
-        'ready': { label: 'Futárnál', color: 'bg-blue-100 text-blue-700' },
-        'delivered': { label: 'Kiszállítva', color: 'bg-green-100 text-green-700' },
-        'rejected': { label: 'Elutasítva', color: 'bg-red-100 text-red-700' }
+    // Helper for status colors
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'pending': return 'bg-yellow-500/20 text-yellow-600';
+            case 'accepted': return 'bg-blue-500/20 text-blue-600';
+            case 'preparing': return 'bg-purple-500/20 text-purple-600';
+            case 'delivering': return 'bg-orange-500/20 text-orange-600';
+            case 'completed': return 'bg-green-500/20 text-green-600';
+            case 'cancelled': return 'bg-red-500/20 text-red-600';
+            default: return 'bg-gray-500/20 text-gray-600';
+        }
+    };
+
+    const getStatusText = (status) => {
+        const map = {
+            'pending': 'Várakozás...',
+            'accepted': 'Étterem elfogadta ✅',
+            'preparing': 'Készül 👨‍🍳',
+            'delivering': 'Futárnál 🚴',
+            'completed': 'Kiszállítva 🏁',
+            'cancelled': 'Elutasítva ❌'
+        };
+        return map[status] || status;
     };
 
     return (
-        <>
-            <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                onClick={onClose}
-                className="fixed inset-0 bg-black/60 z-[90] backdrop-blur-sm"
-            />
-            <motion.div
-                initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white/95 dark:bg-[#1a1c2e]/95 backdrop-blur-xl z-[100] shadow-2xl flex flex-col border-l border-white/20"
-            >
-                <div className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-white/5">
-                    <h2 className="text-xl font-bold flex items-center gap-2"><IoReceipt /> Rendeléseim</h2>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full"><IoClose className="text-2xl" /></button>
-                </div>
+        <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white dark:bg-[#151618] shadow-2xl z-50 flex flex-col transform transition-transform border-l border-white/10">
+            <div className="p-4 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-white/50 backdrop-blur-md">
+                <h2 className="font-bold text-lg flex items-center gap-2">
+                    <IoReceipt className="text-amber-500" /> Rendeléseim
+                </h2>
+                <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full">
+                    <IoClose />
+                </button>
+            </div>
 
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                    {loading ? (
-                        <div className="text-center py-10 opacity-50">Betöltés...</div>
-                    ) : orders.length === 0 ? (
-                        <div className="text-center py-10 opacity-50">Még nincs rendelésed.</div>
-                    ) : (
-                        orders.map(order => (
-                            <div key={order.id} className="bg-white dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className="font-mono text-xs opacity-50">#{order.id}</span>
-                                    <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${statusMap[order.status]?.color || 'bg-gray-100'}`}>
-                                        {statusMap[order.status]?.label || order.status}
-                                    </span>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {loading ? (
+                    <div className="text-center py-10 opacity-50">Betöltés...</div>
+                ) : orders.length === 0 ? (
+                    <div className="text-center py-10 opacity-50">Még nincs rendelésed.</div>
+                ) : (
+                    orders.map(order => (
+                        <div key={order.id} className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5">
+                            <div className="flex justify-between items-start mb-3">
+                                <div>
+                                    <div className="font-bold text-sm mb-0.5">{order.restaurants?.name || 'Ismeretlen Étterem'}</div>
+                                    <div className="text-xs text-gray-500">
+                                        {new Date(order.created_at).toLocaleString('hu-HU', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                    </div>
                                 </div>
-                                <div className="space-y-1 mb-3">
-                                    {order.items?.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between text-sm">
-                                            <span>{item.quantity}x {item.name}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="flex justify-between items-center text-sm pt-2 border-t border-gray-100 dark:border-white/5">
-                                    <span className="opacity-60">{new Date(order.created_at).toLocaleString('hu-HU')}</span>
-                                    <span className="font-bold text-amber-600 dark:text-amber-500">{order.total_price} Ft</span>
-                                </div>
+                                <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide ${getStatusColor(order.status)}`}>
+                                    {getStatusText(order.status)}
+                                </span>
                             </div>
-                        ))
-                    )}
-                </div>
-            </motion.div>
-        </>
+
+                            <div className="space-y-1 mb-3">
+                                {order.items?.map((item, i) => (
+                                    <div key={i} className="text-sm flex justify-between opacity-80">
+                                        <span>{item.quantity}x {item.name}</span>
+                                        <span className="font-mono text-xs">{item.price * item.quantity} Ft</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="flex justify-between items-center pt-2 border-t border-black/5 dark:border-white/5">
+                                <span className="text-xs font-medium opacity-60">Végösszeg:</span>
+                                <span className="font-bold text-amber-500 font-mono">{order.total_price} Ft</span>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+        </div>
     );
 }
+
+
