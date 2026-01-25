@@ -234,7 +234,7 @@ export default function FoodOrderPage() {
                     )}
                 </AnimatePresence>
 
-                <ActiveOrderTracker />
+
             </main>
         </div >
     );
@@ -471,115 +471,6 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
     );
 }
 
-// --- REALTIME ORDER TRACKER ---
-function ActiveOrderTracker() {
-    const { user } = useAuth();
-    const [activeOrder, setActiveOrder] = useState(null);
-
-    // 1. Fetch initial active order & Subscribe
-    useEffect(() => {
-        if (!user) return;
-
-        const fetchActiveOrder = async () => {
-            // Find latest order that is NOT delivered or rejected
-            const { data } = await supabase
-                .from('orders')
-                .select('*')
-                .eq('user_id', user.id)
-                .in('status', ['new', 'accepted', 'ready'])
-                .order('created_at', { ascending: false })
-                .limit(1)
-                .maybeSingle();
-
-            if (data) setActiveOrder(data);
-        };
-
-        fetchActiveOrder();
-
-        // 2. Subscribe to my orders
-        // Note: Removing server-side filter for debugging. Filtering client-side is safer if RLS/Filter is flaky.
-        const channel = supabase
-            .channel(`my-orders-tracker-${user.id}`)
-            .on(
-                'postgres_changes',
-                { event: '*', schema: 'public', table: 'orders' },
-                (payload) => {
-                    console.log('Realtime Event:', payload);
-
-                    // Client-side filter: Only care about MY orders
-                    if ((payload.new && payload.new.user_id !== user.id) && (payload.old && payload.old.user_id !== user.id)) return;
-
-                    // Handle INSERT (New order placed by me, or visible to me)
-                    if (payload.eventType === 'INSERT' && payload.new.user_id === user.id) {
-                        setActiveOrder(payload.new);
-                        return;
-                    }
-
-                    // Handle UPDATE
-                    if (payload.eventType === 'UPDATE') {
-                        setActiveOrder(prev => {
-                            // If we are tracking this specific order, update it
-                            if (prev && prev.id === payload.new.id) {
-                                // Double check ownership if user_id IS present (safety), but allow if missing (partial update)
-                                if (payload.new.user_id && payload.new.user_id !== user.id) return prev;
-
-                                if (['delivered', 'rejected'].includes(payload.new.status)) {
-                                    if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
-                                    return null; // Stop tracking
-                                }
-                                // Merge new data into prev to ensure we don't lose fields not present in payload (if any)
-                                return { ...prev, ...payload.new };
-                            }
-                            return prev;
-                        });
-                    }
-                }
-            )
-            .subscribe((status) => {
-                console.log("Realtime Status:", status);
-            });
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [user]);
-
-    if (!activeOrder) return null;
-
-    // Status Config
-    const statusConfig = {
-        'new': { label: 'Rendelés elküldve...', color: 'bg-gray-800', icon: '⏳' },
-        'accepted': { label: 'Készül az ételed!', color: 'bg-amber-500', icon: '👨‍🍳' },
-        'ready': { label: 'Úton feléd! 🚴', color: 'bg-green-600', icon: '💨' }
-    };
-
-    const currentStatus = statusConfig[activeOrder.status] || { label: 'Ismeretlen', color: 'bg-gray-500', icon: '?' };
-
-    return (
-        <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-24 left-4 right-4 md:left-auto md:right-8 md:w-96 z-40 sm:mb-6"
-        >
-            <div className={`${currentStatus.color} text-white p-4 rounded-2xl shadow-2xl border-2 border-white/20 backdrop-blur-md flex items-center justify-between`}>
-                <div className="flex items-center gap-3">
-                    <div className="text-3xl bg-white/20 w-12 h-12 rounded-full flex items-center justify-center">
-                        {currentStatus.icon}
-                    </div>
-                    <div>
-                        <p className="text-xs font-bold opacity-80 uppercase tracking-wider">Rendelés #{activeOrder.id}</p>
-                        <h3 className="text-xl font-bold">{currentStatus.label}</h3>
-                    </div>
-                </div>
-                <div className="text-right">
-                    <span className="block text-2xl font-black">{activeOrder.total_price} Ft</span>
-                </div>
-            </div>
-        </motion.div>
-    );
-}
-
 // --- MY ORDERS DRAWER ---
 function MyOrdersDrawer({ user, onClose }) {
     const [orders, setOrders] = useState([]);
@@ -600,15 +491,32 @@ function MyOrdersDrawer({ user, onClose }) {
 
         fetchOrders();
 
-        // Realtime updates for my orders list
+        // Robust Realtime Subscription
         const channel = supabase
             .channel(`my-orders-list-${user.id}`)
             .on(
                 'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'orders' },
+                { event: '*', schema: 'public', table: 'orders' },
                 (payload) => {
-                    if (payload.new.user_id === user.id) {
-                        setOrders(prev => prev.map(o => o.id === payload.new.id ? { ...o, ...payload.new } : o));
+                    console.log('MyOrders Realtime:', payload);
+
+                    // Handle INSERT (New order)
+                    // Check if it belongs to me (safely)
+                    if (payload.eventType === 'INSERT' && payload.new.user_id === user.id) {
+                        // Fetch full order with items to display correctly, or just add basic info first
+                        // For now, let's just re-fetch to be clean and get items relation
+                        fetchOrders();
+                    }
+
+                    // Handle UPDATE
+                    if (payload.eventType === 'UPDATE') {
+                        setOrders(prev => prev.map(o => {
+                            if (o.id === payload.new.id) {
+                                // Merge updates
+                                return { ...o, ...payload.new };
+                            }
+                            return o;
+                        }));
                     }
                 }
             )

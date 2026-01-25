@@ -262,15 +262,18 @@ export default function KoszegPassProfile() {
                     </div>
                 </div>
 
-                <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between opacity-50">
+                <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-purple-500/20 rounded-lg text-purple-400">
                             <IoWallet size={24} />
                         </div>
                         <div>
-                            <h3 className="font-bold">tárca (Hamarosan)</h3>
-                            <p className="text-xs text-zinc-500">Kuponok és egyenleg</p>
+                            <h3 className="font-bold">Ponty Egyenleg</h3>
+                            <p className="text-xs text-zinc-500">{profile?.points || 0} pont (1000 Ft = 1 pont)</p>
                         </div>
+                    </div>
+                    <div className="font-mono text-2xl font-bold text-purple-400">
+                        {profile?.points || 0}
                     </div>
                 </div>
             </div>
