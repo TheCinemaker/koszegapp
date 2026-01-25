@@ -516,20 +516,20 @@ function ActiveOrderTracker() {
                     }
 
                     // Handle UPDATE
-                    if (payload.eventType === 'UPDATE' && payload.new.user_id === user.id) {
+                    if (payload.eventType === 'UPDATE') {
                         setActiveOrder(prev => {
                             // If we are tracking this specific order, update it
                             if (prev && prev.id === payload.new.id) {
+                                // Double check ownership if user_id IS present (safety), but allow if missing (partial update)
+                                if (payload.new.user_id && payload.new.user_id !== user.id) return prev;
+
                                 if (['delivered', 'rejected'].includes(payload.new.status)) {
                                     if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
                                     return null; // Stop tracking
                                 }
-                                return payload.new;
+                                // Merge new data into prev to ensure we don't lose fields not present in payload (if any)
+                                return { ...prev, ...payload.new };
                             }
-                            // If we are NOT tracking anything, or tracking an older order, and this modified order is active...
-                            // Actually, let's keep it simple: If this is a status change for a valid active order, maybe we should switch to it?
-                            // For safety, let's just stick to updating the CURRENT one or adopting a NEW one via Insert.
-                            // If the user has multiple active orders, this UI only shows one.
                             return prev;
                         });
                     }
