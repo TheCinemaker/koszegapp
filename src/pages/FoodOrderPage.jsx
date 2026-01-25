@@ -252,11 +252,7 @@ export default function FoodOrderPage() {
                 ">
                     <NavButton label="Főoldal" icon={IoHome} active={activeTab === 'home'} onClick={() => setActiveTab('home')} />
                     <NavButton label="Rendelések" icon={IoReceipt} active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} />
-
-                    <button onClick={() => setActiveTab('rewards')} className={`relative -mt-8 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-2 border-white/20 transition-all duration-300 ${activeTab === 'rewards' ? 'bg-amber-500 scale-110 shadow-amber-500/40 text-white' : 'bg-gray-900 dark:bg-white text-amber-500 dark:text-black hover:scale-105'}`}>
-                        <IoWallet size={24} />
-                    </button>
-
+                    <NavButton label="Pontok" icon={IoWallet} active={activeTab === 'rewards'} onClick={() => setActiveTab('rewards')} />
                     <NavButton label="Fiók" icon={IoPerson} active={activeTab === 'account'} onClick={() => setActiveTab('account')} />
                 </div>
             </div>
