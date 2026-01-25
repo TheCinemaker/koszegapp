@@ -368,16 +368,24 @@ function MenuEditor({ restaurantId }) {
     }, [restaurantId]);
 
     const fetchMenu = async () => {
+        // Fix: Removed alias 'items:' which might cause 400 if PostgREST is strict or confused.
         const { data, error } = await supabase
             .from('menu_categories')
-            .select(`*, items:menu_items(*)`)
+            .select(`*, menu_items(*)`)
             .eq('restaurant_id', restaurantId)
             .order('sort_order', { ascending: true });
 
-        if (!error && data) {
+        if (error) {
+            console.error("Menu fetch error:", error);
+            toast.error("Hiba a menü betöltésekor");
+            return;
+        }
+
+        if (data) {
             const sortedData = data.map(cat => ({
                 ...cat,
-                items: cat.items.sort((a, b) => a.id.localeCompare(b.id))
+                // Mapping back to 'items' for frontend consistency
+                items: (cat.menu_items || []).sort((a, b) => a.id.localeCompare(b.id))
             }));
             setCategories(sortedData);
         }
@@ -396,20 +404,28 @@ function MenuEditor({ restaurantId }) {
     const saveCategory = async (e) => {
         e.preventDefault();
         try {
+            let error;
             if (editingCategory) {
-                await supabase.from('menu_categories').update({ name: formData.name }).eq('id', editingCategory.id);
-                toast.success('Kategória frissítve');
+                const res = await supabase.from('menu_categories').update({ name: formData.name }).eq('id', editingCategory.id);
+                error = res.error;
             } else {
-                await supabase.from('menu_categories').insert({
+                const res = await supabase.from('menu_categories').insert({
                     restaurant_id: restaurantId,
                     name: formData.name,
                     sort_order: categories.length + 1
                 });
-                toast.success('Kategória létrehozva');
+                error = res.error;
             }
+
+            if (error) throw error;
+
+            toast.success(editingCategory ? 'Kategória frissítve' : 'Kategória létrehozva');
             setShowCatModal(false);
             fetchMenu();
-        } catch (error) { toast.error('Hiba'); }
+        } catch (error) {
+            console.error(error);
+            toast.error('Hiba: ' + error.message);
+        }
     };
 
     const uploadImage = async (file) => {
