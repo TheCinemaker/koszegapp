@@ -204,7 +204,14 @@ CREATE TABLE public.orders (
 );
 -- REALTIME SETUP
 ALTER TABLE public.orders REPLICA IDENTITY FULL;
-DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.orders; EXCEPTION WHEN OTHERS THEN NULL; END; $$;
+ALTER TABLE public.restaurants REPLICA IDENTITY FULL;
+ALTER TABLE public.menu_items REPLICA IDENTITY FULL;
+
+DO $$ 
+BEGIN 
+  ALTER PUBLICATION supabase_realtime ADD TABLE public.orders, public.restaurants, public.menu_items; 
+EXCEPTION WHEN OTHERS THEN NULL; 
+END; $$;
 
 -- RLS FOR ORDERS
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
