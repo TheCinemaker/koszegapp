@@ -476,7 +476,7 @@ function ActiveOrderTracker() {
     const { user } = useAuth();
     const [activeOrder, setActiveOrder] = useState(null);
 
-    // 1. Fetch initial active order
+    // 1. Fetch initial active order & Subscribe
     useEffect(() => {
         if (!user) return;
 
@@ -498,21 +498,24 @@ function ActiveOrderTracker() {
 
         // 2. Subscribe to my orders
         const channel = supabase
-            .channel(`my-orders-${user.id}`)
+            .channel(`my-orders-tracker-${user.id}`)
             .on(
                 'postgres_changes',
                 { event: 'UPDATE', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` },
                 (payload) => {
-                    // Update state if it's the tracked order
-                    if (!activeOrder || payload.new.id === activeOrder.id) {
-                        // If status becomes delivered/rejected, hide it
-                        if (['delivered', 'rejected'].includes(payload.new.status)) {
-                            setActiveOrder(null);
-                            if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
-                        } else {
-                            setActiveOrder(payload.new);
+                    setActiveOrder(prev => {
+                        // If we are not tracking anything, and this is a relevant order, maybe track it? 
+                        // For now, only update if it matches the tracked ID.
+                        if (prev && prev.id === payload.new.id) {
+                            // If status becomes delivered/rejected, hide it
+                            if (['delivered', 'rejected'].includes(payload.new.status)) {
+                                if (payload.new.status === 'delivered') toast.success('Jó étvágyat! 🍔');
+                                return null;
+                            }
+                            return payload.new;
                         }
-                    }
+                        return prev;
+                    });
                 }
             )
             .subscribe();
@@ -520,7 +523,7 @@ function ActiveOrderTracker() {
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [user, activeOrder]);
+    }, [user]);
 
     if (!activeOrder) return null;
 
