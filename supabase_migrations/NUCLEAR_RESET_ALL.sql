@@ -162,7 +162,7 @@ CREATE TABLE public.menu_categories (
   created_at timestamptz DEFAULT now(),
   restaurant_id uuid REFERENCES public.restaurants(id) ON DELETE CASCADE,
   name text NOT NULL,
-  order_index integer DEFAULT 0
+  sort_order integer DEFAULT 0
 );
 ALTER TABLE public.menu_categories ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public Categories View" ON public.menu_categories FOR SELECT USING (true);
@@ -181,7 +181,7 @@ CREATE TABLE public.menu_items (
   description text,
   price integer NOT NULL,
   image_url text,
-  available boolean DEFAULT true
+  is_available boolean DEFAULT true
 );
 ALTER TABLE public.menu_items ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public Items View" ON public.menu_items FOR SELECT USING (true);
