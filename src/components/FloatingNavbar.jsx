@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import {
   IoHomeOutline, IoHome,
   IoLocationOutline, IoLocation,
@@ -10,7 +11,9 @@ import {
   IoCarOutline, IoCar,
   IoMapOutline, IoMap,
   IoCloudyNightOutline, IoCloudyNight,
-  IoInformationCircleOutline, IoInformationCircle
+  IoInformationCircleOutline, IoInformationCircle,
+  IoPersonCircleOutline, IoPersonCircle,
+  IoKeyOutline, IoKey
 } from 'react-icons/io5';
 
 export default function FloatingNavbar() {
@@ -26,6 +29,16 @@ export default function FloatingNavbar() {
     { to: "/weather", icon: IoCloudyNightOutline, activeIcon: IoCloudyNight, label: "Időjárás" },
     { to: "/info", icon: IoInformationCircleOutline, activeIcon: IoInformationCircle, label: "Infó" },
   ];
+
+  const { user } = useAuth();
+
+  // Dynamic Auth Item
+  const authItem = user
+    ? { to: "/pass/profile", icon: IoPersonCircleOutline, activeIcon: IoPersonCircle, label: "Profil" }
+    : { to: "/pass/register", icon: IoKeyOutline, activeIcon: IoKey, label: "Belépés" };
+
+  // Add to nav items
+  const allNavItems = [...navItems, authItem];
 
   return (
     <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] sm:max-w-md pointer-events-none">
@@ -43,7 +56,7 @@ export default function FloatingNavbar() {
         transition-all duration-300
         overflow-x-auto scrollbar-hide snap-x snap-mandatory
       ">
-        {navItems.map((item) => (
+        {allNavItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}

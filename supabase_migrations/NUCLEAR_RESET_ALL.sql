@@ -68,8 +68,10 @@ CREATE TABLE public.koszegpass_users (
   created_at timestamptz DEFAULT now()
 );
 ALTER TABLE public.koszegpass_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.koszegpass_users ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Self Pass View" ON public.koszegpass_users FOR SELECT USING (auth.uid() = id);
 CREATE POLICY "Self Pass Update" ON public.koszegpass_users FOR UPDATE USING (auth.uid() = id);
+CREATE POLICY "Self Pass Insert" ON public.koszegpass_users FOR INSERT TO authenticated WITH CHECK (auth.uid() = id);
 
 -- C) PROVIDERS (Service Providers Directory)
 CREATE TABLE public.providers (
