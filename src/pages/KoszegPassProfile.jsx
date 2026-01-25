@@ -12,8 +12,10 @@ export default function KoszegPassProfile() {
     const [loading, setLoading] = useState(true);
 
     // Edit Mode State
+    // Edit Mode State
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({
+        email: '',
         phone: '',
         address: ''
     });
@@ -33,6 +35,7 @@ export default function KoszegPassProfile() {
             } else {
                 setProfile(data);
                 setEditForm({
+                    email: data.email || '',
                     phone: data.phone || '',
                     address: data.address || ''
                 });
@@ -49,6 +52,7 @@ export default function KoszegPassProfile() {
         const { error } = await supabase
             .from('koszegpass_users')
             .update({
+                email: editForm.email,
                 phone: editForm.phone,
                 address: editForm.address
             })
@@ -84,24 +88,77 @@ export default function KoszegPassProfile() {
     return (
         <div className="min-h-screen bg-zinc-900 text-white p-6 pb-24">
 
-            {/* Header Card */}
-            <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-6 shadow-2xl relative overflow-hidden mb-8">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10" />
+            {/* Digital Card Design */}
+            <div className={`
+                relative w-full aspect-[1.586/1] rounded-3xl p-6 shadow-2xl overflow-hidden mb-8 transition-all
+                ${profile?.card_type === 'diamant' ? 'bg-gradient-to-br from-cyan-900 via-blue-900 to-purple-900 border border-cyan-500/30' :
+                    profile?.card_type === 'gold' ? 'bg-gradient-to-br from-yellow-900 via-amber-800 to-yellow-900 border border-yellow-500/30' :
+                        profile?.card_type === 'silver' ? 'bg-gradient-to-br from-gray-800 via-gray-700 to-slate-800 border border-gray-400/30' :
+                            'bg-gradient-to-br from-orange-900 via-red-900 to-amber-900 border border-orange-500/30' // Bronz
+                }
+            `}>
+                {/* Background Effects (Holographic for Diamant) */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl transform translate-x-10 -translate-y-10" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-black/20 rounded-full blur-2xl transform -translate-x-5 translate-y-5" />
 
-                <div className="flex items-center gap-4 relative z-10">
-                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <IoPersonCircle size={40} className="text-white" />
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold">{profile?.full_name || user.user_metadata?.full_name || 'Felhasználó'}</h2>
-                        <p className="text-blue-200 text-sm">@{profile?.username || 'user'}</p>
-                    </div>
-                </div>
+                {/* Card Content Grid */}
+                <div className="relative z-10 h-full flex flex-col justify-between">
 
-                <div className="mt-6 flex gap-3">
-                    <div className="px-3 py-1 bg-black/20 rounded-lg text-xs font-mono border border-white/10 uppercase tracking-widest">
-                        PASS ID: {user.id.substring(0, 8)}
+                    {/* Top Row: Logo & Rank */}
+                    <div className="flex justify-between items-start">
+                        <div className="flex items-center gap-2">
+                            <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
+                                <IoQrCode size={20} className="text-white/80" />
+                            </div>
+                            <span className="font-bold tracking-wider text-white/90 text-sm">KŐSZEG PASS</span>
+                        </div>
+                        <div className={`
+                            px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] border backdrop-blur-sm
+                            ${profile?.card_type === 'diamant' ? 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40 shadow-[0_0_15px_rgba(34,211,238,0.3)]' :
+                                profile?.card_type === 'gold' ? 'bg-yellow-500/20 text-yellow-200 border-yellow-400/40' :
+                                    profile?.card_type === 'silver' ? 'bg-gray-400/20 text-gray-200 border-gray-400/40' :
+                                        'bg-orange-500/20 text-orange-200 border-orange-400/40'}
+                        `}>
+                            {profile?.card_type || 'BRONZ'}
+                        </div>
                     </div>
+
+                    {/* Middle: User Info */}
+                    <div className="mt-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-white/20 to-transparent p-[1px]">
+                                <div className="w-full h-full rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center overflow-hidden">
+                                    {profile?.avatar_url ? (
+                                        <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <IoPersonCircle size={48} className="text-white/80" />
+                                    )}
+                                </div>
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold text-white tracking-wide shadow-black drop-shadow-md">
+                                    {profile?.full_name || user.user_metadata?.full_name || 'Felhasználó'}
+                                </h1>
+                                <p className="text-xs text-white/60 font-mono">@{profile?.username || 'user'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bottom Row: ID & Chip */}
+                    <div className="flex justify-between items-end">
+                        <div className="flex flex-col">
+                            <span className="text-[9px] text-white/40 uppercase tracking-wider mb-0.5">Kártyaszám</span>
+                            <span className="font-mono text-sm text-white/90 tracking-widest tabular-nums">
+                                {user.id.substring(0, 4)} •••• •••• {user.id.substring(user.id.length - 4).toUpperCase()}
+                            </span>
+                        </div>
+                        {/* Chip Visual */}
+                        <div className="w-10 h-7 rounded bg-gradient-to-br from-yellow-200/40 to-yellow-500/40 border border-yellow-300/30 relative overflow-hidden">
+                            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-black/20" />
+                            <div className="absolute left-1/2 top-0 h-full w-[1px] bg-black/20" />
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -112,8 +169,8 @@ export default function KoszegPassProfile() {
                     <button
                         onClick={() => isEditing ? handleSave() : setIsEditing(true)}
                         className={`p-2 rounded-full transition-colors ${isEditing
-                                ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-                                : 'bg-white/10 text-zinc-400 hover:bg-white/20'
+                            ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                            : 'bg-white/10 text-zinc-400 hover:bg-white/20'
                             }`}
                     >
                         {isEditing ? <IoSave size={20} /> : <IoPencil size={20} />}
@@ -121,6 +178,24 @@ export default function KoszegPassProfile() {
                 </div>
 
                 <div className="bg-white/5 border border-white/5 rounded-2xl p-4 space-y-4">
+
+                    {/* Email Field */}
+                    <div className="space-y-1">
+                        <label className="text-xs font-bold uppercase text-zinc-500">Email Cím</label>
+                        {isEditing ? (
+                            <input
+                                type="email"
+                                value={editForm.email}
+                                onChange={e => setEditForm({ ...editForm, email: e.target.value })}
+                                placeholder="pelda@email.hu"
+                                className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                            />
+                        ) : (
+                            <p className="text-zinc-300 font-mono tracking-wide">
+                                {profile?.email || <span className="text-zinc-600 italic">Nincs megadva</span>}
+                            </p>
+                        )}
+                    </div>
 
                     {/* Phone Field */}
                     <div className="space-y-1">
