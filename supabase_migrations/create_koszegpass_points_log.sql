@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS koszegpass_points_log (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES koszegpass_users(id) ON DELETE CASCADE,
+    amount INTEGER DEFAULT 0, -- Transaction value in HUF
     points INTEGER NOT NULL,
     source TEXT NOT NULL, -- e.g. "Scanner App", "Bella Pizzeria"
     created_at TIMESTAMPTZ DEFAULT now()

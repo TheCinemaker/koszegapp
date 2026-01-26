@@ -49,10 +49,10 @@ export default function ScannerPage() {
         }
     };
 
-    // Add Points Logic
-    const handleAddPoints = async (points) => {
-        if (!data) return;
-        setLoading(true); // Show spinner while adding
+    // Add Points Logic (Amount Based)
+    const handleAddPoints = async (amount) => {
+        if (!data || !amount) return;
+        setLoading(true);
 
         try {
             const response = await fetch('/.netlify/functions/add-points', {
@@ -63,7 +63,7 @@ export default function ScannerPage() {
                 },
                 body: JSON.stringify({
                     token: data,
-                    points: points,
+                    amount: parseInt(amount), // Send Amount
                     source: 'Scanner App Prototype'
                 }),
             });
@@ -71,22 +71,22 @@ export default function ScannerPage() {
             const result = await response.json();
 
             if (result.success) {
-                toast.success(`Sikeres jóváírás: +${points} pont! 🎉`, { duration: 3000 });
-                // Optional: Vibrate
-                if (navigator.vibrate) navigator.vibrate(200);
+                toast.success(`Sikeres jóváírás: +${result.addedPoints} pont! (${amount} Ft)`, { duration: 4000 });
+                // Vibrate pattern
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
-                // Update local state to reflect new points instantly
+                // Update local state
                 setScannedUser(prev => ({ ...prev, points: result.newPoints }));
 
-                // Auto reset after 3 seconds
-                setTimeout(resetScanner, 3000);
+                // Auto reset
+                setTimeout(resetScanner, 3500);
             } else {
                 toast.error(result.message || "Hiba a jóváíráskor");
             }
         } catch (error) {
             console.error("Add points error:", error);
             toast.error("Hálózati hiba!");
-            setLoading(false); // Only enable if failed, success resets via timeout
+            setLoading(false);
         }
     };
 
@@ -182,19 +182,34 @@ export default function ScannerPage() {
                                     </div>
                                 )}
 
-                                {/* Point Action Buttons */}
+                                {/* Amount Input Form */}
                                 {scanResult === 'valid' && (
-                                    <div className="grid grid-cols-3 gap-3 w-full max-w-sm mb-6">
-                                        {[10, 25, 50].map((pts) => (
+                                    <div className="w-full max-w-sm mb-6">
+                                        <label className="block text-white/60 text-xs uppercase tracking-widest mb-2 font-bold text-left ml-1">
+                                            Vásárlás összege (Ft)
+                                        </label>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="number"
+                                                placeholder="pl. 3900"
+                                                className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-lg font-bold placeholder-white/30 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                                                id="amountInput"
+                                            />
                                             <button
-                                                key={pts}
-                                                onClick={() => handleAddPoints(pts)}
+                                                onClick={() => {
+                                                    const val = document.getElementById('amountInput').value;
+                                                    if (val) handleAddPoints(val);
+                                                    else toast.error("Add meg az összeget!");
+                                                }}
                                                 disabled={loading}
-                                                className="py-3 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white font-bold text-lg shadow-lg hover:scale-105 active:scale-95 transition-transform disabled:opacity-50"
+                                                className="px-6 py-3 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl font-bold text-white shadow-lg active:scale-95 transition-transform disabled:opacity-50"
                                             >
-                                                +{pts}
+                                                Jóváírás
                                             </button>
-                                        ))}
+                                        </div>
+                                        <p className="text-white/40 text-[10px] mt-2 text-left ml-1">
+                                            Minden 1000 Ft után 1 pont jár. (pl. 3900 Ft = 3 pont)
+                                        </p>
                                     </div>
                                 )}
 

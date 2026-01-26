@@ -17,12 +17,27 @@ exports.handler = async (event) => {
     }
 
     try {
-        const { token, points, source } = JSON.parse(event.body);
+        const { token, amount, source } = JSON.parse(event.body);
 
-        if (!token || !points || isNaN(points)) {
+        const amountVal = Number(amount);
+
+        if (!token || !amountVal || amountVal <= 0) {
             return {
                 statusCode: 400,
                 body: JSON.stringify({ error: "Invalid request data" })
+            };
+        }
+
+        const points = Math.floor(amountVal / 1000);
+
+        if (points === 0) {
+            return {
+                statusCode: 200,
+                body: JSON.stringify({
+                    success: false,
+                    reason: "below_threshold",
+                    message: "A vásárlás összege nem éri el az 1000 Ft-ot (0 pont)."
+                })
             };
         }
 
@@ -40,8 +55,8 @@ exports.handler = async (event) => {
         const { data: card, error: cardError } = await supabase
             .from('koszegpass_cards')
             .select(`
-            user_id, 
-            active, 
+            user_id,
+            active,
             koszegpass_users ( id, points, status )
         `)
             .eq('qr_token', token)
@@ -62,7 +77,7 @@ exports.handler = async (event) => {
         }
 
         const currentPoints = card.koszegpass_users.points || 0;
-        const newPoints = currentPoints + parseInt(points);
+        const newPoints = currentPoints + points;
 
         // 2. Update Points
         const { error: updateError } = await supabase
@@ -79,7 +94,8 @@ exports.handler = async (event) => {
             .from('koszegpass_points_log')
             .insert({
                 user_id: card.user_id,
-                points: parseInt(points),
+                amount: amountVal,
+                points: points,
                 source: source || 'Scanner App'
             });
 
@@ -88,7 +104,8 @@ exports.handler = async (event) => {
             body: JSON.stringify({
                 success: true,
                 newPoints,
-                message: `Sikeres jóváírás: +${points} pont`
+                addedPoints: points,
+                message: `Sikeres jóváírás: ${points} pont (${amountVal} Ft)`
             })
         };
 
