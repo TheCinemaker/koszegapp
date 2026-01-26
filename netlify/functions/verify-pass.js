@@ -18,15 +18,21 @@ exports.handler = async (event, context) => {
 
         // Initialize Supabase with Service Role Key for secure access
         // FALLBACK: If service key is missing (dev), warn but try anon (might fail RLS)
-        const supabaseUrl = process.env.SUPABASE_URL;
+        const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
         if (!supabaseUrl || !supabaseKey) {
             console.error('Missing Supabase credentials');
-            console.log('SUPABASE_URL present:', !!supabaseUrl);
-            console.log('SUPABASE_SERVICE_ROLE_KEY present:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
-            console.log('VITE_SUPABASE_ANON_KEY present:', !!process.env.VITE_SUPABASE_ANON_KEY);
-            return { statusCode: 500, body: JSON.stringify({ error: 'Server configuration error' }) };
+            const missing = [];
+            if (!supabaseUrl) missing.push('SUPABASE_URL');
+            if (!supabaseKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
+
+            return {
+                statusCode: 500,
+                body: JSON.stringify({
+                    error: `Server configuration error: Missing ${missing.join(', ')}`
+                })
+            };
         }
 
         const supabase = createClient(supabaseUrl, supabaseKey);

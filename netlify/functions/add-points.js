@@ -42,11 +42,14 @@ exports.handler = async (event) => {
         }
 
         // Initialize Supabase
-        const supabaseUrl = process.env.SUPABASE_URL;
+        const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
         const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
         if (!supabaseUrl || !supabaseKey) {
-            return { statusCode: 500, body: JSON.stringify({ error: 'Server config error' }) };
+            const missing = [];
+            if (!supabaseUrl) missing.push('SUPABASE_URL');
+            if (!supabaseKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
+            return { statusCode: 500, body: JSON.stringify({ error: `Server configuration error: Missing ${missing.join(', ')}` }) };
         }
 
         const supabase = createClient(supabaseUrl, supabaseKey);
