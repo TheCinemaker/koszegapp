@@ -249,7 +249,7 @@ function MainAppContent() {
 
   return (
     <div className="min-h-screen flex flex-col mesh-bg-vibrant text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500">
-      {!isInGameMode && !location.pathname.startsWith('/food') && (
+      {!isInGameMode && !location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && (
         <>
           <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
             <div className="
