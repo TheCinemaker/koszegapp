@@ -263,13 +263,11 @@ export default function FoodOrderPage() {
                                         </div>
                                     ))}
                                     {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
-                                    {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
-                )}
 
                 {activeTab === 'orders' && (
                     <div className="pb-32 pt-2">
