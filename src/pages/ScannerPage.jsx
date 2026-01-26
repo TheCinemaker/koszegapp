@@ -49,6 +49,47 @@ export default function ScannerPage() {
         }
     };
 
+    // Add Points Logic
+    const handleAddPoints = async (points) => {
+        if (!data) return;
+        setLoading(true); // Show spinner while adding
+
+        try {
+            const response = await fetch('/.netlify/functions/add-points', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'x-scanner-key': 'YOUR_SECRET_KEY' // In prod, this comes from secure storage/auth
+                },
+                body: JSON.stringify({
+                    token: data,
+                    points: points,
+                    source: 'Scanner App Prototype'
+                }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                toast.success(`Sikeres jóváírás: +${points} pont! 🎉`, { duration: 3000 });
+                // Optional: Vibrate
+                if (navigator.vibrate) navigator.vibrate(200);
+
+                // Update local state to reflect new points instantly
+                setScannedUser(prev => ({ ...prev, points: result.newPoints }));
+
+                // Auto reset after 3 seconds
+                setTimeout(resetScanner, 3000);
+            } else {
+                toast.error(result.message || "Hiba a jóváíráskor");
+            }
+        } catch (error) {
+            console.error("Add points error:", error);
+            toast.error("Hálózati hiba!");
+            setLoading(false); // Only enable if failed, success resets via timeout
+        }
+    };
+
     const handleScan = (result, error) => {
         if (!!result && isScanning) {
             validateToken(result?.text);
@@ -138,6 +179,22 @@ export default function ScannerPage() {
                                             <IoFlashOutline className="text-yellow-400" />
                                             <span className="font-bold text-white text-lg">{scannedUser.points} Pont</span>
                                         </div>
+                                    </div>
+                                )}
+
+                                {/* Point Action Buttons */}
+                                {scanResult === 'valid' && (
+                                    <div className="grid grid-cols-3 gap-3 w-full max-w-sm mb-6">
+                                        {[10, 25, 50].map((pts) => (
+                                            <button
+                                                key={pts}
+                                                onClick={() => handleAddPoints(pts)}
+                                                disabled={loading}
+                                                className="py-3 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white font-bold text-lg shadow-lg hover:scale-105 active:scale-95 transition-transform disabled:opacity-50"
+                                            >
+                                                +{pts}
+                                            </button>
+                                        ))}
                                     </div>
                                 )}
 
