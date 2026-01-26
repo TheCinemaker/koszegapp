@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications } from 'react-icons/io5';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront } from 'react-icons/io5';
 import { useCart } from '../hooks/useCart';
 import { getMenu, placeOrder } from '../api/foodService';
 import toast from 'react-hot-toast';
@@ -183,22 +183,21 @@ export default function FoodOrderPage() {
                             </span>
                         )}
                     </button>
+                </div>
 
-                    {/* Detailed Status (Only show if room, or maybe below header? User asked for compact card. Let's keep it simple for now) */}
-                    <div className="max-w-5xl mx-auto mt-2 flex justify-between items-center pointer-events-auto px-2">
-                        {/* LEFT: Status Capsule (if active) */}
-                        <div>
-                            {activeOrderStatus && (
-                                <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
-                                    {getStatusText(activeOrderStatus)}
-                                </div>
-                            )}
-                        </div>
+                <div className="max-w-5xl mx-auto mt-2 flex justify-between items-center pointer-events-auto px-2">
+                    {/* LEFT: Status Capsule (if active) */}
+                    <div>
+                        {activeOrderStatus && (
+                            <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
+                                {getStatusText(activeOrderStatus)}
+                            </div>
+                        )}
+                    </div>
 
-                        {/* RIGHT: Delivery/Collection Slider */}
-                        <div className={view === 'restaurants' ? 'block' : 'opacity-0 pointer-events-none'}>
-                            <DeliveryCollectionSlider value={filterType} onChange={setFilterType} />
-                        </div>
+                    {/* RIGHT: Delivery/Collection Slider */}
+                    <div className={view === 'restaurants' ? 'block' : 'opacity-0 pointer-events-none'}>
+                        <DeliveryCollectionSlider value={filterType} onChange={setFilterType} />
                     </div>
                 </div>
 
@@ -369,7 +368,7 @@ export default function FoodOrderPage() {
   }, [value]);
 
             return (
-            <div className="relative w-[180px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5">
+            <div className="relative w-[180px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5 mx-auto lg:mx-0">
 
                 {/* Background labels */}
                 <div className="absolute inset-0 flex text-[9px] font-bold text-gray-400 uppercase tracking-wider select-none pointer-events-none">
@@ -388,14 +387,15 @@ export default function FoodOrderPage() {
                     dragElastic={0.1}
                     dragMomentum={false}
                     style={{ x }}
-                    onDragEnd={(_, info) => {
-                        if (x.get() > WIDTH / 2) {
-                            onChange("pickup");
+                    onDragEnd={() => {
+                        const currentX = x.get();
+                        if (currentX > WIDTH / 2) {
+                            onChange("collection");
                         } else {
                             onChange("delivery");
                         }
                     }}
-                    onTap={() => onChange(value === 'delivery' ? 'pickup' : 'delivery')}
+                    onTap={() => onChange(value === 'delivery' ? 'collection' : 'delivery')}
                     animate={{ x: value === "delivery" ? 0 : WIDTH }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     className="absolute w-1/2 h-6 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full shadow-md flex items-center justify-center gap-1 text-[9px] font-bold cursor-grab active:cursor-grabbing z-10"
