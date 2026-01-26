@@ -409,10 +409,14 @@ function MainAppContent() {
 
 
           {!location.pathname.startsWith('/food') && <FloatingNavbar />}
-          {/* Hide SmartSpotlight on Dashboards & Auth */}
-          {!location.pathname.startsWith('/koszegieknek') && !location.pathname.startsWith('/business') && !location.pathname.startsWith('/auth') && !location.pathname.startsWith('/food') && (
-            <SmartSpotlight appData={appData} />
-          )}
+          {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
+          {!location.pathname.startsWith('/koszegieknek') &&
+            !location.pathname.startsWith('/business') &&
+            !location.pathname.startsWith('/auth') &&
+            !location.pathname.startsWith('/food') &&
+            !location.pathname.startsWith('/pass') && (
+              <SmartSpotlight appData={appData} />
+            )}
 
 
           {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}

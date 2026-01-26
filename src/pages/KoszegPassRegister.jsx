@@ -111,7 +111,7 @@ export default function KoszegPassRegister() {
                         onClick={() => setIsLogin(!isLogin)}
                         className="text-xs font-bold uppercase tracking-widest text-blue-400 hover:text-blue-300"
                     >
-                        {isLogin ? 'Új Kártya Igénylése' : 'Már Van Kártyám'}
+                        {isLogin ? 'Nincs még kártyád? Igénylés' : 'Már Van Kártyám? Belépés'}
                     </button>
                 </div>
 
