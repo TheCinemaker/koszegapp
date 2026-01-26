@@ -125,33 +125,73 @@ export default function FoodOrderPage() {
     const handleBack = () => { setView('restaurants'); setSelectedRestaurant(null); setCategories([]); };
 
     return (
-        <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-x-hidden pt-2 pb-24 font-sans transition-colors duration-300">
-            {/* HERO */}
-            <div className="pt-6 pb-2 px-6">
-                <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-4 self-start sm:self-center">
+        <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-x-hidden pb-24 font-sans transition-colors duration-300">
+            {/* COMPACT STICKY HEADER */}
+            <div className="sticky top-2 z-50 px-4">
+                <div className="
+                    mx-auto max-w-5xl
+                    bg-white/70 dark:bg-[#1a1c2e]/70 
+                    backdrop-blur-xl saturate-150
+                    border border-white/50 dark:border-white/10 
+                    shadow-lg shadow-black/5
+                    rounded-full
+                    px-4 py-2
+                    flex items-center justify-between
+                ">
+                    {/* Left: Home + Title */}
+                    <div className="flex items-center gap-3">
                         {view === 'menu' ? (
-                            <button onClick={handleBack} className="w-10 h-10 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform"><IoArrowBack className="text-lg text-zinc-900 dark:text-white" /></button>
+                            <button onClick={handleBack} className="w-8 h-8 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform">
+                                <IoArrowBack className="text-sm text-zinc-900 dark:text-white" />
+                            </button>
                         ) : (
-                            <Link to="/" className="w-10 h-10 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform"><IoHome className="text-lg text-zinc-900 dark:text-white" /></Link>
+                            <Link to="/" className="w-8 h-8 shrink-0 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center hover:scale-105 transition-transform">
+                                <IoHome className="text-sm text-zinc-900 dark:text-white" />
+                            </Link>
                         )}
-                        <div>
-                            <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
-                            {user && <p className="text-xs font-bold text-amber-600 dark:text-amber-400">Szia, {user.user_metadata?.nickname || 'Vendég'}!</p>}
+
+                        <div className="flex flex-col leading-none">
+                            <h1 className="text-lg font-black text-zinc-900 dark:text-white tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
+                            {user && <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400">Szia, {user.user_metadata?.nickname || 'Vendég'}!</p>}
                         </div>
                     </div>
-                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-                        <button onClick={() => setIsCartOpen(true)} className="relative flex items-center gap-2 bg-white/60 dark:bg-zinc-800/60 backdrop-blur-xl border border-white/20 shadow-md pl-4 pr-1 py-1 rounded-full hover:scale-105 transition-transform">
-                            <IoBasket className="text-xl text-zinc-800 dark:text-white" />
-                            {activeOrderStatus && <div className="bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap">{getStatusText(activeOrderStatus)}</div>}
-                            {count > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white dark:border-black shadow-sm">{count}</span>}
-                        </button>
-                    </div>
+
+                    {/* Right: Basket Button */}
+                    <button
+                        onClick={() => setIsCartOpen(true)}
+                        className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white dark:bg-zinc-800 shadow-sm hover:scale-105 transition-transform"
+                    >
+                        <IoBasket className="text-base text-zinc-800 dark:text-white" />
+
+                        {/* Status Capsule (Floating next to basket on desktop, hidden on tiny screens if needed, or overlay) */}
+                        {activeOrderStatus && (
+                            <div className="absolute -top-1 -right-1 flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                            </div>
+                        )}
+
+                        {count > 0 && (
+                            <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[9px] font-bold h-4 w-4 flex items-center justify-center rounded-full border border-white dark:border-black shadow-sm">
+                                {count}
+                            </span>
+                        )}
+                    </button>
+
+                    {/* Detailed Status (Only show if room, or maybe below header? User asked for compact card. Let's keep it simple for now) */}
                 </div>
+
+                {activeOrderStatus && (
+                    <div className="max-w-5xl mx-auto mt-2 flex justify-center">
+                        <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
+                            {getStatusText(activeOrderStatus)}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* MAIN */}
-            <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-4">
                 <div className={activeTab === 'home' ? 'block' : 'hidden'}>
                     {view === 'restaurants' && (
                         <>
