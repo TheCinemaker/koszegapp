@@ -23,6 +23,9 @@ exports.handler = async (event, context) => {
 
         if (!supabaseUrl || !supabaseKey) {
             console.error('Missing Supabase credentials');
+            console.log('SUPABASE_URL present:', !!supabaseUrl);
+            console.log('SUPABASE_SERVICE_ROLE_KEY present:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+            console.log('VITE_SUPABASE_ANON_KEY present:', !!process.env.VITE_SUPABASE_ANON_KEY);
             return { statusCode: 500, body: JSON.stringify({ error: 'Server configuration error' }) };
         }
 
@@ -47,9 +50,10 @@ exports.handler = async (event, context) => {
 
         if (error || !data) {
             console.log('Token not found or error:', error);
+            console.log('Searched Token:', token);
             return {
-                statusCode: 200, // Return 200 even for invalid to handle in UI gracefully
-                body: JSON.stringify({ valid: false, message: 'Kártya nem található' }),
+                statusCode: 200,
+                body: JSON.stringify({ valid: false, message: error ? `DB Error: ${error.message}` : 'Kártya nem található (Nincs adat)' }),
             };
         }
 
