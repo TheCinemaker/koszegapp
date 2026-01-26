@@ -8,30 +8,49 @@ import toast from 'react-hot-toast';
 export default function ScannerPage() {
     const navigate = useNavigate();
     const [data, setData] = useState(null);
-    const [scanResult, setScanResult] = useState(null); // 'valid' | 'invalid' | null
+    const [scanResult, setScanResult] = useState(null); // 'valid' | 'invalid' | null | 'error'
     const [isScanning, setIsScanning] = useState(true);
     const [hasPermission, setHasPermission] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [scannedUser, setScannedUser] = useState(null);
 
-    // Mock Validation Logic
-    const validateToken = (token) => {
+    // API Validation Logic
+    const validateToken = async (token) => {
         setIsScanning(false);
+        setLoading(true);
         setData(token);
 
-        // Simple mock check: Must start with "KP-"
-        if (token && token.startsWith('KP-')) {
-            setScanResult('valid');
-            toast.success("Érvényes KőszegPass! ✅");
-            // Play success sound logic here later
-        } else {
-            setScanResult('invalid');
-            toast.error("Érvénytelen kód! ❌");
-            // Play error sound logic here later
+        try {
+            const response = await fetch('/.netlify/functions/verify-pass', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await response.json();
+
+            if (result.valid) {
+                setScanResult('valid');
+                setScannedUser(result.user);
+                toast.success(`Sikeres! ${result.user.name}`);
+                // Play success sound
+            } else {
+                setScanResult('invalid');
+                toast.error(result.message || "Érvénytelen kód!");
+                // Play error sound
+            }
+
+        } catch (error) {
+            console.error("Scan error:", error);
+            setScanResult('error');
+            toast.error("Hálózati hiba!");
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleScan = (result, error) => {
         if (!!result && isScanning) {
-            // Found a code
             validateToken(result?.text);
         }
         if (!!error) {
@@ -42,6 +61,7 @@ export default function ScannerPage() {
     const resetScanner = () => {
         setData(null);
         setScanResult(null);
+        setScannedUser(null);
         setIsScanning(true);
     };
 
@@ -88,31 +108,54 @@ export default function ScannerPage() {
                 ) : (
                     /* Result View */
                     <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-900 to-black">
-                        <motion.div
-                            initial={{ scale: 0.5, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className={`w-32 h-32 rounded-full flex items-center justify-center mb-6 shadow-2xl ${scanResult === 'valid' ? 'bg-green-500 text-green-100' : 'bg-red-500 text-red-100'
-                                }`}
-                        >
-                            {scanResult === 'valid' ? <IoCheckmarkCircle size={64} /> : <IoCloseCircle size={64} />}
-                        </motion.div>
 
-                        <h2 className="text-2xl font-bold mb-2">
-                            {scanResult === 'valid' ? 'Érvényes KőszegPass' : 'Érvénytelen!'}
-                        </h2>
+                        {loading ? (
+                            <div className="text-center">
+                                <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
+                                <p className="text-white/70">Ellenőrzés...</p>
+                            </div>
+                        ) : (
+                            <>
+                                <motion.div
+                                    initial={{ scale: 0.5, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    className={`w-32 h-32 rounded-full flex items-center justify-center mb-6 shadow-2xl ${scanResult === 'valid' ? 'bg-green-500 text-green-100' : 'bg-red-500 text-red-100'
+                                        }`}
+                                >
+                                    {scanResult === 'valid' ? <IoCheckmarkCircle size={64} /> : <IoCloseCircle size={64} />}
+                                </motion.div>
 
-                        <div className="bg-white/10 rounded-xl p-4 w-full max-w-xs mb-8 mx-auto text-center border border-white/10 backdrop-blur-sm">
-                            <p className="text-xs text-white/50 uppercase tracking-widest mb-1">Beolvasott Token</p>
-                            <p className="font-mono text-lg font-bold break-all text-indigo-400">{data}</p>
-                        </div>
+                                <h2 className="text-2xl font-bold mb-2">
+                                    {scanResult === 'valid' ? 'Érvényes KőszegPass' : 'Érvénytelen!'}
+                                </h2>
 
-                        <button
-                            onClick={resetScanner}
-                            className="px-8 py-3 bg-white text-black rounded-full font-bold shadow-lg hover:scale-105 active:scale-95 transition-transform flex items-center gap-2"
-                        >
-                            <IoScanOutline />
-                            Új beolvasás
-                        </button>
+                                {scanResult === 'valid' && scannedUser && (
+                                    <div className="bg-white/10 rounded-2xl p-6 w-full max-w-sm mb-8 mx-auto text-center border border-white/10 backdrop-blur-md shadow-xl">
+                                        <h3 className="text-xl font-bold text-white mb-1">{scannedUser.name}</h3>
+                                        <p className="text-white/60 text-sm uppercase tracking-wider mb-4">{scannedUser.cardType} Kártya</p>
+
+                                        <div className="inline-flex items-center gap-2 bg-indigo-500/20 px-4 py-2 rounded-full border border-indigo-500/30">
+                                            <IoFlashOutline className="text-yellow-400" />
+                                            <span className="font-bold text-white text-lg">{scannedUser.points} Pont</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {scanResult !== 'valid' && (
+                                    <div className="bg-red-500/10 rounded-xl p-4 w-full max-w-xs mb-8 mx-auto text-center border border-red-500/30">
+                                        <p className="text-red-300 font-medium">A kártya nem található vagy inaktív.</p>
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={resetScanner}
+                                    className="px-8 py-3 bg-white text-black rounded-full font-bold shadow-lg hover:scale-105 active:scale-95 transition-transform flex items-center gap-2"
+                                >
+                                    <IoScanOutline />
+                                    Új beolvasás
+                                </button>
+                            </>
+                        )}
                     </div>
                 )}
             </div>
