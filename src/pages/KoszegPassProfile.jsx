@@ -322,15 +322,6 @@ export default function KoszegPassProfile() {
                                         </p>
                                     </div>
 
-                                    {/* Google Wallet Placeholder */}
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); toast('Google Wallet hamarosan...'); }}
-                                        className="mb-4 flex items-center justify-center gap-2 px-4 py-2 bg-black text-white rounded-full text-xs font-bold shadow-lg active:scale-95 transition-transform"
-                                    >
-                                        <IoWalletOutline className="text-lg" />
-                                        Add to Google Wallet
-                                    </button>
-
                                     <div className="absolute bottom-4 flex items-center gap-1 text-zinc-400 text-[10px] font-bold uppercase tracking-widest">
                                         <IoSwapHorizontal />
                                         Visszafordít
