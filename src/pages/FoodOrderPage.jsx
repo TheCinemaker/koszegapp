@@ -201,16 +201,15 @@ export default function FoodOrderPage() {
                 <div className={activeTab === 'home' ? 'block' : 'hidden'}>
                     {view === 'restaurants' && (
                         <>
-                            <div className="flex flex-row items-center justify-between gap-4 mb-6 mt-4">
-                                <div className="relative flex-1 group max-w-lg">
+                            <div className="flex flex-col gap-4 mb-6 mt-4">
+                                {/* Search Bar */}
+                                <div className="relative group w-full">
                                     <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors text-lg" />
-                                    <input type="text" placeholder="Keress éttermet..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full h-12 pl-12 pr-4 rounded-2xl bg-white dark:bg-zinc-800/50 border border-transparent focus:border-amber-500/50 text-sm text-zinc-900 dark:text-white font-medium placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 transition-all shadow-sm" />
+                                    <SearchBarWithTypewriter value={searchTerm} onChange={setSearchTerm} />
                                 </div>
-                                <div className="flex flex-col items-end gap-1">
-                                    <span className="text-[9px] font-bold uppercase text-zinc-400">{filterType === 'delivery' ? 'Kiszállítás' : 'Elvitel'}</span>
-                                    <button onClick={() => setFilterType(prev => prev === 'delivery' ? 'pickup' : 'delivery')} className={`w-10 h-6 rounded-full p-1 transition-colors duration-300 flex items-center ${filterType === 'delivery' ? 'bg-amber-500 justify-end' : 'bg-zinc-300 dark:bg-zinc-700 justify-start'}`}>
-                                        <motion.div layout className="w-4 h-4 rounded-full bg-white shadow-sm" />
-                                    </button>
+                                {/* Segmented Toggle */}
+                                <div className="flex justify-center">
+                                    <DeliveryToggle value={filterType} onChange={setFilterType} />
                                 </div>
                             </div>
                             {realCategories.length > 0 && (
@@ -308,6 +307,86 @@ export default function FoodOrderPage() {
 }
 
 // --- SUB COMPONENTS ---
+
+// 2. SEARCH BAR WITH TYPEWRITER EFFECT
+function SearchBarWithTypewriter({ value, onChange }) {
+    const [placeholder, setPlaceholder] = useState('');
+    const phrases = ["éttermet...", "ételt...", "italt...", "kedvencedet..."];
+
+    useEffect(() => {
+        let currentPhraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let timeout;
+
+        const type = () => {
+            const currentPhrase = phrases[currentPhraseIndex];
+            if (isDeleting) {
+                setPlaceholder(currentPhrase.substring(0, charIndex - 1));
+                charIndex--;
+            } else {
+                setPlaceholder(currentPhrase.substring(0, charIndex + 1));
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                setTimeout(() => { isDeleting = true; }, 1500);
+                timeout = setTimeout(type, 1500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                timeout = setTimeout(type, 500);
+            } else {
+                timeout = setTimeout(type, isDeleting ? 50 : 100);
+            }
+        };
+
+        timeout = setTimeout(type, 100);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    return (
+        <input
+            type="text"
+            placeholder={`Keress ${placeholder}`}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full h-10 pl-12 pr-4 rounded-full bg-white dark:bg-zinc-800/50 border border-transparent focus:border-amber-500/50 text-sm text-zinc-900 dark:text-white font-medium placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 transition-all shadow-sm"
+        />
+    );
+}
+
+// 3. SEGMENTED TOGGLE (Lieferando Style)
+function DeliveryToggle({ value, onChange }) {
+    return (
+        <div className="w-full max-w-xs bg-gray-200 dark:bg-zinc-800/60 rounded-full p-1 flex relative h-10">
+            {/* Sliding background */}
+            <motion.div
+                layout
+                className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white dark:bg-zinc-700 rounded-full shadow-sm"
+                animate={{ x: value === "delivery" ? 0 : "100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            />
+
+            <button
+                onClick={() => onChange("delivery")}
+                className={`relative z-10 w-1/2 flex items-center justify-center gap-2 text-xs font-bold transition-colors ${value === "delivery" ? "text-zinc-900 dark:text-white" : "text-zinc-500"
+                    }`}
+            >
+                <span>🚚</span> Kiszállítás
+            </button>
+
+            <button
+                onClick={() => onChange("pickup")}
+                className={`relative z-10 w-1/2 flex items-center justify-center gap-2 text-xs font-bold transition-colors ${value === "pickup" ? "text-zinc-900 dark:text-white" : "text-zinc-500"
+                    }`}
+            >
+                <span>🏃</span> Elvitel
+            </button>
+        </div>
+    );
+}
+
 function NavButton({ label, icon: Icon, active, onClick }) {
     return (
         <button
