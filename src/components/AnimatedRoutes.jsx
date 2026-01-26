@@ -44,6 +44,7 @@ const FoodAdmin = React.lazy(() => import('../pages/FoodAdmin'));
 const FoodAuthPage = React.lazy(() => import('../pages/FoodAuthPage'));
 const KoszegPassRegister = React.lazy(() => import('../pages/KoszegPassRegister'));
 const KoszegPassProfile = React.lazy(() => import('../pages/KoszegPassProfile'));
+const ScannerPage = React.lazy(() => import('../pages/ScannerPage'));
 
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
@@ -171,6 +172,7 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/pass" element={<Navigate to="/pass/register" replace />} />
           <Route path="/pass/register" element={<PageWrapper showFooter={false}><KoszegPassRegister /></PageWrapper>} />
           <Route path="/pass/profile" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
+          <Route path="/scanner" element={<PageWrapper showFooter={false}><ScannerPage /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>
