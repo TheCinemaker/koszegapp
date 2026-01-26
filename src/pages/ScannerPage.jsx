@@ -20,11 +20,11 @@ export default function ScannerPage() {
         // Simple mock check: Must start with "KP-"
         if (token && token.startsWith('KP-')) {
             setScanResult('valid');
-            toast.success("Érvényes KőszegPass!");
+            toast.success("Érvényes KőszegPass! ✅");
             // Play success sound logic here later
         } else {
             setScanResult('invalid');
-            toast.error("Érvénytelen kód!");
+            toast.error("Érvénytelen kód! ❌");
             // Play error sound logic here later
         }
     };
@@ -98,7 +98,7 @@ export default function ScannerPage() {
                         </motion.div>
 
                         <h2 className="text-2xl font-bold mb-2">
-                            {scanResult === 'valid' ? 'Sikeres Beolvasás!' : 'Érvénytelen Kód'}
+                            {scanResult === 'valid' ? 'Érvényes KőszegPass' : 'Érvénytelen!'}
                         </h2>
 
                         <div className="bg-white/10 rounded-xl p-4 w-full max-w-xs mb-8 mx-auto text-center border border-white/10 backdrop-blur-sm">

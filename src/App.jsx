@@ -408,13 +408,14 @@ function MainAppContent() {
           {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
 
-          {!location.pathname.startsWith('/food') && <FloatingNavbar />}
+          {!location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && <FloatingNavbar />}
           {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
           {!location.pathname.startsWith('/koszegieknek') &&
             !location.pathname.startsWith('/business') &&
             !location.pathname.startsWith('/auth') &&
             !location.pathname.startsWith('/food') &&
-            !location.pathname.startsWith('/pass') && (
+            !location.pathname.startsWith('/pass') &&
+            !location.pathname.startsWith('/scanner') && (
               <SmartSpotlight appData={appData} />
             )}
 
