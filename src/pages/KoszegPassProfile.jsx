@@ -94,22 +94,37 @@ export default function KoszegPassProfile() {
         const fetchKoszegPassProfile = async () => {
             if (!user) return;
 
-            const { data, error } = await supabase
+            // Fetch User Profile
+            const { data: userData, error: userError } = await supabase
                 .from('koszegpass_users')
                 .select('*')
                 .eq('id', user.id)
                 .single();
 
-            if (error) {
-                console.error("Error fetching KőszegPass profile:", error);
+            if (userError) {
+                console.error("Error fetching KőszegPass profile:", userError);
             } else {
-                setProfile(data);
+                setProfile(userData);
                 setEditForm({
-                    email: data.email || '',
-                    phone: data.phone || '',
-                    address: data.address || ''
+                    email: userData.email || '',
+                    phone: userData.phone || '',
+                    address: userData.address || ''
                 });
-                generateQR(user.id);
+
+                // Fetch Secure Card Token (NEW)
+                const { data: cardData, error: cardError } = await supabase
+                    .from('koszegpass_cards')
+                    .select('qr_token')
+                    .eq('user_id', user.id)
+                    .single();
+
+                if (cardData?.qr_token) {
+                    generateQR(cardData.qr_token); // Use Token
+                } else {
+                    // Fallback to ID if no token yet (or wait for trigger)
+                    console.warn("No card token found, falling back to ID");
+                    generateQR(user.id);
+                }
             }
             setLoading(false);
         };
