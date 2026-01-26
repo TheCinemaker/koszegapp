@@ -126,8 +126,8 @@ export default function FoodOrderPage() {
 
     return (
         <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-x-hidden pb-24 font-sans transition-colors duration-300">
-            {/* COMPACT STICKY HEADER */}
-            <div className="sticky top-2 z-50 px-4">
+            {/* COMPACT FIXED HEADER */}
+            <div className="fixed top-2 left-0 right-0 z-[100] px-4 pointer-events-none">
                 <div className="
                     mx-auto max-w-5xl
                     bg-white/70 dark:bg-[#1a1c2e]/70 
@@ -137,6 +137,7 @@ export default function FoodOrderPage() {
                     rounded-full
                     px-4 py-2
                     flex items-center justify-between
+                    pointer-events-auto
                 ">
                     {/* Left: Home + Title */}
                     <div className="flex items-center gap-3">
@@ -168,7 +169,7 @@ export default function FoodOrderPage() {
                     >
                         <IoBasket className="text-base text-zinc-800 dark:text-white" />
 
-                        {/* Status Capsule (Floating next to basket on desktop, hidden on tiny screens if needed, or overlay) */}
+                        {/* Status Capsule */}
                         {activeOrderStatus && (
                             <div className="absolute -top-1 -right-1 flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -187,7 +188,7 @@ export default function FoodOrderPage() {
                 </div>
 
                 {activeOrderStatus && (
-                    <div className="max-w-5xl mx-auto mt-2 flex justify-center">
+                    <div className="max-w-5xl mx-auto mt-2 flex justify-center pointer-events-auto">
                         <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
                             {getStatusText(activeOrderStatus)}
                         </div>
@@ -195,8 +196,8 @@ export default function FoodOrderPage() {
                 )}
             </div>
 
-            {/* MAIN */}
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-4">
+            {/* MAIN (Added top padding for fixed header) */}
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-24">
                 <div className={activeTab === 'home' ? 'block' : 'hidden'}>
                     {view === 'restaurants' && (
                         <>
