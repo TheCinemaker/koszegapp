@@ -13,6 +13,7 @@ export default function ScannerPage() {
     const [hasPermission, setHasPermission] = useState(null);
     const [loading, setLoading] = useState(false);
     const [scannedUser, setScannedUser] = useState(null);
+    const [serverMessage, setServerMessage] = useState(null);
 
     // API Validation Logic
     const validateToken = async (token) => {
@@ -36,6 +37,7 @@ export default function ScannerPage() {
                 // Play success sound
             } else {
                 setScanResult('invalid');
+                setServerMessage(result.message);
                 toast.error(result.message || "Érvénytelen kód!");
                 // Play error sound
             }
@@ -103,6 +105,7 @@ export default function ScannerPage() {
         setData(null);
         setScanResult(null);
         setScannedUser(null);
+        setServerMessage(null);
         setIsScanning(true);
     };
 
@@ -215,7 +218,7 @@ export default function ScannerPage() {
 
                                 {scanResult !== 'valid' && (
                                     <div className="bg-red-500/10 rounded-xl p-4 w-full max-w-xs mb-8 mx-auto text-center border border-red-500/30">
-                                        <p className="text-red-300 font-medium">A kártya nem található vagy inaktív.</p>
+                                        <p className="text-red-300 font-medium">{serverMessage || "A kártya nem található vagy inaktív."}</p>
                                     </div>
                                 )}
 
