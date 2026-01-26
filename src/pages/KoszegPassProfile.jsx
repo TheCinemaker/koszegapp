@@ -75,8 +75,20 @@ export default function KoszegPassProfile() {
         address: ''
     });
 
+    // Refs
+    const editFormRef = useRef(null);
+
     // UX State
     const [isFlipped, setIsFlipped] = useState(false);
+
+    // Auto-scroll to edit form
+    useEffect(() => {
+        if (isEditing && editFormRef.current) {
+            setTimeout(() => {
+                editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }, [isEditing]);
 
     useEffect(() => {
         const fetchKoszegPassProfile = async () => {
@@ -303,12 +315,21 @@ export default function KoszegPassProfile() {
                                         )}
                                     </div>
 
-                                    <div className="bg-zinc-100 dark:bg-black/30 px-3 py-2 rounded-lg w-full">
+                                    <div className="bg-zinc-100 dark:bg-black/30 px-3 py-2 rounded-lg w-full mb-4">
                                         <p className="font-mono text-[10px] text-zinc-500 dark:text-zinc-500 mb-1 uppercase text-center">Teljes Azonosító (UUID)</p>
                                         <p className="font-mono text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-200 break-all text-center leading-tight">
                                             {user.id}
                                         </p>
                                     </div>
+
+                                    {/* Google Wallet Placeholder */}
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); toast('Google Wallet hamarosan...'); }}
+                                        className="mb-4 flex items-center justify-center gap-2 px-4 py-2 bg-black text-white rounded-full text-xs font-bold shadow-lg active:scale-95 transition-transform"
+                                    >
+                                        <IoWalletOutline className="text-lg" />
+                                        Add to Google Wallet
+                                    </button>
 
                                     <div className="absolute bottom-4 flex items-center gap-1 text-zinc-400 text-[10px] font-bold uppercase tracking-widest">
                                         <IoSwapHorizontal />
@@ -359,6 +380,7 @@ export default function KoszegPassProfile() {
                 <AnimatePresence>
                     {isEditing && (
                         <motion.div
+                            ref={editFormRef}
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
