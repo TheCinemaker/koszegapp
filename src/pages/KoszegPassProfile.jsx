@@ -1,4 +1,3 @@
-```
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -33,15 +32,15 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay
         "
     >
         {/* Abstract Background Gradient */}
-        <div className={`absolute - top - 10 - right - 10 w - 32 h - 32 bg - gradient - to - br ${ colorFrom } ${ colorTo } opacity - 20 blur - [50px] rounded - full group - hover: opacity - 30 transition - opacity duration - 500`} />
+        <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${colorFrom} ${colorTo} opacity-20 blur-[50px] rounded-full group-hover:opacity-30 transition-opacity duration-500`} />
 
         <div className="relative z-10 flex items-center justify-between gap-3">
-             <div className="flex items-center gap-3">
-                <div className={`w - 10 h - 10 rounded - xl bg - gradient - to - br ${ colorFrom } ${ colorTo } flex items - center justify - center text - white text - lg shadow - lg transform group - hover: scale - 110 transition - transform duration - 500 shrink - 0`}>
+            <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-500 shrink-0`}>
                     {icon}
                 </div>
                 <div>
-                     <h3 className="text-base font-bold text-gray-900 dark:text-white leading-tight">
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white leading-tight">
                         {title}
                     </h3>
                     <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 line-clamp-1">
@@ -49,9 +48,9 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay
                     </p>
                 </div>
             </div>
-            
+
             {value ? (
-                 <span className="text-lg font-black text-gray-900 dark:text-white whitespace-nowrap">{value}</span>
+                <span className="text-lg font-black text-gray-900 dark:text-white whitespace-nowrap">{value}</span>
             ) : (
                 <div className="w-6 h-6 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-900 dark:text-white group-hover:bg-gray-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all duration-300">
                     <IoArrowForward className="text-xs" />
@@ -78,7 +77,6 @@ export default function KoszegPassProfile() {
 
     // UX State
     const [isFlipped, setIsFlipped] = useState(false);
-    // const [showQrModal, setShowQrModal] = useState(false); // Removed in favor of Flip
 
     useEffect(() => {
         const fetchKoszegPassProfile = async () => {
@@ -162,8 +160,8 @@ export default function KoszegPassProfile() {
             <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] flex flex-col items-center justify-center gap-4">
                 <p className="text-zinc-500 dark:text-zinc-400">Jelentkezz be a megtekintéshez.</p>
                 <div className="flex gap-4">
-                     <button onClick={() => navigate('/auth')} className="px-6 py-2 bg-indigo-600 text-white rounded-full font-bold">Belépés</button>
-                     <button onClick={() => navigate('/pass/register')} className="px-6 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-full font-bold">Regisztráció</button>
+                    <button onClick={() => navigate('/auth')} className="px-6 py-2 bg-indigo-600 text-white rounded-full font-bold">Belépés</button>
+                    <button onClick={() => navigate('/pass/register')} className="px-6 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-full font-bold">Regisztráció</button>
                 </div>
             </div>
         )
@@ -181,7 +179,7 @@ export default function KoszegPassProfile() {
                         </Link>
                         <div>
                             <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-white tracking-tight">KőszegPass</h1>
-                             <p className="text-indigo-600 dark:text-indigo-400 font-bold flex flex-wrap items-center gap-1 leading-tight">
+                            <p className="text-indigo-600 dark:text-indigo-400 font-bold flex flex-wrap items-center gap-1 leading-tight">
                                 <span> {profile?.full_name || user.user_metadata?.full_name || 'Felhasználó'} </span>
                                 <span className="text-zinc-500 font-normal dark:text-zinc-400 text-sm">Digitális Tárca</span>
                             </p>
@@ -192,10 +190,10 @@ export default function KoszegPassProfile() {
 
             <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
 
-                 {/* --- FEATURED: 3D FLIP CARD --- */}
+                {/* --- FEATURED: 3D FLIP CARD --- */}
                 <FadeUp delay={0.1}>
                     <div className="flex justify-center perspective-1000">
-                         <div 
+                        <div
                             className="relative w-full max-w-md aspect-[1.586/1] group cursor-pointer"
                             onClick={() => setIsFlipped(!isFlipped)}
                             style={{ perspective: '1000px' }}
@@ -207,20 +205,19 @@ export default function KoszegPassProfile() {
                                 style={{ transformStyle: 'preserve-3d' }}
                             >
                                 {/* --- FRONT FACE (Design) --- */}
-                                <div 
+                                <div
                                     className={`
-                                        absolute inset - 0 backface - hidden rounded - [24px] p - 4 sm: p - 6 shadow - 2xl overflow - hidden
-                                        border border - white / 15 backdrop - blur - 2xl
-                                        ${
-    profile?.card_type === 'diamant' ? 'bg-gradient-to-br from-[#1a237e] via-[#0d47a1] to-[#311b92]' :
-    profile?.card_type === 'gold' ? 'bg-gradient-to-br from-[#5d4037] via-[#795548] to-[#3e2723]' :
-        profile?.card_type === 'silver' ? 'bg-gradient-to-br from-[#37474f] via-[#455a64] to-[#263238]' :
-            'bg-gradient-to-br from-[#3E1C16] via-[#5D2B20] to-[#2D120E]' // Bronz (Deep Rich Brown)
-}
-`}
+                                        absolute inset-0 backface-hidden rounded-[24px] p-4 sm:p-6 shadow-2xl overflow-hidden
+                                        border border-white/15 backdrop-blur-2xl
+                                        ${profile?.card_type === 'diamant' ? 'bg-gradient-to-br from-[#1a237e] via-[#0d47a1] to-[#311b92]' :
+                                            profile?.card_type === 'gold' ? 'bg-gradient-to-br from-[#5d4037] via-[#795548] to-[#3e2723]' :
+                                                profile?.card_type === 'silver' ? 'bg-gradient-to-br from-[#37474f] via-[#455a64] to-[#263238]' :
+                                                    'bg-gradient-to-br from-[#3E1C16] via-[#5D2B20] to-[#2D120E]' // Bronz (Deep Rich Brown)
+                                        }
+                                    `}
                                     style={{ backfaceVisibility: 'hidden' }}
                                 >
-                                     {/* Noise Texture */}
+                                    {/* Noise Texture */}
                                     <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
 
                                     {/* Glossy Overlay */}
@@ -236,12 +233,10 @@ export default function KoszegPassProfile() {
                                                 <span className="font-black tracking-widest text-white/90 text-[10px] uppercase shadow-black drop-shadow-md">Official City Pass</span>
                                             </div>
                                             <div className={`
-px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [0.15em] border backdrop - blur - md shadow - lg
-                                                ${
-    profile?.card_type === 'diamant' ? 'bg-cyan-400/20 text-cyan-100 border-cyan-400/30' :
-    'bg-orange-500/20 text-orange-100 border-orange-500/30'
-}
-`}>
+                                                px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] border backdrop-blur-md shadow-lg
+                                                ${profile?.card_type === 'diamant' ? 'bg-cyan-400/20 text-cyan-100 border-cyan-400/30' :
+                                                    'bg-orange-500/20 text-orange-100 border-orange-500/30'}
+                                            `}>
                                                 {profile?.card_type || 'BRONZ'}
                                             </div>
                                         </div>
@@ -270,7 +265,7 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
 
                                         {/* Bottom Row: ID & Chip */}
                                         <div className="flex justify-between items-end">
-                                             <div className="flex flex-col">
+                                            <div className="flex flex-col">
                                                 <span className="text-[9px] text-white/50 uppercase tracking-widest mb-1 font-semibold shadow-black drop-shadow-sm">
                                                     Kártyaszám
                                                 </span>
@@ -286,7 +281,7 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     {/* Hint */}
                                     <div className="absolute bottom-3 right-1/2 translate-x-1/2 text-[10px] text-white/40 font-bold uppercase tracking-widest animate-pulse pointer-events-none">
                                         Kattints a kódhoz
@@ -294,12 +289,12 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
                                 </div>
 
                                 {/* --- BACK FACE (Data / QR) --- */}
-                                <div 
+                                <div
                                     className="absolute inset-0 backface-hidden rounded-[24px] p-6 shadow-2xl overflow-hidden bg-white dark:bg-[#1a1c2e] border border-zinc-200 dark:border-white/10 flex flex-col items-center justify-center text-center"
                                     style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                                 >
                                     <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-widest mb-4">Digitális Azonosító</h3>
-                                    
+
                                     <div className="bg-white p-2 rounded-xl shadow-inner border border-zinc-100 mb-4">
                                         {qrCodeUrl ? (
                                             <img src={qrCodeUrl} alt="QR" className="w-32 h-32 object-contain mix-blend-multiply" />
@@ -322,13 +317,13 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
                                 </div>
 
                             </motion.div>
-                         </div>
+                        </div>
                     </div>
                 </FadeUp>
 
-                {/* --- SETTINGS & ACTIONS GRID (Refined) --- */}
+                {/* --- SETTINGS & ACTIONS GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                     <FeatureCard
+                    <FeatureCard
                         title="Profilom"
                         subtitle={isEditing ? 'Szerkesztés...' : 'Adatok módosítása'}
                         icon={<IoPersonOutline />}
@@ -337,16 +332,16 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
                         delay={0.2}
                         onClick={() => setIsEditing(!isEditing)}
                     />
-                    
-                     <FeatureCard
+
+                    <FeatureCard
                         title="Egyenleg"
                         subtitle="Elérhető pontok"
                         icon={<IoWalletOutline />}
-                        value={`${ profile?.points || 0 } PTS`}
+                        value={`${profile?.points || 0} PTS`}
                         colorFrom="from-yellow-400"
                         colorTo="to-orange-500"
                         delay={0.3}
-                        onClick={() => {}} // Maybe history later
+                        onClick={() => { }} // Maybe history later
                     />
 
                     <FeatureCard
@@ -361,7 +356,7 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
                 </div>
 
                 {/* --- EDIT FORM SECTION (CONDITIONAL) --- */}
-                 <AnimatePresence>
+                <AnimatePresence>
                     {isEditing && (
                         <motion.div
                             initial={{ opacity: 0, height: 0 }}
@@ -406,8 +401,8 @@ px - 3 py - 1.5 rounded - full text - [10px] font - black uppercase tracking - [
                         </motion.div>
                     )}
                 </AnimatePresence>
+
             </div>
         </div>
     );
 }
-```
