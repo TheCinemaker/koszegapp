@@ -209,7 +209,7 @@ export default function FoodOrderPage() {
                 <div className={activeTab === 'home' ? 'block' : 'hidden'}>
                     {view === 'restaurants' && (
                         <>
-                            <div className="flex flex-col gap-4 mb-6 mt-4">
+                            <div className="flex flex-col gap-[5px] mb-[5px] mt-[5px]">
                                 {/* Search Bar */}
                                 <div className="relative group w-full">
                                     <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors text-lg" />
@@ -219,9 +219,9 @@ export default function FoodOrderPage() {
                             {realCategories.length > 0 && (
                                 <div className="mb-8 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
                                     <div className="flex gap-2 min-w-max">
-                                        <button onClick={() => setSelectedCategory(null)} className={`flex items-center justify-center px-4 py-2 rounded-xl border transition-all duration-300 font-bold text-xs ${selectedCategory === null ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>Összes</button>
+                                        <button onClick={() => setSelectedCategory(null)} className={`flex items-center justify-center px-4 h-8 rounded-full border transition-all duration-300 font-bold text-xs ${selectedCategory === null ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>Összes</button>
                                         {realCategories.map(cat => (
-                                            <button key={cat} onClick={() => setSelectedCategory(cat)} className={`flex items-center justify-center px-4 py-2 rounded-xl border transition-all duration-300 font-bold text-xs ${selectedCategory === cat ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>{cat}</button>
+                                            <button key={cat} onClick={() => setSelectedCategory(cat)} className={`flex items-center justify-center px-4 h-8 rounded-full border transition-all duration-300 font-bold text-xs ${selectedCategory === cat ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>{cat}</button>
                                         ))}
                                     </div>
                                 </div>
@@ -362,8 +362,8 @@ function SearchBarWithTypewriter({ value, onChange }) {
 
 // 3. SLIDER TOGGLE (Drag based)
 function DeliveryCollectionSlider({ value, onChange }) {
-    // Shrunk dimensions: Container 180px, Handle moves 90px
-    const WIDTH = 90;
+    // Shrunk dimensions: Container 160px, Handle moves 80px
+    const WIDTH = 80;
     const x = useMotionValue(value === "delivery" ? 0 : WIDTH);
 
     useEffect(() => {
@@ -371,7 +371,7 @@ function DeliveryCollectionSlider({ value, onChange }) {
     }, [value]);
 
     return (
-        <div className="relative w-[180px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5 mx-auto lg:mx-0">
+        <div className="relative w-[160px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5 mx-auto lg:mx-0">
 
             {/* Background labels */}
             <div className="absolute inset-0 flex text-[9px] font-bold text-gray-400 uppercase tracking-wider select-none pointer-events-none">
