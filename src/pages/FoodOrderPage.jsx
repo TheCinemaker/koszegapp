@@ -185,101 +185,103 @@ export default function FoodOrderPage() {
                     </button>
 
                     {/* Detailed Status (Only show if room, or maybe below header? User asked for compact card. Let's keep it simple for now) */}
-                </div>
+                    <div className="max-w-5xl mx-auto mt-2 flex justify-between items-center pointer-events-auto px-2">
+                        {/* LEFT: Status Capsule (if active) */}
+                        <div>
+                            {activeOrderStatus && (
+                                <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
+                                    {getStatusText(activeOrderStatus)}
+                                </div>
+                            )}
+                        </div>
 
-                {activeOrderStatus && (
-                    <div className="max-w-5xl mx-auto mt-2 flex justify-center pointer-events-auto">
-                        <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
-                            {getStatusText(activeOrderStatus)}
+                        {/* RIGHT: Delivery/Collection Slider */}
+                        <div className={view === 'restaurants' ? 'block' : 'opacity-0 pointer-events-none'}>
+                            <DeliveryCollectionSlider value={filterType} onChange={setFilterType} />
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
 
-            {/* MAIN (Added top padding for fixed header) */}
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-24">
-                <div className={activeTab === 'home' ? 'block' : 'hidden'}>
-                    {view === 'restaurants' && (
-                        <>
-                            <div className="flex flex-col gap-4 mb-6 mt-4">
-                                {/* Search Bar */}
-                                <div className="relative group w-full">
-                                    <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors text-lg" />
-                                    <SearchBarWithTypewriter value={searchTerm} onChange={setSearchTerm} />
+                {/* MAIN (Added top padding for fixed header) */}
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-24">
+                    <div className={activeTab === 'home' ? 'block' : 'hidden'}>
+                        {view === 'restaurants' && (
+                            <>
+                                <div className="flex flex-col gap-4 mb-6 mt-4">
+                                    {/* Search Bar */}
+                                    <div className="relative group w-full">
+                                        <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-amber-500 transition-colors text-lg" />
+                                        <SearchBarWithTypewriter value={searchTerm} onChange={setSearchTerm} />
+                                    </div>
                                 </div>
-                                {/* Segmented Toggle */}
-                                <div className="flex justify-center">
-                                    <DeliveryToggle value={filterType} onChange={setFilterType} />
+                                {realCategories.length > 0 && (
+                                    <div className="mb-8 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+                                        <div className="flex gap-2 min-w-max">
+                                            <button onClick={() => setSelectedCategory(null)} className={`flex items-center justify-center px-4 py-2 rounded-xl border transition-all duration-300 font-bold text-xs ${selectedCategory === null ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>Összes</button>
+                                            {realCategories.map(cat => (
+                                                <button key={cat} onClick={() => setSelectedCategory(cat)} className={`flex items-center justify-center px-4 py-2 rounded-xl border transition-all duration-300 font-bold text-xs ${selectedCategory === cat ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>{cat}</button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-24">
+                                    {restaurants.filter(r => {
+                                        const termMatch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
+                                        const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
+                                        if (!selectedCategory) return termMatch && deliveryMatch;
+                                        const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
+                                        return termMatch && deliveryMatch && categoryMatch;
+                                    }).map((rest, idx) => <RestaurantCard key={rest.id} restaurant={rest} index={idx} onClick={() => setSelectedRestaurant(rest)} />)
+                                    }
                                 </div>
-                            </div>
-                            {realCategories.length > 0 && (
-                                <div className="mb-8 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-                                    <div className="flex gap-2 min-w-max">
-                                        <button onClick={() => setSelectedCategory(null)} className={`flex items-center justify-center px-4 py-2 rounded-xl border transition-all duration-300 font-bold text-xs ${selectedCategory === null ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>Összes</button>
-                                        {realCategories.map(cat => (
-                                            <button key={cat} onClick={() => setSelectedCategory(cat)} className={`flex items-center justify-center px-4 py-2 rounded-xl border transition-all duration-300 font-bold text-xs ${selectedCategory === cat ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-white/5 hover:border-amber-500/50'}`}>{cat}</button>
+                            </>
+                        )}
+                        {view === 'menu' && selectedRestaurant && (
+                            <div className="pb-24">
+                                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/60 dark:bg-[#1a1c2e]/60 backdrop-blur-[30px] rounded-[2rem] p-5 border border-white/60 dark:border-white/10 shadow-xl mb-6 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
+                                    <div className="flex flex-col md:flex-row gap-5 relative z-10">
+                                        <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0">
+                                            {selectedRestaurant.image_url ? <ParallaxImage src={selectedRestaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-zinc-800" />}
+                                        </div>
+                                        <div className="flex-1">
+                                            <h2 className="text-2xl font-black mb-2 text-gray-900 dark:text-white">{selectedRestaurant.name}</h2>
+                                            <div className="flex flex-wrap gap-2 mb-3">
+                                                <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5"><IoLocation className="text-amber-500" /> {selectedRestaurant.address}</div>
+                                                <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5"><IoTime className="text-amber-500" /> {selectedRestaurant.delivery_time || '30-40p'}</div>
+                                                {selectedRestaurant.promotions && <div className="px-2 py-1 rounded-lg bg-red-100 dark:bg-red-900/30 text-[10px] font-bold flex items-center gap-1 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50"><IoGift /> {selectedRestaurant.promotions}</div>}
+                                            </div>
+                                            <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed max-w-xl">{selectedRestaurant.description}</p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                                {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
+                                    <div className="space-y-8">
+                                        {categories.map((category) => (
+                                            <div key={category.id} id={`cat-${category.id}`}>
+                                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{category.items.map(item => <MenuItemCard key={item.id} item={item} onAdd={() => addItem({ ...item, restaurant_id: selectedRestaurant.id })} />)}</div>
+                                            </div>
                                         ))}
+                                        {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
                                     </div>
-                                </div>
-                            )}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-24">
-                                {restaurants.filter(r => {
-                                    const termMatch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
-                                    const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
-                                    if (!selectedCategory) return termMatch && deliveryMatch;
-                                    const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
-                                    return termMatch && deliveryMatch && categoryMatch;
-                                }).map((rest, idx) => <RestaurantCard key={rest.id} restaurant={rest} index={idx} onClick={() => setSelectedRestaurant(rest)} />)
-                                }
+                                )}
                             </div>
-                        </>
-                    )}
-                    {view === 'menu' && selectedRestaurant && (
-                        <div className="pb-24">
-                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/60 dark:bg-[#1a1c2e]/60 backdrop-blur-[30px] rounded-[2rem] p-5 border border-white/60 dark:border-white/10 shadow-xl mb-6 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
-                                <div className="flex flex-col md:flex-row gap-5 relative z-10">
-                                    <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0">
-                                        {selectedRestaurant.image_url ? <ParallaxImage src={selectedRestaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-zinc-800" />}
-                                    </div>
-                                    <div className="flex-1">
-                                        <h2 className="text-2xl font-black mb-2 text-gray-900 dark:text-white">{selectedRestaurant.name}</h2>
-                                        <div className="flex flex-wrap gap-2 mb-3">
-                                            <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5"><IoLocation className="text-amber-500" /> {selectedRestaurant.address}</div>
-                                            <div className="px-2 py-1 rounded-lg bg-white/50 dark:bg-black/20 text-[10px] font-bold flex items-center gap-1 border border-black/5 dark:border-white/5"><IoTime className="text-amber-500" /> {selectedRestaurant.delivery_time || '30-40p'}</div>
-                                            {selectedRestaurant.promotions && <div className="px-2 py-1 rounded-lg bg-red-100 dark:bg-red-900/30 text-[10px] font-bold flex items-center gap-1 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50"><IoGift /> {selectedRestaurant.promotions}</div>}
-                                        </div>
-                                        <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed max-w-xl">{selectedRestaurant.description}</p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                            {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
-                                <div className="space-y-8">
-                                    {categories.map((category) => (
-                                        <div key={category.id} id={`cat-${category.id}`}>
-                                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{category.items.map(item => <MenuItemCard key={item.id} item={item} onAdd={() => addItem({ ...item, restaurant_id: selectedRestaurant.id })} />)}</div>
-                                        </div>
-                                    ))}
-                                    {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
-                                </div>
-                            )}
+                        )}
+                    </div>
+
+                    {activeTab === 'orders' && (
+                        <div className="pb-32 pt-2">
+                            {user ? <MyOrdersList user={user} /> : <div className="text-center py-20 text-zinc-500">Jelentkezz be a rendeléseidhez.</div>}
                         </div>
                     )}
+                    {activeTab === 'rewards' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="card" /></div>}
+                    {activeTab === 'account' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="settings" /></div>}
                 </div>
 
-                {activeTab === 'orders' && (
-                    <div className="pb-32 pt-2">
-                        {user ? <MyOrdersList user={user} /> : <div className="text-center py-20 text-zinc-500">Jelentkezz be a rendeléseidhez.</div>}
-                    </div>
-                )}
-                {activeTab === 'rewards' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="card" /></div>}
-                {activeTab === 'account' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="settings" /></div>}
-            </div>
-
-            {/* FLOATING NAV (UPDATED TO GLASS STYLE) */}
-            <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] sm:max-w-md pointer-events-none">
-                <div className="
+                {/* FLOATING NAV (UPDATED TO GLASS STYLE) */}
+                <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] sm:max-w-md pointer-events-none">
+                    <div className="
                     pointer-events-auto
                     flex items-center justify-between
                     px-6 py-2
@@ -292,197 +294,222 @@ export default function FoodOrderPage() {
                     shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
                     transition-all duration-300
                 ">
-                    <NavButton label="Főoldal" icon={IoHome} active={activeTab === 'home'} onClick={() => setActiveTab('home')} />
-                    <NavButton label="Rendelések" icon={IoReceipt} active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} />
-                    <NavButton label="Pontok" icon={IoWallet} active={activeTab === 'rewards'} onClick={() => setActiveTab('rewards')} />
-                    <NavButton label="Fiók" icon={IoPerson} active={activeTab === 'account'} onClick={() => setActiveTab('account')} />
+                        <NavButton label="Főoldal" icon={IoHome} active={activeTab === 'home'} onClick={() => setActiveTab('home')} />
+                        <NavButton label="Rendelések" icon={IoReceipt} active={activeTab === 'orders'} onClick={() => setActiveTab('orders')} />
+                        <NavButton label="Pontok" icon={IoWallet} active={activeTab === 'rewards'} onClick={() => setActiveTab('rewards')} />
+                        <NavButton label="Fiók" icon={IoPerson} active={activeTab === 'account'} onClick={() => setActiveTab('account')} />
+                    </div>
                 </div>
-            </div>
 
-            <AnimatePresence>
-                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} />}
-            </AnimatePresence>
-        </div>
-    );
+                <AnimatePresence>
+                    {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} />}
+                </AnimatePresence>
+            </div>
+            );
 }
 
-// --- SUB COMPONENTS ---
+            // --- SUB COMPONENTS ---
 
-// 2. SEARCH BAR WITH TYPEWRITER EFFECT
-function SearchBarWithTypewriter({ value, onChange }) {
+            // 2. SEARCH BAR WITH TYPEWRITER EFFECT
+            function SearchBarWithTypewriter({value, onChange}) {
     const [placeholder, setPlaceholder] = useState('');
-    const phrases = ["éttermet...", "ételt...", "italt...", "kedvencedet..."];
+            const phrases = ["éttermet...", "ételt...", "italt...", "kedvencedet..."];
 
     useEffect(() => {
-        let currentPhraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let timeout;
+                let currentPhraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let timeout;
 
         const type = () => {
             const currentPhrase = phrases[currentPhraseIndex];
             if (isDeleting) {
                 setPlaceholder(currentPhrase.substring(0, charIndex - 1));
-                charIndex--;
+            charIndex--;
             } else {
                 setPlaceholder(currentPhrase.substring(0, charIndex + 1));
-                charIndex++;
+            charIndex++;
             }
 
             if (!isDeleting && charIndex === currentPhrase.length) {
                 setTimeout(() => { isDeleting = true; }, 1500);
-                timeout = setTimeout(type, 1500);
+            timeout = setTimeout(type, 1500);
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
-                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                timeout = setTimeout(type, 500);
+            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            timeout = setTimeout(type, 500);
             } else {
                 timeout = setTimeout(type, isDeleting ? 50 : 100);
             }
         };
 
-        timeout = setTimeout(type, 100);
+            timeout = setTimeout(type, 100);
         return () => clearTimeout(timeout);
     }, []);
 
-    return (
-        <input
-            type="text"
-            placeholder={`Keress ${placeholder}`}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full h-10 pl-12 pr-4 rounded-full bg-white dark:bg-zinc-800/50 border border-transparent focus:border-amber-500/50 text-sm text-zinc-900 dark:text-white font-medium placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 transition-all shadow-sm"
-        />
-    );
-}
-
-// 3. SEGMENTED TOGGLE (Lieferando Style)
-function DeliveryToggle({ value, onChange }) {
-    return (
-        <div className="w-full max-w-xs bg-gray-200 dark:bg-zinc-800/60 rounded-full p-1 flex relative h-10">
-            {/* Sliding background */}
-            <motion.div
-                layout
-                className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white dark:bg-zinc-700 rounded-full shadow-sm"
-                animate={{ x: value === "delivery" ? 0 : "100%" }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            return (
+            <input
+                type="text"
+                placeholder={`Keress ${placeholder}`}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="w-full h-10 pl-12 pr-4 rounded-full bg-white dark:bg-zinc-800/50 border border-transparent focus:border-amber-500/50 text-sm text-zinc-900 dark:text-white font-medium placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 transition-all shadow-sm"
             />
-
-            <button
-                onClick={() => onChange("delivery")}
-                className={`relative z-10 w-1/2 flex items-center justify-center gap-2 text-xs font-bold transition-colors ${value === "delivery" ? "text-zinc-900 dark:text-white" : "text-zinc-500"
-                    }`}
-            >
-                <span>🚚</span> Kiszállítás
-            </button>
-
-            <button
-                onClick={() => onChange("pickup")}
-                className={`relative z-10 w-1/2 flex items-center justify-center gap-2 text-xs font-bold transition-colors ${value === "pickup" ? "text-zinc-900 dark:text-white" : "text-zinc-500"
-                    }`}
-            >
-                <span>🏃</span> Elvitel
-            </button>
-        </div>
-    );
+            );
 }
 
-function NavButton({ label, icon: Icon, active, onClick }) {
+            // 3. SLIDER TOGGLE (Drag based)
+            function DeliveryCollectionSlider({value, onChange}) {
+  // Shrunk dimensions: Container 180px, Handle moves 90px
+  const WIDTH = 90;
+            const x = useMotionValue(value === "delivery" ? 0 : WIDTH);
+
+  useEffect(() => {
+                x.set(value === "delivery" ? 0 : WIDTH);
+  }, [value]);
+
+            return (
+            <div className="relative w-[180px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5">
+
+                {/* Background labels */}
+                <div className="absolute inset-0 flex text-[9px] font-bold text-gray-400 uppercase tracking-wider select-none pointer-events-none">
+                    <div className="w-1/2 flex items-center justify-center gap-1">
+                        <IoBicycle className="text-xs opacity-50" />
+                    </div>
+                    <div className="w-1/2 flex items-center justify-center gap-1">
+                        <IoStorefront className="text-xs opacity-50" />
+                    </div>
+                </div>
+
+                {/* Draggable pill */}
+                <motion.div
+                    drag="x"
+                    dragConstraints={{ left: 0, right: WIDTH }}
+                    dragElastic={0.1}
+                    dragMomentum={false}
+                    style={{ x }}
+                    onDragEnd={(_, info) => {
+                        if (x.get() > WIDTH / 2) {
+                            onChange("pickup");
+                        } else {
+                            onChange("delivery");
+                        }
+                    }}
+                    onTap={() => onChange(value === 'delivery' ? 'pickup' : 'delivery')}
+                    animate={{ x: value === "delivery" ? 0 : WIDTH }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    className="absolute w-1/2 h-6 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full shadow-md flex items-center justify-center gap-1 text-[9px] font-bold cursor-grab active:cursor-grabbing z-10"
+                >
+                    {value === "delivery" ? (
+                        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-1">
+                            <IoBicycle className="text-xs" /> <span>Futár</span>
+                        </motion.div>
+                    ) : (
+                        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-1">
+                            <IoStorefront className="text-xs" /> <span>Elvitel</span>
+                        </motion.div>
+                    )}
+                </motion.div>
+            </div>
+            );
+}
+
+            function NavButton({label, icon: Icon, active, onClick }) {
     return (
-        <button
-            onClick={onClick}
-            className={`
+            <button
+                onClick={onClick}
+                className={`
               relative group flex flex-col items-center justify-center
               h-12 w-12 rounded-[1rem]
               transition-all duration-200 ease-out
               active:scale-90
               ${active
-                    ? 'text-amber-600 dark:text-amber-500'
-                    : 'text-[#1d1d1f] dark:text-gray-300 hover:text-black dark:hover:text-white'
-                }
+                        ? 'text-amber-600 dark:text-amber-500'
+                        : 'text-[#1d1d1f] dark:text-gray-300 hover:text-black dark:hover:text-white'
+                    }
             `}
-        >
-            <Icon className={`
+            >
+                <Icon className={`
                 text-[24px] mb-0.5 z-10 transition-transform duration-300
                 ${active ? 'scale-110 filter drop-shadow-sm' : 'group-hover:scale-110'}
             `} />
-            <span className="text-[9px] font-medium tracking-tight z-10 transition-opacity duration-300 leading-none whitespace-nowrap">
-                {label}
-            </span>
-            {active && <div className="absolute -bottom-1 w-1 h-1 bg-current rounded-full opacity-60" />}
-        </button>
-    )
+                <span className="text-[9px] font-medium tracking-tight z-10 transition-opacity duration-300 leading-none whitespace-nowrap">
+                    {label}
+                </span>
+                {active && <div className="absolute -bottom-1 w-1 h-1 bg-current rounded-full opacity-60" />}
+            </button>
+            )
 }
-function MenuItemCard({ item, onAdd }) {
+            function MenuItemCard({item, onAdd}) {
     return (
-        <FadeUp delay={0.05}>
-            <div className="group relative bg-white/50 dark:bg-[#1a1c2e]/50 rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg hover:shadow-black/5 transition-all duration-300 border border-white/60 dark:border-white/5 flex items-center gap-3 p-2.5 backdrop-blur-md">
-                <div className="w-16 h-16 shrink-0 bg-gray-100 dark:bg-white/5 rounded-xl overflow-hidden relative">
-                    {item.image_url ? <img src={item.image_url} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /> : <div className="flex items-center justify-center h-full text-lg opacity-20">🍽️</div>}
-                </div>
-                <div className="flex-1 min-w-0 flex flex-col justify-center h-full py-0.5">
-                    <div className="flex justify-between items-start gap-2">
-                        <h4 className="font-bold text-sm leading-tight text-gray-900 dark:text-white line-clamp-1">{item.name}</h4>
-                        <span className="font-bold text-amber-600 dark:text-amber-500 text-xs whitespace-nowrap">{item.price} Ft</span>
+            <FadeUp delay={0.05}>
+                <div className="group relative bg-white/50 dark:bg-[#1a1c2e]/50 rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg hover:shadow-black/5 transition-all duration-300 border border-white/60 dark:border-white/5 flex items-center gap-3 p-2.5 backdrop-blur-md">
+                    <div className="w-16 h-16 shrink-0 bg-gray-100 dark:bg-white/5 rounded-xl overflow-hidden relative">
+                        {item.image_url ? <img src={item.image_url} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /> : <div className="flex items-center justify-center h-full text-lg opacity-20">🍽️</div>}
                     </div>
-                    <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">{item.description}</p>
+                    <div className="flex-1 min-w-0 flex flex-col justify-center h-full py-0.5">
+                        <div className="flex justify-between items-start gap-2">
+                            <h4 className="font-bold text-sm leading-tight text-gray-900 dark:text-white line-clamp-1">{item.name}</h4>
+                            <span className="font-bold text-amber-600 dark:text-amber-500 text-xs whitespace-nowrap">{item.price} Ft</span>
+                        </div>
+                        <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">{item.description}</p>
+                    </div>
+                    <button onClick={onAdd} className="w-8 h-8 shrink-0 bg-white dark:bg-white/10 text-amber-500 rounded-full flex items-center justify-center shadow-sm hover:bg-amber-500 hover:text-white hover:scale-110 active:scale-95 transition-all border border-gray-100 dark:border-white/10"><IoAdd className="text-lg font-bold" /></button>
                 </div>
-                <button onClick={onAdd} className="w-8 h-8 shrink-0 bg-white dark:bg-white/10 text-amber-500 rounded-full flex items-center justify-center shadow-sm hover:bg-amber-500 hover:text-white hover:scale-110 active:scale-95 transition-all border border-gray-100 dark:border-white/10"><IoAdd className="text-lg font-bold" /></button>
-            </div>
-        </FadeUp>
-    )
+            </FadeUp>
+            )
 }
-function MyOrdersList({ user }) {
+            function MyOrdersList({user}) {
     const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
+            const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchOrders = async () => {
-            const { data } = await supabase.from('orders').select('*, restaurants(name), items:order_items(*)').eq('user_id', user.id).order('created_at', { ascending: false }).limit(20);
+            const {data} = await supabase.from('orders').select('*, restaurants(name), items:order_items(*)').eq('user_id', user.id).order('created_at', {ascending: false }).limit(20);
             if (data) setOrders(data);
             setLoading(false);
         };
-        fetchOrders();
-        const chan = supabase.channel(`my-orders-list-tab-${user.id}`).on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, (payload) => { if (payload.new.user_id === user.id) fetchOrders(); }).subscribe();
+            fetchOrders();
+            const chan = supabase.channel(`my-orders-list-tab-${user.id}`).on('postgres_changes', {event: '*', schema: 'public', table: 'orders' }, (payload) => { if (payload.new.user_id === user.id) fetchOrders(); }).subscribe();
         return () => supabase.removeChannel(chan);
     }, [user]);
-    const getStatusText = (status) => { const map = { 'pending': 'Függőben', 'accepted': 'Elfogadva', 'preparing': 'Készül', 'delivering': 'Futárnál', 'completed': 'Kész', 'cancelled': 'Törölve' }; return map[status] || status; };
-    if (loading) return <div className="text-center opacity-50 text-xs">Töltés...</div>;
-    if (orders.length === 0) return <div className="text-center opacity-50 text-xs">Nincs korábbi rendelés.</div>;
-    return (
-        <div className="space-y-3">
-            {orders.map(order => (
-                <div key={order.id} className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl p-4 rounded-[1.5rem] border border-white/60 dark:border-white/5 shadow-sm">
-                    <div className="flex justify-between items-center mb-2">
-                        <div className="font-bold text-sm text-gray-900 dark:text-white">{order.restaurants?.name}</div>
-                        <span className="text-[9px] font-bold uppercase bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded-md text-gray-600 dark:text-gray-300">{getStatusText(order.status)}</span>
+    const getStatusText = (status) => { const map = {'pending': 'Függőben', 'accepted': 'Elfogadva', 'preparing': 'Készül', 'delivering': 'Futárnál', 'completed': 'Kész', 'cancelled': 'Törölve' }; return map[status] || status; };
+            if (loading) return <div className="text-center opacity-50 text-xs">Töltés...</div>;
+            if (orders.length === 0) return <div className="text-center opacity-50 text-xs">Nincs korábbi rendelés.</div>;
+            return (
+            <div className="space-y-3">
+                {orders.map(order => (
+                    <div key={order.id} className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl p-4 rounded-[1.5rem] border border-white/60 dark:border-white/5 shadow-sm">
+                        <div className="flex justify-between items-center mb-2">
+                            <div className="font-bold text-sm text-gray-900 dark:text-white">{order.restaurants?.name}</div>
+                            <span className="text-[9px] font-bold uppercase bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded-md text-gray-600 dark:text-gray-300">{getStatusText(order.status)}</span>
+                        </div>
+                        <div className="space-y-0.5 mb-2 opacity-80 text-[11px]">{order.items?.map((item, i) => (<div key={i} className="flex justify-between"><span>{item.quantity}x {item.name}</span><span>{item.price * item.quantity} Ft</span></div>))}</div>
+                        <div className="pt-2 border-t border-black/5 dark:border-white/5 flex justify-between items-center"><span className="text-[10px] text-gray-500">Összesen</span><span className="font-black text-amber-500 text-sm">{order.total_price} Ft</span></div>
                     </div>
-                    <div className="space-y-0.5 mb-2 opacity-80 text-[11px]">{order.items?.map((item, i) => (<div key={i} className="flex justify-between"><span>{item.quantity}x {item.name}</span><span>{item.price * item.quantity} Ft</span></div>))}</div>
-                    <div className="pt-2 border-t border-black/5 dark:border-white/5 flex justify-between items-center"><span className="text-[10px] text-gray-500">Összesen</span><span className="font-black text-amber-500 text-sm">{order.total_price} Ft</span></div>
-                </div>
-            ))}
-        </div>
-    );
+                ))}
+            </div>
+            );
 }
-function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId }) {
-    const { user } = useAuth();
-    const [step, setStep] = useState('cart');
-    const [form, setForm] = useState({ name: '', phone: '', address: '', note: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    useEffect(() => { if (step === 'checkout' && user) { const fetchUserData = async () => { const { data } = await supabase.from('koszegpass_users').select('full_name, phone, address').eq('id', user.id).single(); if (data) setForm(prev => ({ ...prev, name: data.full_name || prev.name, phone: data.phone || prev.phone, address: data.address || prev.address })); }; fetchUserData(); } }, [step, user]);
-    const handleSubmit = async (e) => { e.preventDefault(); setIsSubmitting(true); try { const ordersByRestaurant = items.reduce((acc, item) => { if (!acc[item.restaurant_id]) acc[item.restaurant_id] = []; acc[item.restaurant_id].push(item); return acc; }, {}); await Promise.all(Object.keys(ordersByRestaurant).map(rId => placeOrder({ restaurantId: rId, customer: { ...form, userId: user?.id }, cartItems: ordersByRestaurant[rId] }))); toast.success("Rendelés elküldve! 🍔"); onClear(); onClose(); } catch (error) { console.error(error); toast.error('Hiba történt.'); } finally { setIsSubmitting(false); } };
-    return (
-        <div className="fixed inset-0 z-[100] flex justify-end pointer-events-none">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/20 backdrop-blur-sm pointer-events-auto" />
-            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }} className="w-full max-w-md bg-white/90 dark:bg-[#151515]/95 backdrop-blur-[40px] h-full shadow-2xl pointer-events-auto flex flex-col border-l border-white/20">
-                <div className="p-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between"><h2 className="text-lg font-black">{step === 'cart' ? 'Kosarad 🛒' : 'Befejezés ✨'}</h2><button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:scale-110 transition-transform"><IoClose /></button></div>
-                <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
-                    {items.length === 0 ? <div className="h-full flex flex-col items-center justify-center text-gray-400"><IoBasket className="text-5xl mb-3 opacity-20" /><p className="text-sm">Még üres...</p></div> :
-                        step === 'cart' ? <div className="space-y-3">{items.map(item => (<div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5"><div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">{item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}</div><div className="flex-1 min-w-0"><h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4><p className="text-[10px] text-amber-600 font-bold">{item.price} Ft</p></div><div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm"><button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button><span className="text-xs font-bold w-3 text-center">{item.quantity}</span><button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button></div></div>))}</div> :
-                            <form id="checkout-form" onSubmit={handleSubmit} className="space-y-3"><div className="space-y-2"><input required type="text" placeholder="Név" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} /><input required type="tel" placeholder="Telefonszám" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} /><input required type="text" placeholder="Cím" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} /><textarea rows={3} placeholder="Megjegyzés futárnak..." className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm resize-none" value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} /></div></form>
-                    }
-                </div>
-                {items.length > 0 && <div className="p-6 bg-white dark:bg-zinc-900 border-t border-black/5 dark:border-white/5 pb-10"><div className="flex justify-between items-end mb-4"><span className="text-gray-500 font-bold text-sm">Végösszeg</span><span className="text-2xl font-black text-amber-500">{total.toLocaleString('hu-HU')} Ft</span></div>{step === 'cart' ? <button onClick={() => setStep('checkout')} className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl shadow-xl shadow-amber-500/20 active:scale-95 transition-all text-base">Fizetés</button> : <div className="flex gap-3"><button type="button" onClick={() => setStep('cart')} className="px-5 py-3 bg-gray-100 dark:bg-white/10 font-bold rounded-xl hover:bg-gray-200 transition-colors text-sm">Vissza</button><button type="submit" form="checkout-form" disabled={isSubmitting} className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-black rounded-xl shadow-xl shadow-green-500/20 active:scale-95 transition-all text-base flex justify-center">{isSubmitting ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Rendelés Leadása'}</button></div>}</div>}
-            </motion.div>
-        </div>
-    );
+            function CartDrawer({items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId}) {
+    const {user} = useAuth();
+            const [step, setStep] = useState('cart');
+            const [form, setForm] = useState({name: '', phone: '', address: '', note: '' });
+            const [isSubmitting, setIsSubmitting] = useState(false);
+    useEffect(() => { if (step === 'checkout' && user) { const fetchUserData = async () => { const {data} = await supabase.from('koszegpass_users').select('full_name, phone, address').eq('id', user.id).single(); if (data) setForm(prev => ({...prev, name: data.full_name || prev.name, phone: data.phone || prev.phone, address: data.address || prev.address })); }; fetchUserData(); } }, [step, user]);
+    const handleSubmit = async (e) => {e.preventDefault(); setIsSubmitting(true); try { const ordersByRestaurant = items.reduce((acc, item) => { if (!acc[item.restaurant_id]) acc[item.restaurant_id] = []; acc[item.restaurant_id].push(item); return acc; }, { }); await Promise.all(Object.keys(ordersByRestaurant).map(rId => placeOrder({restaurantId: rId, customer: {...form, userId: user?.id }, cartItems: ordersByRestaurant[rId] }))); toast.success("Rendelés elküldve! 🍔"); onClear(); onClose(); } catch (error) {console.error(error); toast.error('Hiba történt.'); } finally {setIsSubmitting(false); } };
+            return (
+            <div className="fixed inset-0 z-[100] flex justify-end pointer-events-none">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/20 backdrop-blur-sm pointer-events-auto" />
+                <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }} className="w-full max-w-md bg-white/90 dark:bg-[#151515]/95 backdrop-blur-[40px] h-full shadow-2xl pointer-events-auto flex flex-col border-l border-white/20">
+                    <div className="p-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between"><h2 className="text-lg font-black">{step === 'cart' ? 'Kosarad 🛒' : 'Befejezés ✨'}</h2><button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:scale-110 transition-transform"><IoClose /></button></div>
+                    <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
+                        {items.length === 0 ? <div className="h-full flex flex-col items-center justify-center text-gray-400"><IoBasket className="text-5xl mb-3 opacity-20" /><p className="text-sm">Még üres...</p></div> :
+                            step === 'cart' ? <div className="space-y-3">{items.map(item => (<div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5"><div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">{item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}</div><div className="flex-1 min-w-0"><h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4><p className="text-[10px] text-amber-600 font-bold">{item.price} Ft</p></div><div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm"><button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button><span className="text-xs font-bold w-3 text-center">{item.quantity}</span><button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button></div></div>))}</div> :
+                                <form id="checkout-form" onSubmit={handleSubmit} className="space-y-3"><div className="space-y-2"><input required type="text" placeholder="Név" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} /><input required type="tel" placeholder="Telefonszám" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} /><input required type="text" placeholder="Cím" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} /><textarea rows={3} placeholder="Megjegyzés futárnak..." className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm resize-none" value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} /></div></form>
+                        }
+                    </div>
+                    {items.length > 0 && <div className="p-6 bg-white dark:bg-zinc-900 border-t border-black/5 dark:border-white/5 pb-10"><div className="flex justify-between items-end mb-4"><span className="text-gray-500 font-bold text-sm">Végösszeg</span><span className="text-2xl font-black text-amber-500">{total.toLocaleString('hu-HU')} Ft</span></div>{step === 'cart' ? <button onClick={() => setStep('checkout')} className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl shadow-xl shadow-amber-500/20 active:scale-95 transition-all text-base">Fizetés</button> : <div className="flex gap-3"><button type="button" onClick={() => setStep('cart')} className="px-5 py-3 bg-gray-100 dark:bg-white/10 font-bold rounded-xl hover:bg-gray-200 transition-colors text-sm">Vissza</button><button type="submit" form="checkout-form" disabled={isSubmitting} className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-black rounded-xl shadow-xl shadow-green-500/20 active:scale-95 transition-all text-base flex justify-center">{isSubmitting ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Rendelés Leadása'}</button></div>}</div>}
+                </motion.div>
+            </div>
+            );
 }
