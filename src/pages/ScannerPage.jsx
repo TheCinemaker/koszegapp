@@ -37,8 +37,10 @@ export default function ScannerPage() {
                 // Play success sound
             } else {
                 setScanResult('invalid');
-                setServerMessage(result.message);
-                toast.error(result.message || "Érvénytelen kód!");
+                // Check if message is in result.message OR result.error
+                const msg = result.message || result.error || "Érvénytelen kód!";
+                setServerMessage(msg);
+                toast.error(msg);
                 // Play error sound
             }
 
