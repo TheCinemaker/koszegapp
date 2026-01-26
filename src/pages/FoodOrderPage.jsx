@@ -151,8 +151,13 @@ export default function FoodOrderPage() {
                         )}
 
                         <div className="flex flex-col leading-none">
-                            <h1 className="text-lg font-black text-zinc-900 dark:text-white tracking-tight">Kőszeg<span className="text-amber-500">Eats</span></h1>
-                            {user && <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400">Szia, {user.user_metadata?.nickname || 'Vendég'}!</p>}
+                            <h1 className="text-lg font-black text-zinc-900 dark:text-white tracking-tight">
+                                {activeTab === 'home' && (<span>Kőszeg<span className="text-amber-500">Eats</span></span>)}
+                                {activeTab === 'orders' && <span>Rendelések</span>}
+                                {activeTab === 'rewards' && <span>Pontok & Kedvezmények</span>}
+                                {activeTab === 'account' && <span>Fiókom</span>}
+                            </h1>
+                            {activeTab === 'home' && user && <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400">Szia, {user.user_metadata?.nickname || 'Vendég'}!</p>}
                         </div>
                     </div>
 
@@ -257,22 +262,21 @@ export default function FoodOrderPage() {
                                         </div>
                                     ))}
                                     {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
+                                    {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
+                )}
+
                 {activeTab === 'orders' && (
-                    <div className="pb-32">
-                        <div className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-xl p-6 rounded-[2rem] border border-white/50 dark:border-white/10 shadow-lg mb-8 flex items-center gap-4">
-                            <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30"><IoReceipt className="text-xl" /></div>
-                            <h1 className="text-xl font-black text-gray-900 dark:text-white">Rendelések</h1>
-                        </div>
+                    <div className="pb-32 pt-2">
                         {user ? <MyOrdersList user={user} /> : <div className="text-center py-20 text-zinc-500">Jelentkezz be a rendeléseidhez.</div>}
                     </div>
                 )}
-                {activeTab === 'rewards' && <div className="pb-32"><KoszegPassProfile viewMode="card" /></div>}
-                {activeTab === 'account' && <div className="pb-32"><KoszegPassProfile viewMode="settings" /></div>}
+                {activeTab === 'rewards' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="card" /></div>}
+                {activeTab === 'account' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="settings" /></div>}
             </div>
 
             {/* FLOATING NAV (UPDATED TO GLASS STYLE) */}
