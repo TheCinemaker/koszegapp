@@ -269,7 +269,7 @@ export default function KoszegPassProfile() {
                                                     {profile?.full_name || user.user_metadata?.full_name || 'Felhasználó'}
                                                 </h1>
                                                 <div className="flex items-center gap-1.5 bg-black/20 rounded-full px-2 py-0.5 w-fit mt-1 backdrop-blur-sm">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
                                                     <p className="text-[10px] text-white/80 font-mono tracking-wide lowercase">aktív • érintsd meg</p>
                                                 </div>
                                             </div>
@@ -295,7 +295,7 @@ export default function KoszegPassProfile() {
                                     </div>
 
                                     {/* Hint */}
-                                    <div className="absolute bottom-3 right-1/2 translate-x-1/2 text-[10px] text-white/40 font-bold uppercase tracking-widest animate-pulse pointer-events-none">
+                                    <div className="absolute bottom-3 right-1/2 translate-x-1/2 text-[10px] text-white/40 font-bold uppercase tracking-widest pointer-events-none">
                                         Kattints a kódhoz
                                     </div>
                                 </div>
@@ -341,6 +341,33 @@ export default function KoszegPassProfile() {
                         </div>
                     </div>
                 </FadeUp>
+
+                {/* --- ADD TO WALLET BUTTONS --- */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    {/* Apple Wallet */}
+                    <button onClick={() => toast("Apple Wallet implementáció folyamatban...")} className="hover:scale-105 transition-transform">
+                        <img src="/addToAppleWallet.svg" alt="Add to Apple Wallet" className="h-12" />
+                    </button>
+
+                    {/* Google Wallet (Custom implementation to match style) */}
+                    <button
+                        onClick={() => toast("Google Wallet implementáció folyamatban...")}
+                        className="h-12 px-6 bg-black text-white rounded-[32px] flex items-center gap-3 hover:scale-105 transition-transform shadow-lg border border-white/10"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-6 h-6 fill-current">
+                            {/* Simple Wallet-like icon path or Google G logo */}
+                            <path d="M327.3 226.5c4.1-5.6 6.6-12.5 6.6-20.1 0-18.7-15.2-33.9-33.9-33.9 -18.7 0-33.9 15.2-33.9 33.9 0 18.7 15.2 33.9 33.9 33.9 5.8 0 11.2-1.5 16-4.1l-24.9-42.6h-7.8v75.9h7.8L327.3 226.5zM263.7 206.4c0-21.4 17.4-38.8 38.8-38.8 21.4 0 38.8 17.4 38.8 38.8 0 21.4-17.4 38.8-38.8 38.8 -21.4 0-38.8-17.4-38.8-38.8z" />
+                            {/* Or better, simple text + icon */}
+                            <path d="M24 10.5h2.8v11h-2.8v-11zM14.5 17.5c-3.5 0-5.8-2.3-5.8-5.8s2.3-5.8 5.8-5.8 5.8 2.3 5.8 5.8 -2.3 5.8-5.8 5.8zm0-9.8c-2.3 0-4.1 1.7-4.1 4s1.7 4 4.1 4 4.1-1.7 4.1-4 -1.7-4-4.1-4z" transform="scale(12)" />
+                            {/* Just using a generic wallet icon to keep it clean if no asset */}
+                            <path d="M461.6 109.6l-54.9 31.8c-13.8 8-30.7 7.1-43.8-2.3L286.2 87.5c-18.1-13-42.6-11.6-59.2 3.4L64 239.5V88h384v21.6zM64 286v138h384V146.4L256 322 64 147.2" opacity=".4" /><path d="M64 88h384v336H64z" fill="none" class="fa-secondary" /><path d="M125.2 376.8c7.5-3.3 16.2.2 19.5 7.7 3.3 7.5-.2 16.2-7.7 19.5 -7.5 3.3-16.2-.2-19.5-7.7 -3.4-7.4 .1-16.1 7.7-19.5zM448 376c0 13.3-10.7 24-24 24H88c-13.3 0-24-10.7-24-24V88c0-13.3 10.7-24 24-24h360c13.3 0 24 10.7 24 24v288zM416 117.6V88H96v29.6l160 145.4 160-145.4zM96 376h320V166.4L256 312 96 166.4V376z" />
+                        </svg>
+                        <div className="flex flex-col items-start leading-none">
+                            <span className="text-[10px] uppercase font-bold tracking-wide">Add to</span>
+                            <span className="text-sm font-bold">Google Wallet</span>
+                        </div>
+                    </button>
+                </div>
 
                 {/* --- SETTINGS & ACTIONS GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
