@@ -112,33 +112,32 @@ export default function KoszegPassProfile() {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isPocketOpen, setIsPocketOpen] = useState(false); // Controls Pocket Reveal
     const [isEditing, setIsEditing] = useState(false);
-    const [editForm, setEditForm] = useState({ email: '', phone: '', address: '' });
+    const [isDragging, setIsDragging] = useState(false);
+    const [showHistory, setShowHistory] = useState(false);
+    const [history, setHistory] = useState([]);
+    const [editForm, setEditForm] = useState({ full_name: '', email: '', phone: '', address: '' });
     const editFormRef = useRef(null);
 
-    useEffect(() => {
-        if (isEditing && editFormRef.current) setTimeout(() => editFormRef.current.scrollIntoView({ behavior: 'smooth' }), 100);
-    }, [isEditing]);
+    // ... (keep helper/effects)
 
+    // Fetch History on open
     useEffect(() => {
-        const fetchKoszegPassProfile = async () => {
-            if (!user) return;
-            const { data: userData } = await supabase.from('koszegpass_users').select('*').eq('id', user.id).single();
-            setProfile(userData);
-            setEditForm(userData || {});
-            const { data: cardData } = await supabase.from('koszegpass_cards').select('qr_token').eq('user_id', user.id).single();
-            const token = cardData?.qr_token || user.id;
-            const url = await QRCode.toDataURL(token, { width: 400, margin: 2 });
-            setQrCodeUrl(url);
-            setLoading(false);
-        };
-        fetchKoszegPassProfile();
-    }, [user]);
+        if (showHistory && user) {
+            const fetchHistory = async () => {
+                const { data } = await supabase
+                    .from('koszegpass_points_log')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false });
+                setHistory(data || []);
+            };
+            fetchHistory();
+        }
+    }, [showHistory, user]);
 
-    const handleSave = async () => {
-        const { error } = await supabase.from('koszegpass_users').update(editForm).eq('id', user.id);
-        if (!error) { setProfile({ ...profile, ...editForm }); setIsEditing(false); toast.success("Mentve!"); }
-    };
-    const handleLogout = async () => { await logout(); navigate('/pass/register'); };
+    // ... (rest of component logic)
+
+
 
     if (loading) return <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center"><div className="w-8 h-8 border-2 border-indigo-500 rounded-full animate-spin" /></div>;
 
@@ -159,8 +158,12 @@ export default function KoszegPassProfile() {
                     onClick={() => setIsFlipped(!isFlipped)}
                 >
                     <motion.div
-                        className="w-full h-full relative preserve-3d transition-all duration-700"
-                        animate={{ rotateY: isFlipped ? 180 : 0 }}
+                        className="w-full h-full relative preserve-3d transition-all duration-700 rounded-[24px]"
+                        animate={{
+                            rotateY: isFlipped ? 180 : 0,
+                            scale: isPocketOpen ? 1.01 : 1,
+                            boxShadow: isPocketOpen ? '0 30px 80px rgba(0,0,0,0.35)' : '0 20px 60px rgba(0,0,0,0.25)'
+                        }}
                         style={{ transformStyle: 'preserve-3d' }}
                     >
                         {/* FRONT FACE (Refined Design for Peek) */}
@@ -240,38 +243,47 @@ export default function KoszegPassProfile() {
             {/* Draggable / Animated Sheet that covers the card */}
             <motion.div
                 className="fixed bottom-0 left-0 right-0 z-20 bg-[#F2F2F6] dark:bg-[#0F0F0F] rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.2)] border-t border-white/50 dark:border-white/5"
-                initial={{ top: '110px' }} // Start lower (User requested 10px lower, maybe even more to show header?)
-                animate={{ top: isPocketOpen ? '320px' : '110px' }} // Reveal vs Tucked
-                transition={{
-                    type: "spring",
-                    stiffness: 120, // Lower stiffness = Slower, softer spring
-                    damping: 20,    // Higher damping to prevent oscillation
-                    mass: 1.2       // Heavier mass = slower acceleration 
-                }}
+                variants={pocketVariants}
+                initial="closed"
+                animate={isPocketOpen ? "open" : (isDragging ? "dragging" : "closed")}
                 drag="y"
-                dragConstraints={{ top: 110, bottom: 320 }}
+                dragConstraints={isPocketOpen ? { top: -210, bottom: 0 } : { top: 0, bottom: 210 }}
                 dragElastic={0.05} // Stiffer elastic
+                onDragStart={() => setIsDragging(true)}
                 onDragEnd={(e, info) => {
-                    // Snap logic
-                    if (info.offset.y > 50) setIsPocketOpen(true);
-                    else if (info.offset.y < -50) setIsPocketOpen(false);
+                    setIsDragging(false);
+                    const threshold = 50;
+                    const velocityThreshold = 500;
+
+                    // Logic: If dragged far enough OR flicked fast enough
+                    if (info.offset.y > threshold || info.velocity.y > velocityThreshold) {
+                        if (!isPocketOpen) {
+                            setIsPocketOpen(true);
+                            haptic('heavy');
+                        }
+                    } else if (info.offset.y < -threshold || info.velocity.y < -velocityThreshold) {
+                        if (isPocketOpen) {
+                            setIsPocketOpen(false);
+                            haptic('light');
+                        }
+                    }
                 }}
             >
                 {/* Drag Handle */}
-                <div
-                    className="w-full h-12 flex items-center justify-center cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors rounded-t-[32px]"
-                    onClick={() => setIsPocketOpen(!isPocketOpen)}
-                >
-                    <div className="w-12 h-1.5 bg-zinc-300 dark:bg-zinc-700 rounded-full" />
+                <div className="w-full h-12 flex items-center justify-center rounded-t-[32px]">
+                    <div
+                        className="w-32 h-1.5 bg-zinc-300 dark:bg-zinc-700 rounded-full cursor-pointer"
+                        onClick={() => setIsPocketOpen(!isPocketOpen)}
+                    />
                 </div>
 
                 {/* Pocket Content (Menu) */}
                 <div className="px-6 pt-4 pb-32 h-full overflow-y-auto">
                     {/* Points Summary when Tucked/Open */}
-                    <div className="flex flex-col items-center mb-10">
-                        <CircularProgress value={profile?.points || 0}>
+                    <div className="flex flex-col items-center mb-6">
+                        <CircularProgress value={profile?.points || 0} size={160}>
                             <div className="flex flex-col items-center text-center">
-                                <span className="text-4xl font-black text-zinc-900 dark:text-white tracking-tighter">
+                                <span className="text-3xl font-black text-zinc-900 dark:text-white tracking-tighter">
                                     {profile?.points?.toLocaleString()}
                                 </span>
                                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mt-1">Pont</span>
@@ -279,49 +291,102 @@ export default function KoszegPassProfile() {
                         </CircularProgress>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-3 max-w-md mx-auto">
-                        <FeatureCard
-                            title="Profilom"
-                            subtitle="Személyes adatok"
-                            icon={<IoPersonOutline />}
-                            colorFrom="from-blue-400"
-                            colorTo="to-indigo-600"
-                            delay={0.1}
-                            onClick={() => setIsEditing(!isEditing)}
-                        />
-                        <FeatureCard
-                            title="Egyenleg"
-                            subtitle="Tranzakciók"
-                            icon={<IoWalletOutline />}
-                            colorFrom="from-yellow-400"
-                            colorTo="to-orange-500"
-                            delay={0.2}
-                            onClick={() => toast("Hamarosan")}
-                        />
-                        <FeatureCard
-                            title="Kijelentkezés"
-                            subtitle="Biztonságos kilépés"
-                            icon={<IoLogOut />}
-                            colorFrom="from-red-400"
-                            colorTo="to-rose-600"
-                            delay={0.3}
-                            onClick={handleLogout}
-                        />
-                    </div>
-
-                    <AnimatePresence>
-                        {isEditing && (
-                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-8 bg-white dark:bg-[#1a1c2e] p-6 rounded-2xl border border-zinc-100 dark:border-white/10 overflow-hidden max-w-md mx-auto">
-                                <h3 className="font-bold text-lg mb-4 dark:text-white">Adatok</h3>
-                                <div className="space-y-3">
-                                    <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Email" value={editForm.email} onChange={e => setEditForm({ ...editForm, email: e.target.value })} />
-                                    <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Telefon" value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} />
-                                    <button onClick={handleSave} className="w-full py-3 bg-zinc-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-widest text-xs rounded-lg">Mentés</button>
+                    <AnimatePresence mode="wait">
+                        {showHistory ? (
+                            <motion.div
+                                key="history"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 20 }}
+                                className="h-full max-w-md mx-auto"
+                            >
+                                <div className="flex items-center gap-4 mb-6 sticky top-0 bg-[#F2F2F6] dark:bg-[#0F0F0F] z-10 py-2">
+                                    <button
+                                        onClick={() => setShowHistory(false)}
+                                        className="w-10 h-10 rounded-full bg-zinc-200 dark:bg-white/10 flex items-center justify-center dark:text-white"
+                                    >
+                                        <IoArrowBack />
+                                    </button>
+                                    <h3 className="text-xl font-bold dark:text-white">Tranzakciók</h3>
                                 </div>
+
+                                <div className="space-y-3 pb-8">
+                                    {history.length === 0 ? (
+                                        <p className="text-center text-zinc-500 py-8">Nincs még tranzakció.</p>
+                                    ) : (
+                                        history.map(item => (
+                                            <div key={item.id} className="flex items-center justify-between p-4 bg-white dark:bg-white/5 rounded-2xl border border-zinc-100 dark:border-white/5">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                                                        <IoWalletOutline />
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-bold text-zinc-900 dark:text-white text-sm">{item.source}</p>
+                                                        <p className="text-xs text-zinc-500">{new Date(item.created_at).toLocaleDateString('hu-HU')}</p>
+                                                    </div>
+                                                </div>
+                                                <span className="font-bold text-indigo-600 dark:text-indigo-400">+{item.points} P</span>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="menu"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                            >
+                                <div className="grid grid-cols-1 gap-3 max-w-md mx-auto">
+                                    <FeatureCard
+                                        title="Profil szerkesztése"
+                                        subtitle="Személyes adatok"
+                                        icon={<IoPerson />}
+                                        colorFrom="from-blue-400"
+                                        colorTo="to-indigo-600"
+                                        delay={0.1}
+                                        onClick={() => setIsEditing(!isEditing)}
+                                    />
+                                    <FeatureCard
+                                        title="Egyenleg"
+                                        subtitle="Tranzakciók"
+                                        icon={<IoWalletOutline />}
+                                        colorFrom="from-yellow-400"
+                                        colorTo="to-orange-500"
+                                        delay={0.2}
+                                        onClick={() => setShowHistory(true)}
+                                    />
+                                    <FeatureCard
+                                        title="Kijelentkezés"
+                                        subtitle="Biztonságos kilépés"
+                                        icon={<IoLogOut />}
+                                        colorFrom="from-red-400"
+                                        colorTo="to-rose-600"
+                                        delay={0.3}
+                                        onClick={handleLogout}
+                                    />
+                                </div>
+
+                                <AnimatePresence>
+                                    {isEditing && (
+                                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-8 bg-white dark:bg-[#1a1c2e] p-6 rounded-2xl border border-zinc-100 dark:border-white/10 overflow-hidden max-w-md mx-auto">
+                                            <h3 className="font-bold text-lg mb-4 dark:text-white">Adatok szerkesztése</h3>
+                                            <div className="space-y-3">
+                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Teljes név" value={editForm.full_name} onChange={e => setEditForm({ ...editForm, full_name: e.target.value })} />
+                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Lakcím" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
+                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Email" value={editForm.email} onChange={e => setEditForm({ ...editForm, email: e.target.value })} />
+                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Telefon" value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} />
+                                                <button onClick={handleSave} className="w-full py-3 bg-zinc-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-widest text-xs rounded-lg active:scale-95 transition-transform">Mentés</button>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
+
             </motion.div>
 
         </div>
