@@ -174,6 +174,34 @@ export default function KoszegPassProfile() {
 
     if (loading) return <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center"><div className="w-8 h-8 border-2 border-indigo-500 rounded-full animate-spin" /></div>;
 
+    // POCKET ANIMATION VARIANTS
+    const pocketVariants = {
+        open: {
+            top: '320px',
+            y: 0,
+            transition: { type: "spring", stiffness: 120, damping: 20, mass: 1.2 }
+        },
+        closed: {
+            top: '110px',
+            y: [0, 4, 0, 4, 0],
+            transition: {
+                top: { type: "spring", stiffness: 120, damping: 20, mass: 1.2 },
+                y: {
+                    duration: 2,
+                    times: [0, 0.1, 0.2, 0.3, 1],
+                    repeat: Infinity,
+                    repeatDelay: 5,
+                    ease: "easeInOut",
+                    delay: 1 // Wait for close spring to finish
+                }
+            }
+        },
+        dragging: {
+            top: '110px',
+            y: 0
+        }
+    };
+
     // --- LOGIC: POCKET VS REVEAL ---
     // If IS_POCKET_OPEN = TRUE -> We REVEAL the Card (Pocket slides DOWN).
     // If IS_POCKET_OPEN = FALSE (Default) -> We HIDE the Card (Pocket is UP, covering it).
