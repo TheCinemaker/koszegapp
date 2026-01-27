@@ -118,7 +118,40 @@ export default function KoszegPassProfile() {
     const [editForm, setEditForm] = useState({ full_name: '', email: '', phone: '', address: '' });
     const editFormRef = useRef(null);
 
-    // ... (keep helper/effects)
+    // 1. Initial Fetch
+    useEffect(() => {
+        if (!user) {
+            setLoading(false);
+            return;
+        }
+
+        const fetchKoszegPassProfile = async () => {
+            try {
+                const { data: userData, error: userError } = await supabase.from('koszegpass_users').select('*').eq('id', user.id).single();
+
+                if (userError && userError.code !== 'PGRST116') throw userError;
+
+                setProfile(userData);
+                setEditForm(userData || { full_name: '', email: '', phone: '', address: '' });
+
+                const { data: cardData } = await supabase.from('koszegpass_cards').select('qr_token').eq('user_id', user.id).single();
+                const token = cardData?.qr_token || user.id; // Fallback to ID if no token
+
+                try {
+                    const url = await QRCode.toDataURL(token, { width: 400, margin: 2 });
+                    setQrCodeUrl(url);
+                } catch (qrError) {
+                    console.error("QR Generation failed:", qrError);
+                }
+            } catch (error) {
+                console.error("Profile fetch error:", error);
+                toast.error("Hiba az adatok betöltésekor.");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchKoszegPassProfile();
+    }, [user]); // Depend on user to refetch if user changes
 
     // Fetch History on open
     useEffect(() => {
