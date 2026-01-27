@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
-import { IoLogOut, IoPersonCircle, IoQrCode, IoArrowBack, IoArrowForward, IoSettingsOutline, IoPersonOutline, IoWalletOutline, IoSwapHorizontal } from 'react-icons/io5';
+import { IoLogOut, IoPersonCircle, IoQrCode, IoArrowBack, IoArrowForward, IoSettingsOutline, IoPersonOutline, IoWalletOutline, IoSwapHorizontal, IoPerson } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
 import { motion, AnimatePresence } from 'framer-motion';
