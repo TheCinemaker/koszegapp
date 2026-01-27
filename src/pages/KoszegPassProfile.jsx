@@ -25,16 +25,16 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay
             rounded-[2rem] 
             border border-white/60 dark:border-white/10 
             shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]
-            p-4
-            flex flex-col justify-between 
-            h-full min-h-[110px]
+            p-3 sm:px-4
+            flex items-center 
+            min-h-[80px]
             group
         "
     >
         {/* Abstract Background Gradient */}
         <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${colorFrom} ${colorTo} opacity-20 blur-[50px] rounded-full group-hover:opacity-30 transition-opacity duration-500`} />
 
-        <div className="relative z-10 flex items-center justify-between gap-3">
+        <div className="relative z-10 flex items-center justify-between gap-3 w-full">
             <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-500 shrink-0`}>
                     {icon}
