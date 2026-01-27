@@ -118,6 +118,10 @@ export default function KoszegPassProfile() {
     const [editForm, setEditForm] = useState({ full_name: '', email: '', phone: '', address: '' });
     const editFormRef = useRef(null);
 
+    const haptic = (type = 'light') => {
+        if (navigator.vibrate) navigator.vibrate(type === 'heavy' ? 20 : 10);
+    };
+
     // 1. Initial Fetch
     useEffect(() => {
         if (!user) {
@@ -151,6 +155,35 @@ export default function KoszegPassProfile() {
             }
         };
         fetchKoszegPassProfile();
+
+        // 2. Realtime Subscription
+        console.log("Setting up subscription for:", user.id);
+        const subscription = supabase
+            .channel(`profile_changes_${user.id}`)
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'koszegpass_users',
+                    filter: `id=eq.${user.id}`,
+                },
+                (payload) => {
+                    console.log("Realtime update received:", payload);
+                    setProfile(prev => ({ ...prev, ...payload.new }));
+                    if (payload.new.points !== payload.old?.points) {
+                        toast.success(`Pontok frissítve!`, { icon: '🔄' });
+                    }
+                }
+            )
+            .subscribe((status) => {
+                console.log("Subscription status:", status);
+            });
+
+        return () => {
+            console.log("Cleaning up subscription");
+            supabase.removeChannel(subscription);
+        };
     }, [user]); // Depend on user to refetch if user changes
 
     // Fetch History on open
@@ -168,11 +201,21 @@ export default function KoszegPassProfile() {
         }
     }, [showHistory, user]);
 
+    useEffect(() => {
+        if (isEditing && editFormRef.current) setTimeout(() => editFormRef.current.scrollIntoView({ behavior: 'smooth' }), 100);
+    }, [isEditing]);
+
     // ... (rest of component logic)
 
 
 
     if (loading) return <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center"><div className="w-8 h-8 border-2 border-indigo-500 rounded-full animate-spin" /></div>;
+
+    const handleSave = async () => {
+        const { error } = await supabase.from('koszegpass_users').update(editForm).eq('id', user.id);
+        if (!error) { setProfile({ ...profile, ...editForm }); setIsEditing(false); toast.success("Mentve!"); }
+    };
+    const handleLogout = async () => { await logout(); navigate('/pass/register'); };
 
     // POCKET ANIMATION VARIANTS
     const pocketVariants = {
