@@ -232,7 +232,7 @@ export default function KoszegPassProfile() {
                 y: {
                     duration: 2,
                     times: [0, 0.1, 0.2, 0.3, 1],
-                    repeat: Infinity,
+                    repeat: 3,
                     repeatDelay: 5,
                     ease: "easeInOut",
                     delay: 1 // Wait for close spring to finish
