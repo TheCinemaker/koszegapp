@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
-import { IoLogOut, IoPersonCircle, IoQrCode, IoArrowBack, IoArrowForward, IoSettingsOutline, IoPersonOutline, IoWalletOutline, IoSwapHorizontal, IoPerson } from 'react-icons/io5';
+import { IoLogOut, IoPersonCircle, IoQrCode, IoArrowBack, IoArrowForward, IoSettingsOutline, IoPersonOutline, IoWalletOutline, IoSwapHorizontal, IoPerson, IoLogoGoogle, IoLogoApple } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -109,6 +109,7 @@ export default function KoszegPassProfile() {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [qrCodeUrl, setQrCodeUrl] = useState('');
+    const [qrToken, setQrToken] = useState(null);
     const [isFlipped, setIsFlipped] = useState(false);
     const [isPocketOpen, setIsPocketOpen] = useState(false); // Controls Pocket Reveal
     const [isEditing, setIsEditing] = useState(false);
@@ -140,6 +141,7 @@ export default function KoszegPassProfile() {
 
                 const { data: cardData } = await supabase.from('koszegpass_cards').select('qr_token').eq('user_id', user.id).single();
                 const token = cardData?.qr_token || user.id; // Fallback to ID if no token
+                setQrToken(token);
 
                 try {
                     const url = await QRCode.toDataURL(token, { width: 400, margin: 2 });
@@ -216,6 +218,34 @@ export default function KoszegPassProfile() {
         if (!error) { setProfile({ ...profile, ...editForm }); setIsEditing(false); toast.success("Mentve!"); }
     };
     const handleLogout = async () => { await logout(); navigate('/pass/register'); };
+
+    const handleGoogleWallet = async () => {
+        if (!profile) return;
+        const toastId = toast.loading("Google Wallet előkészítése...");
+        try {
+            const response = await fetch('/.netlify/functions/create-google-pass', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: user.id,
+                    full_name: profile.full_name,
+                    points: profile.points,
+                    card_type: profile.card_type,
+                    qr_token: qrToken
+                })
+            });
+            const data = await response.json();
+            if (response.ok && data.saveUrl) {
+                toast.success("Kész! Megnyitás...", { id: toastId });
+                window.open(data.saveUrl, '_blank');
+            } else {
+                throw new Error(data.error || "Hiba történt");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Sikertelen hozzáadás: " + error.message, { id: toastId });
+        }
+    };
 
     // POCKET ANIMATION VARIANTS
     const pocketVariants = {
@@ -470,6 +500,16 @@ export default function KoszegPassProfile() {
                                         delay={0.3}
                                         onClick={handleLogout}
                                     />
+                                </div>
+
+                                <div className="mt-6 flex justify-center pb-8 border-t border-zinc-200 dark:border-white/10 pt-6">
+                                    <button
+                                        onClick={handleGoogleWallet}
+                                        className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-medium shadow-lg hover:scale-105 active:scale-95 transition-transform"
+                                    >
+                                        <IoLogoGoogle size={20} />
+                                        <span>Add to Google Wallet</span>
+                                    </button>
                                 </div>
 
                                 <AnimatePresence>
