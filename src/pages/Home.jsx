@@ -12,13 +12,15 @@ import {
   IoCarSportOutline,
   IoInformationCircleOutline,
   IoDiamondOutline,
-  IoChevronForward
+  IoChevronForward,
+  IoQrCode
 } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import { FadeUp } from '../components/AppleMotion';
 
 const sections = [
-  { to: '/events', label: 'Események', desc: 'Élmények. Élőben.', icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-2 row-span-1', delay: 0.1 },
+  { to: '/pass', label: 'KőszegPass', desc: 'Digitális városkártya.', icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-2 row-span-1', delay: 0.05 },
+  { to: '/events', label: 'Események', desc: 'Élmények. Élőben.', icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-1 row-span-1', delay: 0.1 },
   { to: '/attractions', label: 'Látnivalók', desc: 'Időtlen kincsek.', icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 row-span-1', delay: 0.15 },
   { to: '/gastronomy', label: 'Gasztró', desc: 'Ízek harmóniája.', icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-700', span: 'col-span-1', delay: 0.2 },
   { to: '/weather', label: 'Időjárás', desc: 'Tiszta kilátások.', icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1', delay: 0.25 },
