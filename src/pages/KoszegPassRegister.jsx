@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
-import { IoArrowBack, IoPerson, IoLockClosed, IoIdCard } from 'react-icons/io5';
+import { IoArrowBack, IoPerson, IoLockClosed, IoIdCard, IoInformationCircleOutline, IoClose } from 'react-icons/io5';
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function KoszegPassRegister() {
     const { register, login } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(false); // Toggle between Login/Register
+    const [showInfo, setShowInfo] = useState(false);
 
     const [form, setForm] = useState({
         fullName: '',
@@ -103,15 +104,19 @@ export default function KoszegPassRegister() {
                 className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl z-10"
             >
                 <div className="flex justify-between items-center mb-6">
-                    <button onClick={() => navigate(-1)} className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors">
+                    <button onClick={() => navigate(-1)} className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors order-1">
                         <IoArrowBack size={20} />
                     </button>
-                    {/* Toggle Button */}
+                    {/* Info Button - Order 2 */}
+                    <button onClick={() => setShowInfo(true)} className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors order-3 text-blue-400">
+                        <IoInformationCircleOutline size={22} />
+                    </button>
+                    {/* Toggle Button - Order 2 (Centered-ish via flex) */}
                     <button
                         onClick={() => setIsLogin(!isLogin)}
-                        className="text-xs font-bold uppercase tracking-widest text-blue-400 hover:text-blue-300"
+                        className="text-xs font-bold uppercase tracking-widest text-blue-400 hover:text-blue-300 order-2 mx-auto"
                     >
-                        {isLogin ? 'Nincs még kártyád? Igénylés' : 'Már Van Kártyám? Belépés'}
+                        {isLogin ? 'Regisztráció' : 'Belépés'}
                     </button>
                 </div>
 
@@ -203,6 +208,73 @@ export default function KoszegPassRegister() {
                 </form>
 
             </motion.div>
+
+            {/* INFO MODAL */}
+            <AnimatePresence>
+                {showInfo && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowInfo(false)}
+                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                        />
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="relative w-full max-w-sm bg-zinc-900 border border-white/10 rounded-3xl p-6 shadow-2xl"
+                        >
+                            <button
+                                onClick={() => setShowInfo(false)}
+                                className="absolute top-4 right-4 p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+                            >
+                                <IoClose size={20} />
+                            </button>
+
+                            <div className="flex flex-col items-center text-center mb-6">
+                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-3xl mb-4 shadow-lg shadow-indigo-500/30">
+                                    💎
+                                </div>
+                                <h2 className="text-xl font-bold text-white">Mire jó a KőszegPass?</h2>
+                            </div>
+
+                            <div className="space-y-4 text-zinc-300 text-sm leading-relaxed">
+                                <p>
+                                    A <strong className="text-white">KőszegPass</strong> a város hivatalos hűségkártyája, amit hamarosan városszerte használhatsz!
+                                </p>
+                                <ul className="space-y-3">
+                                    <li className="flex gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                                        <span className="text-xl">🛍️</span>
+                                        <div>
+                                            <strong className="block text-white text-xs uppercase tracking-wide mb-1">Jutalompontok</strong>
+                                            <span>Vásárlásaid után pontokat kapsz a helyi elfogadóhelyeken.</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                                        <span className="text-xl">🏷️</span>
+                                        <div>
+                                            <strong className="block text-white text-xs uppercase tracking-wide mb-1">Kedvezmények</strong>
+                                            <span>Szintedtől függően (Bronz, Ezüst, Arany, Gyémánt) %-os kedvezményeket kapsz.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <p className="text-xs text-zinc-500 italic text-center pt-2">
+                                    "Még nincs semmi, de a lényeg ez lesz!" 😉
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={() => setShowInfo(false)}
+                                className="w-full py-3 mt-6 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform"
+                            >
+                                Értem!
+                            </button>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
