@@ -38,19 +38,9 @@ async function createClass() {
             hexBackgroundColor: "#311b92",
             heroImage: {
                 sourceUri: { uri: "https://placehold.co/1032x336.png" } // Optional hero
-            },
-            classTemplateInfo: {
-                cardTemplateOverride: {
-                    cardRowTemplateInfos: [
-                        {
-                            twoItems: {
-                                startItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['points']" }] } },
-                                endItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['rank']" }] } }
-                            }
-                        }
-                    ]
-                }
             }
+            // REMOVED classTemplateInfo (Advanced Layout) to prevent potential rejection/silent fail
+            // We start with the default layout.
         };
 
         console.log(`Connecting to Google Wallet API to create class: ${fullClassId}...`);

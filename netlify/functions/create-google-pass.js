@@ -21,59 +21,45 @@ exports.handler = async (event, context) => {
             };
         }
 
-        // Generate a random suffix to ensure unique Object ID for every attempt (Prevent "Object already exists" error)
-        const randomSuffix = Math.floor(Math.random() * 100000);
-        const objectId = `${issuerId}.${user_id.replace(/-/g, '_')}_${randomSuffix}`;
-        const fullClassId = `${issuerId}.${classId}`; // Unique Class ID
+        // CORRECT: Stable Object ID (1 User = 1 Pass)
+        const objectId = `${issuerId}.${user_id.replace(/-/g, '_')}`;
+        const fullClassId = `${issuerId}.${classId}`;
 
         // Construct the Google Wallet JWT Payload
-        // Best Practice: ONLY define the Object. The Class must exist beforehand.
         const claims = {
             iss: serviceAccountEmail,
             aud: 'google',
             typ: 'savetowallet',
             iat: Math.floor(Date.now() / 1000),
+            // CORRECT: Origins at root level
+            origins: ['http://localhost:8888', 'http://localhost:3000', 'https://koszegapp.netlify.app'],
             payload: {
                 websafeKeys: [],
-                origins: ['http://localhost:8888', 'http://localhost:3000', 'https://koszegapp.netlify.app'],
-
-                // DEFINE THE OBJECT ONLY
-                genericObjects: [
+                // CORRECT: Using LOYALTY OBJECTS (Matches standard LoyaltyClass)
+                loyaltyObjects: [
                     {
                         id: objectId,
                         classId: fullClassId,
-                        genericType: 'GENERIC_TYPE_LOYALTY', // User requested LOYALTY type
-                        hexBackgroundColor: '#311b92',
-                        logo: {
-                            sourceUri: {
-                                uri: 'https://placehold.co/192x192.png'
-                            }
-                        },
-                        cardTitle: {
-                            defaultValue: {
-                                language: 'hu',
-                                value: 'KőszegPass'
-                            }
-                        },
-                        header: {
-                            defaultValue: {
-                                language: 'hu',
-                                value: full_name || 'Felhasználó'
-                            }
-                        },
+                        // No genericType needed for LoyaltyObject
+
+                        accountName: full_name || 'Felhasználó',
+                        accountId: user_id,
+                        state: 'ACTIVE',
+
                         barcode: {
                             type: 'QR_CODE',
                             value: qr_token || user_id,
                             alternateText: qr_token || user_id
                         },
+
                         textModulesData: [
                             {
-                                id: 'points', // Matches template fieldPath: "object.textModulesData['points']"
+                                id: 'points',
                                 header: 'Pontok',
                                 body: (points || 0).toLocaleString()
                             },
                             {
-                                id: 'rank', // Matches template fieldPath: "object.textModulesData['rank']"
+                                id: 'rank',
                                 header: 'Rang',
                                 body: (card_type || 'Bronz').toUpperCase()
                             }
