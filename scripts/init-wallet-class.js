@@ -35,9 +35,9 @@ async function createClass() {
             programLogo: {
                 sourceUri: { uri: "https://placehold.co/192x192.png" }
             },
-            hexBackgroundColor: "#311b92",
+            hexBackgroundColor: "#1e1b4b", // Deep Indigo/Cosmic theme
             heroImage: {
-                sourceUri: { uri: "https://placehold.co/1032x336.png" } // Optional hero
+                sourceUri: { uri: "https://placehold.co/1032x336.png" }
             }
             // REMOVED classTemplateInfo (Advanced Layout) to prevent potential rejection/silent fail
             // We start with the default layout.

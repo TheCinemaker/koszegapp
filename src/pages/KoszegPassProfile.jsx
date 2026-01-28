@@ -175,6 +175,16 @@ export default function KoszegPassProfile() {
                     setProfile(prev => ({ ...prev, ...payload.new }));
                     if (payload.new.points !== payload.old?.points) {
                         toast.success(`Pontok frissítve!`, { icon: '🔄' });
+
+                        // Sync with Google Wallet
+                        fetch('/.netlify/functions/update-google-pass', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                user_id: user.id,
+                                points: payload.new.points,
+                                card_type: payload.new.card_type
+                            })
+                        }).catch(err => console.error("Wallet sync failed:", err));
                     }
                 }
             )
