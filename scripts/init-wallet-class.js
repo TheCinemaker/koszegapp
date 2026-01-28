@@ -33,11 +33,11 @@ async function createClass() {
             reviewStatus: "UNDER_REVIEW",
             programName: "KőszegPass",
             programLogo: {
-                sourceUri: { uri: "https://placehold.co/192x192.png" }
+                sourceUri: { uri: "https://koszegapp.netlify.app/android-chrome-192x192.png" }
             },
             hexBackgroundColor: "#1e1b4b", // Deep Indigo/Cosmic theme
             heroImage: {
-                sourceUri: { uri: "https://placehold.co/1032x336.png" }
+                sourceUri: { uri: "https://koszegapp.netlify.app/img/wallet_hero.png" }
             }
             // REMOVED classTemplateInfo (Advanced Layout) to prevent potential rejection/silent fail
             // We start with the default layout.

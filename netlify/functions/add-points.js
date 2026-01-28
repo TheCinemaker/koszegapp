@@ -82,10 +82,18 @@ exports.handler = async (event) => {
         const currentPoints = card.koszegpass_users.points || 0;
         const newPoints = currentPoints + points;
 
-        // 2. Update Points
+        // 2. Update Points & Calculate Tier (Max 20,000 scale)
+        let newCardType = 'bronze';
+        if (newPoints >= 20000) newCardType = 'diamant';
+        else if (newPoints >= 10000) newCardType = 'gold';
+        else if (newPoints >= 5000) newCardType = 'silver';
+
         const { error: updateError } = await supabase
             .from('koszegpass_users')
-            .update({ points: newPoints })
+            .update({
+                points: newPoints,
+                card_type: newCardType
+            })
             .eq('id', card.user_id);
 
         if (updateError) {

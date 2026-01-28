@@ -61,7 +61,7 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay
 );
 
 // --- HELPER COMPONENT: Circular Progress ---
-const CircularProgress = ({ value, max = 200000, size = 180, strokeWidth = 8, children }) => {
+const CircularProgress = ({ value, max = 20000, size = 180, strokeWidth = 8, children }) => {
     const radius = (size - strokeWidth) / 2;
     const circumference = radius * 2 * Math.PI;
     const progress = Math.min(value / max, 1);
