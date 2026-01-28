@@ -21,7 +21,8 @@ exports.handler = async (event, context) => {
             };
         }
 
-        const objectId = `${issuerId}.${user_id.replace(/-/g, '_')}`; // Sanitize ID
+        const objectId = `${issuerId}.${user_id.replace(/-/g, '_')}`; // Unique Object ID
+        const fullClassId = `${issuerId}.${classId}`; // Unique Class ID
 
         // Construct the Google Wallet JWT Payload
         // See: https://developers.google.com/wallet/generic/web
@@ -30,13 +31,31 @@ exports.handler = async (event, context) => {
             aud: 'google',
             typ: 'savetowallet',
             iat: Math.floor(Date.now() / 1000),
-            // origin: 'https://koszegapp.netlify.app', // Optional: secure origin
             payload: {
                 websafeKeys: [],
+                // DEFINE THE CLASS (Template)
+                genericClasses: [
+                    {
+                        id: fullClassId,
+                        classTemplateInfo: {
+                            cardTemplateOverride: {
+                                cardRowTemplateInfos: [
+                                    {
+                                        twoItems: {
+                                            startItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['points']" }] } },
+                                            endItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['rank']" }] } }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                // DEFINE THE OBJECT (User Instance)
                 genericObjects: [
                     {
                         id: objectId,
-                        classId: `${issuerId}.${classId}`,
+                        classId: fullClassId,
                         genericType: 'GENERIC_TYPE_UNSPECIFIED',
                         hexBackgroundColor: '#311b92', // Match Diamant/Blue theme roughly
                         logo: {
