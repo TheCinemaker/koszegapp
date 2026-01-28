@@ -33,6 +33,7 @@ exports.handler = async (event, context) => {
             iat: Math.floor(Date.now() / 1000),
             payload: {
                 websafeKeys: [],
+                origins: ['http://localhost:8888', 'http://localhost:3000'], // Allow local origins
                 // DEFINE THE CLASS (Template)
                 genericClasses: [
                     {
