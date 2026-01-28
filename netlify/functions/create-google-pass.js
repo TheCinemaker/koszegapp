@@ -21,7 +21,9 @@ exports.handler = async (event, context) => {
             };
         }
 
-        const objectId = `${issuerId}.${user_id.replace(/-/g, '_')}`; // Unique Object ID
+        // Generate a random suffix to ensure unique Object ID for every attempt (Prevent "Object already exists" error)
+        const randomSuffix = Math.floor(Math.random() * 100000);
+        const objectId = `${issuerId}.${user_id.replace(/-/g, '_')}_${randomSuffix}`;
         const fullClassId = `${issuerId}.${classId}`; // Unique Class ID
 
         // Construct the Google Wallet JWT Payload
