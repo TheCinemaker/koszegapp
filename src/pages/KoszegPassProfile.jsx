@@ -514,11 +514,11 @@ export default function KoszegPassProfile() {
 
                                 <div className="mt-6 flex justify-center pb-8 border-t border-zinc-200 dark:border-white/10 pt-6">
                                     <button
-                                        onClick={handleGoogleWallet}
-                                        className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-medium shadow-lg hover:scale-105 active:scale-95 transition-transform"
+                                        disabled
+                                        className="flex items-center gap-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 px-6 py-3 rounded-full font-medium shadow-none cursor-not-allowed grayscale"
                                     >
                                         <IoLogoGoogle size={20} />
-                                        <span>Add to Google Wallet</span>
+                                        <span>Google Wallet (Hamarosan)</span>
                                     </button>
                                 </div>
 
