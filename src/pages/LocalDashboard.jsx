@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle, IoLogIn, IoLogOut, IoPerson, IoCalendar } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { IoTrashOutline, IoWarningOutline, IoArrowBack, IoArrowForward, IoLeafOutline, IoWaterOutline, IoInformationCircleOutline, IoSearchOutline, IoCheckmarkCircle, IoLogIn, IoLogOut, IoPerson, IoCalendar, IoQrCode } from "react-icons/io5";
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
 
@@ -78,7 +78,8 @@ export default function LocalDashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [showTomorrowDetails, setShowTomorrowDetails] = useState(false);
     const [providers, setProviders] = useState([]);
-    const { user, logout } = useAuth(); // Destructure logout here
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProviders = async () => {
@@ -377,6 +378,17 @@ export default function LocalDashboard() {
 
                 {/* --- SERVICES GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    {/* KőszegPass Card (Enabled) */}
+                    <FeatureCard
+                        title="KőszegPass"
+                        subtitle="Digitális városkártya, kedvezmények és pontgyűjtés"
+                        icon={<IoQrCode />}
+                        colorFrom="from-indigo-500"
+                        colorTo="to-purple-600"
+                        delay={0.1}
+                        onClick={() => navigate('/pass')}
+                    />
 
                     {/* NEW: Booking Card moved to grid */}
                     {/* Booking Card - COMING SOON */}
