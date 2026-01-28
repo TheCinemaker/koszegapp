@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
         const fullClassId = `${issuerId}.${classId}`; // Unique Class ID
 
         // Construct the Google Wallet JWT Payload
-        // See: https://developers.google.com/wallet/generic/web
+        // Best Practice: ONLY define the Object. The Class must exist beforehand.
         const claims = {
             iss: serviceAccountEmail,
             aud: 'google',
@@ -33,35 +33,18 @@ exports.handler = async (event, context) => {
             iat: Math.floor(Date.now() / 1000),
             payload: {
                 websafeKeys: [],
-                origins: ['http://localhost:8888', 'http://localhost:3000'], // Allow local origins
-                // DEFINE THE CLASS (Template)
-                genericClasses: [
-                    {
-                        id: fullClassId,
-                        classTemplateInfo: {
-                            cardTemplateOverride: {
-                                cardRowTemplateInfos: [
-                                    {
-                                        twoItems: {
-                                            startItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['points']" }] } },
-                                            endItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['rank']" }] } }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                ],
-                // DEFINE THE OBJECT (User Instance)
+                origins: ['http://localhost:8888', 'http://localhost:3000', 'https://koszegapp.netlify.app'],
+
+                // DEFINE THE OBJECT ONLY
                 genericObjects: [
                     {
                         id: objectId,
                         classId: fullClassId,
-                        genericType: 'GENERIC_TYPE_UNSPECIFIED',
-                        hexBackgroundColor: '#311b92', // Match Diamant/Blue theme roughly
+                        genericType: 'GENERIC_TYPE_LOYALTY', // User requested LOYALTY type
+                        hexBackgroundColor: '#311b92',
                         logo: {
                             sourceUri: {
-                                uri: 'https://koszegapp.netlify.app/icon-192.png' // Use app icon as logo
+                                uri: 'https://placehold.co/192x192.png'
                             }
                         },
                         cardTitle: {
@@ -83,14 +66,14 @@ exports.handler = async (event, context) => {
                         },
                         textModulesData: [
                             {
+                                id: 'points', // Matches template fieldPath: "object.textModulesData['points']"
                                 header: 'Pontok',
-                                body: (points || 0).toLocaleString(),
-                                id: 'points'
+                                body: (points || 0).toLocaleString()
                             },
                             {
+                                id: 'rank', // Matches template fieldPath: "object.textModulesData['rank']"
                                 header: 'Rang',
-                                body: (card_type || 'Bronz').toUpperCase(),
-                                id: 'rank'
+                                body: (card_type || 'Bronz').toUpperCase()
                             }
                         ]
                     }
