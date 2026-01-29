@@ -380,8 +380,10 @@ export default function KoszegPassProfile() {
                             className="absolute inset-0 backface-hidden rounded-[24px] p-6 shadow-2xl overflow-hidden bg-white dark:bg-[#1a1c2e] border border-zinc-200 dark:border-white/10 flex flex-col items-center justify-center text-center"
                             style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                         >
-                            <img src={qrCodeUrl} className="w-32 h-32 object-contain mix-blend-multiply mb-4" />
-                            <p className="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-200 break-all">{user.id}</p>
+                            <div className="bg-white p-4 rounded-xl shadow-sm mb-4">
+                                <img src={qrCodeUrl} className="w-32 h-32 object-contain" />
+                            </div>
+                            <p className="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-200 break-all px-4">{user.id}</p>
                         </div>
                     </motion.div>
                 </div>
