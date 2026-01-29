@@ -126,7 +126,8 @@ export default function KoszegPassProfile() {
     // 1. Initial Fetch
     useEffect(() => {
         if (!user) {
-            setLoading(false);
+            // Redirect to Register/Login if not authenticated
+            navigate('/pass/register', { replace: true });
             return;
         }
 
@@ -290,6 +291,9 @@ export default function KoszegPassProfile() {
     // If IS_POCKET_OPEN = FALSE (Default) -> We HIDE the Card (Pocket is UP, covering it).
     // TUCKED: Pocket Top = 110px. (Roughly 80px Card Top + 30px Peak)
     // OPEN: Pocket Top = 320px.
+
+    // PROTECTION: Don't render if no user (prevents crash)
+    if (!user) return null;
 
     return (
         <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-hidden relative selection:bg-indigo-500/30">
