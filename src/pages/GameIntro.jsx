@@ -39,12 +39,7 @@ export default function GameIntro() {
   }, []);
 
   /* ===== FÁZISOK LÉPTETÉSE ===== */
-  useEffect(() => {
-    if (phase === 'intro') {
-      const t = setTimeout(() => setPhase('rules'), 4000); // 4mp olvasási idő az első tömbhöz
-      return () => clearTimeout(t);
-    }
-  }, [phase]);
+  // Removed automatic phase switching as per new requirement (waiting for user click)
 
   const handleNameSubmit = (name) => {
     setPlayerName(name);
@@ -77,80 +72,64 @@ export default function GameIntro() {
       <div className="relative z-10 w-full max-w-md flex flex-col items-center justify-start pt-[20vh] space-y-8 text-center">
 
         <AnimatePresence mode='wait'>
-          {/* 1. FÁZIS: INTRO (SOFTSTART DESIGN) */}
-          {(phase === 'intro' || phase === 'rules' || phase === 'choice') && (
+          {/* 1. FÁZIS: INTRO (Unified Text) */}
+          {(phase === 'intro') && (
             <motion.div
               key="intro"
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="space-y-4"
+              transition={{ duration: 1.5, ease: 'easeOut' }} // Slower, unified fade
+              className="space-y-6 text-center max-w-sm mx-auto"
             >
-              <h1 className="text-2xl font-serif text-white/90 leading-tight">
-                Az idő nem vonal.
-              </h1>
-              {phase !== 'choice' && (
-                <div className="text-white/60 leading-relaxed font-light mt-4 space-y-4 text-sm">
-                  <p>Hanem rétegek egymáson.</p>
-                  <p>
-                    A város nem csak épült.<br />
-                    Megmaradt.
-                  </p>
-                </div>
-              )}
-            </motion.div>
-          )}
+              <div className="text-white/80 leading-relaxed font-light text-sm uppercase tracking-widest space-y-6">
+                <p>
+                  AZ IDŐ NEM VONAL.<br />
+                  HANEM RÉTEGEK EGYMÁSON.
+                </p>
+                <p>
+                  A VÁROS NEM CSAK ÉPÜLT.<br />
+                  MEGMARADT.
+                </p>
+                <p>
+                  FALAI NEM BESZÉLNEK HANGOSAN.<br />
+                  DE EMLÉKEZNEK.
+                </p>
+                <p>
+                  VANNAK HELYEK,<br />
+                  AHOL A MÚLT NEM MÖGÖTTED VAN,<br />
+                  HANEM KÖRÜLÖTTED.
+                </p>
+                <p className="text-white font-semibold">
+                  HA JÓ HELYEN ÁLLSZ MEG,<br />
+                  TALÁN ÉSZREVESZED.
+                </p>
+              </div>
 
-          {/* 2. FÁZIS: LORE (MÚLT) */}
-          {(phase === 'rules') && (
-            <motion.div
-              key="rules"
-              initial={{ opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="mt-4 text-white/60 leading-relaxed font-light max-w-sm mx-auto text-sm space-y-4"
-            >
-              <p>
-                Falai nem beszélnek hangosan.<br />
-                De emlékeznek.
-              </p>
-              <p>
-                Vannak helyek,<br />
-                ahol a múlt nem mögötted van,<br />
-                hanem körülötted.
-              </p>
-              <p className="font-serif italic text-white/80">
-                Ha jó helyen állsz meg,<br />
-                talán észreveszed.
-              </p>
+              {/* Tovább Gomb - Késleltetve */}
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 4, duration: 1 }} // Button appears after text is fully read
+                onClick={() => setPhase('choice')}
+                className="
+                   mt-12
+                   text-xs
+                   uppercase
+                   tracking-[0.4em]
+                   text-blue-300
+                   opacity-80
+                   hover:opacity-100
+                   border-b border-transparent
+                   hover:border-blue-300/40
+                   pb-2
+                   transition-all
+                   inline-block
+                 "
+              >
+                INDULJ EL →
+              </motion.button>
             </motion.div>
-          )}
-
-          {/* EGYETLEN TOVÁBBLÉPÉS GOMB (Csak a Rules végén) */}
-          {phase === 'rules' && (
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2.5 }} // Hagyunk időt az olvasásra
-              onClick={() => setPhase('choice')}
-              className="
-                 mt-12
-                 text-xs
-                 uppercase
-                 tracking-[0.4em]
-                 text-blue-300
-                 opacity-80
-                 hover:opacity-100
-                 border-b border-transparent
-                 hover:border-blue-300/40
-                 pb-2
-                 transition-all
-               "
-            >
-              INDULJ EL →
-            </motion.button>
           )}
 
           {/* 3. FÁZIS: VÁLASZTÁS */}

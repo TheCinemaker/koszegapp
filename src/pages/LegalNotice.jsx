@@ -18,17 +18,20 @@ export default function LegalNotice() {
                 </h1>
 
                 <div className="bg-red-900/10 border border-red-500/30 p-6 rounded-lg space-y-4">
-                    <p className="font-bold text-red-400 uppercase tracking-widest text-xs">
-                        Figyelmeztetés
+                    <p className="font-bold text-red-400 uppercase tracking-widest text-xs mb-4">
+                        Szerzői jogi védelem
                     </p>
-                    <p className="leading-relaxed text-white/90">
-                        Ez az alkalmazás és annak teljes tartalma <strong>saját szellemi termékem</strong>.
+                    <p className="leading-relaxed text-white/90 text-sm">
+                        A KőszegAPP alkalmazás, annak teljes tartalma, működési koncepciója, forráskódja, grafikai megjelenése, adatstruktúrája és egyedi megoldásai szerzői jogi védelem alatt álló szellemi alkotások, amelyek kizárólag a jogosult tulajdonát képezik.
                     </p>
-                    <p className="leading-relaxed text-white/90 font-medium">
-                        Senki nem használhatja fel az engedélyem nélkül!
+                    <p className="leading-relaxed text-white/90 text-sm">
+                        Az alkalmazás bármilyen formában történő másolása, felhasználása, átdolgozása, terjesztése, visszafejtése, illetve az alkalmazás működésével vagy koncepciójával lényegében megegyező vagy ahhoz hasonló rendszer létrehozása a jogosult előzetes írásos engedélye nélkül tilos.
                     </p>
-                    <p className="leading-relaxed text-white/90 italic">
-                        Amennyiben bárki engedély nélkül másolja, felhasználja, vagy ehhez hasonló rendszert készít az ötletem alapján, azzal szemben azonnali jogi lépéseket teszek és beperelem!
+                    <p className="leading-relaxed text-white/90 text-sm italic border-t border-white/10 pt-4 mt-4">
+                        A jogosulatlan felhasználás jogsértésnek minősül, és polgári jogi, valamint szükség esetén büntetőjogi eljárást vonhat maga után. A jogosult fenntartja a jogot, hogy jogsértés esetén haladéktalanul jogi lépéseket tegyen, ideértve a kártérítési igény érvényesítését is.
+                    </p>
+                    <p className="text-right text-xs text-white/50 uppercase tracking-widest mt-2">
+                        Minden jog fenntartva.
                     </p>
                 </div>
 

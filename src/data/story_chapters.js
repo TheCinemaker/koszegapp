@@ -1,7 +1,7 @@
 export const storyChapters = [
     {
         id: 1,
-        unlockAt: 4,
+        unlockAt: 5,
         title: "I. A Rés az Időn",
         content: `
 A város nem csak kövekből épült. A falak között valami más is rejtőzik – egy régi, mély remegés, amit csak az érez, aki figyel.
@@ -14,10 +14,10 @@ Hanem a jövőből.
     },
     {
         id: 2,
-        unlockAt: 8,
+        unlockAt: 10,
         title: "II. A Néma Árnyék",
         content: `
-Már félig nyitva a kapu. A múlt és a jelen kezd összemosódni.
+Már félig bezárult a kapu. A múlt és a jelen kezd összemosódni.
 A feljegyzések szerint a legnagyobb veszély nem a falakon kívül volt, hanem belül. Egy árnyék járta a várost az ostrom éjszakáin. Nem szólt senkihez, de ahol megjelent, ott a reménytelenség helyét átvette a dac.
 Ki volt ez az árnyék?
 Miért nincsenek róla feljegyzések a hivatalos krónikákban?
@@ -27,7 +27,7 @@ Talán mert nem tartozott oda. Talán mert ő is csak egy látogató volt... min
     },
     {
         id: 3,
-        unlockAt: 12,
+        unlockAt: 15,
         title: "III. Az Utolsó Kör",
         content: `
 A kör bezárult.

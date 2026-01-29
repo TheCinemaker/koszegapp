@@ -61,7 +61,7 @@ export default function IntroExperience() {
                     transition={{ delay: 0.6, duration: 1.5, ease: 'easeOut' }}
                     className="mt-8 text-xs uppercase tracking-[0.3em] font-sans text-center text-white/80"
                 >
-                    Az idő nem egyetlen korból való.
+                    AZ IDŐ NEM EGYETLEN KORBÓL VALÓ.
                 </motion.p>
             )}
 

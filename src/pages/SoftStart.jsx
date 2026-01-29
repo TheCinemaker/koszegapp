@@ -32,11 +32,11 @@ export default function SoftStart() {
                     className="space-y-4"
                 >
                     <p className="text-sm text-white/40 font-mono uppercase tracking-widest">
-                        A város nem felejtett.
+                        A NEVED MÁR A KRÓNIKÁBAN.
                     </p>
 
                     <h2 className="text-3xl font-serif text-white/90 leading-tight">
-                        Nem minden fal néma.
+                        DE A TÖRTÉNET MÉG NINCS KÉSZ.
                     </h2>
                 </motion.div>
 
@@ -44,17 +44,18 @@ export default function SoftStart() {
                     initial={{ opacity: 0, y: 35 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.1, ease: 'easeOut', delay: 0.2 }}
-                    className="mt-4 text-white/60 leading-relaxed font-light max-w-xs"
+                    className="mt-4 text-white/60 leading-relaxed font-light max-w-xs uppercase tracking-wider text-xs space-y-4"
                 >
                     <p>
-                        Nem minden történet maradt meg a könyvekben, van, amit csak a kövek őriznek.
+                        A VÁROS EGY TÉRKÉP,<br />
+                        DE NEM TÁVOLSÁGOKAT MÉR,<br />
+                        HANEM IDŐT.
                     </p>
-                    <p className="mt-4">
-                        Vannak helyek a városban,
-                        ahol a múlt nem zárult le.
+                    <p className="items-center text-amber-500/80 font-bold">
+                        INDULJ EL ÉS A FALAK SEGÍTENEK FELFEDNI AZ IGAZSÁGOT!
                     </p>
-                    <p className="font-serif italic text-white/80 mt-2">
-                        Ha jó helyen állsz meg, talán elmondanak valamit.
+                    <p className="font-serif italic text-white/40 lowercase tracking-normal">
+                        A kövek mutatják majd az utat.
                     </p>
                 </motion.div>
 
@@ -129,12 +130,8 @@ export default function SoftStart() {
                         transition={{ duration: 0.9, delay: 0.6 }}
                         className="mt-8 text-sm text-neutral-100/30 leading-relaxed max-w-xs"
                     >
-                        <p>
-                            Ha most indulsz el először,
-                            a Főtér környéke jó kezdet.
-                        </p>
-                        <p className="mt-2 text-neutral-100/50 font-serif italic">
-                            A falakon keresd a jelet.
+                        <p className="font-serif italic text-white/40">
+                            A falakon keresd a jelet. (QR kódok)
                         </p>
                     </motion.div>
                 )}

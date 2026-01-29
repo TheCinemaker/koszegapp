@@ -19,44 +19,27 @@ export default function GameRules() {
 
                 <div className="space-y-8 text-white/80 leading-relaxed font-light">
 
-                    <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-                        <h2 className="text-lg font-bold text-blue-300 mb-2 uppercase tracking-wide">1. A Cél</h2>
+                    {/* Section 1: Introduction */}
+                    <div className="bg-white/5 p-6 rounded-lg border border-white/10 space-y-4">
+                        <p className="font-bold text-amber-500">Kőszeg, 1532. A város ostrom alatt áll.</p>
                         <p>
-                            Kőszeg, 1532. A város ostrom alatt áll. A te feladatod, hogy összegyűjtsd a szétszóródott kulcsdarabokat és megmentsd a várost a pusztulástól.
+                            A te feladatod, hogy összegyűjtsd az idővonalon szétszóródott kulcsdarabokat és megmentsd a várost a pusztulástól. Így bezárhatod a várkaput!
                         </p>
                     </div>
 
-                    <section>
-                        <h2 className="text-lg font-bold text-amber-200 mb-2">Hogyan játssz?</h2>
-                        <ul className="list-disc pl-5 space-y-3 marker:text-amber-500">
-                            <li>
-                                <strong className="text-white">Keress QR Kódokat:</strong> A város nevezetes pontjain elrejtettünk QR kódokat. Keresd a kis táblákat!
-                            </li>
-                            <li>
-                                <strong className="text-white">Szkennelj:</strong> Használd a beépített szkennert vagy a telefonod kameráját a kódok beolvasásához.
-                            </li>
-                            <li>
-                                <strong className="text-white">Válaszolj:</strong> Minden helyszínen egy kérdést kell megválaszolnod, vagy egy feladatot megoldanod a "kulcs" megszerzéséhez.
-                            </li>
-                            <li>
-                                <strong className="text-white">Gyűjts:</strong> Minél több kulcsot szerzel, annál közelebb kerülsz a Vár titkához.
-                            </li>
-                        </ul>
-                    </section>
+                    {/* Section 2: Gameplay */}
+                    <div className="space-y-4">
+                        <p>
+                            Minden helyszínen egy emléket olvashatsz az adott helyszínről. Az ajánlott útvonalhoz minden megállónál egy feladatot kell megoldanod, így gyorsabban bezárhatod az időkaput!
+                        </p>
+                    </div>
 
-                    <section>
-                        <h2 className="text-lg font-bold text-amber-200 mb-2">Játékmódok</h2>
-                        <div className="grid grid-cols-2 gap-4 text-sm text-center">
-                            <div className="bg-white/5 p-4 rounded border border-white/10">
-                                <div className="font-bold mb-1">Felfedező</div>
-                                <div className="opacity-70">Családoknak, gyerekeknek (Könnyebb)</div>
-                            </div>
-                            <div className="bg-white/5 p-4 rounded border border-white/10">
-                                <div className="font-bold mb-1">Történész</div>
-                                <div className="opacity-70">Felnőtteknek, történelem rajongóknak (Nehezebb)</div>
-                            </div>
-                        </div>
-                    </section>
+                    {/* Section 3: Mystery */}
+                    <div className="bg-blue-500/10 p-6 rounded-lg border border-blue-500/20 italic text-blue-200">
+                        <p>
+                            Minél több kulcsot szerzel, annál közelebb kerülsz a Vár titkához. Mert vannak titkok, hidd el! Misztikus, rejtélyes titkok, amit csak a falak és kövek ismernek! Minden titkot meg kell ismerned!
+                        </p>
+                    </div>
 
                 </div>
 

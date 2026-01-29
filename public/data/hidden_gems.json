@@ -1,7 +1,7 @@
 [
     {
         "id": "varoshaza",
-        "name": "1. Városháza",
+        "name": "4. Városháza",
         "lat": 47.3892,
         "lng": 16.5410,
         "image": "/images/game/locations/varoshaza.jpg",
@@ -36,8 +36,8 @@
         },
         "next_clue": "Ahol a város kapuja állt, ott ma a hősök emléke tornyosul. Keresd a zenélő kaput, ami nem fából, hanem emlékekből épült!",
         "next_location_riddle": {
-            "adult": "A döntések terméből lépj ki a fényre. Keress egy teret, hol a pestis emléke égbe nyúl, s hol a piac zaját ma csend honolja.",
-            "child": "Irány a nagy tér! Keress egy hatalmas oszlopot a közepén, ahol régen piac volt!"
+            "adult": "A döntések házából lépj ki a fényre. A tér közepén egy Anya áll gyermekével, ki évszázadok óta figyeli a macskaköveket.",
+            "child": "Menj a tér közepére! Keress egy szobrot: egy néni figyeli a lépteidet."
         }
     },
     {
@@ -62,15 +62,15 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Hagyd el a nyüzsgő teret. Keress követ, mely öregebb a házaknál. Ahol a Zwinger szelleme őrzi a sarkot.",
-            "child": "Keress egy nagyon régi, vastag kőfalat! Egy kerek bástya is van ott!"
+            "adult": "Irány a tér másik vége! Ahol a vár egykori kapuja állt, ma torony emelkedik. Át lehet menni alatta.",
+            "child": "Keress egy nagy tornyot, ami régen kapu volt! Át lehet menni alatta!"
         },
         "keyFragment": "A Közösség Lánca",
         "next_clue": "Indulj el a város széle felé! Keresd a leomlott falakat és a 'Zwinger' öreg bástyáját."
     },
     {
         "id": "ovaros-falak",
-        "name": "3. Óváros falmaradványai",
+        "name": "12. Óváros falmaradványai",
         "lat": 47.3908,
         "lng": 16.5385,
         "image": "/images/game/locations/ovaros-falak.jpg",
@@ -90,8 +90,8 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "A falak mentén haladj. Egy lőmester nevét keresd, ki a föld alatt hallgatózott. A víz rezdülése árulta el neki a titkot.",
-            "child": "Menj tovább a fal mellett! Keress egy helyet, ahol egy bácsi (Forintos Mátyás) hallgatózott a pincében!"
+            "adult": "A falak mentén haladj felfelé. Egy lőmester nevét keresd, ki a föld alatt hallgatózott. A víz rezdülése árulta el neki a titkot.",
+            "child": "Sétálj tovább a fal mellett! Alatta mély vizesárok, De vigyázz, a falra nem mászhatsz fel, hogy ott sétálj végig! Keress egy nagy bástyát, ami a vizesárok szélén áll!"
         },
         "keyFragment": "A Kitartás Köve",
         "moment": {
@@ -104,7 +104,7 @@
     },
     {
         "id": "forintos-bastya",
-        "name": "Forintos-bástya",
+        "name": "13. Forintos-bástya",
         "lat": 47.3902,
         "lng": 16.5380,
         "image": "https://koszeg.hu/pictures/explorer/objects/63/forintos-bastya192n.jpg",
@@ -124,8 +124,8 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "A harci zaj elül. A hit ereje hív. Keresd a templomot, melyet a 'magyarok' használtak, s hol Szent Imre herceg neve vigyáz.",
-            "child": "Most keress egy templomot! Azt, amelyiknek Szent Imre a neve."
+            "adult": "Az utolsó lépés a tiéd. A végső erőd, hol a kapitány farkasszemet nézett a szultánnal. De vigyázz: A kapu csak akkor nyílik, ha minden kulcsod megvan!",
+            "child": "Már csak egy hely van hátra: A VÁR! De csak akkor mehetsz be, ha mindent megtaláltál előtte!"
         },
         "keyFragment": "A Lőmester Kanóca",
         "moment": {
@@ -154,14 +154,14 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "A lélek után a test gyógyulása következik. Egy mitikus állat őrzi a kaput. Egyszarvú hívogat a szomszeédban.",
-            "child": "Keress egy házat a közelben, aminek a képén egy unikornis (egyszarvú) van!"
+            "adult": "Irány a Hősök Tornya! (Vissza a kezdőponthoz, vagy folytasd a felfedezést önállóan.)",
+            "child": "Keressük meg a Hősök Tornyát!"
         },
         "keyFragment": "Az Összefogás Ostyája"
     },
     {
         "id": "patikamuzeum",
-        "name": "Patikamúzeum (Arany Egyszarvú)",
+        "name": "8. Patikamúzeum (Arany Egyszarvú)",
         "lat": 47.3895,
         "lng": 16.5402,
         "image": "https://www.kvmkl.hu/webimages/images/Egyszarvu%2016x9%20_D750816_01.jpg",
@@ -177,14 +177,14 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Lépj vissza a tér közepére. Egy anya áll ott gyermekével, ki évszázadok óta figyeli a macskaköveket. Nem oszlop, hanem szobor.",
-            "child": "Menj vissza a tér közepére! Keress egy szobrot, ahol egy néni tart egy kisbabát."
+            "adult": "Ha szomjas a vándor, hova lép? A tér széléhez közel áll egy forrás, melyet fegyverrel őriztek, nehogy méreg kerüljön bele.",
+            "child": "Hol ittak régen az emberek? Keress egy szép kutat a téren!"
         },
         "keyFragment": "Az Élet Elixírje"
     },
     {
         "id": "maria-szobor",
-        "name": "Mária-szobor",
+        "name": "5. Mária-szobor",
         "lat": 47.38965,
         "lng": 16.54065,
         "image": "https://www.faragoesfarago.hu/images/reference/11/dscf0534.jpg_xz4h.jpg",
@@ -200,14 +200,14 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Ha szomjas a vándor, hova lép? A tér szélén áll egy forrás, melyet fegyverrel őriztek, nehogy méreg kerüljön bele.",
-            "child": "Hol ittak régen az emberek? Keress egy szép kutat a téren!"
+            "adult": "Nem messze innen egy ház lábakon áll. Árkádjai alatt mészárosok vágtak, ma iratok pihennek.",
+            "child": "Keress egy házat, aminek lábai vannak (oszlopokon áll)!"
         },
         "keyFragment": "Az Oltalom Palástja"
     },
     {
         "id": "varoskut",
-        "name": "Városkút",
+        "name": "9. Városkút",
         "lat": 47.38960,
         "lng": 16.54055,
         "image": "https://utazaskatalogus.hu/wp-content/uploads/2020/11/utazaskatalogus-koszeg-es-kornyeke-varoskut.jpg",
@@ -223,15 +223,15 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Nem messze innen egy ház lábakon áll. Árkádjai alatt mészárosok vágtak, ma iratok pihennek.",
-            "child": "Keress egy házat, aminek lábai vannak (oszlopokon áll)!"
+            "adult": "A víz után a hit ereje hív. Keresd az öregebb templomot. Hol Jurisics gyermekei nyugszanak.",
+            "child": "Keress egy templomot a közelben! Ez a régebbi, és Szent Jakab a neve."
         },
         "keyFragment": "A Tisztaság Cseppje"
     },
     {
         "id": "tabornokhaz",
         "type": "extra",
-        "name": "5. Tábornokház (Idő-Kilátó)",
+        "name": "3. Tábornokház (Idő-Kilátó)",
         "lat": 47.3895,
         "lng": 16.5408,
         "image": "https://koszeg.hu/images/tabornokhaz.jpg",
@@ -247,8 +247,8 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Irány a Lábasház!",
-            "child": "Irány a Lábasház!"
+            "adult": "A téren a város szíve dobog. Címerek őrzik a homlokzatot, s bent születnek a döntések.",
+            "child": "Állj meg és jól nézz körül! Keresd meg a házat, amire sok címer (pajzs) van festve!"
         },
         "keyFragment": null
     },
@@ -274,15 +274,15 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Hagyd el a teret a madarak éneke felé. Egy híres ornitológus család otthona vár, rokokó díszekkel.",
-            "child": "Keress egy házat, ahol a madaras bácsi lakott! Szép díszes a fala."
+            "adult": "A szomszédban a falak beszélnek. Nem festve, hanem karcolva. Olvasd a latin igét a homlokzaton.",
+            "child": "Keress egy házat nem messze innen, a fala tele van karcolt mintákkal! Fekete-fehér mintákat keress."
         },
         "keyFragment": "Az Utolsó Cipó",
         "next_clue": "Hagyd el a teret, és indulj a madarak éneke felé. Egy híres ornitológus család háza vár a Chernel utcában."
     },
     {
         "id": "chernel-haz",
-        "name": "7. Chernel-ház",
+        "name": "11. Chernel-ház",
         "lat": 47.3902,
         "lng": 16.5395,
         "image": "https://koszeg.hu/images/chernel.jpg",
@@ -298,15 +298,15 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Vissza a hithez. Keresd az öregebb templomot. Hol Jurisics gyermekei nyugszanak, s hol a Madonna köpenye alá rejt.",
-            "child": "Keress még egy templomot! Ez a régebbi, és Szent Jakab a neve."
+            "adult": "Haladj tovább az utcán. Ahol a falak a legvastagabbak, ott áll az Öreg Bástya. A Zwinger őrzi a sarkot.",
+            "child": "Menj tovább az úton! Keress egy nagyon régi, vastag kőfalat! Egy kerek bástya is van ott!"
         },
         "keyFragment": "Az Elrejtett Ékszer",
         "next_clue": "A paloták mögött húzódik a régi határ. Keresd az öreg bástyát (Zwinger) és a legvastagabb falakat."
     },
     {
         "id": "szent-jakab",
-        "name": "8. Szent Jakab Templom",
+        "name": "10. Szent Jakab Templom",
         "lat": 47.3900,
         "lng": 16.5402,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Szent_Jakab-templom.JPG/800px-Szent_Jakab-templom.JPG",
@@ -326,8 +326,8 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "A templom mellett a művészet beszél. A falat nem festették, hanem karcolták. Olvasd a latin igét a homlokzaton.",
-            "child": "Keress egy házat, ami tele van karcolt mintákkal! Nagyon híres ház!"
+            "adult": "Hagyd el a teret a madarak éneke felé. Egy híres ornitológus család otthona vár a szűk utcában,(a városháza bal oldalán keresd) rokokó díszekkel.",
+            "child": "Indulj el a kis utcán! Keress egy házat, ahol a madaras bácsi lakott! Szép díszes a fala.(a városháza bal oldalán tudsz bemenni rajt!)"
         },
         "keyFragment": "Az Ima Ereje",
         "moment": {
@@ -340,7 +340,7 @@
     },
     {
         "id": "sgraffitos-haz",
-        "name": "9. Sgraffitós-ház",
+        "name": "7. Sgraffitós-ház",
         "lat": 47.3893,
         "lng": 16.5409,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/K%C5%91szeg%2C_Sgraffit%C3%B3s_h%C3%A1z_2021_02.jpg/800px-K%C5%91szeg%2C_Sgraffit%C3%B3s_h%C3%A1z_2021_02.jpg",
@@ -360,15 +360,15 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Most emeld tekinteted a legmagasabb toronyra. A Főtér ékköve, hol 11-kor kondul a harang a dél helyett.",
-            "child": "Most menj a legnagyobb templomhoz a városban! Ott, ahol a harang szól."
+            "adult": "A művészet után a gyógyulás következik. Egy mitikus állat őrzi a kaput. Egyszarvú hívogat a szomszédban.",
+            "child": "Keress egy házat a közelben, aminek a képén egy unikornis (egyszarvú) van! Nagy kapuja ha nyitva van, üvegfalon keresztül nézhetsz be"
         },
         "keyFragment": "A Művészet Ékköve",
         "next_clue": "A művészet után térj vissza a hithez. Keresd a templomot, mely Jurisics gyermekeit őrzi. Két templom áll a téren, ez az öregebb."
     },
     {
         "id": "jezus-szive",
-        "name": "10. Jézus Szíve Templom",
+        "name": "1. Jézus Szíve Templom",
         "lat": 47.3889,
         "lng": 16.5417,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/K%C5%91szeg%2C_J%C3%A9zus_Sz%C3%ADve-templom.jpg/800px-K%C5%91szeg%2C_J%C3%A9zus_Sz%C3%ADve-templom.jpg",
@@ -391,7 +391,7 @@
     },
     {
         "id": "egykori-varoskapu",
-        "name": "11. Hősök Tornya (Városkapu)",
+        "name": "2. Hősök Tornya (Városkapu)",
         "lat": 47.3890,
         "lng": 16.5411,
         "image": "https://koszeg.hu/images/varoskapu_helye.jpg",
@@ -411,15 +411,15 @@
             }
         ],
         "next_location_riddle": {
-            "adult": "Az utolsó lépés a tiéd. A végső erőd, hol a kapitány farkasszemet nézett a szultánnal. Találd meg magad.",
-            "child": "Már csak egy hely van hátra: A VÁR! Keresd meg a nagy várat!"
+            "adult": "A kapun áthaladva sárgállik egy ház, ahonnan tábornokok figyelték a teret. Keresd a loggiát a magasban!",
+            "child": "Nézz körül! Keresd meg a sárga házat, aminek erkélye van fentről, ajtaja viszont majdnem a föld alatt van!"
         },
         "keyFragment": "A Záródó Kapu",
         "next_clue": "A kapu szomszédságában sárgállik egy ház, honnan tábornokok figyelték a teret. Keresd a loggiát a magasban!"
     },
     {
         "id": "jurisics-var",
-        "name": "12. Jurisics Vár (VÉGCÉL)",
+        "name": "14. Jurisics Vár (VÉGCÉL)",
         "lat": 47.3905,
         "lng": 16.5397,
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Jurisics_mikl%C3%B3s_v%C3%A1r.jpg/800px-Jurisics_mikl%C3%B3s_v%C3%A1r.jpg",

@@ -38,7 +38,7 @@ export default function ScanIntro() {
             transition-all
           "
                 >
-                    Indíthatom →
+                    Szkennelek
                 </button>
 
                 <div className="pt-8">

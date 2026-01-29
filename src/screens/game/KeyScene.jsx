@@ -157,34 +157,33 @@ export default function KeyScene({ gem, isNewKey, onNext, onClose, mode, foundCo
                 ) : null}
 
                 {/* SIMA TOVÁBB GOMB (Mindig látható új kulcsnál, kvíz nincs) */}
+                {/* SIMA TOVÁBB GOMB (Mindig látható) */}
                 <AnimatePresence>
-                    {(isNewKey || !gem.next_location_riddle) && (
-                        <motion.button
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1 }}
-                            onClick={isNewKey ? onNext : onClose}
-                            className={`
-                                w-full py-4 mt-8 mb-8
-                                uppercase tracking-[0.2em] font-bold text-sm
-                                rounded-lg transition-all shadow-lg
-                                flex items-center justify-center gap-2
-                                ${isNewKey
-                                    ? "bg-gradient-to-r from-amber-700 to-amber-900 text-amber-50 hover:shadow-amber-900/40 border border-amber-500/30"
-                                    : "bg-white/10 text-white/60 hover:bg-white/20 border border-white/10"
-                                }
-                            `}
-                        >
-                            {isNewKey ? (
-                                <>
-                                    <span>Felfedezés Folytatása</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </>
-                            ) : "Visszatérés"}
-                        </motion.button>
-                    )}
+                    <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1 }}
+                        onClick={isNewKey ? onNext : onClose}
+                        className={`
+                            w-full py-4 mt-8 mb-8
+                            uppercase tracking-[0.2em] font-bold text-sm
+                            rounded-lg transition-all shadow-lg
+                            flex items-center justify-center gap-2
+                            ${isNewKey
+                                ? "bg-gradient-to-r from-amber-700 to-amber-900 text-amber-50 hover:shadow-amber-900/40 border border-amber-500/30"
+                                : "bg-white/10 text-white/60 hover:bg-white/20 border border-white/10"
+                            }
+                        `}
+                    >
+                        {isNewKey ? (
+                            <>
+                                <span>Felfedezés Folytatása</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                </svg>
+                            </>
+                        ) : "Vissza a Naplóhoz"}
+                    </motion.button>
                 </AnimatePresence>
 
                 {/* Counter */}
