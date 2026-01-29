@@ -55,6 +55,102 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
     </FadeUp>
 );
 
+// --- SIMPLE POINTS DISPLAY (Lightweight) ---
+function SimplePointsDisplay({ user }) {
+    const [pointsData, setPointsData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!user) { setLoading(false); return; }
+        const fetchPoints = async () => {
+            const { data, error } = await supabase.from('koszegpass_users').select('points, card_type').eq('id', user.id).single();
+            if (data) setPointsData(data);
+            setLoading(false);
+        };
+        fetchPoints();
+        // Realtime update
+        const chan = supabase.channel('simple-points-watch').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'koszegpass_users', filter: `id=eq.${user.id}` }, (payload) => {
+            setPointsData(payload.new);
+        }).subscribe();
+        return () => supabase.removeChannel(chan);
+    }, [user]);
+
+    if (!user) return <div className="text-center py-20 text-zinc-500">Jelentkezz be a pontjaidhoz.</div>;
+    if (loading) return <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div></div>;
+
+    const points = pointsData?.points || 0;
+    const tier = pointsData?.card_type || 'Bronz';
+
+    // Tier Colors & Logic
+    const getTierColor = (t) => {
+        if (t === 'Diamond' || t === 'Gyémánt') return 'from-cyan-400 to-blue-600';
+        if (t === 'Gold' || t === 'Arany') return 'from-amber-300 to-yellow-500';
+        if (t === 'Silver' || t === 'Ezüst') return 'from-slate-300 to-slate-500';
+        return 'from-orange-400 to-amber-600'; // Bronz
+    };
+
+    // Progress Logic (Simple version of profile)
+    const max = 20000;
+    const percentage = Math.min((points / max) * 100, 100);
+
+    return (
+        <div className="px-4 py-8">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-zinc-900 text-white rounded-[2.5rem] p-8 relative overflow-hidden shadow-2xl"
+            >
+                {/* Background Glow */}
+                <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${getTierColor(tier)} opacity-20 blur-[60px] rounded-full translate-x-1/3 -translate-y-1/3`} />
+                <div className={`absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr ${getTierColor(tier)} opacity-10 blur-[40px] rounded-full -translate-x-1/3 translate-y-1/3`} />
+
+                <div className="relative z-10 flex flex-col items-center text-center">
+
+                    <div className="mb-2 text-zinc-400 text-sm font-bold uppercase tracking-widest">KőszegPass Egyenleg</div>
+                    <div className="text-5xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+                        {points.toLocaleString()} <span className="text-2xl text-zinc-500">pts</span>
+                    </div>
+
+                    <div className={`
+                        px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md
+                        text-sm font-bold flex items-center gap-2 mb-8
+                    `}>
+                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${getTierColor(tier)}`} />
+                        <span className="uppercase">{tier} Szint</span>
+                    </div>
+
+                    {/* Simple Progress Bar */}
+                    <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden mb-2">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${percentage}%` }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className={`h-full bg-gradient-to-r ${getTierColor(tier)}`}
+                        />
+                    </div>
+                    <div className="flex justify-between w-full text-[10px] text-zinc-500 font-bold uppercase tracking-wider">
+                        <span>0</span>
+                        <span>{max.toLocaleString()}</span>
+                    </div>
+
+                    <div className="mt-8 p-4 bg-white/5 rounded-2xl border border-white/5 w-full text-left">
+                        <div className="flex items-start gap-3">
+                            <div className="text-2xl">💡</div>
+                            <div>
+                                <h4 className="font-bold text-white text-sm mb-1">Mire jó ez?</h4>
+                                <p className="text-xs text-zinc-400 leading-relaxed">
+                                    Gyűjts pontokat rendelésekkel és használd fel őket kedvezményekre a városi elfogadóhelyeken! (Food rendelésnél: 100 Ft = 1 pont)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
 export default function FoodOrderPage() {
     const [activeTab, setActiveTab] = useState('home');
     const [view, setView] = useState('restaurants');
@@ -277,7 +373,7 @@ export default function FoodOrderPage() {
                         {user ? <MyOrdersList user={user} /> : <div className="text-center py-20 text-zinc-500">Jelentkezz be a rendeléseidhez.</div>}
                     </div>
                 )}
-                {activeTab === 'rewards' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="card" /></div>}
+                {activeTab === 'rewards' && <div className="pb-32 pt-2"><SimplePointsDisplay user={user} /></div>}
                 {activeTab === 'account' && <div className="pb-32 pt-2"><KoszegPassProfile viewMode="settings" /></div>}
             </div>
 
