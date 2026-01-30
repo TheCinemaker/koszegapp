@@ -81,6 +81,11 @@ exports.handler = async (event, context) => {
         const p12Buffer = fs.readFileSync(p12Path);
         const wwdrBuffer = fs.readFileSync(wwdrPath);
 
+        // Convert WWDR DER to PEM (node-forge expects PEM)
+        const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
+        const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
+        const wwdrPem = forge.pki.certificateToPem(wwdrCert);
+
         const { key, cert } = extractFromP12(
             p12Buffer,
             process.env.APPLE_PASS_P12_PASSWORD
@@ -113,7 +118,7 @@ exports.handler = async (event, context) => {
         const pass = new PKPass(
             {}, // No buffers/files
             {
-                wwdr: wwdrBuffer,
+                wwdr: wwdrPem,
                 signerCert: cert,
                 signerKey: key,
                 signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
