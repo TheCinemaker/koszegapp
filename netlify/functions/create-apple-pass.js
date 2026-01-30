@@ -86,11 +86,12 @@ exports.handler = async (event, context) => {
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
-        // 2. Initialize Pass
+        // 2. Initialize Pass with correct structure
         const pass = new PKPass(
             {
-                model: 'storeCard',
-                passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID, // Updated var name
+                model: 'storeCard', // or object with 'storeCard': { ... } depending on lib version, but usually root fields + specific type object
+                formatVersion: 1,
+                passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
                 teamIdentifier: process.env.APPLE_TEAM_ID,
                 organizationName: 'Kőszeg Város',
                 description: 'KőszegPass Városkártya',
@@ -98,13 +99,59 @@ exports.handler = async (event, context) => {
                 backgroundColor: 'rgb(245, 245, 247)',
                 foregroundColor: 'rgb(0, 0, 0)',
                 labelColor: 'rgb(142, 142, 147)',
-                logoText: 'KőszegPass'
+                logoText: 'KőszegPass',
+
+                // Store Card specific fields structure
+                storeCard: {
+                    primaryFields: [
+                        {
+                            key: 'balance',
+                            label: 'PONTOK',
+                            value: String(points || 0),
+                            textAlignment: 'PKTextAlignmentRight'
+                        }
+                    ],
+                    secondaryFields: [
+                        {
+                            key: 'rank',
+                            label: 'RANG',
+                            value: (card_type || 'Bronz').toUpperCase(),
+                            textAlignment: 'PKTextAlignmentLeft'
+                        }
+                    ],
+                    backFields: [
+                        {
+                            key: 'name',
+                            label: 'Név',
+                            value: full_name || 'Felhasználó'
+                        },
+                        {
+                            key: 'id',
+                            label: 'Kártyaszám',
+                            value: user_id
+                        },
+                        {
+                            key: 'info',
+                            label: 'Info',
+                            value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez!'
+                        }
+                    ]
+                },
+
+                barcodes: [
+                    {
+                        format: 'PKBarcodeFormatQR',
+                        message: qr_token || user_id,
+                        messageEncoding: 'iso-8859-1',
+                        altText: user_id
+                    }
+                ]
             },
             {
                 wwdr: wwdrBuffer,
                 signerCert: cert,
                 signerKey: key,
-                // signerKeyPassphrase:  // Not needed if we extracted PEM already
+                signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
             }
         );
 
@@ -125,50 +172,7 @@ exports.handler = async (event, context) => {
             console.warn("Failed to load images", e);
         }
 
-        // 4. Set Fields
-        pass.setSecondaryFields([
-            {
-                key: 'rank',
-                label: 'RANG',
-                value: (card_type || 'Bronz').toUpperCase(),
-                textAlignment: 'PKTextAlignmentLeft'
-            }
-        ]);
-
-        pass.setAuxiliaryFields([
-            {
-                key: 'points',
-                label: 'PONTOK',
-                value: String(points || 0),
-                textAlignment: 'PKTextAlignmentRight'
-            }
-        ]);
-
-        pass.setBackFields([
-            {
-                key: 'name',
-                label: 'Név',
-                value: full_name || 'Felhasználó'
-            },
-            {
-                key: 'id',
-                label: 'Kártyaszám',
-                value: user_id
-            },
-            {
-                key: 'info',
-                label: 'Info',
-                value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez!'
-            }
-        ]);
-
-        // 5. Barcode
-        pass.setBarcodes({
-            format: 'PKBarcodeFormatQR',
-            message: qr_token || user_id,
-            messageEncoding: 'iso-8859-1',
-            altText: user_id
-        });
+        // No setters used (setSecondaryFields, setAuxiliaryFields, setBackFields, setBarcodes removed)
 
         // 6. Generate
         const buffer = pass.getAsBuffer();
