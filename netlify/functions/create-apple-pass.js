@@ -1,24 +1,21 @@
 const { PKPass } = require('passkit-generator');
 const fetch = require('node-fetch');
 const forge = require('node-forge');
+const fs = require('fs');
+const path = require('path');
 
-// Helper to get buffer from URL or Env Base64
-async function getBuffer(source) {
-    if (!source) return null;
-    if (source.startsWith('http')) {
-        const res = await fetch(source);
-        if (!res.ok) throw new Error(`Failed to fetch ${source}`);
-        return res.buffer();
-    }
-    // Assume Base64 string if not http
-    return Buffer.from(source, 'base64');
+// Helper to get buffer from URL
+async function getBuffer(url) {
+    if (!url) return null;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+    return res.buffer();
 }
 
-// Helper to extract Key and Cert from P12
-function extractFromP12(p12Base64, password) {
+// Helper to extract Key and Cert from P12 Buffer
+function extractFromP12(p12Buffer, password) {
     try {
-        const p12Der = forge.util.decode64(p12Base64);
-        const p12Asn1 = forge.asn1.fromDer(p12Der);
+        const p12Asn1 = forge.asn1.fromDer(p12Buffer.toString('binary'));
         const p12 = forge.pkcs12.pkcs12FromAsn1(p12Asn1, password || '');
 
         let key = null;
@@ -40,7 +37,6 @@ function extractFromP12(p12Base64, password) {
         if (!key && !cert) {
             // Try looking in other bag types if not found
             // This is a simplified extraction, might need more robust loop if P12 structure varies
-            console.log("Using fallback bag search...");
             const localKeyBags = p12.getBags({ bagType: forge.pki.oids.keyBag });
             if (localKeyBags[forge.pki.oids.keyBag]?.[0]) {
                 key = forge.pki.privateKeyToPem(localKeyBags[forge.pki.oids.keyBag][0].key);
@@ -48,7 +44,7 @@ function extractFromP12(p12Base64, password) {
         }
 
         if (!key || !cert) {
-            throw new Error("Could not extract Key or Cert from P12");
+            throw new Error("Could not extract Key or Cert from P12 file");
         }
 
         return { key, cert };
@@ -67,10 +63,20 @@ exports.handler = async (event, context) => {
     try {
         const { user_id, full_name, points, card_type, qr_token } = JSON.parse(event.body);
 
-        // 1. Extract Certs from Env P12
-        // We use the P12 provided in env vars
+        // 1. Read Certs from Files (Fix for Netlify 4KB Env Limit)
+        // Paths are relative to the project root in Netlify Functions
+        const p12Path = path.join(process.cwd(), 'netlify/functions/certs/pass.p12');
+        const wwdrPath = path.join(process.cwd(), 'netlify/functions/certs/AppleWWDRCAG3.cer');
+
+        if (!fs.existsSync(p12Path) || !fs.existsSync(wwdrPath)) {
+            throw new Error(`Certificates missing at ${p12Path} or ${wwdrPath}`);
+        }
+
+        const p12Buffer = fs.readFileSync(p12Path);
+        const wwdrBuffer = fs.readFileSync(wwdrPath);
+
         const { key, cert } = extractFromP12(
-            process.env.APPLE_PASS_P12_BASE64,
+            p12Buffer,
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
@@ -89,7 +95,7 @@ exports.handler = async (event, context) => {
                 logoText: 'KőszegPass'
             },
             {
-                wwdr: await getBuffer(process.env.APPLE_WWDR_CERT_BASE64), // Updated var name
+                wwdr: wwdrBuffer,
                 signerCert: cert,
                 signerKey: key,
                 // signerKeyPassphrase:  // Not needed if we extracted PEM already
@@ -146,7 +152,7 @@ exports.handler = async (event, context) => {
             {
                 key: 'info',
                 label: 'Info',
-                value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez a városban!'
+                value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez!'
             }
         ]);
 
@@ -175,7 +181,7 @@ exports.handler = async (event, context) => {
         console.error("Apple Pass Error:", err);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: err.message, stack: err.stack })
+            body: JSON.stringify({ error: err.message })
         };
     }
 };
