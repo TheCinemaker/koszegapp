@@ -64,11 +64,17 @@ exports.handler = async (event, context) => {
         const { user_id, full_name, points, card_type, qr_token } = JSON.parse(event.body);
 
         // 1. Read Certs from Files (Fix for Netlify 4KB Env Limit)
-        // Paths are relative to the project root in Netlify Functions
-        const p12Path = path.join(process.cwd(), 'netlify/functions/certs/pass.p12');
-        const wwdrPath = path.join(process.cwd(), 'netlify/functions/certs/AppleWWDRCAG3.cer');
+        // Paths are relative to the function file in Netlify Functions
+        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
+        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
 
         if (!fs.existsSync(p12Path) || !fs.existsSync(wwdrPath)) {
+            // Debug: List directory contents to help if it fails again
+            console.error('Certs missing. __dirname:', __dirname);
+            try {
+                console.error('Contents of __dirname:', fs.readdirSync(__dirname));
+                console.error('Contents of certs (if exists):', fs.readdirSync(path.join(__dirname, 'certs')));
+            } catch (e) { }
             throw new Error(`Certificates missing at ${p12Path} or ${wwdrPath}`);
         }
 
