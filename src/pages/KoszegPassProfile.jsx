@@ -518,13 +518,66 @@ export default function KoszegPassProfile() {
                                     />
                                 </div>
 
-                                <div className="mt-6 flex justify-center pb-8 border-t border-zinc-200 dark:border-white/10 pt-6">
+                                <div className="mt-6 flex flex-col gap-3 justify-center pb-8 border-t border-zinc-200 dark:border-white/10 pt-6 px-4">
                                     <button
-                                        disabled
-                                        className="flex items-center gap-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 px-6 py-3 rounded-full font-medium shadow-none cursor-not-allowed grayscale"
+                                        onClick={async () => {
+                                            const toastId = toast.loading('Apple Wallet Pass generálása...');
+                                            try {
+                                                const res = await fetch('/.netlify/functions/create-apple-pass', {
+                                                    method: 'POST',
+                                                    body: JSON.stringify(profile)
+                                                });
+                                                if (!res.ok) throw new Error('Hiba a generálás során');
+
+                                                // Download Blob
+                                                const blob = await res.blob();
+                                                const url = window.URL.createObjectURL(blob);
+                                                const a = document.createElement('a');
+                                                a.href = url;
+                                                a.download = 'koszegpass.pkpass';
+                                                document.body.appendChild(a);
+                                                a.click();
+                                                document.body.removeChild(a);
+                                                toast.success('Pass letöltve!', { id: toastId });
+                                            } catch (e) {
+                                                console.error(e);
+                                                toast.error('Hiba történt', { id: toastId });
+                                            }
+                                        }}
+                                        className="w-full flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:scale-[1.02] active:scale-95 transition-transform"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <svg viewBox="0 0 512 512" width="20" height="20" fill="currentColor">
+                                                <path d="M389.2 248.5c1.4-74.8 61-110.8 63.8-112.6-35-51.1-89.8-58.1-109-58.7-46.2-4.7-90.8 27.2-114.3 27.2-24 0-64.2-26.6-105.4-25.9-54.3.8-104.6 31.6-132.8 80.2-56.7 98.1-14.5 242.4 40.7 322.1 27.1 39.1 59.4 83.1 101.9 81.6 40.6-1.6 56-26.3 105.1-26.3 49 0 62.9 26.3 105.8 25.5 44-1.6 71.9-40.1 98.8-79.5 31.2-45.6 44-89.7 44.5-91.9-1-.5-85.3-32.8-86.5-122.3zm-77.9-166c22.5-27.3 37.7-65.3 33.6-103.2-32.3 1.3-71.5 21.5-94.8 48.4-20.2 23.3-37.9 60.5-33.1 96.1 36.1 2.8 72.9-19.1 94.3-41.3z" />
+                                            </svg>
+                                            <span>Add to Apple Wallet</span>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        onClick={async () => {
+                                            const toastId = toast.loading('Google Wallet nyitása...');
+                                            try {
+                                                const res = await fetch('/.netlify/functions/create-google-pass', {
+                                                    method: 'POST',
+                                                    body: JSON.stringify(profile)
+                                                });
+                                                const data = await res.json();
+                                                if (data.saveUrl) {
+                                                    window.open(data.saveUrl, '_blank');
+                                                    toast.dismiss(toastId);
+                                                } else {
+                                                    throw new Error('No URL');
+                                                }
+                                            } catch (e) {
+                                                console.error(e);
+                                                toast.error('Hiba történt', { id: toastId });
+                                            }
+                                        }}
+                                        className="w-full flex items-center justify-center gap-2 bg-white text-black border border-zinc-200 px-6 py-3 rounded-xl font-medium shadow-sm hover:bg-zinc-50 active:scale-95 transition-transform"
                                     >
                                         <IoLogoGoogle size={20} />
-                                        <span>Google Wallet (Hamarosan)</span>
+                                        <span>Google Wallet Mentés</span>
                                     </button>
                                 </div>
 
