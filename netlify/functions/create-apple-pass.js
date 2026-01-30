@@ -86,8 +86,8 @@ exports.handler = async (event, context) => {
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
-        // 2. Initialize Pass with correct structure
-        // Based on the library source, we must provide 'pass.json' as a buffer for it to detect the type.
+        // 2. Initialize Pass with correct structure (Based on source code analysis)
+        // v3 API approach: Manual construction without pass.json buffer
 
         // Ensure values are strings and not empty
         const safeUserId = String(user_id || 'UNKNOWN');
@@ -96,7 +96,7 @@ exports.handler = async (event, context) => {
         const safeRank = (card_type || 'Bronz').toUpperCase();
         const safeQr = qr_token || safeUserId;
 
-        const passModel = {
+        const passProps = {
             formatVersion: 1,
             passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
             teamIdentifier: process.env.APPLE_TEAM_ID,
@@ -107,65 +107,63 @@ exports.handler = async (event, context) => {
             foregroundColor: 'rgb(0, 0, 0)',
             labelColor: 'rgb(142, 142, 147)',
             logoText: 'KőszegPass',
-
-            // Store Card specific fields structure
-            storeCard: {
-                primaryFields: [
-                    {
-                        key: 'balance',
-                        label: 'PONTOK',
-                        value: safePoints,
-                        textAlignment: 'PKTextAlignmentRight'
-                    }
-                ],
-                secondaryFields: [
-                    {
-                        key: 'rank',
-                        label: 'RANG',
-                        value: safeRank,
-                        textAlignment: 'PKTextAlignmentLeft'
-                    }
-                ],
-                backFields: [
-                    {
-                        key: 'name',
-                        label: 'Név',
-                        value: safeName
-                    },
-                    {
-                        key: 'id',
-                        label: 'Kártyaszám',
-                        value: safeUserId
-                    },
-                    {
-                        key: 'info',
-                        label: 'Info',
-                        value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez!'
-                    }
-                ]
-            },
-
-            barcodes: [
-                {
-                    format: 'PKBarcodeFormatQR',
-                    message: safeQr,
-                    messageEncoding: 'iso-8859-1',
-                    altText: safeUserId
-                }
-            ]
+            // model: 'storeCard' // Not used here, set type explicitly below
         };
 
         const pass = new PKPass(
-            {
-                'pass.json': Buffer.from(JSON.stringify(passModel))
-            },
+            {}, // No buffers/files
             {
                 wwdr: wwdrBuffer,
                 signerCert: cert,
                 signerKey: key,
                 signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
+            },
+            passProps // Props go here
+        );
+
+        // Explicitly set type to initialize fields
+        pass.type = 'storeCard';
+
+        // 4. Set Fields (Using push directly on arrays as per v3 API)
+        pass.primaryFields.push({
+            key: 'balance',
+            label: 'PONTOK',
+            value: safePoints,
+            textAlignment: 'PKTextAlignmentRight'
+        });
+
+        pass.secondaryFields.push({
+            key: 'rank',
+            label: 'RANG',
+            value: safeRank,
+            textAlignment: 'PKTextAlignmentLeft'
+        });
+
+        pass.backFields.push(
+            {
+                key: 'name',
+                label: 'Név',
+                value: safeName
+            },
+            {
+                key: 'id',
+                label: 'Kártyaszám',
+                value: safeUserId
+            },
+            {
+                key: 'info',
+                label: 'Info',
+                value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez!'
             }
         );
+
+        // 5. Barcode
+        pass.setBarcodes({
+            format: 'PKBarcodeFormatQR',
+            message: safeQr,
+            messageEncoding: 'iso-8859-1',
+            altText: safeUserId
+        });
 
         // 3. Add Images
         const SITE_URL = 'https://koszegapp.netlify.app';
