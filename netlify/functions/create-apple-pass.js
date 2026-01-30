@@ -89,7 +89,7 @@ exports.handler = async (event, context) => {
         // 2. Initialize Pass with correct structure
         const pass = new PKPass(
             {
-                model: 'storeCard', // or object with 'storeCard': { ... } depending on lib version, but usually root fields + specific type object
+                // model: 'storeCard', // REMOVED: Redundant and causing type error. storeCard object defines type.
                 formatVersion: 1,
                 passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
                 teamIdentifier: process.env.APPLE_TEAM_ID,
