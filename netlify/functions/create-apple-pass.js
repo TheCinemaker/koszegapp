@@ -88,13 +88,21 @@ exports.handler = async (event, context) => {
 
         // 2. Initialize Pass with correct structure
         // Based on the library source, we must provide 'pass.json' as a buffer for it to detect the type.
+
+        // Ensure values are strings and not empty
+        const safeUserId = String(user_id || 'UNKNOWN');
+        const safeName = full_name || 'Felhasználó';
+        const safePoints = String(points || '0');
+        const safeRank = (card_type || 'Bronz').toUpperCase();
+        const safeQr = qr_token || safeUserId;
+
         const passModel = {
             formatVersion: 1,
             passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
             teamIdentifier: process.env.APPLE_TEAM_ID,
             organizationName: 'Kőszeg Város',
             description: 'KőszegPass Városkártya',
-            serialNumber: user_id,
+            serialNumber: safeUserId,
             backgroundColor: 'rgb(245, 245, 247)',
             foregroundColor: 'rgb(0, 0, 0)',
             labelColor: 'rgb(142, 142, 147)',
@@ -106,7 +114,7 @@ exports.handler = async (event, context) => {
                     {
                         key: 'balance',
                         label: 'PONTOK',
-                        value: String(points || 0),
+                        value: safePoints,
                         textAlignment: 'PKTextAlignmentRight'
                     }
                 ],
@@ -114,7 +122,7 @@ exports.handler = async (event, context) => {
                     {
                         key: 'rank',
                         label: 'RANG',
-                        value: (card_type || 'Bronz').toUpperCase(),
+                        value: safeRank,
                         textAlignment: 'PKTextAlignmentLeft'
                     }
                 ],
@@ -122,12 +130,12 @@ exports.handler = async (event, context) => {
                     {
                         key: 'name',
                         label: 'Név',
-                        value: full_name || 'Felhasználó'
+                        value: safeName
                     },
                     {
                         key: 'id',
                         label: 'Kártyaszám',
-                        value: user_id
+                        value: safeUserId
                     },
                     {
                         key: 'info',
@@ -140,9 +148,9 @@ exports.handler = async (event, context) => {
             barcodes: [
                 {
                     format: 'PKBarcodeFormatQR',
-                    message: qr_token || user_id,
+                    message: safeQr,
                     messageEncoding: 'iso-8859-1',
-                    altText: user_id
+                    altText: safeUserId
                 }
             ]
         };
