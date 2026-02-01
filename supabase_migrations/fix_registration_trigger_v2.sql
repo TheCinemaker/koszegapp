@@ -1,8 +1,7 @@
--- FIX: Registration Trigger Robustness v3 (Fixing Re-registration)
--- This script updates the 'handle_new_user' function to handle orphaned profiles.
--- If a user was deleted from Auth but their profile remained (common in dev), 
--- re-registering with the same username creates a new ID but clashes on username UNIQUE constraint.
--- This script ADOPTS the old profile to the new ID.
+-- FIX: Registration Trigger Robustness v4 (Fixing FK Conflict)
+-- This script updates the 'handle_new_user' function to handle orphaned profiles by DELETING them first.
+-- Why DELETE? Because updating the 'id' (PK) fails if child tables (cards, logs) don't have ON UPDATE CASCADE.
+-- Since the Auth User was deleted, the old profile data is "dead" anyway.
 
 create or replace function public.handle_new_user() 
 returns trigger as $$
@@ -15,77 +14,61 @@ begin
   _fullname := new.raw_user_meta_data->>'full_name';
   _role := new.raw_user_meta_data->>'role';
 
+  -- 1. CLEANUP ORPHANS (Crucial Step)
+  -- If a profile exists with this username but different ID, it's an orphan from a deleted Auth user.
+  -- We must delete it to free up the username and avoid FK conflicts during ID update.
+  
+  -- Check in KőszegPass Users
+  if exists (select 1 from public.koszegpass_users where username = _username) then
+     delete from public.koszegpass_users where username = _username;
+  end if;
+
+  -- Check in Profiles
+  if exists (select 1 from public.profiles where username = _username) then
+     delete from public.profiles where username = _username;
+  end if;
+
+
+  -- 2. INSERT NEW DATA
+  -- Now it's safe to insert fresh rows
+
   -- KőszegPass User (Client)
   if _role = 'koszegpass' then
-    
-    -- 1. Try to adopt existing KőszegPass profile (handle username conflict)
-    update public.koszegpass_users 
-    set id = new.id, full_name = _fullname
-    where username = _username;
-
-    if not found then
-      -- Insert new if not found
+      
       insert into public.koszegpass_users (id, username, full_name)
       values (new.id, _username, _fullname)
-      on conflict (id) do update set -- Handle ID conflict if any
+      on conflict (id) do update set
         full_name = excluded.full_name,
         username = excluded.username;
-    end if;
 
-    -- 2. Try to adopt existing Public Profile (handle username conflict)
-    update public.profiles
-    set id = new.id, full_name = _fullname, role = 'client'
-    where username = _username;
-
-    if not found then
       insert into public.profiles (id, username, full_name, role)
       values (new.id, _username, _fullname, 'client')
       on conflict (id) do update set
         full_name = excluded.full_name,
         role = 'client';
-    end if;
 
   -- Restaurant Owner
   elsif _role = 'restaurant' then
-    -- Adopt or Insert
-    update public.profiles
-    set id = new.id, full_name = _fullname, role = 'restaurant'
-    where username = _username;
-
-    if not found then
       insert into public.profiles (id, role, full_name, username)
       values (new.id, 'restaurant', _fullname, _username)
       on conflict (id) do update set
         full_name = excluded.full_name,
         role = 'restaurant';
-    end if;
 
   -- Provider / Partner
   elsif _role = 'provider' then
-     update public.profiles
-     set id = new.id, full_name = _fullname, role = 'provider'
-     where username = _username;
-
-     if not found then
       insert into public.profiles (id, role, full_name, username)
       values (new.id, 'provider', _fullname, _username)
       on conflict (id) do update set
         full_name = excluded.full_name,
         role = 'provider';
-     end if;
 
   -- Fallback (Generic Client)
   else
-    update public.profiles
-    set id = new.id, full_name = _fullname, role = 'client'
-    where username = _username;
-
-    if not found then
       insert into public.profiles (id, full_name, username, role)
       values (new.id, _fullname, _username, 'client')
       on conflict (id) do update set
         full_name = excluded.full_name;
-    end if;
   end if;
 
   return new;
