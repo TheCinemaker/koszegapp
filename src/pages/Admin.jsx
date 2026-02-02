@@ -1,6 +1,7 @@
 // src/pages/Admin/index.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { supabase } from "../lib/supabaseClient";
 import { Toaster, toast } from 'react-hot-toast';
 import {
   FaBars, FaTimes, FaSignOutAlt, FaSave, FaPlus, FaSearch,
