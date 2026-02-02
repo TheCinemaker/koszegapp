@@ -255,24 +255,48 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
+  const [whitelistRole, setWhitelistRole] = useState(null);
+
+  const checkWhitelist = async (username) => {
+    try {
+      const { data, error } = await supabase
+        .from('admin_whitelist')
+        .select('role')
+        .eq('username', username)
+        .single();
+
+      if (error || !data) return null;
+      return data.role;
+    } catch (e) {
+      console.error("Whitelist check failed:", e);
+      return null;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoggingIn(true);
+
     try {
-      // 1. Try default 'client' login (Admin, Varos, etc.)
-      try {
-        await login(selectedUser, password, 'client');
-      } catch (clientError) {
-        // 2. If failed, try 'provider' login (External Partners)
-        console.log("Client login failed, trying provider...", clientError);
-        await login(selectedUser, password, 'provider');
+      // 1. Check Whitelist FIRST
+      const role = await checkWhitelist(selectedUser);
+      if (!role) {
+        throw new Error("Ez a felhasználó nincs engedélyezve az Admin felületen.");
       }
+
+      // 2. Try Login (Client mode only as we standardized on client.{user}@koszeg.app)
+      // Note: We use 'client' as the auth type because all these users are technically clients in Auth,
+      // but their 'role' in admin_whitelist determines their Admin privileges.
+      await login(selectedUser, password, 'client');
+
+      // 3. Success (AuthContext will update state)
     } catch (err) {
-      // If both fail
-      setError("Hibás felhasználónév vagy jelszó. (Próbáltuk: client és provider módban is)");
+      console.error("Login failed:", err);
+      // Ensure logout if partial success (e.g. auth ok but whitelist fail logic glitch)
+      await logout();
+      setError(err.message || "Hibás felhasználónév vagy jelszó.");
     } finally {
       setIsLoggingIn(false);
     }
@@ -288,7 +312,7 @@ function Login() {
         <div className="flex flex-col items-center mb-8">
           <img src="/images/koeszeg_logo_nobg.png" alt="Logo" className="w-16 h-16 mb-4 drop-shadow-md" />
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">KőszegAPP Admin</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Jelentkezz be a folytatáshoz</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Kizárólag engedélyezett felhasználóknak</p>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -329,7 +353,7 @@ function Login() {
             disabled={isLoggingIn}
             className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-500/30 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
           >
-            {isLoggingIn ? "Bejelentkezés..." : "Belépés"}
+            {isLoggingIn ? "Ellenőrzés..." : "Belépés"}
           </button>
         </form>
       </div>
@@ -787,11 +811,50 @@ function AdminApp() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [adminRole, setAdminRole] = useState(null); // 'superadmin', 'editor', 'partner'
+
+  // Fetch Admin Role on Mount
+  useEffect(() => {
+    const fetchRole = async () => {
+      // 1. Check if user is in whitelist (Double check for safety)
+      const { data, error } = await supabase
+        .from('admin_whitelist')
+        .select('role')
+        .eq('username', user.user_metadata?.nickname || user.user_metadata?.username) // AuthContext saves original nickname
+        .single();
+
+      if (data) {
+        setAdminRole(data.role);
+        // If partner, set restricted default view
+        if (data.role === 'partner') {
+          setCurrentKey('events');
+        }
+      }
+    };
+    fetchRole();
+  }, [user]);
 
   // Mobil nézetben csukjuk be alapból
   useEffect(() => {
     if (window.innerWidth < 768) setSidebarOpen(false);
   }, []);
+
+  // Filter Menu Items based on Role
+  const visibleMenuItems = useMemo(() => {
+    if (!adminRole) return [];
+
+    // Superadmin & Editor sees everything
+    if (adminRole === 'superadmin' || adminRole === 'editor') {
+      return Object.keys(EDITABLE_CONTENT);
+    }
+
+    // Partner (Kulsos) sees LIMITED
+    if (adminRole === 'partner') {
+      return ['events']; // Csak események
+    }
+
+    return [];
+  }, [adminRole]);
 
   const loadContent = async (key) => {
     if (!key) return;
@@ -869,20 +932,22 @@ function AdminApp() {
             <span className="font-bold text-lg text-gray-800 dark:text-gray-100 tracking-tight">Vezérlőpult</span>
           </div>
 
-          <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
-            {Object.entries(EDITABLE_CONTENT).map(([key, config]) => {
-              if (!config.permissions.view.some(p => hasPermission(p))) return null;
-              const Icon = MENU_ICONS[key] || FaSearch;
-              return (
-                <SidebarItem
-                  key={key}
-                  icon={Icon}
-                  label={config.name}
-                  active={currentKey === key}
-                  onClick={() => { setCurrentKey(key); if (window.innerWidth < 768) setSidebarOpen(false); }}
-                />
-              );
-            })}
+          <nav className="flex-1 overflow-y-auto py-6 px-3">
+            <div className="space-y-1">
+              {visibleMenuItems.map((key) => {
+                const cfg = EDITABLE_CONTENT[key];
+                const Icon = MENU_ICONS[key] || FaInfoCircle;
+                return (
+                  <SidebarItem
+                    key={key}
+                    icon={Icon}
+                    label={cfg.name}
+                    active={currentKey === key}
+                    onClick={() => { setCurrentKey(key); if (window.innerWidth < 768) setSidebarOpen(false); }}
+                  />
+                );
+              })}
+            </div>
           </nav>
 
           <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
