@@ -829,6 +829,9 @@ function AdminApp() {
         if (data.role === 'partner') {
           setCurrentKey('events');
         }
+      } else {
+        toast.error("Nincs jogosultságod az Admin felülethez!");
+        await logout();
       }
     };
     fetchRole();
