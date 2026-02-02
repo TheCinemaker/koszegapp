@@ -79,44 +79,39 @@ exports.handler = async (event) => {
             };
         }
 
-        const currentPoints = card.koszegpass_users.points || 0;
-        const newPoints = currentPoints + points;
+        // 2. Call RPC (Robust Security Definer)
+        // Ez a funkció elvégzi a számítást, az update-et és a logolást is egy lépésben.
+        // Mivel Security Definer, átüti az RLS falakat.
 
-        // 2. Update Points & Calculate Tier (Max 20,000 scale)
-        let newCardType = 'bronze';
-        if (newPoints >= 20000) newCardType = 'diamant';
-        else if (newPoints >= 10000) newCardType = 'gold';
-        else if (newPoints >= 5000) newCardType = 'silver';
+        const { data: rpcResult, error: rpcError } = await supabase
+            .rpc('add_koszegpass_points', {
+                p_user_id: card.user_id,
+                p_amount: amountVal,
+                p_source: source || 'Scanner App'
+            });
 
-        const { error: updateError } = await supabase
-            .from('koszegpass_users')
-            .update({
-                points: newPoints,
-                card_type: newCardType
-            })
-            .eq('id', card.user_id);
-
-        if (updateError) {
-            throw updateError;
+        if (rpcError) {
+            console.error('RPC Error:', rpcError);
+            throw rpcError;
         }
 
-        // 3. Log Transaction
-        await supabase
-            .from('koszegpass_points_log')
-            .insert({
-                user_id: card.user_id,
-                amount: amountVal,
-                points: points,
-                source: source || 'Scanner App'
-            });
+        // RPC-től saját formátumot kapunk vissza
+        if (!rpcResult.success) {
+            return {
+                statusCode: 200,
+                body: JSON.stringify(rpcResult)
+            };
+        }
+
+        /* DIRECT UPDATE REMOVED - REPLACED BY RPC */
 
         return {
             statusCode: 200,
             body: JSON.stringify({
                 success: true,
-                newPoints,
-                addedPoints: points,
-                message: `Sikeres jóváírás: ${points} pont (${amountVal} Ft)`
+                newPoints: rpcResult.newPoints,
+                addedPoints: rpcResult.addedPoints,
+                message: `Sikeres jóváírás: ${rpcResult.addedPoints} pont (${amountVal} Ft)`
             })
         };
 
