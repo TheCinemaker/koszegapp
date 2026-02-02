@@ -916,8 +916,8 @@ function AdminApp() {
   const filteredData = useMemo(() => {
     if (!contentData) return [];
     let d = contentData;
-    // Jogosultság szűrés
-    const canViewAll = hasPermission(currentConfig.permissions.view[0]);
+    // Jogosultság szűrés (Local adminRole based)
+    const canViewAll = checkPermission(currentConfig.permissions.view[0]);
     if (!canViewAll) {
       d = d.filter(x => x.createdBy === user.id || !x.createdBy);
     }
@@ -929,9 +929,43 @@ function AdminApp() {
     return d;
   }, [contentData, query, user.id, hasPermission, currentConfig]);
 
+  // HELPER: Local Permission Check based on robust adminRole
+  const checkPermission = (permission) => {
+    if (!adminRole) return false;
+
+    // 1. Full Access Roles
+    if (['superadmin', 'editor', 'admin', 'varos'].includes(adminRole)) {
+      return true;
+    }
+
+    // 2. Partner / Kulsos
+    if (adminRole === 'partner' || adminRole === 'kulsos') {
+      if (permission === 'events:create') return true;
+      if (permission === 'events:view_all') return true;
+      return false;
+    }
+
+    return false;
+  };
+
   const PreviewComponent = currentConfig.previewComponent;
   const FormComponent = currentConfig.formComponent;
-  const canCreate = hasPermission(currentConfig.permissions.create);
+
+  // 3. Local Permission Check (Overrides AuthContext)
+  const canCreate = useMemo(() => {
+    if (!adminRole) return false;
+    const required = currentConfig.permissions.create;
+
+    // Superadmin/Editor/Admin/Varos -> ALL
+    if (['superadmin', 'editor', 'admin', 'varos'].includes(adminRole)) return true;
+
+    // Partner (Kulsos) -> Events Only
+    if (adminRole === 'partner' || adminRole === 'kulsos') {
+      return required === 'events:create'; // Explicit allow
+    }
+
+    return false;
+  }, [adminRole, currentConfig]);
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden font-sans">
