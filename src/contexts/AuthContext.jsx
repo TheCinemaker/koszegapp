@@ -92,7 +92,83 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ... (login/register/logout unchanged) ...
+  /* 
+     Unified Login for Clients and Providers
+     - Clients use 'nickname'
+     - Providers use 'username' (which we map to email)
+  */
+  const login = async (identifier, password, type = 'client') => {
+    // Generate internal email based on type
+    const isProvider = type === 'provider' || type === 'restaurant';
+    const prefix = isProvider ? 'provider' : 'client';
+
+    // Normalize identifier more aggressively
+    const safeId = normalizeIdentifier(identifier);
+    const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
+
+    console.log(`[AuthDebug] Login Attempt:`);
+    console.log(`  Type: ${type}`);
+    console.log(`  Raw ID: "${identifier}"`);
+    console.log(`  Safe ID: "${safeId}"`);
+    console.log(`  Gen Email: "${generatedEmail}"`);
+    console.log(`  Password Len: ${password?.length}`);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: generatedEmail,
+      password
+    });
+
+    if (error) {
+      console.error("[AuthDebug] Login Error:", error);
+      throw error;
+    }
+    console.log("[AuthDebug] Login Success:", data.user?.id);
+    return data;
+  };
+
+  const register = async (identifier, password, fullName, role) => {
+    const isProvider = role === 'provider' || role === 'restaurant';
+    const prefix = isProvider ? 'provider' : 'client';
+
+    const safeId = normalizeIdentifier(identifier);
+    const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
+
+    console.log(`[AuthDebug] Register Attempt:`);
+    console.log(`  Role: ${role}`);
+    console.log(`  Raw ID: "${identifier}"`);
+    console.log(`  Safe ID: "${safeId}"`);
+    console.log(`  Gen Email: "${generatedEmail}"`);
+
+    // Workaround: Database trigger might reject 'restaurant' role if ENUM is restrictive.
+    // We send 'provider' as the metadata role to satisfy the trigger.
+    // The calling code (FoodAuthPage) is responsible for manually updating the profile to 'restaurant' after registration.
+    const metadataRole = role === 'restaurant' ? 'provider' : role;
+
+    const { data, error } = await supabase.auth.signUp({
+      email: generatedEmail,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          nickname: identifier, // Store original identifier
+          role: metadataRole
+        }
+      }
+    });
+
+    if (error) {
+      console.error("[AuthDebug] Register Error:", error);
+      throw error;
+    }
+    return data;
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setToken(null);
+  };
+
 
   // Helper for role-based access
   const hasRole = (role) => {

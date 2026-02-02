@@ -179,6 +179,7 @@ ON public.orders FOR INSERT
 TO authenticated
 WITH CHECK ( auth.uid() = user_id );
 
+DROP POLICY IF EXISTS "Admins/Restaurants can view all orders" ON public.orders;
 CREATE POLICY "Admins/Restaurants can view all orders"
 ON public.orders FOR SELECT
 TO authenticated
@@ -230,12 +231,15 @@ BEGIN
     ) ON CONFLICT DO NOTHING;
 
     -- Insert into Profiles (Unified Login)
+    -- ERROR FIX: Role 'koszegpass' might not be fully propagated in constraints or causes issues.
+    -- We map them to 'client' in the main profiles table, because they ARE clients, just with a special pass.
+    -- Or we can try to force 'client' if 'koszegpass' fails.
     INSERT INTO public.profiles (id, username, full_name, role)
     VALUES (
       new.id, 
       new.raw_user_meta_data->>'nickname',
       new.raw_user_meta_data->>'full_name',
-      'koszegpass' -- Explicitly mark as koszegpass for role checks
+      'client' -- SAFE FALLBACK: All KőszegPass users are Clients + Pass holder.
     ) ON CONFLICT DO NOTHING;
 
   -- If Restaurant Owner
