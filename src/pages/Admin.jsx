@@ -292,11 +292,14 @@ function Login() {
       // but their 'role' in admin_whitelist determines their Admin privileges.
       await login(selectedUser, password, 'client');
 
-      // 3. Success (AuthContext will update state)
+      // 3. Save Username for AdminApp check
+      localStorage.setItem('admin_username', selectedUser);
+
     } catch (err) {
       console.error("Login failed:", err);
       // Ensure logout if partial success (e.g. auth ok but whitelist fail logic glitch)
       await logout();
+      localStorage.removeItem('admin_username');
       setError(err.message || "Hibás felhasználónév vagy jelszó.");
     } finally {
       setIsLoggingIn(false);
@@ -817,11 +820,20 @@ function AdminApp() {
   // Fetch Admin Role on Mount
   useEffect(() => {
     const fetchRole = async () => {
-      // 1. Check if user is in whitelist (Double check for safety)
+      // 1. Check localStorage for Admin Username (Frontend Source of Truth)
+      const adminUsername = localStorage.getItem('admin_username');
+
+      if (!adminUsername) {
+        console.warn("No admin_username in localStorage");
+        toast.error("Nincs Admin belépés (munkamenet lejárt)!");
+        await logout();
+        return;
+      }
+
       const { data, error } = await supabase
         .from('admin_whitelist')
         .select('role')
-        .eq('username', user.user_metadata?.nickname || user.user_metadata?.username) // AuthContext saves original nickname
+        .eq('username', adminUsername)
         .single();
 
       if (data) {
