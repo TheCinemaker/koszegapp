@@ -283,5 +283,26 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1770109711580"
+  },
+  {
+    "name": "Apple Wallet DEMOevent",
+    "date": "2026-02-04",
+    "time": "10:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "This is a demo event created to test Apple Wallet behavior.\n\nIt is used to verify how event passes appear and become relevant in the Wallet.  \nNo real event is associated with this entry!!!",
+    "tags": [
+      "test",
+      "apple",
+      "wallet"
+    ],
+    "image": "wallet.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770129958714"
   }
 ]
