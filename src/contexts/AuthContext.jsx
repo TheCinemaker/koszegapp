@@ -76,6 +76,21 @@ export const AuthProvider = ({ children }) => {
         if (whitelistData) {
           adminRole = whitelistData.role;
         }
+      } else if (authUser.email && authUser.email.endsWith('@koszeg.app')) {
+        // Fallback: Try to parse username from email (e.g. client.admin@koszeg.app -> admin)
+        const parts = authUser.email.split('@')[0].split('.');
+        if (parts.length >= 2) {
+          const parsedUsername = parts[1];
+          const { data: whitelistData } = await supabase
+            .from('admin_whitelist')
+            .select('role')
+            .eq('username', parsedUsername)
+            .maybeSingle();
+          if (whitelistData) {
+            adminRole = whitelistData.role;
+            console.log(`[AuthDebug] Resolved role '${adminRole}' from email for '${parsedUsername}'`);
+          }
+        }
       }
 
       if (profileData || adminRole) {

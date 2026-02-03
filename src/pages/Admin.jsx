@@ -1010,6 +1010,8 @@ function AdminApp() {
               <div className="overflow-hidden">
                 <p className="text-sm font-medium truncate text-gray-900 dark:text-white">{user.displayName || user.email}</p>
                 <p className="text-xs text-gray-400 truncate">Adminisztrátor</p>
+                {/* DEBUG: Temporary Role Display */}
+                <p className="text-[10px] text-red-500 font-mono">Role: {adminRole || 'NULL'}</p>
               </div>
             </div>
             <button
@@ -1046,7 +1048,7 @@ function AdminApp() {
             </div>
             {canCreate && (
               <button
-                onClick={() => setEditingItem({ id: `new_${Date.now()}`, createdBy: user.id })}
+                onClick={() => setEditingItem({ id: "", createdBy: user.id })}
                 className="btn-primary flex items-center gap-2 shadow-lg shadow-indigo-500/30"
               >
                 <FaPlus className="text-xs" /> <span className="hidden sm:inline">Új létrehozása</span>
