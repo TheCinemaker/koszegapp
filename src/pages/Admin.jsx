@@ -986,37 +986,6 @@ function AdminApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [adminRole, setAdminRole] = useState(null); // 'superadmin', 'editor', 'partner'
 
-  const handleGeneratePass = async (eventItem) => {
-    const toastId = toast.loading("Jegy generálása...");
-    try {
-      const res = await fetch('/.netlify/functions/create-event-pass', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(eventItem),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Generálási hiba');
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `event-${eventItem.id}.pkpass`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-
-      toast.success("Jegy letöltve!", { id: toastId });
-    } catch (e) {
-      console.error(e);
-      toast.error(`Hiba: ${e.message}`, { id: toastId });
-    }
-  };
-
   // Fetch Admin Role on Mount
   useEffect(() => {
     const fetchRole = async () => {
