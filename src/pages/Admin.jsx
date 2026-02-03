@@ -1221,7 +1221,7 @@ function AdminApp() {
             {expiredEventsCount > 0 && (
               <button
                 onClick={handleBulkDeleteExpired}
-                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-full text-sm font-bold transition-colors animate-pulse"
+                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-full text-sm font-bold transition-colors"
                 title="5 napnál régebbi események törlése"
               >
                 <FaTrash />
