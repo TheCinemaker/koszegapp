@@ -36,6 +36,7 @@ import {
   FaInfoCircle,
   FaGem
 } from 'react-icons/fa';
+import { Toaster, toast } from 'react-hot-toast';
 import EventImageCard from '../components/EventImageCard'; // Using logic, but custom render? Or adapting? Let's use custom for max control.
 
 const MONTH_NAMES = ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'];
@@ -92,7 +93,7 @@ function toICS(evt) {
 // --- GIGATRENDY COMPONENTS ---
 
 // 1. Floating Glass Card
-const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
+const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePass }) => {
   const isMultiDay = evt.end_date && evt.end_date !== evt.date;
   const monthStr = evt._s ? format(evt._s, 'MMM', { locale: hu }).replace('.', '') : '';
   const dayStr = evt._s ? format(evt._s, 'd') : '';
@@ -127,6 +128,20 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
           <div className="text-xs font-bold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">{monthStr}</div>
           <div className="text-2xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
         </div>
+
+        {/* Apple Wallet Badge (Official Style) */}
+        {!isPast && onGeneratePass && (
+          <button
+            onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
+            className="absolute top-4 left-20 h-10 px-3 bg-black rounded-lg flex items-center gap-1.5 shadow-lg hover:scale-105 active:scale-95 transition-all border border-white/10"
+            title="Hozzáadás az Apple Wallethez"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="white">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+            </svg>
+            <span className="text-white text-[10px] font-semibold tracking-tight">Wallet</span>
+          </button>
+        )}
 
         {/* Favorite Button (Floating) */}
         {!isPast && (
@@ -202,6 +217,37 @@ export default function Events() {
 
   const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
 
+  const handleGeneratePass = async (eventItem) => {
+    const toastId = toast.loading("Wallet Pass készítése...");
+    try {
+      const res = await fetch('/.netlify/functions/create-event-pass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventItem),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Generálási hiba');
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `event-${eventItem.id}.pkpass`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Letöltve!", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
   // --- Initial Fetch ---
   useEffect(() => {
     setLoading(true);
@@ -270,6 +316,7 @@ export default function Events() {
   // CLEAN MINIMAL BACKGROUND (DASHBOARD STYLE)
   return (
     <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+      <Toaster position="top-right" />
 
       {/* 1. SIMPLE HEADER (Back + Title) */}
       <div className="max-w-7xl mx-auto flex items-center gap-4 mb-6 pt-2">
@@ -363,6 +410,7 @@ export default function Events() {
                   evt={evt}
                   isFavorite={isFavorite(evt.id)}
                   toggleFavorite={isFavorite(evt.id) ? removeFavorite : addFavorite}
+                  onGeneratePass={handleGeneratePass}
                 />
               </FadeUp>
             ))}
