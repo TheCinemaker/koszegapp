@@ -82,8 +82,15 @@ exports.handler = async (event) => {
         // Date formatting
         const today = new Date();
         const yyyyMMdd = today.toISOString().split('T')[0];
+
+        // Expiration: next day at 00:05 (protects against iOS cache + timezone drift)
         const expirationDate = new Date(today);
-        expirationDate.setHours(23, 59, 59, 999);
+        expirationDate.setDate(expirationDate.getDate() + 1);
+        expirationDate.setHours(0, 5, 0, 0);
+
+        // Relevant from 8 AM today (UX refinement - "wakes up" at morning)
+        const relevantDate = new Date(today);
+        relevantDate.setHours(8, 0, 0, 0);
 
         /* ---------- Certificates ---------- */
         const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
@@ -118,10 +125,10 @@ exports.handler = async (event) => {
                 foregroundColor: 'rgb(255,255,255)',
                 labelColor: 'rgb(187,222,251)',
                 logoText: 'KőszegAPP',
-                relevantDate: today,
+                relevantDate,
                 expirationDate,
-                webServiceURL: 'https://koszegapp.netlify.app/.netlify/functions/pass-update',
-                authenticationToken: Buffer.from(`daily-${yyyyMMdd}`).toString('base64'),
+                // No webServiceURL - daily pass doesn't update during the day
+                // Bootstrap + event pass updates are sufficient
                 sharingProhibited: false,
                 suppressStripShine: false
             }
