@@ -126,32 +126,21 @@ exports.handler = async (event) => {
         /* ---------- Images ---------- */
 
 try {
-  const icon = fs.readFileSync(
-    path.resolve(__dirname, 'assets/icon.png')
-  );
+  const icon = fs.readFileSync(path.resolve(__dirname, 'icon.png'));
   pass.addBuffer('icon.png', icon);
 
-  const icon2x = fs.readFileSync(
-    path.resolve(__dirname, 'assets/icon@2x.png')
-  );
+  const icon2x = fs.readFileSync(path.resolve(__dirname, 'icon@2x.png'));
   pass.addBuffer('icon@2x.png', icon2x);
 
-  // logo opcionális, de ajánlott
-  const logo = fs.readFileSync(
-    path.resolve(__dirname, 'assets/logo.png')
-  );
+  const logo = fs.readFileSync(path.resolve(__dirname, 'logo.png'));
   pass.addBuffer('logo.png', logo);
 
-  const logo2x = fs.readFileSync(
-    path.resolve(__dirname, 'assets/logo@2x.png')
-  );
+  const logo2x = fs.readFileSync(path.resolve(__dirname, 'logo@2x.png'));
   pass.addBuffer('logo@2x.png', logo2x);
-
 } catch (e) {
   console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
   throw new Error('Wallet icon missing');
 }
-
         /* ---------- Generate ---------- */
         const buffer = pass.getAsBuffer();
 
