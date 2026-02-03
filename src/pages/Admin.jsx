@@ -577,7 +577,7 @@ function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
 // ---- ŰRLAPOK (MODERNIZED) ----
 // (A form logika ugyanaz, csak a kinézet változott a FormModal/Fields miatt)
 
-function EventForm({ initial, onCancel, onSave, onDelete }) {
+function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate }) {
   const { user, token, hasPermission } = useAuth();
   const empty = { name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
@@ -773,6 +773,16 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
         <footer className="p-6 bg-white dark:bg-gray-800 border-t dark:border-gray-700 flex justify-between">
           {canDelete && initial.id && <button type="button" onClick={() => { if (window.confirm("Biztos törlöd?")) onDelete(initial.id); }} className="btn-danger"><FaTrash className="inline mr-2" />Törlés</button>}
           <div className="flex gap-3 ml-auto">
+            {onTriggerPassUpdate && initial.id && (
+              <button
+                type="button"
+                onClick={() => onTriggerPassUpdate(initial.id)}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
+                title="Apple Wallet pass-ek frissítése"
+              >
+                🔄 Pass frissítése
+              </button>
+            )}
             <button type="button" onClick={onCancel} className="btn-secondary">Mégse</button>
             <button type="submit" className="btn-primary"><FaSave className="inline mr-2" />Mentés</button>
           </div>
@@ -1122,6 +1132,58 @@ function AdminApp() {
     return false;
   };
 
+  const handleGeneratePass = async (eventItem) => {
+    const toastId = toast.loading("Jegy generálása...");
+    try {
+      const res = await fetch('/.netlify/functions/create-event-pass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventItem),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Generálási hiba');
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `event-${eventItem.id}.pkpass`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Jegy letöltve!", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
+  const handleTriggerPassUpdate = async (eventId) => {
+    const toastId = toast.loading("Pass frissítés triggerelése...");
+    try {
+      const res = await fetch('/.netlify/functions/trigger-pass-update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventId }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Trigger hiba');
+      }
+
+      toast.success("✅ Apple értesítve! A pass-ek frissülni fognak.", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
   const filteredData = useMemo(() => {
     if (!contentData) return [];
     let d = contentData;
@@ -1351,6 +1413,7 @@ function AdminApp() {
               setEditingItem(null);
               toast.success("Törölve.");
             }}
+            onTriggerPassUpdate={currentKey === 'events' ? handleTriggerPassUpdate : undefined}
           />
         )}
       </main>
