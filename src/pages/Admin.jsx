@@ -370,6 +370,29 @@ function RequireAuth({ children }) {
   return user ? children : <Login />;
 }
 
+// ---- PREDEFINED LOCATIONS ----
+const PREDEFINED_LOCATIONS = {
+  "Jurisics vár": { lat: 47.389582, lng: 16.538988 },
+  "KÖSZHÁZ (Jurisics vár)": { lat: 47.389582, lng: 16.538988 },
+  "Jurisics vár – Lovagterem": { lat: 47.389582, lng: 16.538988 },
+  "Fő tér": { lat: 47.389025, lng: 16.541018 },
+  "Jézus Szíve Plébániatemplom": { lat: 47.388833, lng: 16.540755 },
+  "Hősök kapuja": { lat: 47.389182, lng: 16.539745 },
+  "Kőszegi Városi Múzeum": { lat: 47.389182, lng: 16.539745 },
+  "Arany Egyszarvú Patikamúzeum": { lat: 47.389455, lng: 16.539130 },
+  "Dr. Nagy László EGYMI": { lat: 47.388133, lng: 16.542176 },
+  "Béri Balog Ádám Általános Iskola": { lat: 47.381757, lng: 16.546072 },
+  "Kőszegi Chernel Kálmán Városi Könyvtár": { lat: 47.389579, lng: 16.542464 },
+  "Zsinagóga": { lat: 47.391408, lng: 16.541513 },
+  "Jégcsarnok": { lat: 47.381322, lng: 16.547666 },
+  "Csónakázó-tó": { lat: 47.3865, lng: 16.5321 },
+  "Kálvária-templom": { lat: 47.3941, lng: 16.5244 },
+  "Hétforrás": { lat: 47.38685, lng: 16.5054 },
+  "Óház-kilátó": { lat: 47.3934, lng: 16.4947 },
+  "Stájerházi Erdészeti Múzeum": { lat: 47.3842, lng: 16.4718 },
+  "Szent Vid-kápolna": { lat: 47.3688, lng: 16.4867 }
+};
+
 // ---- KÁRTYA KOMPONENSEK ----
 // Update to support delete button inside card
 const CardBase = ({ children, onClick }) => (
@@ -389,19 +412,26 @@ function EventCard({ item: ev, onClick, onDelete, canDelete }) {
 
   return (
     <CardBase onClick={onClick}>
-      {/* Direct Delete Button (Top Right) */}
+      {/* Direct Delete Button (Top Right) - ALWAYS VISIBLE */}
       {canDelete && onDelete && (
         <button
           onClick={(e) => {
             e.stopPropagation(); // Don't open edit modal
             onDelete(ev.id);
           }}
-          className="absolute top-2 right-2 z-20 p-2 bg-white/90 text-red-500 rounded-full shadow-md hover:bg-red-500 hover:text-white transition-colors opacity-0 group-hover:opacity-100"
+          className="absolute top-2 right-2 z-50 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
           title="Törlés"
         >
-          <FaTrash size={12} />
+          <FaTrash size={14} />
         </button>
       )}
+
+      {/* ID Badge (Top Left - below date if space, or absolute) */}
+      <div className="absolute top-12 left-3 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{ev.id}
+        </span>
+      </div>
 
       <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
         {img && (
@@ -412,7 +442,7 @@ function EventCard({ item: ev, onClick, onDelete, canDelete }) {
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         )}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 left-3 z-20">
           <span className={`px-2 py-1 rounded-md text-xs font-bold shadow-sm ${dateClass}`}>
             {ev.date}
           </span>
@@ -436,7 +466,7 @@ function EventCard({ item: ev, onClick, onDelete, canDelete }) {
 
 function EventForm({ initial, onCancel, onSave, onDelete }) {
   const { user, token, hasPermission } = useAuth();
-  const empty = { id: "", name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
+  const empty = { name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
 
   const [v, setV] = useState({ ...empty, ...initial });
@@ -465,8 +495,22 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
     }
   };
 
+  const handleLocationSelect = (e) => {
+    const locName = e.target.value;
+    if (!locName) return;
+
+    // If it's a predefined location, auto-fill coords
+    if (PREDEFINED_LOCATIONS[locName]) {
+      const coords = PREDEFINED_LOCATIONS[locName];
+      setV(prev => ({ ...prev, location: locName, coords: coords }));
+      setCoordsInput(`${coords.lat}, ${coords.lng}`);
+    } else {
+      // Custom text entered
+      setV(prev => ({ ...prev, location: locName }));
+    }
+  };
+
   const validate = () => {
-    if (!v.id?.trim()) return "Az 'ID' mező kitöltése kötelező.";
     if (!v.name?.trim()) return "A 'Név' mező kitöltése kötelező.";
     if (!isValidDate(v.date)) return "A dátum formátuma érvénytelen (ÉÉÉÉ-HH-NN).";
     if (!isValidTime(v.time)) return "Az idő formátuma érvénytelen (ÓÓ:PP).";
@@ -541,7 +585,7 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
         <div className="flex-1 p-8 space-y-6">
           {err && <div className="p-4 bg-red-100 text-red-700 rounded-xl">{err}</div>}
           <FormRow>
-            <FormField label="ID"><TextInput value={v.id} onChange={(e) => setV({ ...v, id: e.target.value })} /></FormField>
+            <FormField label="ID (Auto)"><TextInput value={v.id} disabled={true} placeholder="Mentéskor generálódik..." /></FormField>
             <FormField label="Név"><TextInput value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></FormField>
           </FormRow>
 
@@ -571,8 +615,30 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
             <FormField label="Dátum"><input type="date" value={v.date} onChange={(e) => setV({ ...v, date: e.target.value })} className={inputClasses} /></FormField>
             <FormField label="Idő"><input type="time" value={v.time} onChange={(e) => setV({ ...v, time: e.target.value })} className={inputClasses} /></FormField>
           </FormRow>
-          <FormField label="Helyszín"><TextInput value={v.location} onChange={(e) => setV({ ...v, location: e.target.value })} /></FormField>
-          <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
+
+          <FormRow>
+            <FormField label="Helyszín">
+              <div className="flex flex-col gap-2">
+                <select
+                  onChange={handleLocationSelect}
+                  className={inputClasses}
+                  value={PREDEFINED_LOCATIONS[v.location] ? v.location : ""}
+                >
+                  <option value="">-- Válassz gyorsan --</option>
+                  {Object.keys(PREDEFINED_LOCATIONS).sort().map(k => (
+                    <option key={k} value={k}>{k}</option>
+                  ))}
+                </select>
+                <TextInput
+                  placeholder="Vagy írd be kézzel..."
+                  value={v.location}
+                  onChange={(e) => setV({ ...v, location: e.target.value })}
+                />
+              </div>
+            </FormField>
+            <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
+          </FormRow>
+
           <FormField label="Leírás"><TextArea value={v.description} onChange={(e) => setV({ ...v, description: e.target.value })} /></FormField>
           <FormField label="Címkék"><TextInput value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} /></FormField>
 
