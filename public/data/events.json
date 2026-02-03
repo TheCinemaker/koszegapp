@@ -113,7 +113,6 @@
     "highlightLabel": "🎭🎶 JELMEZES FÚVÓS FARSANG – 90’s HANGULATBAN! 🎶🎭"
   },
   {
-    "id": "new_1768500320153",
     "name": "Balog SZM bál",
     "date": "2026-02-14",
     "time": "19:30",
@@ -132,7 +131,8 @@
     "image": "szmbal.jpg",
     "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
     "highlight": true,
-    "highlightLabel": "Hollywoody csillogás"
+    "highlightLabel": "Hollywood-i csillogás",
+    "id": "new_1768500320153"
   },
   {
     "id": "new_1768893910346",
