@@ -913,22 +913,6 @@ function AdminApp() {
 
   const currentConfig = EDITABLE_CONTENT[currentKey];
 
-  const filteredData = useMemo(() => {
-    if (!contentData) return [];
-    let d = contentData;
-    // Jogosultság szűrés (Local adminRole based)
-    const canViewAll = checkPermission(currentConfig.permissions.view[0]);
-    if (!canViewAll) {
-      d = d.filter(x => x.createdBy === user.id || !x.createdBy);
-    }
-    // Keresés
-    if (query) {
-      const q = query.toLowerCase();
-      d = d.filter(item => Object.values(item).some(val => String(val).toLowerCase().includes(q)));
-    }
-    return d;
-  }, [contentData, query, user.id, hasPermission, currentConfig]);
-
   // HELPER: Local Permission Check based on robust adminRole
   const checkPermission = (permission) => {
     if (!adminRole) return false;
@@ -947,6 +931,24 @@ function AdminApp() {
 
     return false;
   };
+
+  const filteredData = useMemo(() => {
+    if (!contentData) return [];
+    let d = contentData;
+    // Jogosultság szűrés (Local adminRole based)
+    const canViewAll = checkPermission(currentConfig.permissions.view[0]);
+    if (!canViewAll) {
+      d = d.filter(x => x.createdBy === user.id || !x.createdBy);
+    }
+    // Keresés
+    if (query) {
+      const q = query.toLowerCase();
+      d = d.filter(item => Object.values(item).some(val => String(val).toLowerCase().includes(q)));
+    }
+    return d;
+  }, [contentData, query, user.id, hasPermission, currentConfig]);
+
+
 
   const PreviewComponent = currentConfig.previewComponent;
   const FormComponent = currentConfig.formComponent;
