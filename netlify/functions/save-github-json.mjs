@@ -39,18 +39,29 @@ export async function handler(event) {
 
     // --- WHITELIST CHECK (Backend Side) ---
     // If role is client/missing, check the whitelist table to see if they are actually an admin
-    const username = user.user_metadata?.nickname || user.user_metadata?.username;
+    let username = user.user_metadata?.nickname || user.user_metadata?.username;
+
+    // Fallback: Try to parse username from email (e.g. client.admin@koszeg.app -> admin)
+    if (!username && user.email && user.email.endsWith('@koszeg.app')) {
+      const parts = user.email.split('@')[0].split('.');
+      if (parts.length >= 2) {
+        username = parts[1]; // e.g. 'admin' from 'client.admin'
+        console.log(`[save-github-json] Parsed username from email: ${username}`);
+      }
+    }
 
     // We can query public table because we have RLS 'public read' enabled
-    const { data: whitelistData } = await supabase
-      .from('admin_whitelist')
-      .select('role')
-      .eq('username', username)
-      .maybeSingle();
+    if (username) {
+      const { data: whitelistData } = await supabase
+        .from('admin_whitelist')
+        .select('role')
+        .eq('username', username)
+        .maybeSingle();
 
-    if (whitelistData) {
-      role = whitelistData.role; // Override with the real role
-      console.log(`[save-github-json] Whitelist override: ${username} -> ${role}`);
+      if (whitelistData) {
+        role = whitelistData.role; // Override with the real role
+        console.log(`[save-github-json] Whitelist override: ${username} -> ${role}`);
+      }
     }
     // --------------------------------------
 
