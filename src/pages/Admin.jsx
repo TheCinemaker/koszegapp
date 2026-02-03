@@ -1,14 +1,16 @@
 // src/pages/Admin/index.jsx
-import React, { useEffect, useMemo, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { supabase } from "../lib/supabaseClient";
-import { Toaster, toast } from 'react-hot-toast';
 import {
   FaBars, FaTimes, FaSignOutAlt, FaSave, FaPlus, FaSearch,
   FaCalendarAlt, FaMapMarkerAlt, FaImage, FaTrash, FaPen,
   FaUserCircle, FaInfoCircle, FaParking, FaTree, FaUtensils,
-  FaBed, FaLandmark
+  FaBed, FaLandmark, FaApple
 } from 'react-icons/fa';
+
+// ... (existing code) ...
+
+// ---- KÁRTYA KOMPONENSEK ----
+// ... (CardBase, GenericCard, ImageCard) ...
+
 
 // ---- Beállítások és Segédek ----
 const JSON_SAVE_FN = "/.netlify/functions/save-github-json";
@@ -497,31 +499,46 @@ function ImageCard({ item, onClick, imagePath, onDelete, canDelete }) {
 
 // ... GenericCard and ImageCard can remain as is or be updated similarly if needed ...
 
-function EventCard({ item: ev, onClick, onDelete, canDelete }) {
+function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
   const img = ev.image ? `${IMG_FUNC_BASE}${encodeURIComponent("public/images/events/" + ev.image)}` : "";
   const dateClass = new Date(ev.date) < new Date() ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700";
 
   return (
     <CardBase onClick={onClick}>
-      {/* Direct Delete Button (Top Right) - ALWAYS VISIBLE */}
-      {canDelete && onDelete && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation(); // Don't open edit modal
-            onDelete(ev.id);
-          }}
-          className="absolute top-2 right-2 z-20 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
-          title="Törlés"
-        >
-          <FaTrash size={14} />
-        </button>
-      )}
+       {/* Action Buttons (Top Right) */}
+       <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
+           {/* Direct Delete Button */}
+           {canDelete && onDelete && (
+            <button
+                onClick={(e) => {
+                    e.stopPropagation(); // Don't open edit modal
+                    onDelete(ev.id);
+                }}
+                className="p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+                title="Törlés"
+            >
+                <FaTrash size={14} />
+            </button>
+          )}
+          
+           {/* Apple Wallet Button */}
+           <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onGeneratePass(ev);
+                }}
+                className="p-2.5 bg-black text-white rounded-full shadow-lg hover:bg-gray-800 transition-colors border border-gray-700"
+                title="Apple Wallet Jegy Generálása"
+            >
+                <FaApple size={16} />
+            </button>
+       </div>
 
       {/* ID Badge (Top Left - below date if space, or absolute) */}
       <div className="absolute top-12 left-3 z-20">
-        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
-          #{ev.id}
-        </span>
+         <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+           #{ev.id}
+         </span>
       </div>
 
       <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
@@ -551,6 +568,7 @@ function EventCard({ item: ev, onClick, onDelete, canDelete }) {
     </CardBase>
   );
 }
+
 
 // ---- ŰRLAPOK (MODERNIZED) ----
 // (A form logika ugyanaz, csak a kinézet változott a FormModal/Fields miatt)
@@ -954,6 +972,37 @@ function AdminApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [adminRole, setAdminRole] = useState(null); // 'superadmin', 'editor', 'partner'
 
+  const handleGeneratePass = async (eventItem) => {
+    const toastId = toast.loading("Jegy generálása...");
+    try {
+      const res = await fetch('/.netlify/functions/create-event-pass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventItem),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Generálási hiba');
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `event-${eventItem.id}.pkpass`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Jegy letöltve!", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
   // Fetch Admin Role on Mount
   useEffect(() => {
     const fetchRole = async () => {
@@ -1271,6 +1320,7 @@ function AdminApp() {
                       toast.success("Törölve.");
                     }
                   }}
+                  onGeneratePass={() => handleGeneratePass(item)}
                   canDelete={checkPermission(currentConfig.permissions.delete)}
                 />
               ))}
