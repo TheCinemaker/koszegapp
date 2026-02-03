@@ -32,37 +32,9 @@ const sections = [
 ];
 
 export default function Home() {
-  const [downloadingDaily, setDownloadingDaily] = useState(false);
-
-  const handleDownloadDailyPass = async () => {
-    setDownloadingDaily(true);
-    const toastId = toast.loading("Mai pass generálása...");
-    try {
-      const res = await fetch('/.netlify/functions/get-daily-pass');
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || 'Nincs esemény ma');
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      const today = new Date().toISOString().split('T')[0];
-      a.download = `koszegma-${today}.pkpass`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-
-      toast.success("Mai pass letöltve!", { id: toastId });
-    } catch (e) {
-      console.error(e);
-      toast.error(e.message || 'Hiba történt', { id: toastId });
-    } finally {
-      setDownloadingDaily(false);
-    }
+  // KőszegMA subscription pass - direct download link
+  const handleDownloadDailyPass = () => {
+    window.location.href = '/.netlify/functions/create-daily-subscription-pass';
   };
 
   return (
