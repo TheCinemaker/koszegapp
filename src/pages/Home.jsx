@@ -87,8 +87,7 @@ export default function Home() {
         <FadeUp delay={0} duration={1.2} className="mb-6">
           <button
             onClick={handleDownloadDailyPass}
-            disabled={downloadingDaily}
-            className="w-full relative block rounded-[1.5rem] p-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 backdrop-blur-[20px] shadow-xl hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full relative block rounded-[1.5rem] p-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 backdrop-blur-[20px] shadow-xl hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] overflow-hidden group"
           >
             {/* Animated Background Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/50 via-pink-500/50 to-indigo-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
