@@ -398,11 +398,102 @@ const PREDEFINED_LOCATIONS = {
 const CardBase = ({ children, onClick }) => (
   <div
     onClick={onClick}
-    className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col h-full relative" // relative added
+    className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col h-full relative"
   >
     {children}
   </div>
 );
+
+function GenericCard({ item, onClick, onDelete, canDelete }) {
+  return (
+    <CardBase onClick={onClick}>
+      {/* Delete Button */}
+      {canDelete && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(item.id);
+          }}
+          className="absolute top-2 right-2 z-50 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          title="Törlés"
+        >
+          <FaTrash size={14} />
+        </button>
+      )}
+
+      {/* ID Badge */}
+      <div className="absolute top-2 left-2 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{item.id}
+        </span>
+      </div>
+
+      <div className="p-5 flex flex-col h-full">
+        <div className="flex items-start justify-between mb-2 mt-4"> {/* mt-4 to clear badge/button */}
+          <div className="bg-gray-100 dark:bg-gray-700 p-2 rounded-lg text-gray-500">
+            <FaInfoCircle />
+          </div>
+        </div>
+        <h3 className="font-bold text-lg text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-indigo-600 transition-colors">
+          {item.name || item.title || "Névtelen elem"}
+        </h3>
+        {item.address && <p className="text-sm text-gray-500 mt-auto flex items-center gap-1"><FaMapMarkerAlt className="text-xs" /> {item.address}</p>}
+      </div>
+    </CardBase>
+  );
+}
+
+function ImageCard({ item, onClick, imagePath, onDelete, canDelete }) {
+  const imgUrl = item.image ? `${IMG_FUNC_BASE}${encodeURIComponent(imagePath + item.image)}` : null;
+  return (
+    <CardBase onClick={onClick}>
+      {/* Delete Button */}
+      {canDelete && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(item.id);
+          }}
+          className="absolute top-2 right-2 z-50 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          title="Törlés"
+        >
+          <FaTrash size={14} />
+        </button>
+      )}
+
+      {/* ID Badge */}
+      <div className="absolute top-2 left-2 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{item.id}
+        </span>
+      </div>
+
+      <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
+        {imgUrl ? (
+          <img
+            src={imgUrl}
+            alt={item.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-gray-300">
+            <FaImage className="text-4xl" />
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
+      <div className="p-4 flex flex-col flex-1">
+        <h3 className="font-bold text-gray-900 dark:text-white truncate group-hover:text-indigo-600 transition-colors mb-1">
+          {item.name || item.title}
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+          {item.description || item.address || item.category || "Nincs leírás"}
+        </p>
+      </div>
+    </CardBase>
+  );
+}
 
 // ... GenericCard and ImageCard can remain as is or be updated similarly if needed ...
 
