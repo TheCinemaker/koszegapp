@@ -13,6 +13,8 @@ import {
   IoTicketOutline,
   IoShareSocialOutline
 } from 'react-icons/io5';
+import { FaApple } from "react-icons/fa";
+import { Toaster, toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
 import GhostImage from '../components/GhostImage';
@@ -76,6 +78,38 @@ export default function EventDetail() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const handleGeneratePass = async () => {
+    if (!evt) return;
+    const toastId = toast.loading("Wallet Pass készítése...");
+    try {
+      const res = await fetch('/.netlify/functions/create-event-pass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(evt),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Generálási hiba');
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `event-${evt.id}.pkpass`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Letöltve!", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
   const { s, e } = useMemo(() => parseDateRange(evt || {}), [evt]);
   const isMultiDay = !!(evt?.end_date && evt.end_date !== evt.date);
 
@@ -114,6 +148,7 @@ export default function EventDetail() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-purple-500 selection:text-white relative">
+      <Toaster position="top-right" />
 
       {/* GLOBAL BACKGROUND NOISE */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
@@ -225,6 +260,15 @@ export default function EventDetail() {
                     <p className="text-gray-500 dark:text-gray-400 mb-8">Ne felejtsd el később!</p>
 
                     <div className="space-y-3">
+                      {/* Apple Wallet Button */}
+                      <button
+                        onClick={handleGeneratePass}
+                        className="w-full bg-black text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all border border-gray-800"
+                      >
+                        <FaApple className="text-xl" />
+                        <span className="text-sm">Hozzáadás: Apple Wallet</span>
+                      </button>
+
                       {evt.link && (
                         <motion.a
                           whileHover={{ scale: 1.05 }}
