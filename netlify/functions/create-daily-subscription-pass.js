@@ -124,21 +124,33 @@ exports.handler = async (event) => {
         );
 
         /* ---------- Images ---------- */
-        const SITE_URL = 'https://koszegapp.netlify.app';
 
-        try {
-            const iconRes = await fetch(`${SITE_URL}/images/apple-touch-icon.png`);
-            const icon = await iconRes.buffer();
-            pass.addBuffer('icon.png', icon);
-            pass.addBuffer('icon@2x.png', icon);
+try {
+  const icon = fs.readFileSync(
+    path.resolve(__dirname, 'assets/icon.png')
+  );
+  pass.addBuffer('icon.png', icon);
 
-            const logoRes = await fetch(`${SITE_URL}/images/koeszeg_logo_nobg.png`);
-            const logo = await logoRes.buffer();
-            pass.addBuffer('logo.png', logo);
-            pass.addBuffer('logo@2x.png', logo);
-        } catch (e) {
-            console.warn('Images missing, pass still valid', e);
-        }
+  const icon2x = fs.readFileSync(
+    path.resolve(__dirname, 'assets/icon@2x.png')
+  );
+  pass.addBuffer('icon@2x.png', icon2x);
+
+  // logo opcionális, de ajánlott
+  const logo = fs.readFileSync(
+    path.resolve(__dirname, 'assets/logo.png')
+  );
+  pass.addBuffer('logo.png', logo);
+
+  const logo2x = fs.readFileSync(
+    path.resolve(__dirname, 'assets/logo@2x.png')
+  );
+  pass.addBuffer('logo@2x.png', logo2x);
+
+} catch (e) {
+  console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
+  throw new Error('Wallet icon missing');
+}
 
         /* ---------- Generate ---------- */
         const buffer = pass.getAsBuffer();
