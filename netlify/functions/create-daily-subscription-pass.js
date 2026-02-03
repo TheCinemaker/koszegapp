@@ -81,8 +81,8 @@ exports.handler = async (event) => {
                 backgroundColor: 'rgb(33,150,243)',
                 foregroundColor: 'rgb(255,255,255)',
                 labelColor: 'rgb(187,222,251)',
-                webServiceURL: 'https://koszegapp.netlify.app/.netlify/functions/pass-update',
-                authenticationToken: Buffer.from('daily-subscription').toString('base64'),
+                // ❌ NO webServiceURL - bootstrap pass doesn't update
+                // ❌ NO authenticationToken - only registers device
                 sharingProhibited: false,
                 suppressStripShine: false,
                 // ❗ NO expirationDate - this pass never expires
@@ -94,7 +94,7 @@ exports.handler = async (event) => {
             }
         );
 
-        pass.type = 'generic';
+        pass.type = 'storeCard';
 
         /* ---------- Fields ---------- */
         pass.primaryFields.push({
@@ -146,7 +146,8 @@ exports.handler = async (event) => {
             statusCode: 200,
             headers: {
                 'Content-Type': 'application/vnd.apple.pkpass',
-                'Content-Disposition': 'attachment; filename="koszeg-ma-wallet.pkpass"'
+                'Content-Disposition': 'attachment; filename="koszeg-ma-wallet.pkpass"',
+                'Cache-Control': 'no-store'
             },
             body: buffer.toString('base64'),
             isBase64Encoded: true
