@@ -1,26 +1,5 @@
 [
   {
-    "id": "event-2026-002",
-    "name": "Csőre Töltve – Újévi Boomwhacker Show",
-    "date": "2026-01-06",
-    "end_date": "2026-01-06",
-    "time": "17:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Kőszeg Város Ifjúsági Fúvószenekarának különleges újévi hangversenye. Vezényel: Szilágyiné Gasztonyi Eszter. A belépés ingyenes!",
-    "tags": [
-      "zene",
-      "koncert",
-      "ifjúsági",
-      "családi",
-      "ingyenes"
-    ],
-    "image": "csore_toltve.png"
-  },
-  {
     "id": "event-2026-003",
     "name": "Városi Véradás",
     "date": "2026-01-07",
