@@ -6,6 +6,10 @@
   directory = "netlify/functions"
   included_files = ["netlify/functions/certs/*"]
 
+# Scheduled function: Daily pass generator (runs every morning at 6 AM CET)
+[functions."daily-pass-generator"]
+  schedule = "0 5 * * *"  # 5 AM UTC = 6 AM CET
+
 [dev]
   command = "npm run dev"
   targetPort = 3000
