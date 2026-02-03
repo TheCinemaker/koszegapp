@@ -512,10 +512,25 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
 
   const submit = (e) => {
     e.preventDefault();
-    const msg = validate();
-    if (msg) { setErr(msg); return; }
+
+    // Auto-generate ID if missing/empty (for new items)
+    let finalData = { ...v };
+    if (!finalData.id || finalData.id.trim() === "") {
+      const year = new Date().getFullYear();
+      const timestamp = Date.now();
+      finalData.id = `event-${year}-${timestamp}`;
+    }
+
+    // Validate using the (potentially generated) ID
+    if (!finalData.id?.trim()) return setErr("Az 'ID' mező kitöltése kötelező (belső hiba)."); // Should not happen
+    if (!finalData.name?.trim()) return setErr("A 'Név' mező kitöltése kötelező.");
+    if (!isValidDate(finalData.date)) return setErr("A dátum formátuma érvénytelen (ÉÉÉÉ-HH-NN).");
+    if (!isValidTime(finalData.time)) return setErr("Az idő formátuma érvénytelen (ÓÓ:PP).");
+    if (!finalData.location?.trim()) return setErr("A 'Helyszín' mező kitöltése kötelező.");
+    if (!finalData.image?.trim()) return setErr("Kép feltöltése kötelező.");
+
     const tags = tagsInput.split(",").map((t) => t.trim()).filter(Boolean);
-    onSave({ ...v, tags, createdBy: v.createdBy || user.id });
+    onSave({ ...finalData, tags, createdBy: finalData.createdBy || user.id });
   };
 
   // Permission Check
