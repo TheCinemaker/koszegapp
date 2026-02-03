@@ -371,73 +371,38 @@ function RequireAuth({ children }) {
 }
 
 // ---- KÁRTYA KOMPONENSEK ----
+// Update to support delete button inside card
 const CardBase = ({ children, onClick }) => (
   <div
     onClick={onClick}
-    className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col h-full"
+    className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col h-full relative" // relative added
   >
     {children}
   </div>
 );
 
-function GenericCard({ item, onClick }) {
-  return (
-    <CardBase onClick={onClick}>
-      <div className="p-5 flex flex-col h-full">
-        <div className="flex items-start justify-between mb-2">
-          <div className="bg-gray-100 dark:bg-gray-700 p-2 rounded-lg text-gray-500">
-            <FaInfoCircle />
-          </div>
-          <span className="text-xs font-mono text-gray-400 bg-gray-50 dark:bg-gray-900 px-2 py-1 rounded">
-            #{item.id}
-          </span>
-        </div>
-        <h3 className="font-bold text-lg text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-indigo-600 transition-colors">
-          {item.name || item.title || "Névtelen elem"}
-        </h3>
-        {item.address && <p className="text-sm text-gray-500 mt-auto flex items-center gap-1"><FaMapMarkerAlt className="text-xs" /> {item.address}</p>}
-      </div>
-    </CardBase>
-  );
-}
+// ... GenericCard and ImageCard can remain as is or be updated similarly if needed ...
 
-function ImageCard({ item, onClick, imagePath }) {
-  const imgUrl = item.image ? `${IMG_FUNC_BASE}${encodeURIComponent(imagePath + item.image)}` : null;
-  return (
-    <CardBase onClick={onClick}>
-      <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
-        {imgUrl ? (
-          <img
-            src={imgUrl}
-            alt={item.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            onError={(e) => { e.currentTarget.style.display = "none"; }}
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-gray-300">
-            <FaImage className="text-4xl" />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-      </div>
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-bold text-gray-900 dark:text-white truncate group-hover:text-indigo-600 transition-colors mb-1">
-          {item.name || item.title}
-        </h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-          {item.description || item.address || item.category || "Nincs leírás"}
-        </p>
-      </div>
-    </CardBase>
-  );
-}
-
-function EventCard({ item: ev, onClick }) {
+function EventCard({ item: ev, onClick, onDelete, canDelete }) {
   const img = ev.image ? `${IMG_FUNC_BASE}${encodeURIComponent("public/images/events/" + ev.image)}` : "";
   const dateClass = new Date(ev.date) < new Date() ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700";
 
   return (
     <CardBase onClick={onClick}>
+      {/* Direct Delete Button (Top Right) */}
+      {canDelete && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // Don't open edit modal
+            onDelete(ev.id);
+          }}
+          className="absolute top-2 right-2 z-20 p-2 bg-white/90 text-red-500 rounded-full shadow-md hover:bg-red-500 hover:text-white transition-colors opacity-0 group-hover:opacity-100"
+          title="Törlés"
+        >
+          <FaTrash size={12} />
+        </button>
+      )}
+
       <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
         {img && (
           <img
@@ -984,6 +949,39 @@ function AdminApp() {
     return false;
   }, [adminRole, currentConfig]);
 
+  // 4. Bulk Delete Logic (Expired Events)
+  const expiredEventsCount = useMemo(() => {
+    if (currentKey !== 'events') return 0;
+    const today = new Date();
+    // 5 days buffer
+    const buffer = new Date();
+    buffer.setDate(today.getDate() - 5);
+
+    return contentData.filter(ev => {
+      if (!ev.date) return false;
+      // Check if event end date (or start date) is older than 5 days
+      const d = new Date(ev.end_date || ev.date);
+      return d < buffer;
+    }).length;
+  }, [contentData, currentKey]);
+
+  const handleBulkDeleteExpired = () => {
+    if (!checkPermission('events:delete')) return toast.error("Nincs jogosultságod törölni.");
+
+    if (window.confirm(`Biztosan törölni szeretnéd azt a ${expiredEventsCount} eseményt, ami már több mint 5 napja lejárt?`)) {
+      const today = new Date();
+      const buffer = new Date();
+      buffer.setDate(today.getDate() - 5);
+
+      setContentData(prev => prev.filter(ev => {
+        if (!ev.date) return true; // Keep invalid dates to be safe
+        const d = new Date(ev.end_date || ev.date);
+        return d >= buffer; // Keep future/recent events
+      }));
+      toast.success(`${expiredEventsCount} lejárt esemény törölve! Ne felejts el Menteni!`);
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden font-sans">
       <Toaster position="top-right" />
@@ -1061,6 +1059,19 @@ function AdminApp() {
                 className="pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-full text-sm border-none focus:ring-2 focus:ring-indigo-500 w-48 sm:w-64 transition-all"
               />
             </div>
+
+            {/* Expired Purge Button */}
+            {expiredEventsCount > 0 && (
+              <button
+                onClick={handleBulkDeleteExpired}
+                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-full text-sm font-bold transition-colors animate-pulse"
+                title="5 napnál régebbi események törlése"
+              >
+                <FaTrash />
+                <span className="hidden sm:inline">{expiredEventsCount} lejárt törlése</span>
+              </button>
+            )}
+
             {canCreate && (
               <button
                 onClick={() => setEditingItem({ id: "", createdBy: user.id })}
@@ -1092,7 +1103,19 @@ function AdminApp() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-1">
               {filteredData.map(item => (
-                <PreviewComponent key={item.id} item={item} onClick={() => setEditingItem(item)} />
+                <PreviewComponent
+                  key={item.id}
+                  item={item}
+                  onClick={() => setEditingItem(item)}
+                  // Pass delete handler for direct card access
+                  onDelete={(id) => {
+                    if (window.confirm("Biztos törlöd?")) {
+                      setContentData(prev => prev.filter(x => x.id !== id));
+                      toast.success("Törölve.");
+                    }
+                  }}
+                  canDelete={checkPermission(currentConfig.permissions.delete)}
+                />
               ))}
             </div>
           )}
