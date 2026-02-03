@@ -131,15 +131,20 @@ try {
 
   const icon2x = fs.readFileSync(path.resolve(__dirname, 'icon@2x.png'));
   pass.addBuffer('icon@2x.png', icon2x);
+} catch (e) {
+  console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
+  throw new Error('Wallet icon missing');
+}
 
+// 🟡 LOGO OPCIONÁLIS
+try {
   const logo = fs.readFileSync(path.resolve(__dirname, 'logo.png'));
   pass.addBuffer('logo.png', logo);
 
   const logo2x = fs.readFileSync(path.resolve(__dirname, 'logo@2x.png'));
   pass.addBuffer('logo@2x.png', logo2x);
 } catch (e) {
-  console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
-  throw new Error('Wallet icon missing');
+  console.warn('⚠️ Logo missing – continuing without logo');
 }
         /* ---------- Generate ---------- */
         const buffer = pass.getAsBuffer();
