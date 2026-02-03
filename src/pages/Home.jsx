@@ -114,7 +114,7 @@ export default function Home() {
               {/* Apple Wallet Badge */}
               <div className="flex-shrink-0">
                 <img
-                  src="https://developer.apple.com/wallet/add-to-apple-wallet-guidelines/images/download-on-the-app-store-badge.svg"
+                  src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
                   alt="Add to Apple Wallet"
                   className="h-12 opacity-90 group-hover:opacity-100 transition-opacity"
                 />
