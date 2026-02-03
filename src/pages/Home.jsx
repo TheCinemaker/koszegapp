@@ -65,37 +65,36 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/50 via-pink-500/50 to-indigo-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
             {/* Content */}
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex-1 text-left">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl group-hover:rotate-6 group-hover:scale-110 transition-all duration-700">
-                    📍
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-white leading-none tracking-tight">
-                      KőszegMA
-                    </h3>
-                    <p className="text-sm text-white/80 font-medium mt-1">
-                      Mai események a Wallet-edben
-                    </p>
-                  </div>
-                </div>
-              </div>
+<div className="relative z-10 flex items-center justify-between">
+  <div className="flex-1 text-left">
+    <div className="flex items-center gap-3 mb-2">
+      <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl group-hover:rotate-6 group-hover:scale-110 transition-all duration-700">
+        📍
+      </div>
+      <div>
+        <h3 className="text-2xl font-bold text-white leading-none tracking-tight">
+          KőszegMA
+        </h3>
+        <p className="text-sm text-white/80 font-medium mt-1">
+          Mai események a Wallet-edben
+        </p>
+      </div>
+    </div>
+  </div>
 
-              {/* Apple Wallet Badge */}
-              <div className="flex-shrink-0">
-                <img
-                  src="https://help.apple.com/assets/63B77291A1B7A93F492858BB/63B77292A1B7A93F492858C2/en_US/492fe3e49c4a69ad4096f73f5e8a50ad.png"
-                  alt="Add to Apple Wallet"
-                  className="h-12 opacity-90 group-hover:opacity-100 transition-opacity"
-                />
-              </div>
-            </div>
+  {/* Apple Wallet Badge */}
+  <div className="flex-shrink-0">
+    <img
+      src="/add-to-apple-wallet.svg"
+      alt="Add to Apple Wallet"
+      className="h-12 opacity-90 group-hover:opacity-100 transition-opacity"
+      draggable={false}
+    />
+  </div>
+</div>
 
-            {/* Shine Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-200%] group-hover:animate-shine opacity-30 duration-1000" />
-          </button>
-        </FadeUp>
+{/* Shine Effect */}
+<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-200%] group-hover:animate-shine opacity-30 duration-1000" />
 
         {/* --- ULTRA-COMPACT BENTO GRID --- */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 auto-rows-fr">
