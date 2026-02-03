@@ -1,4 +1,8 @@
 // src/pages/Admin/index.jsx
+import React, { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { supabase } from "../lib/supabaseClient";
+import { Toaster, toast } from 'react-hot-toast';
 import {
   FaBars, FaTimes, FaSignOutAlt, FaSave, FaPlus, FaSearch,
   FaCalendarAlt, FaMapMarkerAlt, FaImage, FaTrash, FaPen,
@@ -505,40 +509,40 @@ function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
 
   return (
     <CardBase onClick={onClick}>
-       {/* Action Buttons (Top Right) */}
-       <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
-           {/* Direct Delete Button */}
-           {canDelete && onDelete && (
-            <button
-                onClick={(e) => {
-                    e.stopPropagation(); // Don't open edit modal
-                    onDelete(ev.id);
-                }}
-                className="p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
-                title="Törlés"
-            >
-                <FaTrash size={14} />
-            </button>
-          )}
-          
-           {/* Apple Wallet Button */}
-           <button
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onGeneratePass(ev);
-                }}
-                className="p-2.5 bg-black text-white rounded-full shadow-lg hover:bg-gray-800 transition-colors border border-gray-700"
-                title="Apple Wallet Jegy Generálása"
-            >
-                <FaApple size={16} />
-            </button>
-       </div>
+      {/* Action Buttons (Top Right) */}
+      <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
+        {/* Direct Delete Button */}
+        {canDelete && onDelete && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Don't open edit modal
+              onDelete(ev.id);
+            }}
+            className="p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+            title="Törlés"
+          >
+            <FaTrash size={14} />
+          </button>
+        )}
+
+        {/* Apple Wallet Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onGeneratePass(ev);
+          }}
+          className="p-2.5 bg-black text-white rounded-full shadow-lg hover:bg-gray-800 transition-colors border border-gray-700"
+          title="Apple Wallet Jegy Generálása"
+        >
+          <FaApple size={16} />
+        </button>
+      </div>
 
       {/* ID Badge (Top Left - below date if space, or absolute) */}
       <div className="absolute top-12 left-3 z-20">
-         <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
-           #{ev.id}
-         </span>
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{ev.id}
+        </span>
       </div>
 
       <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
