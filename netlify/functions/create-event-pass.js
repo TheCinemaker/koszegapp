@@ -114,15 +114,36 @@ exports.handler = async (event) => {
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
-        /* ---------- Dates ---------- */
+        /* ---------- Dates & Time Logic ---------- */
 
         const eventDate = new Date(`${date}T${time}:00+01:00`);
         const expirationDate = new Date(eventDate);
         expirationDate.setDate(expirationDate.getDate() + 1);
 
-        /* ---------- Colors ---------- */
+        const now = new Date();
+        const diffMinutes = Math.round((eventDate - now) / 60000);
+
+        /* ---------- Colors (Dynamic based on time) ---------- */
 
         const colors = getEventPalette(tags);
+
+        // 2️⃣ Dynamic color shift as event approaches/happens
+        if (diffMinutes <= 60 && diffMinutes > 0) {
+            colors.bg = 'rgb(156,39,176)'; // Purple - event starting soon
+        }
+        if (diffMinutes <= 0 && diffMinutes > -180) {
+            colors.bg = 'rgb(76,175,80)'; // Green - event happening now
+        }
+
+        /* ---------- Smart relevantText (1️⃣) ---------- */
+
+        let relevantText = `Ma ${time} – ${name}`;
+        if (diffMinutes <= 60 && diffMinutes > 0) {
+            relevantText = `⏰ ${diffMinutes} perc múlva kezdődik`;
+        }
+        if (diffMinutes <= 0 && diffMinutes > -180) {
+            relevantText = `🎉 Most zajlik – jó szórakozást!`;
+        }
 
         /* ---------- Pass Props ---------- */
 
@@ -139,13 +160,29 @@ exports.handler = async (event) => {
             logoText: 'KőszegAPP',
             relevantDate: eventDate,
             expirationDate,
+
+            // 1️⃣ Smart lock screen text
             locations: [
                 {
                     latitude: coords.lat,
                     longitude: coords.lng,
-                    relevantText: name
+                    relevantText
                 }
-            ]
+            ],
+
+            // 3️⃣ Future-proof web service (for updates)
+            webServiceURL: 'https://koszegapp.netlify.app/.netlify/functions/pass-update',
+            authenticationToken: Buffer.from(id).toString('base64'),
+
+            // 4️⃣ Apple Watch optimization
+            userInfo: {
+                eventType: tags[0] || 'event',
+                city: 'Kőszeg'
+            },
+
+            // 5️⃣ Accessibility & Apple compliance
+            sharingProhibited: false,
+            suppressStripShine: false
         };
 
         const pass = new PKPass(
@@ -161,25 +198,34 @@ exports.handler = async (event) => {
 
         pass.type = 'eventTicket';
 
-        /* ---------- Fields ---------- */
+        /* ---------- Fields (6️⃣ with emoji refinement) ---------- */
 
         pass.primaryFields.push({
             key: 'event',
-            label: 'ESEMÉNY',
+            label: '🎟️ ESEMÉNY',
             value: name
         });
 
         pass.secondaryFields.push({
             key: 'datetime',
-            label: 'IDŐPONT',
+            label: '🕒 IDŐPONT',
             value: `${date} · ${time}`
         });
 
         pass.auxiliaryFields.push({
             key: 'place',
-            label: 'HELYSZÍN',
+            label: '📍 HELYSZÍN',
             value: location
         });
+
+        // 7️⃣ "Memory mode" - post-event thank you message
+        if (diffMinutes < -120) {
+            pass.backFields.push({
+                key: 'thanks',
+                label: '💛 Köszönjük',
+                value: 'Köszönjük, hogy velünk voltál az eseményen!'
+            });
+        }
 
         pass.backFields.push(
             {
