@@ -28,7 +28,8 @@ function createApplePushJWT() {
 
     // Try to load from env variable first, then from file
     if (process.env.APPLE_PUSH_PRIVATE_KEY) {
-        privateKey = process.env.APPLE_PUSH_PRIVATE_KEY;
+        // Fix escaped newlines in env variable (e.g., "\\n" -> actual newline)
+        privateKey = process.env.APPLE_PUSH_PRIVATE_KEY.replace(/\\n/g, '\n');
     } else {
         const keyPath = path.resolve(__dirname, 'certs/AuthKey.p8');
         if (fs.existsSync(keyPath)) {
@@ -36,6 +37,11 @@ function createApplePushJWT() {
         } else {
             throw new Error('APPLE_PUSH_PRIVATE_KEY not found in env or certs/AuthKey.p8');
         }
+    }
+
+    // Ensure the key is properly formatted
+    if (!privateKey.includes('BEGIN PRIVATE KEY')) {
+        throw new Error('Invalid private key format. Must be a valid PEM key.');
     }
 
     return jwt.sign(
