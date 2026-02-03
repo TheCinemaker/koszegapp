@@ -26,17 +26,15 @@ function createApplePushJWT() {
 
     let privateKey;
 
-    // Try to load from env variable first, then from file
-    if (process.env.APPLE_PUSH_PRIVATE_KEY) {
+    // Try to load from file first (more reliable), then from env variable
+    const keyPath = path.resolve(__dirname, 'certs/AuthKey_54DA92K9DB.p8');
+    if (fs.existsSync(keyPath)) {
+        privateKey = fs.readFileSync(keyPath, 'utf8');
+    } else if (process.env.APPLE_PUSH_PRIVATE_KEY) {
         // Fix escaped newlines in env variable (e.g., "\\n" -> actual newline)
         privateKey = process.env.APPLE_PUSH_PRIVATE_KEY.replace(/\\n/g, '\n');
     } else {
-        const keyPath = path.resolve(__dirname, 'certs/AuthKey.p8');
-        if (fs.existsSync(keyPath)) {
-            privateKey = fs.readFileSync(keyPath, 'utf8');
-        } else {
-            throw new Error('APPLE_PUSH_PRIVATE_KEY not found in env or certs/AuthKey.p8');
-        }
+        throw new Error('APPLE_PUSH_PRIVATE_KEY not found in certs/AuthKey_54DA92K9DB.p8 or env');
     }
 
     // Ensure the key is properly formatted
