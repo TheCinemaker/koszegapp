@@ -94,7 +94,7 @@ exports.handler = async (event) => {
             }
         );
 
-        pass.type = 'storeCard';
+        pass.type = 'generic';
 
         /* ---------- Fields ---------- */
         pass.primaryFields.push({
