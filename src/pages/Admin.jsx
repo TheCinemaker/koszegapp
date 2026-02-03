@@ -414,7 +414,7 @@ function GenericCard({ item, onClick, onDelete, canDelete }) {
             e.stopPropagation();
             onDelete(item.id);
           }}
-          className="absolute top-2 right-2 z-50 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          className="absolute top-2 right-2 z-20 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
           title="Törlés"
         >
           <FaTrash size={14} />
@@ -454,7 +454,7 @@ function ImageCard({ item, onClick, imagePath, onDelete, canDelete }) {
             e.stopPropagation();
             onDelete(item.id);
           }}
-          className="absolute top-2 right-2 z-50 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          className="absolute top-2 right-2 z-20 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
           title="Törlés"
         >
           <FaTrash size={14} />
@@ -510,7 +510,7 @@ function EventCard({ item: ev, onClick, onDelete, canDelete }) {
             e.stopPropagation(); // Don't open edit modal
             onDelete(ev.id);
           }}
-          className="absolute top-2 right-2 z-50 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          className="absolute top-2 right-2 z-20 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
           title="Törlés"
         >
           <FaTrash size={14} />
