@@ -1,4 +1,5 @@
 const { PKPass } = require('passkit-generator');
+const fetch = require('node-fetch');
 const forge = require('node-forge');
 const fs = require('fs');
 const path = require('path');
