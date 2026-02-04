@@ -13,7 +13,9 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env': process.env
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    // Avoid exposing all process.env to prevent secret leaks
+    'process.env': {}
   },
   optimizeDeps: {
     include: ['fuse.js']
