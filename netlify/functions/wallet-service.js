@@ -104,16 +104,16 @@ async function generateDailyPass(serialNumber) {
             passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
             teamIdentifier: process.env.APPLE_TEAM_ID,
             serialNumber,
-            organizationName: 'Kőszeg Város',
+            organizationName: 'Koszeg Varos',
             description: 'KőszegAPP – Mai programok',
-            backgroundColor: 'rgb(63,81,181)',
-            foregroundColor: 'rgb(255,255,255)',
-            labelColor: 'rgb(187,222,251)',
+            backgroundColor: '#3F51B5',
+            foregroundColor: '#FFFFFF',
+            labelColor: '#BBDEFB',
             logoText: 'Ma Kőszegen',
             relevantDate,
             expirationDate,
-            sharingProhibited: false,
-            suppressStripShine: false,
+            sharingProhibited: true,
+            suppressStripShine: true,
             userInfo: {
                 city: 'Kőszeg',
                 generatedAt: new Date().toISOString()
@@ -319,7 +319,8 @@ exports.handler = async (event) => {
         }
 
         const serialNumbers = data.map(d => d.serial_number);
-        const lastUpdated = new Date().getTime().toString(); // Simple tag
+        // Optimization: Use daily tag so it only updates once per day unless manually triggered
+        const lastUpdated = new Date().toISOString().split('T')[0];
 
         return {
             statusCode: 200,
