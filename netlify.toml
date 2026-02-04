@@ -2,6 +2,11 @@
   command = "npm run build"
   publish = "dist"
 
+[[redirects]]
+  from = "/v1/*"
+  to = "/.netlify/functions/wallet-service"
+  status = 200
+
 [functions]
   directory = "netlify/functions"
   included_files = [

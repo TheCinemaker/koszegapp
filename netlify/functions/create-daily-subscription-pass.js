@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const forge = require('node-forge');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 /*
   BOOTSTRAP SUBSCRIPTION PASS
@@ -45,6 +46,26 @@ function extractFromP12(p12Buffer, password) {
     return { key, cert };
 }
 
+async function getTodaysEvents() {
+    try {
+        const res = await fetch('https://koszegapp.netlify.app/.netlify/functions/get-github-json?path=public/data/events.json');
+        if (!res.ok) return [];
+
+        const events = await res.json();
+        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+        // Filter events happening today
+        return events.filter(e => {
+            const eventDate = e.date;
+            const endDate = e.end_date || e.date;
+            return eventDate <= today && endDate >= today;
+        });
+    } catch (e) {
+        console.error('Failed to fetch events:', e);
+        return [];
+    }
+}
+
 /* -------------------- Handler -------------------- */
 
 exports.handler = async (event) => {
@@ -62,7 +83,15 @@ exports.handler = async (event) => {
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
-        /* ---------- Create Bootstrap Pass ---------- */
+        /* ---------- Data ---------- */
+        const todaysEvents = await getTodaysEvents();
+        const authToken = crypto.randomBytes(32).toString('hex');
+
+        // Date formatting
+        const today = new Date();
+        const yyyyMMdd = today.toISOString().split('T')[0];
+
+        /* ---------- Create Subscription Pass ---------- */
         const pass = new PKPass(
             {},
             {
@@ -75,19 +104,20 @@ exports.handler = async (event) => {
                 formatVersion: 1,
                 passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
                 teamIdentifier: process.env.APPLE_TEAM_ID,
-                serialNumber: 'daily-subscription',
+                serialNumber: 'daily-subscription', // Fixed serial for the subscription card
                 organizationName: 'Kőszeg Város',
                 description: 'Ma Kőszegen – Wallet feliratkozás',
                 logoText: 'Ma Kőszegen',
                 backgroundColor: 'rgb(33,150,243)',
                 foregroundColor: 'rgb(255,255,255)',
                 labelColor: 'rgb(187,222,251)',
-                // ❌ NO webServiceURL - bootstrap pass doesn't update
-                // ❌ NO authenticationToken - only registers device
+
+                // ✅ Update fields
+                webServiceURL: 'https://koszegapp.netlify.app/.netlify/functions/wallet-service',
+                authenticationToken: authToken,
+
                 sharingProhibited: false,
                 suppressStripShine: false,
-                // ❗ NO expirationDate - this pass never expires
-                // ❗ NO relevantDate - always available
                 userInfo: {
                     passType: 'daily-subscription',
                     city: 'Kőszeg'
@@ -101,7 +131,7 @@ exports.handler = async (event) => {
         pass.primaryFields.push({
             key: 'title',
             label: '📍 MA KŐSZEGEN',
-            value: 'Napi események a Walletben'
+            value: todaysEvents.length > 0 ? `${todaysEvents.length} esemény` : 'Napi események'
         });
 
         pass.secondaryFields.push({
@@ -110,11 +140,22 @@ exports.handler = async (event) => {
             value: '✅ Feliratkozva'
         });
 
+        // Add today's events if any (Day 1 experience)
+        if (todaysEvents.length > 0) {
+            todaysEvents.slice(0, 3).forEach((e, idx) => {
+                pass.auxiliaryFields.push({
+                    key: `event_${idx}`,
+                    label: e.time,
+                    value: e.name
+                });
+            });
+        }
+
         pass.backFields.push(
             {
                 key: 'info',
                 label: 'Hogyan működik?',
-                value: 'Ha Kőszegen van aznap esemény, a Wallet automatikusan megjeleníti a napi programokat.'
+                value: 'Ez a kártya automatikusan frissül, ha Kőszegen van aznap esemény.'
             },
             {
                 key: 'source',
@@ -123,29 +164,37 @@ exports.handler = async (event) => {
             }
         );
 
+        if (todaysEvents.length > 0) {
+            pass.backFields.push({
+                key: 'todays_events',
+                label: 'Mai részletek',
+                value: todaysEvents.map(e => `${e.time} – ${e.name} (${e.location})`).join('\n')
+            });
+        }
+
         /* ---------- Images ---------- */
 
-try {
-  const icon = fs.readFileSync(path.resolve(__dirname, 'icon.png'));
-  pass.addBuffer('icon.png', icon);
+        try {
+            const icon = fs.readFileSync(path.resolve(__dirname, 'icon.png'));
+            pass.addBuffer('icon.png', icon);
 
-  const icon2x = fs.readFileSync(path.resolve(__dirname, 'icon@2x.png'));
-  pass.addBuffer('icon@2x.png', icon2x);
-} catch (e) {
-  console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
-  throw new Error('Wallet icon missing');
-}
+            const icon2x = fs.readFileSync(path.resolve(__dirname, 'icon@2x.png'));
+            pass.addBuffer('icon@2x.png', icon2x);
+        } catch (e) {
+            console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
+            throw new Error('Wallet icon missing');
+        }
 
-// 🟡 LOGO OPCIONÁLIS
-try {
-  const logo = fs.readFileSync(path.resolve(__dirname, 'logo.png'));
-  pass.addBuffer('logo.png', logo);
+        // 🟡 LOGO OPCIONÁLIS
+        try {
+            const logo = fs.readFileSync(path.resolve(__dirname, 'logo.png'));
+            pass.addBuffer('logo.png', logo);
 
-  const logo2x = fs.readFileSync(path.resolve(__dirname, 'logo@2x.png'));
-  pass.addBuffer('logo@2x.png', logo2x);
-} catch (e) {
-  console.warn('⚠️ Logo missing – continuing without logo');
-}
+            const logo2x = fs.readFileSync(path.resolve(__dirname, 'logo@2x.png'));
+            pass.addBuffer('logo@2x.png', logo2x);
+        } catch (e) {
+            console.warn('⚠️ Logo missing – continuing without logo');
+        }
         /* ---------- Generate ---------- */
         const buffer = pass.getAsBuffer();
 

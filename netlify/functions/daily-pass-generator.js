@@ -1,21 +1,30 @@
-const { PKPass } = require('passkit-generator');
-const fetch = require('node-fetch');
+const { createClient } = require('@supabase/supabase-js');
+const http2 = require('http2');
 const forge = require('node-forge');
 const fs = require('fs');
 const path = require('path');
 
 /*
-  DAILY PASS GENERATOR
+  DAILY PASS UPDATER (PUSH NOTIFICATION SENDER)
   
-  Runs every morning at 6 AM (Netlify scheduled function)
-  Generates a "Ma Kőszegen" (Today in Kőszeg) pass with today's events
+  Runs every morning at 6 AM (Netlify scheduled function).
+  Instead of generating a static file, this function:
+  1. Fetches all registered wallet devices from Supabase.
+  2. Connects to Apple Push Notification Service (APNs) via HTTP/2.
+  3. Sends a "wakeup" push to each device.
   
-  Users who have this pass will automatically receive updates
+  The devices will then background-fetch the new pass from:
+  GET /v1/passes/... (handled by wallet-service.js)
 */
 
-/* -------------------- Helpers -------------------- */
+// Initialize Supabase
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_KEY
+);
 
-function extractFromP12(p12Buffer, password) {
+/* -------------------- Cert Helpers -------------------- */
+function extractKeys(p12Buffer, password) {
     const p12Asn1 = forge.asn1.fromDer(p12Buffer.toString('binary'));
     const p12 = forge.pkcs12.pkcs12FromAsn1(p12Asn1, password || '');
 
@@ -34,170 +43,107 @@ function extractFromP12(p12Buffer, password) {
         );
     }
 
-    if (!key || !cert) throw new Error('Missing cert or key');
-
+    if (!key || !cert) throw new Error('Missing cert or key in P12');
     return { key, cert };
 }
 
-async function getTodaysEvents() {
-    const res = await fetch('https://koszegapp.netlify.app/.netlify/functions/get-github-json?path=public/data/events.json');
-    if (!res.ok) throw new Error('Failed to fetch events');
+/* -------------------- APNs Helper -------------------- */
+async function sendPushBatch(tokens, cert, key) {
+    if (tokens.length === 0) return 0;
 
-    const events = await res.json();
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    console.log(`🚀 连接 APNs... Sending to ${tokens.length} devices.`);
 
-    // Filter events happening today
-    const todaysEvents = events.filter(e => {
-        const eventDate = e.date;
-        const endDate = e.end_date || e.date;
-        return eventDate <= today && endDate >= today;
+    const client = http2.connect('https://api.push.apple.com', {
+        key: key,
+        cert: cert
     });
 
-    return todaysEvents;
+    client.on('error', (err) => console.error('APNs Client Error:', err));
+
+    let successCount = 0;
+    const promises = tokens.map(token => {
+        return new Promise((resolve) => {
+            const req = client.request({
+                ':method': 'POST',
+                ':path': `/3/device/${token}`,
+                'apns-topic': process.env.APPLE_PASS_TYPE_ID
+            });
+
+            req.on('response', (headers) => {
+                const status = headers[':status'];
+                if (status === 200) {
+                    successCount++;
+                    // console.log(`✅ Push sent to ${token.substring(0, 5)}...`);
+                } else {
+                    console.warn(`⚠️ Push failed for ${token.substring(0, 5)}... Status: ${status}`);
+                    // If 410 (Gone), we should ideally remove from DB, but keeping it simple for now.
+                }
+                resolve();
+            });
+
+            req.on('error', (err) => {
+                console.error(`❌ Request error for ${token}:`, err);
+                resolve();
+            });
+
+            // Send empty JSON payload for Wallet updates
+            req.write(JSON.stringify({}));
+            req.end();
+        });
+    });
+
+    await Promise.all(promises);
+
+    // Close client after short delay to ensure all streams finished
+    await new Promise(r => setTimeout(r, 1000));
+    client.close();
+
+    return successCount;
 }
 
 /* -------------------- Handler -------------------- */
 
 exports.handler = async (event) => {
     try {
-        console.log('🌅 Daily pass generator started');
+        console.log('🌅 Daily Pass Auto-Updater Started');
 
-        // Get today's events
-        const todaysEvents = await getTodaysEvents();
+        // 1. Get all registered devices
+        // We only need the push_token. Grouping by push_token to avoid duplicates if same device registered multiple times (shouldn't happen due to DB validation but good practice)
+        const { data: devices, error } = await supabase
+            .from('wallet_devices')
+            .select('push_token');
 
-        if (todaysEvents.length === 0) {
-            console.log('No events today, skipping pass generation');
-            return {
-                statusCode: 200,
-                body: JSON.stringify({ message: 'No events today' })
-            };
+        if (error) throw new Error(`Supabase query failed: ${error.message}`);
+
+        if (!devices || devices.length === 0) {
+            console.log('No devices registered. Exiting.');
+            return { statusCode: 200, body: 'No devices' };
         }
 
-        console.log(`Found ${todaysEvents.length} events for today`);
+        // Unique tokens
+        const tokens = [...new Set(devices.map(d => d.push_token))];
+        console.log(`Found ${tokens.length} unique devices to update.`);
 
-        // Get highlighted events (or all if none highlighted)
-        const highlights = todaysEvents.filter(e => e.highlight);
-        const eventsToShow = highlights.length > 0 ? highlights : todaysEvents.slice(0, 3);
-
-        // Date formatting
-        const today = new Date();
-        const yyyyMMdd = today.toISOString().split('T')[0];
-
-        // Expiration: next day at 00:05 (protects against iOS cache + timezone drift)
-        const expirationDate = new Date(today);
-        expirationDate.setDate(expirationDate.getDate() + 1);
-        expirationDate.setHours(0, 5, 0, 0);
-
-        // Relevant from 8 AM today (UX refinement - "wakes up" at morning)
-        const relevantDate = new Date(today);
-        relevantDate.setHours(8, 0, 0, 0);
-
-        /* ---------- Certificates ---------- */
+        // 2. Load Certificates
         const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
-        const wwdrBuffer = fs.readFileSync(path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer'));
+        const { key, cert } = extractKeys(p12Buffer, process.env.APPLE_PASS_P12_PASSWORD);
 
-        const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
-        const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
-        const wwdrPem = forge.pki.certificateToPem(wwdrCert);
+        // 3. Send Pushes
+        const sentCount = await sendPushBatch(tokens, cert, key);
 
-        const { key, cert } = extractFromP12(
-            p12Buffer,
-            process.env.APPLE_PASS_P12_PASSWORD
-        );
-
-        /* ---------- Create Pass ---------- */
-        const pass = new PKPass(
-            {},
-            {
-                wwdr: wwdrPem,
-                signerCert: cert,
-                signerKey: key,
-                signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
-            },
-            {
-                formatVersion: 1,
-                passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
-                teamIdentifier: process.env.APPLE_TEAM_ID,
-                serialNumber: `daily-${yyyyMMdd}`,
-                organizationName: 'Kőszeg Város',
-                description: 'KőszegAPP – Napi Események',
-                backgroundColor: 'rgb(63,81,181)',
-                foregroundColor: 'rgb(255,255,255)',
-                labelColor: 'rgb(187,222,251)',
-                logoText: 'KőszegAPP',
-                relevantDate,
-                expirationDate,
-                // No webServiceURL - daily pass doesn't update during the day
-                // Bootstrap + event pass updates are sufficient
-                sharingProhibited: false,
-                suppressStripShine: false
-            }
-        );
-
-        pass.type = 'eventTicket';
-
-        /* ---------- Fields ---------- */
-        pass.primaryFields.push({
-            key: 'title',
-            label: '📍 MA KŐSZEGEN',
-            value: yyyyMMdd
-        });
-
-        eventsToShow.forEach((e, idx) => {
-            pass.secondaryFields.push({
-                key: `event_${idx}`,
-                label: '🎉 Esemény',
-                value: `${e.time} – ${e.name}`
-            });
-        });
-
-        pass.backFields.push(
-            {
-                key: 'details',
-                label: 'Mai események',
-                value: eventsToShow.map(e => `${e.time} – ${e.name} (${e.location})`).join('\n')
-            },
-            {
-                key: 'source',
-                label: 'Forrás',
-                value: 'KőszegAPP'
-            }
-        );
-
-        /* ---------- Images ---------- */
-        const SITE_URL = 'https://koszegapp.netlify.app';
-
-        try {
-            const iconRes = await fetch(`${SITE_URL}/images/apple-touch-icon.png`);
-            const icon = await iconRes.buffer();
-            pass.addBuffer('icon.png', icon);
-            pass.addBuffer('icon@2x.png', icon);
-
-            const logoRes = await fetch(`${SITE_URL}/images/koeszeg_logo_nobg.png`);
-            const logo = await logoRes.buffer();
-            pass.addBuffer('logo.png', logo);
-            pass.addBuffer('logo@2x.png', logo);
-        } catch (e) {
-            console.warn('Daily pass image load failed', e);
-        }
-
-        /* ---------- Generate ---------- */
-        const buffer = pass.getAsBuffer();
-
-        console.log(`✅ Daily pass generated for ${yyyyMMdd} with ${eventsToShow.length} events`);
-
-        // Note: We don't push here. Apple automatically delivers to subscribed users.
+        console.log(`✅ Finished. Sent ${sentCount}/${tokens.length} pushes.`);
 
         return {
             statusCode: 200,
             body: JSON.stringify({
-                message: `Daily pass ready: daily-${yyyyMMdd}`,
-                events: eventsToShow.length
+                message: 'Push notifications sent',
+                total: tokens.length,
+                successful: sentCount
             })
         };
 
     } catch (err) {
-        console.error('DAILY PASS ERROR:', err);
+        console.error('DAILY UPDATE ERROR:', err);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: err.message })
