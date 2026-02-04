@@ -525,7 +525,11 @@ export default function KoszegPassProfile() {
                                             try {
                                                 const res = await fetch('/.netlify/functions/create-apple-pass', {
                                                     method: 'POST',
-                                                    body: JSON.stringify(profile)
+                                                    body: JSON.stringify({
+                                                        ...profile,
+                                                        user_id: user.id,
+                                                        qr_token: qrToken || user.id
+                                                    })
                                                 });
                                                 if (!res.ok) throw new Error('Hiba a generálás során');
 
@@ -560,7 +564,11 @@ export default function KoszegPassProfile() {
                                             try {
                                                 const res = await fetch('/.netlify/functions/create-google-pass', {
                                                     method: 'POST',
-                                                    body: JSON.stringify(profile)
+                                                    body: JSON.stringify({
+                                                        ...profile,
+                                                        user_id: user.id,
+                                                        qr_token: qrToken || user.id
+                                                    })
                                                 });
                                                 const data = await res.json();
                                                 if (data.saveUrl) {

@@ -35,10 +35,39 @@ export async function handler(event) {
     }
 
     // Role -> Permissions Mapping
-    const role = user.user_metadata?.role || 'client';
+    let role = user.user_metadata?.role || 'client';
+
+    // --- WHITELIST CHECK (Backend Side) ---
+    // If role is client/missing, check the whitelist table to see if they are actually an admin
+    let username = user.user_metadata?.nickname || user.user_metadata?.username;
+
+    // Fallback: Try to parse username from email (e.g. client.admin@koszeg.app -> admin)
+    if (!username && user.email && user.email.endsWith('@koszeg.app')) {
+      const parts = user.email.split('@')[0].split('.');
+      if (parts.length >= 2) {
+        username = parts[1]; // e.g. 'admin' from 'client.admin'
+        console.log(`[save-github-json] Parsed username from email: ${username}`);
+      }
+    }
+
+    // We can query public table because we have RLS 'public read' enabled
+    if (username) {
+      const { data: whitelistData } = await supabase
+        .from('admin_whitelist')
+        .select('role')
+        .eq('username', username)
+        .maybeSingle();
+
+      if (whitelistData) {
+        role = whitelistData.role; // Override with the real role
+        console.log(`[save-github-json] Whitelist override: ${username} -> ${role}`);
+      }
+    }
+    // --------------------------------------
+
     let perms = [];
 
-    if (role === 'admin') {
+    if (['admin', 'superadmin', 'editor'].includes(role)) {
       perms = ['*'];
     } else if (['provider', 'varos', 'var', 'tourinform', 'partner'].includes(role)) {
       // Grant general write permissions like we did for image upload
@@ -46,7 +75,7 @@ export async function handler(event) {
     }
 
     const decodedUser = {
-      id: user.user_metadata?.nickname || user.email || user.id,
+      id: username || user.email || user.id,
       role: role,
       permissions: perms
     };

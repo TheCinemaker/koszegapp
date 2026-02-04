@@ -91,15 +91,25 @@ exports.handler = async (event, context) => {
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
-        // 2. Initialize Pass with correct structure (Based on source code analysis)
-        // v3 API approach: Manual construction without pass.json buffer
+        // 2. Initialize Pass
+        // Define Colors based on Card Type (Matching App Gradients approx.)
+        const cardColors = {
+            'DIAMANT': { bg: 'rgb(26, 35, 126)', fg: 'rgb(255, 255, 255)', label: 'rgb(200, 200, 255)' }, // Deep Blue
+            'GOLD': { bg: 'rgb(93, 64, 55)', fg: 'rgb(255, 255, 255)', label: 'rgb(255, 224, 178)' },   // Brown/Gold
+            'SILVER': { bg: 'rgb(55, 71, 79)', fg: 'rgb(255, 255, 255)', label: 'rgb(207, 216, 220)' }, // Dark Grey
+            'BRONZE': { bg: 'rgb(62, 28, 22)', fg: 'rgb(255, 255, 255)', label: 'rgb(215, 204, 200)' }  // Dark Brown
+        };
 
-        // Ensure values are strings and not empty
-        const safeUserId = String(user_id || 'UNKNOWN');
+        // Normalize rank
+        let normalizeRank = (card_type || 'Bronz').toUpperCase();
+        if (normalizeRank === 'BRONZ') normalizeRank = 'BRONZE'; // Fix common typo mapping
+
+        const colors = cardColors[normalizeRank] || cardColors['BRONZE'];
+
+        const safeUserId = String(user_id || '').toUpperCase(); // Use empty string if missing
         const safeName = full_name || 'Felhasználó';
         const safePoints = String(points || '0');
-        const safeRank = (card_type || 'Bronz').toUpperCase();
-        const safeQr = qr_token || safeUserId;
+        const safeQr = qr_token || safeUserId; // QR Content
 
         const passProps = {
             formatVersion: 1,
@@ -107,29 +117,27 @@ exports.handler = async (event, context) => {
             teamIdentifier: process.env.APPLE_TEAM_ID,
             organizationName: 'Kőszeg Város',
             description: 'KőszegPass Városkártya',
-            serialNumber: safeUserId,
-            backgroundColor: 'rgb(245, 245, 247)',
-            foregroundColor: 'rgb(0, 0, 0)',
-            labelColor: 'rgb(142, 142, 147)',
+            serialNumber: safeUserId || 'UNKNOWN-' + Date.now(), // Unique ID
+            backgroundColor: colors.bg,
+            foregroundColor: colors.fg,
+            labelColor: colors.label,
             logoText: 'KőszegPass',
-            // model: 'storeCard' // Not used here, set type explicitly below
         };
 
         const pass = new PKPass(
-            {}, // No buffers/files
+            {},
             {
                 wwdr: wwdrPem,
                 signerCert: cert,
                 signerKey: key,
                 signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
             },
-            passProps // Props go here
+            passProps
         );
 
-        // Explicitly set type to initialize fields
         pass.type = 'storeCard';
 
-        // 4. Set Fields (Using push directly on arrays as per v3 API)
+        // 4. Set Fields
         pass.primaryFields.push({
             key: 'balance',
             label: 'PONTOK',
@@ -140,7 +148,7 @@ exports.handler = async (event, context) => {
         pass.secondaryFields.push({
             key: 'rank',
             label: 'RANG',
-            value: safeRank,
+            value: normalizeRank,
             textAlignment: 'PKTextAlignmentLeft'
         });
 
@@ -158,7 +166,7 @@ exports.handler = async (event, context) => {
             {
                 key: 'info',
                 label: 'Info',
-                value: 'Ez a KőszegPass digitális kártyád. Használd kedvezményekhez és pontgyűjtéshez!'
+                value: 'Ez a KőszegPass digitális kártyád. Mutasd fel elfogadóhelyeken!'
             }
         );
 
@@ -167,7 +175,7 @@ exports.handler = async (event, context) => {
             format: 'PKBarcodeFormatQR',
             message: safeQr,
             messageEncoding: 'iso-8859-1',
-            altText: safeUserId
+            altText: safeUserId // Show User ID below QR, or leave empty '' to hide "unknown"
         });
 
         // 3. Add Images

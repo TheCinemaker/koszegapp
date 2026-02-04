@@ -55,22 +55,53 @@ export const AuthProvider = ({ children }) => {
 
   const fetchProfile = async (authUser) => {
     try {
-      // Use maybeSingle() instead of single() to avoid error logs if missing
-      const { data, error } = await supabase
+      // 1. Fetch Public Profile
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', authUser.id)
         .maybeSingle();
 
-      if (error) {
-        console.error("Profile fetch error (bg):", error);
+      // 2. Fetch Admin Whitelist Role (if matched by username/nickname)
+      // Note: authUser.user_metadata.nickname holds the login username
+      const username = authUser.user_metadata?.nickname || authUser.user_metadata?.username;
+      let adminRole = null;
+
+      if (username) {
+        const { data: whitelistData } = await supabase
+          .from('admin_whitelist')
+          .select('role')
+          .eq('username', username)
+          .maybeSingle();
+        if (whitelistData) {
+          adminRole = whitelistData.role;
+        }
+      } else if (authUser.email && authUser.email.endsWith('@koszeg.app')) {
+        // Fallback: Try to parse username from email (e.g. client.admin@koszeg.app -> admin)
+        const parts = authUser.email.split('@')[0].split('.');
+        if (parts.length >= 2) {
+          const parsedUsername = parts[1];
+          const { data: whitelistData } = await supabase
+            .from('admin_whitelist')
+            .select('role')
+            .eq('username', parsedUsername)
+            .maybeSingle();
+          if (whitelistData) {
+            adminRole = whitelistData.role;
+            console.log(`[AuthDebug] Resolved role '${adminRole}' from email for '${parsedUsername}'`);
+          }
+        }
       }
 
-      if (data) {
-        // Update user state with profile data when it arrives
-        setUser(prev => ({ ...prev, ...data }));
+      if (profileData || adminRole) {
+        // Update user state. If adminRole exists, it OVERRIDES the profile role for permission checks.
+        setUser(prev => ({
+          ...prev,
+          ...profileData,
+          // If present in whitelist, use that role. Otherwise fallback to profile role.
+          role: adminRole || profileData?.role || 'client'
+        }));
       }
-      // If no data, we already have certain authUser info, so no need to "unset" anything
     } catch (error) {
       console.error("Profile fetch unexpected error:", error);
     }
@@ -153,22 +184,41 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
   };
 
+
   // Helper for role-based access
-  // Checks both the merged profile 'role' and the auth metadata 'role' as fallback
   const hasRole = (role) => {
     return (user?.role === role) || (user?.user_metadata?.role === role);
   };
 
-  // Implemented specifically for Admin.jsx requirements
   const hasPermission = (permission) => {
     if (!user) return false;
     const role = user.role || user.user_metadata?.role || 'client';
 
-    // Admin has full access
-    if (role === 'admin') return true;
+    // 1. Superadmin / Editor / Admin (Legacy) -> FULL ACCESS
+    if (['superadmin', 'editor', 'admin', 'varos'].includes(role)) {
+      return true;
+    }
 
-    // Provider access logic
-    if (role === 'provider' || role === 'partner' || role === 'var' || role === 'varos' || role === 'tourinform') {
+    // 2. Partner (Kulsos) -> RESTRICTED
+    // "Csak új eseményt vehet fel"
+    if (role === 'partner' || role === 'kulsos') {
+      // Allow Creating Events
+      if (permission === 'events:create') return true;
+      // Allow viewing own events (implicit for editing flow, though they can't edit officially?)
+      // User said "Only take new event", implying NO edit/delete?
+      // Let's be strict: Create ONLY.
+      // But they need to VIEW the list to see if it's there? Usually yes.
+      // Let's allow 'view_all' for events so they can see the calendar? 
+      // User said "Csak uj eseményt vehet fel".
+      // Let's grant: 'events:create', 'events:view_all' (to see dashboard).
+      // Deny: 'events:edit', 'events:delete'.
+      if (permission === 'events:view_all') return true;
+
+      return false;
+    }
+
+    // 3. Provider / Restaurant (Legacy Business Logic)
+    if (role === 'provider' || role === 'partner' || role === 'var' || role === 'tourinform' || role === 'restaurant') {
       // Allow operations on their own content
       if (permission.endsWith('_own')) return true;
       // Allow creation

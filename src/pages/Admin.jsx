@@ -1,13 +1,20 @@
 // src/pages/Admin/index.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { supabase } from "../lib/supabaseClient";
 import { Toaster, toast } from 'react-hot-toast';
 import {
   FaBars, FaTimes, FaSignOutAlt, FaSave, FaPlus, FaSearch,
   FaCalendarAlt, FaMapMarkerAlt, FaImage, FaTrash, FaPen,
   FaUserCircle, FaInfoCircle, FaParking, FaTree, FaUtensils,
-  FaBed, FaLandmark
+  FaBed, FaLandmark, FaApple
 } from 'react-icons/fa';
+
+// ... (existing code) ...
+
+// ---- KÁRTYA KOMPONENSEK ----
+// ... (CardBase, GenericCard, ImageCard) ...
+
 
 // ---- Beállítások és Segédek ----
 const JSON_SAVE_FN = "/.netlify/functions/save-github-json";
@@ -255,24 +262,51 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
+  const [whitelistRole, setWhitelistRole] = useState(null);
+
+  const checkWhitelist = async (username) => {
+    try {
+      const { data, error } = await supabase
+        .from('admin_whitelist')
+        .select('role')
+        .eq('username', username)
+        .single();
+
+      if (error || !data) return null;
+      return data.role;
+    } catch (e) {
+      console.error("Whitelist check failed:", e);
+      return null;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoggingIn(true);
+
     try {
-      // 1. Try default 'client' login (Admin, Varos, etc.)
-      try {
-        await login(selectedUser, password, 'client');
-      } catch (clientError) {
-        // 2. If failed, try 'provider' login (External Partners)
-        console.log("Client login failed, trying provider...", clientError);
-        await login(selectedUser, password, 'provider');
+      // 1. Check Whitelist FIRST
+      const role = await checkWhitelist(selectedUser);
+      if (!role) {
+        throw new Error("Ez a felhasználó nincs engedélyezve az Admin felületen.");
       }
+
+      // 2. Try Login (Client mode only as we standardized on client.{user}@koszeg.app)
+      // Note: We use 'client' as the auth type because all these users are technically clients in Auth,
+      // but their 'role' in admin_whitelist determines their Admin privileges.
+      await login(selectedUser, password, 'client');
+
+      // 3. Save Username for AdminApp check
+      localStorage.setItem('admin_username', selectedUser);
+
     } catch (err) {
-      // If both fail
-      setError("Hibás felhasználónév vagy jelszó. (Próbáltuk: client és provider módban is)");
+      console.error("Login failed:", err);
+      // Ensure logout if partial success (e.g. auth ok but whitelist fail logic glitch)
+      await logout();
+      localStorage.removeItem('admin_username');
+      setError(err.message || "Hibás felhasználónév vagy jelszó.");
     } finally {
       setIsLoggingIn(false);
     }
@@ -288,7 +322,7 @@ function Login() {
         <div className="flex flex-col items-center mb-8">
           <img src="/images/koeszeg_logo_nobg.png" alt="Logo" className="w-16 h-16 mb-4 drop-shadow-md" />
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">KőszegAPP Admin</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Jelentkezz be a folytatáshoz</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Kizárólag engedélyezett felhasználóknak</p>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -329,7 +363,7 @@ function Login() {
             disabled={isLoggingIn}
             className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-500/30 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
           >
-            {isLoggingIn ? "Bejelentkezés..." : "Belépés"}
+            {isLoggingIn ? "Ellenőrzés..." : "Belépés"}
           </button>
         </form>
       </div>
@@ -342,27 +376,69 @@ function RequireAuth({ children }) {
   return user ? children : <Login />;
 }
 
+// ---- PREDEFINED LOCATIONS ----
+const PREDEFINED_LOCATIONS = {
+  "Jurisics vár": { lat: 47.389582, lng: 16.538988 },
+  "KÖSZHÁZ (Jurisics vár)": { lat: 47.389582, lng: 16.538988 },
+  "Jurisics vár – Lovagterem": { lat: 47.389582, lng: 16.538988 },
+  "Fő tér": { lat: 47.389025, lng: 16.541018 },
+  "Jézus Szíve Plébániatemplom": { lat: 47.388833, lng: 16.540755 },
+  "Hősök kapuja": { lat: 47.389182, lng: 16.539745 },
+  "Kőszegi Városi Múzeum": { lat: 47.389182, lng: 16.539745 },
+  "Arany Egyszarvú Patikamúzeum": { lat: 47.389455, lng: 16.539130 },
+  "Dr. Nagy László EGYMI": { lat: 47.388133, lng: 16.542176 },
+  "Béri Balog Ádám Általános Iskola": { lat: 47.381757, lng: 16.546072 },
+  "Kőszegi Chernel Kálmán Városi Könyvtár": { lat: 47.389579, lng: 16.542464 },
+  "Zsinagóga": { lat: 47.391408, lng: 16.541513 },
+  "Jégcsarnok": { lat: 47.381322, lng: 16.547666 },
+  "Csónakázó-tó": { lat: 47.3865, lng: 16.5321 },
+  "Kálvária-templom": { lat: 47.3941, lng: 16.5244 },
+  "Hétforrás": { lat: 47.38685, lng: 16.5054 },
+  "Óház-kilátó": { lat: 47.3934, lng: 16.4947 },
+  "Stájerházi Erdészeti Múzeum": { lat: 47.3842, lng: 16.4718 },
+  "Szent Vid-kápolna": { lat: 47.3688, lng: 16.4867 }
+};
+
 // ---- KÁRTYA KOMPONENSEK ----
+// Update to support delete button inside card
 const CardBase = ({ children, onClick }) => (
   <div
     onClick={onClick}
-    className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col h-full"
+    className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col h-full relative"
   >
     {children}
   </div>
 );
 
-function GenericCard({ item, onClick }) {
+function GenericCard({ item, onClick, onDelete, canDelete }) {
   return (
     <CardBase onClick={onClick}>
+      {/* Delete Button */}
+      {canDelete && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(item.id);
+          }}
+          className="absolute top-2 right-2 z-20 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          title="Törlés"
+        >
+          <FaTrash size={14} />
+        </button>
+      )}
+
+      {/* ID Badge */}
+      <div className="absolute top-2 left-2 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{item.id}
+        </span>
+      </div>
+
       <div className="p-5 flex flex-col h-full">
-        <div className="flex items-start justify-between mb-2">
+        <div className="flex items-start justify-between mb-2 mt-4"> {/* mt-4 to clear badge/button */}
           <div className="bg-gray-100 dark:bg-gray-700 p-2 rounded-lg text-gray-500">
             <FaInfoCircle />
           </div>
-          <span className="text-xs font-mono text-gray-400 bg-gray-50 dark:bg-gray-900 px-2 py-1 rounded">
-            #{item.id}
-          </span>
         </div>
         <h3 className="font-bold text-lg text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-indigo-600 transition-colors">
           {item.name || item.title || "Névtelen elem"}
@@ -373,10 +449,31 @@ function GenericCard({ item, onClick }) {
   );
 }
 
-function ImageCard({ item, onClick, imagePath }) {
+function ImageCard({ item, onClick, imagePath, onDelete, canDelete }) {
   const imgUrl = item.image ? `${IMG_FUNC_BASE}${encodeURIComponent(imagePath + item.image)}` : null;
   return (
     <CardBase onClick={onClick}>
+      {/* Delete Button */}
+      {canDelete && onDelete && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(item.id);
+          }}
+          className="absolute top-2 right-2 z-20 p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+          title="Törlés"
+        >
+          <FaTrash size={14} />
+        </button>
+      )}
+
+      {/* ID Badge */}
+      <div className="absolute top-2 left-2 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{item.id}
+        </span>
+      </div>
+
       <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
         {imgUrl ? (
           <img
@@ -404,12 +501,50 @@ function ImageCard({ item, onClick, imagePath }) {
   );
 }
 
-function EventCard({ item: ev, onClick }) {
+// ... GenericCard and ImageCard can remain as is or be updated similarly if needed ...
+
+function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
   const img = ev.image ? `${IMG_FUNC_BASE}${encodeURIComponent("public/images/events/" + ev.image)}` : "";
   const dateClass = new Date(ev.date) < new Date() ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700";
 
   return (
     <CardBase onClick={onClick}>
+      {/* Action Buttons (Top Right) */}
+      <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
+        {/* Direct Delete Button */}
+        {canDelete && onDelete && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Don't open edit modal
+              onDelete(ev.id);
+            }}
+            className="p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+            title="Törlés"
+          >
+            <FaTrash size={14} />
+          </button>
+        )}
+
+        {/* Apple Wallet Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onGeneratePass(ev);
+          }}
+          className="p-2.5 bg-black text-white rounded-full shadow-lg hover:bg-gray-800 transition-colors border border-gray-700"
+          title="Apple Wallet Jegy Generálása"
+        >
+          <FaApple size={16} />
+        </button>
+      </div>
+
+      {/* ID Badge (Top Left - below date if space, or absolute) */}
+      <div className="absolute top-12 left-3 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{ev.id}
+        </span>
+      </div>
+
       <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
         {img && (
           <img
@@ -419,7 +554,7 @@ function EventCard({ item: ev, onClick }) {
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         )}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 left-3 z-20">
           <span className={`px-2 py-1 rounded-md text-xs font-bold shadow-sm ${dateClass}`}>
             {ev.date}
           </span>
@@ -438,12 +573,13 @@ function EventCard({ item: ev, onClick }) {
   );
 }
 
+
 // ---- ŰRLAPOK (MODERNIZED) ----
 // (A form logika ugyanaz, csak a kinézet változott a FormModal/Fields miatt)
 
-function EventForm({ initial, onCancel, onSave, onDelete }) {
+function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate }) {
   const { user, token, hasPermission } = useAuth();
-  const empty = { id: "", name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
+  const empty = { name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
 
   const [v, setV] = useState({ ...empty, ...initial });
@@ -472,8 +608,22 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
     }
   };
 
+  const handleLocationSelect = (e) => {
+    const locName = e.target.value;
+    if (!locName) return;
+
+    // If it's a predefined location, auto-fill coords
+    if (PREDEFINED_LOCATIONS[locName]) {
+      const coords = PREDEFINED_LOCATIONS[locName];
+      setV(prev => ({ ...prev, location: locName, coords: coords }));
+      setCoordsInput(`${coords.lat}, ${coords.lng}`);
+    } else {
+      // Custom text entered
+      setV(prev => ({ ...prev, location: locName }));
+    }
+  };
+
   const validate = () => {
-    if (!v.id?.trim()) return "Az 'ID' mező kitöltése kötelező.";
     if (!v.name?.trim()) return "A 'Név' mező kitöltése kötelező.";
     if (!isValidDate(v.date)) return "A dátum formátuma érvénytelen (ÉÉÉÉ-HH-NN).";
     if (!isValidTime(v.time)) return "Az idő formátuma érvénytelen (ÓÓ:PP).";
@@ -484,10 +634,25 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
 
   const submit = (e) => {
     e.preventDefault();
-    const msg = validate();
-    if (msg) { setErr(msg); return; }
+
+    // Auto-generate ID if missing/empty (for new items)
+    let finalData = { ...v };
+    if (!finalData.id || finalData.id.trim() === "") {
+      const year = new Date().getFullYear();
+      const timestamp = Date.now();
+      finalData.id = `event-${year}-${timestamp}`;
+    }
+
+    // Validate using the (potentially generated) ID
+    if (!finalData.id?.trim()) return setErr("Az 'ID' mező kitöltése kötelező (belső hiba)."); // Should not happen
+    if (!finalData.name?.trim()) return setErr("A 'Név' mező kitöltése kötelező.");
+    if (!isValidDate(finalData.date)) return setErr("A dátum formátuma érvénytelen (ÉÉÉÉ-HH-NN).");
+    if (!isValidTime(finalData.time)) return setErr("Az idő formátuma érvénytelen (ÓÓ:PP).");
+    if (!finalData.location?.trim()) return setErr("A 'Helyszín' mező kitöltése kötelező.");
+    if (!finalData.image?.trim()) return setErr("Kép feltöltése kötelező.");
+
     const tags = tagsInput.split(",").map((t) => t.trim()).filter(Boolean);
-    onSave({ ...v, tags, createdBy: v.createdBy || user.id });
+    onSave({ ...finalData, tags, createdBy: finalData.createdBy || user.id });
   };
 
   // Permission Check
@@ -533,7 +698,7 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
         <div className="flex-1 p-8 space-y-6">
           {err && <div className="p-4 bg-red-100 text-red-700 rounded-xl">{err}</div>}
           <FormRow>
-            <FormField label="ID"><TextInput value={v.id} onChange={(e) => setV({ ...v, id: e.target.value })} /></FormField>
+            <FormField label="ID (Auto)"><TextInput value={v.id} disabled={true} placeholder="Mentéskor generálódik..." /></FormField>
             <FormField label="Név"><TextInput value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></FormField>
           </FormRow>
 
@@ -563,8 +728,30 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
             <FormField label="Dátum"><input type="date" value={v.date} onChange={(e) => setV({ ...v, date: e.target.value })} className={inputClasses} /></FormField>
             <FormField label="Idő"><input type="time" value={v.time} onChange={(e) => setV({ ...v, time: e.target.value })} className={inputClasses} /></FormField>
           </FormRow>
-          <FormField label="Helyszín"><TextInput value={v.location} onChange={(e) => setV({ ...v, location: e.target.value })} /></FormField>
-          <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
+
+          <FormRow>
+            <FormField label="Helyszín">
+              <div className="flex flex-col gap-2">
+                <select
+                  onChange={handleLocationSelect}
+                  className={inputClasses}
+                  value={PREDEFINED_LOCATIONS[v.location] ? v.location : ""}
+                >
+                  <option value="">-- Válassz gyorsan --</option>
+                  {Object.keys(PREDEFINED_LOCATIONS).sort().map(k => (
+                    <option key={k} value={k}>{k}</option>
+                  ))}
+                </select>
+                <TextInput
+                  placeholder="Vagy írd be kézzel..."
+                  value={v.location}
+                  onChange={(e) => setV({ ...v, location: e.target.value })}
+                />
+              </div>
+            </FormField>
+            <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
+          </FormRow>
+
           <FormField label="Leírás"><TextArea value={v.description} onChange={(e) => setV({ ...v, description: e.target.value })} /></FormField>
           <FormField label="Címkék"><TextInput value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} /></FormField>
 
@@ -586,6 +773,16 @@ function EventForm({ initial, onCancel, onSave, onDelete }) {
         <footer className="p-6 bg-white dark:bg-gray-800 border-t dark:border-gray-700 flex justify-between">
           {canDelete && initial.id && <button type="button" onClick={() => { if (window.confirm("Biztos törlöd?")) onDelete(initial.id); }} className="btn-danger"><FaTrash className="inline mr-2" />Törlés</button>}
           <div className="flex gap-3 ml-auto">
+            {onTriggerPassUpdate && initial.id && (
+              <button
+                type="button"
+                onClick={() => onTriggerPassUpdate(initial.id)}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2"
+                title="Apple Wallet pass-ek frissítése"
+              >
+                🔄 Pass frissítése
+              </button>
+            )}
             <button type="button" onClick={onCancel} className="btn-secondary">Mégse</button>
             <button type="submit" className="btn-primary"><FaSave className="inline mr-2" />Mentés</button>
           </div>
@@ -787,11 +984,62 @@ function AdminApp() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [adminRole, setAdminRole] = useState(null); // 'superadmin', 'editor', 'partner'
+
+  // Fetch Admin Role on Mount
+  useEffect(() => {
+    const fetchRole = async () => {
+      // 1. Check localStorage for Admin Username (Frontend Source of Truth)
+      const adminUsername = localStorage.getItem('admin_username');
+
+      if (!adminUsername) {
+        console.warn("No admin_username in localStorage");
+        toast.error("Nincs Admin belépés (munkamenet lejárt)!");
+        await logout();
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('admin_whitelist')
+        .select('role')
+        .eq('username', adminUsername)
+        .single();
+
+      if (data) {
+        setAdminRole(data.role);
+        // If partner, set restricted default view
+        if (data.role === 'partner') {
+          setCurrentKey('events');
+        }
+      } else {
+        toast.error("Nincs jogosultságod az Admin felülethez!");
+        await logout();
+      }
+    };
+    fetchRole();
+  }, [user]);
 
   // Mobil nézetben csukjuk be alapból
   useEffect(() => {
     if (window.innerWidth < 768) setSidebarOpen(false);
   }, []);
+
+  // Filter Menu Items based on Role
+  const visibleMenuItems = useMemo(() => {
+    if (!adminRole) return [];
+
+    // Superadmin & Editor sees everything
+    if (adminRole === 'superadmin' || adminRole === 'editor') {
+      return Object.keys(EDITABLE_CONTENT);
+    }
+
+    // Partner (Kulsos) sees LIMITED
+    if (adminRole === 'partner') {
+      return ['events']; // Csak események
+    }
+
+    return [];
+  }, [adminRole]);
 
   const loadContent = async (key) => {
     if (!key) return;
@@ -834,11 +1082,82 @@ function AdminApp() {
 
   const currentConfig = EDITABLE_CONTENT[currentKey];
 
+  // HELPER: Local Permission Check based on robust adminRole
+  const checkPermission = (permission) => {
+    if (!adminRole) return false;
+
+    // 1. Full Access Roles
+    if (['superadmin', 'editor', 'admin', 'varos'].includes(adminRole)) {
+      return true;
+    }
+
+    // 2. Partner / Kulsos
+    if (adminRole === 'partner' || adminRole === 'kulsos') {
+      if (permission === 'events:create') return true;
+      if (permission === 'events:view_all') return true;
+      return false;
+    }
+
+    return false;
+  };
+
+  const handleGeneratePass = async (eventItem) => {
+    const toastId = toast.loading("Jegy generálása...");
+    try {
+      const res = await fetch('/.netlify/functions/create-event-pass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventItem),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Generálási hiba');
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `event-${eventItem.id}.pkpass`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Jegy letöltve!", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
+  const handleTriggerPassUpdate = async (eventId) => {
+    const toastId = toast.loading("Pass frissítés triggerelése...");
+    try {
+      const res = await fetch('/.netlify/functions/trigger-pass-update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventId }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Trigger hiba');
+      }
+
+      toast.success("✅ Apple értesítve! A pass-ek frissülni fognak.", { id: toastId });
+    } catch (e) {
+      console.error(e);
+      toast.error(`Hiba: ${e.message}`, { id: toastId });
+    }
+  };
+
   const filteredData = useMemo(() => {
     if (!contentData) return [];
     let d = contentData;
-    // Jogosultság szűrés
-    const canViewAll = hasPermission(currentConfig.permissions.view[0]);
+    // Jogosultság szűrés (Local adminRole based)
+    const canViewAll = checkPermission(currentConfig.permissions.view[0]);
     if (!canViewAll) {
       d = d.filter(x => x.createdBy === user.id || !x.createdBy);
     }
@@ -850,9 +1169,59 @@ function AdminApp() {
     return d;
   }, [contentData, query, user.id, hasPermission, currentConfig]);
 
+
+
   const PreviewComponent = currentConfig.previewComponent;
   const FormComponent = currentConfig.formComponent;
-  const canCreate = hasPermission(currentConfig.permissions.create);
+
+  // 3. Local Permission Check (Overrides AuthContext)
+  const canCreate = useMemo(() => {
+    if (!adminRole) return false;
+    const required = currentConfig.permissions.create;
+
+    // Superadmin/Editor/Admin/Varos -> ALL
+    if (['superadmin', 'editor', 'admin', 'varos'].includes(adminRole)) return true;
+
+    // Partner (Kulsos) -> Events Only
+    if (adminRole === 'partner' || adminRole === 'kulsos') {
+      return required === 'events:create'; // Explicit allow
+    }
+
+    return false;
+  }, [adminRole, currentConfig]);
+
+  // 4. Bulk Delete Logic (Expired Events)
+  const expiredEventsCount = useMemo(() => {
+    if (currentKey !== 'events') return 0;
+    const today = new Date();
+    // 5 days buffer
+    const buffer = new Date();
+    buffer.setDate(today.getDate() - 5);
+
+    return contentData.filter(ev => {
+      if (!ev.date) return false;
+      // Check if event end date (or start date) is older than 5 days
+      const d = new Date(ev.end_date || ev.date);
+      return d < buffer;
+    }).length;
+  }, [contentData, currentKey]);
+
+  const handleBulkDeleteExpired = () => {
+    if (!checkPermission('events:delete')) return toast.error("Nincs jogosultságod törölni.");
+
+    if (window.confirm(`Biztosan törölni szeretnéd azt a ${expiredEventsCount} eseményt, ami már több mint 5 napja lejárt?`)) {
+      const today = new Date();
+      const buffer = new Date();
+      buffer.setDate(today.getDate() - 5);
+
+      setContentData(prev => prev.filter(ev => {
+        if (!ev.date) return true; // Keep invalid dates to be safe
+        const d = new Date(ev.end_date || ev.date);
+        return d >= buffer; // Keep future/recent events
+      }));
+      toast.success(`${expiredEventsCount} lejárt esemény törölve! Ne felejts el Menteni!`);
+    }
+  };
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden font-sans">
@@ -869,20 +1238,22 @@ function AdminApp() {
             <span className="font-bold text-lg text-gray-800 dark:text-gray-100 tracking-tight">Vezérlőpult</span>
           </div>
 
-          <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
-            {Object.entries(EDITABLE_CONTENT).map(([key, config]) => {
-              if (!config.permissions.view.some(p => hasPermission(p))) return null;
-              const Icon = MENU_ICONS[key] || FaSearch;
-              return (
-                <SidebarItem
-                  key={key}
-                  icon={Icon}
-                  label={config.name}
-                  active={currentKey === key}
-                  onClick={() => { setCurrentKey(key); if (window.innerWidth < 768) setSidebarOpen(false); }}
-                />
-              );
-            })}
+          <nav className="flex-1 overflow-y-auto py-6 px-3">
+            <div className="space-y-1">
+              {visibleMenuItems.map((key) => {
+                const cfg = EDITABLE_CONTENT[key];
+                const Icon = MENU_ICONS[key] || FaInfoCircle;
+                return (
+                  <SidebarItem
+                    key={key}
+                    icon={Icon}
+                    label={cfg.name}
+                    active={currentKey === key}
+                    onClick={() => { setCurrentKey(key); if (window.innerWidth < 768) setSidebarOpen(false); }}
+                  />
+                );
+              })}
+            </div>
           </nav>
 
           <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
@@ -893,6 +1264,8 @@ function AdminApp() {
               <div className="overflow-hidden">
                 <p className="text-sm font-medium truncate text-gray-900 dark:text-white">{user.displayName || user.email}</p>
                 <p className="text-xs text-gray-400 truncate">Adminisztrátor</p>
+                {/* DEBUG: Temporary Role Display */}
+                <p className="text-[10px] text-red-500 font-mono">Role: {adminRole || 'NULL'}</p>
               </div>
             </div>
             <button
@@ -927,9 +1300,22 @@ function AdminApp() {
                 className="pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-full text-sm border-none focus:ring-2 focus:ring-indigo-500 w-48 sm:w-64 transition-all"
               />
             </div>
+
+            {/* Expired Purge Button */}
+            {expiredEventsCount > 0 && (
+              <button
+                onClick={handleBulkDeleteExpired}
+                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-full text-sm font-bold transition-colors"
+                title="5 napnál régebbi események törlése"
+              >
+                <FaTrash />
+                <span className="hidden sm:inline">{expiredEventsCount} lejárt törlése</span>
+              </button>
+            )}
+
             {canCreate && (
               <button
-                onClick={() => setEditingItem({ id: `new_${Date.now()}`, createdBy: user.id })}
+                onClick={() => setEditingItem({ id: "", createdBy: user.id })}
                 className="btn-primary flex items-center gap-2 shadow-lg shadow-indigo-500/30"
               >
                 <FaPlus className="text-xs" /> <span className="hidden sm:inline">Új létrehozása</span>
@@ -958,7 +1344,20 @@ function AdminApp() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-1">
               {filteredData.map(item => (
-                <PreviewComponent key={item.id} item={item} onClick={() => setEditingItem(item)} />
+                <PreviewComponent
+                  key={item.id}
+                  item={item}
+                  onClick={() => setEditingItem(item)}
+                  // Pass delete handler for direct card access
+                  onDelete={(id) => {
+                    if (window.confirm("Biztos törlöd?")) {
+                      setContentData(prev => prev.filter(x => x.id !== id));
+                      toast.success("Törölve.");
+                    }
+                  }}
+                  onGeneratePass={() => handleGeneratePass(item)}
+                  canDelete={checkPermission(currentConfig.permissions.delete)}
+                />
               ))}
             </div>
           )}
@@ -983,6 +1382,7 @@ function AdminApp() {
               setEditingItem(null);
               toast.success("Törölve.");
             }}
+            onTriggerPassUpdate={currentKey === 'events' ? handleTriggerPassUpdate : undefined}
           />
         )}
       </main>

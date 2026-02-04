@@ -1,6 +1,12 @@
 {
-  "updatedAt": "2026-01-30T11:27:08.084Z",
+  "updatedAt": "2026-02-04T11:31:58.150Z",
   "items": [
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14779",
+      "date": "2026. Február 2.",
+      "title": "Gyermekorvosi rendelés 2026.02.01-től",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14779"
+    },
     {
       "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13344",
       "date": "2026. Január 19.",
@@ -30,12 +36,6 @@
       "date": "2026. Január 9.",
       "title": "Hirdetmények",
       "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15301",
-      "date": "2026. Január 8.",
-      "title": "Kérdőív óvodai, iskolai és felnőtt étkezés tárgyában",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15301"
     }
   ]
 }

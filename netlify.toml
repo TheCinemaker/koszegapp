@@ -2,9 +2,24 @@
   command = "npm run build"
   publish = "dist"
 
+[[redirects]]
+  from = "/v1/*"
+  to = "/.netlify/functions/wallet-service"
+  status = 200
+
 [functions]
   directory = "netlify/functions"
-  included_files = ["netlify/functions/certs/*"]
+  included_files = [
+    "netlify/functions/certs/*",
+    "netlify/functions/icon.png",
+    "netlify/functions/icon@2x.png",
+    "netlify/functions/logo.png",
+    "netlify/functions/logo@2x.png"
+  ]
+
+# Scheduled function: Daily pass generator (runs every morning at 6 AM CET)
+[functions."daily-pass-generator"]
+  schedule = "0 5 * * *"  # 5 AM UTC = 6 AM CET
 
 [dev]
   command = "npm run dev"

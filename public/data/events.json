@@ -1,231 +1,5 @@
 [
   {
-    "id": "event-2026-001",
-    "name": "Kőszegi Vonósok Újévi Koncertje",
-    "date": "2026-01-03",
-    "end_date": "2026-01-03",
-    "time": "19:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Boldog keringők, táncos ritmusok. Induljon a 2026-os esztendő vidám, lendületes dallamokkal! A Kőszegi Vonósok különleges koncertje a 30. jubileumi év nyitányaként.\n\nMűsoron: Johann Strauss, Dohnál Péter, Kárpáti Sándor és mások művei.\nKözreműködik: Concordia-Barátság Énekegyesület, Wiener Schubertbund.\nVezényel: Scheer Uwe.",
-    "tags": [
-      "zene",
-      "koncert",
-      "újév",
-      "ingyenes"
-    ],
-    "image": "koszegi_vonosok_ujevi.jpg",
-    "highlight": true,
-    "highlightLabel": "✨ Újévi Koncert"
-  },
-  {
-    "id": "event-2026-002",
-    "name": "Csőre Töltve – Újévi Boomwhacker Show",
-    "date": "2026-01-06",
-    "end_date": "2026-01-06",
-    "time": "17:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Kőszeg Város Ifjúsági Fúvószenekarának különleges újévi hangversenye. Vezényel: Szilágyiné Gasztonyi Eszter. A belépés ingyenes!",
-    "tags": [
-      "zene",
-      "koncert",
-      "ifjúsági",
-      "családi",
-      "ingyenes"
-    ],
-    "image": "csore_toltve.png"
-  },
-  {
-    "id": "event-2026-003",
-    "name": "Városi Véradás",
-    "date": "2026-01-07",
-    "end_date": "2026-01-07",
-    "time": "11:30-18:00",
-    "location": "Jurisics vár (KÖSZHÁZ)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Nyújtsa karját és mentsen meg három életet! Szükséges iratok: TAJ kártya, személyi igazolvány, lakcímkártya. Napi utolsó véradásra jelentkező felvétele: 17:30.",
-    "tags": [
-      "közösség",
-      "egészség",
-      "véradás"
-    ],
-    "image": "veradas_jan7.png"
-  },
-  {
-    "id": "event-2026-004",
-    "name": "Nagycsaládosok Egyesülete Retro Bál",
-    "date": "2026-01-10",
-    "end_date": "2026-01-10",
-    "time": "19:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "II. Kőszegi Nagycsaládos Retro Bál. Nem csak nagycsaládosoknak! Svédasztalos vacsora, tombola, Zenezoli Music Produkció. Jegyár: 7.500 Ft (támogatói: 2.000 Ft).",
-    "tags": [
-      "bál",
-      "zene",
-      "tánc",
-      "közösség"
-    ],
-    "image": "nagycsalados_bal.jpg"
-  },
-  {
-    "id": "event-2026-005",
-    "name": "Florian Zeller: A fiú",
-    "date": "2026-01-16",
-    "end_date": "2026-01-16",
-    "time": "19:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "A Kőszegi Várszínház és a Karinthy Színház bemutatója. Megrázó, mély lélektani dráma. Ingyenes előadás!",
-    "tags": [
-      "színház",
-      "kultúra",
-      "dráma",
-      "ingyenes"
-    ],
-    "image": "afiu.jpg"
-  },
-  {
-    "id": "event-2026-006",
-    "name": "Árpád-házi Iskola Bálja",
-    "date": "2026-01-17",
-    "end_date": "2026-01-17",
-    "time": "19:00",
-    "location": "Árpád-házi Szent Margit Iskola",
-    "coords": {
-      "lat": 47.3915,
-      "lng": 16.542
-    },
-    "description": "Az Árpád-házi Szent Margit Óvoda, Általános Iskola, Gimnázium és Kollégium jótékonysági bálja.",
-    "tags": [
-      "bál",
-      "iskola",
-      "közösség"
-    ],
-    "image": "balkep_default.jpg"
-  },
-  {
-    "id": "event-2026-007",
-    "name": "Bersek Bál",
-    "date": "2026-01-17",
-    "end_date": "2026-01-17",
-    "time": "19:00",
-    "location": "Dr. Nagy László EGYMI díszterme",
-    "coords": {
-      "lat": 47.388133,
-      "lng": 16.542176
-    },
-    "description": "A Bersek József Általános Iskola jótékonysági bálja.",
-    "tags": [
-      "bál",
-      "iskola",
-      "közösség"
-    ],
-    "image": "bersekbal.jpg"
-  },
-  {
-    "id": "event-2026-008",
-    "name": "Magyar Kultúra Napja – Déryné naplója",
-    "date": "2026-01-22",
-    "time": "18:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "ÉLETJELENETEK két színésznő életéből\nDéryné Széppataki Róza naplója alapján\nEgyszemélyes színpadi játék - One woman show -\naz Avignoni Fesztivál OFF 1995 francia nyelvű előadásának magyar nyelvű felújítása\n\nVarga Kata-Lina\nmagyar-francia színésznő magyar nyelvű előadásában\n\n42 színpadi jelenet, kb másfél órában, Déryné Széppataki Róza – az Osztrák-Magyar Monarchia magyar színésznője és operaénekesnője – XIX. századi naplójából. Varga Kata-Lina Dérynét és Déryné életének több mint 30 korabeli személyiségét kelti életre ebben az egyszemélyes sziporkázó kavalkádban, néhány jelenetben saját XX.-XXI. századi karrierjét is megidézve. A 27 zenés, énekes bejátszás, „hab a tortán”.\nAz előadás Kőszeg Város Önkormányzata és a Kőszegi Várszínház ajándéka az ünnep alkalmából.\n\na belépés ingyenes!",
-    "tags": [
-      "színház",
-      "kultúra",
-      "ünnep",
-      "ingyenes"
-    ],
-    "image": "kulturanapja.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "end_date": "2026-01-22"
-  },
-  {
-    "id": "event-2026-009",
-    "name": "Horvát Bál",
-    "date": "2026-01-24",
-    "end_date": "2026-01-24",
-    "time": "19:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "A Kőszegi Horvát Nemzetiségi Önkormányzat és a Kőszegfalviért Egyesület bálja. Élőzene, tánc, jó hangulat.",
-    "tags": [
-      "bál",
-      "nemzetiségi",
-      "tánc"
-    ],
-    "image": "horvat_bal.jpg"
-  },
-  {
-    "id": "event-2026-010",
-    "name": "Vecsei Márton: A menjek országa – könyvbemutató",
-    "date": "2026-01-26",
-    "time": "18:00",
-    "location": "KÖSZHÁZ (Jurisics vár)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Utazókönyv bemutató. Beszélgetés a szerzővel, dedikálás. Ingyenes program.",
-    "tags": [
-      "irodalom",
-      "könyv",
-      "kultúra",
-      "ingyenes"
-    ],
-    "image": "menjek.jpg",
-    "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
-    "highlight": false,
-    "highlightLabel": "",
-    "end_date": "2026-01-26"
-  },
-  {
-    "id": "event-2026-011",
-    "name": "Egy elnémult klavír nyomában – Filmvetítés",
-    "date": "2026-01-29",
-    "end_date": "2026-01-29",
-    "time": "17:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Erdélyi Duka János dokumentumfilmjének vetítése (114 perc). Beszélgetés az alkotóval. Irodalmi séta Dukai Takách Judit és mások nyomában. Ingyenes!",
-    "tags": [
-      "film",
-      "mozi",
-      "kultúra",
-      "történelem",
-      "ingyenes"
-    ],
-    "image": "filmvetites.jpg"
-  },
-  {
     "id": "event-2026-012",
     "name": "Gyógy Bál",
     "date": "2026-01-31",
@@ -242,84 +16,6 @@
       "közösség"
     ],
     "image": "balkep_default.jpg"
-  },
-  {
-    "id": "new_1767771798997",
-    "name": "Promenád 2",
-    "date": "2026-01-15",
-    "time": "17:00",
-    "location": "Jurisics vár lovagterem",
-    "coords": {
-      "lat": 47.38938300664955,
-      "lng": 16.53832773319626
-    },
-    "description": "A Kőszegi Művészeti Egyesület alkotóinak kiállításmegnyitója 2026. január 15-én, csütörtökön, 17.00 órakor a vár lovagtermében. \nA belépés ingyenes",
-    "tags": [
-      "kiállítás"
-    ],
-    "image": "promenad.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1767774974121",
-    "name": "ASVÖ-Burgenland Kids-Cup",
-    "date": "2026-01-10",
-    "time": "09:30",
-    "location": "Jégcsarnok, Deák Ferenc utca 6",
-    "coords": {
-      "lat": 47.381322684589236,
-      "lng": 16.547666188486307
-    },
-    "description": "2026. január 10-én, szombaton az EHV Stegersbach és az ASVÖ Burgenland szeretettel meghív minden 18 év alatti gyermeket és fiatalt a Kids-Cupra.\n\nA rendezvény a kőszegi jégcsarnokban kerül megrendezésre\n(Deák Ferenc utca, 9730 Kőszeg, Magyarország).\n\nA rendezvény részletei:\n\nTalálkozó: 9:30\n\nKezdés: 10:00\n\nIdőtartam: kb. 3 óra\n\nAz ASVÖ Burgenland Kids-Cup kiváló lehetőség a fiatal jégkorongozók számára, hogy tornaformátumban próbálják ki tudásukat, és első versenytapasztalataikat szerezzék meg.\n\nAmit hozni kell:\n\njégkorongfelszerelés\n\nÉljen át izgalmas mérkőzéseket, és támogassa a jégkorong-tehetségek következő generációját!\n\n🔗 https://sites.google.com/view/asvoekidscup/startseite\n\nAm Samstag, den 10. Jänner 2026, lädt der EHV Stegersbach und der ASVÖ Burgenland alle Kinder und Jugendlichen bis 18 Jahre herzlich zum Kids-Cup ein!\nDie Veranstaltung findet in der Eishalle Köszeg (Deak Ferenc u., 9730 Ungarn) statt.\nVeranstaltungsdetails:\nTreffpunkt: 9:30 Uhr\nBeginn: 10:00 Uhr\nDauer: ca. 3 Stunden\nDer ASVÖ-Burgenland Kids-Cup ist eine großartige Gelegenheit für junge Eishockeyspieler, ihre Fähigkeiten in einem Turnierformat zu erproben und erste Wettkampferfahrungen zu sammeln.\nWas mitzubringen ist:\nEishockeyausrüstung\nErleben Sie spannende Spiele und unterstützen Sie die nächste Generation von Eishockey-Talenten.\nhttps://sites.google.com/view/asvoekidscup/startseite",
-    "tags": [
-      "jéghoki",
-      "sport"
-    ],
-    "image": "asvo.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1767775182154",
-    "name": "Réteskészítő Workshop",
-    "date": "2026-01-17",
-    "time": "09:00",
-    "location": "Kőszeg, Napostető Borterasz",
-    "coords": {
-      "lat": 47.394469587765116,
-      "lng": 16.527880676174583
-    },
-    "description": "Ha érdekel a leheletvékony tésztájú, roppanós, gazdagon töltött, békebeli házi húzott rétes készítése, akkor itt a helyed!☺️\n▶️ Hogy épül fel a kurzus?\nDagasztunk, tésztát pihentetünk, közben elkészítjük a töltelékeket, aztán húzunk, tekerünk, sütünk, végül pedig kóstolunk és jóllakunk.😊\nTöbbféle (édes-és sós) ízzel készülök, melyekből haza is tudtok majd vinni egy jókora dobozzal, hogy a család is megkóstolhassa a műveiteket.😊\n▶️Helyszín: Kőszeg, Napostető Borterasz\n▶️Időtartam: 9:00-14:00\n▶️ Amit hozz magaddal:\n- minden alapanyagot, eszközt én biztosítok\n▶️ Részvételi díj:\nA tanfolyam ára 25.000,- Ft, mely magában foglalja a helyben és otthon fogyasztott réteseket, az írásos jegyzetet a tészta- és töltelékreceptekkel, elkészítési útmutatókkal, valamint a kávé-és vízfogyasztást.\n▶️ Jelentkezés:\nKüldj e-mailt a tanfolyam időpontjával és a számlázási adataiddal (név,cím) a horvath.flora.anna@gmail.com címre!\nVálaszul elküldöm a számlaszámot. Az utalással tudod biztosítani a helyed a kurzusra. A helyek befizetési sorrendben telnek be!\nVárlak szeretettel! 😊\nFlóra ",
-    "tags": [
-      "Sütemény",
-      "Kikapcsolódás"
-    ],
-    "image": "retesworkshop.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1767775465876",
-    "name": "Tevan család- és nyomdatörténeti vándorkiállítás",
-    "date": "2026-01-08",
-    "time": "17:00",
-    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389591491147485,
-      "lng": 16.542480681373817
-    },
-    "description": "A Tevan Interaktív Vándorkiállítást 2008 óta 52 helyszínen (50 magyar és két határon kívüli helyszínen) tekinthették meg a látogatók. A kiállítás a Tevan Nyomda kulturális örökségén kívül, a nácizmus áldozatainak kíván emléket állítani egy közép-európai történelmi metszeten keresztül. Jelenleg a kiállítás Békéscsabán a Békéscsabai Zsinagóga állandó kiállításaként látható. A kiállítás anyagából készült roll-upokat és a hozzátartozó interaktív anyagot fogjuk bemutatni Kőszegen is.\nTevan Adolf 1903-ban Békéscsabán alapította meg a nemzetközi hírnevű Tevan Nyomdát, amelyet fia, Tevan Andor korszerű üzemmé fejlesztett. Az 1910-es években elindította a 83 kötetes Tevan Könyvtár Sorozatot, majd a Tevan Amatőrsorozatot, amelyek igényes és szép kivitelezésű könyveikkel méltán lettek népszerűek. A könyvek mellett a nyomda egy saját lapot adott ki, emellett hét folyóiratot nyomtatott. A család mindezeken túl aktívan részt vett Békéscsaba társadalmi és kulturális életében, alapítója volt az Auróra Körnek, amely többek között Bartók Béla hangversenyének is helyet adott. A nyomdaipari tevékenységen túl a család tagjai több művészeti ágban is kiemelkedőt alkottak: Tevan Margit Munkácsy-díjas ötvösművész, Engel Tevan István grafikus, továbbá Kolozsváry Sándor és Zsigmond elismert képzőművész volt. Az anyag hiteles forrásokból, a megjelent Tevan-publikációk egészén túl, a családi emlékekből, hagyatékokból és fényképgyűjteményekből, levéltári dokumentumokból, anyakönyvekből, aprónyomtatvány-gyűjteményekből, fotótárakból, valamint a korabeli folyóiratokból és a szakforrásokból származik.",
-    "tags": [
-      "kiállítás"
-    ],
-    "image": "tevan.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
   },
   {
     "id": "new_1767775724183",
@@ -417,62 +113,6 @@
     "highlightLabel": "🎭🎶 JELMEZES FÚVÓS FARSANG – 90’s HANGULATBAN! 🎶🎭"
   },
   {
-    "id": "new_1768217058371",
-    "name": "Boros Ferenc - Téli filmklub",
-    "date": "2026-01-22",
-    "time": "17:00",
-    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.38957957467325,
-      "lng": 16.54246485948845
-    },
-    "description": "Szeretettel várunk minden kedves érdeklődőt új tematikus sorozatunk, a Téli filmklub első előadására, melyet Boros Ferenc filmes szakember tart A magyar hangosfilm kezdetei címmel 2026. január 22-én csütörtökön 17 órakor rendezvénytermünkben!\nKilencvenöt évvel ezelőtt, 1931. szeptember 25-én mutatták be a Royal Apollo moziban A kék bálványt, az első magyar hangosfilmet Jávor Pál főszereplésével.\nAz igazi áttörést csak a második magyar hangosfilm, a magyar helyszínt és magyar karaktereket felvonultató Hyppolit, a lakáj hozta meg Kabos Gyula és Csortos Gyula feledhetetlen alakításával.\nBoros Ferenc filmes szakember előadása kulisszatitkokkal, érdekességekkel, kultikus filmes jelenetekkel a magyar filmtörténet virágzó korszakáról, mely alatt többek között olyan klasszikusok születtek, mint a Hyppolit, a lakáj, a Meseautó, vagy a korszakot lezáró Halálos tavasz. ",
-    "tags": [
-      "filmklub"
-    ],
-    "image": "filmklub.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1768424166195",
-    "name": "Hagyományőrző Mulatság",
-    "date": "2026-04-18",
-    "time": "18:00",
-    "location": "Dr. Nagy László Egységes Gyógypedagógiai Módszertani Intézmény",
-    "coords": {
-      "lat": 47.3927279874961,
-      "lng": 16.549287797647047
-    },
-    "description": "Az idei évben immár 3. alkalommal rendezzük meg Hagyományőrző Mulatságunkat. A helyszín ugyan változik, de a jó hangulat marad a megszokottak szerint. Mindenkit várunk szeretettel. Részletekkel később jelentkezünk!",
-    "tags": [
-      "Bál"
-    ],
-    "image": "hagyomanyorzobal.jpg",
-    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1768486493481",
-    "name": "Dicsőítés",
-    "date": "2026-01-17",
-    "time": "16:00",
-    "location": "Kőszegi Református Templom – Csillagterem",
-    "coords": {
-      "lat": 47.39017399208686,
-      "lng": 16.544275215183585
-    },
-    "description": "Szűcs László lelkész és zenész barátai",
-    "tags": [],
-    "image": "dicsoites-1768486604097.jpg",
-    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1768500320153",
     "name": "Balog SZM bál",
     "date": "2026-02-14",
     "time": "19:30",
@@ -491,7 +131,8 @@
     "image": "szmbal.jpg",
     "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
     "highlight": true,
-    "highlightLabel": "Hollywoody csillogás"
+    "highlightLabel": "Hollywood-i csillogás",
+    "id": "new_1768500320153"
   },
   {
     "id": "new_1768893910346",
@@ -533,22 +174,135 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1768898996688",
-    "name": "Quizard kupa I. forduló",
-    "date": "2026-01-23",
-    "time": "19:00",
-    "location": "Tóth pincészet",
+    "name": "Megjöttek a madarak! ",
+    "date": "2026-03-28",
+    "time": "06:00",
+    "location": "Abért-tó",
     "coords": {
-      "lat": 47.38725760201167,
-      "lng": 16.54182412533522
+      "lat": 47.361468984861524,
+      "lng": 16.566764593144782
     },
-    "description": "2026. januárjában már a tizedik Országos Bajnokságunk veszi kezdetét.\nGyertek el maximum 7 fős csapatotokkal egy hamisítatlan pubkvízre, ahol nem kevesebb, mint 60 kérdés vár rátok 10 különböző játékblokkban, melyet az adott héten az ország hozzávetőlegesen 200 másik csapatával együtt játszhattok le és mérhetitek velük össze a tudásotokat, amellett, hogy minőségi időt töltötök együtt a barátaitokkal.\nMiközben mi a kérdéseinkkel szórakoztatunk benneteket, Ti nyugodtan meg tudtok inni néhány italt, vagy elfogyasztani a vacsorátokat.\nA bajnokságunkba szezon közben is nyugodtan becsatlakozhattok, akár 1-1 fordulóra is eljöhettek, ehhez semmi plusz regisztráció nem szükséges a részetekről.\nA részvétel továbbra is és országos hálózatként egyedüliként ingyenes, de egy nagyjából 3 000 forintos minimális fejenkénti fogyasztást a játék alatt a partnerhelyszíneinkkel együtt elvárunk.\nA győztes csapat továbbra sem távozik egy kvíz után üres kézzel, a nyereményről az adott kvízhelyszín gondoskodik 🙂\nJelentkezni itt az eseménynél tudtok külön posztban, csapatnév és a várható létszám megadásával. A hetedik fő felett 3 pont levonásban részesültök.\nGyertek el, próbáljátok ki, hiszen nálunk egyedül a szórakozás nem kérdés! 🙂",
+    "description": "Madármegfigyelés és madárgyűrűzés az Őrségi Nemzeti Park Igazgatóság és a Magyar Madártani és Természetvédelmi Egyesület Vas Megyei Helyi Csoportja közös szervezésében.\nJavában zajlik ekkor a madárvonulás, amely remek alkalom a madarak színes világának tanulmányozására. A szakemberek teleszkópjaik, valamint az énekesmadarak megfogására alkalmas függönyhálók segítségével testközelbe hozzák az éppen a tó környékén tartózkodó madarakat",
     "tags": [
-      "játék"
+      "madarak",
+      "tavasz"
     ],
-    "image": "quizard.jpg",
-    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
+    "image": "madar-1770108951533.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "event-2026-1770108954728"
+  },
+  {
+    "name": "Lélektöltés patchwork kiállítás és francia sanzonest",
+    "date": "2026-02-12",
+    "time": "17:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Szeretettel várunk mindenkit a Léleköltés című kiállításon, melyen a Savaria Foltműhely alkotásait tekinthetik meg!\nA kiállítást megnyitja: Trifusz Péter képzőművész\nKözreműködnek: Peltzer Géza és Korponay Zsófi\nA megnyitó után Egy kis Párizs címmel Edith Piaf legszebb dalai és virtuóz francia musették csendülnek fel a rendezvényteremben.\n2026. február 12.-március 28. között a kiállítás ingyenesen megtekinthető a könyvtár nyitvatartási idejében.\nA Savaria Foltműhely 2022-ben alakult egy baráti társaságból, közös alkotási vágyból és a textilművészet iránti szeretetből.\nÖten alkotjuk a műhelyt: Tali Juli, Wawzin Ágnes, Kiss Gáborné, Zsarnai Sándorné és Szabó Krisztina. Csoportunknak nincs vezetője – közösen döntünk mindenről, hiszen számunkra a közösség ereje, az egyenrangúság és az egymástól való tanulás a legfontosabb. Célunk, hogy a hagyományos és modern quilt technikák ötvözésével olyan textilművészeti alkotásokat hozzunk létre, amelyekben megjelenik mindannyiunk egyéni látásmódja, mégis egységes közösségi szellemet képviselnek.\nSzeretettel várunk mindenkit a kapcsolódó programokra is!\nTárlatvezetés az alkotókkal\n2026. február 24-én, kedden 17 órától.\nTavaszi patchwork kézműves foglalkozás 2026. február 28-án, szombaton 10-12 óra között.",
+    "tags": [
+      "kiállítás"
+    ],
+    "image": "patchwork.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770109091328"
+  },
+  {
+    "name": "Légrády Péter - Picking, Blues és Whisky",
+    "date": "2026-02-07",
+    "time": "19:00",
+    "location": "Hotel Írottkő",
+    "coords": {
+      "lat": 47.38820394713575,
+      "lng": 16.542514524399124
+    },
+    "description": "Könnyed beszélgetés az amerikai zene történetéből - nagyon sok élő zenével.\nBeszélgető- és zenésztárs: Horváth György\nHelyszín: Hotel Írottkő - Drink bár, Kőszeg\n2026.02.07. szombat 19.00 óra\nFoglalás és további információ:\n+36 30 843 0331 ",
+    "tags": [],
+    "image": "legrady.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770109254996"
+  },
+  {
+    "name": "Kőszeg -Classic Love",
+    "date": "2026-04-23",
+    "time": "19:00",
+    "location": "Zsinagóga",
+    "coords": {
+      "lat": 47.391408,
+      "lng": 16.541513
+    },
+    "description": "Vivaldi mester olyan népszerű, hogy a Négy Évszak tavalyi befejezése után közkívánatra idén is szerepel a műsoron. La Follia (A Bolond) egyike a legősibb európai zenei témáknak és évszázadok óta csavar az ujja köré minden hallgatót. Merüljünk alá a kultúránk kútjába, és az alján kincset találunk!\nÉppen 150 éve mutatták be Bizet remekművét a Carment. Az operából játszom egy csokorra való témát. Habanera, Hejj Torreádor! Egyik szebb mint a másik.Sajnos Bizet küzdelmes élete végén nem érte meg, hogy a zenéje az égbe íródjon a csillagok közé.Érdekes történet, mesélek majd róla.\nBach nagy G-moll Fantázia és Fúgája cím alapján talán csak a legnagyobb rajongóknak dobogtatja meg a szívét, de meghallgatva ezt a tökéletes remekművet az is rajongó lesz, aki korábban csak azért dobálózott Bach nevével, mert azt egy csomó menő barátjától hallotta.10 éve készült belőle felvételem a BACH lemezemre, és az utóbbi hetekben azon gondolkoztam, hogy tudom-e új szintre emelni. De meg kell valljam, oda jutottam nem kell. Ha úgy eljátszom mint akkor, minden nüánsz hallható lesz amit az akkori hangszerelésben megfogalmaztam, akkor érdemes lesz több koncertre is eljönni (vagy megvenni a lemezt) mert első hallásra garantálom, hogy a szakértők sem veszik észre mindet.Félreértés ne essék, nem az én nagyszerűségem ez, hanem a szerzőé. Jómagam, csak bátran megmutatom őket.Az ilyen esetekre mondom: “Orgonám van és nem félek használni!” Vívódtam, kiadjuk-e a régóta készülő szerelmes lemezt.\n2018 óta ülök rajta, csiszolgatjuk, egyre szebb lett, de közben véget ért a CD korszak. Végül – Oh hübrisz – úgy megszerettem, hogy limitált darabszámmal de megjelenik.Erről játszom a Cataniai Hattyú, Bellini – Norma című operájának szívbe markoló áriáját a Casta Diva-t és Debussytőla Holdfényt (Clair De Lune). Fogunk sírni, de ne aggódj kedves hallgató, nem minden könny keserű! Különösen nem a katarzis és a szépség könnyei! Fogunk a levegőbe csapni – EZ AZ! – felkiáltással, és fogjuk magunkat egynek érezni minden lélegzővel, olyan mély az örökségünk óceánja.\nMindent összevetve hozom a Lords of the Organ sorozat szokásos arculatát!\nVáltozatos muzsikák, erő és alázat, mélységek és magasságok, mindezLátványkoncertformában, lenyűgöző művészi grafikákkal kiegészítve a zenét, hiszen a koncert Vivaldihoz hasonlóan nem csak kiszolgálni, de formálni is igyekszik a közízlést!\n\nÉljük át együtt! ",
+    "tags": [
+      "koncert"
+    ],
+    "image": "classiclove.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770109379623"
+  },
+  {
+    "name": "Kőszegi hegység MAKASE túra",
+    "date": "2026-04-18",
+    "time": "09:30",
+    "location": "Velem",
+    "coords": {
+      "lat": 47.344733515622885,
+      "lng": 16.493856856720075
+    },
+    "description": "KŐSZEG és az ÍROTTKŐ Natúrpark • Kétnapos túra a varázslatos Kőszegi-hegységben 💚\nMagyarország ékszerdoboza, azaz Kőszeg városa, a kőszeghegyaljai falvak, valamint maga a Kőszegi-hegység, rengeteg látnivalóval és érdekességgel fogadja az idelátogatót. Mik azok a becsületkasszák? Miért harangoznak itt 11-kor? Hogy kapcsolódik Kőszeg a magyar Szent Koronához? Hol és hogyan lehet egyik lábbal Magyarországon a másikkal meg Ausztriában állni? Ha szeretnél ezekre választ kapni, és még a Dunántúl legmagasabb pontjának, a 884 méter magas Írott-kő meghódítása is belefér, akkor tarts velünk! 🙂\n➡️ 2026. április 18-19.\nTöbb info: https://www.kaland.sport.hu/celpontjaink/magyarorszag/koszeg-es-az-irottko-naturpark-o-ketnapos-tura-a-varazslatos-koszegi-hegysegben",
+    "tags": [
+      "tóra"
+    ],
+    "image": "turaapr.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770109602448"
+  },
+  {
+    "name": "Világjárók klubja",
+    "date": "2026-02-11",
+    "time": "18:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "2026. február 11-én 18.00 órakor a Jurisics várban kerül megrendezésre a Világjárók Klubja, melynek témája:Tavasz Sydneyben.\nSzeretettel várjuk mindazokat, akik szeretnék megismerni ezt a várost egy képes útibeszámolón keresztül!\nElőadó: Lepold Ágnes\nA belépés ingyenes, de regisztrációhoz kötött!\nInformáció, regisztráció: Jurisics-vár Művelődési Központ és Várszínház (Kőszeg, Rajnis u. 9.) Telefon: 94/360-113 e-mail: gelencser@koszeg.hu",
+    "tags": [],
+    "image": "vilagjaro.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770109711580"
+  },
+  {
+    "name": "Apple Wallet DEMOevent",
+    "date": "2026-02-04",
+    "time": "10:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "This is a demo event created to test Apple Wallet behavior.\n\nIt is used to verify how event passes appear and become relevant in the Wallet.  \nNo real event is associated with this entry!!!",
+    "tags": [
+      "test",
+      "apple",
+      "wallet"
+    ],
+    "image": "wallet.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1770129958714"
   }
 ]

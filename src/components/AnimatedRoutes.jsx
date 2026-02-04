@@ -46,6 +46,12 @@ const KoszegPassRegister = React.lazy(() => import('../pages/KoszegPassRegister'
 const KoszegPassProfile = React.lazy(() => import('../pages/KoszegPassProfile'));
 const ScannerPage = React.lazy(() => import('../pages/ScannerPage'));
 
+// Ticket System Components
+const TicketPurchase = React.lazy(() => import('../pages/TicketSystem/TicketPurchase'));
+const TicketSuccess = React.lazy(() => import('../pages/TicketSystem/TicketSuccess'));
+const TicketScanner = React.lazy(() => import('../pages/TicketSystem/TicketScanner'));
+const TicketAdmin = React.lazy(() => import('../pages/TicketSystem/TicketAdmin'));
+
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
 
@@ -173,6 +179,12 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/pass/register" element={<PageWrapper showFooter={false}><KoszegPassRegister /></PageWrapper>} />
           <Route path="/pass/profile" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
           <Route path="/scanner" element={<PageWrapper showFooter={false}><ScannerPage /></PageWrapper>} />
+
+          {/* Ticket System Routes (Isolated Module) */}
+          <Route path="/tickets" element={<PageWrapper><TicketPurchase /></PageWrapper>} />
+          <Route path="/tickets/success" element={<PageWrapper><TicketSuccess /></PageWrapper>} />
+          <Route path="/tickets/scanner" element={<PageWrapper showFooter={false}><TicketScanner /></PageWrapper>} />
+          <Route path="/tickets/admin" element={<PageWrapper><TicketAdmin /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>
