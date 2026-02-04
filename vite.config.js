@@ -8,8 +8,12 @@ export default defineConfig({
   server: { port: 3000 },
   resolve: {
     alias: {
-      'fuse.js': path.resolve(__dirname, 'node_modules/fuse.js/dist/fuse.mjs')
+      'fuse.js': path.resolve(__dirname, 'node_modules/fuse.js/dist/fuse.mjs'),
+      'util': 'util'
     }
+  },
+  define: {
+    'process.env': process.env
   },
   optimizeDeps: {
     include: ['fuse.js']
