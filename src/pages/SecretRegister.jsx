@@ -124,7 +124,7 @@ export default function SecretRegister() {
 
                     <div>
                         <label className="block text-xs font-bold uppercase text-neutral-500 mb-1">
-                            Egyedi Utótag (pl. "2" -> admin_2)
+                            Egyedi Utótag (pl. &quot;2&quot; → admin_2)
                         </label>
                         <input
                             type="text"
