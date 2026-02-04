@@ -198,15 +198,19 @@ async function generateDailyPass(serialNumber) {
 
 /* -------------------- Main Handler -------------------- */
 exports.handler = async (event) => {
-    const { httpMethod, path, headers, body } = event;
-    console.log(`WALLET SERVICE: ${httpMethod} ${path}`);
+    const { httpMethod, path, headers, body, queryStringParameters } = event;
+    console.log(`WALLET SERVICE REQUEST: ${httpMethod} ${path}`);
+    console.log('Query Params:', queryStringParameters);
+
+    // Clean path to remove any query strings if present (though usually separated)
+    const cleanPath = path.split('?')[0];
 
     // Robust path matching
     // Apple calls: /v1/devices/{deviceId}/registrations/{passTypeId}/{serialNumber}
 
     // 1️⃣ Device Registration (POST)
-    if (httpMethod === 'POST' && path.match(/\/registrations\//)) {
-        const parts = path.split('/');
+    if (httpMethod === 'POST' && cleanPath.match(/\/registrations\//)) {
+        const parts = cleanPath.split('/');
         // find "devices" because path might include prefix
         const devicesIdx = parts.indexOf('devices');
         if (devicesIdx === -1) return { statusCode: 404, body: 'Invalid path' };
@@ -250,8 +254,8 @@ exports.handler = async (event) => {
     }
 
     // 2️⃣ Device Unregistration (DELETE)
-    if (httpMethod === 'DELETE' && path.match(/\/registrations\//)) {
-        const parts = path.split('/');
+    if (httpMethod === 'DELETE' && cleanPath.match(/\/registrations\//)) {
+        const parts = cleanPath.split('/');
         const devicesIdx = parts.indexOf('devices');
         if (devicesIdx === -1) return { statusCode: 404 };
 
@@ -280,9 +284,56 @@ exports.handler = async (event) => {
         return { statusCode: 200, body: '' };
     }
 
+    // 2.5️⃣ Get Serial Numbers (GET)
+    // /v1/devices/{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}
+    if (httpMethod === 'GET' && cleanPath.match(/\/registrations\//)) { // This matches the path structure
+        const parts = cleanPath.split('/');
+        const devicesIdx = parts.indexOf('devices');
+        if (devicesIdx === -1) return { statusCode: 404 };
+
+        const deviceLibraryIdentifier = parts[devicesIdx + 1];
+        const registrationsIdx = parts.indexOf('registrations');
+        const passTypeIdentifier = parts[registrationsIdx + 1];
+
+        // Handle query params: ?passesUpdatedSince=tag
+        const passesUpdatedSince = event.queryStringParameters ? event.queryStringParameters.passesUpdatedSince : null;
+
+        // Query Supabase for passes for this device
+        let query = supabase
+            .from('wallet_devices')
+            .select('serial_number, updated_at')
+            .eq('device_library_identifier', deviceLibraryIdentifier)
+            .eq('pass_type_identifier', passTypeIdentifier);
+
+        if (passesUpdatedSince) {
+            // Filter by updated_at > invalid_tag? (We use dates as tags? Or simple logic)
+            // Apple sends the 'lastUpdated' tag we returned previously.
+            // If tag is not present or we want to force update, return all.
+            // For now, let's just return all matching serials, as our set is small.
+        }
+
+        const { data, error } = await query;
+
+        if (error || !data || data.length === 0) {
+            return { statusCode: 204, body: '' }; // No content
+        }
+
+        const serialNumbers = data.map(d => d.serial_number);
+        const lastUpdated = new Date().getTime().toString(); // Simple tag
+
+        return {
+            statusCode: 200,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                serialNumbers: serialNumbers,
+                lastUpdated: lastUpdated
+            })
+        };
+    }
+
     // 3️⃣ Get Latest Pass (GET)
-    if (httpMethod === 'GET' && path.match(/\/passes\//)) {
-        const parts = path.split('/');
+    if (httpMethod === 'GET' && cleanPath.match(/\/passes\//)) {
+        const parts = cleanPath.split('/');
         const passesIdx = parts.indexOf('passes');
         const passTypeIdentifier = parts[passesIdx + 1];
         const serialNumber = parts[passesIdx + 2];
@@ -325,7 +376,7 @@ exports.handler = async (event) => {
     }
 
     // 4️⃣ Log
-    if (httpMethod === 'POST' && path.match(/\/log/)) {
+    if (httpMethod === 'POST' && cleanPath.match(/\/log/)) {
         console.error('CLIENT LOG:', body);
         return { statusCode: 200 };
     }
