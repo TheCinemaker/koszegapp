@@ -113,7 +113,7 @@ exports.handler = async (event) => {
                 labelColor: 'rgb(187,222,251)',
 
                 // ✅ Update fields
-                webServiceURL: 'https://koszegapp.netlify.app/.netlify/functions/wallet-service',
+                webServiceURL: 'https://koszegapp.netlify.app',
                 authenticationToken: authToken,
 
                 sharingProhibited: false,
