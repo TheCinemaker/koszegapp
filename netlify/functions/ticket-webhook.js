@@ -60,6 +60,8 @@ exports.handler = async (event) => {
     const { event_id, buyer_name, buyer_email, guest_count, ticket_type } = session.metadata || {};
 
     try {
+        let ticketId;
+
         // Idempotency check: Don't process the same session twice
         const { data: existing } = await supabase
             .from('tickets')
@@ -68,50 +70,53 @@ exports.handler = async (event) => {
             .maybeSingle(); // Use maybeSingle() to avoid error if not found
 
         if (existing) {
-            console.log('Ticket already processed:', session.id);
-            return { statusCode: 200, body: 'Already processed' };
+            console.log('Ticket already processed, resending email:', session.id);
+            ticketId = existing.id;
+            // Proceed to email sending logic below...
+        } else {
+            // Generate Ticket Data
+            const qrToken = crypto.randomBytes(16).toString('hex');
+
+            // Insert Ticket
+            const { data: ticket, error } = await supabase
+                .from('tickets')
+                .insert({
+                    event_id,
+                    stripe_session_id: session.id,
+                    buyer_name,
+                    buyer_email,
+                    buyer_email, // safety
+                    guest_count: Number(guest_count || 1),
+                    ticket_type: ticket_type || 'general',
+                    qr_token: qrToken,
+                    status: 'paid',
+                    amount_paid: session.amount_total, // Save raw amount from Stripe
+                })
+                .select()
+                .single();
+
+            if (error) {
+                console.error('Database Insert Error:', error);
+                throw error;
+            }
+            ticketId = ticket.id;
+            console.log('✅ Ticket created successfully:', ticketId);
         }
-
-        // Generate Ticket Data
-        const qrToken = crypto.randomBytes(16).toString('hex');
-
-        // Insert Ticket
-        const { data: ticket, error } = await supabase
-            .from('tickets')
-            .insert({
-                event_id,
-                stripe_session_id: session.id,
-                buyer_name,
-                buyer_email,
-                guest_count: Number(guest_count || 1),
-                ticket_type: ticket_type || 'general',
-                qr_token: qrToken,
-                status: 'paid',
-                amount_paid: session.amount_total, // Save raw amount from Stripe
-            })
-            .select()
-            .single();
-
-        if (error) {
-            console.error('Database Insert Error:', error);
-            throw error;
-        }
-
-        console.log('✅ Ticket created successfully:', ticket.id);
 
         // Fire-and-forget email sending
         // Using explicit node-fetch to avoid runtime issues
         const confirmUrl = `${getAppUrl()}/.netlify/functions/ticket-send-confirmation`;
+        console.log('Triggering email for ticket:', ticketId);
 
         fetch(confirmUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ticketId: ticket.id }),
+            body: JSON.stringify({ ticketId: ticketId }),
         }).catch(err => console.error('❌ Failed to trigger email function:', err));
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ ok: true, ticketId: ticket.id }),
+            body: JSON.stringify({ ok: true, ticketId: ticketId, resent: !!existing }),
         };
 
     } catch (err) {
