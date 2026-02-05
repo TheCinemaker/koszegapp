@@ -8,7 +8,7 @@ const crypto = require('crypto');
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
-    process.env.VITE_SUPABASE_ANON_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 exports.handler = async (event) => {
