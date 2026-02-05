@@ -1,6 +1,12 @@
 {
-  "updatedAt": "2026-02-04T11:31:58.150Z",
+  "updatedAt": "2026-02-05T11:34:24.106Z",
   "items": [
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15327",
+      "date": "2026. Február 5.",
+      "title": "Partnerségi egyeztetés  - M87 rendezési terv módosítás",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15327"
+    },
     {
       "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14779",
       "date": "2026. Február 2.",
@@ -30,12 +36,6 @@
       "date": "2026. Január 13.",
       "title": "LOMILOTTÓ SORSOLÁS DECEMBERI NYERTESEK!",
       "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13540"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958",
-      "date": "2026. Január 9.",
-      "title": "Hirdetmények",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=14958"
     }
   ]
 }
