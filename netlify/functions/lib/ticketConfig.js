@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Load ticket config once at module initialization
-const configPath = path.resolve(__dirname, '../../../config/ticket-config.json');
+const configPath = path.resolve(__dirname, '../ticket-config.json');
 const ticketConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 
 /**
