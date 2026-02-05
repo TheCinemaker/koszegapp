@@ -149,8 +149,8 @@ exports.handler = async (event) => {
       </div>
 
       <div style="text-align: center; margin-bottom: 30px;">
-        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}" class="wallet-btn">
-          Hozzáadás Apple Wallet-hez
+        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}" style="display: inline-block;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
         </a>
       </div>
       

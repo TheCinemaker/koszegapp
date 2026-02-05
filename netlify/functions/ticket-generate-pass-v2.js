@@ -76,7 +76,6 @@ exports.handler = async (event) => {
         }
 
         // 2. Read Certs
-        // Relative path handling for Netlify Functions (matches create-apple-pass.js)
         const p12Path = path.resolve(__dirname, 'certs/pass.p12');
         const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
 
@@ -122,28 +121,28 @@ exports.handler = async (event) => {
         pass.type = 'eventTicket';
 
         // 4. Set Fields
-        // Header: Event Name
+        // Header
         pass.headerFields.push({
             key: "event",
             label: "Esemény",
             value: ticketEvent.name
         });
 
-        // Primary: Date & Time
+        // Primary
         pass.primaryFields.push({
             key: "time",
             label: "Időpont",
             value: `${ticketEvent.date} ${ticketEvent.time}`
         });
 
-        // Secondary: Location
+        // Secondary
         pass.secondaryFields.push({
             key: "location",
             label: "Helyszín",
             value: ticketEvent.location
         });
 
-        // Auxiliary: Guest Count
+        // Auxiliary
         pass.auxiliaryFields.push({
             key: "guests",
             label: "Jegyek",
@@ -153,11 +152,10 @@ exports.handler = async (event) => {
         // Back Fields
         pass.backFields.push(
             { key: "buyer", label: "Vásárló", value: ticket.buyer_name },
-            { key: "id", label: "Ticket ID", value: ticket.id },
-            { key: "support", label: "Kapcsolat", value: ticketConfig.branding.supportEmail }
+            { key: "id", label: "Ticket ID", value: ticket.id }
         );
 
-        // 5. Barcode
+        // 5. Barcode (QR)
         const qrValue = ticket.qr_code_token || ticket.qr_token || ticket.id;
         pass.setBarcodes({
             format: 'PKBarcodeFormatQR',
@@ -166,7 +164,21 @@ exports.handler = async (event) => {
             altText: qrValue
         });
 
-        // 6. Generate
+        // 6. Add Images (Icon & Logo)
+        // Looking for icon.png in the same directory or specific path
+        const iconPath = path.resolve(__dirname, 'icon.png');
+
+        if (fs.existsSync(iconPath)) {
+            const iconBuffer = fs.readFileSync(iconPath);
+            pass.addBuffer('icon.png', iconBuffer);
+            pass.addBuffer('icon@2x.png', iconBuffer); // Use same for 2x for now or resize if needed
+            pass.addBuffer('logo.png', iconBuffer);     // Use icon as logo too if specific logo missing
+            pass.addBuffer('logo@2x.png', iconBuffer);
+        } else {
+            console.warn('Icon file not found at:', iconPath);
+        }
+
+        // 7. Generate
         const buffer = pass.getAsBuffer();
 
         return {
