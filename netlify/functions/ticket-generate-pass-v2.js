@@ -1,42 +1,14 @@
-const { PKPass } = require('passkit-generator');
+// Ticket System - Apple Wallet Pass Generator V2 (Visual QR)
+// Generates .pkpass file for Apple Wallet with QR code on strip image via Jimp
+// Based on V1 robust logic + V2 visual features
+
+const { ticketConfig, getWalletConfig } = require('./lib/ticketConfig');
 const { createClient } = require('@supabase/supabase-js');
-const { ticketConfig, getAppUrl } = require('./lib/ticketConfig');
-const fs = require('fs');
+const { PKPass } = require('passkit-generator');
 const path = require('path');
-const forge = require('node-forge');
 const QRCode = require('qrcode');
 const Jimp = require('jimp');
-
-// Helper to extract Key and Cert from P12 Buffer
-function extractFromP12(p12Buffer, password) {
-    try {
-        const p12Asn1 = forge.asn1.fromDer(p12Buffer.toString('binary'));
-        const p12 = forge.pkcs12.pkcs12FromAsn1(p12Asn1, password || '');
-
-        let key = null;
-        let cert = null;
-
-        const bags = p12.getBags({ bagType: forge.pki.oids.certBag });
-        const certBag = bags[forge.pki.oids.certBag]?.[0];
-        if (certBag) {
-            cert = forge.pki.certificateToPem(certBag.cert);
-        }
-
-        const keyBags = p12.getBags({ bagType: forge.pki.oids.pkcs8ShroudedKeyBag });
-        const keyBag = keyBags[forge.pki.oids.pkcs8ShroudedKeyBag]?.[0];
-        if (keyBag) {
-            key = forge.pki.privateKeyToPem(keyBag.key);
-        }
-
-        if (!key || !cert) {
-            throw new Error("Could not extract Key or Cert from P12 file");
-        }
-        return { key, cert };
-    } catch (e) {
-        console.error("P12 Extraction Error:", e);
-        throw e;
-    }
-}
+const fs = require('fs');
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -45,14 +17,17 @@ const supabase = createClient(
 
 exports.handler = async (event) => {
     try {
-        const { ticketId } = event.queryStringParameters;
+        const ticketId = event.queryStringParameters?.ticketId;
 
         if (!ticketId) {
-            return { statusCode: 400, body: 'Ticket ID required' };
+            return {
+                statusCode: 400,
+                body: 'Ticket ID required'
+            };
         }
 
-        // 1. Fetch Ticket Data
-        const { data: ticket, error } = await supabase
+        // Fetch ticket with event details
+        const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
             .select(`
         *,
@@ -67,181 +42,146 @@ exports.handler = async (event) => {
             .eq('id', ticketId)
             .single();
 
-        if (error || !ticket) {
-            console.error('Ticket fetch error:', error);
-            return { statusCode: 404, body: 'Ticket not found' };
+        if (ticketError || !ticket) {
+            return {
+                statusCode: 404,
+                body: 'Ticket not found'
+            };
         }
 
-        const ticketEvent = ticket.ticket_events;
-        if (!ticketEvent) {
-            return { statusCode: 500, body: 'Event data missing' };
-        }
+        const eventData = ticket.ticket_events;
 
-        // 2. Read Certs
-        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
-        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
+        // Get wallet config
+        const walletConfig = getWalletConfig();
 
-        if (!fs.existsSync(p12Path) || !fs.existsSync(wwdrPath)) {
-            throw new Error(`Certificates missing at ${p12Path} or ${wwdrPath}`);
-        }
-
-        const p12Buffer = fs.readFileSync(p12Path);
-        const wwdrBuffer = fs.readFileSync(wwdrPath);
-
-        const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
-        const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
-        const wwdrPem = forge.pki.certificateToPem(wwdrCert);
-
-        const { key, cert } = extractFromP12(
-            p12Buffer,
-            process.env.APPLE_PASS_P12_PASSWORD
-        );
-
-        // 3. Create Pass
-        const pass = new PKPass(
-            {},
-            {
-                wwdr: wwdrPem,
-                signerCert: cert,
-                signerKey: key,
-                signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
-            },
-            {
-                formatVersion: 1,
-                passTypeIdentifier: ticketConfig.wallet.apple.passTypeIdentifier,
-                teamIdentifier: ticketConfig.wallet.apple.teamIdentifier,
-                organizationName: ticketConfig.branding.appName,
-                description: `Jegy: ${ticketEvent.name}`,
-                serialNumber: ticket.id,
-                backgroundColor: 'rgb(255, 255, 255)',
-                foregroundColor: 'rgb(0, 0, 0)',
-                labelColor: 'rgb(80, 80, 80)',
-                logoText: ticketConfig.branding.appName
+        // Create pass using file-based certificates (like V1)
+        const pass = await PKPass.from({
+            model: path.resolve(__dirname, 'assets/ticket.pass'),
+            certificates: {
+                wwdr: path.resolve(__dirname, 'certs/wwdr.pem'),
+                signerCert: path.resolve(__dirname, 'certs/signerCert.pem'),
+                signerKey: path.resolve(__dirname, 'certs/signerKey.pem'),
+                signerKeyPassphrase: walletConfig.passphrase || ''
             }
-        );
+        }, {
+            serialNumber: ticket.id,
+            description: `${walletConfig.passNamePrefix}${eventData.name}`,
+            organizationName: ticketConfig.branding.appName,
+            passTypeIdentifier: walletConfig.passTypeIdentifier,
+            teamIdentifier: walletConfig.teamIdentifier,
+            webServiceURL: process.env.URL,
+            authenticationToken: ticket.qr_token
+        });
 
-        pass.type = 'eventTicket';
-
-        // 4. Set Fields
-        // Header
+        // Set pass fields
         pass.headerFields.push({
-            key: "event",
-            label: "Esemény",
-            value: ticketEvent.name
+            key: 'event',
+            label: 'ESEMÉNY',
+            value: eventData.name,
         });
 
-        // Primary
         pass.primaryFields.push({
-            key: "time",
-            label: "Időpont",
-            value: `${ticketEvent.date} ${ticketEvent.time}`
+            key: 'name',
+            label: 'NÉV',
+            value: ticket.buyer_name
         });
 
-        // Secondary
         pass.secondaryFields.push({
-            key: "location",
-            label: "Helyszín",
-            value: ticketEvent.location
+            key: 'date',
+            label: 'DÁTUM',
+            value: new Date(eventData.date).toLocaleDateString('hu-HU')
+        }, {
+            key: 'time',
+            label: 'IDŐPONT',
+            value: eventData.time
         });
 
-        // Auxiliary
         pass.auxiliaryFields.push({
-            key: "guests",
-            label: "Jegyek",
+            key: 'location',
+            label: 'HELYSZÍN',
+            value: eventData.location
+        }, {
+            key: 'guests',
+            label: 'VENDÉGEK',
             value: `${ticket.guest_count} fő`
         });
 
-        // Back Fields
-        pass.backFields.push(
-            { key: "buyer", label: "Vásárló", value: ticket.buyer_name },
-            { key: "id", label: "Ticket ID", value: ticket.id }
-        );
+        pass.backFields.push({
+            key: 'terms',
+            label: 'Feltételek',
+            value: 'Ez a jegy csak egyszer használható fel. Kérjük, mutasd fel a QR kódot a belépéskor.'
+        });
 
-        // 5. Barcode (QR)
+        // Set standard barcode (for scanners)
         const qrValue = ticket.qr_code_token || ticket.qr_token || ticket.id;
         pass.setBarcodes({
-            format: 'PKBarcodeFormatQR',
             message: qrValue,
+            format: 'PKBarcodeFormatQR',
             messageEncoding: 'iso-8859-1',
             altText: qrValue
         });
 
-        // 6. Image Composite (QR on Strip)
-        // Looking for wallet.png in public/images/events/ or similar
-        // Since we are in netlify/functions, we need to go up to public
-        // Path: ../../public/images/events/wallet.png (relative to this file)
+        // --- Visual QR Code Compositing (The V2 Special) ---
+
+        // 1. Path to strip image
         const stripPath = path.resolve(__dirname, '../../public/images/events/wallet.png');
 
         if (fs.existsSync(stripPath)) {
-            // Read strip image
+            // 2. Read strip image
             const stripImage = await Jimp.read(stripPath);
 
-            // Generate QR Code Buffer
+            // 3. Generate QR Code Buffer (High contrast)
             const qrBuffer = await QRCode.toBuffer(qrValue, {
-                width: 150, // QR size
-                margin: 1,
+                width: 160,
+                margin: 2,
                 color: {
                     dark: '#000000',
                     light: '#FFFFFF'
                 }
             });
 
-            // Read QR image
+            // 4. Read QR image
             const qrImage = await Jimp.read(qrBuffer);
 
-            // Composite QR onto Strip (Bottom Right or Center?)
-            // Usually strip is 375x98 (Retina @1x? No, standard strip is 375x98pt / 1125x294px)
-            // Let's assume the strip image is adequate size.
-            // We'll place it on the right side if it's wide, or center if not.
-            // Let's place it at x: 20, y: (height - qrHeight) / 2 for left alignment?
-            // Apple Wallet strip images are displayed behind the primary fields slightly.
-            // Actually, best practice for "eventTicket" with background image is `strip.png`.
-            // Let's put the QR code on the right side.
-
-            // Resize QR if needed? 150px seems okay for 1125px wide image.
-            const x = stripImage.bitmap.width - qrImage.bitmap.width - 40; // 40px padding from right
+            // 5. Calculate position (Right aligned with padding)
+            // Strip dimensions in Wallet are roughly 1125px width
+            // Place it 50px from right edge, centered vertically
+            const x = stripImage.bitmap.width - qrImage.bitmap.width - 50;
             const y = (stripImage.bitmap.height - qrImage.bitmap.height) / 2;
 
+            // 6. Composite
             stripImage.composite(qrImage, x, y);
 
-            // Get Buffer
+            // 7. Get Buffer
             const compositedBuffer = await stripImage.getBufferAsync(Jimp.MIME_PNG);
 
+            // 8. Add to pass
             pass.addBuffer('strip.png', compositedBuffer);
-            pass.addBuffer('strip@2x.png', compositedBuffer); // Ideally create 2x version
+            pass.addBuffer('strip@2x.png', compositedBuffer); // Ideally utilize high-res
         } else {
-            console.warn('Strip base image not found at:', stripPath);
+            console.warn('Strip image not found for compositing:', stripPath);
         }
 
-        // Icon
-        const iconPath = path.resolve(__dirname, 'icon.png');
-        if (fs.existsSync(iconPath)) {
-            const iconBuffer = fs.readFileSync(iconPath);
-            pass.addBuffer('icon.png', iconBuffer);
-            pass.addBuffer('icon@2x.png', iconBuffer);
-            pass.addBuffer('logo.png', iconBuffer);
-            pass.addBuffer('logo@2x.png', iconBuffer);
-        }
+        // --- End Visual QR ---
 
-
-        // 7. Generate
+        // Generate pass buffer
         const buffer = pass.getAsBuffer();
 
         return {
             statusCode: 200,
             headers: {
                 'Content-Type': 'application/vnd.apple.pkpass',
-                'Content-Disposition': `attachment; filename="ticket-${ticket.id.substring(0, 8)}.pkpass"`
+                'Content-Disposition': `attachment; filename="ticket-${ticket.id}.pkpass"`
             },
             body: buffer.toString('base64'),
             isBase64Encoded: true
         };
 
-    } catch (err) {
-        console.error('Pass generation error:', err);
+    } catch (error) {
+        console.error('Pass generation error:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: err.message })
+            body: JSON.stringify({ error: error.message })
         };
     }
 };
