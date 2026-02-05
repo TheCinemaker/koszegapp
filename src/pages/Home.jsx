@@ -32,11 +32,6 @@ const sections = [
 ];
 
 export default function Home() {
-  // KőszegMA subscription pass - direct download link
-  const handleDownloadDailyPass = () => {
-    window.location.href = '/.netlify/functions/create-daily-subscription-pass';
-  };
-
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative">
 
@@ -55,48 +50,7 @@ export default function Home() {
           </FadeUp>
         </div>
 
-        {/* --- KŐSZEGMA DAILY PASS CARD --- */}
-<FadeUp delay={0} duration={1.2} className="mb-6">
-  <button
-    onClick={handleDownloadDailyPass}
-    className="w-full relative block rounded-[1.5rem] p-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 backdrop-blur-[20px] shadow-xl hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-700 hover:scale-[1.02] active:scale-[0.98] overflow-hidden group"
-  >
-    {/* Animated Background Gradient */}
-    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/50 via-pink-500/50 to-indigo-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
-    {/* Content */}
-    <div className="relative z-10 flex items-center justify-between">
-      <div className="flex-1 text-left">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl group-hover:rotate-6 group-hover:scale-110 transition-all duration-700">
-            📍
-          </div>
-          <div>
-            <h3 className="text-2xl font-bold text-white leading-none tracking-tight">
-              KőszegMA
-            </h3>
-            <p className="text-sm text-white/80 font-medium mt-1">
-              Mai események a Wallet-edben
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Apple Wallet Badge */}
-      <div className="flex-shrink-0">
-        <img
-          src="/add-to-apple-wallet.svg"
-          alt="Add to Apple Wallet"
-          className="h-12 opacity-90 group-hover:opacity-100 transition-opacity"
-          draggable={false}
-        />
-      </div>
-    </div>
-
-    {/* Shine Effect */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-200%] group-hover:animate-shine opacity-30 duration-1000" />
-  </button>
-</FadeUp>
         {/* --- ULTRA-COMPACT BENTO GRID --- */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 auto-rows-fr">
           {sections.map((sec) => (
