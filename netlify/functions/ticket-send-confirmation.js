@@ -8,9 +8,10 @@ const QRCode = require('qrcode');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// USE SERVICE ROLE KEY (Essential for backend access bypassing RLS)
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
-  process.env.VITE_SUPABASE_ANON_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 exports.handler = async (event) => {
@@ -25,6 +26,7 @@ exports.handler = async (event) => {
     }
 
     // Fetch ticket with event details
+    // Note: ensure 'ticket_events' relation (Foreign Key) exists in Supabase
     const { data: ticket, error: ticketError } = await supabase
       .from('tickets')
       .select(`
@@ -41,14 +43,31 @@ exports.handler = async (event) => {
       .single();
 
     if (ticketError || !ticket) {
+      console.error('Ticket fetch error:', ticketError);
       return {
         statusCode: 404,
         body: JSON.stringify({ error: 'Ticket not found' })
       };
     }
 
-    // Generate QR code as base64
-    const qrCodeDataUrl = await QRCode.toDataURL(ticket.qr_token, {
+    // Safety check for relation
+    if (!ticket.ticket_events) {
+      console.error('Event relation missing for ticket:', ticketId);
+      // Build a fallback event object or throw
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Event data missing' })
+      };
+    }
+
+    // Generate QR code as base64 - USE qr_code_token (DB column name)
+    const qrTokenValue = ticket.qr_code_token || ticket.qr_token; // Fallback just in case
+
+    if (!qrTokenValue) {
+      throw new Error('QR token missing on ticket record');
+    }
+
+    const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
       width: 300,
       margin: 2
     });
