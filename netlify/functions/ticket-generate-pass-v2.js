@@ -1,9 +1,40 @@
+const { PKPass } = require('passkit-generator');
 const { createClient } = require('@supabase/supabase-js');
-const { Template } = require("@walletpass/pass-js");
 const { ticketConfig, getAppUrl } = require('./lib/ticketConfig');
+const fs = require('fs');
+const path = require('path');
+const forge = require('node-forge');
 
-// Dedicated Ticket Pass Generator V2
-// Focuses solely on reliable 'eventTicket' generation
+// Helper to extract Key and Cert from P12 Buffer
+function extractFromP12(p12Buffer, password) {
+    try {
+        const p12Asn1 = forge.asn1.fromDer(p12Buffer.toString('binary'));
+        const p12 = forge.pkcs12.pkcs12FromAsn1(p12Asn1, password || '');
+
+        let key = null;
+        let cert = null;
+
+        const bags = p12.getBags({ bagType: forge.pki.oids.certBag });
+        const certBag = bags[forge.pki.oids.certBag]?.[0];
+        if (certBag) {
+            cert = forge.pki.certificateToPem(certBag.cert);
+        }
+
+        const keyBags = p12.getBags({ bagType: forge.pki.oids.pkcs8ShroudedKeyBag });
+        const keyBag = keyBags[forge.pki.oids.pkcs8ShroudedKeyBag]?.[0];
+        if (keyBag) {
+            key = forge.pki.privateKeyToPem(keyBag.key);
+        }
+
+        if (!key || !cert) {
+            throw new Error("Could not extract Key or Cert from P12 file");
+        }
+        return { key, cert };
+    } catch (e) {
+        console.error("P12 Extraction Error:", e);
+        throw e;
+    }
+}
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -44,113 +75,105 @@ exports.handler = async (event) => {
             return { statusCode: 500, body: 'Event data missing' };
         }
 
-        // 2. Prepare Pass Logic
-        // In a real scenario, you'd load the cert/key from env or file
-        // For now assuming existing cert loader or usage pattern from legacy if available
-        // BUT since user asked for separation, I will implement standard pass-js logic here.
+        // 2. Read Certs
+        // Relative path handling for Netlify Functions (matches create-apple-pass.js)
+        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
+        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
 
-        // NOTE: This requires the P12 certificate and password to be available in ENV
-        if (!process.env.APPLE_PASS_CERTIFICATE || !process.env.APPLE_PASS_PASSWORD) {
-            console.error('Missing Apple Wallet configuration');
-            return { statusCode: 500, body: 'Wallet configuration missing' };
+        if (!fs.existsSync(p12Path) || !fs.existsSync(wwdrPath)) {
+            throw new Error(`Certificates missing at ${p12Path} or ${wwdrPath}`);
         }
 
-        // 3. Create Template (Event Ticket)
-        const template = new Template("eventTicket", {
-            passTypeIdentifier: ticketConfig.wallet.apple.passTypeIdentifier,
-            teamIdentifier: ticketConfig.wallet.apple.teamIdentifier,
-            organizationName: ticketConfig.branding.appName,
-            description: `Jegy: ${ticketEvent.name}`,
-            sharingProhibited: true,
-            backgroundColor: "rgb(255, 255, 255)",
-            foregroundColor: "rgb(0, 0, 0)",
-            labelColor: "rgb(80, 80, 80)"
-        });
+        const p12Buffer = fs.readFileSync(p12Path);
+        const wwdrBuffer = fs.readFileSync(wwdrPath);
 
-        // Load Keys (Assuming BASE64 encoded P12 in env for Netlify)
-        // If it's a file path in dev, handle that? 
-        // Usually best to store as base64 string in Netlify Env
-        try {
-            const certBuffer = Buffer.from(process.env.APPLE_PASS_CERTIFICATE, 'base64');
-            await template.loadCertificate(certBuffer, process.env.APPLE_PASS_PASSWORD);
-        } catch (certError) {
-            console.error('Certificate load error:', certError);
-            return { statusCode: 500, body: 'Certificate error' };
-        }
+        const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
+        const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
+        const wwdrPem = forge.pki.certificateToPem(wwdrCert);
 
-        // 4. Populate Fields
-        const pass = template.createPass({
-            serialNumber: ticket.id,
-            authenticationToken: ticket.qr_code_token || ticket.qr_token || ticket.id // fallback
-        });
+        const { key, cert } = extractFromP12(
+            p12Buffer,
+            process.env.APPLE_PASS_P12_PASSWORD
+        );
 
+        // 3. Create Pass
+        const pass = new PKPass(
+            {},
+            {
+                wwdr: wwdrPem,
+                signerCert: cert,
+                signerKey: key,
+                signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
+            },
+            {
+                formatVersion: 1,
+                passTypeIdentifier: ticketConfig.wallet.apple.passTypeIdentifier,
+                teamIdentifier: ticketConfig.wallet.apple.teamIdentifier,
+                organizationName: ticketConfig.branding.appName,
+                description: `Jegy: ${ticketEvent.name}`,
+                serialNumber: ticket.id,
+                backgroundColor: 'rgb(255, 255, 255)',
+                foregroundColor: 'rgb(0, 0, 0)',
+                labelColor: 'rgb(80, 80, 80)',
+                logoText: ticketConfig.branding.appName
+            }
+        );
+
+        pass.type = 'eventTicket';
+
+        // 4. Set Fields
         // Header: Event Name
-        pass.headerFields.add({
+        pass.headerFields.push({
             key: "event",
             label: "Esemény",
             value: ticketEvent.name
         });
 
         // Primary: Date & Time
-        const eventDateTime = new Date(`${ticketEvent.date}T${ticketEvent.time}`);
-        // Pass-js handles dates, but string format is safer for display sometimes
-        // Let's use the standard date format if possible, or string value
-        pass.primaryFields.add({
+        pass.primaryFields.push({
             key: "time",
             label: "Időpont",
-            value: `${ticketEvent.date} ${ticketEvent.time}`,
-            // specific date style can be added if supported by lib, keeping simple text for safety
+            value: `${ticketEvent.date} ${ticketEvent.time}`
         });
 
         // Secondary: Location
-        pass.secondaryFields.add({
+        pass.secondaryFields.push({
             key: "location",
             label: "Helyszín",
             value: ticketEvent.location
         });
 
         // Auxiliary: Guest Count
-        pass.auxiliaryFields.add({
+        pass.auxiliaryFields.push({
             key: "guests",
             label: "Jegyek",
             value: `${ticket.guest_count} fő`
         });
 
-        // Back Fields (Info)
-        pass.backFields.add({
-            key: "buyer",
-            label: "Vásárló",
-            value: ticket.buyer_name
-        });
+        // Back Fields
+        pass.backFields.push(
+            { key: "buyer", label: "Vásárló", value: ticket.buyer_name },
+            { key: "id", label: "Ticket ID", value: ticket.id },
+            { key: "support", label: "Kapcsolat", value: ticketConfig.branding.supportEmail }
+        );
 
-        pass.backFields.add({
-            key: "id",
-            label: "Jegy Azonosító",
-            value: ticket.id
-        });
-
-        pass.backFields.add({
-            key: "support",
-            label: "Ügyfélszolgálat",
-            value: ticketConfig.branding.supportEmail
-        });
-
-        // 5. Barcode (QR)
+        // 5. Barcode
         const qrValue = ticket.qr_code_token || ticket.qr_token || ticket.id;
-        pass.barcodes = [{
+        pass.setBarcodes({
+            format: 'PKBarcodeFormatQR',
             message: qrValue,
-            format: "PKBarcodeFormatQR",
-            messageEncoding: "iso-8859-1"
-        }];
+            messageEncoding: 'iso-8859-1',
+            altText: qrValue
+        });
 
-        // 6. Generate Buffer
-        const buffer = await pass.asBuffer();
+        // 6. Generate
+        const buffer = pass.getAsBuffer();
 
         return {
             statusCode: 200,
             headers: {
                 'Content-Type': 'application/vnd.apple.pkpass',
-                'Content-Disposition': `attachment; filename="ticket-${ticketEvent.date}.pkpass"`
+                'Content-Disposition': `attachment; filename="ticket-${ticket.id.substring(0, 8)}.pkpass"`
             },
             body: buffer.toString('base64'),
             isBase64Encoded: true
