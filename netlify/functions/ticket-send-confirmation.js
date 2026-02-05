@@ -60,14 +60,14 @@ exports.handler = async (event) => {
       };
     }
 
-    // Generate QR code as base64 - USE qr_code_token (DB column name)
+    // Generate QR code as buffer for email attachment
     const qrTokenValue = ticket.qr_code_token || ticket.qr_token; // Fallback just in case
 
     if (!qrTokenValue) {
       throw new Error('QR token missing on ticket record');
     }
 
-    const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
+    const qrCodeBuffer = await QRCode.toBuffer(qrTokenValue, {
       width: 300,
       margin: 2
     });
@@ -79,8 +79,8 @@ exports.handler = async (event) => {
       day: 'numeric'
     });
 
-    // Apple Wallet link
-    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass?ticketId=${ticketId}`;
+    // Apple Wallet link - pointing to V2 generator
+    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}`;
 
     // Get email config
     const emailConfig = getEmailConfig();
@@ -90,6 +90,13 @@ exports.handler = async (event) => {
       from: emailConfig.from,
       to: [ticket.buyer_email],
       subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
+      attachments: [
+        {
+          filename: 'qrcode.png',
+          content: qrCodeBuffer,
+          content_id: 'qrcode' // Referenced in HTML as cid:qrcode
+        }
+      ],
       html: `
 <!DOCTYPE html>
 <html>
@@ -144,13 +151,13 @@ exports.handler = async (event) => {
 
       <div class="qr-section">
         <div class="qr-label">Belépőkód</div>
-        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
+        <img src="cid:qrcode" alt="QR Kód" class="qr-image" />
         <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
       </div>
 
       <div style="text-align: center; margin-bottom: 30px;">
-        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}" style="display: inline-block;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
+        <a href="${walletPassUrl}" style="display: inline-block;">
+          <img src="${getAppUrl()}/addToAppleWallet.svg" alt="Add to Apple Wallet" style="height: 42px;" />
         </a>
       </div>
       

@@ -4,6 +4,8 @@ const { ticketConfig, getAppUrl } = require('./lib/ticketConfig');
 const fs = require('fs');
 const path = require('path');
 const forge = require('node-forge');
+const QRCode = require('qrcode');
+const Jimp = require('jimp');
 
 // Helper to extract Key and Cert from P12 Buffer
 function extractFromP12(p12Buffer, password) {
@@ -164,19 +166,63 @@ exports.handler = async (event) => {
             altText: qrValue
         });
 
-        // 6. Add Images (Icon & Logo)
-        // Looking for icon.png in the same directory or specific path
-        const iconPath = path.resolve(__dirname, 'icon.png');
+        // 6. Image Composite (QR on Strip)
+        // Looking for wallet.png in public/images/events/ or similar
+        // Since we are in netlify/functions, we need to go up to public
+        // Path: ../../public/images/events/wallet.png (relative to this file)
+        const stripPath = path.resolve(__dirname, '../../public/images/events/wallet.png');
 
+        if (fs.existsSync(stripPath)) {
+            // Read strip image
+            const stripImage = await Jimp.read(stripPath);
+
+            // Generate QR Code Buffer
+            const qrBuffer = await QRCode.toBuffer(qrValue, {
+                width: 150, // QR size
+                margin: 1,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            });
+
+            // Read QR image
+            const qrImage = await Jimp.read(qrBuffer);
+
+            // Composite QR onto Strip (Bottom Right or Center?)
+            // Usually strip is 375x98 (Retina @1x? No, standard strip is 375x98pt / 1125x294px)
+            // Let's assume the strip image is adequate size.
+            // We'll place it on the right side if it's wide, or center if not.
+            // Let's place it at x: 20, y: (height - qrHeight) / 2 for left alignment?
+            // Apple Wallet strip images are displayed behind the primary fields slightly.
+            // Actually, best practice for "eventTicket" with background image is `strip.png`.
+            // Let's put the QR code on the right side.
+
+            // Resize QR if needed? 150px seems okay for 1125px wide image.
+            const x = stripImage.bitmap.width - qrImage.bitmap.width - 40; // 40px padding from right
+            const y = (stripImage.bitmap.height - qrImage.bitmap.height) / 2;
+
+            stripImage.composite(qrImage, x, y);
+
+            // Get Buffer
+            const compositedBuffer = await stripImage.getBufferAsync(Jimp.MIME_PNG);
+
+            pass.addBuffer('strip.png', compositedBuffer);
+            pass.addBuffer('strip@2x.png', compositedBuffer); // Ideally create 2x version
+        } else {
+            console.warn('Strip base image not found at:', stripPath);
+        }
+
+        // Icon
+        const iconPath = path.resolve(__dirname, 'icon.png');
         if (fs.existsSync(iconPath)) {
             const iconBuffer = fs.readFileSync(iconPath);
             pass.addBuffer('icon.png', iconBuffer);
-            pass.addBuffer('icon@2x.png', iconBuffer); // Use same for 2x for now or resize if needed
-            pass.addBuffer('logo.png', iconBuffer);     // Use icon as logo too if specific logo missing
+            pass.addBuffer('icon@2x.png', iconBuffer);
+            pass.addBuffer('logo.png', iconBuffer);
             pass.addBuffer('logo@2x.png', iconBuffer);
-        } else {
-            console.warn('Icon file not found at:', iconPath);
         }
+
 
         // 7. Generate
         const buffer = pass.getAsBuffer();
