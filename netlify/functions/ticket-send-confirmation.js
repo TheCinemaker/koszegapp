@@ -89,7 +89,7 @@ exports.handler = async (event) => {
     const { data, error } = await resend.emails.send({
       from: emailConfig.from,
       to: [ticket.buyer_email],
-      subject: `${emailConfig.subjectPrefix} 🎟️ Jegyed: ${ticketEvent.name}`,
+      subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -97,94 +97,73 @@ exports.handler = async (event) => {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jegyed - ${ticketEvent.name}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f7; margin: 0; padding: 0; color: #1d1d1f; }
+    .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .header { background: #000000; padding: 40px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.5px; }
+    .content { padding: 40px; }
+    .greeting { font-size: 17px; margin-bottom: 20px; font-weight: 500; }
+    .lead { font-size: 17px; color: #86868b; margin-bottom: 30px; line-height: 1.5; }
+    .card { background: #f5f5f7; border-radius: 16px; padding: 24px; margin-bottom: 30px; }
+    .event-title { font-size: 22px; font-weight: 700; margin: 0 0 10px 0; color: #000000; letter-spacing: -0.8px; }
+    .detail-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 15px; color: #424245; }
+    .detail-icon { margin-right: 10px; opacity: 0.7; }
+    .qr-section { text-align: center; margin: 30px 0; padding: 20px 0; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
+    .qr-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; margin-bottom: 15px; }
+    .qr-image { width: 220px; height: 220px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .wallet-btn { display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 98px; font-size: 15px; font-weight: 600; transition: transform 0.2s; }
+    .wallet-btn:hover { transform: scale(1.02); }
+    .footer { background: #f5f5f7; padding: 30px; text-align: center; font-size: 12px; color: #86868b; border-top: 1px solid #e5e5e5; }
+    .warning { font-size: 13px; color: #ff3b30; margin-top: 20px; text-align: center; }
+    .link { color: #0066cc; text-decoration: none; }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 20px;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">🎟️ Jegyed elkészült!</h1>
-            </td>
-          </tr>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>KőszegTicket</h1>
+    </div>
+    
+    <div class="content">
+      <div class="greeting">Kedves ${ticket.buyer_name}!</div>
+      <div class="lead">Elkészült a jegyed a következő eseményre:</div>
 
-          <!-- Content -->
-          <tr>
-            <td style="padding: 40px 30px;">
-              <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0;">
-                Kedves <strong>${ticket.buyer_name}</strong>!
-              </p>
-              
-              <p style="font-size: 16px; color: #374151; margin: 0 0 30px 0;">
-                Sikeresen megvásároltad a jegyedet a következő eseményre:
-              </p>
+      <div class="card">
+        <h2 class="event-title">${ticketEvent.name}</h2>
+        <div class="detail-row">
+          <span class="detail-icon">📅</span> <strong>${eventDate}, ${ticketEvent.time}</strong>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📍</span> ${ticketEvent.location}
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">👥</span> ${ticket.guest_count} fő részére
+        </div>
+      </div>
 
-              <!-- Event Details -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9fafb; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
-                <tr>
-                  <td>
-                    <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 22px;">${ticketEvent.name}</h2>
-                    <p style="color: #6b7280; margin: 5px 0; font-size: 14px;">
-                      📅 <strong>Dátum:</strong> ${eventDate}, ${ticketEvent.time}
-                    </p>
-                    <p style="color: #6b7280; margin: 5px 0; font-size: 14px;">
-                      📍 <strong>Helyszín:</strong> ${ticketEvent.location}
-                    </p>
-                    <p style="color: #6b7280; margin: 5px 0; font-size: 14px;">
-                      👥 <strong>Vendégek száma:</strong> ${ticket.guest_count} fő
-                    </p>
-                  </td>
-                </tr>
-              </table>
+      <div class="qr-section">
+        <div class="qr-label">Belépőkód</div>
+        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
+        <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
+      </div>
 
-              <!-- QR Code -->
-              <div style="text-align: center; margin: 30px 0;">
-                <p style="font-size: 16px; color: #374151; margin: 0 0 15px 0; font-weight: bold;">
-                  A belépéshez szükséges QR kód:
-                </p>
-                <img src="${qrCodeDataUrl}" alt="QR Code" style="max-width: 250px; border: 2px solid #e5e7eb; border-radius: 8px; padding: 10px; background: white;" />
-                <p style="font-size: 12px; color: #9ca3af; margin: 10px 0 0 0;">
-                  Mutasd fel ezt a QR kódot a belépéskor
-                </p>
-              </div>
+      <div style="text-align: center; margin-bottom: 30px;">
+        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}" class="wallet-btn">
+          Hozzáadás Apple Wallet-hez
+        </a>
+      </div>
+      
+      <div class="warning">
+        Ez a jegy egyszeri belépésre jogosít. Kérjük, ne oszd meg mással!
+      </div>
+    </div>
 
-              <!-- Apple Wallet Button -->
-              <div style="text-align: center; margin: 30px 0;">
-                <a href="${walletPassUrl}" style="display: inline-block; background-color: #000000; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold;">
-                   Add hozzá az Apple Wallet-hez
-                </a>
-              </div>
-
-              <!-- Important Notice -->
-              <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 30px 0; border-radius: 4px;">
-                <p style="color: #92400e; margin: 0; font-size: 14px;">
-                  <strong>⚠️ Fontos:</strong> Ez a jegy csak egyszer használható fel. Kérjük, őrizd meg és mutasd fel a belépéskor!
-                </p>
-              </div>
-
-              <p style="font-size: 14px; color: #6b7280; margin: 20px 0 0 0;">
-                Kellemes szórakozást kívánunk!<br>
-                <strong>KőszegAPP csapata</strong>
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-                Ha kérdésed van, írj nekünk: <a href="mailto:${ticketConfig.branding.supportEmail}" style="color: #667eea;">${ticketConfig.branding.supportEmail}</a>
-              </p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
+    <div class="footer">
+      <p>&copy; ${new Date().getFullYear()} KőszegAPP. Minden jog fenntartva.</p>
+      <p>Kérdésed van? <a href="mailto:${ticketConfig.branding.supportEmail}" class="link">Írj nekünk</a></p>
+    </div>
+  </div>
 </body>
 </html>
       `

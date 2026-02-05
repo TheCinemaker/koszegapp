@@ -10,14 +10,14 @@
         "singleUse": true
     },
     "email": {
-        "from": "KőszegAPP <onboarding@resend.dev>",
-        "subjectPrefix": "[TEST]",
+        "from": "KőszegTicket <ticket@koszegapp.hu>",
+        "subjectPrefix": "KőszegTicket jegy:",
         "sendDelayMs": 500
     },
     "wallet": {
         "apple": {
             "enabled": true,
-            "passNamePrefix": "TEST – ",
+            "passNamePrefix": "",
             "teamIdentifier": "XXXXXXX",
             "passTypeIdentifier": "pass.hu.koszegapp.ticket"
         },
