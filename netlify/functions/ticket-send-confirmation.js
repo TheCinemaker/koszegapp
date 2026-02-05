@@ -72,8 +72,8 @@ exports.handler = async (event) => {
       margin: 2
     });
 
-    const event = ticket.ticket_events;
-    const eventDate = new Date(event.date).toLocaleDateString('hu-HU', {
+    const ticketEvent = ticket.ticket_events;
+    const eventDate = new Date(ticketEvent.date).toLocaleDateString('hu-HU', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -89,14 +89,14 @@ exports.handler = async (event) => {
     const { data, error } = await resend.emails.send({
       from: emailConfig.from,
       to: [ticket.buyer_email],
-      subject: `${emailConfig.subjectPrefix} 🎟️ Jegyed: ${event.name}`,
+      subject: `${emailConfig.subjectPrefix} 🎟️ Jegyed: ${ticketEvent.name}`,
       html: `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jegyed - ${event.name}</title>
+  <title>Jegyed - ${ticketEvent.name}</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 20px;">
@@ -126,12 +126,12 @@ exports.handler = async (event) => {
               <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9fafb; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
                 <tr>
                   <td>
-                    <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 22px;">${event.name}</h2>
+                    <h2 style="color: #1f2937; margin: 0 0 15px 0; font-size: 22px;">${ticketEvent.name}</h2>
                     <p style="color: #6b7280; margin: 5px 0; font-size: 14px;">
-                      📅 <strong>Dátum:</strong> ${eventDate}, ${event.time}
+                      📅 <strong>Dátum:</strong> ${eventDate}, ${ticketEvent.time}
                     </p>
                     <p style="color: #6b7280; margin: 5px 0; font-size: 14px;">
-                      📍 <strong>Helyszín:</strong> ${event.location}
+                      📍 <strong>Helyszín:</strong> ${ticketEvent.location}
                     </p>
                     <p style="color: #6b7280; margin: 5px 0; font-size: 14px;">
                       👥 <strong>Vendégek száma:</strong> ${ticket.guest_count} fő
