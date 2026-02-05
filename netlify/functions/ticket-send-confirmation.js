@@ -8,34 +8,25 @@ const QRCode = require('qrcode');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Service role key required for backend access
+// USE SERVICE ROLE KEY (Essential for backend access bypassing RLS)
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 exports.handler = async (event) => {
-  // Netlify guard
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
-
-  if (!event.body) {
-    return { statusCode: 400, body: 'Missing body' };
-  }
-
   try {
-    // Parse input
     const { ticketId } = JSON.parse(event.body);
 
     if (!ticketId) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Ticket ID required' }),
+        body: JSON.stringify({ error: 'Ticket ID required' })
       };
     }
 
-    // Fetch ticket + event
+    // Fetch ticket with event details
+    // Note: ensure 'ticket_events' relation (Foreign Key) exists in Supabase
     const { data: ticket, error: ticketError } = await supabase
       .from('tickets')
       .select(`
@@ -55,92 +46,135 @@ exports.handler = async (event) => {
       console.error('Ticket fetch error:', ticketError);
       return {
         statusCode: 404,
-        body: JSON.stringify({ error: 'Ticket not found' }),
+        body: JSON.stringify({ error: 'Ticket not found' })
       };
     }
 
+    // Safety check for relation
     if (!ticket.ticket_events) {
       console.error('Event relation missing for ticket:', ticketId);
+      // Build a fallback event object or throw
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: 'Event data missing' }),
+        body: JSON.stringify({ error: 'Event data missing' })
       };
     }
 
-    // QR token (DB column name is qr_code_token)
-    const qrTokenValue = ticket.qr_code_token;
+    // Generate QR code as base64 - USE qr_code_token (DB column name)
+    const qrTokenValue = ticket.qr_code_token || ticket.qr_token; // Fallback just in case
 
     if (!qrTokenValue) {
       throw new Error('QR token missing on ticket record');
     }
 
-    // Generate QR code
     const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
       width: 300,
-      margin: 2,
+      margin: 2
     });
 
     const ticketEvent = ticket.ticket_events;
     const eventDate = new Date(ticketEvent.date).toLocaleDateString('hu-HU', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric',
+      day: 'numeric'
     });
 
-    // Apple Wallet link (future-proof)
-    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}`;
+    // Apple Wallet link
+    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass?ticketId=${ticketId}`;
 
+    // Get email config
     const emailConfig = getEmailConfig();
 
-    // Send email via Resend
+    // Send email
     const { data, error } = await resend.emails.send({
-      from: 'KőszegTicket <onboarding@resend.dev>',
+      from: emailConfig.from,
       to: [ticket.buyer_email],
       subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
       html: `
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jegyed - ${ticketEvent.name}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f7; margin: 0; padding: 0; color: #1d1d1f; }
+    .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .header { background: #000000; padding: 40px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.5px; }
+    .content { padding: 40px; }
+    .greeting { font-size: 17px; margin-bottom: 20px; font-weight: 500; }
+    .lead { font-size: 17px; color: #86868b; margin-bottom: 30px; line-height: 1.5; }
+    .card { background: #f5f5f7; border-radius: 16px; padding: 24px; margin-bottom: 30px; }
+    .event-title { font-size: 22px; font-weight: 700; margin: 0 0 10px 0; color: #000000; letter-spacing: -0.8px; }
+    .detail-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 15px; color: #424245; }
+    .detail-icon { margin-right: 10px; opacity: 0.7; }
+    .qr-section { text-align: center; margin: 30px 0; padding: 20px 0; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
+    .qr-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; margin-bottom: 15px; }
+    .qr-image { width: 220px; height: 220px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .wallet-btn { display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 98px; font-size: 15px; font-weight: 600; transition: transform 0.2s; }
+    .wallet-btn:hover { transform: scale(1.02); }
+    .footer { background: #f5f5f7; padding: 30px; text-align: center; font-size: 12px; color: #86868b; border-top: 1px solid #e5e5e5; }
+    .warning { font-size: 13px; color: #ff3b30; margin-top: 20px; text-align: center; }
+    .link { color: #0066cc; text-decoration: none; }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; background:#f5f5f7; margin:0; padding:0;">
-  <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:16px;padding:32px;">
-    <h2>Kedves ${ticket.buyer_name}!</h2>
-    <p>Elkészült a jegyed a következő eseményre:</p>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>KőszegTicket</h1>
+    </div>
+    
+    <div class="content">
+      <div class="greeting">Kedves ${ticket.buyer_name}!</div>
+      <div class="lead">Elkészült a jegyed a következő eseményre:</div>
 
-    <h3>${ticketEvent.name}</h3>
-    <p>📅 ${eventDate}, ${ticketEvent.time}</p>
-    <p>📍 ${ticketEvent.location}</p>
-    <p>👥 ${ticket.guest_count} fő</p>
+      <div class="card">
+        <h2 class="event-title">${ticketEvent.name}</h2>
+        <div class="detail-row">
+          <span class="detail-icon">📅</span> <strong>${eventDate}, ${ticketEvent.time}</strong>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📍</span> ${ticketEvent.location}
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">👥</span> ${ticket.guest_count} fő részére
+        </div>
+      </div>
 
-    <hr />
+      <div class="qr-section">
+        <div class="qr-label">Belépőkód</div>
+        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
+        <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
+      </div>
 
-    <p><strong>Belépőkód:</strong></p>
-    <img src="${qrCodeDataUrl}" alt="QR Code" style="width:220px;" />
-    <p style="font-family:monospace;">${qrTokenValue}</p>
+      <div style="text-align: center; margin-bottom: 30px;">
+        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}" style="display: inline-block;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
+        </a>
+      </div>
+      
+      <div class="warning">
+        Ez a jegy egyszeri belépésre jogosít. Kérjük, ne oszd meg mással!
+      </div>
+    </div>
 
-    <p style="margin-top:20px;">
-      <a href="${walletPassUrl}">Add hozzá az Apple Wallethez</a>
-    </p>
-
-    <p style="margin-top:30px;font-size:12px;color:#666;">
-      Ez a jegy egyszeri belépésre jogosít.
-    </p>
+    <div class="footer">
+      <p>&copy; ${new Date().getFullYear()} KőszegAPP. Minden jog fenntartva.</p>
+      <p>Kérdésed van? <a href="mailto:${ticketConfig.branding.supportEmail}" class="link">Írj nekünk</a></p>
+    </div>
   </div>
 </body>
 </html>
-      `,
+      `
     });
 
-    console.log('📧 Resend response:', { data, error });
-
     if (error) {
+      console.error('Resend error:', error);
       throw error;
     }
 
-    // Mark email as sent
+    // Update ticket email_sent_at
     await supabase
       .from('tickets')
       .update({ email_sent_at: new Date().toISOString() })
@@ -150,14 +184,15 @@ exports.handler = async (event) => {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        emailId: data.id,
-      }),
+        emailId: data.id
+      })
     };
+
   } catch (error) {
     console.error('Email sending error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: error.message })
     };
   }
 };

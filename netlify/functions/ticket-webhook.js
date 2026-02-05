@@ -103,16 +103,29 @@ exports.handler = async (event) => {
             console.log('✅ Ticket created successfully:', ticketId);
         }
 
-        // Fire-and-forget email sending
+        // Fire-and-forget email sending -> CHANGED to await to ensure execution in serverless
         // Using explicit node-fetch to avoid runtime issues
         const confirmUrl = `${getAppUrl()}/.netlify/functions/ticket-send-confirmation`;
         console.log('Triggering email for ticket:', ticketId);
 
-        fetch(confirmUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ticketId: ticketId }),
-        }).catch(err => console.error('❌ Failed to trigger email function:', err));
+        try {
+            const emailResponse = await fetch(confirmUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ticketId: ticketId }),
+            });
+
+            if (!emailResponse.ok) {
+                const errorText = await emailResponse.text();
+                console.error(`❌ Failed to trigger email function: ${emailResponse.status} ${errorText}`);
+                // We don't throw here to avoid failing the webhook response to Stripe
+                // effectively "soft fail" on email, but ticket is created.
+            } else {
+                console.log('✅ Email trigger launched successfully');
+            }
+        } catch (fetchErr) {
+            console.error('❌ Failed to trigger email function (network/fetch error):', fetchErr);
+        }
 
         return {
             statusCode: 200,
