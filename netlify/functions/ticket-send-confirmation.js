@@ -60,14 +60,14 @@ exports.handler = async (event) => {
       };
     }
 
-    // Generate QR code as buffer for email attachment
+    // Generate QR code as Data URL (Revert to reliable method)
     const qrTokenValue = ticket.qr_code_token || ticket.qr_token; // Fallback just in case
 
     if (!qrTokenValue) {
       throw new Error('QR token missing on ticket record');
     }
 
-    const qrCodeBuffer = await QRCode.toBuffer(qrTokenValue, {
+    const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
       width: 300,
       margin: 2
     });
@@ -79,7 +79,7 @@ exports.handler = async (event) => {
       day: 'numeric'
     });
 
-    // Apple Wallet link - pointing to V2 generator
+    // Apple Wallet link - points to V2 generator
     const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}`;
 
     // Get email config
@@ -90,13 +90,7 @@ exports.handler = async (event) => {
       from: emailConfig.from,
       to: [ticket.buyer_email],
       subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
-      attachments: [
-        {
-          filename: 'qrcode.png',
-          content: qrCodeBuffer,
-          content_id: 'qrcode' // Referenced in HTML as cid:qrcode
-        }
-      ],
+      // Attachments removed to restore reliability
       html: `
 <!DOCTYPE html>
 <html>
@@ -119,6 +113,7 @@ exports.handler = async (event) => {
     .qr-section { text-align: center; margin: 30px 0; padding: 20px 0; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
     .qr-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; margin-bottom: 15px; }
     .qr-image { width: 220px; height: 220px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .qr-code-text { font-family: monospace; font-size: 14px; background: #eee; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 10px; color: #333; }
     .wallet-btn { display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 98px; font-size: 15px; font-weight: 600; transition: transform 0.2s; }
     .wallet-btn:hover { transform: scale(1.02); }
     .footer { background: #f5f5f7; padding: 30px; text-align: center; font-size: 12px; color: #86868b; border-top: 1px solid #e5e5e5; }
@@ -151,7 +146,8 @@ exports.handler = async (event) => {
 
       <div class="qr-section">
         <div class="qr-label">Belépőkód</div>
-        <img src="cid:qrcode" alt="QR Kód" class="qr-image" />
+        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
+        <div class="qr-code-text">${qrTokenValue}</div>
         <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
       </div>
 
