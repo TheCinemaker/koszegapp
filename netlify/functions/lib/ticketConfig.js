@@ -1,12 +1,8 @@
 // Ticket System - Centralized Configuration Loader
 // Single source of truth for all ticket system settings
 
-const fs = require('fs');
-const path = require('path');
-
-// Load ticket config once at module initialization
-const configPath = path.resolve(__dirname, '../ticket-config.json');
-const ticketConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+// Load ticket config via require (ensures bundling)
+const ticketConfig = require('../ticket-config.json');
 
 /**
  * Get the full application URL
