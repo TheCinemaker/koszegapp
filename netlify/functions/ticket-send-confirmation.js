@@ -15,15 +15,22 @@ const supabase = createClient(
 );
 
 exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  if (!event.body) {
+    return { statusCode: 400, body: 'Missing body' };
+  }
+
   try {
     const { ticketId } = JSON.parse(event.body);
+    ...
+    const { data, error } = await resend.emails.send({ ... });
 
-    if (!ticketId) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Ticket ID required' })
-      };
-    }
+    console.log('📧 Resend response:', { data, error });
+
+    if (error) throw error;
 
     // Fetch ticket with event details
     // Note: ensure 'ticket_events' relation (Foreign Key) exists in Supabase
@@ -87,7 +94,7 @@ exports.handler = async (event) => {
 
     // Send email
     const { data, error } = await resend.emails.send({
-      from: emailConfig.from,
+      from: 'KőszegTicket <onboarding@resend.dev>',
       to: [ticket.buyer_email],
       subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
       // Attachments removed to restore reliability
