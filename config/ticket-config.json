@@ -10,7 +10,7 @@
         "singleUse": true
     },
     "email": {
-        "from": "KőszegTicket <ticket@koszegapp.hu>",
+        "from": "KőszegTicket <onboarding@resend.dev>",
         "subjectPrefix": "KőszegTicket jegy:",
         "sendDelayMs": 500
     },
