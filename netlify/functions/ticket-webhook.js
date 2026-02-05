@@ -1,10 +1,11 @@
-// Ticket System - Stripe Webhook Handler
-// Processes Stripe payment events and creates tickets
+// Ticket System - Stripe Webhook Handler (Robust Version)
+// Handles raw body parsing, correct header casing, and explicit fetch
 
-const { ticketConfig, getAppUrl } = require('./lib/ticketConfig');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
+const fetch = require('node-fetch');
+const { getAppUrl } = require('./lib/ticketConfig'); // Keep our config util
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -12,98 +13,107 @@ const supabase = createClient(
 );
 
 exports.handler = async (event) => {
-    const sig = event.headers['stripe-signature'];
+    // Only allow POST
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, body: 'Method Not Allowed' };
+    }
+
+    // Handle header casing inconsistency (Stripe-Signature vs stripe-signature)
+    const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     let stripeEvent;
 
     try {
-        // Verify webhook signature
+        // Critical: Stripe constructEvent requires the RAW body.
+        // Netlify might base64 encode the body, so we must decode it if necessary.
+        const rawBody = event.isBase64Encoded
+            ? Buffer.from(event.body, 'base64').toString('utf8')
+            : event.body;
+
         if (webhookSecret) {
-            stripeEvent = stripe.webhooks.constructEvent(event.body, sig, webhookSecret);
+            stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
         } else {
-            // For testing without webhook secret
-            stripeEvent = JSON.parse(event.body);
+            // Fallback for local testing without webhook secret (not recommended for production)
+            stripeEvent = JSON.parse(rawBody);
         }
     } catch (err) {
-        console.error('Webhook signature verification failed:', err.message);
+        console.error('❌ Stripe signature error:', err.message);
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: `Webhook Error: ${err.message}` })
+            body: `Webhook Error: ${err.message}`,
         };
     }
 
-    // Handle the event
-    if (stripeEvent.type === 'checkout.session.completed') {
-        const session = stripeEvent.data.object;
-
-        try {
-            // Extract metadata
-            const { event_id, buyer_name, buyer_email, guest_count, ticket_type } = session.metadata;
-
-            // Check if ticket already exists (idempotency)
-            const { data: existingTicket } = await supabase
-                .from('tickets')
-                .select('id')
-                .eq('stripe_session_id', session.id)
-                .single();
-
-            if (existingTicket) {
-                console.log('Ticket already exists for session:', session.id);
-                return { statusCode: 200, body: JSON.stringify({ received: true }) };
-            }
-
-            // Generate unique QR token (length from config)
-            const qrToken = crypto.randomBytes(ticketConfig.qr.tokenLength).toString('hex');
-
-            // Create ticket
-            const { data: ticket, error: ticketError } = await supabase
-                .from('tickets')
-                .insert({
-                    event_id: event_id,
-                    stripe_session_id: session.id,
-                    buyer_name: buyer_name,
-                    buyer_email: buyer_email,
-                    guest_count: parseInt(guest_count),
-                    ticket_type: ticket_type || 'general',
-                    qr_token: qrToken,
-                    status: 'paid',
-                    amount_paid: session.amount_total / 100 // Convert from cents
-                })
-                .select()
-                .single();
-
-            if (ticketError) {
-                console.error('Error creating ticket:', ticketError);
-                throw ticketError;
-            }
-
-            console.log('Ticket created:', ticket.id);
-
-            // Trigger email sending (async - don't wait)
-            fetch(`${getAppUrl()}/.netlify/functions/ticket-send-confirmation`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ticketId: ticket.id })
-            }).catch(err => console.error('Error triggering email:', err));
-
-            return {
-                statusCode: 200,
-                body: JSON.stringify({ received: true, ticketId: ticket.id })
-            };
-
-        } catch (error) {
-            console.error('Error processing webhook:', error);
-            return {
-                statusCode: 500,
-                body: JSON.stringify({ error: error.message })
-            };
-        }
+    // Filter events
+    if (stripeEvent.type !== 'checkout.session.completed') {
+        return { statusCode: 200, body: 'Ignored' };
     }
 
-    // Return 200 for other event types
-    return {
-        statusCode: 200,
-        body: JSON.stringify({ received: true })
-    };
+    const session = stripeEvent.data.object;
+    // Safe destructuring with default empty object
+    const { event_id, buyer_name, buyer_email, guest_count, ticket_type } = session.metadata || {};
+
+    try {
+        // Idempotency check: Don't process the same session twice
+        const { data: existing } = await supabase
+            .from('tickets')
+            .select('id')
+            .eq('stripe_session_id', session.id)
+            .maybeSingle(); // Use maybeSingle() to avoid error if not found
+
+        if (existing) {
+            console.log('Ticket already processed:', session.id);
+            return { statusCode: 200, body: 'Already processed' };
+        }
+
+        // Generate Ticket Data
+        const qrToken = crypto.randomBytes(16).toString('hex');
+
+        // Insert Ticket
+        const { data: ticket, error } = await supabase
+            .from('tickets')
+            .insert({
+                event_id,
+                stripe_session_id: session.id,
+                buyer_name,
+                buyer_email,
+                guest_count: Number(guest_count || 1),
+                ticket_type: ticket_type || 'general',
+                qr_token: qrToken,
+                status: 'paid',
+                amount_paid: session.amount_total, // Save raw amount from Stripe
+            })
+            .select()
+            .single();
+
+        if (error) {
+            console.error('Database Insert Error:', error);
+            throw error;
+        }
+
+        console.log('✅ Ticket created successfully:', ticket.id);
+
+        // Fire-and-forget email sending
+        // Using explicit node-fetch to avoid runtime issues
+        const confirmUrl = `${getAppUrl()}/.netlify/functions/ticket-send-confirmation`;
+
+        fetch(confirmUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ticketId: ticket.id }),
+        }).catch(err => console.error('❌ Failed to trigger email function:', err));
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ ok: true, ticketId: ticket.id }),
+        };
+
+    } catch (err) {
+        console.error('❌ Ticket processing error:', err);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Internal processing error' }),
+        };
+    }
 };
