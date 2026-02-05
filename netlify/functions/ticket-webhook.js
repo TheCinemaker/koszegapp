@@ -22,6 +22,11 @@ exports.handler = async (event) => {
     const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
+    if (!sig) {
+        console.error('Missing Stripe-Signature header');
+        return { statusCode: 400, body: 'Missing signature' };
+    }
+
     let stripeEvent;
 
     try {
