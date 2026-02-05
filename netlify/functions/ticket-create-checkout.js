@@ -1,14 +1,8 @@
 // Ticket System - Stripe Checkout Session Creator
 // Creates a Stripe checkout session for ticket purchases
 
-const fs = require('fs');
-const path = require('path');
-
-// Load config from file
-const configPath = path.resolve(__dirname, 'certs/ticket-config.json');
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-
-const stripe = require('stripe')(config.stripe.secretKey);
+const { ticketConfig, getStripeConfig } = require('./lib/ticketConfig');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
@@ -86,13 +80,16 @@ exports.handler = async (event) => {
         const serviceFee = ticketPrice * (parseFloat(ticketEvent.service_fee_percent) / 100);
         const totalAmount = Math.round((ticketPrice + serviceFee) * 100); // Convert to cents
 
+        // Get Stripe config
+        const stripeConfig = getStripeConfig();
+
         // Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
                 {
                     price_data: {
-                        currency: 'huf',
+                        currency: stripeConfig.currency.toLowerCase(),
                         product_data: {
                             name: `${ticketEvent.name} - Jegy`,
                             description: `${guestCount} fő - ${ticketEvent.date} ${ticketEvent.time}`,
@@ -103,8 +100,8 @@ exports.handler = async (event) => {
                 },
             ],
             mode: 'payment',
-            success_url: `${config.url}/tickets/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${config.url}/tickets?cancelled=true`,
+            success_url: `${stripeConfig.successUrl}?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${stripeConfig.cancelUrl}?cancelled=true`,
             customer_email: buyerEmail,
             metadata: {
                 event_id: eventId,

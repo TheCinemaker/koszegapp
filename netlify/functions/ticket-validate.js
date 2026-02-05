@@ -1,6 +1,7 @@
 // Ticket System - QR Code Validator
 // Validates and marks tickets as used
 
+const { ticketConfig } = require('./lib/ticketConfig');
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(

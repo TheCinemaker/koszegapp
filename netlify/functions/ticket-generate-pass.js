@@ -1,6 +1,7 @@
 // Ticket System - Apple Wallet Pass Generator
 // Generates .pkpass file for Apple Wallet
 
+const { ticketConfig, getWalletConfig } = require('./lib/ticketConfig');
 const { createClient } = require('@supabase/supabase-js');
 const { PKPass } = require('passkit-generator');
 const path = require('path');
@@ -46,6 +47,9 @@ exports.handler = async (event) => {
 
         const event = ticket.ticket_events;
 
+        // Get wallet config
+        const walletConfig = getWalletConfig();
+
         // Create pass
         const pass = await PKPass.from({
             model: path.resolve(__dirname, 'assets/ticket.pass'),
@@ -53,14 +57,14 @@ exports.handler = async (event) => {
                 wwdr: path.resolve(__dirname, 'certs/wwdr.pem'),
                 signerCert: path.resolve(__dirname, 'certs/signerCert.pem'),
                 signerKey: path.resolve(__dirname, 'certs/signerKey.pem'),
-                signerKeyPassphrase: process.env.PASSKIT_PASSPHRASE || ''
+                signerKeyPassphrase: walletConfig.passphrase || ''
             }
         }, {
             serialNumber: ticket.id,
-            description: `Jegy - ${event.name}`,
-            organizationName: 'KőszegAPP',
-            passTypeIdentifier: process.env.PASSKIT_PASS_TYPE_ID || 'pass.hu.koszegapp.ticket',
-            teamIdentifier: process.env.PASSKIT_TEAM_ID || '',
+            description: `${walletConfig.passNamePrefix}${event.name}`,
+            organizationName: ticketConfig.branding.appName,
+            passTypeIdentifier: walletConfig.passTypeIdentifier,
+            teamIdentifier: walletConfig.teamIdentifier,
             webServiceURL: process.env.URL,
             authenticationToken: ticket.qr_token
         });

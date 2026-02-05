@@ -815,3 +815,18 @@ Most már minden komponens a helyén van:
 
 👉 Ez az a rendszer, amit tegnap leírtunk.
 És ez most tényleg működik.
+
+---
+
+📅 PROJEKT STÁTUSZ - 2026.02.05
+
+🎫 TICKET RENDSZER
+✅ Frontend KÉSZ
+🔄 Backend folyamatban - ma kezdjük
+   - Resend integráció (email küldés)
+   - Stripe integráció (fizetés)
+   - Ma még csak HOMOKOZÓBAN tesztelünk! 🏖️
+
+🍎 APPLE WALLET - KőszegMA
+❌ KőszegMA gomb KIVÉVE a home oldalról (nem működik még)
+⏳ Napi frissítés implementálása következik

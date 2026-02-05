@@ -1,14 +1,8 @@
 // Ticket System - Stripe Webhook Handler
 // Processes Stripe payment events and creates tickets
 
-const fs = require('fs');
-const path = require('path');
-
-// Load config from file
-const configPath = path.resolve(__dirname, 'certs/ticket-config.json');
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-
-const stripe = require('stripe')(config.stripe.secretKey);
+const { ticketConfig, getAppUrl } = require('./lib/ticketConfig');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
 
@@ -59,8 +53,8 @@ exports.handler = async (event) => {
                 return { statusCode: 200, body: JSON.stringify({ received: true }) };
             }
 
-            // Generate unique QR token
-            const qrToken = crypto.randomBytes(32).toString('hex');
+            // Generate unique QR token (length from config)
+            const qrToken = crypto.randomBytes(ticketConfig.qr.tokenLength).toString('hex');
 
             // Create ticket
             const { data: ticket, error: ticketError } = await supabase
@@ -87,7 +81,7 @@ exports.handler = async (event) => {
             console.log('Ticket created:', ticket.id);
 
             // Trigger email sending (async - don't wait)
-            fetch(`${config.url}/.netlify/functions/ticket-send-confirmation`, {
+            fetch(`${getAppUrl()}/.netlify/functions/ticket-send-confirmation`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ticketId: ticket.id })

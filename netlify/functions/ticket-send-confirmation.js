@@ -1,39 +1,33 @@
 // Ticket System - Email Confirmation Sender
 // Sends ticket confirmation email with QR code
 
-const fs = require('fs');
-const path = require('path');
-
-// Load config from file
-const configPath = path.resolve(__dirname, 'certs/ticket-config.json');
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-
+const { ticketConfig, getEmailConfig, getAppUrl } = require('./lib/ticketConfig');
 const { Resend } = require('resend');
 const { createClient } = require('@supabase/supabase-js');
 const QRCode = require('qrcode');
 
-const resend = new Resend(config.resend.apiKey);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const supabase = createClient(
-    process.env.VITE_SUPABASE_URL,
-    process.env.VITE_SUPABASE_ANON_KEY
+  process.env.VITE_SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
 );
 
 exports.handler = async (event) => {
-    try {
-        const { ticketId } = JSON.parse(event.body);
+  try {
+    const { ticketId } = JSON.parse(event.body);
 
-        if (!ticketId) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ error: 'Ticket ID required' })
-            };
-        }
+    if (!ticketId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Ticket ID required' })
+      };
+    }
 
-        // Fetch ticket with event details
-        const { data: ticket, error: ticketError } = await supabase
-            .from('tickets')
-            .select(`
+    // Fetch ticket with event details
+    const { data: ticket, error: ticketError } = await supabase
+      .from('tickets')
+      .select(`
         *,
         ticket_events (
           name,
@@ -43,38 +37,41 @@ exports.handler = async (event) => {
           location
         )
       `)
-            .eq('id', ticketId)
-            .single();
+      .eq('id', ticketId)
+      .single();
 
-        if (ticketError || !ticket) {
-            return {
-                statusCode: 404,
-                body: JSON.stringify({ error: 'Ticket not found' })
-            };
-        }
+    if (ticketError || !ticket) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ error: 'Ticket not found' })
+      };
+    }
 
-        // Generate QR code as base64
-        const qrCodeDataUrl = await QRCode.toDataURL(ticket.qr_token, {
-            width: 300,
-            margin: 2
-        });
+    // Generate QR code as base64
+    const qrCodeDataUrl = await QRCode.toDataURL(ticket.qr_token, {
+      width: 300,
+      margin: 2
+    });
 
-        const event = ticket.ticket_events;
-        const eventDate = new Date(event.date).toLocaleDateString('hu-HU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+    const event = ticket.ticket_events;
+    const eventDate = new Date(event.date).toLocaleDateString('hu-HU', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
 
-        // Apple Wallet link
-        const walletPassUrl = `${config.url}/.netlify/functions/ticket-generate-pass?ticketId=${ticketId}`;
+    // Apple Wallet link
+    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass?ticketId=${ticketId}`;
 
-        // Send email
-        const { data, error } = await resend.emails.send({
-            from: config.resend.fromEmail,
-            to: [ticket.buyer_email],
-            subject: `🎟️ Jegyed: ${event.name}`,
-            html: `
+    // Get email config
+    const emailConfig = getEmailConfig();
+
+    // Send email
+    const { data, error } = await resend.emails.send({
+      from: emailConfig.from,
+      to: [ticket.buyer_email],
+      subject: `${emailConfig.subjectPrefix} 🎟️ Jegyed: ${event.name}`,
+      html: `
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,7 +157,7 @@ exports.handler = async (event) => {
           <tr>
             <td style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
               <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-                Ha kérdésed van, írj nekünk: <a href="mailto:info@koszegapp.hu" style="color: #667eea;">info@koszegapp.hu</a>
+                Ha kérdésed van, írj nekünk: <a href="mailto:${ticketConfig.branding.supportEmail}" style="color: #667eea;">${ticketConfig.branding.supportEmail}</a>
               </p>
             </td>
           </tr>
@@ -172,32 +169,32 @@ exports.handler = async (event) => {
 </body>
 </html>
       `
-        });
+    });
 
-        if (error) {
-            console.error('Resend error:', error);
-            throw error;
-        }
-
-        // Update ticket email_sent_at
-        await supabase
-            .from('tickets')
-            .update({ email_sent_at: new Date().toISOString() })
-            .eq('id', ticketId);
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                success: true,
-                emailId: data.id
-            })
-        };
-
-    } catch (error) {
-        console.error('Email sending error:', error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: error.message })
-        };
+    if (error) {
+      console.error('Resend error:', error);
+      throw error;
     }
+
+    // Update ticket email_sent_at
+    await supabase
+      .from('tickets')
+      .update({ email_sent_at: new Date().toISOString() })
+      .eq('id', ticketId);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: true,
+        emailId: data.id
+      })
+    };
+
+  } catch (error) {
+    console.error('Email sending error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message })
+    };
+  }
 };
