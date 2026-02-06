@@ -163,6 +163,37 @@ exports.handler = async (event) => {
             altText: qrValue
         });
 
+        // Helper to fetch buffer from URL
+        async function getBuffer(url) {
+            if (!url) return null;
+            const fetch = require('node-fetch');
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+            return res.buffer();
+        }
+
+        /* ---------- Images (Icon & Logo from Live Site) ---------- */
+        const SITE_URL = 'https://koszegapp.netlify.app';
+
+        try {
+            // Fetch Standard Images (Required for valid pass)
+            const icon = await getBuffer(`${SITE_URL}/images/apple-touch-icon.png`);
+            if (icon) {
+                pass.addBuffer('icon.png', icon);
+                pass.addBuffer('icon@2x.png', icon);
+            }
+
+            const logo = await getBuffer(`${SITE_URL}/images/koeszeg_logo_nobg.png`);
+            if (logo) {
+                pass.addBuffer('logo.png', logo);
+                pass.addBuffer('logo@2x.png', logo);
+            }
+        } catch (e) {
+            console.warn('Standard Image load failed:', e);
+            // proceed, but pass might be invalid without icon
+        }
+
+
         // --- Visual QR Code Compositing (The V2 Special) ---
 
         // 1. Path to strip image
