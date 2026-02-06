@@ -10,8 +10,8 @@
         "singleUse": true
     },
     "email": {
-        "from": "KőszegAPP <onboarding@resend.dev>",
-        "subjectPrefix": "[TEST]",
+        "from": "KőszegAPP <ticket@koszegapp.hu>",
+        "subjectPrefix": "",
         "sendDelayMs": 500
     },
     "wallet": {
