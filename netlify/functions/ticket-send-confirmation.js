@@ -150,7 +150,7 @@ exports.handler = async (event) => {
 
       <div style="text-align: center; margin-bottom: 30px;">
         <a href="${walletPassUrl}" style="display: inline-block;">
-          <img src="${getAppUrl()}/images/apple badges/addtoapplewallet.png" alt="Add to Apple Wallet" style="height: 42px;" />
+          <img src="${getAppUrl()}/images/apple badges/addtoapplewallet.png" alt="Add to Apple Wallet" style="height: 42px; width: auto;" />
         </a>
       </div>
       
