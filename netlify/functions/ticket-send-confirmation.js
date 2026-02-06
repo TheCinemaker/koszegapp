@@ -79,8 +79,8 @@ exports.handler = async (event) => {
       day: 'numeric'
     });
 
-    // Apple Wallet link
-    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass?ticketId=${ticketId}`;
+    // Apple Wallet link - pointing to V2 generator (Ticket System)
+    const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}`;
 
     // Get email config
     const emailConfig = getEmailConfig();
