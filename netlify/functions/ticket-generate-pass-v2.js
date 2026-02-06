@@ -54,24 +54,66 @@ exports.handler = async (event) => {
         // Get wallet config
         const walletConfig = getWalletConfig();
 
-        // Create pass using file-based certificates (like V1)
-        const pass = await PKPass.from({
-            model: path.resolve(__dirname, 'assets/ticket.pass'),
-            certificates: {
-                wwdr: path.resolve(__dirname, 'certs/wwdr.pem'),
-                signerCert: path.resolve(__dirname, 'certs/signerCert.pem'),
-                signerKey: path.resolve(__dirname, 'certs/signerKey.pem'),
-                signerKeyPassphrase: walletConfig.passphrase || ''
+        // 2. Read Certs
+        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
+        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
+
+        // Helper to extract Key and Cert from P12 Buffer
+        function extractFromP12(p12Buffer, password) {
+            const forge = require('node-forge');
+            try {
+                const p12Asn1 = forge.asn1.fromDer(p12Buffer.toString('binary'));
+                const p12 = forge.pkcs12.pkcs12FromAsn1(p12Asn1, password || '');
+                let key = null;
+                let cert = null;
+                const bags = p12.getBags({ bagType: forge.pki.oids.certBag });
+                const certBag = bags[forge.pki.oids.certBag]?.[0];
+                if (certBag) cert = forge.pki.certificateToPem(certBag.cert);
+                const keyBags = p12.getBags({ bagType: forge.pki.oids.pkcs8ShroudedKeyBag });
+                const keyBag = keyBags[forge.pki.oids.pkcs8ShroudedKeyBag]?.[0];
+                if (keyBag) key = forge.pki.privateKeyToPem(keyBag.key);
+                return { key, cert };
+            } catch (e) {
+                console.error("P12 Extraction Error:", e);
+                throw e;
             }
-        }, {
-            serialNumber: ticket.id,
-            description: `${walletConfig.passNamePrefix}${eventData.name}`,
-            organizationName: ticketConfig.branding.appName,
-            passTypeIdentifier: walletConfig.passTypeIdentifier,
-            teamIdentifier: walletConfig.teamIdentifier,
-            webServiceURL: process.env.URL,
-            authenticationToken: ticket.qr_token
-        });
+        }
+
+        const p12Buffer = fs.readFileSync(p12Path);
+        const wwdrBuffer = fs.readFileSync(wwdrPath);
+        const forge = require('node-forge'); // Ensure forge is available
+        const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
+        const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
+        const wwdrPem = forge.pki.certificateToPem(wwdrCert);
+
+        const { key, cert } = extractFromP12(p12Buffer, process.env.APPLE_PASS_P12_PASSWORD);
+
+        // 3. Create Pass programmatically (No model directory needed)
+        const pass = new PKPass(
+            {}, // No template model
+            {
+                wwdr: wwdrPem,
+                signerCert: cert,
+                signerKey: key,
+                signerKeyPassphrase: process.env.APPLE_PASS_P12_PASSWORD
+            },
+            {
+                formatVersion: 1,
+                passTypeIdentifier: ticketConfig.wallet.apple.passTypeIdentifier,
+                teamIdentifier: ticketConfig.wallet.apple.teamIdentifier,
+                organizationName: ticketConfig.branding.appName,
+                description: `Jegy: ${eventData.name}`,
+                serialNumber: ticket.id,
+                backgroundColor: 'rgb(255, 255, 255)',
+                foregroundColor: 'rgb(0, 0, 0)',
+                labelColor: 'rgb(80, 80, 80)',
+                logoText: ticketConfig.branding.appName,
+                webServiceURL: process.env.URL,
+                authenticationToken: ticket.qr_token
+            }
+        );
+
+        pass.type = 'eventTicket';
 
         // Set pass fields
         pass.headerFields.push({
