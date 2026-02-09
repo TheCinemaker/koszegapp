@@ -1,6 +1,12 @@
 {
-  "updatedAt": "2026-02-05T11:34:24.106Z",
+  "updatedAt": "2026-02-09T11:43:15.857Z",
   "items": [
+    {
+      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15328",
+      "date": "2026. Február 6.",
+      "title": "Főépítész ügyfélfogadás 2026.02.09.",
+      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15328"
+    },
     {
       "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15327",
       "date": "2026. Február 5.",
@@ -30,12 +36,6 @@
       "date": "2026. Január 13.",
       "title": "Zöldhulladék átvétel - Kőszeg",
       "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=15307"
-    },
-    {
-      "id": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13540",
-      "date": "2026. Január 13.",
-      "title": "LOMILOTTÓ SORSOLÁS DECEMBERI NYERTESEK!",
-      "url": "https://koszeg.hu/hu/onkormanyzat/hirek/content.php?id=13540"
     }
   ]
 }
