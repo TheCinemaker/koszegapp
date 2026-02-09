@@ -53,13 +53,18 @@ export default function ScannerPage() {
         }
     };
 
+    // Toggle Mode
+    const [mode, setMode] = useState('add'); // 'add' | 'deduct'
+
     // Add Points Logic (Amount Based)
-    const handleAddPoints = async (amount) => {
+    const handleTransaction = async (amount) => {
         if (!data || !amount) return;
         setLoading(true);
 
+        const endpoint = mode === 'add' ? '/.netlify/functions/add-points' : '/.netlify/functions/deduct-points';
+
         try {
-            const response = await fetch('/.netlify/functions/add-points', {
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +80,11 @@ export default function ScannerPage() {
             const result = await response.json();
 
             if (result.success) {
-                toast.success(`Sikeres jóváírás: +${result.addedPoints} pont! (${amount} Ft)`, { duration: 4000 });
+                const msg = mode === 'add'
+                    ? `Sikeres jóváírás: +${result.addedPoints} pont! (${amount} Ft)`
+                    : `Sikeres beváltás: -${result.deductedPoints} pont!`;
+
+                toast.success(msg, { duration: 4000 });
                 // Vibrate pattern
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
@@ -85,10 +94,10 @@ export default function ScannerPage() {
                 // Auto reset
                 setTimeout(resetScanner, 3500);
             } else {
-                toast.error(result.message || "Hiba a jóváíráskor");
+                toast.error(result.message || "Hiba a tranzakció során");
             }
         } catch (error) {
-            console.error("Add points error:", error);
+            console.error("Transaction error:", error);
             toast.error("Hálózati hiba!");
             setLoading(false);
         }
@@ -153,19 +162,37 @@ export default function ScannerPage() {
                     </div>
                 ) : (
                     /* Result View */
-                    <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-900 to-black">
+                    <div className={`w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br ${mode === 'add' ? 'from-gray-900 to-black' : 'from-red-900/40 to-black'}`}>
 
                         {loading ? (
                             <div className="text-center">
                                 <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
-                                <p className="text-white/70">Ellenőrzés...</p>
+                                <p className="text-white/70">Feldolgozás...</p>
                             </div>
                         ) : (
                             <>
+                                {/* Mode Toggle */}
+                                {scanResult === 'valid' && (
+                                    <div className="flex bg-white/10 p-1 rounded-full mb-6 border border-white/10">
+                                        <button
+                                            onClick={() => setMode('add')}
+                                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'add' ? 'bg-indigo-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
+                                        >
+                                            Jóváírás
+                                        </button>
+                                        <button
+                                            onClick={() => setMode('deduct')}
+                                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'deduct' ? 'bg-red-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
+                                        >
+                                            Beváltás
+                                        </button>
+                                    </div>
+                                )}
+
                                 <motion.div
                                     initial={{ scale: 0.5, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    className={`w-32 h-32 rounded-full flex items-center justify-center mb-6 shadow-2xl ${scanResult === 'valid' ? 'bg-green-500 text-green-100' : 'bg-red-500 text-red-100'
+                                    className={`w-32 h-32 rounded-full flex items-center justify-center mb-6 shadow-2xl ${scanResult === 'valid' ? (mode === 'add' ? 'bg-green-500 text-green-100' : 'bg-amber-500 text-amber-100') : 'bg-red-500 text-red-100'
                                         }`}
                                 >
                                     {scanResult === 'valid' ? <IoCheckmarkCircle size={64} /> : <IoCloseCircle size={64} />}
@@ -191,30 +218,30 @@ export default function ScannerPage() {
                                 {scanResult === 'valid' && (
                                     <div className="w-full max-w-sm mb-6">
                                         <label className="block text-white/60 text-xs uppercase tracking-widest mb-2 font-bold text-left ml-1">
-                                            Vásárlás összege (Ft)
+                                            {mode === 'add' ? 'Vásárlás összege (Ft)' : 'Pontok száma'}
                                         </label>
                                         <div className="flex gap-2">
                                             <input
                                                 type="number"
-                                                placeholder="pl. 3900"
+                                                placeholder={mode === 'add' ? "pl. 3900" : "pl. 500"}
                                                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-lg font-bold placeholder-white/30 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 transition-all"
                                                 id="amountInput"
                                             />
                                             <button
                                                 onClick={() => {
                                                     const val = document.getElementById('amountInput').value;
-                                                    if (val) handleAddPoints(val);
+                                                    if (val) handleTransaction(val);
                                                     else toast.error("Add meg az összeget!");
                                                 }}
                                                 disabled={loading}
-                                                className="px-6 py-3 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl font-bold text-white shadow-lg active:scale-95 transition-transform disabled:opacity-50"
+                                                className={`px-6 py-3 rounded-xl font-bold text-white shadow-lg active:scale-95 transition-transform disabled:opacity-50 ${mode === 'add' ? 'bg-gradient-to-br from-indigo-600 to-purple-700' : 'bg-gradient-to-br from-red-600 to-orange-700'}`}
                                             >
-                                                Jóváírás
+                                                {mode === 'add' ? 'Jóváírás' : 'Levonás'}
                                             </button>
                                         </div>
-                                        <p className="text-white/40 text-[10px] mt-2 text-left ml-1">
+                                        {mode === 'add' && <p className="text-white/40 text-[10px] mt-2 text-left ml-1">
                                             Minden 1000 Ft után 1 pont jár. (pl. 3900 Ft = 3 pont)
-                                        </p>
+                                        </p>}
                                     </div>
                                 )}
 
