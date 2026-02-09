@@ -18,8 +18,8 @@
         "apple": {
             "enabled": true,
             "passNamePrefix": "TEST – ",
-            "teamIdentifier": "XXXXXXX",
-            "passTypeIdentifier": "pass.hu.koszegapp.ticket"
+            "teamIdentifier": "97FG847W58",
+            "passTypeIdentifier": "pass.hu.koszeg.koszegpass"
         },
         "google": {
             "enabled": false,
