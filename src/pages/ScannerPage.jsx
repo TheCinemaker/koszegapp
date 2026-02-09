@@ -172,22 +172,7 @@ export default function ScannerPage() {
                         ) : (
                             <>
                                 {/* Mode Toggle */}
-                                {scanResult === 'valid' && (
-                                    <div className="flex bg-white/10 p-1 rounded-full mb-6 border border-white/10">
-                                        <button
-                                            onClick={() => setMode('add')}
-                                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'add' ? 'bg-indigo-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
-                                        >
-                                            Jóváírás
-                                        </button>
-                                        <button
-                                            onClick={() => setMode('deduct')}
-                                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'deduct' ? 'bg-red-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
-                                        >
-                                            Beváltás
-                                        </button>
-                                    </div>
-                                )}
+
 
                                 <motion.div
                                     initial={{ scale: 0.5, opacity: 0 }}
@@ -211,6 +196,24 @@ export default function ScannerPage() {
                                             <IoFlashOutline className="text-yellow-400" />
                                             <span className="font-bold text-white text-lg">{scannedUser.points} Pont</span>
                                         </div>
+                                    </div>
+                                )}
+
+                                {/* Mode Toggle (Moved Lower) */}
+                                {scanResult === 'valid' && (
+                                    <div className="flex bg-white/10 p-1 rounded-full mb-6 border border-white/10 mx-auto w-fit">
+                                        <button
+                                            onClick={() => setMode('add')}
+                                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'add' ? 'bg-indigo-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
+                                        >
+                                            Jóváírás
+                                        </button>
+                                        <button
+                                            onClick={() => setMode('deduct')}
+                                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'deduct' ? 'bg-red-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
+                                        >
+                                            Beváltás
+                                        </button>
                                     </div>
                                 )}
 
