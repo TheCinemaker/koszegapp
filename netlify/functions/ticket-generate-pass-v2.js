@@ -4,12 +4,9 @@ const forge = require('node-forge');
 const fs = require('fs');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
-const QRCode = require('qrcode');
-const Jimp = require('jimp');
-const { ticketConfig, getWalletConfig } = require('./lib/ticketConfig');
+const { ticketConfig } = require('./lib/ticketConfig');
 
 /* -------------------- Helpers -------------------- */
-
 async function getBuffer(url) {
     if (!url) return null;
     try {
@@ -18,7 +15,7 @@ async function getBuffer(url) {
         return res.buffer();
     } catch (e) {
         console.warn(`Buffer fetch failed for ${url}:`, e.message);
-        return null; // Fail graceful
+        return null;
     }
 }
 
@@ -57,27 +54,26 @@ const supabase = createClient(
 exports.handler = async (event) => {
     try {
         const ticketId = event.queryStringParameters?.ticketId;
-        if (!ticketId) return { statusCode: 400, body: 'Ticket ID required' };
+        if (!ticketId) {
+            return { statusCode: 400, body: 'Ticket ID required' };
+        }
 
-        // Fetch ticket data
+        // Fetch ticket + event adatok
         const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
             .select(`*, ticket_events(name, date, time, location)`)
             .eq('id', ticketId)
             .single();
 
-        if (ticketError || !ticket) return { statusCode: 404, body: 'Ticket not found' };
+        if (ticketError || !ticket) {
+            return { statusCode: 404, body: 'Ticket not found' };
+        }
 
         const eventData = ticket.ticket_events;
-        const walletConfig = getWalletConfig();
 
-        /* ---------- Certificates ---------- */
-
-        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
-        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
-
-        const p12Buffer = fs.readFileSync(p12Path);
-        const wwdrBuffer = fs.readFileSync(wwdrPath);
+        /* ---------- Tanúsítványok ---------- */
+        const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
+        const wwdrBuffer = fs.readFileSync(path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer'));
 
         const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
         const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
@@ -88,32 +84,37 @@ exports.handler = async (event) => {
             process.env.APPLE_PASS_P12_PASSWORD
         );
 
-        /* ---------- Pass Props ---------- */
-        // Use logic similar to create-event-pass but with Ticket data
+        /* ---------- Egyszerű jegy pass props ---------- */
+        const eventDate = new Date(`${eventData.date}T${eventData.time}:00+01:00`);
+        const expirationDate = new Date(eventDate);
+        expirationDate.setDate(expirationDate.getDate() + 1);
+
+        // Fix 1: Hardwire ID-k a biztonság kedvéért (vagy Env Var ellenőrzése)
+        // A biztonság kedvéért itt hagyom a hardcoded értékeket, ha az Env Var-ok nem lennének jók.
+        // passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID || 'pass.hu.koszeg.koszegpass'
 
         const passProps = {
             formatVersion: 1,
-            passTypeIdentifier: ticketConfig.wallet.apple.passTypeIdentifier, // Use config
-            teamIdentifier: ticketConfig.wallet.apple.teamIdentifier,
+            passTypeIdentifier: 'pass.hu.koszeg.koszegpass', // Hardcoded fix
+            teamIdentifier: '97FG847W58', // Hardcoded fix
             organizationName: ticketConfig.branding.appName,
-            description: `Jegy: ${eventData.name}`,
-            serialNumber: `EVENT-TICKET-${ticket.id}`, // Force unique serial from Daily Pass
-            backgroundColor: 'rgb(255, 255, 255)', // Light theme for tickets
+            description: `Belépő – ${eventData.name}`,
+            serialNumber: `EVENT-TICKET-${ticket.id}`, // Fix 2: Prefix collision avoid
+
+            backgroundColor: 'rgb(255, 255, 255)',
             foregroundColor: 'rgb(0, 0, 0)',
             labelColor: 'rgb(80, 80, 80)',
             logoText: ticketConfig.branding.appName,
-            // Ticket specific dates
-            relevantDate: new Date(`${eventData.date}T${eventData.time}:00+01:00`),
 
-            webServiceURL: process.env.URL, // Auto update
-            authenticationToken: ticket.qr_token,
+            relevantDate: eventDate,
+            expirationDate,
 
-            sharingProhibited: true, // Tickets shouldn't be shared ideally
-            groupingIdentifier: `event-ticket-${eventData.name.replace(/\s+/g, '-')}` // Separate from daily pass
+            sharingProhibited: true,
+            groupingIdentifier: `event-ticket-${eventData.name.replace(/\s+/g, '-')}` // Fix 3: Grouping
         };
 
         const pass = new PKPass(
-            {}, // No model
+            {},
             {
                 wwdr: wwdrPem,
                 signerCert: cert,
@@ -123,13 +124,14 @@ exports.handler = async (event) => {
             passProps
         );
 
+        // Egyértelműen jegyként kezelje
         pass.type = 'eventTicket';
 
-        /* ---------- Fields ---------- */
+        /* ---------- Mezők: esemény + vevő + idő + hely ---------- */
         pass.headerFields.push({
             key: 'event',
             label: 'ESEMÉNY',
-            value: eventData.name,
+            value: eventData.name?.toUpperCase() || 'ESEMÉNY'
         });
 
         pass.primaryFields.push({
@@ -153,11 +155,12 @@ exports.handler = async (event) => {
         pass.backFields.push({
             key: 'terms',
             label: 'Feltételek',
-            value: 'Ez a jegy egyszeri belépésre jogosít.'
+            value: 'Ez a jegy egyszeri belépésre jogosít. Mutasd fel a QR kódot a belépéskor.'
         });
 
-        /* ---------- Barcode (Ticket Specific) ---------- */
-        const qrValue = ticket.qr_code_token || ticket.qr_token || ticket.id;
+        /* ---------- QR-kód a beléptetéshez ---------- */
+        const qrValue = ticket.qr_code_token || ticket.qr_token || String(ticket.id);
+
         pass.setBarcodes({
             message: qrValue,
             format: 'PKBarcodeFormatQR',
@@ -165,7 +168,7 @@ exports.handler = async (event) => {
             altText: qrValue
         });
 
-        /* ---------- Images (Online Fetch) ---------- */
+        /* ---------- Ikonok (kötelező assetek) ---------- */
         const SITE_URL = 'https://koszegapp.netlify.app';
 
         try {
@@ -180,37 +183,13 @@ exports.handler = async (event) => {
                 pass.addBuffer('logo.png', logo);
                 pass.addBuffer('logo@2x.png', logo);
             }
-
-            // --- Visual QR on Strip (V2) ---
-            const stripPath = path.resolve(__dirname, '../../public/images/events/wallet.png');
-            if (fs.existsSync(stripPath)) {
-                const stripImage = await Jimp.read(stripPath);
-                const qrBuffer = await QRCode.toBuffer(qrValue, {
-                    width: 160,
-                    margin: 2,
-                    color: { dark: '#000000', light: '#FFFFFF' }
-                });
-                const qrImage = await Jimp.read(qrBuffer);
-
-                const x = stripImage.bitmap.width - qrImage.bitmap.width - 50;
-                const y = (stripImage.bitmap.height - qrImage.bitmap.height) / 2;
-
-                stripImage.composite(qrImage, x, y);
-                const compositedBuffer = await stripImage.getBufferAsync(Jimp.MIME_PNG);
-
-                pass.addBuffer('strip.png', compositedBuffer);
-                pass.addBuffer('strip@2x.png', compositedBuffer);
-            } else {
-                // Fallback fetch strip if local missing?
-                // For now, let's trust the file exists as previous steps showed
-            }
-
         } catch (e) {
             console.warn('Image processing failed:', e);
         }
 
-        /* ---------- Output ---------- */
-        const buffer = pass.getAsBuffer();
+        /* ---------- Válasz ---------- */
+        // Fix 4: Await buffer!
+        const buffer = await pass.getAsBuffer();
 
         return {
             statusCode: 200,
