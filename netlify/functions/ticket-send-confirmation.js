@@ -67,11 +67,9 @@ exports.handler = async (event) => {
       throw new Error('QR token missing on ticket record');
     }
 
-    // Generate QR code as Buffer (for CID attachment - better deliverability)
-    const qrBuffer = await QRCode.toBuffer(qrTokenValue, {
+    const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
       width: 300,
-      margin: 2,
-      type: 'png'
+      margin: 2
     });
 
     const ticketEvent = ticket.ticket_events;
@@ -92,13 +90,6 @@ exports.handler = async (event) => {
       from: emailConfig.from,
       to: [ticket.buyer_email],
       subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
-      attachments: [
-        {
-          filename: 'qrcode.png',
-          content: qrBuffer,
-          content_id: 'qrcode' // CID for inline image
-        }
-      ],
       html: `
 <!DOCTYPE html>
 <html>
@@ -153,28 +144,18 @@ exports.handler = async (event) => {
 
       <div class="qr-section">
         <div class="qr-label">Belépőkód</div>
-        <img src="cid:qrcode" alt="QR Kód" class="qr-image" />
+        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
         <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
       </div>
 
       <div style="text-align: center; margin-bottom: 30px;">
-        <!-- Apple Wallet Button (CSS Only - No Image Blocking) -->
-        <a href="${walletPassUrl}" style="display: inline-block; background-color: #000000; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-family: -apple-system, sans-serif; font-weight: 600; font-size: 16px;">
-           Add to Apple Wallet
-        </a>
-        
-        <br><br>
-
-        <!-- PDF Download Button -->
-        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pdf?ticketId=${ticketId}" target="_blank" style="display: inline-block; background-color: #f5f5f7; border: 1px solid #d2d2d7; border-radius: 8px; padding: 12px 24px; color: #1d1d1f; text-decoration: none; font-size: 14px; font-weight: 500;">
-          📄 Jegy letöltése PDF-ben
+        <a href="${walletPassUrl}" style="display: inline-block;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
         </a>
       </div>
       
       <div class="warning">
         Ez a jegy egyszeri belépésre jogosít. Kérjük, ne oszd meg mással!
-        <br>
-        <small style="color: #86868b;">Ha a fenti gombok nem működnek: <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pdf?ticketId=${ticketId}">Kattints ide a PDF-ért</a></small>
       </div>
     </div>
 

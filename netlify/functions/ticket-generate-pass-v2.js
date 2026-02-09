@@ -7,7 +7,6 @@ const { createClient } = require('@supabase/supabase-js');
 const { ticketConfig } = require('./lib/ticketConfig');
 
 /* -------------------- Helpers -------------------- */
-
 async function getBuffer(url) {
     if (!url) return null;
     try {
@@ -47,7 +46,6 @@ function extractFromP12(p12Buffer, password) {
 }
 
 /* -------------------- Handler -------------------- */
-
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -74,7 +72,6 @@ exports.handler = async (event) => {
         const eventData = ticket.ticket_events;
 
         /* ---------- Tanúsítványok ---------- */
-
         const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
         const wwdrBuffer = fs.readFileSync(path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer'));
 
@@ -88,18 +85,21 @@ exports.handler = async (event) => {
         );
 
         /* ---------- Egyszerű jegy pass props ---------- */
-
         const eventDate = new Date(`${eventData.date}T${eventData.time}:00+01:00`);
         const expirationDate = new Date(eventDate);
         expirationDate.setDate(expirationDate.getDate() + 1);
 
+        // Fix 1: Hardwire ID-k a biztonság kedvéért (vagy Env Var ellenőrzése)
+        // A biztonság kedvéért itt hagyom a hardcoded értékeket, ha az Env Var-ok nem lennének jók.
+        // passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID || 'pass.hu.koszeg.koszegpass'
+
         const passProps = {
             formatVersion: 1,
-            passTypeIdentifier: process.env.APPLE_PASS_TYPE_ID,
-            teamIdentifier: process.env.APPLE_TEAM_ID,
+            passTypeIdentifier: 'pass.hu.koszeg.koszegpass', // Hardcoded fix
+            teamIdentifier: '97FG847W58', // Hardcoded fix
             organizationName: ticketConfig.branding.appName,
             description: `Belépő – ${eventData.name}`,
-            serialNumber: ticket.id,
+            serialNumber: `EVENT-TICKET-${ticket.id}`, // Fix 2: Prefix collision avoid
 
             backgroundColor: 'rgb(255, 255, 255)',
             foregroundColor: 'rgb(0, 0, 0)',
@@ -109,7 +109,8 @@ exports.handler = async (event) => {
             relevantDate: eventDate,
             expirationDate,
 
-            sharingProhibited: true
+            sharingProhibited: true,
+            groupingIdentifier: `event-ticket-${eventData.name.replace(/\s+/g, '-')}` // Fix 3: Grouping
         };
 
         const pass = new PKPass(
@@ -127,11 +128,10 @@ exports.handler = async (event) => {
         pass.type = 'eventTicket';
 
         /* ---------- Mezők: esemény + vevő + idő + hely ---------- */
-
         pass.headerFields.push({
             key: 'event',
             label: 'ESEMÉNY',
-            value: eventData.name
+            value: eventData.name?.toUpperCase() || 'ESEMÉNY'
         });
 
         pass.primaryFields.push({
@@ -159,7 +159,6 @@ exports.handler = async (event) => {
         });
 
         /* ---------- QR-kód a beléptetéshez ---------- */
-
         const qrValue = ticket.qr_code_token || ticket.qr_token || String(ticket.id);
 
         pass.setBarcodes({
@@ -170,7 +169,6 @@ exports.handler = async (event) => {
         });
 
         /* ---------- Ikonok (kötelező assetek) ---------- */
-
         const SITE_URL = 'https://koszegapp.netlify.app';
 
         try {
@@ -190,8 +188,8 @@ exports.handler = async (event) => {
         }
 
         /* ---------- Válasz ---------- */
-
-        const buffer = pass.getAsBuffer();
+        // Fix 4: Await buffer!
+        const buffer = await pass.getAsBuffer();
 
         return {
             statusCode: 200,
