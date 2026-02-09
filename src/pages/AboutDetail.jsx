@@ -215,15 +215,15 @@ function MonumentalSection({ img, title, text }) {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
   const opacity = useTransform(
     scrollYProgress,
-    [0.25, 0.4, 0.6, 0.75],
+    [0.15, 0.3, 0.7, 0.85],
     [0, 1, 1, 0]
   );
 
   return (
     <section ref={ref} className="relative min-h-[170vh] bg-black">
 
-      {/* IMAGE */}
-      <div className="sticky top-0 h-screen overflow-hidden">
+      {/* IMAGE (z-0) */}
+      <div className="sticky top-0 h-screen overflow-hidden z-0">
         <motion.img
           src={img}
           alt={title}
@@ -235,13 +235,13 @@ function MonumentalSection({ img, title, text }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
 
-      {/* TEXT */}
-      <div className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none">
+      {/* TEXT (z-10) */}
+      <div className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none z-10">
         <motion.div style={{ opacity }} className="max-w-4xl">
-          <h3 className="text-6xl md:text-[8vw] font-black tracking-tight mb-10 drop-shadow-2xl">
+          <h3 className="text-6xl md:text-[8vw] font-black tracking-tight mb-10 drop-shadow-2xl text-white">
             {title}
           </h3>
-          <p className="text-xl md:text-3xl text-neutral-200 leading-relaxed whitespace-pre-line">
+          <p className="text-xl md:text-3xl text-neutral-200 leading-relaxed whitespace-pre-line drop-shadow-lg">
             {text}
           </p>
         </motion.div>
