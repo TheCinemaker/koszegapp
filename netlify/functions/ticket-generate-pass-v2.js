@@ -97,7 +97,7 @@ exports.handler = async (event) => {
             teamIdentifier: ticketConfig.wallet.apple.teamIdentifier,
             organizationName: ticketConfig.branding.appName,
             description: `Jegy: ${eventData.name}`,
-            serialNumber: ticket.id,
+            serialNumber: `EVENT-TICKET-${ticket.id}`, // Force unique serial from Daily Pass
             backgroundColor: 'rgb(255, 255, 255)', // Light theme for tickets
             foregroundColor: 'rgb(0, 0, 0)',
             labelColor: 'rgb(80, 80, 80)',
