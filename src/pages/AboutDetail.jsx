@@ -160,9 +160,8 @@ export default function AboutDetail() {
               />
             </div>
 
-            {/* IPHONE FRAME PNG */}
             <img
-              src="/images/iphone-frame.png"
+              src="/images/about_pictures/iphone-frame.png"
               alt="iPhone Frame"
               className="absolute w-full h-full object-contain pointer-events-none select-none z-10"
               draggable="false"
