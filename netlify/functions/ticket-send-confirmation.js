@@ -149,13 +149,23 @@ exports.handler = async (event) => {
       </div>
 
       <div style="text-align: center; margin-bottom: 30px;">
-        <a href="${walletPassUrl}" style="display: inline-block;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
+        <!-- Apple Wallet Badge: Use official Apple CDN or reliable source -->
+        <a href="${walletPassUrl}" style="display: inline-block; text-decoration: none; margin-bottom: 20px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" width="160" height="50" style="display: block; border: 0;" />
+        </a>
+        
+        <br><br>
+
+        <!-- PDF Download Button: Simple, robust styling -->
+        <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pdf?ticketId=${ticketId}" target="_blank" style="display: inline-block; background-color: #f5f5f7; border: 1px solid #d2d2d7; border-radius: 8px; padding: 12px 24px; color: #1d1d1f; text-decoration: none; font-size: 14px; font-weight: 500;">
+          📄 Jegy letöltése PDF-ben
         </a>
       </div>
       
       <div class="warning">
         Ez a jegy egyszeri belépésre jogosít. Kérjük, ne oszd meg mással!
+        <br>
+        <small style="color: #86868b;">Ha a fenti gombok nem működnek: <a href="${getAppUrl()}/.netlify/functions/ticket-generate-pdf?ticketId=${ticketId}">Kattints ide a PDF-ért</a></small>
       </div>
     </div>
 
