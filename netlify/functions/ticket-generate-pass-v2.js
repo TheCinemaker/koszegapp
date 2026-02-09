@@ -53,6 +53,8 @@ const supabase = createClient(
 
 exports.handler = async (event) => {
     try {
+        console.log('VERSION: V3-SAFE-MODE-PREFIXED - 2026-02-09'); // Deployment Verification
+
         const ticketId = event.queryStringParameters?.ticketId;
         if (!ticketId) {
             return { statusCode: 400, body: 'Ticket ID required' };
