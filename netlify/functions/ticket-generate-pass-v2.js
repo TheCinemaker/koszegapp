@@ -109,6 +109,7 @@ exports.handler = async (event) => {
             authenticationToken: ticket.qr_token,
 
             sharingProhibited: true, // Tickets shouldn't be shared ideally
+            groupingIdentifier: `event-ticket-${eventData.name.replace(/\s+/g, '-')}` // Separate from daily pass
         };
 
         const pass = new PKPass(
