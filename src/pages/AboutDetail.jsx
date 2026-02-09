@@ -105,8 +105,8 @@ export default function AboutDetail() {
       </section>
 
 
-      {/* 3. STICKY PHONE SHOWCASE (Reduced height: 350vh total) */}
-      <div className="relative" style={{ height: "350vh" }}>
+      {/* 3. STICKY PHONE SHOWCASE (Reduced height: 250vh total) */}
+      <div className="relative" style={{ height: "250vh" }}>
 
         <div className="sticky top-0 h-screen flex flex-col md:flex-row items-center justify-center overflow-hidden">
 
@@ -161,7 +161,8 @@ export default function AboutDetail() {
                     style={{
                       opacity: useTransform(
                         smoothProgress,
-                        [(index * 0.25) + 0.1, (index * 0.25) + 0.25, (index * 0.25) + 0.4],
+                        // Broader opacity range to ensure visibility
+                        [(index * 0.25), (index * 0.25) + 0.15, (index * 0.25) + 0.35],
                         [0, 1, 0]
                       ),
                       zIndex: index
@@ -211,18 +212,7 @@ export default function AboutDetail() {
             viewport={{ once: true }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <button
-              onClick={() => navigate('/auth')}
-              className="px-10 py-4 bg-white text-black rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_50px_rgba(255,255,255,0.2)]"
-            >
-              Regisztrálok
-            </button>
-            <button
-              onClick={() => navigate('/')}
-              className="px-10 py-4 bg-zinc-900 border border-zinc-700 text-white rounded-full font-bold text-lg hover:bg-zinc-800 transition-colors"
-            >
-              Körülnézek
-            </button>
+            {/* Buttons removed by request */}
           </motion.div>
 
           <div className="mt-20 opacity-30 invert">
