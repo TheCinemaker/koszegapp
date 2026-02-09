@@ -223,7 +223,7 @@ export default function TicketScanner() {
 
                 {/* Validating Indicator */}
                 {validating && (
-                    <div className="mt-8 text-center animate-pulse">
+                    <div className="mt-8 text-center bg-gray-800 rounded-xl p-4">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
                         <p className="text-gray-400 font-semibold">Ellenőrzés folyamatban...</p>
                     </div>
