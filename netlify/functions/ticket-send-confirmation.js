@@ -67,9 +67,11 @@ exports.handler = async (event) => {
       throw new Error('QR token missing on ticket record');
     }
 
-    const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
+    // Generate QR code as Buffer (for CID attachment - better deliverability)
+    const qrBuffer = await QRCode.toBuffer(qrTokenValue, {
       width: 300,
-      margin: 2
+      margin: 2,
+      type: 'png'
     });
 
     const ticketEvent = ticket.ticket_events;
@@ -90,6 +92,13 @@ exports.handler = async (event) => {
       from: emailConfig.from,
       to: [ticket.buyer_email],
       subject: `${emailConfig.subjectPrefix} ${ticketEvent.name}`,
+      attachments: [
+        {
+          filename: 'qrcode.png',
+          content: qrBuffer,
+          content_id: 'qrcode' // CID for inline image
+        }
+      ],
       html: `
 <!DOCTYPE html>
 <html>
@@ -144,7 +153,7 @@ exports.handler = async (event) => {
 
       <div class="qr-section">
         <div class="qr-label">Belépőkód</div>
-        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
+        <img src="cid:qrcode" alt="QR Kód" class="qr-image" />
         <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
       </div>
 
