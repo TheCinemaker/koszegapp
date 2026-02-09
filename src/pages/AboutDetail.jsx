@@ -25,7 +25,7 @@ export default function AboutDetail() {
   });
 
   // -----------------------------
-  // 3D TILT (SPRING BASED)
+  // 3D TILT (SPRING)
   // -----------------------------
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
@@ -39,8 +39,8 @@ export default function AboutDetail() {
     if (!isFinePointer) return;
 
     const handleMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 18;
-      const y = (e.clientY / window.innerHeight - 0.5) * 18;
+      const x = (e.clientX / window.innerWidth - 0.5) * 16;
+      const y = (e.clientY / window.innerHeight - 0.5) * 16;
       setMouse({ x, y });
     };
 
@@ -56,33 +56,19 @@ export default function AboutDetail() {
   // -----------------------------
   const bgColor = useTransform(
     smooth,
-    [0, 0.25, 0.5, 0.75, 1],
-    ["#000000", "#070712", "#101225", "#070712", "#000000"]
+    [0, 0.3, 0.6, 1],
+    ["#000000", "#0a0a15", "#101225", "#000000"]
   );
 
   // -----------------------------
   // DEVICE SCALE
   // -----------------------------
-  const deviceScale = useTransform(smooth, [0, 0.3], [0.9, 1.05]);
+  const deviceScale = useTransform(smooth, [0, 0.3], [0.9, 1.08]);
 
   // -----------------------------
-  // SCENE OPACITIES
+  // LIGHT SWEEP
   // -----------------------------
-  const scene1Opacity = useTransform(smooth, [0, 0.25], [1, 0]);
-  const scene2Opacity = useTransform(smooth, [0.25, 0.6], [0, 1]);
-  const scene3Opacity = useTransform(smooth, [0.6, 0.85], [0, 1]);
-
-  // -----------------------------
-  // TEXT OPACITY
-  // -----------------------------
-  const text1Opacity = useTransform(smooth, [0, 0.18], [1, 0]);
-  const text2Opacity = useTransform(smooth, [0.3, 0.5], [0, 1]);
-  const text3Opacity = useTransform(smooth, [0.65, 0.8], [0, 1]);
-
-  // -----------------------------
-  // FOCUS BLUR
-  // -----------------------------
-  const deviceBlur = useTransform(smooth, [0.3, 0.5], [0, 4]);
+  const lightSweepX = useTransform(smooth, [0.2, 0.6], ["-120%", "120%"]);
 
   // -----------------------------
   // SCREEN SEQUENCE
@@ -100,7 +86,7 @@ export default function AboutDetail() {
   const screenOpacities = screens.map((_, i) =>
     useTransform(
       smooth,
-      [0.25 + i * 0.08, 0.4 + i * 0.08],
+      [0.25 + i * 0.08, 0.45 + i * 0.08],
       [1, 0]
     )
   );
@@ -109,14 +95,14 @@ export default function AboutDetail() {
     <div
       ref={containerRef}
       className="relative overflow-x-hidden bg-black text-white"
-      style={{ perspective: "1600px" }}
+      style={{ perspective: "1800px" }}
     >
       {/* BACKGROUND */}
       <motion.div
         className="fixed inset-0 -z-20"
         style={{ backgroundColor: bgColor }}
       >
-        <div className="absolute inset-0 opacity-[0.08] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+        <div className="absolute inset-0 opacity-[0.06] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
       </motion.div>
 
       {/* Floating Header / Back Button (Restored) */}
@@ -129,28 +115,34 @@ export default function AboutDetail() {
         </button>
       </div>
 
-      {/* PROGRESS BAR */}
+      {/* SCROLL PROGRESS */}
       <motion.div
-        className="fixed top-0 left-0 h-[2px] bg-white/80 z-50 origin-left"
+        className="fixed top-0 left-0 h-[2px] bg-white z-50 origin-left"
         style={{ scaleX: smooth }}
       />
 
-      {/* MAIN CINEMATIC SECTION */}
-      <section className="h-[480vh] relative">
+      {/* CINEMATIC SECTION */}
+      <section className="h-[500vh] relative">
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
 
-          {/* DEVICE */}
+          {/* SOFT GLOW BEHIND DEVICE */}
+          <motion.div
+            style={{ scale: deviceScale }}
+            className="absolute w-[600px] h-[600px] bg-indigo-700/20 rounded-full blur-[160px]"
+          />
+
+          {/* DEVICE CONTAINER */}
           <motion.div
             style={{
-              opacity: scene2Opacity,
-              scale: deviceScale,
               rotateX,
               rotateY,
-              filter: deviceBlur.to((v) => `blur(${v}px)`),
+              scale: deviceScale,
+              transformStyle: "preserve-3d",
             }}
-            className="absolute w-[340px] h-[700px] rounded-[48px] bg-black border border-white/10 shadow-[0_80px_200px_rgba(0,0,0,0.9)] overflow-hidden"
+            className="relative w-[380px] h-[780px] flex items-center justify-center"
           >
-            <div className="absolute inset-[6px] rounded-[40px] overflow-hidden bg-black">
+            {/* SCREEN CONTENT */}
+            <div className="absolute w-[330px] h-[710px] overflow-hidden rounded-[40px]">
               {screens.map((screen, i) => (
                 <motion.img
                   key={screen}
@@ -160,64 +152,51 @@ export default function AboutDetail() {
                   alt=""
                 />
               ))}
+
+              {/* GLASS LIGHT SWEEP */}
+              <motion.div
+                style={{ x: lightSweepX }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-12"
+              />
             </div>
-            <div className="absolute top-0 inset-x-8 h-[40px] bg-gradient-to-b from-white/15 to-transparent rounded-b-[30px]" />
+
+            {/* IPHONE FRAME PNG */}
+            <img
+              src="/images/iphone-frame.png"
+              alt="iPhone Frame"
+              className="absolute w-full h-full object-contain pointer-events-none select-none z-10"
+              draggable="false"
+              onError={(e) => e.target.style.display = 'none'} // Hide if missing
+            />
           </motion.div>
 
           {/* HERO TEXT */}
-          <div className="absolute text-center pointer-events-none">
-            <motion.h2
-              style={{ opacity: text1Opacity }}
-              className="text-[10vw] font-bold tracking-tight"
-            >
-              KŐSZEG.
-            </motion.h2>
-
-            <motion.h2
-              style={{ opacity: text2Opacity }}
-              className="text-[6vw] font-bold tracking-tight"
-            >
-              Élmények.
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400">
-                {" "}Élőben.
-              </span>
-            </motion.h2>
-
-            <motion.h2
-              style={{ opacity: text3Opacity }}
-              className="text-[6vw] font-bold tracking-tight max-w-4xl mx-auto"
-            >
-              Ez a város operációs rendszere.
-            </motion.h2>
-          </div>
+          <motion.h1
+            style={{
+              opacity: useTransform(smooth, [0, 0.2], [1, 0]),
+              scale: useTransform(smooth, [0, 0.2], [1, 1.2]),
+            }}
+            className="absolute text-[10vw] font-bold tracking-tight text-white"
+          >
+            KŐSZEG.
+          </motion.h1>
         </div>
       </section>
 
       {/* SILENT APPLE SECTION */}
       <section className="h-screen flex items-center justify-center bg-black">
         <div className="text-center">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1.2 }}
-            className="text-[6vw] font-bold tracking-tight"
-          >
+          <h2 className="text-[6vw] font-bold tracking-tight">
             Nem egy alkalmazás.
-          </motion.h2>
-
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1.2 }}
-            className="text-[6vw] font-bold tracking-tight mt-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500"
-          >
+          </h2>
+          <h2 className="text-[6vw] font-bold tracking-tight mt-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500">
             Egy digitális város.
-          </motion.h2>
+          </h2>
         </div>
       </section>
 
       {/* FINAL IMPACT */}
-      <section className="h-screen flex items-center justify-center relative overflow-hidden bg-black">
+      <section className="h-screen flex items-center justify-center relative bg-black overflow-hidden">
         <div
           style={{
             background:
