@@ -50,6 +50,7 @@ import LiveCityMap from './components/LiveCityMap';
 import ResidentCheckModal from './components/ResidentCheckModal';
 
 import AnimatedRoutes from './components/AnimatedRoutes';
+import SettingsMenu from './components/SettingsMenu';
 
 
 
@@ -373,20 +374,8 @@ function MainAppContent() {
                   )}
                 </div>
 
-                {/* Dark Mode Toggle */}
-                <button
-                  onClick={toggleDark}
-                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             border border-white/20
-                             text-gray-700 dark:text-yellow-300
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                  aria-label="Sötét mód váltása"
-                >
-                  {dark ? <IoSunnyOutline className="text-lg sm:text-xl" /> : <IoMoonOutline className="text-lg sm:text-xl" />}
-                </button>
+                {/* Settings Menu (Language + Dark Mode) */}
+                <SettingsMenu />
               </div>
             </div>
           </header>

@@ -175,7 +175,7 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/food-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
 
           {/* KőszegPass Routes (Isolated Flow) */}
-          <Route path="/pass" element={<Navigate to="/pass/register" replace />} />
+          <Route path="/pass" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
           <Route path="/pass/register" element={<PageWrapper showFooter={false}><KoszegPassRegister /></PageWrapper>} />
           <Route path="/pass/profile" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
           <Route path="/scanner" element={<PageWrapper showFooter={false}><ScannerPage /></PageWrapper>} />

@@ -5,7 +5,16 @@ import path from 'path';
 export default defineConfig({
   base: '/',
   plugins: [react()],
-  server: { port: 3000 },
+  server: {
+    port: 3000,
+    proxy: {
+      '/.netlify/functions': {
+        target: 'http://localhost:8888',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
   resolve: {
     alias: {
       'fuse.js': path.resolve(__dirname, 'node_modules/fuse.js/dist/fuse.mjs'),

@@ -10,7 +10,7 @@ export default function KoszegPassRegister() {
     const { register, login } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [isLogin, setIsLogin] = useState(false); // Toggle between Login/Register
+    const [isLogin, setIsLogin] = useState(true); // Default to Login
     const [showInfo, setShowInfo] = useState(false);
 
     const [form, setForm] = useState({

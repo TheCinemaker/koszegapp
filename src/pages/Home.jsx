@@ -22,13 +22,14 @@ const sections = [
   { to: '/pass', label: 'KőszegPass', desc: 'Digitális városkártya.', icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-2 row-span-1', delay: 0.05 },
   { to: '/events', label: 'Események', desc: 'Élmények. Élőben.', icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-1 row-span-1', delay: 0.1 },
   { to: '/attractions', label: 'Látnivalók', desc: 'Időtlen kincsek.', icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 row-span-1', delay: 0.15 },
-  { to: '/gastronomy', label: 'Gasztró', desc: 'Ízek harmóniája.', icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-700', span: 'col-span-1', delay: 0.2 },
-  { to: '/weather', label: 'Időjárás', desc: 'Tiszta kilátások.', icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1', delay: 0.25 },
-  { to: '/leisure', label: 'Szabadidő', desc: 'Kalandra hív.', icon: IoWalkOutline, gradient: 'from-lime-500 to-green-700', span: 'col-span-1', delay: 0.3 },
-  { to: '/hotels', label: 'Szállás', desc: 'Nyugalom szigete.', icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1', delay: 0.35 },
-  { to: '/parking', label: 'Parkolás', desc: 'Célba értél.', icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1', delay: 0.4 },
-  { to: '/info', label: 'Infó', desc: 'Hasznos tudás.', icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-1', delay: 0.45 },
-  // { to: '/game/intro', label: 'KőszegQuest', desc: 'A te legendád.', icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 sm:col-span-3', special: true, delay: 0.5 },
+  { to: '/food', label: 'KőszegEats', desc: 'Helyi ízek, házhoz.', icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 row-span-1', delay: 0.2, comingSoon: true },
+  { to: '/tickets', label: 'KőszegTickets', desc: 'Belépők egy helyen.', icon: IoQrCode, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1', delay: 0.25, comingSoon: true },
+  { to: '/hotels', label: 'Szállás', desc: 'Nyugalom szigete.', icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1', delay: 0.3 },
+  { to: '/weather', label: 'Időjárás', desc: 'Tiszta kilátások.', icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1', delay: 0.35 },
+  { to: '/game/intro', label: 'Kőszeg1532', desc: 'Találd meg a város kincseit.', icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 row-span-1', delay: 0.4, comingSoon: true },
+  { to: '/leisure', label: 'Szabadidő', desc: 'Kalandra hív.', icon: IoWalkOutline, gradient: 'from-lime-500 to-green-700', span: 'col-span-1', delay: 0.45 },
+  { to: '/parking', label: 'Parkolás', desc: 'Célba értél.', icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1', delay: 0.5 },
+  { to: '/info', label: 'Infó', desc: 'Hasznos tudás.', icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-2 sm:col-span-1', delay: 0.55 },
 ];
 
 export default function Home() {
@@ -56,7 +57,13 @@ export default function Home() {
           {sections.map((sec) => (
             <FadeUp key={sec.label} delay={sec.delay + 0.2} duration={1.6} className={sec.span}>
               <Link
-                to={sec.to}
+                to={sec.comingSoon ? '#' : sec.to}
+                onClick={(e) => {
+                  if (sec.comingSoon) {
+                    e.preventDefault();
+                    toast('Ez a funkció hamarosan elérhető!', { icon: '🚧' });
+                  }
+                }}
                 className={`
                       relative h-full block rounded-[1.5rem] p-5 lg:p-6
                       bg-white/70 dark:bg-white/5 
@@ -65,6 +72,7 @@ export default function Home() {
                       shadow-sm hover:shadow-xl hover:shadow-indigo-500/10
                       transition-all duration-700 hover:scale-[1.02] active:scale-[0.98]
                       flex flex-col justify-between overflow-hidden group
+                      ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
                   `}
               >
                 {/* Internal Glow Gradient */}
@@ -85,7 +93,9 @@ export default function Home() {
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-none tracking-tight">
                       {sec.label}
                     </h3>
-                    <IoChevronForward className="text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm" />
+                    {!sec.comingSoon && (
+                      <IoChevronForward className="text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm" />
+                    )}
                   </div>
                   {/* Delayed Fade-in for slogan */}
                   <motion.p
@@ -97,6 +107,15 @@ export default function Home() {
                     {sec.desc}
                   </motion.p>
                 </div>
+
+                {/* Coming Soon Overlay (Centered) */}
+                {sec.comingSoon && (
+                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px] rounded-[1.5rem]">
+                    <span className="text-lg font-black uppercase tracking-widest text-white drop-shadow-md transform -rotate-12 border-2 border-white/50 px-4 py-1 rounded-xl">
+                      HAMAROSAN
+                    </span>
+                  </div>
+                )}
 
                 {/* Shine Effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-200%] group-hover:animate-shine opacity-30 duration-1000" />

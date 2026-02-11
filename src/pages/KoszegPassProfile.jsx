@@ -103,8 +103,36 @@ const CircularProgress = ({ value, max = 20000, size = 180, strokeWidth = 8, chi
     );
 };
 
+// POCKET ANIMATION VARIANTS (Moved outside component for performance)
+const pocketVariants = {
+    open: {
+        top: '320px',
+        y: 0,
+        transition: { type: "spring", stiffness: 120, damping: 20, mass: 1.2 }
+    },
+    closed: {
+        top: '110px',
+        y: [0, 4, 0, 4, 0],
+        transition: {
+            top: { type: "spring", stiffness: 120, damping: 20, mass: 1.2 },
+            y: {
+                duration: 2,
+                times: [0, 0.1, 0.2, 0.3, 1],
+                repeat: 3,
+                repeatDelay: 5,
+                ease: "easeInOut",
+                delay: 1 // Wait for close spring to finish
+            }
+        }
+    },
+    dragging: {
+        top: '110px',
+        y: 0
+    }
+};
+
 export default function KoszegPassProfile() {
-    const { user, logout } = useAuth();
+    const { user, logout, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -123,27 +151,43 @@ export default function KoszegPassProfile() {
         if (navigator.vibrate) navigator.vibrate(type === 'heavy' ? 20 : 10);
     };
 
-    // 1. Initial Fetch
+    // 1. Initial Fetch & Subscription
     useEffect(() => {
-        if (!user) {
-            // Redirect to Register/Login if not authenticated
+        if (authLoading) return; // Wait for auth to initialize
+
+        // Critical: Check for user.id to avoid race conditions
+        if (!user?.id) {
             navigate('/pass/register', { replace: true });
             return;
         }
 
         const fetchKoszegPassProfile = async () => {
+            // ... (existing fetch logic)
             try {
+                // Fetch User Profile
                 const { data: userData, error: userError } = await supabase.from('koszegpass_users').select('*').eq('id', user.id).single();
-
                 if (userError && userError.code !== 'PGRST116') throw userError;
-
                 setProfile(userData);
                 setEditForm(userData || { full_name: '', email: '', phone: '', address: '' });
 
+                // Fetch Card Data
                 const { data: cardData } = await supabase.from('koszegpass_cards').select('qr_token').eq('user_id', user.id).single();
                 const token = cardData?.qr_token || user.id; // Fallback to ID if no token
                 setQrToken(token);
 
+                // Fetch Transaction History (New)
+                const { data: historyData, error: historyError } = await supabase
+                    .from('koszegpass_points_log')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false })
+                    .limit(20);
+
+                if (!historyError) {
+                    setHistory(historyData || []);
+                }
+
+                // Generate QR Code
                 try {
                     const url = await QRCode.toDataURL(token, { width: 400, margin: 2 });
                     setQrCodeUrl(url);
@@ -157,11 +201,11 @@ export default function KoszegPassProfile() {
                 setLoading(false);
             }
         };
+
         fetchKoszegPassProfile();
 
-        // 2. Realtime Subscription
-        console.log("Setting up subscription for:", user.id);
-        const subscription = supabase
+        // 2. Realtime Subscription (Robust)
+        const channel = supabase
             .channel(`profile_changes_${user.id}`)
             .on(
                 'postgres_changes',
@@ -172,11 +216,9 @@ export default function KoszegPassProfile() {
                     filter: `id=eq.${user.id}`,
                 },
                 (payload) => {
-                    console.log("Realtime update received:", payload);
                     setProfile(prev => ({ ...prev, ...payload.new }));
                     if (payload.new.points !== payload.old?.points) {
                         toast.success(`Pontok frissítve!`, { icon: '🔄' });
-
                         // Sync with Google Wallet
                         fetch('/.netlify/functions/update-google-pass', {
                             method: 'POST',
@@ -186,43 +228,30 @@ export default function KoszegPassProfile() {
                                 card_type: payload.new.card_type
                             })
                         }).catch(err => console.error("Wallet sync failed:", err));
+
+                        // Refresh history on points update
+                        supabase
+                            .from('koszegpass_points_log')
+                            .select('*')
+                            .eq('user_id', user.id)
+                            .order('created_at', { ascending: false })
+                            .limit(20)
+                            .then(({ data }) => {
+                                if (data) setHistory(data);
+                            });
                     }
                 }
             )
-            .subscribe((status) => {
-                console.log("Subscription status:", status);
-            });
+            .subscribe();
 
         return () => {
-            console.log("Cleaning up subscription");
-            supabase.removeChannel(subscription);
+            supabase.removeChannel(channel);
         };
-    }, [user]); // Depend on user to refetch if user changes
+    }, [user, authLoading, navigate]);
 
-    // Fetch History on open
-    useEffect(() => {
-        if (showHistory && user) {
-            const fetchHistory = async () => {
-                const { data } = await supabase
-                    .from('koszegpass_points_log')
-                    .select('*')
-                    .eq('user_id', user.id)
-                    .order('created_at', { ascending: false });
-                setHistory(data || []);
-            };
-            fetchHistory();
-        }
-    }, [showHistory, user]);
+    // ... (other effects)
 
-    useEffect(() => {
-        if (isEditing && editFormRef.current) setTimeout(() => editFormRef.current.scrollIntoView({ behavior: 'smooth' }), 100);
-    }, [isEditing]);
-
-    // ... (rest of component logic)
-
-
-
-    if (loading) return <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center"><div className="w-8 h-8 border-2 border-indigo-500 rounded-full animate-spin" /></div>;
+    if (authLoading || (loading && user)) return <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] flex items-center justify-center"><div className="w-8 h-8 border-2 border-indigo-500 rounded-full animate-spin" /></div>;
 
     const handleSave = async () => {
         const { error } = await supabase.from('koszegpass_users').update(editForm).eq('id', user.id);
@@ -258,33 +287,7 @@ export default function KoszegPassProfile() {
         }
     };
 
-    // POCKET ANIMATION VARIANTS
-    const pocketVariants = {
-        open: {
-            top: '320px',
-            y: 0,
-            transition: { type: "spring", stiffness: 120, damping: 20, mass: 1.2 }
-        },
-        closed: {
-            top: '110px',
-            y: [0, 4, 0, 4, 0],
-            transition: {
-                top: { type: "spring", stiffness: 120, damping: 20, mass: 1.2 },
-                y: {
-                    duration: 2,
-                    times: [0, 0.1, 0.2, 0.3, 1],
-                    repeat: 3,
-                    repeatDelay: 5,
-                    ease: "easeInOut",
-                    delay: 1 // Wait for close spring to finish
-                }
-            }
-        },
-        dragging: {
-            top: '110px',
-            y: 0
-        }
-    };
+
 
     // --- LOGIC: POCKET VS REVEAL ---
     // If IS_POCKET_OPEN = TRUE -> We REVEAL the Card (Pocket slides DOWN).
@@ -387,7 +390,26 @@ export default function KoszegPassProfile() {
                         </div>
                     </motion.div>
                 </div>
+
+                {/* Card Flip Hint */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1, duration: 1 }}
+                    className="absolute -bottom-12 left-0 right-0 flex justify-center pointer-events-none"
+                >
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-sm border border-black/5 dark:border-white/5">
+                        <IoSwapHorizontal className="text-zinc-400 dark:text-zinc-500 text-xs" />
+                        <span className="text-[10px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">
+                            Érintsd meg a kártyát
+                        </span>
+                    </div>
+                </motion.div>
             </div>
+
+            {/* Card Flip Hint */}
+
+
 
             {/* --- LAYER 2: THE POCKET (Foreground / Z-10) --- */}
             {/* Draggable / Animated Sheet that covers the card */}
@@ -434,7 +456,7 @@ export default function KoszegPassProfile() {
                         <CircularProgress value={profile?.points || 0} size={160}>
                             <div className="flex flex-col items-center text-center">
                                 <span className="text-3xl font-black text-zinc-900 dark:text-white tracking-tighter">
-                                    {profile?.points?.toLocaleString()}
+                                    {(profile?.points ?? 0).toLocaleString()}
                                 </span>
                                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mt-1">Pont</span>
                             </div>
@@ -525,6 +547,7 @@ export default function KoszegPassProfile() {
                                             try {
                                                 const res = await fetch('/.netlify/functions/create-apple-pass', {
                                                     method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({
                                                         ...profile,
                                                         user_id: user.id,
@@ -548,68 +571,97 @@ export default function KoszegPassProfile() {
                                                 toast.error('Hiba történt', { id: toastId });
                                             }
                                         }}
-                                        className="w-full flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:scale-[1.02] active:scale-95 transition-transform"
+                                        className="transition-transform active:scale-95"
                                     >
-                                        <div className="flex items-center gap-2">
-                                            <svg viewBox="0 0 512 512" width="20" height="20" fill="currentColor">
-                                                <path d="M389.2 248.5c1.4-74.8 61-110.8 63.8-112.6-35-51.1-89.8-58.1-109-58.7-46.2-4.7-90.8 27.2-114.3 27.2-24 0-64.2-26.6-105.4-25.9-54.3.8-104.6 31.6-132.8 80.2-56.7 98.1-14.5 242.4 40.7 322.1 27.1 39.1 59.4 83.1 101.9 81.6 40.6-1.6 56-26.3 105.1-26.3 49 0 62.9 26.3 105.8 25.5 44-1.6 71.9-40.1 98.8-79.5 31.2-45.6 44-89.7 44.5-91.9-1-.5-85.3-32.8-86.5-122.3zm-77.9-166c22.5-27.3 37.7-65.3 33.6-103.2-32.3 1.3-71.5 21.5-94.8 48.4-20.2 23.3-37.9 60.5-33.1 96.1 36.1 2.8 72.9-19.1 94.3-41.3z" />
-                                            </svg>
-                                            <span>Add to Apple Wallet</span>
-                                        </div>
+                                        <img src="/images/apple_wallet_badge_hu.svg" alt="Add to Apple Wallet" className="h-[42px] w-auto mx-auto" />
                                     </button>
 
+                                    {/* Google Wallet Button */}
                                     <button
-                                        onClick={async () => {
-                                            const toastId = toast.loading('Google Wallet nyitása...');
-                                            try {
-                                                const res = await fetch('/.netlify/functions/create-google-pass', {
-                                                    method: 'POST',
-                                                    body: JSON.stringify({
-                                                        ...profile,
-                                                        user_id: user.id,
-                                                        qr_token: qrToken || user.id
-                                                    })
-                                                });
-                                                const data = await res.json();
-                                                if (data.saveUrl) {
-                                                    window.open(data.saveUrl, '_blank');
-                                                    toast.dismiss(toastId);
-                                                } else {
-                                                    throw new Error('No URL');
-                                                }
-                                            } catch (e) {
-                                                console.error(e);
-                                                toast.error('Hiba történt', { id: toastId });
-                                            }
-                                        }}
-                                        className="w-full flex items-center justify-center gap-2 bg-white text-black border border-zinc-200 px-6 py-3 rounded-xl font-medium shadow-sm hover:bg-zinc-50 active:scale-95 transition-transform"
+                                        onClick={handleGoogleWallet}
+                                        className="transition-transform active:scale-95"
                                     >
-                                        <IoLogoGoogle size={20} />
-                                        <span>Google Wallet Mentés</span>
+                                        <img src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg" alt="Google Wallet Mentés" className="h-[48px] w-auto mx-auto" />
                                     </button>
                                 </div>
-
-                                <AnimatePresence>
-                                    {isEditing && (
-                                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-8 bg-white dark:bg-[#1a1c2e] p-6 rounded-2xl border border-zinc-100 dark:border-white/10 overflow-hidden max-w-md mx-auto">
-                                            <h3 className="font-bold text-lg mb-4 dark:text-white">Adatok szerkesztése</h3>
-                                            <div className="space-y-3">
-                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Teljes név" value={editForm.full_name} onChange={e => setEditForm({ ...editForm, full_name: e.target.value })} />
-                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Lakcím" value={editForm.address} onChange={e => setEditForm({ ...editForm, address: e.target.value })} />
-                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Email" value={editForm.email} onChange={e => setEditForm({ ...editForm, email: e.target.value })} />
-                                                <input className="w-full bg-zinc-50 dark:bg-black p-3 rounded-lg border border-zinc-200 dark:border-white/10 dark:text-white" placeholder="Telefon" value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} />
-                                                <button onClick={handleSave} className="w-full py-3 bg-zinc-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-widest text-xs rounded-lg active:scale-95 transition-transform">Mentés</button>
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
 
-            </motion.div>
+                {/* --- EDIT PROFILE MODAL --- */}
+                <AnimatePresence>
+                    {isEditing && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setIsEditing(false)}
+                                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            />
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.9, opacity: 0 }}
+                                className="relative w-full max-w-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-6 shadow-2xl"
+                            >
+                                <div className="flex justify-between items-center mb-6">
+                                    <h3 className="font-bold text-xl dark:text-white">Profil szerkesztése</h3>
+                                    <button onClick={() => setIsEditing(false)} className="p-2 bg-zinc-100 dark:bg-white/5 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 transition-colors">
+                                        <IoArrowBack size={20} className="dark:text-white" />
+                                    </button>
+                                </div>
 
-        </div>
+                                <div className="space-y-4">
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Teljes Név</label>
+                                        <input
+                                            className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                                            placeholder="Teljes név"
+                                            value={editForm.full_name}
+                                            onChange={e => setEditForm({ ...editForm, full_name: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Lakcím</label>
+                                        <input
+                                            className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                                            placeholder="Lakcím"
+                                            value={editForm.address}
+                                            onChange={e => setEditForm({ ...editForm, address: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Email</label>
+                                        <input
+                                            className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                                            placeholder="Email"
+                                            value={editForm.email}
+                                            onChange={e => setEditForm({ ...editForm, email: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Telefon</label>
+                                        <input
+                                            className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                                            placeholder="Telefon"
+                                            value={editForm.phone}
+                                            onChange={e => setEditForm({ ...editForm, phone: e.target.value })}
+                                        />
+                                    </div>
+                                    <button
+                                        onClick={handleSave}
+                                        className="w-full py-4 mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 active:scale-95 transition-transform"
+                                    >
+                                        Mentés
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
+        </div >
     );
 }

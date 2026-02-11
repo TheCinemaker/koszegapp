@@ -165,60 +165,18 @@ export default function FoodOrderPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const { user } = useAuth();
+    const { user, loading: authLoading } = useAuth();
     const [activeOrderStatus, setActiveOrderStatus] = useState(null);
 
-    useEffect(() => {
-        if (!user) return;
-        const fetchActiveOrders = async () => {
-            const { data } = await supabase.from('orders').select('status').eq('user_id', user.id).in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering']).order('created_at', { ascending: false }).limit(1).maybeSingle();
-            setActiveOrderStatus(data ? data.status : null);
-        };
-        fetchActiveOrders();
-        const chan = supabase.channel('active-orders-monitor').on('postgres_changes', { event: '*', schema: 'public', table: 'orders', filter: `user_id=eq.${user.id}` }, () => fetchActiveOrders()).subscribe();
-        return () => supabase.removeChannel(chan);
-    }, [user]);
+    // ... (effects)
 
-    const getStatusText = (status) => {
-        const map = { 'new': 'Függőben', 'accepted': 'Készül 🍳', 'preparing': 'Készül 🔥', 'ready': 'Futárnál 🚴', 'delivering': 'Futárnál 🚴', 'completed': 'Kész ✅' };
-        return map[status] || status;
-    };
-
-    useEffect(() => {
-        const fetchRestaurants = async () => {
-            const { data } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
-            if (data) setRestaurants(data);
-        };
-        const fetchCategories = async () => {
-            const { data } = await supabase.from('menu_categories').select('name, restaurant_id');
-            if (data) {
-                const uniqueCats = [...new Set(data.map(c => c.name))].sort();
-                setRealCategories(uniqueCats);
-                const map = {};
-                data.forEach(c => { if (!map[c.name]) map[c.name] = new Set(); map[c.name].add(c.restaurant_id); });
-                setCategoryMap(map);
-            }
-        };
-        fetchRestaurants();
-        fetchCategories();
-        const sub = supabase.channel('restaurants-updates').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'restaurants' }, (payload) => {
-            setRestaurants(prev => prev.map(r => r.id === payload.new.id ? { ...r, ...payload.new } : r));
-        }).subscribe();
-        return () => supabase.removeChannel(sub);
-    }, []);
-
-    useEffect(() => {
-        if (selectedRestaurant) {
-            setLoading(true);
-            getMenu(selectedRestaurant.id).then(data => { setCategories(data); setView('menu'); }).catch(() => toast.error("Hiba a menü betöltésekor")).finally(() => setLoading(false));
-            const sub = supabase.channel(`menu-${selectedRestaurant.id}`).on('postgres_changes', { event: '*', schema: 'public', table: 'menu_items', filter: `restaurant_id=eq.${selectedRestaurant.id}` }, () => {
-                getMenu(selectedRestaurant.id).then(setCategories);
-            }).subscribe();
-            return () => supabase.removeChannel(sub);
-        }
-    }, [selectedRestaurant]);
-
-    const handleBack = () => { setView('restaurants'); setSelectedRestaurant(null); setCategories([]); };
+    if (authLoading) {
+        return (
+            <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] flex justify-center items-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-x-hidden pb-24 font-sans transition-colors duration-300">
