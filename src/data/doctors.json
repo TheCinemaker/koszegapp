@@ -68,30 +68,31 @@
     ],
     "pediatrics": [
         {
-            "name": "Dr. Masát Péter (Helyettes: Dr. Szalados Katalin)",
-            "district": "1. számú gyermekkörzet",
-            "phone": "94/360-191",
+            "name": "Dr. Garda Károly",
+            "district": "1. és 2. számú körzet (Hétfő, Szerda)",
+            "phone": "94/360-148",
             "hours": [
-                "Hétfő: 13:30 – 16:30",
-                "Szerda: 13:30 – 16:30",
-                "Péntek: 8:00 – 12:00"
+                "Hétfő: 13:00 – 17:00",
+                "Szerda: 13:00 – 17:00"
             ],
             "consultation": [
-                "Hétfő: 12:30 – 13:30",
-                "Szerda: 12:30 – 13:30"
+                "Hétfő: 12:00 – 13:00 (1. körzet)",
+                "Szerda: 12:00 – 13:00 (1. körzet)"
             ]
         },
         {
-            "name": "Dr. Garda Károly (Helyettes: Dr. Szalados Katalin)",
-            "district": "2. számú gyermekkörzet",
-            "phone": "94/360-148",
+            "name": "Dr. Haj Muhammad Anwar",
+            "district": "1. és 2. számú körzet (Kedd, Csütörtök, Péntek)",
+            "phone": "94/360-191",
             "hours": [
-                "Kedd: 14:30 – 17:30",
-                "Csütörtök: 10:00 – 13:00"
+                "Kedd: 14:00 – 16:00",
+                "Csütörtök: 14:00 – 16:00",
+                "Péntek (páros hét): 08:30 – 12:30",
+                "Péntek (páratlan hét): 12:00 – 16:00"
             ],
             "consultation": [
-                "Kedd: 13:30 – 14:30",
-                "Csütörtök: 9:00 – 10:00"
+                "Kedd: 13:00 – 14:00 (2. körzet)",
+                "Csütörtök: 13:00 – 14:00 (2. körzet)"
             ]
         }
     ],
