@@ -654,6 +654,8 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("USER:", user);
+        console.log("USER ID:", user?.id, typeof user?.id);
         setIsSubmitting(true);
         try {
             const ordersByRestaurant = items.reduce((acc, item) => {

@@ -13,6 +13,7 @@ import {
 import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
 import { AnimatePresence } from 'framer-motion';
+import SMSParkingCard from '../components/SMSParkingCard';
 
 export default function Parking() {
   const { t } = useTranslation('parking'); // Load namespace
@@ -68,6 +69,8 @@ export default function Parking() {
 
       <div className="max-w-4xl mx-auto relative z-10">
 
+
+
         {/* 1. SIMPLE HEADER */}
         <div className="flex items-center gap-4 mb-6">
           <button onClick={() => navigate('/')} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/40 hover:bg-white/60 transition-colors shadow-sm">
@@ -77,6 +80,11 @@ export default function Parking() {
             {t('title')}
           </h1>
         </div>
+
+        {/* NEW: SMS PARKING CARD */}
+        <FadeUp delay={0.05}>
+          <SMSParkingCard />
+        </FadeUp>
 
         {/* 2. SEARCH & CONTROLS */}
         <FadeUp delay={0.1} className="mb-6 space-y-4">
