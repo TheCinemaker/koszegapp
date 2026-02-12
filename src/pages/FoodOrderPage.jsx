@@ -168,8 +168,92 @@ export default function FoodOrderPage() {
     const { user, loading: authLoading } = useAuth();
     const [activeOrderStatus, setActiveOrderStatus] = useState(null);
 
-    // ... (effects)
+    useEffect(() => {
+        const fetchRestaurants = async () => {
+            try {
+                const { data, error } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
+                if (data) setRestaurants(data);
 
+                // Extract categories for filter
+                if (data) {
+                    const allCats = new Set();
+                    const shopMap = {};
+                    data.forEach(r => {
+                        if (r.tags) {
+                            r.tags.forEach(t => {
+                                allCats.add(t);
+                                if (!shopMap[t]) shopMap[t] = new Set();
+                                shopMap[t].add(r.id);
+                            });
+                        }
+                    });
+                    setRealCategories(Array.from(allCats).sort());
+                    setCategoryMap(shopMap);
+                }
+            } catch (error) {
+                console.error("Error fetching restaurants:", error);
+                toast.error("Nem sikerült betölteni az éttermeket.");
+            }
+        };
+
+        fetchRestaurants();
+
+        // Realtime subscription for restaurants
+        const channel = supabase.channel('restaurants-updates')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'restaurants' }, () => {
+                fetchRestaurants();
+            })
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, []);
+
+    // 2. Load menu when restaurant selected
+    useEffect(() => {
+        if (selectedRestaurant) {
+            setLoading(true);
+            const fetchMenu = async () => {
+                try {
+                    const menuData = await getMenu(selectedRestaurant.id);
+                    setCategories(menuData);
+                    setView('menu');
+                    window.scrollTo(0, 0);
+                } catch (error) {
+                    console.error(error);
+                    toast.error("Hiba a menü betöltésekor.");
+                } finally {
+                    setLoading(false);
+                }
+            };
+            fetchMenu();
+        } else {
+            setView('restaurants');
+            setCategories([]);
+        }
+    }, [selectedRestaurant]);
+
+    // Handle back button
+    const handleBack = () => {
+        setSelectedRestaurant(null);
+        setView('restaurants');
+    };
+
+    // Watch active orders
+    useEffect(() => {
+        if (!user) return;
+        const checkStatus = async () => {
+            const { data } = await supabase.from('orders').select('status').eq('user_id', user.id).in('status', ['pending', 'accepted', 'preparing', 'delivering']).limit(1);
+            if (data && data.length > 0) setActiveOrderStatus(data[0].status);
+            else setActiveOrderStatus(null);
+        };
+        checkStatus();
+        const chan = supabase.channel('active-order-watch').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, (payload) => {
+            if (payload.new.user_id === user.id) checkStatus();
+        }).subscribe();
+        return () => supabase.removeChannel(chan);
+    }, [user]);
     if (authLoading) {
         return (
             <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] flex justify-center items-center">
