@@ -1,0 +1,23 @@
+{
+    "cardNumber": "Kártyaszám",
+    "points": "Pont",
+    "transactions": "Tranzakciók",
+    "editProfile": "Profil szerkesztése",
+    "balance": "Egyenleg",
+    "logout": "Kijelentkezés",
+    "logoutSubtitle": "Biztonságos kilépés",
+    "save": "Mentés",
+    "active": "aktív",
+    "touchCard": "Érintsd meg a kártyát",
+    "fullName": "Teljes Név",
+    "address": "Lakcím",
+    "email": "Email",
+    "phone": "Telefon",
+    "noTransactions": "Nincs még tranzakció.",
+    "downloadPass": "Pass letöltve!",
+    "generatingPass": "Apple Wallet Pass generálása...",
+    "googleWalletPrep": "Google Wallet előkészítése...",
+    "googleWalletSuccess": "Kész! Megnyitás...",
+    "error": "Hiba történt",
+    "personalData": "Személyes adatok"
+}

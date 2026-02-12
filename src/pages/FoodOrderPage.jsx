@@ -550,10 +550,53 @@ function MyOrdersList({ user }) {
 function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId }) {
     const { user } = useAuth();
     const [step, setStep] = useState('cart');
-    const [form, setForm] = useState({ name: '', phone: '', address: '', note: '' });
+    const [form, setForm] = useState({ name: '', phone: '', address: '', note: '', paymentMethod: 'cash' });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    useEffect(() => { if (step === 'checkout' && user) { const fetchUserData = async () => { const { data } = await supabase.from('koszegpass_users').select('full_name, phone, address').eq('id', user.id).single(); if (data) setForm(prev => ({ ...prev, name: data.full_name || prev.name, phone: data.phone || prev.phone, address: data.address || prev.address })); }; fetchUserData(); } }, [step, user]);
-    const handleSubmit = async (e) => { e.preventDefault(); setIsSubmitting(true); try { const ordersByRestaurant = items.reduce((acc, item) => { if (!acc[item.restaurant_id]) acc[item.restaurant_id] = []; acc[item.restaurant_id].push(item); return acc; }, {}); await Promise.all(Object.keys(ordersByRestaurant).map(rId => placeOrder({ restaurantId: rId, customer: { ...form, userId: user?.id }, cartItems: ordersByRestaurant[rId] }))); toast.success("Rendelés elküldve! 🍔"); onClear(); onClose(); } catch (error) { console.error(error); toast.error('Hiba történt.'); } finally { setIsSubmitting(false); } };
+
+    useEffect(() => {
+        if (step === 'checkout' && user) {
+            const fetchUserData = async () => {
+                const { data } = await supabase.from('koszegpass_users').select('full_name, phone, address').eq('id', user.id).single();
+                if (data) setForm(prev => ({
+                    ...prev,
+                    name: data.full_name || prev.name,
+                    phone: data.phone || prev.phone,
+                    address: data.address || prev.address
+                }));
+            };
+            fetchUserData();
+        }
+    }, [step, user]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            const ordersByRestaurant = items.reduce((acc, item) => {
+                if (!acc[item.restaurant_id]) acc[item.restaurant_id] = [];
+                acc[item.restaurant_id].push(item);
+                return acc;
+            }, {});
+
+            await Promise.all(Object.keys(ordersByRestaurant).map(rId =>
+                placeOrder({
+                    restaurantId: rId,
+                    customer: { ...form, userId: user?.id }, // form now includes paymentMethod
+                    cartItems: ordersByRestaurant[rId]
+                })
+            ));
+
+            toast.success("Rendelés elküldve! 🍔 +Pontok jóváírva!");
+            onClear();
+            onClose();
+        } catch (error) {
+            console.error(error);
+            toast.error('Hiba történt.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="fixed inset-0 z-[100] flex justify-end pointer-events-none">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-black/20 backdrop-blur-sm pointer-events-auto" />
@@ -562,10 +605,48 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                 <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
                     {items.length === 0 ? <div className="h-full flex flex-col items-center justify-center text-gray-400"><IoBasket className="text-5xl mb-3 opacity-20" /><p className="text-sm">Még üres...</p></div> :
                         step === 'cart' ? <div className="space-y-3">{items.map(item => (<div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5"><div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">{item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}</div><div className="flex-1 min-w-0"><h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4><p className="text-[10px] text-amber-600 font-bold">{item.price} Ft</p></div><div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm"><button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button><span className="text-xs font-bold w-3 text-center">{item.quantity}</span><button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button></div></div>))}</div> :
-                            <form id="checkout-form" onSubmit={handleSubmit} className="space-y-3"><div className="space-y-2"><input required type="text" placeholder="Név" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} /><input required type="tel" placeholder="Telefonszám" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} /><input required type="text" placeholder="Cím" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} /><textarea rows={3} placeholder="Megjegyzés futárnak..." className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm resize-none" value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} /></div></form>
+                            <form id="checkout-form" onSubmit={handleSubmit} className="space-y-4">
+                                <div className="space-y-2">
+                                    <input required type="text" placeholder="Név" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+                                    <input required type="tel" placeholder="Telefonszám" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+                                    <input required type="text" placeholder="Cím" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
+                                    <textarea rows={3} placeholder="Megjegyzés futárnak..." className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm resize-none" value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} />
+                                </div>
+
+                                {/* PAYMENT METHOD SELECTION */}
+                                <div className="space-y-2">
+                                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Fizetési mód</h3>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setForm({ ...form, paymentMethod: 'cash' })}
+                                            className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'cash' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
+                                        >
+                                            <IoWallet className="text-lg" />
+                                            <span className="text-[10px] font-bold">Készpénz</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setForm({ ...form, paymentMethod: 'card_terminal' })}
+                                            className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'card_terminal' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
+                                        >
+                                            <div className="text-lg">💳</div>
+                                            <span className="text-[10px] font-bold">Kártya (Futárnál)</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setForm({ ...form, paymentMethod: 'szep_card' })}
+                                            className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'szep_card' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
+                                        >
+                                            <div className="text-lg">🎫</div>
+                                            <span className="text-[10px] font-bold">SZÉP Kártya</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                     }
                 </div>
-                {items.length > 0 && <div className="p-6 bg-white dark:bg-zinc-900 border-t border-black/5 dark:border-white/5 pb-10"><div className="flex justify-between items-end mb-4"><span className="text-gray-500 font-bold text-sm">Végösszeg</span><span className="text-2xl font-black text-amber-500">{total.toLocaleString('hu-HU')} Ft</span></div>{step === 'cart' ? <button onClick={() => setStep('checkout')} className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl shadow-xl shadow-amber-500/20 active:scale-95 transition-all text-base">Fizetés</button> : <div className="flex gap-3"><button type="button" onClick={() => setStep('cart')} className="px-5 py-3 bg-gray-100 dark:bg-white/10 font-bold rounded-xl hover:bg-gray-200 transition-colors text-sm">Vissza</button><button type="submit" form="checkout-form" disabled={isSubmitting} className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-black rounded-xl shadow-xl shadow-green-500/20 active:scale-95 transition-all text-base flex justify-center">{isSubmitting ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Rendelés Leadása'}</button></div>}</div>}
+                {items.length > 0 && <div className="p-6 bg-white dark:bg-zinc-900 border-t border-black/5 dark:border-white/5 pb-10"><div className="flex justify-between items-end mb-4"><span className="text-gray-500 font-bold text-sm">Végösszeg (+{Math.floor(total / 100)} pont)</span><span className="text-2xl font-black text-amber-500">{total.toLocaleString('hu-HU')} Ft</span></div>{step === 'cart' ? <button onClick={() => setStep('checkout')} className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl shadow-xl shadow-amber-500/20 active:scale-95 transition-all text-base">Fizetés</button> : <div className="flex gap-3"><button type="button" onClick={() => setStep('cart')} className="px-5 py-3 bg-gray-100 dark:bg-white/10 font-bold rounded-xl hover:bg-gray-200 transition-colors text-sm">Vissza</button><button type="submit" form="checkout-form" disabled={isSubmitting} className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-black rounded-xl shadow-xl shadow-green-500/20 active:scale-95 transition-all text-base flex justify-center">{isSubmitting ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Rendelés Leadása'}</button></div>}</div>}
             </motion.div>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import GastroCard from '../components/GastroCard';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { FaSearch } from 'react-icons/fa';
@@ -22,6 +23,7 @@ function makeStableWeightFn(salt) {
 }
 
 export default function Gastronomy({ restaurants = [], loading }) {
+  const { t } = useTranslation('gastronomy'); // Load namespace 
   const navigate = useNavigate();
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -77,7 +79,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
             <svg className="w-5 h-5 text-gray-700 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
           </button>
           <h1 className="text-xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">
-            Gasztro & Ízek
+            {t('title')}
           </h1>
           <div className="w-9" />
         </div>
@@ -87,7 +89,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
           <div className="flex gap-3 h-8">
             <input
               type="search"
-              placeholder="Keress éttermet..."
+              placeholder={t('searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1 h-full px-4 rounded-lg
@@ -127,7 +129,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
                 }
                `}
             >
-              {type}
+              {type === 'Minden' ? t('all') : type === 'Kedvenceim' ? t('favorites') : type}
             </button>
           ))}
         </div>
@@ -145,9 +147,9 @@ export default function Gastronomy({ restaurants = [], loading }) {
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-60">
-              <p className="text-sm font-bold text-gray-500">Nincs találat...</p>
+              <p className="text-sm font-bold text-gray-500">{t('noResults')}</p>
               <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-orange-500 text-xs font-bold hover:underline">
-                Szűrők törlése
+                {t('clearFilters')}
               </button>
             </div>
           )}

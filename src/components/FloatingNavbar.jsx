@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; // Added import
 import { useAuth } from '../contexts/AuthContext';
 import {
   IoHomeOutline, IoHome,
@@ -17,25 +18,26 @@ import {
 } from 'react-icons/io5';
 
 export default function FloatingNavbar() {
+  const { t } = useTranslation(); // Hook
   const navItems = [
-    { to: "/", icon: IoHomeOutline, activeIcon: IoHome, label: "Főoldal" },
-    { to: "/attractions", icon: IoLocationOutline, activeIcon: IoLocation, label: "Látnivalók" },
-    { to: "/events", icon: IoCalendarOutline, activeIcon: IoCalendar, label: "Események" },
-    { to: "/gastronomy", icon: IoRestaurantOutline, activeIcon: IoRestaurant, label: "Gasztró" },
-    { to: "/hotels", icon: IoBedOutline, activeIcon: IoBed, label: "Szállás" },
-    { to: "/leisure", icon: IoBicycleOutline, activeIcon: IoBicycle, label: "Szabadidő" },
-    { to: "/parking", icon: IoCarOutline, activeIcon: IoCar, label: "Parkolás" },
-    { to: "/live-map", icon: IoMapOutline, activeIcon: IoMap, label: "Térkép" },
-    { to: "/weather", icon: IoCloudyNightOutline, activeIcon: IoCloudyNight, label: "Időjárás" },
-    { to: "/info", icon: IoInformationCircleOutline, activeIcon: IoInformationCircle, label: "Infó" },
+    { to: "/", icon: IoHomeOutline, activeIcon: IoHome, label: t('nav.home') },
+    { to: "/attractions", icon: IoLocationOutline, activeIcon: IoLocation, label: t('nav.attractions') },
+    { to: "/events", icon: IoCalendarOutline, activeIcon: IoCalendar, label: t('nav.events') },
+    { to: "/gastronomy", icon: IoRestaurantOutline, activeIcon: IoRestaurant, label: t('nav.gastronomy') },
+    { to: "/hotels", icon: IoBedOutline, activeIcon: IoBed, label: t('nav.hotels') },
+    { to: "/leisure", icon: IoBicycleOutline, activeIcon: IoBicycle, label: t('nav.leisure') },
+    { to: "/parking", icon: IoCarOutline, activeIcon: IoCar, label: t('nav.parking') },
+    { to: "/live-map", icon: IoMapOutline, activeIcon: IoMap, label: t('nav.map') },
+    { to: "/weather", icon: IoCloudyNightOutline, activeIcon: IoCloudyNight, label: t('nav.weather') },
+    { to: "/info", icon: IoInformationCircleOutline, activeIcon: IoInformationCircle, label: t('nav.info') },
   ];
 
   const { user } = useAuth();
 
   // Dynamic Auth Item
   const authItem = user
-    ? { to: "/pass/profile", icon: IoPersonCircleOutline, activeIcon: IoPersonCircle, label: "Profil" }
-    : { to: "/pass/register", icon: IoKeyOutline, activeIcon: IoKey, label: "Belépés" };
+    ? { to: "/pass/profile", icon: IoPersonCircleOutline, activeIcon: IoPersonCircle, label: t('nav.profile') }
+    : { to: "/pass/register", icon: IoKeyOutline, activeIcon: IoKey, label: t('nav.login') };
 
   // Add to nav items
   const allNavItems = [...navItems, authItem];

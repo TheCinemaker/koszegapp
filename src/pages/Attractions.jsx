@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { fetchAttractions } from '../api';
 import { Link } from 'react-router-dom';
 import AttractionsMap from '../components/AttractionsMap';
@@ -18,6 +19,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FadeUp } from '../components/AppleMotion';
 
 export default function Attractions() {
+  const { t } = useTranslation('attractions'); // Load namespace
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -75,7 +77,7 @@ export default function Attractions() {
 
   const handleLocateMe = () => {
     if (!navigator.geolocation) {
-      setLocationError('A böngésződ nem támogatja a helymeghatározást.');
+      setLocationError(t('locationError.unsupported'));
       return;
     }
     setIsLocating(true);
@@ -87,7 +89,7 @@ export default function Attractions() {
         setIsLocating(false);
       },
       () => {
-        setLocationError('Nem sikerült lekérni a pozíciót. Engedélyezd a böngészőben.');
+        setLocationError(t('locationError.permission'));
         setIsLocating(false);
       }
     );
@@ -115,7 +117,7 @@ export default function Attractions() {
             <IoArrowBack className="text-xl text-gray-900 dark:text-white" />
           </Link>
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Látnivalók
+            {t('title')}
           </h1>
         </FadeUp>
 
@@ -129,7 +131,7 @@ export default function Attractions() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Keress kincseket..."
+                placeholder={t('searchPlaceholder')}
                 className="flex-1 h-full px-5 bg-transparent
                            text-sm font-medium text-gray-900 dark:text-gray-100
                            placeholder-gray-500 dark:placeholder-gray-400
@@ -154,7 +156,7 @@ export default function Attractions() {
                     : 'bg-white/40 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-white/30 hover:bg-white/60 dark:hover:bg-white/10'
                     }`}
                 >
-                  {category}
+                  {category === 'Minden' ? t('all') : category === 'Kedvenceim' ? t('favorites') : category}
                 </button>
               ))}
             </div>
@@ -190,7 +192,7 @@ export default function Attractions() {
             <AnimatePresence>
               {filteredItems.length === 0 && !loading && (
                 <FadeUp className="col-span-full text-center py-20 opacity-50">
-                  <p className="text-xl font-light">Nincs találat.</p>
+                  <p className="text-xl font-light">{t('noResults')}</p>
                 </FadeUp>
               )}
               {filteredItems.map((item, idx) => (
@@ -264,14 +266,14 @@ export default function Attractions() {
                           rel="noopener noreferrer"
                           className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-indigo-500 transition-colors flex items-center gap-1"
                         >
-                          <IoLocationOutline className="text-lg" /> Térkép
+                          <IoLocationOutline className="text-lg" /> {t('mapLink')}
                         </a>
 
                         <Link
                           to={`/attractions/${item.id}`}
                           className="flex items-center gap-1 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-2 transition-all duration-300"
                         >
-                          Részletek <IoChevronForward />
+                          {t('details')} <IoChevronForward />
                         </Link>
                       </div>
                     </div>

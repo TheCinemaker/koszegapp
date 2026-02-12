@@ -1,0 +1,15 @@
+{
+    "title": "Informationen",
+    "subtitle": "Öffentliche Daten und Notrufnummern.",
+    "categories": {
+        "emergency": "Notruf",
+        "health": "Gesundheitswesen",
+        "tourism": "Tourismus",
+        "app": "Über die App"
+    },
+    "aboutCard": {
+        "title": "KőszegAPP",
+        "desc": "Nicht nur eine App. Teil des digitalen Gewebes von Kőszeg. Offline-Karte, Echtzeit-Ereignisse, Intelligentes Stadtmanagement. Die Zukunft ist da.",
+        "button": "Mehr"
+    }
+}

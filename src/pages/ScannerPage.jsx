@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { QrReader } from 'react-qr-reader';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBack, IoScanOutline, IoCheckmarkCircle, IoCloseCircle, IoFlashOutline, IoFlashOffOutline } from 'react-icons/io5';
@@ -6,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export default function ScannerPage() {
+    const { t } = useTranslation('scanner'); // Load 'scanner' namespace
     const navigate = useNavigate();
     const [data, setData] = useState(null);
     const [scanResult, setScanResult] = useState(null); // 'valid' | 'invalid' | null | 'error'
@@ -33,12 +35,12 @@ export default function ScannerPage() {
             if (result.valid) {
                 setScanResult('valid');
                 setScannedUser(result.user);
-                toast.success(`Sikeres! ${result.user.name}`);
+                toast.success(t('success', { name: result.user.name }));
                 // Play success sound
             } else {
                 setScanResult('invalid');
                 // Check if message is in result.message OR result.error
-                const msg = result.message || result.error || "Érvénytelen kód!";
+                const msg = result.message || result.error || t('invalidCode');
                 setServerMessage(msg);
                 toast.error(msg);
                 // Play error sound
@@ -47,7 +49,7 @@ export default function ScannerPage() {
         } catch (error) {
             console.error("Scan error:", error);
             setScanResult('error');
-            toast.error("Hálózati hiba!");
+            toast.error(t('networkError'));
         } finally {
             setLoading(false);
         }
@@ -81,8 +83,8 @@ export default function ScannerPage() {
 
             if (result.success) {
                 const msg = mode === 'add'
-                    ? `Sikeres jóváírás: +${result.addedPoints} pont! (${amount} Ft)`
-                    : `Sikeres beváltás: -${result.deductedPoints} pont!`;
+                    ? t('successfulCredit', { points: result.addedPoints, amount })
+                    : t('successfulRedemption', { points: result.deductedPoints });
 
                 toast.success(msg, { duration: 4000 });
                 // Vibrate pattern
@@ -94,11 +96,11 @@ export default function ScannerPage() {
                 // Auto reset
                 setTimeout(resetScanner, 3500);
             } else {
-                toast.error(result.message || "Hiba a tranzakció során");
+                toast.error(result.message || t('transactionError'));
             }
         } catch (error) {
             console.error("Transaction error:", error);
-            toast.error("Hálózati hiba!");
+            toast.error(t('networkError'));
             setLoading(false);
         }
     };
@@ -130,7 +132,7 @@ export default function ScannerPage() {
                 >
                     <IoArrowBack className="text-xl" />
                 </button>
-                <h1 className="text-lg font-bold tracking-wider uppercase">KőszegPass Scanner</h1>
+                <h1 className="text-lg font-bold tracking-wider uppercase">{t('title')}</h1>
                 <div className="w-10" /> {/* Spacer */}
             </div>
 
@@ -157,7 +159,7 @@ export default function ScannerPage() {
                             </div>
                         </div>
                         <p className="absolute bottom-10 left-0 right-0 text-center text-white/70 text-sm font-medium">
-                            Irányítsd a kamerát a QR kódra
+                            {t('pointCamera')}
                         </p>
                     </div>
                 ) : (
@@ -167,7 +169,7 @@ export default function ScannerPage() {
                         {loading ? (
                             <div className="text-center">
                                 <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
-                                <p className="text-white/70">Feldolgozás...</p>
+                                <p className="text-white/70">{t('processing')}</p>
                             </div>
                         ) : (
                             <>
@@ -184,17 +186,17 @@ export default function ScannerPage() {
                                 </motion.div>
 
                                 <h2 className="text-2xl font-bold mb-2">
-                                    {scanResult === 'valid' ? 'Érvényes KőszegPass' : 'Érvénytelen!'}
+                                    {scanResult === 'valid' ? t('validPass') : t('invalid')}
                                 </h2>
 
                                 {scanResult === 'valid' && scannedUser && (
                                     <div className="bg-white/10 rounded-2xl p-6 w-full max-w-sm mb-8 mx-auto text-center border border-white/10 backdrop-blur-md shadow-xl">
                                         <h3 className="text-xl font-bold text-white mb-1">{scannedUser.name}</h3>
-                                        <p className="text-white/60 text-sm uppercase tracking-wider mb-4">{scannedUser.cardType} Kártya</p>
+                                        <p className="text-white/60 text-sm uppercase tracking-wider mb-4">{scannedUser.cardType} {t('card')}</p>
 
                                         <div className="inline-flex items-center gap-2 bg-indigo-500/20 px-4 py-2 rounded-full border border-indigo-500/30">
                                             <IoFlashOutline className="text-yellow-400" />
-                                            <span className="font-bold text-white text-lg">{scannedUser.points} Pont</span>
+                                            <span className="font-bold text-white text-lg">{scannedUser.points} {t('points')}</span>
                                         </div>
                                     </div>
                                 )}
@@ -206,13 +208,13 @@ export default function ScannerPage() {
                                             onClick={() => setMode('add')}
                                             className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'add' ? 'bg-indigo-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
                                         >
-                                            Jóváírás
+                                            {t('credit')}
                                         </button>
                                         <button
                                             onClick={() => setMode('deduct')}
                                             className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${mode === 'deduct' ? 'bg-red-500 text-white shadow-lg' : 'text-white/50 hover:text-white'}`}
                                         >
-                                            Beváltás
+                                            {t('redeem')}
                                         </button>
                                     </div>
                                 )}
@@ -221,12 +223,12 @@ export default function ScannerPage() {
                                 {scanResult === 'valid' && (
                                     <div className="w-full max-w-sm mb-6">
                                         <label className="block text-white/60 text-xs uppercase tracking-widest mb-2 font-bold text-left ml-1">
-                                            {mode === 'add' ? 'Vásárlás összege (Ft)' : 'Pontok száma'}
+                                            {mode === 'add' ? t('purchaseAmount') : t('pointsAmount')}
                                         </label>
                                         <div className="flex gap-2">
                                             <input
                                                 type="number"
-                                                placeholder={mode === 'add' ? "pl. 3900" : "pl. 500"}
+                                                placeholder={mode === 'add' ? t('placeholderCredit') : t('placeholderRedeem')}
                                                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-lg font-bold placeholder-white/30 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 transition-all"
                                                 id="amountInput"
                                             />
@@ -234,23 +236,23 @@ export default function ScannerPage() {
                                                 onClick={() => {
                                                     const val = document.getElementById('amountInput').value;
                                                     if (val) handleTransaction(val);
-                                                    else toast.error("Add meg az összeget!");
+                                                    else toast.error(t('enterAmount'));
                                                 }}
                                                 disabled={loading}
                                                 className={`px-6 py-3 rounded-xl font-bold text-white shadow-lg active:scale-95 transition-transform disabled:opacity-50 ${mode === 'add' ? 'bg-gradient-to-br from-indigo-600 to-purple-700' : 'bg-gradient-to-br from-red-600 to-orange-700'}`}
                                             >
-                                                {mode === 'add' ? 'Jóváírás' : 'Levonás'}
+                                                {mode === 'add' ? t('credit') : t('deduct')}
                                             </button>
                                         </div>
                                         {mode === 'add' && <p className="text-white/40 text-[10px] mt-2 text-left ml-1">
-                                            Minden 1000 Ft után 1 pont jár. (pl. 3900 Ft = 3 pont)
+                                            {t('creditInfo')}
                                         </p>}
                                     </div>
                                 )}
 
                                 {scanResult !== 'valid' && (
                                     <div className="bg-red-500/10 rounded-xl p-4 w-full max-w-xs mb-8 mx-auto text-center border border-red-500/30">
-                                        <p className="text-red-300 font-medium">{serverMessage || "A kártya nem található vagy inaktív."}</p>
+                                        <p className="text-red-300 font-medium">{serverMessage || t('cardNotFound')}</p>
                                     </div>
                                 )}
 
@@ -259,7 +261,7 @@ export default function ScannerPage() {
                                     className="px-8 py-3 bg-white text-black rounded-full font-bold shadow-lg hover:scale-105 active:scale-95 transition-transform flex items-center gap-2"
                                 >
                                     <IoScanOutline />
-                                    Új beolvasás
+                                    {t('newScan')}
                                 </button>
                             </>
                         )}

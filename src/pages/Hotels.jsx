@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { fetchHotels } from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaArrowLeft, FaMapMarkerAlt, FaBed } from 'react-icons/fa';
@@ -6,6 +7,7 @@ import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
 
 export default function Hotels() {
+  const { t } = useTranslation('hotels'); // Load namespace 
   const navigate = useNavigate();
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
@@ -58,7 +60,7 @@ export default function Hotels() {
             <FaArrowLeft className="text-sm text-gray-700 dark:text-white" />
           </button>
           <h1 className="text-xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">
-            Szállás
+            {t('title')}
           </h1>
           <div className="w-9" />
         </div>
@@ -68,7 +70,7 @@ export default function Hotels() {
           <div className="flex gap-3 h-8">
             <input
               type="search"
-              placeholder="Keress szállást..."
+              placeholder={t('searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1 h-full px-4 rounded-lg
@@ -108,7 +110,7 @@ export default function Hotels() {
                 }
                `}
             >
-              {type}
+              {type === 'Minden' ? t('all') : type}
             </button>
           ))}
         </div>
@@ -158,7 +160,7 @@ export default function Hotels() {
 
                     <div className="flex items-center justify-end">
                       <span className="px-4 py-2 rounded-full bg-violet-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-violet-500/30 group-hover:bg-violet-500 transition-colors">
-                        Megtekintés
+                        {t('view')}
                       </span>
                     </div>
                   </div>
@@ -167,9 +169,9 @@ export default function Hotels() {
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-60">
-              <p className="text-sm font-bold text-gray-500">Nincs találat...</p>
+              <p className="text-sm font-bold text-gray-500">{t('noResults')}</p>
               <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-violet-500 text-xs font-bold hover:underline">
-                Szűrők törlése
+                {t('clearFilters')}
               </button>
             </div>
           )}

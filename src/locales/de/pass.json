@@ -1,0 +1,23 @@
+{
+    "cardNumber": "Kartennummer",
+    "points": "Punkte",
+    "transactions": "Transaktionen",
+    "editProfile": "Profil bearbeiten",
+    "balance": "Guthaben",
+    "logout": "Abmelden",
+    "logoutSubtitle": "Sicherer Ausgang",
+    "save": "Speichern",
+    "active": "aktiv",
+    "touchCard": "Karte antippen",
+    "fullName": "Name",
+    "address": "Adresse",
+    "email": "Email",
+    "phone": "Telefon",
+    "noTransactions": "Noch keine Transaktionen.",
+    "downloadPass": "Pass heruntergeladen!",
+    "generatingPass": "Apple Wallet Pass wird erstellt...",
+    "googleWalletPrep": "Google Wallet wird vorbereitet...",
+    "googleWalletSuccess": "Bereit! Öffnen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "personalData": "Persönliche Daten"
+}

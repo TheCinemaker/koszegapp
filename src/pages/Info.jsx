@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { fetchInfo } from '../api';
 import { Link } from 'react-router-dom';
 import {
@@ -51,6 +52,7 @@ const linkifyPhones = (text) => {
 };
 
 export default function Info() {
+  const { t } = useTranslation('info'); // Load namespace
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,10 +74,10 @@ export default function Info() {
   }, [items]);
 
   const categoryOrder = [
-    { key: 'emergency', title: 'Segélyhívók', color: 'from-rose-500 to-red-600', text: 'text-rose-600', icon: IoShieldCheckmarkOutline },
-    { key: 'health', title: 'Egészségügy', color: 'from-emerald-400 to-teal-500', text: 'text-teal-600', icon: IoMedkitOutline },
-    { key: 'tourism', title: 'Turizmus', color: 'from-sky-400 to-blue-500', text: 'text-sky-600', icon: IoLeafOutline },
-    { key: 'app', title: 'Az Alkalmazásról', color: 'from-violet-500 to-purple-600', text: 'text-violet-600', icon: IoInformationCircleOutline }
+    { key: 'emergency', title: t('categories.emergency'), color: 'from-rose-500 to-red-600', text: 'text-rose-600', icon: IoShieldCheckmarkOutline },
+    { key: 'health', title: t('categories.health'), color: 'from-emerald-400 to-teal-500', text: 'text-teal-600', icon: IoMedkitOutline },
+    { key: 'tourism', title: t('categories.tourism'), color: 'from-sky-400 to-blue-500', text: 'text-sky-600', icon: IoLeafOutline },
+    { key: 'app', title: t('categories.app'), color: 'from-violet-500 to-purple-600', text: 'text-violet-600', icon: IoInformationCircleOutline }
   ];
 
   if (loading) return (
@@ -101,10 +103,10 @@ export default function Info() {
           </Link>
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white leading-none">
-              Információk
+              {t('title')}
             </h1>
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">
-              Közérdekű adatok és segélyhívók.
+              {t('subtitle')}
             </p>
           </div>
         </FadeUp>
@@ -151,12 +153,12 @@ export default function Info() {
                                 <IconComponent className="text-4xl text-white drop-shadow-lg" />
                               </div>
                               <div className="flex-1">
-                                <h3 className="text-3xl font-bold mb-2 tracking-tight">KőszegAPP</h3>
+                                <h3 className="text-3xl font-bold mb-2 tracking-tight">{t('aboutCard.title')}</h3>
                                 <p className="text-gray-300 text-sm leading-relaxed max-w-lg mb-6 desc-text font-medium opacity-90">
-                                  Nem csak egy app. Kőszeg digitális szövetének része. Offline térkép, Valós idejű események, Intelligens városirányítás. A jövő megérkezett.
+                                  {t('aboutCard.desc')}
                                 </p>
                                 <span className="inline-flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-transform duration-300 group-hover:scale-105 shadow-lg shadow-white/10">
-                                  Tovább <IoChevronForward />
+                                  {t('aboutCard.button')} <IoChevronForward />
                                 </span>
                               </div>
                             </div>

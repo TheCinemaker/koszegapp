@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchParking } from '../api';
 import { isParkingPaidNow } from '../utils/parkingUtils';
@@ -14,6 +15,7 @@ import { FadeUp } from '../components/AppleMotion';
 import { AnimatePresence } from 'framer-motion';
 
 export default function Parking() {
+  const { t } = useTranslation('parking'); // Load namespace
   const navigate = useNavigate();
   const [parkingSpots, setParkingSpots] = useState([]);
   const [error, setError] = useState(null);
@@ -72,7 +74,7 @@ export default function Parking() {
             <IoArrowBack className="text-xl text-gray-900 dark:text-white" />
           </button>
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Parkolás
+            {t('title')}
           </h1>
         </div>
 
@@ -86,7 +88,7 @@ export default function Parking() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Keress parkolóhelyet..."
+                placeholder={t('searchPlaceholder')}
                 className="flex-1 h-full px-5 bg-transparent
                            text-sm font-medium text-gray-900 dark:text-gray-100
                            placeholder-gray-500 dark:placeholder-gray-400
@@ -114,7 +116,7 @@ export default function Parking() {
                     }
                      `}
                 >
-                  {type}
+                  {type === 'Minden' ? t('all') : type === 'Ingyenes' ? t('free') : t('paid')}
                 </button>
               ))}
             </div>
@@ -177,7 +179,7 @@ export default function Parking() {
                                     ${isPaid ? 'bg-rose-500/90' : 'bg-emerald-500/90'} backdrop-blur-xl
                                 `}>
                           <div className={`w-1.5 h-1.5 rounded-full ${isPaid ? 'bg-white' : 'bg-white animate-pulse'}`} />
-                          {isPaid ? 'Fizetős' : 'Ingyenes'}
+                          {isPaid ? t('paid') : t('free')}
                         </div>
                       </div>
 
@@ -195,10 +197,10 @@ export default function Parking() {
 
                         <div className="flex items-center justify-between border-t border-gray-200/50 dark:border-white/10 pt-4 mt-6">
                           <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                            {spot.capacity ? `${spot.capacity} Hely` : ''}
+                            {spot.capacity ? `${spot.capacity} ${t('spots')}` : ''}
                           </span>
                           <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
-                            Részletek <IoArrowBack className="rotate-180" />
+                            {t('details')} <IoArrowBack className="rotate-180" />
                           </span>
                         </div>
                       </div>
@@ -209,9 +211,9 @@ export default function Parking() {
             ) : (
               <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-40">
                 <IoCarSportOutline className="text-6xl text-gray-400 mb-4" />
-                <p className="text-lg font-bold text-gray-500">Nincs találat...</p>
+                <p className="text-lg font-bold text-gray-500">{t('noResults')}</p>
                 <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-zinc-500 text-sm font-bold hover:underline">
-                  Szűrők törlése
+                  {t('clearFilters')}
                 </button>
               </div>
             )}

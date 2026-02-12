@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
@@ -7,6 +8,7 @@ import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function KoszegPassRegister() {
+    const { t } = useTranslation('auth'); // Load namespace 
     const { register, login } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ export default function KoszegPassRegister() {
 
         // Basic Validation
         if (form.password.length < 6) {
-            toast.error("A jelszónak legalább 6 karakternek kell lennie!");
+            toast.error(t('errors.passwordLength'));
             return;
         }
 
@@ -37,7 +39,7 @@ export default function KoszegPassRegister() {
                 // --- LOGIN LOGIC ---
                 // We use 'client' because KőszegPass users are just clients in the auth system context
                 await login(form.username, form.password, 'client');
-                toast.success('Sikeres belépés! 🔓');
+                toast.success(t('koszegPass.successLogin'));
                 navigate('/pass/profile', { replace: true });
 
             } else {
@@ -66,7 +68,7 @@ export default function KoszegPassRegister() {
                         console.warn("DB Insert warning:", dbError);
                     }
 
-                    toast.success('Sikeres KőszegPass regisztráció! 💳');
+                    toast.success(t('koszegPass.successRegister'));
 
                     // Auto Login if needed
                     if (!authData.session) {
@@ -80,11 +82,11 @@ export default function KoszegPassRegister() {
         } catch (error) {
             console.error(error);
             if (error.message?.includes("already registered") || error.message?.includes("unique constraint")) {
-                toast.error("Ez a felhasználónév már foglalt.");
+                toast.error(t('errors.usernameTaken'));
             } else if (error.message?.includes("Invalid login")) {
-                toast.error("Hibás felhasználónév vagy jelszó.");
+                toast.error(t('errors.invalidCredentials'));
             } else {
-                toast.error("Hiba történt: " + error.message);
+                toast.error(t('errors.genericError') + error.message);
             }
         } finally {
             setLoading(false);
@@ -116,16 +118,16 @@ export default function KoszegPassRegister() {
                         onClick={() => setIsLogin(!isLogin)}
                         className="text-xs font-bold uppercase tracking-widest text-blue-400 hover:text-blue-300 order-2 mx-auto"
                     >
-                        {isLogin ? 'Regisztráció' : 'Belépés'}
+                        {isLogin ? t('koszegPass.switchRegister') : t('koszegPass.switchLogin')}
                     </button>
                 </div>
 
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-                        {isLogin ? 'KőszegPass Belépés' : 'KőszegPass Igénylés'}
+                        {isLogin ? t('koszegPass.loginTitle') : t('koszegPass.registerTitle')}
                     </h1>
                     <p className="text-zinc-400 text-sm mt-2">
-                        {isLogin ? 'Lépj be a digitális útleveleddel.' : 'Hozd létre digitális útleveled.'}
+                        {isLogin ? t('koszegPass.loginSubtitle') : t('koszegPass.registerSubtitle')}
                     </p>
                 </div>
 
@@ -133,7 +135,7 @@ export default function KoszegPassRegister() {
 
                     {/* Username (Always needed) */}
                     <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Felhasználónév</label>
+                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('koszegPass.usernameLabel')}</label>
                         <div className="relative">
                             <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                             <input
@@ -142,7 +144,7 @@ export default function KoszegPassRegister() {
                                 value={form.username}
                                 onChange={e => setForm({ ...form, username: e.target.value })}
                                 className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-zinc-600"
-                                placeholder="Pl. gipszjakab"
+                                placeholder={t('koszegPass.usernamePlaceholder')}
                             />
                         </div>
                     </div>
@@ -151,7 +153,7 @@ export default function KoszegPassRegister() {
                     {!isLogin && (
                         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
                             <div className="space-y-1">
-                                <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Teljes Név</label>
+                                <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('koszegPass.fullNameLabel')}</label>
                                 <div className="relative">
                                     <IoIdCard className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                     <input
@@ -160,7 +162,7 @@ export default function KoszegPassRegister() {
                                         value={form.fullName}
                                         onChange={e => setForm({ ...form, fullName: e.target.value })}
                                         className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-zinc-600"
-                                        placeholder="Pl. Gipsz Jakab"
+                                        placeholder={t('koszegPass.fullNamePlaceholder')}
                                     />
                                 </div>
                             </div>
@@ -181,7 +183,7 @@ export default function KoszegPassRegister() {
 
                     {/* Password */}
                     <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Jelszó</label>
+                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('koszegPass.passwordLabel')}</label>
                         <div className="relative">
                             <IoLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                             <input
@@ -190,7 +192,7 @@ export default function KoszegPassRegister() {
                                 value={form.password}
                                 onChange={e => setForm({ ...form, password: e.target.value })}
                                 className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-zinc-600"
-                                placeholder="••••••••"
+                                placeholder={t('koszegPass.passwordPlaceholder')}
                             />
                         </div>
                     </div>
@@ -201,8 +203,8 @@ export default function KoszegPassRegister() {
                         className="w-full h-14 mt-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 disabled:opacity-50"
                     >
                         {loading
-                            ? (isLogin ? 'Belépés...' : 'Regisztráció...')
-                            : (isLogin ? 'Belépés' : 'KőszegPass Létrehozása')}
+                            ? (isLogin ? t('koszegPass.loginLoading') : t('koszegPass.registerLoading'))
+                            : (isLogin ? t('koszegPass.loginButton') : t('koszegPass.registerButton'))}
                     </button>
 
                 </form>
@@ -237,31 +239,29 @@ export default function KoszegPassRegister() {
                                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-3xl mb-4 shadow-lg shadow-indigo-500/30">
                                     💎
                                 </div>
-                                <h2 className="text-xl font-bold text-white">Mire jó a KőszegPass?</h2>
+                                <h2 className="text-xl font-bold text-white">{t('koszegPass.info.title')}</h2>
                             </div>
 
                             <div className="space-y-4 text-zinc-300 text-sm leading-relaxed">
-                                <p>
-                                    A <strong className="text-white">KőszegPass</strong> a város hivatalos hűségkártyája, amit hamarosan városszerte használhatsz!
-                                </p>
+                                <p dangerouslySetInnerHTML={{ __html: t('koszegPass.info.description') }}></p>
                                 <ul className="space-y-3">
                                     <li className="flex gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
                                         <span className="text-xl">🛍️</span>
                                         <div>
-                                            <strong className="block text-white text-xs uppercase tracking-wide mb-1">Jutalompontok</strong>
-                                            <span>Vásárlásaid után pontokat kapsz a helyi elfogadóhelyeken.</span>
+                                            <strong className="block text-white text-xs uppercase tracking-wide mb-1">{t('koszegPass.info.pointsTitle')}</strong>
+                                            <span>{t('koszegPass.info.pointsDesc')}</span>
                                         </div>
                                     </li>
                                     <li className="flex gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
                                         <span className="text-xl">🏷️</span>
                                         <div>
-                                            <strong className="block text-white text-xs uppercase tracking-wide mb-1">Kedvezmények</strong>
-                                            <span>Szintedtől függően (Bronz, Ezüst, Arany, Gyémánt) %-os kedvezményeket kapsz.</span>
+                                            <strong className="block text-white text-xs uppercase tracking-wide mb-1">{t('koszegPass.info.discountsTitle')}</strong>
+                                            <span>{t('koszegPass.info.discountsDesc')}</span>
                                         </div>
                                     </li>
                                 </ul>
                                 <p className="text-xs text-zinc-500 italic text-center pt-2">
-                                    "Még nincs semmi, de a lényeg ez lesz!" 😉
+                                    {t('koszegPass.info.footer')}
                                 </p>
                             </div>
 
@@ -269,7 +269,7 @@ export default function KoszegPassRegister() {
                                 onClick={() => setShowInfo(false)}
                                 className="w-full py-3 mt-6 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform"
                             >
-                                Értem!
+                                {t('koszegPass.info.button')}
                             </button>
                         </motion.div>
                     </div>

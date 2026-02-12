@@ -1,0 +1,50 @@
+{
+    "sections": {
+        "pass": {
+            "label": "KőszegPass",
+            "desc": "Digitale Stadtkarte."
+        },
+        "events": {
+            "label": "Events",
+            "desc": "Erlebnisse. Live."
+        },
+        "attractions": {
+            "label": "Sehenswertes",
+            "desc": "Zeitlose Schätze."
+        },
+        "food": {
+            "label": "KőszegEats",
+            "desc": "Lokale Aromen, geliefert."
+        },
+        "tickets": {
+            "label": "KőszegTickets",
+            "desc": "Tickets an einem Ort."
+        },
+        "hotels": {
+            "label": "Unterkunft",
+            "desc": "Insel der Ruhe."
+        },
+        "weather": {
+            "label": "Wetter",
+            "desc": "Klare Aussichten."
+        },
+        "game": {
+            "label": "Kőszeg1532",
+            "desc": "Finde die Schätze der Stadt."
+        },
+        "leisure": {
+            "label": "Freizeit",
+            "desc": "Das Abenteuer ruft."
+        },
+        "parking": {
+            "label": "Parken",
+            "desc": "Sie sind angekommen."
+        },
+        "info": {
+            "label": "Info",
+            "desc": "Nützliches Wissen."
+        }
+    },
+    "comingSoon": "DEMNÄCHST",
+    "comingSoonMessage": "Diese Funktion ist bald verfügbar!"
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
@@ -15,6 +16,7 @@ const CATEGORIES = [
 ];
 
 export default function AuthPage() {
+    const { t } = useTranslation('auth'); // Load namespace
     const { login, register } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -46,7 +48,7 @@ export default function AuthPage() {
         const finalCategory = category === 'egyeb' ? customCategory : category;
 
         if (!businessName || !finalCategory || !providerUsername || !password) {
-            toast.error('Töltsd ki az összes mezőt!');
+            toast.error(t('errors.fillAll'));
             return;
         }
 
@@ -71,16 +73,16 @@ export default function AuthPage() {
 
                 if (provError && !provError.message.includes('duplicate')) {
                     console.error("Provider insert error:", provError);
-                    toast.error("Hiba a szolgáltatói adatok mentésekor.");
+                    toast.error(t('errors.saveError'));
                 } else {
-                    toast.success('Sikeres partner regisztráció! 🚀');
+                    toast.success(t('errors.successRegister'));
                     navigate('/business', { replace: true });
                 }
             }
         } catch (error) {
             console.error("Reg Error:", error);
             if (error.message.includes("already registered")) {
-                toast.error('Ez a felhasználónév már foglalt!');
+                toast.error(t('errors.usernameTaken'));
             } else {
                 toast.error('Hiba: ' + error.message);
             }
@@ -92,7 +94,7 @@ export default function AuthPage() {
     const handleProviderLogin = async (e) => {
         e.preventDefault();
         if (!loginUsername || !loginPassword) {
-            toast.error('Hiányzó adatok!');
+            toast.error(t('errors.missingData'));
             return;
         }
 
@@ -102,16 +104,16 @@ export default function AuthPage() {
             if (user) {
                 // Check if user is actually a provider
                 if (user.user_metadata?.role === 'restaurant') {
-                    toast.success("Ez egy étterem fiók! Átirányítás...");
+                    toast.success(t('errors.restaurantRedirect'));
                     navigate('/food-admin');
                 } else {
-                    toast.success('Sikeres belépés!');
+                    toast.success(t('errors.successLogin'));
                     navigate('/business', { replace: true });
                 }
             }
         } catch (error) {
             console.error(error);
-            toast.error('Hibás felhasználónév vagy jelszó!');
+            toast.error(t('errors.invalidCredentials'));
         } finally {
             setLoading(false);
         }
@@ -129,7 +131,7 @@ export default function AuthPage() {
                     onClick={() => navigate(-1)}
                     className="mb-6 flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
                 >
-                    <IoArrowBack /> Vissza
+                    <IoArrowBack /> {t('back')}
                 </button>
 
                 {/* Auth Card */}
@@ -140,12 +142,12 @@ export default function AuthPage() {
 
                     <div className="text-center mb-6">
                         <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
-                            {activeTab === 'client' ? 'Vendég Belépés' : 'Partner Portál'}
+                            {activeTab === 'client' ? t('client.title') : t('provider.title')}
                         </h1>
                         <p className="text-zinc-500 dark:text-zinc-400 text-sm">
                             {activeTab === 'client'
-                                ? 'Használd a KőszegPass-t a belépéshez'
-                                : (isLogin ? 'Jelentkezz be a szolgáltatói pultba' : 'Regisztráld vállalkozásod')}
+                                ? t('client.subtitle')
+                                : (isLogin ? t('provider.loginSubtitle') : t('provider.registerSubtitle'))}
                         </p>
                     </div>
 
@@ -182,20 +184,18 @@ export default function AuthPage() {
                                 💳
                             </motion.div>
 
-                            <p className="text-zinc-600 dark:text-zinc-300 text-sm px-4 leading-relaxed">
-                                A <strong>KőszegApp</strong> összes funkciójához (Foglalás, KőszegPass, Kedvezmények) egyetlen univerzális fiókra van szükséged.
-                            </p>
+                            <p className="text-zinc-600 dark:text-zinc-300 text-sm px-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('client.description') }}></p>
 
                             <div className="pt-2">
                                 <button
                                     onClick={() => navigate('/pass/register')}
                                     className="w-full h-14 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 shadow-blue-500/20"
                                 >
-                                    Login with KőszegPass
+                                    {t('client.loginButton')}
                                     <span className="bg-white/20 px-2 py-0.5 rounded text-xs ml-1">UNIFIED</span>
                                 </button>
                                 <p className="text-xs text-zinc-400 mt-3">
-                                    Nincs még fiókod? A gombra kattintva regisztrálhatsz is.
+                                    {t('client.noAccount')}
                                 </p>
                             </div>
                         </div>
@@ -208,7 +208,7 @@ export default function AuthPage() {
                                     <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                     <input
                                         type="text"
-                                        placeholder="Felhasználónév"
+                                        placeholder={t('provider.login.usernamePlaceholder')}
                                         value={loginUsername}
                                         onChange={e => setLoginUsername(e.target.value)}
                                         className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-white/10 focus:border-purple-500 focus:outline-none dark:text-white"
@@ -219,7 +219,7 @@ export default function AuthPage() {
                                     <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                     <input
                                         type="password"
-                                        placeholder="Jelszó"
+                                        placeholder={t('provider.login.passwordPlaceholder')}
                                         value={loginPassword}
                                         onChange={e => setLoginPassword(e.target.value)}
                                         className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-white/10 focus:border-purple-500 focus:outline-none dark:text-white"
@@ -231,14 +231,14 @@ export default function AuthPage() {
                                     disabled={loading}
                                     className="w-full h-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30"
                                 >
-                                    {loading ? 'Belépés...' : 'Bejelentkezés'}
+                                    {loading ? t('provider.login.loading') : t('provider.login.button')}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setIsLogin(false)}
                                     className="w-full text-sm text-purple-600 dark:text-purple-400 hover:underline pt-2"
                                 >
-                                    Még nincs partner fiókom, regisztrálok
+                                    {t('provider.login.switchToRegister')}
                                 </button>
                             </form>
                         ) : (
@@ -248,7 +248,7 @@ export default function AuthPage() {
                                     <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                     <input
                                         type="text"
-                                        placeholder="Cégnév / Szalon neve *"
+                                        placeholder={t('provider.register.businessNamePlaceholder')}
                                         value={businessName}
                                         onChange={e => setBusinessName(e.target.value)}
                                         className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-white/10 focus:border-purple-500 focus:outline-none dark:text-white"
@@ -263,10 +263,10 @@ export default function AuthPage() {
                                         className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-white/10 focus:border-purple-500 focus:outline-none dark:text-white appearance-none"
                                         required
                                     >
-                                        <option value="">Válassz kategóriát...</option>
+                                        <option value="">{t('provider.register.categoryPlaceholder')}</option>
                                         {CATEGORIES.map(cat => (
                                             <option key={cat.id} value={cat.id}>
-                                                {cat.icon} {cat.label}
+                                                {cat.icon} {t(`provider.register.categories.${cat.id}`)}
                                             </option>
                                         ))}
                                     </select>

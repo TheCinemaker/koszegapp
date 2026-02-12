@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
@@ -132,6 +133,7 @@ const pocketVariants = {
 };
 
 export default function KoszegPassProfile() {
+    const { t } = useTranslation('pass'); // Load 'pass' namespace
     const { user, logout, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
@@ -196,7 +198,7 @@ export default function KoszegPassProfile() {
                 }
             } catch (error) {
                 console.error("Profile fetch error:", error);
-                toast.error("Hiba az adatok betöltésekor.");
+                toast.error(t('error'));
             } finally {
                 setLoading(false);
             }
@@ -255,13 +257,13 @@ export default function KoszegPassProfile() {
 
     const handleSave = async () => {
         const { error } = await supabase.from('koszegpass_users').update(editForm).eq('id', user.id);
-        if (!error) { setProfile({ ...profile, ...editForm }); setIsEditing(false); toast.success("Mentve!"); }
+        if (!error) { setProfile({ ...profile, ...editForm }); setIsEditing(false); toast.success(t('save') + "!"); }
     };
     const handleLogout = async () => { await logout(); navigate('/pass/register'); };
 
     const handleGoogleWallet = async () => {
         if (!profile) return;
-        const toastId = toast.loading("Google Wallet előkészítése...");
+        const toastId = toast.loading(t('googleWalletPrep'));
         try {
             const response = await fetch('/.netlify/functions/create-google-pass', {
                 method: 'POST',
@@ -276,14 +278,14 @@ export default function KoszegPassProfile() {
             });
             const data = await response.json();
             if (response.ok && data.saveUrl) {
-                toast.success("Kész! Megnyitás...", { id: toastId });
+                toast.success(t('googleWalletSuccess'), { id: toastId });
                 window.open(data.saveUrl, '_blank');
             } else {
-                throw new Error(data.error || "Hiba történt");
+                throw new Error(data.error || t('error'));
             }
         } catch (error) {
             console.error(error);
-            toast.error("Sikertelen hozzáadás: " + error.message, { id: toastId });
+            toast.error(t('error') + ": " + error.message, { id: toastId });
         }
     };
 
@@ -363,7 +365,7 @@ export default function KoszegPassProfile() {
                                     <div>
                                         <div className="flex items-center gap-1.5 bg-black/20 rounded-full px-2 py-0.5 w-fit backdrop-blur-sm border border-white/5">
                                             <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.6)]" />
-                                            <p className="text-[9px] text-white/90 font-mono tracking-wide lowercase">aktív</p>
+                                            <p className="text-[9px] text-white/90 font-mono tracking-wide lowercase">{t('active')}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -371,7 +373,7 @@ export default function KoszegPassProfile() {
                                 {/* Bottom Row: ID only (Chip Removed) */}
                                 <div className="flex justify-between items-end">
                                     <div className="flex flex-col">
-                                        <span className="text-[8px] text-white/50 uppercase tracking-widest mb-1 font-semibold">Kártyaszám</span>
+                                        <span className="text-[8px] text-white/50 uppercase tracking-widest mb-1 font-semibold">{t('cardNumber')}</span>
                                         <span className="font-mono text-white/95 tracking-[0.15em] text-sm tabular-nums">•••• {user.id.slice(-4)}</span>
                                     </div>
                                 </div>
@@ -401,7 +403,7 @@ export default function KoszegPassProfile() {
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-sm border border-black/5 dark:border-white/5">
                         <IoSwapHorizontal className="text-zinc-400 dark:text-zinc-500 text-xs" />
                         <span className="text-[10px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">
-                            Érintsd meg a kártyát
+                            {t('touchCard')}
                         </span>
                     </div>
                 </motion.div>
@@ -458,7 +460,7 @@ export default function KoszegPassProfile() {
                                 <span className="text-3xl font-black text-zinc-900 dark:text-white tracking-tighter">
                                     {(profile?.points ?? 0).toLocaleString()}
                                 </span>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mt-1">Pont</span>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mt-1">{t('points')}</span>
                             </div>
                         </CircularProgress>
                     </div>
@@ -479,12 +481,12 @@ export default function KoszegPassProfile() {
                                     >
                                         <IoArrowBack />
                                     </button>
-                                    <h3 className="text-xl font-bold dark:text-white">Tranzakciók</h3>
+                                    <h3 className="text-xl font-bold dark:text-white">{t('transactions')}</h3>
                                 </div>
 
                                 <div className="space-y-3 pb-8">
                                     {history.length === 0 ? (
-                                        <p className="text-center text-zinc-500 py-8">Nincs még tranzakció.</p>
+                                        <p className="text-center text-zinc-500 py-8">{t('noTransactions')}</p>
                                     ) : (
                                         history.map(item => (
                                             <div key={item.id} className="flex items-center justify-between p-4 bg-white dark:bg-white/5 rounded-2xl border border-zinc-100 dark:border-white/5">
@@ -512,8 +514,8 @@ export default function KoszegPassProfile() {
                             >
                                 <div className="grid grid-cols-1 gap-3 max-w-md mx-auto">
                                     <FeatureCard
-                                        title="Profil szerkesztése"
-                                        subtitle="Személyes adatok"
+                                        title={t('editProfile')}
+                                        subtitle={t('personalData')}
                                         icon={<IoPerson />}
                                         colorFrom="from-blue-400"
                                         colorTo="to-indigo-600"
@@ -521,8 +523,8 @@ export default function KoszegPassProfile() {
                                         onClick={() => setIsEditing(!isEditing)}
                                     />
                                     <FeatureCard
-                                        title="Egyenleg"
-                                        subtitle="Tranzakciók"
+                                        title={t('balance')}
+                                        subtitle={t('transactions')}
                                         icon={<IoWalletOutline />}
                                         colorFrom="from-yellow-400"
                                         colorTo="to-orange-500"
@@ -530,8 +532,8 @@ export default function KoszegPassProfile() {
                                         onClick={() => setShowHistory(true)}
                                     />
                                     <FeatureCard
-                                        title="Kijelentkezés"
-                                        subtitle="Biztonságos kilépés"
+                                        title={t('logout')}
+                                        subtitle={t('logoutSubtitle')}
                                         icon={<IoLogOut />}
                                         colorFrom="from-red-400"
                                         colorTo="to-rose-600"
@@ -543,7 +545,7 @@ export default function KoszegPassProfile() {
                                 <div className="mt-6 flex flex-col gap-3 justify-center pb-8 border-t border-zinc-200 dark:border-white/10 pt-6 px-4">
                                     <button
                                         onClick={async () => {
-                                            const toastId = toast.loading('Apple Wallet Pass generálása...');
+                                            const toastId = toast.loading(t('generatingPass'));
                                             try {
                                                 const res = await fetch('/.netlify/functions/create-apple-pass', {
                                                     method: 'POST',
@@ -565,10 +567,10 @@ export default function KoszegPassProfile() {
                                                 document.body.appendChild(a);
                                                 a.click();
                                                 document.body.removeChild(a);
-                                                toast.success('Pass letöltve!', { id: toastId });
+                                                toast.success(t('downloadPass'), { id: toastId });
                                             } catch (e) {
                                                 console.error(e);
-                                                toast.error('Hiba történt', { id: toastId });
+                                                toast.error(t('error'), { id: toastId });
                                             }
                                         }}
                                         className="transition-transform active:scale-95"
@@ -607,7 +609,7 @@ export default function KoszegPassProfile() {
                                 className="relative w-full max-w-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-6 shadow-2xl"
                             >
                                 <div className="flex justify-between items-center mb-6">
-                                    <h3 className="font-bold text-xl dark:text-white">Profil szerkesztése</h3>
+                                    <h3 className="font-bold text-xl dark:text-white">{t('editProfile')}</h3>
                                     <button onClick={() => setIsEditing(false)} className="p-2 bg-zinc-100 dark:bg-white/5 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 transition-colors">
                                         <IoArrowBack size={20} className="dark:text-white" />
                                     </button>
@@ -615,37 +617,37 @@ export default function KoszegPassProfile() {
 
                                 <div className="space-y-4">
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Teljes Név</label>
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('fullName')}</label>
                                         <input
                                             className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="Teljes név"
+                                            placeholder={t('fullName')}
                                             value={editForm.full_name}
                                             onChange={e => setEditForm({ ...editForm, full_name: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Lakcím</label>
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('address')}</label>
                                         <input
                                             className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="Lakcím"
+                                            placeholder={t('address')}
                                             value={editForm.address}
                                             onChange={e => setEditForm({ ...editForm, address: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Email</label>
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('email')}</label>
                                         <input
                                             className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="Email"
+                                            placeholder={t('email')}
                                             value={editForm.email}
                                             onChange={e => setEditForm({ ...editForm, email: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">Telefon</label>
+                                        <label className="text-xs font-bold uppercase text-zinc-500 ml-1">{t('phone')}</label>
                                         <input
                                             className="w-full bg-zinc-50 dark:bg-black p-3 rounded-xl border border-zinc-200 dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="Telefon"
+                                            placeholder={t('phone')}
                                             value={editForm.phone}
                                             onChange={e => setEditForm({ ...editForm, phone: e.target.value })}
                                         />
@@ -654,7 +656,7 @@ export default function KoszegPassProfile() {
                                         onClick={handleSave}
                                         className="w-full py-4 mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 active:scale-95 transition-transform"
                                     >
-                                        Mentés
+                                        {t('save')}
                                     </button>
                                 </div>
                             </motion.div>

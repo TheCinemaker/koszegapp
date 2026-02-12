@@ -18,21 +18,25 @@ import {
 import { motion } from 'framer-motion';
 import { FadeUp } from '../components/AppleMotion';
 
-const sections = [
-  { to: '/pass', label: 'KőszegPass', desc: 'Digitális városkártya.', icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-2 row-span-1', delay: 0.05 },
-  { to: '/events', label: 'Események', desc: 'Élmények. Élőben.', icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-1 row-span-1', delay: 0.1 },
-  { to: '/attractions', label: 'Látnivalók', desc: 'Időtlen kincsek.', icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 row-span-1', delay: 0.15 },
-  { to: '/food', label: 'KőszegEats', desc: 'Helyi ízek, házhoz.', icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 row-span-1', delay: 0.2, comingSoon: true },
-  { to: '/tickets', label: 'KőszegTickets', desc: 'Belépők egy helyen.', icon: IoQrCode, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1', delay: 0.25, comingSoon: true },
-  { to: '/hotels', label: 'Szállás', desc: 'Nyugalom szigete.', icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1', delay: 0.3 },
-  { to: '/weather', label: 'Időjárás', desc: 'Tiszta kilátások.', icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1', delay: 0.35 },
-  { to: '/game/intro', label: 'Kőszeg1532', desc: 'Találd meg a város kincseit.', icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 row-span-1', delay: 0.4, comingSoon: true },
-  { to: '/leisure', label: 'Szabadidő', desc: 'Kalandra hív.', icon: IoWalkOutline, gradient: 'from-lime-500 to-green-700', span: 'col-span-1', delay: 0.45 },
-  { to: '/parking', label: 'Parkolás', desc: 'Célba értél.', icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1', delay: 0.5 },
-  { to: '/info', label: 'Infó', desc: 'Hasznos tudás.', icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-2 sm:col-span-1', delay: 0.55 },
-];
+import { useTranslation } from 'react-i18next'; // Added import
 
 export default function Home() {
+  const { t } = useTranslation('home'); // Load 'home' namespace
+
+  const sections = [
+    { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-2 row-span-1', delay: 0.05 },
+    { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-1 row-span-1', delay: 0.1 },
+    { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 row-span-1', delay: 0.15 },
+    { to: '/food', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 row-span-1', delay: 0.2, comingSoon: true },
+    { to: '/tickets', label: t('sections.tickets.label'), desc: t('sections.tickets.desc'), icon: IoQrCode, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1', delay: 0.25, comingSoon: true },
+    { to: '/hotels', label: t('sections.hotels.label'), desc: t('sections.hotels.desc'), icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1', delay: 0.3 },
+    { to: '/weather', label: t('sections.weather.label'), desc: t('sections.weather.desc'), icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1', delay: 0.35 },
+    { to: '/game/intro', label: t('sections.game.label'), desc: t('sections.game.desc'), icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 row-span-1', delay: 0.4, comingSoon: true },
+    { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, gradient: 'from-lime-500 to-green-700', span: 'col-span-1', delay: 0.45 },
+    { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1', delay: 0.5 },
+    { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-2 sm:col-span-1', delay: 0.55 },
+  ];
+
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative">
 
@@ -61,7 +65,7 @@ export default function Home() {
                 onClick={(e) => {
                   if (sec.comingSoon) {
                     e.preventDefault();
-                    toast('Ez a funkció hamarosan elérhető!', { icon: '🚧' });
+                    toast(t('comingSoonMessage'), { icon: '🚧' });
                   }
                 }}
                 className={`
@@ -112,7 +116,7 @@ export default function Home() {
                 {sec.comingSoon && (
                   <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px] rounded-[1.5rem]">
                     <span className="text-lg font-black uppercase tracking-widest text-white drop-shadow-md transform -rotate-12 border-2 border-white/50 px-4 py-1 rounded-xl">
-                      HAMAROSAN
+                      {t('comingSoon')}
                     </span>
                   </div>
                 )}

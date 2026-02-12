@@ -1,0 +1,54 @@
+{
+    "header": "Események",
+    "searchPlaceholder": "Keresés...",
+    "filters": {
+        "week": "HETI",
+        "month": "HAVI",
+        "date": "DÁTUM",
+        "all": "MIND"
+    },
+    "addToWallet": "Hozzáadás az Apple Wallethez",
+    "walletButton": "Wallet",
+    "multiDay": "Többnapos",
+    "details": "Részletek",
+    "saveToCalendar": "Naptárba mentés",
+    "generatingPass": "Wallet Pass készítése...",
+    "downloaded": "Letöltve!",
+    "generationError": "Generálási hiba",
+    "errorPrefix": "Hiba: {{message}}",
+    "noResults": {
+        "title": "Nincs találat",
+        "desc": "Próbálj más szűrési feltételeket.",
+        "clearFilters": "Szűrők törlése"
+    },
+    "pastEvents": "Lezajlott Események",
+    "selectMonth": "Hónap kiválasztása",
+    "months": [
+        "Január",
+        "Február",
+        "Március",
+        "Április",
+        "Május",
+        "Június",
+        "Július",
+        "Augusztus",
+        "Szeptember",
+        "Október",
+        "November",
+        "December"
+    ],
+    "monthsShort": [
+        "Jan",
+        "Feb",
+        "Már",
+        "Ápr",
+        "Máj",
+        "Jún",
+        "Júl",
+        "Aug",
+        "Szep",
+        "Okt",
+        "Nov",
+        "Dec"
+    ]
+}

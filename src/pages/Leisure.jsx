@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next'; // Added import
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchLeisure } from '../api';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
@@ -7,6 +8,7 @@ import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
 
 export default function Leisure() {
+  const { t } = useTranslation('leisure'); // Load namespace 
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [error, setError] = useState(null);
@@ -66,7 +68,7 @@ export default function Leisure() {
             <FaArrowLeft className="text-sm text-gray-700 dark:text-white" />
           </button>
           <h1 className="text-xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">
-            Szabadidő
+            {t('title')}
           </h1>
           <div className="w-9" />
         </div>
@@ -76,7 +78,7 @@ export default function Leisure() {
           <div className="flex gap-3 h-8">
             <input
               type="search"
-              placeholder="Keress programot..."
+              placeholder={t('searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1 h-full px-4 rounded-lg
@@ -116,7 +118,8 @@ export default function Leisure() {
                 }
                `}
             >
-              {type}
+            >
+              {type === 'Minden' ? t('all') : type === 'Kedvenceim' ? t('favorites') : type}
             </button>
           ))}
         </div>
@@ -149,7 +152,7 @@ export default function Leisure() {
 
                     <div className="absolute bottom-3 left-4 right-4 text-white">
                       <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider mb-1 opacity-90">
-                        <FaHiking /> {item.category || 'Szabadidő'}
+                        <FaHiking /> {item.category || t('defaultCategory')}
                       </div>
                       <h3 className="text-xl font-bold leading-tight shadow-black drop-shadow-md">{item.name}</h3>
                     </div>
@@ -186,7 +189,7 @@ export default function Leisure() {
                         to={`/leisure/${item.id}`}
                         className="px-4 py-2 rounded-full bg-lime-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-lime-500/30 group-hover:bg-lime-500 transition-colors"
                       >
-                        Részletek
+                        {t('details')}
                       </Link>
                     </div>
                   </div>
@@ -195,9 +198,9 @@ export default function Leisure() {
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-60">
-              <p className="text-sm font-bold text-gray-500">Nincs találat...</p>
+              <p className="text-sm font-bold text-gray-500">{t('noResults')}</p>
               <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-lime-500 text-xs font-bold hover:underline">
-                Szűrők törlése
+                {t('clearFilters')}
               </button>
             </div>
           )}

@@ -1,0 +1,11 @@
+{
+    "title": "Parking",
+    "searchPlaceholder": "Search for parking...",
+    "all": "All",
+    "free": "Free",
+    "paid": "Paid",
+    "spots": "Spots",
+    "details": "Details",
+    "noResults": "No results found...",
+    "clearFilters": "Clear filters"
+}

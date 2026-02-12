@@ -68,6 +68,10 @@ export default function App() {
   );
 }
 
+import AmbientBackground from './components/AmbientBackground';
+
+// ... (imports remain)
+
 // AZ ÖSSZES TÖBBI LOGIKA ÉS JSX ÁTKÖLTÖZIK IDE, EZ A KOMPONENS MÁR A PROVIDEREN BELÜL VAN
 function MainAppContent() {
   const { t, i18n } = useTranslation();
@@ -249,11 +253,13 @@ function MainAppContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col mesh-bg-vibrant text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500">
-      {!isInGameMode && !location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && (
-        <>
-          <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
-            <div className="
+    <>
+      <AmbientBackground weather={weather} dark={dark} />
+      <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
+        {!isInGameMode && !location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && (
+          <>
+            <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
+              <div className="
               pointer-events-auto
               w-full max-w-5xl
               h-full
@@ -267,152 +273,152 @@ function MainAppContent() {
               shadow-[0_10px_40px_rgba(0,0,0,0.1)]
               relative
             ">
-              {/* Subtle Gradient Accent (Top Lip) */}
-              <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
+                {/* Subtle Gradient Accent (Top Lip) */}
+                <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
 
-              <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-                <img
-                  onClick={() => navigate('/')}
-                  src="/images/koeszeg_logo_nobg.png"
-                  alt="KőszegAPP logo"
-                  className="w-8 h-8 sm:w-10 sm:h-10 hover:rotate-12 transition-transform duration-500 cursor-pointer drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]"
-                />
-                <div
-                  onClick={() => navigate('/')}
-                  className="flex items-center gap-0.5 cursor-pointer whitespace-nowrap"
-                >
-                  <span className="text-base sm:text-xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
-                    Kőszeg
-                  </span>
-                  <span className="text-base sm:text-xl font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight">
-                    APP
-                  </span>
+                <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+                  <img
+                    onClick={() => navigate('/')}
+                    src="/images/koeszeg_logo_nobg.png"
+                    alt="KőszegAPP logo"
+                    className="w-8 h-8 sm:w-10 sm:h-10 hover:rotate-12 transition-transform duration-500 cursor-pointer drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]"
+                  />
+                  <div
+                    onClick={() => navigate('/')}
+                    className="flex items-center gap-0.5 cursor-pointer whitespace-nowrap"
+                  >
+                    <span className="text-base sm:text-xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+                      Kőszeg
+                    </span>
+                    <span className="text-base sm:text-xl font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight">
+                      APP
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                {/* Local Resident Info Button */}
-                <button
-                  onClick={() => setShowResidentModal(true)}
-                  className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             text-gray-700 dark:text-gray-200
-                             border border-white/20
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                  aria-label="Lakossági infók"
-                >
-                  <IoHomeOutline className="text-base sm:text-lg" />
-                  <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
-                </button>
-
-                {/* Weather Button (Compact) */}
-                <button
-                  onClick={() => setShowWeatherModal(true)}
-                  className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             text-gray-700 dark:text-gray-200
-                             border border-white/20
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                >
-                  <IoCloudyNightOutline className="text-base sm:text-lg" />
-                  <span className="text-[10px] sm:text-xs font-bold">{weather.temp}°</span>
-                </button>
-
-                {/* Map Button */}
-                <Link
-                  to="/live-map"
-                  className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             text-gray-700 dark:text-gray-200
-                             border border-white/20
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                  aria-label="Térkép"
-                >
-                  <IoMapOutline className="text-lg sm:text-xl" />
-                </Link>
-
-                {/* Favorites Button */}
-                <div className="relative" ref={favoritesRef}>
+                <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                  {/* Local Resident Info Button */}
                   <button
-                    onClick={() => setShowFavorites(!showFavorites)}
-                    className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                    onClick={() => setShowResidentModal(true)}
+                    className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                    aria-label="Lakossági infók"
+                  >
+                    <IoHomeOutline className="text-base sm:text-lg" />
+                    <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
+                  </button>
+
+                  {/* Weather Button (Compact) */}
+                  <button
+                    onClick={() => setShowWeatherModal(true)}
+                    className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <IoCloudyNightOutline className="text-base sm:text-lg" />
+                    <span className="text-[10px] sm:text-xs font-bold">{weather.temp}°</span>
+                  </button>
+
+                  {/* Map Button */}
+                  <Link
+                    to="/live-map"
+                    className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                    aria-label="Térkép"
+                  >
+                    <IoMapOutline className="text-lg sm:text-xl" />
+                  </Link>
+
+                  {/* Favorites Button */}
+                  <div className="relative" ref={favoritesRef}>
+                    <button
+                      onClick={() => setShowFavorites(!showFavorites)}
+                      className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
                                bg-white/20 dark:bg-black/20
                                backdrop-blur-md
                                text-gray-700 dark:text-gray-200
                                border border-white/20
                                hover:bg-white/40 dark:hover:bg-black/40
                                transition-all duration-300 hover:scale-105 active:scale-95 group"
-                    aria-label="Kedvencek megnyitása"
-                  >
-                    {favoritesCount > 0 ? (
-                      <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
-                    ) : (
-                      <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
-                    )}
+                      aria-label="Kedvencek megnyitása"
+                    >
+                      {favoritesCount > 0 ? (
+                        <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
+                      ) : (
+                        <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
+                      )}
 
-                    {favoritesCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
-                        {favoritesCount}
-                      </span>
-                    )}
-                  </button>
+                      {favoritesCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
+                          {favoritesCount}
+                        </span>
+                      )}
+                    </button>
 
-                  {showFavorites && (
-                    <FavoritesDashboard
-                      attractions={favoriteAttractions}
-                      events={favoriteEvents}
-                      leisure={favoriteLeisure}
-                      restaurants={favoriteRestaurants}
-                      onClose={() => setShowFavorites(false)}
-                    />
-                  )}
+                    {showFavorites && (
+                      <FavoritesDashboard
+                        attractions={favoriteAttractions}
+                        events={favoriteEvents}
+                        leisure={favoriteLeisure}
+                        restaurants={favoriteRestaurants}
+                        onClose={() => setShowFavorites(false)}
+                      />
+                    )}
+                  </div>
+
+                  {/* Settings Menu (Language + Dark Mode) */}
+                  <SettingsMenu />
                 </div>
-
-                {/* Settings Menu (Language + Dark Mode) */}
-                <SettingsMenu />
               </div>
-            </div>
-          </header>
-          <div className="h-16" />
-        </>
-      )}
+            </header>
+            <div className="h-16" />
+          </>
+        )}
 
-      <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
-        {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
-        <AnimatedRoutes appData={appData} />
-      </main>
+        <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
+          {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
+          <AnimatedRoutes appData={appData} />
+        </main>
 
-      {!isInGameMode && (
-        <>
-          <Toaster position="bottom-center" />
-          {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
-          {showResidentModal && <ResidentCheckModal onClose={() => setShowResidentModal(false)} />}
+        {!isInGameMode && (
+          <>
+            <Toaster position="bottom-center" />
+            {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
+            {showResidentModal && <ResidentCheckModal onClose={() => setShowResidentModal(false)} />}
 
-          {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
-
-
-          {!location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && <FloatingNavbar />}
-          {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
-          {!location.pathname.startsWith('/koszegieknek') &&
-            !location.pathname.startsWith('/business') &&
-            !location.pathname.startsWith('/auth') &&
-            !location.pathname.startsWith('/food') &&
-            !location.pathname.startsWith('/pass') &&
-            !location.pathname.startsWith('/scanner') && (
-              <SmartSpotlight appData={appData} />
-            )}
+            {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
 
-          {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}
-          {/* {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />} */}
+            {!location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && <FloatingNavbar />}
+            {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
+            {!location.pathname.startsWith('/koszegieknek') &&
+              !location.pathname.startsWith('/business') &&
+              !location.pathname.startsWith('/auth') &&
+              !location.pathname.startsWith('/food') &&
+              !location.pathname.startsWith('/pass') &&
+              !location.pathname.startsWith('/scanner') && (
+                <SmartSpotlight appData={appData} />
+              )}
 
-          {/* {isHome && !showProgramModal && (
+
+            {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}
+            {/* {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />} */}
+
+            {/* {isHome && !showProgramModal && (
             <button
               onClick={() => setShowProgramModal(true)}
               className="w-14 h-14 fixed bottom-20 right-4 bg-purple-700 text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-purple-800 transition transform hover:scale-110 z-50"
@@ -421,8 +427,9 @@ function MainAppContent() {
               🍇
             </button>
           )} */}
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }

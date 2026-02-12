@@ -63,7 +63,8 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
         p_customer_note: customer.note || '',
         p_total_price: totalPrice,
         p_items: itemsJson,
-        p_user_id: customer.userId || null
+        p_user_id: customer.userId || null,
+        p_payment_method: customer.paymentMethod || 'cash'
     });
 
     if (error) {

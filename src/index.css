@@ -152,7 +152,7 @@
   background: linear-gradient(135deg, #84fab0, #8fd3f4);
 }
 
-.mesh-bg-vibrant {
+/* .mesh-bg-vibrant {
   background:
     radial-gradient(at 0% 0%, rgba(0, 198, 255, 0.15) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(255, 154, 158, 0.15) 0px, transparent 50%),
@@ -169,8 +169,7 @@
     radial-gradient(at 100% 100%, rgba(132, 250, 176, 0.08) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(0, 114, 255, 0.1) 0px, transparent 50%);
   background-color: #0f172a;
-  /* Slate 900 base */
-}
+} */
 
 /* 2026 Glass Effect - Dark Mode optimized */
 .glass-2026 {

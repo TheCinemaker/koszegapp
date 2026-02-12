@@ -1,0 +1,54 @@
+{
+    "header": "Veranstaltungen",
+    "searchPlaceholder": "Suchen...",
+    "filters": {
+        "week": "WOCHE",
+        "month": "MONAT",
+        "date": "DATUM",
+        "all": "ALLE"
+    },
+    "addToWallet": "Zu Apple Wallet hinzufügen",
+    "walletButton": "Wallet",
+    "multiDay": "Mehrtägig",
+    "details": "Details",
+    "saveToCalendar": "Im Kalender speichern",
+    "generatingPass": "Wallet Pass wird erstellt...",
+    "downloaded": "Heruntergeladen!",
+    "generationError": "Generierungsfehler",
+    "errorPrefix": "Fehler: {{message}}",
+    "noResults": {
+        "title": "Keine Ergebnisse",
+        "desc": "Versuche andere Filterkriterien.",
+        "clearFilters": "Filter löschen"
+    },
+    "pastEvents": "Vergangene Veranstaltungen",
+    "selectMonth": "Monat wählen",
+    "months": [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember"
+    ],
+    "monthsShort": [
+        "Jan",
+        "Feb",
+        "Mär",
+        "Apr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Dez"
+    ]
+}

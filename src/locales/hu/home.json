@@ -1,0 +1,50 @@
+{
+    "sections": {
+        "pass": {
+            "label": "KőszegPass",
+            "desc": "Digitális városkártya."
+        },
+        "events": {
+            "label": "Események",
+            "desc": "Élmények. Élőben."
+        },
+        "attractions": {
+            "label": "Látnivalók",
+            "desc": "Időtlen kincsek."
+        },
+        "food": {
+            "label": "KőszegEats",
+            "desc": "Helyi ízek, házhoz."
+        },
+        "tickets": {
+            "label": "KőszegTickets",
+            "desc": "Belépők egy helyen."
+        },
+        "hotels": {
+            "label": "Szállás",
+            "desc": "Nyugalom szigete."
+        },
+        "weather": {
+            "label": "Időjárás",
+            "desc": "Tiszta kilátások."
+        },
+        "game": {
+            "label": "Kőszeg1532",
+            "desc": "Találd meg a város kincseit."
+        },
+        "leisure": {
+            "label": "Szabadidő",
+            "desc": "Kalandra hív."
+        },
+        "parking": {
+            "label": "Parkolás",
+            "desc": "Célba értél."
+        },
+        "info": {
+            "label": "Infó",
+            "desc": "Hasznos tudás."
+        }
+    },
+    "comingSoon": "HAMAROSAN",
+    "comingSoonMessage": "Ez a funkció hamarosan elérhető!"
+}

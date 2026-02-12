@@ -1,0 +1,54 @@
+{
+    "header": "Events",
+    "searchPlaceholder": "Search...",
+    "filters": {
+        "week": "WEEKLY",
+        "month": "MONTHLY",
+        "date": "DATE",
+        "all": "ALL"
+    },
+    "addToWallet": "Add to Apple Wallet",
+    "walletButton": "Wallet",
+    "multiDay": "Multi-day",
+    "details": "Details",
+    "saveToCalendar": "Save to Calendar",
+    "generatingPass": "Generating Wallet Pass...",
+    "downloaded": "Downloaded!",
+    "generationError": "Generation Error",
+    "errorPrefix": "Error: {{message}}",
+    "noResults": {
+        "title": "No results",
+        "desc": "Try different filter criteria.",
+        "clearFilters": "Clear filters"
+    },
+    "pastEvents": "Past Events",
+    "selectMonth": "Select Month",
+    "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ],
+    "monthsShort": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ]
+}

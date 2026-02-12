@@ -1,0 +1,15 @@
+{
+    "title": "Information",
+    "subtitle": "Public data and emergency contacts.",
+    "categories": {
+        "emergency": "Emergency",
+        "health": "Healthcare",
+        "tourism": "Tourism",
+        "app": "About App"
+    },
+    "aboutCard": {
+        "title": "KőszegAPP",
+        "desc": "Not just an app. Part of Kőszeg's digital fabric. Offline map, Real-time events, Smart city management. The future has arrived.",
+        "button": "More"
+    }
+}

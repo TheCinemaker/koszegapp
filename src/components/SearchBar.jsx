@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from 'react-i18next'; // Added import
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
@@ -12,6 +13,7 @@ const SOURCES = [
 ];
 
 export default function SearchBar() { // Refreshed
+  const { t } = useTranslation(); // Hook
   const [q, setQ] = useState("");
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState(false);
@@ -87,7 +89,7 @@ export default function SearchBar() { // Refreshed
           value={q}
           onChange={e => setQ(e.target.value)}
           onFocus={() => { if (q.trim().length > 1) setShowResults(true); }}
-          placeholder="Keress bármire..."
+          placeholder={t('search.placeholder')}
           className="flex-1 h-9 px-4 rounded-xl
                      bg-white/80 dark:bg-gray-800/80
                      backdrop-blur-md

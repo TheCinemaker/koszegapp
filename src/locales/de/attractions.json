@@ -1,0 +1,13 @@
+{
+    "title": "Sehenswürdigkeiten",
+    "searchPlaceholder": "Schätze suchen...",
+    "all": "Alle",
+    "favorites": "Favoriten",
+    "noResults": "Keine Ergebnisse.",
+    "mapLink": "Karte",
+    "details": "Details",
+    "locationError": {
+        "unsupported": "Dein Browser unterstützt keine Geolokalisierung.",
+        "permission": "Position konnte nicht abgerufen werden. Bitte im Browser erlauben."
+    }
+}

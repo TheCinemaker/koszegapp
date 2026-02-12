@@ -1,0 +1,13 @@
+{
+    "title": "Látnivalók",
+    "searchPlaceholder": "Keress kincseket...",
+    "all": "Minden",
+    "favorites": "Kedvenceim",
+    "noResults": "Nincs találat.",
+    "mapLink": "Térkép",
+    "details": "Részletek",
+    "locationError": {
+        "unsupported": "A böngésződ nem támogatja a helymeghatározást.",
+        "permission": "Nem sikerült lekérni a pozíciót. Engedélyezd a böngészőben."
+    }
+}

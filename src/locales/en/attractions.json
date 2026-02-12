@@ -1,0 +1,13 @@
+{
+    "title": "Attractions",
+    "searchPlaceholder": "Search for treasures...",
+    "all": "All",
+    "favorites": "Favorites",
+    "noResults": "No results found.",
+    "mapLink": "Map",
+    "details": "Details",
+    "locationError": {
+        "unsupported": "Your browser does not support geolocation.",
+        "permission": "Could not get position. Please allow in browser."
+    }
+}

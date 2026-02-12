@@ -1,0 +1,23 @@
+{
+    "cardNumber": "Card Number",
+    "points": "Points",
+    "transactions": "Transactions",
+    "editProfile": "Edit Profile",
+    "balance": "Balance",
+    "logout": "Log Out",
+    "logoutSubtitle": "Secure entry",
+    "save": "Save",
+    "active": "active",
+    "touchCard": "Tap the card",
+    "fullName": "Full Name",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "noTransactions": "No transactions yet.",
+    "downloadPass": "Pass downloaded!",
+    "generatingPass": "Generating Apple Wallet Pass...",
+    "googleWalletPrep": "Preparing Google Wallet...",
+    "googleWalletSuccess": "Ready! Opening...",
+    "error": "An error occurred",
+    "personalData": "Personal Data"
+}
