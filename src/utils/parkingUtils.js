@@ -52,7 +52,7 @@ function toRad(value) {
 }
 
 // Távolság két pont között (Haversine formula) - méterben
-function getDistance(lat1, lon1, lat2, lon2) {
+export function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371000; // Föld sugara méterben
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);

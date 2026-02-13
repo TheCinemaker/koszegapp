@@ -23,6 +23,12 @@
                 "code": "9733",
                 "price": "440 HUF/óra",
                 "hours": "08:00 - 17:00"
+            },
+            "free": {
+                "name": "Ingyenes Zóna",
+                "code": "FREE",
+                "price": "0 HUF",
+                "hours": "Nincs díj"
             }
         },
         "button": "SMS Indítása",
