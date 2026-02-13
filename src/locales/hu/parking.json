@@ -16,13 +16,13 @@
                 "name": "Kőszeg Zöld",
                 "code": "9731",
                 "price": "320 HUF/óra",
-                "hours": "08:00 - 17:00"
+                "hours": "H-P 08:00 - 17:00"
             },
             "red": {
                 "name": "Kőszeg Piros",
                 "code": "9733",
                 "price": "440 HUF/óra",
-                "hours": "08:00 - 17:00"
+                "hours": "H-P 08:00 - 17:00"
             },
             "free": {
                 "name": "Ingyenes Zóna",
@@ -31,7 +31,9 @@
                 "hours": "Nincs díj"
             }
         },
-        "button": "SMS Indítása",
+        "button": "Parkolás Indítása",
+        "stopButton": "Parkolás Leállítása (STOP)",
+        "freePeriod": "Jelenleg ingyenes a parkolás (H-P 08:00-17:00)",
         "info": "A gomb megnyitja az SMS alkalmazást.",
         "countryLabel": "Felségjelzés",
         "formatInfo": "Külföldi rendszám esetén válaszd ki az országot!",
