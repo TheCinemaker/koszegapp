@@ -1,11 +1,19 @@
 {
-    "title": "Parkolás",
-    "searchPlaceholder": "Keress parkolóhelyet...",
+    "title": "Parkoló",
+    "searchPlaceholder": "Keresés név vagy cím alapján...",
     "all": "Minden",
     "free": "Ingyenes",
     "paid": "Fizetős",
     "spots": "Hely",
     "details": "Részletek",
-    "noResults": "Nincs találat...",
-    "clearFilters": "Szűrők törlése"
+    "noResults": "Nincs találat a keresési feltételeknek megfelelően.",
+    "clearFilters": "Szűrők törlése",
+    "smsCard": {
+        "title": "SMS Parkolás",
+        "zone": "Kőszeg, I. zóna",
+        "code": "8600",
+        "button": "SMS Indítása",
+        "info": "Küldd el a rendszámot SMS-ben!"
+    },
+    "error": "Hiba történt:"
 }

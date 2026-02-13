@@ -1,11 +1,11 @@
 {
     "title": "Freizeit",
-    "searchPlaceholder": "Programme suchen...",
+    "searchPlaceholder": "Suche nach Name oder Beschreibung...",
     "all": "Alle",
-    "favorites": "Favoriten",
-    "other": "Andere",
-    "defaultCategory": "Freizeit",
+    "favorites": "Meine Favoriten",
+    "defaultCategory": "Sonstiges",
     "details": "Details",
-    "noResults": "Keine Ergebnisse...",
-    "clearFilters": "Filter löschen"
+    "noResults": "Keine Ergebnisse gefunden.",
+    "clearFilters": "Filter löschen",
+    "error": "Fehler:"
 }

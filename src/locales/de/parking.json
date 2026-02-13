@@ -1,11 +1,19 @@
 {
     "title": "Parken",
-    "searchPlaceholder": "Parkplatz suchen...",
+    "searchPlaceholder": "Suche nach Name oder Adresse...",
     "all": "Alle",
     "free": "Kostenlos",
     "paid": "Gebührenpflichtig",
     "spots": "Plätze",
     "details": "Details",
-    "noResults": "Keine Ergebnisse...",
-    "clearFilters": "Filter löschen"
+    "noResults": "Keine Ergebnisse gefunden.",
+    "clearFilters": "Filter löschen",
+    "smsCard": {
+        "title": "SMS-Parken",
+        "zone": "Kőszeg, Zone I",
+        "code": "8600",
+        "button": "SMS Starten",
+        "info": "Senden Sie Ihr Kennzeichen per SMS!"
+    },
+    "error": "Fehler:"
 }

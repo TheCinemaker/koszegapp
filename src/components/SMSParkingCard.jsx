@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { IoCarSport, IoPhonePortraitOutline, IoSend } from 'react-icons/io5';
 
 export default function SMSParkingCard() {
+    const { t } = useTranslation('parking');
     const [plate, setPlate] = useState('');
     const [carrier, setCarrier] = useState('30'); // Default to 30
 
@@ -34,8 +36,8 @@ export default function SMSParkingCard() {
                         <IoCarSport className="text-2xl" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white leading-none">SMS Parkolás</h2>
-                        <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wider mt-1">Gyors Indítás</p>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white leading-none">{t('smsCard.title')}</h2>
+                        <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wider mt-1">{t('smsCard.zone')}</p>
                     </div>
                 </div>
 
@@ -91,11 +93,11 @@ export default function SMSParkingCard() {
           `}
                 >
                     <IoSend className={plate ? "animate-pulse" : ""} />
-                    <span>Parkolás Indítása</span>
+                    <span>{t('smsCard.button')}</span>
                 </motion.button>
 
                 <p className="text-[10px] text-center text-gray-400 font-medium">
-                    A gomb megnyitja az SMS alkalmazást a kitöltött adatokkal.
+                    {t('smsCard.info')}
                     <br />Címzett: +36 {carrier} 763 9731 | Üzenet: {plate || '...'}
                 </p>
 

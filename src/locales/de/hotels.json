@@ -1,8 +1,9 @@
 {
     "title": "Unterkunft",
-    "searchPlaceholder": "Unterkunft suchen...",
+    "searchPlaceholder": "Suche nach Name oder Adresse...",
     "all": "Alle",
-    "noResults": "Keine Ergebnisse...",
+    "view": "Ansehen",
+    "noResults": "Keine Ergebnisse gefunden.",
     "clearFilters": "Filter löschen",
-    "view": "Ansehen"
+    "error": "Fehler:"
 }

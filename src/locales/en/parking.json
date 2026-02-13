@@ -1,11 +1,19 @@
 {
     "title": "Parking",
-    "searchPlaceholder": "Search for parking...",
+    "searchPlaceholder": "Search by name or address...",
     "all": "All",
     "free": "Free",
     "paid": "Paid",
     "spots": "Spots",
     "details": "Details",
-    "noResults": "No results found...",
-    "clearFilters": "Clear filters"
+    "noResults": "No results found matching your criteria.",
+    "clearFilters": "Clear filters",
+    "smsCard": {
+        "title": "SMS Parking",
+        "zone": "Kőszeg, Zone I",
+        "code": "8600",
+        "button": "Start via SMS",
+        "info": "Send your license plate number via SMS!"
+    },
+    "error": "Error:"
 }

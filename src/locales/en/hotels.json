@@ -1,8 +1,9 @@
 {
     "title": "Accommodation",
-    "searchPlaceholder": "Search for accommodation...",
+    "searchPlaceholder": "Search by name or address...",
     "all": "All",
-    "noResults": "No results found...",
+    "view": "View",
+    "noResults": "No results found matching your criteria.",
     "clearFilters": "Clear filters",
-    "view": "View"
+    "error": "Error:"
 }

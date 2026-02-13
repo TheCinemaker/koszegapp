@@ -1,11 +1,11 @@
 {
     "title": "Szabadidő",
-    "searchPlaceholder": "Keress programot...",
+    "searchPlaceholder": "Keresés név vagy leírás alapján...",
     "all": "Minden",
     "favorites": "Kedvenceim",
-    "other": "Egyéb",
-    "defaultCategory": "Szabadidő",
+    "defaultCategory": "Egyéb",
     "details": "Részletek",
-    "noResults": "Nincs találat...",
-    "clearFilters": "Szűrők törlése"
+    "noResults": "Nincs találat a keresési feltételeknek megfelelően.",
+    "clearFilters": "Szűrők törlése",
+    "error": "Hiba történt:"
 }

@@ -1,8 +1,9 @@
 {
     "title": "Szállás",
-    "searchPlaceholder": "Keress szállást...",
+    "searchPlaceholder": "Keresés név vagy cím alapján...",
     "all": "Minden",
-    "noResults": "Nincs találat...",
+    "view": "Megtekintés",
+    "noResults": "Nincs találat a keresési feltételeknek megfelelően.",
     "clearFilters": "Szűrők törlése",
-    "view": "Megtekintés"
+    "error": "Hiba történt:"
 }

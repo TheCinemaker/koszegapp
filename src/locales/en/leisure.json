@@ -1,11 +1,11 @@
 {
     "title": "Leisure",
-    "searchPlaceholder": "Search for programs...",
+    "searchPlaceholder": "Search by name or description...",
     "all": "All",
-    "favorites": "Favorites",
-    "other": "Other",
-    "defaultCategory": "Leisure",
+    "favorites": "My Favorites",
+    "defaultCategory": "Other",
     "details": "Details",
-    "noResults": "No results found...",
-    "clearFilters": "Clear filters"
+    "noResults": "No results found matching your criteria.",
+    "clearFilters": "Clear filters",
+    "error": "Error:"
 }
