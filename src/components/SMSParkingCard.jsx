@@ -180,15 +180,14 @@ export default function SMSParkingCard() {
                     )}
                 </div>
 
-                {/* License Plate Input - COMPACT FRAME */}
+                {/* License Plate Input - COMPACT BUT FULL WIDTH */}
                 <div className={`space-y-2 transition-opacity duration-300 ${isFreeZone ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Rendszám</label>
-                    {/* Width restricted even further to reduce height, keeping aspect ratio */}
-                    <div className="relative w-full max-w-[240px] aspect-[520/110] mx-auto shadow-2xl rounded-lg overflow-hidden group">
+                    <div className="relative w-full max-w-sm mx-auto shadow-2xl rounded-lg overflow-hidden group">
                         <img
                             src="/images/license_plate_frame.png"
                             alt="License Plate Frame"
-                            className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+                            className="block w-full h-auto pointer-events-none"
                         />
                         <input
                             type="text"
@@ -199,13 +198,12 @@ export default function SMSParkingCard() {
                             className="
                                 absolute inset-0 w-full h-full 
                                 bg-transparent 
-                                text-center text-2xl font-black 
+                                text-center text-3xl font-black 
                                 uppercase tracking-[0.15em] 
                                 text-gray-900 
                                 placeholder-gray-300/50 
                                 focus:outline-none 
                                 z-10
-                                pt-0
                             "
                             style={{ fontFamily: 'monospace' }}
                         />
