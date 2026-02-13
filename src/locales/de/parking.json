@@ -10,10 +10,69 @@
     "clearFilters": "Filter löschen",
     "smsCard": {
         "title": "SMS-Parken",
-        "zone": "Kőszeg, Zone I",
-        "code": "8600",
+        "zoneLabel": "Zone auswählen",
+        "zones": {
+            "green": {
+                "name": "Kőszeg Grün",
+                "code": "9731",
+                "price": "320 HUF/Std",
+                "hours": "08:00 - 17:00"
+            },
+            "red": {
+                "name": "Kőszeg Rot",
+                "code": "9733",
+                "price": "440 HUF/Std",
+                "hours": "08:00 - 17:00"
+            }
+        },
         "button": "SMS Starten",
-        "info": "Senden Sie Ihr Kennzeichen per SMS!"
+        "info": "Die Taste öffnet Ihre SMS-App.",
+        "countryLabel": "Länderkennzeichen",
+        "formatInfo": "Bei ausländischen Kennzeichen das Land wählen!",
+        "platePlaceholder": "Kennzeichen",
+        "gpsBtn": "Zone per GPS bestimmen",
+        "zoneInfo": {
+            "title": "Zoneninformationen",
+            "red": {
+                "title": "Zone I (Rot - 9733)",
+                "streets": [
+                    "Rákóczi F. Str (Temető Str - Hauptplatz)",
+                    "Várkör 57-59 & 61-67",
+                    "Rajnis József Str",
+                    "Táblaház Str",
+                    "Schneller István Str",
+                    "Chernel Str",
+                    "Kelcz-Adelffy Str",
+                    "Várkör (Kossuth L. Str - Flagge)"
+                ]
+            },
+            "green": {
+                "title": "Zone II (Grün - 9731)",
+                "streets": [
+                    "Győry János Str",
+                    "Ady Endre Str",
+                    "Temető Str (Rákóczi F. Str - Győry J. Str)",
+                    "Rákóczi F. Str (Temető Str - Schwarzer Garten)",
+                    "Munkácsy M. Str",
+                    "Kossuth L. Str",
+                    "Várkör (Flagge - Károly R. Platz)",
+                    "Károly Róbert Platz",
+                    "Gyöngyös Str",
+                    "Pék Str",
+                    "Liszt F. Str (2-18, 11-15, 23-29)",
+                    "Táncsics M. Str",
+                    "Petőfi Platz 7-13"
+                ]
+            },
+            "restricted": {
+                "title": "Nur mit Genehmigung",
+                "streets": [
+                    "Brenner-Haus Hof",
+                    "Csónaktömb Parkplatz",
+                    "Gebiet hinter Kossuth L. Str 12-16"
+                ]
+            }
+        }
     },
     "error": "Fehler:"
 }

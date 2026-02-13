@@ -6,16 +6,20 @@ import { IoCarSport, IoPhonePortraitOutline, IoSend } from 'react-icons/io5';
 export default function SMSParkingCard() {
     const { t } = useTranslation('parking');
     const [plate, setPlate] = useState('');
-    const [carrier, setCarrier] = useState('30'); // Default to 30
+    const [carrier, setCarrier] = useState('30');
+    const [zone, setZone] = useState('green'); // 'green' | 'red'
+
+    const currentZone = t(`smsCard.zones.${zone}`, { returnObjects: true });
 
     const handleSendSMS = () => {
         if (!plate) return;
 
-        // Target number: +36 (30|20|70) 763 9731
-        const phoneNumber = `+36${carrier}7639731`;
-        const messageBody = plate.toUpperCase().replace(/\s/g, ''); // Remove spaces, ensure uppercase
+        // Target number: +36 (30|20|70) + ZONE CODE (9731/9733)
+        // Note: Actual parking numbers are usually +36 (20/30/70) 763 xxxx
+        // Formatting based on typical Hungarian parking: +36 20 763 9731
+        const phoneNumber = `+36${carrier}763${currentZone.code}`;
+        const messageBody = plate.toUpperCase().replace(/\s/g, '');
 
-        // Detect if iOS for body separator (safe fallback)
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const bodySeparator = isIOS ? '&' : '?';
 
@@ -37,22 +41,78 @@ export default function SMSParkingCard() {
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white leading-none">{t('smsCard.title')}</h2>
-                        <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wider mt-1">{t('smsCard.zone')}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs font-bold px-2 py-0.5 rounded bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300">
+                                {currentZone.code}
+                            </span>
+                            <span className="text-xs font-semibold text-indigo-500 uppercase tracking-wider">
+                                {currentZone.price} ({currentZone.hours})
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                {/* License Plate Input */}
+                {/* Zone Selection */}
+                <div className="space-y-2">
+                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">{t('smsCard.zoneLabel')}</label>
+                    <div className="grid grid-cols-2 gap-3">
+                        {['green', 'red'].map((z) => {
+                            const zData = t(`smsCard.zones.${z}`, { returnObjects: true });
+                            const isActive = zone === z;
+                            const activeColor = z === 'green' ? 'bg-emerald-600' : 'bg-rose-600';
+                            const activeShadow = z === 'green' ? 'shadow-emerald-500/30' : 'shadow-rose-500/30';
+
+                            return (
+                                <button
+                                    key={z}
+                                    onClick={() => setZone(z)}
+                                    className={`
+                                        relative h-14 rounded-xl text-sm font-bold transition-all duration-300 border overflow-hidden
+                                        ${isActive
+                                            ? `${activeColor} text-white border-transparent shadow-lg ${activeShadow} scale-[1.02]`
+                                            : 'bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10'
+                                        }
+                                    `}
+                                >
+                                    <span className="relative z-10">{zData.name}</span>
+                                    {isActive && <motion.div layoutId="zoneHighlight" className="absolute inset-0 bg-white/10" />}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* License Plate Input with Custom Frame */}
                 <div className="space-y-2">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Rendszám</label>
-                    <div className="relative group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 blur-lg rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
+                    <div className="relative w-full aspect-[520/110] max-w-sm mx-auto shadow-2xl rounded-lg overflow-hidden">
+                        {/* Frame Image */}
+                        <img
+                            src="/images/license_plate_frame.png"
+                            alt="License Plate Frame"
+                            className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+                        />
+
+                        {/* Input Field Overlay - Positioned to fit the frame's editable area */}
+                        {/* Assuming the frame has standard margins. Adjust padding/position as needed. */}
                         <input
                             type="text"
                             value={plate}
                             onChange={(e) => setPlate(e.target.value.toUpperCase())}
                             placeholder="ABC-123"
                             maxLength={10}
-                            className="relative w-full h-16 bg-white dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-2xl text-center text-3xl font-black tracking-[0.2em] uppercase text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-700 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all shadow-inner"
+                            className="
+                                absolute inset-0 w-full h-full 
+                                bg-transparent 
+                                text-center text-3xl sm:text-4xl font-black 
+                                uppercase tracking-[0.2em] 
+                                text-gray-900 
+                                placeholder-gray-300/50 
+                                focus:outline-none 
+                                z-10
+                                pt-2 /* Slight visual adjustment for vertical centering */
+                            "
+                            style={{ fontFamily: 'monospace' }} // Monospace for license plate feel
                         />
                     </div>
                 </div>
@@ -93,12 +153,12 @@ export default function SMSParkingCard() {
           `}
                 >
                     <IoSend className={plate ? "animate-pulse" : ""} />
-                    <span>{t('smsCard.button')}</span>
+                    <span>{t('smsCard.button')} ({currentZone.code})</span>
                 </motion.button>
 
                 <p className="text-[10px] text-center text-gray-400 font-medium">
                     {t('smsCard.info')}
-                    <br />Címzett: +36 {carrier} 763 9731 | Üzenet: {plate || '...'}
+                    <br />Címzett: +36 {carrier} 763 {currentZone.code} | Üzenet: {plate || '...'}
                 </p>
 
             </div>

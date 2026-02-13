@@ -10,10 +10,69 @@
     "clearFilters": "Szűrők törlése",
     "smsCard": {
         "title": "SMS Parkolás",
-        "zone": "Kőszeg, I. zóna",
-        "code": "8600",
+        "zoneLabel": "Zóna Kiválasztása",
+        "zones": {
+            "green": {
+                "name": "Kőszeg Zöld",
+                "code": "9731",
+                "price": "320 HUF/óra",
+                "hours": "08:00 - 17:00"
+            },
+            "red": {
+                "name": "Kőszeg Piros",
+                "code": "9733",
+                "price": "440 HUF/óra",
+                "hours": "08:00 - 17:00"
+            }
+        },
         "button": "SMS Indítása",
-        "info": "Küldd el a rendszámot SMS-ben!"
+        "info": "A gomb megnyitja az SMS alkalmazást.",
+        "countryLabel": "Felségjelzés",
+        "formatInfo": "Külföldi rendszám esetén válaszd ki az országot!",
+        "platePlaceholder": "Rendszám",
+        "gpsBtn": "Zóna meghatározása GPS-szel",
+        "zoneInfo": {
+            "title": "Zóna Információk",
+            "red": {
+                "title": "I. Övezet (Piros - 9733)",
+                "streets": [
+                    "Rákóczi F. utca (Temető u. - Fő tér)",
+                    "Várkör 57-59. és 61-67.",
+                    "Rajnis József utca",
+                    "Táblaház utca",
+                    "Schneller István utca",
+                    "Chernel utca",
+                    "Kelcz-Adelffy utca",
+                    "Várkör (Kossuth L. u. - Országzászló)"
+                ]
+            },
+            "green": {
+                "title": "II. Övezet (Zöld - 9731)",
+                "streets": [
+                    "Győry János utca",
+                    "Ady Endre utca",
+                    "Temető u. (Rákóczi F. u. - Győry J. u.)",
+                    "Rákóczi F. u. (Temető u. - Fekete kert)",
+                    "Munkácsy M. utca",
+                    "Kossuth L. utca",
+                    "Várkör (Országzászló - Károly R. tér)",
+                    "Károly Róbert tér",
+                    "Gyöngyös utca",
+                    "Pék utca",
+                    "Liszt F. utca (2-18, 11-15, 23-29)",
+                    "Táncsics M. utca",
+                    "Petőfi tér 7-13."
+                ]
+            },
+            "restricted": {
+                "title": "Kizárólag Engedéllyel",
+                "streets": [
+                    "Brenner-ház udvar",
+                    "Csónaktömb parkoló",
+                    "Kossuth L. u. 12-16. mögötti terület"
+                ]
+            }
+        }
     },
     "error": "Hiba történt:"
 }

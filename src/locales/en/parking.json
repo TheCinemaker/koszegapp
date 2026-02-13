@@ -10,10 +10,69 @@
     "clearFilters": "Clear filters",
     "smsCard": {
         "title": "SMS Parking",
-        "zone": "Kőszeg, Zone I",
-        "code": "8600",
+        "zoneLabel": "Select Zone",
+        "zones": {
+            "green": {
+                "name": "Kőszeg Green",
+                "code": "9731",
+                "price": "320 HUF/hr",
+                "hours": "08:00 - 17:00"
+            },
+            "red": {
+                "name": "Kőszeg Red",
+                "code": "9733",
+                "price": "440 HUF/hr",
+                "hours": "08:00 - 17:00"
+            }
+        },
         "button": "Start via SMS",
-        "info": "Send your license plate number via SMS!"
+        "info": "The button opens your SMS app.",
+        "countryLabel": "Country Code",
+        "formatInfo": "For foreign plates, select the country!",
+        "platePlaceholder": "Plate Number",
+        "gpsBtn": "Detect Zone via GPS",
+        "zoneInfo": {
+            "title": "Zone Information",
+            "red": {
+                "title": "Zone I (Red - 9733)",
+                "streets": [
+                    "Rákóczi F. St (Temető St - Main Square)",
+                    "Várkör 57-59 & 61-67",
+                    "Rajnis József St",
+                    "Táblaház St",
+                    "Schneller István St",
+                    "Chernel St",
+                    "Kelcz-Adelffy St",
+                    "Várkör (Kossuth L. St - Flag)"
+                ]
+            },
+            "green": {
+                "title": "Zone II (Green - 9731)",
+                "streets": [
+                    "Győry János St",
+                    "Ady Endre St",
+                    "Temető St (Rákóczi F. St - Győry J. St)",
+                    "Rákóczi F. St (Temető St - Black Garden)",
+                    "Munkácsy M. St",
+                    "Kossuth L. St",
+                    "Várkör (Flag - Károly R. Sq)",
+                    "Károly Róbert Sq",
+                    "Gyöngyös St",
+                    "Pék St",
+                    "Liszt F. St (2-18, 11-15, 23-29)",
+                    "Táncsics M. St",
+                    "Petőfi Sq 7-13"
+                ]
+            },
+            "restricted": {
+                "title": "Permit Only",
+                "streets": [
+                    "Brenner House Courtyard",
+                    "Csónaktömb Parking",
+                    "Area behind Kossuth L. St 12-16"
+                ]
+            }
+        }
     },
     "error": "Error:"
 }
