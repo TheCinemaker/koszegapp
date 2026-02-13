@@ -1,4 +1,5 @@
 import { triggerHaptic } from '../utils/haptics'; // Import utility
+import { useTranslation } from 'react-i18next'; // Hook
 
 export default function FloatingNavbar() {
   const { t } = useTranslation(); // Hook
