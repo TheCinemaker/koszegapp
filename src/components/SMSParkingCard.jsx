@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoCarSport, IoPhonePortraitOutline, IoSend, IoLocate, IoCheckmarkCircle } from 'react-icons/io5';
 import { fetchParkingZones } from '../api';
 import { getDistance, getDistanceFromPolyline } from '../utils/parkingUtils';
+import { triggerHaptic, HapticType } from '../utils/haptics';
 
 export default function SMSParkingCard() {
     const { t } = useTranslation('parking');
@@ -17,6 +18,7 @@ export default function SMSParkingCard() {
     const isFreeZone = zone === 'free';
 
     const handleGPS = async () => {
+        triggerHaptic(HapticType.MEDIUM);
         setIsLocating(true);
         setLocationError(null);
 
@@ -83,7 +85,11 @@ export default function SMSParkingCard() {
     };
 
     const handleSendSMS = () => {
-        if (!plate || isFreeZone) return;
+        if (!plate || isFreeZone) {
+            triggerHaptic(HapticType.ERROR);
+            return;
+        }
+        triggerHaptic(HapticType.SUCCESS);
         const phoneNumber = `+36${carrier}763${currentZone.code}`;
         const messageBody = plate.toUpperCase().replace(/\s/g, '');
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -146,7 +152,7 @@ export default function SMSParkingCard() {
                             return (
                                 <button
                                     key={z}
-                                    onClick={() => setZone(z)}
+                                    onClick={() => { setZone(z); triggerHaptic(HapticType.LIGHT); }}
                                     className={`
                                         relative h-14 rounded-xl text-sm font-bold transition-all duration-300 border overflow-hidden
                                         ${isActive
@@ -217,7 +223,7 @@ export default function SMSParkingCard() {
                         {['20', '30', '70'].map((opt) => (
                             <button
                                 key={opt}
-                                onClick={() => setCarrier(opt)}
+                                onClick={() => { setCarrier(opt); triggerHaptic(HapticType.LIGHT); }}
                                 className={`
                   flex-1 h-12 rounded-xl text-lg font-bold transition-all duration-300 border
                   ${carrier === opt

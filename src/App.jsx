@@ -17,6 +17,7 @@ import {
   IoSunnyOutline,
   IoHomeOutline
 } from 'react-icons/io5';
+import { triggerHaptic, HapticType } from './utils/haptics';
 
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
@@ -297,93 +298,100 @@ function MainAppContent() {
                 </div>
 
                 <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                  {/* Local Resident Info Button */}
-                  <button
-                    onClick={() => setShowResidentModal(true)}
-                    className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             text-gray-700 dark:text-gray-200
-                             border border-white/20
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                    aria-label="Lakossági infók"
-                  >
-                    <IoHomeOutline className="text-base sm:text-lg" />
-                    <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
-                  </button>
+// ... imports
+                  import {triggerHaptic, HapticType} from './utils/haptics';
 
-                  {/* Weather Button (Compact) */}
-                  <button
-                    onClick={() => setShowWeatherModal(true)}
-                    className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             text-gray-700 dark:text-gray-200
-                             border border-white/20
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                  >
-                    <IoCloudyNightOutline className="text-base sm:text-lg" />
-                    <span className="text-[10px] sm:text-xs font-bold">{weather.temp}°</span>
-                  </button>
+                  // ... inside App component
 
-                  {/* Map Button */}
-                  <Link
-                    to="/live-map"
-                    className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
-                             bg-white/20 dark:bg-black/20
-                             backdrop-blur-md
-                             text-gray-700 dark:text-gray-200
-                             border border-white/20
-                             hover:bg-white/40 dark:hover:bg-black/40
-                             transition-all duration-300 hover:scale-105 active:scale-95"
-                    aria-label="Térkép"
-                  >
-                    <IoMapOutline className="text-lg sm:text-xl" />
-                  </Link>
-
-                  {/* Favorites Button */}
-                  <div className="relative" ref={favoritesRef}>
+                  <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                    {/* Local Resident Info Button */}
                     <button
-                      onClick={() => setShowFavorites(!showFavorites)}
-                      className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                      onClick={() => { setShowResidentModal(true); triggerHaptic(); }}
+                      className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                      aria-label="Lakossági infók"
+                    >
+                      <IoHomeOutline className="text-base sm:text-lg" />
+                      <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
+                    </button>
+
+                    {/* Weather Button (Compact) */}
+                    <button
+                      onClick={() => { setShowWeatherModal(true); triggerHaptic(); }}
+                      className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                    >
+                      <IoCloudyNightOutline className="text-base sm:text-lg" />
+                      <span className="text-[10px] sm:text-xs font-bold">{weather.temp}°</span>
+                    </button>
+
+                    {/* Map Button */}
+                    <Link
+                      to="/live-map"
+                      onClick={() => triggerHaptic()}
+                      className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                             bg-white/20 dark:bg-black/20
+                             backdrop-blur-md
+                             text-gray-700 dark:text-gray-200
+                             border border-white/20
+                             hover:bg-white/40 dark:hover:bg-black/40
+                             transition-all duration-300 hover:scale-105 active:scale-95"
+                      aria-label="Térkép"
+                    >
+                      <IoMapOutline className="text-lg sm:text-xl" />
+                    </Link>
+
+                    {/* Favorites Button */}
+                    <div className="relative" ref={favoritesRef}>
+                      <button
+                        onClick={() => { setShowFavorites(!showFavorites); triggerHaptic(HapticType.MEDIUM); }}
+                        className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
                                bg-white/20 dark:bg-black/20
                                backdrop-blur-md
                                text-gray-700 dark:text-gray-200
                                border border-white/20
                                hover:bg-white/40 dark:hover:bg-black/40
                                transition-all duration-300 hover:scale-105 active:scale-95 group"
-                      aria-label="Kedvencek megnyitása"
-                    >
-                      {favoritesCount > 0 ? (
-                        <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
-                      ) : (
-                        <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
-                      )}
+                        aria-label="Kedvencek megnyitása"
+                      >
+                        {favoritesCount > 0 ? (
+                          <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
+                        ) : (
+                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
+                        )}
 
-                      {favoritesCount > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
-                          {favoritesCount}
-                        </span>
-                      )}
-                    </button>
+                        {favoritesCount > 0 && (
+                          <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
+                            {favoritesCount}
+                          </span>
+                        )}
+                      </button>
 
-                    {showFavorites && (
-                      <FavoritesDashboard
-                        attractions={favoriteAttractions}
-                        events={favoriteEvents}
-                        leisure={favoriteLeisure}
-                        restaurants={favoriteRestaurants}
-                        onClose={() => setShowFavorites(false)}
-                      />
-                    )}
+                      {showFavorites && (
+                        <FavoritesDashboard
+                          attractions={favoriteAttractions}
+                          events={favoriteEvents}
+                          leisure={favoriteLeisure}
+                          restaurants={favoriteRestaurants}
+                          onClose={() => setShowFavorites(false)}
+                        />
+                      )}
+                    </div>
+
+                    {/* Settings Menu (Language + Dark Mode) */}
+                    <SettingsMenu />
                   </div>
-
-                  {/* Settings Menu (Language + Dark Mode) */}
-                  <SettingsMenu />
                 </div>
-              </div>
             </header>
             <div className="h-16" />
           </>

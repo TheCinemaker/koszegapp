@@ -75,7 +75,13 @@ function SimplePointsDisplay({ user }) {
         return () => supabase.removeChannel(chan);
     }, [user]);
 
-    if (!user) return <div className="text-center py-20 text-zinc-500">Jelentkezz be a pontjaidhoz.</div>;
+    if (!user) return (
+        <div className="text-center py-20 text-zinc-500">
+            <Link to="/pass/register?redirectTo=/food" className="text-amber-500 font-bold hover:underline">
+                Jelentkezz be
+            </Link> a pontjaidhoz.
+        </div>
+    );
     if (loading) return <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div></div>;
 
     const points = pointsData?.points || 0;
@@ -412,7 +418,13 @@ export default function FoodOrderPage() {
 
                 {activeTab === 'orders' && (
                     <div className="pb-32 pt-2">
-                        {user ? <MyOrdersList user={user} /> : <div className="text-center py-20 text-zinc-500">Jelentkezz be a rendeléseidhez.</div>}
+                        {user ? <MyOrdersList user={user} /> : (
+                            <div className="text-center py-20 text-zinc-500">
+                                <Link to="/pass/register?redirectTo=/food" className="text-amber-500 font-bold hover:underline">
+                                    Jelentkezz be
+                                </Link> a rendeléseidhez.
+                            </div>
+                        )}
                     </div>
                 )}
                 {activeTab === 'rewards' && <div className="pb-32 pt-2"><SimplePointsDisplay user={user} /></div>}

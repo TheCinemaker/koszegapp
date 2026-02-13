@@ -40,7 +40,11 @@ export default function KoszegPassRegister() {
                 // We use 'client' because KőszegPass users are just clients in the auth system context
                 await login(form.username, form.password, 'client');
                 toast.success(t('koszegPass.successLogin'));
-                navigate('/pass/profile', { replace: true });
+
+                // Check for redirect param
+                const params = new URLSearchParams(window.location.search);
+                const redirect = params.get('redirectTo');
+                navigate(redirect || '/pass/profile', { replace: true });
 
             } else {
                 // --- REGISTER LOGIC ---
@@ -75,7 +79,9 @@ export default function KoszegPassRegister() {
                         await login(form.username, form.password, 'client');
                     }
 
-                    navigate('/pass/profile', { replace: true });
+                    const params = new URLSearchParams(window.location.search);
+                    const redirect = params.get('redirectTo');
+                    navigate(redirect || '/pass/profile', { replace: true });
                 }
             }
 

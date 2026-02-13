@@ -1,21 +1,4 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // Added import
-import { useAuth } from '../contexts/AuthContext';
-import {
-  IoHomeOutline, IoHome,
-  IoLocationOutline, IoLocation,
-  IoCalendarOutline, IoCalendar,
-  IoRestaurantOutline, IoRestaurant,
-  IoBedOutline, IoBed,
-  IoBicycleOutline, IoBicycle,
-  IoCarOutline, IoCar,
-  IoMapOutline, IoMap,
-  IoCloudyNightOutline, IoCloudyNight,
-  IoInformationCircleOutline, IoInformationCircle,
-  IoPersonCircleOutline, IoPersonCircle,
-  IoKeyOutline, IoKey
-} from 'react-icons/io5';
+import { triggerHaptic } from '../utils/haptics'; // Import utility
 
 export default function FloatingNavbar() {
   const { t } = useTranslation(); // Hook
@@ -62,6 +45,7 @@ export default function FloatingNavbar() {
           <NavLink
             key={item.to}
             to={item.to}
+            onClick={() => triggerHaptic()}
             className={({ isActive }) => `
               relative group flex flex-col items-center justify-center
               min-w-[4rem] h-10 rounded-[1rem] snap-center

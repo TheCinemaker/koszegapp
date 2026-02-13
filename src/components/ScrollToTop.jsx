@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
+import { triggerHaptic } from '../utils/haptics';
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
@@ -13,6 +14,7 @@ export default function ScrollToTop() {
   }, []);
 
   const scrollToTop = () => {
+    triggerHaptic();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
