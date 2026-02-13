@@ -583,7 +583,7 @@ export default function KoszegPassProfile() {
                                         onClick={handleGoogleWallet}
                                         className="transition-transform active:scale-95"
                                     >
-                                        <img src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg" alt="Google Wallet Mentés" className="h-[48px] w-auto mx-auto" />
+                                        <img src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg" alt="Google Wallet Mentés" className="h-[42px] w-auto mx-auto" />
                                     </button>
                                 </div>
                             </motion.div>
