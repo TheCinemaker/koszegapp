@@ -19,14 +19,14 @@ export default function Footer() {
                         SA Software & Network Solutions
                     </a>
                 </p>
-                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-500 flex items-center justify-center gap-2">
+                <p className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-400 flex items-center justify-center gap-2">
                     <span>Design: Hidalmasi Erik</span>
                     <span className="opacity-50">•</span>
                     <span className="opacity-70">✨ with AI</span>
                     <span className="opacity-50">•</span>
                     <Link to="/adatvedelem" className="opacity-50 hover:opacity-100 transition-opacity hover:text-indigo-500">Adatvédelem</Link>
                     <span className="opacity-50">•</span>
-                    <span className="opacity-30">v2.0</span>
+                    <span className="opacity-30">v3.0</span>
                 </p>
             </div>
             {/* Extra spacing for FloatingNavbar */}
