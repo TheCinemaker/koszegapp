@@ -133,8 +133,8 @@ export default function SMSParkingCard() {
                 <button
                     onClick={() => { setMode('start'); triggerHaptic(HapticType.LIGHT); }}
                     className={`flex-1 py-3 rounded-[20px] text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${mode === 'start'
-                            ? 'bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-400 shadow-md'
-                            : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5'
+                        ? 'bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-400 shadow-md'
+                        : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5'
                         }`}
                 >
                     <IoPlayCircleOutline size={18} />
@@ -143,8 +143,8 @@ export default function SMSParkingCard() {
                 <button
                     onClick={() => { setMode('stop'); triggerHaptic(HapticType.LIGHT); }}
                     className={`flex-1 py-3 rounded-[20px] text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${mode === 'stop'
-                            ? 'bg-white dark:bg-zinc-800 text-rose-600 dark:text-rose-400 shadow-md'
-                            : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5'
+                        ? 'bg-white dark:bg-zinc-800 text-rose-600 dark:text-rose-400 shadow-md'
+                        : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5'
                         }`}
                 >
                     <IoStopCircleOutline size={18} />
@@ -311,7 +311,7 @@ export default function SMSParkingCard() {
                         </>
                     ) : (
                         <>
-                            {mode === 'start' ? <IoSend size={20} /> : <IoHandLeftOutline size={20} className="hidden" /> /* Icon placeholder */}
+                            {mode === 'start' ? <IoSend size={20} /> : <IoStopCircleOutline size={20} />}
                             <span>
                                 {mode === 'start' ? t('smsCard.button') : t('smsCard.stopButton')}
                             </span>
