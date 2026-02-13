@@ -18,6 +18,7 @@ export default function SettingsMenu() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
+    const [ambientEnabled, setAmbientEnabled] = useState(localStorage.getItem('ambientMode') === 'true');
     const menuRef = useRef(null);
 
     // Close on click outside
@@ -95,6 +96,38 @@ export default function SettingsMenu() {
                                     className={`
                     absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm
                     ${dark ? 'translate-x-6' : 'translate-x-0'}
+                  `}
+                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                />
+                            </button>
+                        </div>
+
+                        {/* Ambient Mode Toggle */}
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
+                                <span className="text-lg">✨</span>
+                                <span className="font-medium text-sm">Élő Háttér</span>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    const newValue = !(localStorage.getItem('ambientMode') === 'true');
+                                    localStorage.setItem('ambientMode', newValue);
+                                    window.dispatchEvent(new Event('ambient-mode-change'));
+                                    // Force re-render of this component to update toggle state visual if needed, 
+                                    // but we can just use a local state or read from LS since we are in an onClick.
+                                    // Better: use a local state for the UI, synced with LS.
+                                    setAmbientEnabled(newValue);
+                                }}
+                                className={`
+                  relative w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none
+                  ${ambientEnabled ? 'bg-indigo-600' : 'bg-gray-300'}
+                `}
+                            >
+                                <motion.div
+                                    layout
+                                    className={`
+                    absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm
+                    ${ambientEnabled ? 'translate-x-6' : 'translate-x-0'}
                   `}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                 />

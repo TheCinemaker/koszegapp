@@ -29,6 +29,14 @@ export default function AmbientBackground({ weather, dark }) {
     const [sunData, setSunData] = useState(null);
     const [phase, setPhase] = useState('day');
     const [debugHour, setDebugHour] = useState(null); // NULL = Realtime, Number = Debug Time
+    const [enabled, setEnabled] = useState(localStorage.getItem('ambientMode') === 'true'); // Default to FALSE
+
+    // Listen for toggle changes
+    useEffect(() => {
+        const handleToggle = () => setEnabled(localStorage.getItem('ambientMode') === 'true');
+        window.addEventListener('ambient-mode-change', handleToggle);
+        return () => window.removeEventListener('ambient-mode-change', handleToggle);
+    }, []);
 
     // Update Sun Position & Phase every minute
     useEffect(() => {
@@ -111,6 +119,7 @@ export default function AmbientBackground({ weather, dark }) {
     }, [weather]);
 
 
+    if (!enabled) return <div className="fixed inset-0 bg-[#f5f5f7] dark:bg-black -z-50 transition-colors duration-500" />;
     if (!sunData) return <div className="fixed inset-0 bg-slate-900 -z-50" />;
 
     return (
