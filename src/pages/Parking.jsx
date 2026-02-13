@@ -169,7 +169,15 @@ export default function Parking() {
                             src={`/images/parking/${spot.image}`}
                             alt={spot.name}
                             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ease-out"
-                            onError={(e) => { e.target.onerror = null; e.target.style.display = 'none'; e.target.nextSibling.classList.remove('hidden'); e.target.nextSibling.classList.add('flex'); }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.style.display = 'none';
+                              const sibling = e.target.nextElementSibling;
+                              if (sibling) {
+                                sibling.classList.remove('hidden');
+                                sibling.classList.add('flex');
+                              }
+                            }}
                           />
                         ) : null}
                         {/* Fallback Ghost */}
