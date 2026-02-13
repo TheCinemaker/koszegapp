@@ -55,10 +55,12 @@ import SettingsMenu from './components/SettingsMenu';
 
 
 
-const Admin = React.lazy(() => import('./pages/Admin.jsx'));
-const MaintenancePage = React.lazy(() => import('./pages/Maintenance.jsx'));
-const ARView = React.lazy(() => import('./pages/ARView.jsx'));
-const CityPass = React.lazy(() => import('./pages/CityPass.jsx'));
+import { lazyWithRetry } from './utils/lazyWithRetry';
+
+const Admin = lazyWithRetry(() => import('./pages/Admin.jsx'));
+const MaintenancePage = lazyWithRetry(() => import('./pages/Maintenance.jsx'));
+const ARView = lazyWithRetry(() => import('./pages/ARView.jsx'));
+const CityPass = lazyWithRetry(() => import('./pages/CityPass.jsx'));
 
 // A LÉNYEG: A FŐ APP KOMPONENS CSAK A PROVIDERT ÁLLÍTJA BE
 export default function App() {
