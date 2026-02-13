@@ -1,5 +1,15 @@
 import { triggerHaptic } from '../utils/haptics'; // Import utility
 import { useTranslation } from 'react-i18next'; // Hook
+import { NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import {
+  IoHomeOutline, IoCalendarOutline, IoRestaurantOutline, IoBedOutline,
+  IoBicycleOutline, IoCarOutline, IoMapOutline, IoCloudyNightOutline,
+  IoInformationCircleOutline, IoLocationOutline, IoPersonCircleOutline,
+  IoKeyOutline, IoHome, IoCalendar, IoRestaurant, IoBed, IoBicycle,
+  IoCar, IoMap, IoCloudyNight, IoInformationCircle, IoLocation,
+  IoPersonCircle, IoKey
+} from 'react-icons/io5';
 
 export default function FloatingNavbar() {
   const { t } = useTranslation(); // Hook
