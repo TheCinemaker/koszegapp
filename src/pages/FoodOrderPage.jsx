@@ -187,6 +187,38 @@ export default function FoodOrderPage() {
     const { user, loading: authLoading } = useAuth();
     const [activeOrderStatus, setActiveOrderStatus] = useState(null);
 
+    // 1. Monitor active order status for logged-in user
+    useEffect(() => {
+        if (!user) return;
+
+        const fetchActiveOrders = async () => {
+            const { data } = await supabase
+                .from('orders')
+                .select('status')
+                .eq('user_id', user.id)
+                .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering'])
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+            setActiveOrderStatus(data ? data.status : null);
+        };
+
+        fetchActiveOrders();
+
+        const chan = supabase
+            .channel('active-orders-monitor')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'orders',
+                filter: `user_id=eq.${user.id}`
+            }, () => fetchActiveOrders())
+            .subscribe();
+
+        return () => supabase.removeChannel(chan);
+    }, [user]);
+
     useEffect(() => {
         const fetchRestaurants = async () => {
             try {
