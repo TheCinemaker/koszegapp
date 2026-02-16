@@ -10,6 +10,19 @@ import { Link } from 'react-router-dom';
 import KoszegPassProfile from './KoszegPassProfile';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
+// --- HELPER FUNCTIONS ---
+const getOrderStatusText = (status) => {
+    const map = {
+        'pending': 'Függőben',
+        'accepted': 'Elfogadva',
+        'preparing': 'Készül',
+        'delivering': 'Futárnál',
+        'completed': 'Kész',
+        'cancelled': 'Törölve'
+    };
+    return map[status] || status;
+};
+
 // --- RESTAURANT CARD (Same as good version) ---
 const RestaurantCard = ({ restaurant, onClick, index }) => (
     <FadeUp delay={index * 0.05}>
@@ -336,7 +349,7 @@ export default function FoodOrderPage() {
                     <div>
                         {activeOrderStatus && (
                             <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
-                                {getStatusText(activeOrderStatus)}
+                                {getOrderStatusText(activeOrderStatus)}
                             </div>
                         )}
                     </div>
@@ -625,7 +638,7 @@ function MyOrdersList({ user }) {
         const chan = supabase.channel(`my-orders-list-tab-${user.id}`).on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, (payload) => { if (payload.new.user_id === user.id) fetchOrders(); }).subscribe();
         return () => supabase.removeChannel(chan);
     }, [user]);
-    const getStatusText = (status) => { const map = { 'pending': 'Függőben', 'accepted': 'Elfogadva', 'preparing': 'Készül', 'delivering': 'Futárnál', 'completed': 'Kész', 'cancelled': 'Törölve' }; return map[status] || status; };
+
     if (loading) return <div className="text-center opacity-50 text-xs">Töltés...</div>;
     if (orders.length === 0) return <div className="text-center opacity-50 text-xs">Nincs korábbi rendelés.</div>;
     return (
@@ -634,7 +647,7 @@ function MyOrdersList({ user }) {
                 <div key={order.id} className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl p-4 rounded-[1.5rem] border border-white/60 dark:border-white/5 shadow-sm">
                     <div className="flex justify-between items-center mb-2">
                         <div className="font-bold text-sm text-gray-900 dark:text-white">{order.restaurants?.name}</div>
-                        <span className="text-[9px] font-bold uppercase bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded-md text-gray-600 dark:text-gray-300">{getStatusText(order.status)}</span>
+                        <span className="text-[9px] font-bold uppercase bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded-md text-gray-600 dark:text-gray-300">{getOrderStatusText(order.status)}</span>
                     </div>
                     <div className="space-y-0.5 mb-2 opacity-80 text-[11px]">{order.items?.map((item, i) => (<div key={i} className="flex justify-between"><span>{item.quantity}x {item.name}</span><span>{item.price * item.quantity} Ft</span></div>))}</div>
                     <div className="pt-2 border-t border-black/5 dark:border-white/5 flex justify-between items-center"><span className="text-[10px] text-gray-500">Összesen</span><span className="font-black text-amber-500 text-sm">{order.total_price} Ft</span></div>

@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { IoRestaurant, IoFastFood, IoSettings, IoLogOut, IoNotifications, IoAddCircle, IoTime, IoPrint, IoSave, IoImage, IoCheckmarkCircle, IoStatsChart, IoInformationCircle } from 'react-icons/io5';
+import { IoRestaurant, IoFastFood, IoSettings, IoLogOut, IoNotifications, IoAddCircle, IoTime, IoPrint, IoSave, IoImage, IoCheckmarkCircle, IoStatsChart, IoInformationCircle, IoClose } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+
+// Windows 98 UI Constants
+const WIN98 = {
+    bg: 'bg-[#008080]', // Teal
+    windowBg: 'bg-[#c0c0c0]', // Silver
+    text: 'text-black font-sans', // System font
+    borderOutset: 'border-t-2 border-l-2 border-r-2 border-b-2 border-t-white border-l-white border-r-black border-b-black',
+    borderInset: 'border-t-2 border-l-2 border-r-2 border-b-2 border-t-black border-l-black border-r-white border-b-white',
+    titleBar: 'bg-gradient-to-r from-[#000080] to-[#1084d0] text-white font-bold px-1 py-0.5 flex justify-between items-center select-none',
+    btn: 'bg-[#c0c0c0] active:border-t-black active:border-l-black active:border-r-white active:border-b-white px-3 py-1 text-sm active:translate-y-px',
+};
 
 export default function FoodAdmin() {
     const { user, logout, loading } = useAuth();
@@ -43,15 +54,31 @@ export default function FoodAdmin() {
     }, [user, loading, navigate]);
 
     if (loading || verifying) {
-        return <div className="min-h-screen flex items-center justify-center bg-zinc-900 text-white animate-pulse">Betöltés...</div>;
+        return (
+            <div className={`min-h-screen ${WIN98.bg} flex items-center justify-center`}>
+                <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-4`}>
+                    <p className="font-bold">Rendszer indítása...</p>
+                </div>
+            </div>
+        );
     }
 
     if (!restaurantId) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-900 text-white">
-                <h1 className="text-2xl font-bold mb-4">Nincs étterem társítva!</h1>
-                <p className="text-zinc-400 mb-6">Kérlek regisztrálj új éttermet vagy vedd fel a kapcsolatot az adminisztrátorral.</p>
-                <button onClick={() => navigate('/food-auth')} className="px-6 py-2 bg-amber-600 rounded-lg font-bold">Vissza a belépéshez</button>
+            <div className={`min-h-screen ${WIN98.bg} flex items-center justify-center`}>
+                <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-96 flex flex-col`}>
+                    <div className={WIN98.titleBar}>
+                        <span>Hiba</span>
+                        <button onClick={() => navigate('/food-auth')} className={`${WIN98.btn} ${WIN98.borderOutset} w-5 h-5 flex items-center justify-center leading-none pb-1`}>x</button>
+                    </div>
+                    <div className="p-4 flex gap-4 items-center">
+                        <div className="text-red-600 text-4xl">❌</div>
+                        <div>
+                            <p className="mb-4">Nincs étterem társítva a fiókhoz.</p>
+                            <button onClick={() => navigate('/food-auth')} className={`${WIN98.btn} ${WIN98.borderOutset} w-full`}>Vissza a belépéshez</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -62,7 +89,7 @@ export default function FoodAdmin() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-[#0b0b0c] text-gray-900 dark:text-gray-100 font-sans">
+        <div className={`min-h-screen ${WIN98.bg} p-1 md:p-2 overflow-hidden flex flex-col font-sans text-sm`}>
             <FoodAdminDashboard restaurantId={restaurantId} onLogout={handleLogout} />
         </div>
     );
@@ -72,6 +99,7 @@ export default function FoodAdmin() {
 function FoodAdminDashboard({ restaurantId, onLogout }) {
     const [activeTab, setActiveTab] = useState('orders'); // 'orders' | 'menu' | 'profile'
     const [restaurantData, setRestaurantData] = useState(null);
+    const [showHelp, setShowHelp] = useState(false);
 
     // Fetch basic restaurant data for header
     useEffect(() => {
@@ -81,56 +109,74 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
     }, [restaurantId]);
 
     return (
-        <div className="flex flex-col h-screen">
-            {/* Top Bar */}
-            <header className="bg-white dark:bg-[#1a1c2e] border-b border-gray-200 dark:border-white/5 h-16 px-6 flex items-center justify-between sticky top-0 z-20">
-                <div className="flex items-center gap-3">
-                    <h2 className="font-bold text-lg hidden md:block">
-                        {restaurantData?.name || 'Étterem Kezelő'}
-                    </h2>
-                    <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${restaurantData?.is_open ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                        {restaurantData?.is_open ? 'Nyitva' : 'Zárva'}
-                    </span>
+        <div className={`flex-1 flex flex-col ${WIN98.windowBg} ${WIN98.borderOutset} p-0.5`}>
+            {/* Title Bar */}
+            <div className={WIN98.titleBar}>
+                <div className="flex items-center gap-2">
+                    <img src="/icons/icon-192x192.png" className="w-4 h-4 grayscale contrast-200" alt="" />
+                    <span>FoodManager 98 - {restaurantData?.name || 'Betöltés...'}</span>
+                </div>
+                <div className="flex gap-1">
+                    <button onClick={onLogout} className={`${WIN98.btn} ${WIN98.borderOutset} w-5 h-5 flex items-center justify-center leading-none pb-1 font-bold`}>_</button>
+                    <button onClick={onLogout} className={`${WIN98.btn} ${WIN98.borderOutset} w-5 h-5 flex items-center justify-center leading-none pb-1 font-bold`}>X</button>
+                </div>
+            </div>
+
+            {/* Menu Bar / Toolbar */}
+            <div className="flex gap-4 px-2 py-1 border-b border-gray-400 shadow-sm text-sm mb-1 bg-[#c0c0c0]">
+                <button onClick={() => setShowHelp(true)} className="underline cursor-pointer hover:bg-blue-800 hover:text-white px-1">Súgó</button>
+                <span className="ml-auto text-gray-500">{new Date().toLocaleDateString()}</span>
+            </div>
+
+            {/* Content Area with Tabs */}
+            <div className="flex-1 overflow-hidden flex flex-col p-2">
+
+                {/* Tabs */}
+                <div className="flex items-end pl-2 gap-0.5 relative z-10 -mb-[2px]">
+                    <TabButton id="orders" label="Rendelések" active={activeTab} set={setActiveTab} />
+                    <TabButton id="menu" label="Étlap Szerkesztő" active={activeTab} set={setActiveTab} />
+                    <TabButton id="search" label="Keresés" active={activeTab} set={setActiveTab} />
+                    <TabButton id="stats" label="Kimutatások" active={activeTab} set={setActiveTab} />
+                    <TabButton id="profile" label="Beállítások" active={activeTab} set={setActiveTab} />
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <button onClick={onLogout} className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-red-500 transition-colors">
-                        <IoLogOut className="text-lg" /> <span className="hidden md:inline">Kilépés</span>
-                    </button>
-                </div>
-            </header>
-
-            {/* Content Area */}
-            <div className="flex-1 overflow-hidden flex flex-col">
-                <main className="flex-1 overflow-y-auto p-4 md:p-8 relative">
-                    {/* Tabs */}
-                    <div className="flex justify-center mb-4 gap-2 md:gap-4 overflow-x-auto pb-2">
-                        <TabButton id="orders" label="Rendelések" icon={<IoFastFood />} active={activeTab} set={setActiveTab} />
-                        <TabButton id="menu" label="Étlap" icon={<IoRestaurant />} active={activeTab} set={setActiveTab} />
-                        <TabButton id="stats" label="Statisztika" icon={<IoStatsChart />} active={activeTab} set={setActiveTab} />
-                        <TabButton id="profile" label="Beállítások" icon={<IoSettings />} active={activeTab} set={setActiveTab} />
-                    </div>
-
-
-
-                    <div className="max-w-6xl mx-auto">
+                {/* Main Panel */}
+                <main className={`flex-1 overflow-y-auto ${WIN98.borderOutset} bg-[#c0c0c0] p-4 relative`}>
+                    {/* Inner content usually has an inset border in some apps, but standard is just gray bg or white if document */}
+                    <div className="max-w-full mx-auto">
                         {activeTab === 'orders' && <OrderList restaurantId={restaurantId} />}
                         {activeTab === 'menu' && <MenuEditor restaurantId={restaurantId} />}
+                        {activeTab === 'search' && <SearchPanel restaurantId={restaurantId} />}
                         {activeTab === 'stats' && <SalesSummary restaurantId={restaurantId} />}
                         {activeTab === 'profile' && <ProfileEditor restaurantId={restaurantId} />}
                     </div>
                 </main>
             </div>
+
+            {/* Status Bar */}
+            <div className={`h-6 ${WIN98.borderInset} flex items-center px-2 text-xs gap-4 bg-[#c0c0c0]`}>
+                <span className="w-32 truncate border-r border-gray-400 pr-2">Állapot: {restaurantData?.is_open ? 'Nyitva' : 'Zárva'}</span>
+                <span className="flex-1 truncate">Felhasználó: Kész</span>
+                <span className="border-l border-gray-400 pl-2">v4.0.98</span>
+            </div>
+            {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
         </div>
     );
 }
 
-const TabButton = ({ id, label, icon, active, set }) => (
+const TabButton = ({ id, label, active, set }) => (
     <button
         onClick={() => set(id)}
-        className={`px-4 md:px-6 py-2 rounded-full font-bold transition-all flex items-center gap-2 whitespace-nowrap ${active === id ? 'bg-amber-500 text-white shadow-lg scale-105' : 'bg-white dark:bg-white/5 text-gray-500 hover:bg-gray-100'}`}
+        className={`
+            px-3 py-1 rounded-t-sm text-sm font-bold
+            border-t-2 border-l-2 border-r-2 
+            ${active === id
+                ? 'bg-[#c0c0c0] border-t-white border-l-white border-r-black text-black z-20 pb-1.5 -mb-1'
+                : 'bg-[#b0b0b0] border-t-white border-l-white border-r-gray-600 text-gray-700 mb-0'
+            }
+        `}
     >
-        {icon} {label}
+        {label}
     </button>
 );
 
@@ -139,10 +185,11 @@ const TabButton = ({ id, label, icon, active, set }) => (
 function OrderList({ restaurantId }) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedOrder, setSelectedOrder] = useState(null);
 
     const playNotification = () => {
         try {
-            const audio = new Audio('/sounds/bell.mp3'); // Ensure this file exists or use a robust solution
+            const audio = new Audio('/sounds/bell.mp3');
             audio.play().catch(() => { });
         } catch (e) { }
     };
@@ -164,7 +211,6 @@ function OrderList({ restaurantId }) {
 
         fetchOrders();
 
-        // Subscribe to Orders
         const channel = supabase
             .channel(`orders-${restaurantId}`)
             .on(
@@ -195,13 +241,14 @@ function OrderList({ restaurantId }) {
         await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
     };
 
-    // ... printReceipt logic ...
     const printReceipt = (order) => {
         try {
+            // ... print logic (same as before but maybe simpler log) ...
+            // Keeping original print logic for functionality
             const doc = new jsPDF({
                 orientation: 'portrait',
                 unit: 'mm',
-                format: [80, 200] // Thermal printer width approx 80mm
+                format: [80, 200]
             });
 
             doc.setFontSize(14);
@@ -261,96 +308,97 @@ function OrderList({ restaurantId }) {
         }
     };
 
-    if (loading) return <div className="p-10 text-center animate-pulse">Rendelések betöltése...</div>;
+    if (loading) return (
+        <div className="bg-white border-2 border-inset p-4 text-center">Adatok betöltése...</div>
+    );
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             <QuickDelivery restaurantId={restaurantId} />
 
-            {orders.length === 0 ? (
-                <div className="text-center py-20 opacity-50 flex flex-col items-center">
-                    <IoFastFood className="text-6xl mb-4 opacity-20" />
-                    <p>Nincs aktív rendelés jelenleg.</p>
-                </div>
-            ) : (
-                <div className="grid gap-4">
-                    {orders.map(order => (
-                        <div key={order.id} className={`bg-white dark:bg-[#1a1c2e] p-6 rounded-2xl shadow-sm border flex flex-col md:flex-row items-start justify-between gap-4 animate-in slide-in-from-bottom-2 fade-in duration-300 ${order.status === 'new' ? 'border-amber-500 shadow-md ring-1 ring-amber-500/20' : 'border-gray-100 dark:border-white/5'}`}>
-                            {/* ... Order Card Content (Same as before) ... */}
-                            <div className="flex-1 w-full">
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="flex items-center gap-2">
-                                        <span className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-500 px-2 py-0.5 rounded text-xs font-bold font-mono">#{order.id}</span>
-                                        <span className="text-gray-400 text-xs">{new Date(order.created_at).toLocaleTimeString()}</span>
-                                        {order.status === 'new' && <span className="text-red-500 text-xs font-bold animate-pulse">● ÚJ</span>}
-                                    </div>
-                                    <div className="md:hidden">
-                                        <span className="font-bold">{order.total_price} Ft</span>
-                                    </div>
-                                </div>
+            <div className={`bg-white ${WIN98.borderInset} h-[600px] overflow-auto`}>
+                <table className="w-full text-left border-collapse">
+                    <thead className="bg-[#c0c0c0] sticky top-0 z-10">
+                        <tr>
+                            {['Időpont', 'Vevő Neve', 'Cím', 'Tételek', 'Összeg', 'Státusz', 'Műveletek'].map(head => (
+                                <th key={head} className={`p-1 border border-r-black border-b-black border-l-white border-t-white text-xs font-normal select-none active:border-r-white active:border-b-white active:border-l-black active:border-t-black`}>
+                                    <div className="px-1">{head}</div>
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody className="bg-white text-sm">
+                        {orders.map(order => (
+                            <tr
+                                key={order.id}
+                                onClick={() => setSelectedOrder(order)}
+                                className={`
+                                    border-b border-gray-200 group cursor-pointer
+                                    ${order.status === 'new'
+                                        ? 'bg-yellow-300 text-black font-bold'
+                                        : 'hover:bg-blue-800 hover:text-white'
+                                    }
+                                `}
+                            >
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'}`}>{new Date(order.created_at).toLocaleTimeString()}</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} font-bold`}>{order.customer_name}</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-xs truncate max-w-[150px]`} title={order.customer_address}>{order.customer_address}</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-xs italic`}>
+                                    {order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}
+                                    {order.customer_note && <span className={`font-bold ml-1 ${order.status === 'new' ? 'text-yellow-300' : 'text-red-500 group-hover:text-yellow-300'}`}> (! {order.customer_note})</span>}
+                                </td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-right`}>{order.total_price} Ft</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-center`}>
+                                    <span className={`px-1 text-xs uppercase font-bold 
+                                        ${order.status === 'new' ? 'bg-red-600 text-white' :
+                                            order.status === 'accepted' ? 'bg-yellow-200 text-black' :
+                                                order.status === 'ready' ? 'bg-blue-200 text-black' : 'bg-green-200 text-black'}
+                                     `}>
+                                        {order.status === 'new' ? 'ÚJ KÉRÉS!' : order.status}
+                                    </span>
+                                </td>
+                                <td className="p-1 flex gap-1 justify-center">
+                                    {order.status === 'new' ? (
+                                        <>
+                                            <button onClick={() => handleStatusChange(order.id, 'accepted')} className={`${WIN98.btn} bg-green-200`}>Ok</button>
+                                            <button onClick={() => handleStatusChange(order.id, 'rejected')} className={`${WIN98.btn}`}>Nem</button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {order.status === 'accepted' && (
+                                                <button onClick={() => handleStatusChange(order.id, 'ready')} className={`${WIN98.btn}`}>Futár</button>
+                                            )}
+                                            {order.status === 'ready' && (
+                                                <button onClick={() => handleStatusChange(order.id, 'delivered')} className={`${WIN98.btn}`}>Kész</button>
+                                            )}
+                                        </>
+                                    )}
+                                    <button onClick={(e) => { e.stopPropagation(); printReceipt(order); }} className={`${WIN98.btn} px-1`} title="Nyomtatás">🖨️</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                {orders.length === 0 && (
+                    <div className="p-10 text-center text-gray-400">Nincs megjeleníthető adat.</div>
+                )}
+            </div>
 
-                                <div className="mb-4">
-                                    {order.items && order.items.map((item, idx) => (
-                                        <div key={idx} className="font-bold text-lg text-gray-800 dark:text-gray-200 border-b border-gray-50 dark:border-white/5 last:border-0 py-1 flex justify-between">
-                                            <span>{item.quantity}x {item.name}</span>
-                                            <span className="text-sm font-normal text-gray-500">{item.price * item.quantity} Ft</span>
-                                        </div>
-                                    ))}
-                                </div>
+            <div className="flex justify-between items-center text-xs">
+                <span>{orders.length} objektum(ok)</span>
+                <span>Szabad memória: 64MB</span>
+            </div>
 
-                                <div className="text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-white/5 mt-2">
-                                    <p className="font-bold text-gray-900 dark:text-white uppercase tracking-wide flex items-center gap-2">
-                                        {order.customer_name}
-                                        <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider border border-gray-200">
-                                            SZÁLLÍTÁS
-                                        </span>
-                                    </p>
-                                    <p className="font-mono text-base text-gray-800 dark:text-gray-300 my-1">{order.customer_address}</p>
-                                    <p className="font-mono text-xs">{order.customer_phone}</p>
-                                    {order.customer_note && <p className="mt-2 bg-yellow-50 dark:bg-yellow-900/20 p-2 rounded text-amber-700 dark:text-amber-500 italic">"{order.customer_note}"</p>}
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-2 w-full md:w-56 shrink-0 border-t md:border-t-0 md:border-l border-gray-100 dark:border-white/5 pt-4 md:pt-0 md:pl-4">
-                                <div className="text-right hidden md:block mb-4">
-                                    <span className="text-2xl font-black text-gray-800 dark:text-white">{order.total_price?.toLocaleString()} <span className="text-sm font-normal text-gray-500">Ft</span></span>
-                                </div>
-
-                                {order.status === 'new' ? (
-                                    <>
-                                        <button onClick={() => handleStatusChange(order.id, 'accepted')} className="py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl text-lg shadow-lg shadow-amber-500/20 transition-transform active:scale-95 flex items-center justify-center gap-2"><IoFastFood /> Elfogad</button>
-                                        <button onClick={() => handleStatusChange(order.id, 'rejected')} className="py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 font-bold rounded-xl text-xs transition-colors text-gray-500">Elutasít</button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className={`py-3 text-center font-bold rounded-xl border-2 ${order.status === 'accepted' ? 'border-green-500 text-green-600 bg-green-50 dark:bg-green-900/10' : order.status === 'ready' ? 'border-blue-500 text-blue-600' : 'border-red-200 text-red-400'}`}>
-                                            {order.status === 'accepted' ? 'Készül...' : order.status === 'ready' ? 'Futárnál' : 'Kézbesítve / Lezárva'}
-                                        </div>
-
-                                        {order.status === 'accepted' && (
-                                            <button onClick={() => handleStatusChange(order.id, 'ready')} className="py-2 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm shadow-lg transition-transform active:scale-95">Futárnak átadva</button>
-                                        )}
-
-                                        {order.status === 'ready' && (
-                                            <button onClick={() => handleStatusChange(order.id, 'delivered')} className="py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-sm shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2"><IoCheckmarkCircle className="text-lg" /> Sikeres Kézbesítés</button>
-                                        )}
-
-                                        {order.status !== 'rejected' && (
-                                            <button
-                                                onClick={() => printReceipt(order)}
-                                                className="py-2 border-2 border-dashed border-gray-300 hover:border-gray-500 text-gray-500 font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition-colors"
-                                            >
-                                                <IoPrint /> Blokk Nyomtatása
-                                            </button>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            {selectedOrder && (
+                <OrderDetailModal
+                    order={selectedOrder}
+                    onClose={() => setSelectedOrder(null)}
+                    onStatusChange={handleStatusChange}
+                    onPrint={printReceipt}
+                />
             )}
         </div>
+
     );
 }
 
@@ -374,7 +422,6 @@ function MenuEditor({ restaurantId }) {
     }, [restaurantId]);
 
     const fetchMenu = async () => {
-        // Fix: Removed alias 'items:' which might cause 400 if PostgREST is strict or confused.
         const { data, error } = await supabase
             .from('menu_categories')
             .select(`*, menu_items(*)`)
@@ -390,7 +437,6 @@ function MenuEditor({ restaurantId }) {
         if (data) {
             const sortedData = data.map(cat => ({
                 ...cat,
-                // Mapping back to 'items' for frontend consistency
                 items: (cat.menu_items || []).sort((a, b) => a.id.localeCompare(b.id))
             }));
             setCategories(sortedData);
@@ -437,7 +483,7 @@ function MenuEditor({ restaurantId }) {
     const uploadImage = async (file) => {
         if (!file) return null;
         const fileExt = file.name.split('.').pop();
-        const fileName = `${restaurantId}/${Math.random()}.${fileExt}`;
+        const fileName = `${restaurantId}/${crypto.randomUUID()}.${fileExt}`;
         const filePath = `${fileName}`;
 
         const { error: uploadError } = await supabase.storage
@@ -458,7 +504,6 @@ function MenuEditor({ restaurantId }) {
         try {
             let imageUrl = formData.image_url;
 
-            // Upload image if a file was selected (we'll add file input to state)
             if (formData.imageFile) {
                 imageUrl = await uploadImage(formData.imageFile);
             }
@@ -492,7 +537,6 @@ function MenuEditor({ restaurantId }) {
         }
     };
 
-    // ... (rest of helper functions same as before)
     const openCatModal = (cat = null) => {
         setEditingCategory(cat);
         setFormData(cat ? { name: cat.name } : { name: '' });
@@ -508,50 +552,47 @@ function MenuEditor({ restaurantId }) {
         setShowItemModal(true);
     };
 
-    if (loading) return <div className="p-10 text-center animate-pulse">Menü betöltése...</div>;
+    if (loading) return <div className="p-10 text-center text-sm">Könyvtárak beolvasása...</div>;
 
     return (
         <div className="max-w-4xl mx-auto pb-32">
             <QuickDelivery restaurantId={restaurantId} />
 
-            <div className="flex items-center justify-between mb-8">
-                <h1 className="text-2xl font-bold">Menü Szerkesztése</h1>
-                <button onClick={() => openCatModal()} className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg flex items-center gap-2 transition-transform active:scale-95">
-                    <IoAddCircle className="text-lg" /> Új Kategória
+            <div className={`flex items-center justify-between mb-2 p-1 ${WIN98.borderInset} bg-white`}>
+                <span className="font-bold px-2">Helyi meghajtó (C:) \ Étlap</span>
+                <button onClick={() => openCatModal()} className={`${WIN98.btn} text-xs`}>
+                    Új Mappa (Kategória)
                 </button>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-4">
                 {categories.map(cat => (
-                    <div key={cat.id} className="bg-white dark:bg-[#151618] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-white/5">
-                        <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100 dark:border-gray-800">
-                            <h3 className="font-bold text-xl">{cat.name}</h3>
-                            <button onClick={() => openCatModal(cat)} className="text-gray-400 hover:text-amber-500 px-3 py-1 rounded-lg text-xs font-bold transition-colors">Szerkeszt</button>
+                    <div key={cat.id} className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1 mb-4`}>
+                        <div className={`${WIN98.titleBar} mx-0 mb-1`}>
+                            <span>📁 {cat.name}</span>
+                            <button onClick={() => openCatModal(cat)} className="text-white text-xs underline px-2">Szerkeszt</button>
                         </div>
-                        <div className="space-y-3">
+
+                        <div className={`bg-white ${WIN98.borderInset} p-2 grid grid-cols-1 md:grid-cols-2 gap-2`}>
                             {cat.items?.map(item => (
-                                <div key={item.id} className={`flex items-center gap-4 p-3 rounded-xl border transition-all ${item.is_available ? 'bg-white dark:bg-white/5 border-gray-100 dark:border-white/5' : 'bg-gray-50 dark:bg-black/20 border-gray-100 dark:border-white/5 opacity-60 grayscale'}`}>
-                                    <div className="w-12 h-12 bg-gray-200 dark:bg-white/10 rounded-lg overflow-hidden shrink-0">
-                                        {item.image_url ?
-                                            <img src={item.image_url} alt="" className="w-full h-full object-cover" /> :
-                                            <div className="w-full h-full flex items-center justify-center text-gray-400"><IoImage /></div>
-                                        }
+                                <div key={item.id} className={`flex items-start gap-2 p-1 border border-dotted border-gray-400 ${!item.is_available ? 'opacity-50 grayscale' : ''}`}>
+                                    <div className={`w-10 h-10 ${WIN98.borderInset} shrink-0 bg-gray-200 overflow-hidden`}>
+                                        {item.image_url && <img src={item.image_url} alt="" className="w-full h-full object-cover" />}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <h4 className="font-bold text-sm">{item.name}</h4>
-                                        <p className="text-xs text-gray-500 truncate">{item.description}</p>
-                                        <p className="text-xs font-mono font-bold text-amber-600 mt-0.5">{item.price} Ft</p>
+                                        <h4 className="font-bold text-xs truncate">{item.name}</h4>
+                                        <p className="text-[10px] text-gray-500 truncate">{item.price} Ft</p>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <button onClick={() => openItemModal(cat.id, item)} className="p-2 text-gray-400 hover:text-blue-500 transition-colors"><IoSettings /></button>
-                                        <button onClick={() => toggleItemAvailability(item.id, item.is_available)} className={`px-2 py-1 rounded text-xs font-bold ${item.is_available ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>
-                                            {item.is_available ? '✓' : 'X'}
+                                    <div className="flex flex-col gap-1">
+                                        <button onClick={() => openItemModal(cat.id, item)} className={`${WIN98.btn} py-0 px-1 text-[10px]`}>✏️</button>
+                                        <button onClick={() => toggleItemAvailability(item.id, item.is_available)} className={`${WIN98.btn} py-0 px-1 text-[10px] ${item.is_available ? 'text-green-800' : 'text-red-800'}`}>
+                                            {item.is_available ? 'ON' : 'OFF'}
                                         </button>
                                     </div>
                                 </div>
                             ))}
-                            <button onClick={() => openItemModal(cat.id)} className="w-full py-3 border-2 border-dashed border-gray-200 dark:border-white/10 rounded-xl text-gray-400 font-bold text-sm hover:border-amber-500 hover:text-amber-500 transition-colors flex items-center justify-center gap-2 group">
-                                <IoAddCircle className="group-hover:scale-110 transition-transform" /> Új étel hozzáadása
+                            <button onClick={() => openItemModal(cat.id)} className="w-full h-12 border border-dashed border-gray-400 flex items-center justify-center text-gray-500 text-xs hover:bg-gray-100">
+                                + Új Fájl
                             </button>
                         </div>
                     </div>
@@ -559,38 +600,54 @@ function MenuEditor({ restaurantId }) {
             </div>
 
             {(showCatModal || showItemModal) && (
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
-                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-[#1e2030] w-full max-w-md rounded-2xl p-6 shadow-2xl">
-                        <h2 className="text-xl font-bold mb-4">{showCatModal ? 'Kategória' : 'Étel'} Szerkesztése</h2>
-                        <form onSubmit={showCatModal ? saveCategory : saveItem} className="space-y-4">
-                            <input autoFocus placeholder="Elnevezés" className="w-full bg-gray-50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required />
+                <div className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none">
+                    <div className="absolute inset-0 bg-transparent pointer-events-auto" />
+                    <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-full max-w-sm pointer-events-auto shadow-xl relative z-10`}>
+                        <div className={WIN98.titleBar}>
+                            <span>{showCatModal ? 'Kategória Tulajdonságok' : 'Fájl Tulajdonságok'}</span>
+                            <button onClick={() => { setShowCatModal(false); setShowItemModal(false); }} className={`${WIN98.btn} w-4 h-4 flex items-center justify-center leading-none pb-1`}>x</button>
+                        </div>
+                        <form onSubmit={showCatModal ? saveCategory : saveItem} className="p-4 space-y-4">
+                            <div className="space-y-1">
+                                <label className="text-xs">Név:</label>
+                                <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} autoFocus value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required />
+                            </div>
+
                             {!showCatModal && (
                                 <>
-                                    <textarea rows={2} placeholder="Leírás" className="w-full bg-gray-50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-2 resize-none" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-                                    <input type="number" placeholder="Ár (Ft)" className="w-full bg-gray-50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-2" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} required />
+                                    <div className="space-y-1">
+                                        <label className="text-xs">Leírás:</label>
+                                        <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-xs">Ár (HUF):</label>
+                                        <input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} required />
+                                    </div>
 
-                                    {/* Image Upload UI */}
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase text-gray-500">Kép feltöltése</label>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={e => setFormData({ ...formData, imageFile: e.target.files[0] })}
-                                            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"
-                                        />
-                                        <div className="text-center text-xs text-gray-400 uppercase font-bold">- VAGY -</div>
-                                        <input placeholder="Kép URL (belső vagy külső link)" className="w-full bg-gray-50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-2" value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} />
+                                    {/* Retro Image Upload */}
+                                    <div className="space-y-1">
+                                        <label className="text-xs">Kép forrása:</label>
+                                        <div className="flex gap-1">
+                                            <input className={`flex-1 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none`} value={formData.imageFile ? formData.imageFile.name : (formData.image_url || '')} readOnly />
+                                            <label className={`${WIN98.btn} cursor-pointer`}>
+                                                Tallózás...
+                                                <input type="file" accept="image/*" className="hidden" onChange={e => setFormData({ ...formData, imageFile: e.target.files[0] })} />
+                                            </label>
+                                        </div>
+                                        <div className="text-[10px] text-gray-500">Vagy add meg az URL-t kézzel:</div>
+                                        <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none`} value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} />
                                     </div>
                                 </>
                             )}
+
                             <div className="flex gap-2 justify-end pt-2">
-                                <button type="button" onClick={() => { setShowCatModal(false); setShowItemModal(false); }} className="px-4 py-2 text-gray-500 font-bold hover:bg-gray-100 rounded-lg">Mégsem</button>
-                                <button disabled={uploading} className="px-6 py-2 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-500 disabled:opacity-50">
-                                    {uploading ? 'Feltöltés...' : 'Mentés'}
+                                <button type="button" onClick={() => { setShowCatModal(false); setShowItemModal(false); }} className={`${WIN98.btn} min-w-[70px]`}>Mégsem</button>
+                                <button disabled={uploading} className={`${WIN98.btn} min-w-[70px] border border-black font-bold`}>
+                                    {uploading ? 'Mentés...' : 'Alkalmaz'}
                                 </button>
                             </div>
                         </form>
-                    </motion.div>
+                    </div>
                 </div>
             )}
         </div>
@@ -606,25 +663,17 @@ function SalesSummary({ restaurantId }) {
         if (!restaurantId) return;
 
         const fetchStats = async () => {
-            // Calculate date ranges
             const now = new Date();
-
-            // Start of Today
             const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-            // Start of Week (Monday)
-            const day = now.getDay();
-            const diff = now.getDate() - day + (day === 0 ? -6 : 1);
-            const startOfWeek = new Date(now.setDate(diff));
+            // FIX: Copy date to avoid mutation
+            const todayForWeek = new Date(now);
+            const day = todayForWeek.getDay();
+            const diff = todayForWeek.getDate() - day + (day === 0 ? -6 : 1);
+            const startOfWeek = new Date(todayForWeek.setDate(diff));
             startOfWeek.setHours(0, 0, 0, 0);
 
-            // Start of Month
             const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
-            // Fetch all orders that are completed/delivered (or just all reliable revenue orders)
-            // We'll fetch orders from the beginning of the month to cover all cases if week is within month? 
-            // Actually, week can span months. Let's safe-fetch from 40 days ago.
-            // But strict SQL filtering is better. For MVP, let's fetch 'delivered' orders from last 40 days.
 
             const safeStartDate = new Date();
             safeStartDate.setDate(safeStartDate.getDate() - 40);
@@ -663,67 +712,81 @@ function SalesSummary({ restaurantId }) {
         fetchStats();
     }, [restaurantId]);
 
-    if (loading) return <div className="p-10 text-center animate-pulse">Statisztika számolása...</div>;
+    if (loading) return <div className="p-10 text-center text-sm">Adatok feldolgozása...</div>;
 
     return (
-        <div className="max-w-4xl mx-auto space-y-8">
-            <h2 className="text-2xl font-bold mb-6">Bevétel Összesítő</h2>
+        <div className="max-w-4xl mx-auto space-y-4">
+            <div className={`p-1 ${WIN98.borderInset} bg-white mb-4`}>
+                <span className="font-bold px-2">Statisztikák \ Bevétel</span>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Daily Card */}
-                <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
-                        <IoTime className="text-8xl" />
+                <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1`}>
+                    <div className={`${WIN98.titleBar} mx-0 mb-1 bg-gradient-to-r from-teal-800 to-teal-600`}>
+                        <span>Napló (Mai)</span>
                     </div>
-                    <div className="relative z-10">
-                        <p className="text-amber-100 font-bold uppercase text-xs tracking-wider mb-1">Mai Bevétel</p>
-                        <h3 className="text-3xl font-black">{stats.daily.toLocaleString()} <span className="text-lg font-medium opacity-80">Ft</span></h3>
+                    <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
+                        <div className="mb-2"><IoTime className="inline text-2xl text-gray-400" /></div>
+                        <h3 className="text-2xl font-bold font-mono">{stats.daily.toLocaleString()} Ft</h3>
+                        <p className="text-xs text-gray-500 mt-1">Mai forgalom</p>
                     </div>
                 </div>
 
                 {/* Weekly Card */}
-                <div className="bg-white dark:bg-[#1a1c2e] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-white/5 relative overflow-hidden group">
-                    <div className="absolute -right-4 -bottom-4 opacity-5 dark:opacity-[0.03]">
-                        <IoStatsChart className="text-9xl text-gray-900 dark:text-white" />
+                <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1`}>
+                    <div className={`${WIN98.titleBar} mx-0 mb-1 bg-gradient-to-r from-blue-800 to-blue-600`}>
+                        <span>Heti Összesítés</span>
                     </div>
-                    <div className="relative z-10">
-                        <p className="text-gray-500 dark:text-gray-400 font-bold uppercase text-xs tracking-wider mb-1">E heti bevétel</p>
-                        <h3 className="text-3xl font-black text-gray-900 dark:text-white">{stats.weekly.toLocaleString()} <span className="text-lg font-medium text-gray-400">Ft</span></h3>
+                    <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
+                        <div className="mb-2"><IoStatsChart className="inline text-2xl text-gray-400" /></div>
+                        <h3 className="text-2xl font-bold font-mono">{stats.weekly.toLocaleString()} Ft</h3>
+                        <p className="text-xs text-gray-500 mt-1">E heti forgalom</p>
                     </div>
                 </div>
 
                 {/* Monthly Card */}
-                <div className="bg-white dark:bg-[#1a1c2e] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-white/5 relative overflow-hidden group">
-                    <div className="relative z-10">
-                        <p className="text-gray-500 dark:text-gray-400 font-bold uppercase text-xs tracking-wider mb-1">Havi bevétel</p>
-                        <h3 className="text-3xl font-black text-gray-900 dark:text-white">{stats.monthly.toLocaleString()} <span className="text-lg font-medium text-gray-400">Ft</span></h3>
-                        <div className="mt-4 w-full bg-gray-100 dark:bg-white/5 h-1.5 rounded-full overflow-hidden">
-                            <div className="h-full bg-green-500 w-[70%]" /> {/* Mock progress for visual flair */}
+                <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1`}>
+                    <div className={`${WIN98.titleBar} mx-0 mb-1 bg-gradient-to-r from-purple-800 to-purple-600`}>
+                        <span>Havi Jelentés</span>
+                    </div>
+                    <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
+                        <div className="mb-2"><IoStatsChart className="inline text-2xl text-gray-400" /></div>
+                        <h3 className="text-2xl font-bold font-mono">{stats.monthly.toLocaleString()} Ft</h3>
+
+                        {/* Retro Progress Bar */}
+                        <div className={`mt-3 h-4 ${WIN98.borderInset} bg-gray-200 relative`}>
+                            <div className="absolute top-0 left-0 h-full bg-blue-800" style={{ width: '70%' }}></div>
+                            {/* Blocks for retro feel */}
+                            <div className="absolute top-0 left-0 h-full w-full flex opacity-20">
+                                {Array.from({ length: 10 }).map((_, i) => (
+                                    <div key={i} className="flex-1 border-r border-white"></div>
+                                ))}
+                            </div>
                         </div>
-                        <p className="text-[10px] text-gray-400 mt-2 italic">A hónap 70%-a telt el.</p>
+                        <p className="text-[10px] text-gray-400 mt-1">Hónap állapota: 70%</p>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-blue-50 dark:bg-blue-900/10 p-6 rounded-2xl border border-blue-100 dark:border-blue-900/20 flex items-start gap-4">
-                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-xl text-blue-600 dark:text-blue-400">
-                    <IoInformationCircle className="text-xl" />
-                </div>
-                <div>
-                    <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-1">Információ</h4>
-                    <p className="text-sm text-blue-800 dark:text-blue-300">A statisztika csak a "Kézbesített" (delivered) vagy függőben lévő rendeléseket számolja, az elutasítottakat nem. A heti számítás Hétfőtől kezdődik.</p>
+            <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-2 flex items-start gap-3`}>
+                <div className="text-3xl">ℹ️</div>
+                <div className="text-sm">
+                    <p className="font-bold mb-1">Információ</p>
+                    <p>A statisztika csak a "Kézbesített" (delivered) vagy függőben lévő rendeléseket számolja, az elutasítottakat nem. A heti számítás Hétfőtől kezdődik.</p>
                 </div>
             </div>
         </div>
     );
 }
 
+// --- 5. PROFILE EDITOR TAB ---
 function ProfileEditor({ restaurantId }) {
     const [loading, setLoading] = useState(true);
-    const [uploading, setUploading] = useState(false); // NEW
+    const [uploading, setUploading] = useState(false);
     const [form, setForm] = useState({
         name: '',
-        image_url: '', // NEW
+        image_url: '',
         phone: '',
         address: '',
         description: '',
@@ -743,7 +806,7 @@ function ProfileEditor({ restaurantId }) {
             if (data) {
                 setForm({
                     name: data.name || '',
-                    image_url: data.image_url || '', // NEW
+                    image_url: data.image_url || '',
                     phone: data.phone || '',
                     address: data.address || '',
                     description: data.description || '',
@@ -769,7 +832,7 @@ function ProfileEditor({ restaurantId }) {
             if (!file) return;
 
             const fileExt = file.name.split('.').pop();
-            const fileName = `${Math.random()}.${fileExt}`;
+            const fileName = `${crypto.randomUUID()}.${fileExt}`;
             const filePath = `${restaurantId}/${fileName}`;
 
             const { error: uploadError } = await supabase.storage
@@ -794,7 +857,7 @@ function ProfileEditor({ restaurantId }) {
         e.preventDefault();
         const { error } = await supabase.from('restaurants').update({
             name: form.name,
-            image_url: form.image_url, // NEW
+            image_url: form.image_url,
             phone: form.phone,
             address: form.address,
             description: form.description,
@@ -816,169 +879,121 @@ function ProfileEditor({ restaurantId }) {
         setForm(prev => ({ ...prev, settings: { ...prev.settings, [key]: !prev.settings[key] } }));
     };
 
-    if (loading) return <div className="p-10 text-center animate-pulse">Profil betöltése...</div>;
+    if (loading) return <div className="p-10 text-center text-sm">Profil betöltése...</div>;
 
     return (
-        <form onSubmit={save} className="max-w-2xl mx-auto space-y-6 pb-20">
+        <form onSubmit={save} className="max-w-2xl mx-auto space-y-4 pb-20">
             <QuickDelivery restaurantId={restaurantId} />
 
-            {/* Same Basic Info Section */}
-            <div className="bg-white dark:bg-[#151618] p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-                <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><IoRestaurant /> Alapadatok</h3>
-                <div className="grid md:grid-cols-2 gap-4">
+            {/* Basic Info */}
+            <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
+                <legend className="px-1 font-bold text-sm">Alapadatok</legend>
+                <div className="grid md:grid-cols-2 gap-4 p-2">
 
-                    {/* Image Upload UI */}
-                    <div className="md:col-span-2 mb-4">
-                        <label className="text-xs font-bold uppercase text-gray-500 mb-2 block">Borítókép</label>
-                        <div className="relative h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/10 group">
+                    {/* Image Upload */}
+                    <div className="md:col-span-2 mb-2 flex gap-4 items-start">
+                        <div className={`w-32 h-24 ${WIN98.borderInset} bg-gray-200 relative overflow-hidden flex items-center justify-center`}>
                             {form.image_url ? (
                                 <img src={form.image_url} alt="Cover" className="w-full h-full object-cover" />
                             ) : (
-                                <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                                    <span className="text-sm">Nincs kép feltöltve</span>
-                                </div>
-                            )}
-
-                            {/* Overlay & Input */}
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <label className="cursor-pointer bg-white text-black px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-transform flex items-center gap-2">
-                                    {uploading ? 'Feltöltés...' : 'Kép cseréje'}
-                                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
-                                </label>
-                            </div>
-
-                            {/* Loading State */}
-                            {uploading && (
-                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-10">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
-                                </div>
+                                <span className="text-xs text-gray-500">Nincs Kép</span>
                             )}
                         </div>
-                    </div>
-
-                    <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-gray-500">Étterem Neve</label>
-                        <input className="input-field" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
-                    </div>
-                    <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-gray-500">Telefonszám</label>
-                        <input className="input-field" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
-                    </div>
-                    <div className="space-y-1 md:col-span-2">
-                        <label className="text-xs font-bold uppercase text-gray-500">Cím</label>
-                        <input className="input-field" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
-                    </div>
-                    <div className="space-y-1 md:col-span-2">
-                        <label className="text-xs font-bold uppercase text-gray-500">Rövid leírás (Szlogen)</label>
-                        <input className="input-field" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
-                    </div>
-                </div>
-            </div>
-
-            <div className="bg-white dark:bg-[#151618] p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-                <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><IoTime /> Nyitvatartás & Szállítás</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-gray-500">Nyitvatartás (Szöveges)</label>
-                        <input className="input-field" placeholder="H-V: 10-22" value={form.opening_hours} onChange={e => setForm({ ...form, opening_hours: e.target.value })} />
-                    </div>
-                    {/* Delivery Toggle & Time */}
-                    <div className="space-y-1">
-                        <div className="flex justify-between items-center mb-1">
-                            <label className="text-xs font-bold uppercase text-gray-500">Kiszállítás</label>
-                            <label className="flex items-center gap-2 cursor-pointer">
-                                <span className={`text-[10px] font-bold uppercase ${form.has_delivery ? 'text-green-500' : 'text-gray-400'}`}>
-                                    {form.has_delivery ? 'Van' : 'Nincs'}
-                                </span>
-                                <input
-                                    type="checkbox"
-                                    checked={form.has_delivery}
-                                    onChange={e => setForm({ ...form, has_delivery: e.target.checked })}
-                                    className="w-8 h-4 bg-gray-200 rounded-full appearance-none checked:bg-green-500 transition-colors relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:w-3 after:h-3 after:rounded-full after:transition-all checked:after:left-4.5 accent-transparent"
-                                />
+                        <div className="flex-1 space-y-2">
+                            <p className="text-xs mb-1">Borítókép kiválasztása:</p>
+                            <label className={`${WIN98.btn} inline-block cursor-pointer`}>
+                                {uploading ? 'Feltöltés...' : 'Tallózás...'}
+                                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
                             </label>
                         </div>
-                        {form.has_delivery ? (
-                            <input className="input-field" placeholder="30-45 perc" value={form.delivery_time} onChange={e => setForm({ ...form, delivery_time: e.target.value })} />
-                        ) : (
-                            <div className="input-field opacity-50 bg-gray-100 dark:bg-white/5 flex items-center gap-2 text-gray-500 text-sm">
-                                <IoFastFood /> Csak helyben / Elvitel
-                            </div>
-                        )}
+                    </div>
+
+                    <div className="space-y-1">
+                        <label className="text-xs">Étterem Neve:</label>
+                        <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-gray-500">Min. Rendelés (Ft)</label>
-                        <input type="number" className="input-field" value={form.min_order_value} onChange={e => setForm({ ...form, min_order_value: e.target.value })} />
+                        <label className="text-xs">Telefonszám:</label>
+                        <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+                    </div>
+                    <div className="space-y-1 md:col-span-2">
+                        <label className="text-xs">Cím:</label>
+                        <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
+                    </div>
+                    <div className="space-y-1 md:col-span-2">
+                        <label className="text-xs">Rövid leírás (Szlogen):</label>
+                        <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
                     </div>
                 </div>
-            </div>
+            </fieldset>
 
-            <div className="bg-white dark:bg-[#151618] p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-                <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><IoNotifications /> Hírek, Menük & Akciók</h3>
-
-                <div className="space-y-4">
-                    {/* Daily Menu Section - NEW */}
-                    <div className="space-y-2 p-4 bg-orange-50 dark:bg-orange-900/10 rounded-xl border border-orange-100 dark:border-orange-900/20">
-                        <div className="flex justify-between items-center">
-                            <label className="text-xs font-bold uppercase text-orange-700 dark:text-orange-500">Heti / Napi Menü Ajánlat</label>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-gray-400">Megjelenítés?</span>
-                                <input type="checkbox" checked={form.settings.show_daily_menu} onChange={() => toggleSetting('show_daily_menu')} className="w-4 h-4 accent-amber-600" />
-                            </div>
-                        </div>
-                        <textarea rows={3} className="input-field resize-none bg-white font-mono text-sm" placeholder="Hétfő: Bableves, Palacsinta&#10;Kedd: Gulyás, Túrós csusza..." value={form.daily_menu} onChange={e => setForm({ ...form, daily_menu: e.target.value })} />
-                        <p className="text-[10px] text-gray-400">Ide írhatod be a gyors napi menü ajánlataidat egyszerű szövegként.</p>
+            {/* Opening Hours & Delivery */}
+            <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
+                <legend className="px-1 font-bold text-sm">Nyitvatartás & Szállítás</legend>
+                <div className="grid md:grid-cols-2 gap-4 p-2">
+                    <div className="space-y-1">
+                        <label className="text-xs">Nyitvatartás:</label>
+                        <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} placeholder="H-V: 10-22" value={form.opening_hours} onChange={e => setForm({ ...form, opening_hours: e.target.value })} />
                     </div>
 
-                    {/* News Section */}
-                    <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                            <label className="text-xs font-bold uppercase text-gray-500">Hírek / Újdonságok</label>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-gray-400">Megjelenítés?</span>
-                                <input type="checkbox" checked={form.settings.show_news} onChange={() => toggleSetting('show_news')} className="w-4 h-4 accent-amber-600" />
-                            </div>
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2 mb-1">
+                            <input
+                                type="checkbox"
+                                id="hasDelivery"
+                                checked={form.has_delivery}
+                                onChange={e => setForm({ ...form, has_delivery: e.target.checked })}
+                                className="accent-black"
+                            />
+                            <label htmlFor="hasDelivery" className="text-xs cursor-pointer select-none">Házhozszállítás engedélyezése</label>
                         </div>
-                        <textarea rows={2} className="input-field resize-none" placeholder="Pl. Megújult étlapunk..." value={form.news} onChange={e => setForm({ ...form, news: e.target.value })} />
+                        <input disabled={!form.has_delivery} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none ${!form.has_delivery ? 'bg-gray-200 text-gray-500' : ''}`} placeholder="30-45 perc" value={form.delivery_time} onChange={e => setForm({ ...form, delivery_time: e.target.value })} />
                     </div>
 
-                    {/* Promo Section */}
-                    <div className="space-y-2">
-                        <div className="flex justify-between items-center">
-                            <label className="text-xs font-bold uppercase text-gray-500">Akciók / Kedvezmények</label>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-gray-400">Megjelenítés?</span>
-                                <input type="checkbox" checked={form.settings.show_promotions} onChange={() => toggleSetting('show_promotions')} className="w-4 h-4 accent-amber-600" />
-                            </div>
-                        </div>
-                        <textarea rows={2} className="input-field resize-none" placeholder="Pl. Minden pizzára 10% kedvezmény..." value={form.promotions} onChange={e => setForm({ ...form, promotions: e.target.value })} />
+                    <div className="space-y-1">
+                        <label className="text-xs">Min. Rendelés (Ft):</label>
+                        <input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.min_order_value} onChange={e => setForm({ ...form, min_order_value: e.target.value })} />
                     </div>
                 </div>
-            </div>
+            </fieldset>
 
-            <button type="submit" className="w-full py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-2xl shadow-lg text-lg flex items-center justify-center gap-2 transition-transform active:scale-95">
-                <IoSave /> Beállítások Mentése
+            {/* News & Promos */}
+            <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
+                <legend className="px-1 font-bold text-sm">Hírek & Akciók</legend>
+                <div className="space-y-4 p-2">
+
+                    {/* Daily Menu */}
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <input type="checkbox" checked={form.settings.show_daily_menu} onChange={() => toggleSetting('show_daily_menu')} className="accent-black" />
+                            <label className="text-xs font-bold">Napi Menü (Szöveges)</label>
+                        </div>
+                        <textarea rows={3} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none font-mono`} placeholder="Hétfő: Leves..." value={form.daily_menu} onChange={e => setForm({ ...form, daily_menu: e.target.value })} />
+                    </div>
+
+                    {/* News */}
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <input type="checkbox" checked={form.settings.show_news} onChange={() => toggleSetting('show_news')} className="accent-black" />
+                            <label className="text-xs font-bold">Hírek</label>
+                        </div>
+                        <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={form.news} onChange={e => setForm({ ...form, news: e.target.value })} />
+                    </div>
+
+                    {/* Promos */}
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <input type="checkbox" checked={form.settings.show_promotions} onChange={() => toggleSetting('show_promotions')} className="accent-black" />
+                            <label className="text-xs font-bold">Akciók</label>
+                        </div>
+                        <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={form.promotions} onChange={e => setForm({ ...form, promotions: e.target.value })} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" className={`${WIN98.btn} w-full py-2 font-bold flex items-center justify-center gap-2`}>
+                💾 Beállítások Mentése
             </button>
-            <style jsx>{`
-                .input-field {
-                    width: 100%;
-                    background-color: rgb(249 250 251);
-                    border: 1px solid rgb(229 231 235);
-                    border-radius: 0.75rem;
-                    padding: 0.75rem 1rem;
-                    outline: none;
-                    transition: all 200ms;
-                }
-                .dark .input-field {
-                    background-color: rgba(255,255,255,0.05);
-                    border-color: rgba(255,255,255,0.1);
-                    color: white;
-                }
-                .input-field:focus {
-                    border-color: #d97706;
-                    box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
-                }
-            `}</style>
         </form>
     );
 }
@@ -1000,32 +1015,333 @@ function QuickDelivery({ restaurantId }) {
             .then(() => toast.success(`Idő: ${newVal}`, { icon: '⏱️' }));
     };
 
+    const isActive = (opt) => time === opt.replace('p', 'perc');
+
     return (
-        <div className="bg-amber-500/10 border-2 border-amber-500/20 rounded-2xl p-4 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-                <div className="bg-amber-500 text-white p-2 rounded-lg">
-                    <IoTime className="text-xl" />
+        <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
+            <legend className="px-1 font-bold text-xs">Gyors Kiszállítási Idő</legend>
+            <div className="flex items-center justify-between gap-4 p-2">
+                <div className="flex items-center gap-3 bg-black text-green-500 font-mono px-4 py-2 border-4 border-gray-400 border-inset">
+                    <p className="text-xl font-bold tracking-widest">{time}</p>
                 </div>
-                <div>
-                    <h3 className="font-bold text-gray-800 dark:text-white text-sm uppercase">Kiszállítási Idő</h3>
-                    <p className="text-2xl font-black text-amber-600 dark:text-amber-500 leading-none">{time}</p>
+
+                <div className="flex flex-wrap gap-1">
+                    {["15 p", "30 p", "45 p", "60 p", "60+ p"].map(opt => (
+                        <button
+                            key={opt}
+                            onClick={() => handleSet(opt)}
+                            className={`${WIN98.btn} ${isActive(opt) ? 'font-bold border-black bg-white' : ''} `}
+                        >
+                            {opt}
+                        </button>
+                    ))}
                 </div>
+            </div>
+        </fieldset>
+    );
+}
+
+// --- HELP MODAL (USER MANUAL) ---
+function HelpModal({ onClose }) {
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+            <div className="absolute inset-0 bg-black/50 pointer-events-auto" onClick={onClose} />
+            <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-full max-w-2xl pointer-events-auto shadow-xl max-h-[80vh] flex flex-col`}>
+                <div className={WIN98.titleBar}>
+                    <div className="flex items-center gap-2">
+                        <span>📖 Súgó - FoodManager 98</span>
+                    </div>
+                    <button onClick={onClose} className={`${WIN98.btn} w-4 h-4 flex items-center justify-center leading-none pb-1`}>x</button>
+                </div>
+
+                <div className="p-4 overflow-y-auto bg-white border-2 border-inset border-gray-400 m-1 flex-1 text-sm font-sans leading-relaxed">
+                    <h1 className="text-xl font-bold mb-4 border-b-2 border-black pb-1">Használati Útmutató</h1>
+
+                    <section className="mb-6">
+                        <h2 className="font-bold bg-blue-800 text-white px-1 mb-2">1. Rendelések (Orders)</h2>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li><strong>Értesítés:</strong> Új rendeléskor csengés hallható, és a sor <span className="bg-yellow-300 px-1 font-bold">SÁRGA</span> színűvé válik.</li>
+                            <li><strong>Státuszok:</strong>
+                                <ul className="list-circle pl-5 mt-1 text-gray-700">
+                                    <li><span className="bg-red-600 text-white px-1 text-xs">ÚJ</span>: Azonnal reagálni kell!</li>
+                                    <li><span className="bg-yellow-200 px-1 text-xs">ELFOGADVA</span>: Készítés alatt.</li>
+                                    <li><span className="bg-green-200 px-1 text-xs">KÉSZ</span>: Kiszállítva.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Nyomtatás:</strong> A 🖨️ gombbal blokk nyomtatható.</li>
+                        </ul>
+                    </section>
+
+                    <section className="mb-4">
+                        <h2 className="font-bold bg-blue-800 text-white px-1 mb-2">2. Egyéb Funkciók</h2>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li><strong>Étlap:</strong> Mappák (Kategóriák) és Fájlok (Ételek).</li>
+                            <li><strong>Profil:</strong> Nyitvatartás és Szállítási idő beállítása.</li>
+                        </ul>
+                    </section>
+
+                    <div className="p-2 flex justify-end">
+                        <button onClick={onClose} className={`${WIN98.btn} w-24 border-black font-bold`}>OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// --- ORDER DETAIL MODAL ---
+function OrderDetailModal({ order, onClose, onStatusChange, onPrint }) {
+    return (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center pointer-events-none">
+            <div className="absolute inset-0 bg-transparent pointer-events-auto" onClick={onClose} />
+            <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-full max-w-lg pointer-events-auto shadow-xl flex flex-col relative z-20`}>
+                <div className={WIN98.titleBar}>
+                    <div className="flex items-center gap-2">
+                        <span>Rendelés Részletei - #{order.id}</span>
+                    </div>
+                    <button onClick={onClose} className={`${WIN98.btn} w-4 h-4 flex items-center justify-center leading-none pb-1`}>x</button>
+                </div>
+
+                <div className="p-4 bg-white border-2 border-inset border-gray-400 m-1 flex-1 text-sm font-sans max-h-[70vh] overflow-y-auto">
+                    {/* Header Info */}
+                    <div className="flex justify-between items-start border-b-2 border-gray-200 pb-2 mb-2">
+                        <div>
+                            <h2 className="text-xl font-bold">{order.customer_name}</h2>
+                            <p className="text-gray-600">{order.customer_phone}</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="font-mono text-lg font-bold">{order.total_price} Ft</p>
+                            <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleString()}</p>
+                        </div>
+                    </div>
+
+                    {/* Address */}
+                    <div className="mb-4 bg-yellow-50 p-2 border border-yellow-200">
+                        <p className="font-bold text-xs text-gray-500 uppercase">Szállítási Cím:</p>
+                        <p className="text-lg leading-tight">{order.customer_address}</p>
+                        {order.customer_note && (
+                            <p className="mt-2 text-red-600 font-bold">⚠️ Megjegyzés: {order.customer_note}</p>
+                        )}
+                    </div>
+
+                    {/* Items */}
+                    <div className="mb-4">
+                        <p className="font-bold text-xs text-gray-500 uppercase mb-1">Rendelt Tételek:</p>
+                        <ul className="space-y-1 border-t border-gray-200 pt-1">
+                            {order.items?.map((item, idx) => (
+                                <li key={idx} className="flex justify-between items-center text-sm">
+                                    <span className="font-bold">{item.quantity}x {item.name}</span>
+                                    <span>{item.price * item.quantity} Ft</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Actions */}
+                <div className="p-2 gap-2 flex flex-wrap justify-end bg-gray-200">
+                    <button onClick={() => onPrint(order)} className={`${WIN98.btn} mr-auto`} title="Nyomtatás">🖨️ Nyomtatás</button>
+
+                    {order.status === 'new' && (
+                        <>
+                            <button onClick={() => { onStatusChange(order.id, 'accepted'); onClose(); }} className={`${WIN98.btn} bg-green-200 font-bold border-green-800`}>Elfogad</button>
+                            <button onClick={() => { onStatusChange(order.id, 'rejected'); onClose(); }} className={`${WIN98.btn} bg-red-200`}>Elutasít</button>
+                        </>
+                    )}
+
+                    {order.status === 'accepted' && (
+                        <button onClick={() => { onStatusChange(order.id, 'ready'); onClose(); }} className={`${WIN98.btn} font-bold`}>Futárnak Átad</button>
+                    )}
+
+                    {order.status === 'ready' && (
+                        <button onClick={() => { onStatusChange(order.id, 'delivered'); onClose(); }} className={`${WIN98.btn} font-bold`}>Kész / Kiszállítva</button>
+                    )}
+
+                    <button onClick={onClose} className={`${WIN98.btn} min-w-[60px]`}>Bezár</button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// --- SEARCH PANEL (WIN98 FIND) ---
+function SearchPanel({ restaurantId }) {
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState([]);
+    const [searching, setSearching] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+
+    // Status Logic for Search Panel
+    const handleStatusChange = async (orderId, newStatus) => {
+        await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
+        setResults(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+        if (selectedOrder && selectedOrder.id === orderId) {
+            setSelectedOrder(prev => ({ ...prev, status: newStatus }));
+        }
+    };
+
+    // Print Logic for Search Panel
+    const printReceipt = (order) => {
+        try {
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [80, 200]
+            });
+
+            doc.setFontSize(14);
+            doc.text('KőszegApp Rendelés', 40, 10, { align: 'center' });
+            doc.setFontSize(10);
+            doc.text(`#${order.id}`, 40, 16, { align: 'center' });
+            doc.text(new Date(order.created_at).toLocaleString('hu-HU'), 40, 22, { align: 'center' });
+            doc.line(5, 25, 75, 25);
+            doc.text('Vevő:', 5, 32);
+            doc.setFont('helvetica', 'bold');
+            doc.text(order.customer_name, 5, 37);
+            doc.setFont('helvetica', 'normal');
+            doc.text(order.customer_phone, 5, 42);
+            doc.text(doc.splitTextToSize(order.customer_address, 70), 5, 47);
+            if (order.customer_note) {
+                doc.setFontSize(8);
+                doc.text(`Megj: ${order.customer_note}`, 5, 60);
+            }
+            let yPos = order.customer_note ? 65 : 55;
+            doc.line(5, yPos, 75, yPos);
+            yPos += 5;
+            order.items.forEach(item => {
+                doc.text(`${item.quantity}x`, 5, yPos);
+                doc.text(doc.splitTextToSize(item.name, 50), 12, yPos);
+                doc.text(`${item.price} Ft`, 75, yPos, { align: 'right' });
+                yPos += 6;
+                if (item.name.length > 25) yPos += 4;
+            });
+            yPos += 5;
+            doc.line(5, yPos, 75, yPos);
+            yPos += 7;
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('VÉGÖSSZEG:', 5, yPos);
+            doc.text(`${order.total_price} Ft`, 75, yPos, { align: 'right' });
+            doc.save(`rendeles_${order.id}.pdf`);
+            toast.success('Nyomtatás indítva... 🖨️');
+        } catch (e) {
+            console.error('PDF Error:', e);
+            toast.error('Hiba a nyomtatáskor');
+        }
+    };
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!query.trim()) return;
+
+        setSearching(true);
+        setHasSearched(true);
+
+        try {
+            const { data, error } = await supabase
+                .from('orders')
+                .select(`*, items:order_items(*)`)
+                .eq('restaurant_id', restaurantId)
+                .or(`customer_name.ilike.%${query}%,customer_phone.ilike.%${query}%,customer_address.ilike.%${query}%`)
+                .order('created_at', { ascending: false })
+                .limit(50);
+
+            if (error) throw error;
+            setResults(data || []);
+        } catch (err) {
+            console.error(err);
+            toast.error('Hiba a keresés során');
+        } finally {
+            setSearching(false);
+        }
+    };
+
+    return (
+        <div className="max-w-4xl mx-auto h-[600px] flex flex-col">
+            <div className="p-2 bg-[#c0c0c0] mb-2 border-2 border-white border-b-black border-r-black">
+                <form onSubmit={handleSearch} className="flex gap-2 items-end">
+                    <div className="flex-1 space-y-1">
+                        <label className="text-xs font-bold">Keresés (Név, Cím, Tel):</label>
+                        <div className="flex gap-2">
+                            <input
+                                autoFocus
+                                className={`flex-1 ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`}
+                                value={query}
+                                onChange={e => setQuery(e.target.value)}
+                                placeholder="pl. Tóth István"
+                            />
+                            <button type="submit" className={`${WIN98.btn} font-bold px-4 flex items-center gap-2`}>
+                                🔍 {searching ? '...' : 'Keresés'}
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <div className="flex flex-wrap gap-2 justify-center">
-                {["15 p", "30 p", "45 p", "60 p", "60+ p"].map(opt => (
-                    <button
-                        key={opt}
-                        onClick={() => handleSet(opt)}
-                        className={`px-4 py-3 rounded-xl font-bold text-sm transition-transform active:scale-95 shadow-sm border ${time === opt.replace('p', 'perc')
-                            ? 'bg-amber-500 text-white border-amber-600'
-                            : 'bg-white dark:bg-white/10 text-gray-600 dark:text-gray-200 border-gray-200 dark:border-white/5 hover:bg-gray-50'
-                            }`}
-                    >
-                        {opt}
-                    </button>
-                ))}
+            {/* Results List */}
+            <div className={`flex-1 ${WIN98.borderInset} bg-white overflow-y-auto`}>
+                {hasSearched && results.length === 0 ? (
+                    <div className="p-10 text-center text-gray-500">
+                        <p className="font-bold text-lg mb-2">Nincs találat.</p>
+                        <p className="text-sm">Próbáld más névvel vagy címmel.</p>
+                    </div>
+                ) : (
+                    <table className="w-full text-left border-collapse text-sm">
+                        <thead className="bg-[#c0c0c0] sticky top-0">
+                            <tr>
+                                <th className="p-1 border border-gray-400 w-32">Dátum</th>
+                                <th className="p-1 border border-gray-400">Ügyfél</th>
+                                <th className="p-1 border border-gray-400">Tételek</th>
+                                <th className="p-1 border border-gray-400">Cím</th>
+                                <th className="p-1 border border-gray-400 w-24 text-right">Összeg</th>
+                                <th className="p-1 border border-gray-400 w-24 text-center">Státusz</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {results.map(order => (
+                                <tr
+                                    key={order.id}
+                                    onClick={() => setSelectedOrder(order)}
+                                    className="hover:bg-blue-800 hover:text-white cursor-pointer group border-b border-gray-100"
+                                >
+                                    <td className="p-1 border-r border-gray-200 text-xs">{new Date(order.created_at).toLocaleString()}</td>
+                                    <td className="p-1 border-r border-gray-200 font-bold">{order.customer_name}</td>
+                                    <td className="p-1 border-r border-gray-200 text-xs italic">{order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}</td>
+                                    <td className="p-1 border-r border-gray-200 text-xs">{order.customer_address}</td>
+                                    <td className="p-1 border-r border-gray-200 text-right font-mono">{order.total_price} Ft</td>
+                                    <td className="p-1 text-center text-xs">
+                                        <span className={`px-1 rounded-sm
+                                            ${order.status === 'delivered' ? 'bg-green-200 text-black' :
+                                                order.status === 'rejected' ? 'bg-red-200 text-black' : 'bg-gray-200 text-black'}
+                                         `}>
+                                            {order.status}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))}
+                            {!hasSearched && (
+                                <tr className="text-gray-400 italic">
+                                    <td colSpan={6} className="p-4 text-center">Írj be valamit a kereséshez...</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                )}
             </div>
+
+            <div className="flex justify-between items-center text-xs mt-1">
+                <span>{results.length} találat</span>
+            </div>
+
+            {selectedOrder && (
+                <OrderDetailModal
+                    order={selectedOrder}
+                    onClose={() => setSelectedOrder(null)}
+                    onStatusChange={handleStatusChange}
+                    onPrint={printReceipt}
+                />
+            )}
         </div>
     );
 }
