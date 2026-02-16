@@ -191,6 +191,8 @@ export default function FoodOrderPage() {
     useEffect(() => {
         if (!user) return;
 
+        console.log('👤 Setting up active orders monitor for user:', user.id);
+
         const fetchActiveOrders = async () => {
             const { data } = await supabase
                 .from('orders')
@@ -201,6 +203,7 @@ export default function FoodOrderPage() {
                 .limit(1)
                 .maybeSingle();
 
+            console.log('📊 Active order status fetched:', data?.status || 'none');
             setActiveOrderStatus(data ? data.status : null);
         };
 
@@ -213,10 +216,18 @@ export default function FoodOrderPage() {
                 schema: 'public',
                 table: 'orders',
                 filter: `user_id=eq.${user.id}`
-            }, () => fetchActiveOrders())
-            .subscribe();
+            }, (payload) => {
+                console.log('🔔 User order event received:', payload.eventType, payload);
+                fetchActiveOrders();
+            })
+            .subscribe((status) => {
+                console.log('📡 Active orders subscription status:', status);
+            });
 
-        return () => supabase.removeChannel(chan);
+        return () => {
+            console.log('👤 Cleaning up active orders monitor');
+            supabase.removeChannel(chan);
+        };
     }, [user]);
 
     useEffect(() => {

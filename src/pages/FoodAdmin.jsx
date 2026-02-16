@@ -215,12 +215,15 @@ function OrderList({ restaurantId }) {
 
         fetchOrders();
 
+        console.log('🔌 Setting up realtime subscription for restaurant:', restaurantId);
+
         const channel = supabase
             .channel(`orders-${restaurantId}`)
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'orders', filter: `restaurant_id=eq.${restaurantId}` },
                 (payload) => {
+                    console.log('🔔 Realtime event received:', payload.eventType, payload);
                     if (payload.eventType === 'INSERT') {
                         playNotification();
                         toast.success('🔔 Új rendelés érkezett!');
@@ -233,9 +236,12 @@ function OrderList({ restaurantId }) {
                     }
                 }
             )
-            .subscribe();
+            .subscribe((status) => {
+                console.log('📡 Realtime subscription status:', status);
+            });
 
         return () => {
+            console.log('🔌 Cleaning up realtime subscription');
             supabase.removeChannel(channel);
         };
     }, [restaurantId]);
