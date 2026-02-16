@@ -205,7 +205,11 @@ function OrderList({ restaurantId }) {
                 .order('created_at', { ascending: false })
                 .limit(50);
 
-            if (!error && data) setOrders(data);
+            if (!error && data) {
+                console.log('📦 Orders loaded:', data);
+                console.log('📦 First order items:', data[0]?.items);
+                setOrders(data);
+            }
             setLoading(false);
         };
 
