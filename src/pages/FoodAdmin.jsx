@@ -346,7 +346,7 @@ function OrderList({ restaurantId }) {
                                     border-b border-gray-200 group cursor-pointer
                                     ${order.status === 'new'
                                         ? 'bg-yellow-300 text-black font-bold'
-                                        : 'hover:bg-blue-800 hover:text-white'
+                                        : 'bg-white text-black hover:bg-blue-800 hover:text-white'
                                     }
                                 `}
                             >
