@@ -140,8 +140,8 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
 
             {/* Menu Bar / Toolbar */}
             <div className="flex gap-4 px-2 py-1 border-b border-gray-400 shadow-sm text-sm mb-1 bg-[#c0c0c0]">
-                <button onClick={() => setShowHelp(true)} className="underline cursor-pointer hover:bg-blue-800 hover:text-white px-1">Súgó</button>
-                <span className="ml-auto text-gray-500">{new Date().toLocaleDateString()}</span>
+                <button onClick={() => setShowHelp(true)} className="underline cursor-pointer hover:bg-blue-800 hover:text-white px-1 text-black">Súgó</button>
+                <span className="ml-auto text-black">{new Date().toLocaleDateString()}</span>
             </div>
 
             {/* Content Area with Tabs */}
@@ -170,7 +170,7 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
             </div>
 
             {/* Status Bar */}
-            <div className={`h-6 ${WIN98.borderInset} flex items-center px-2 text-xs gap-4 bg-[#c0c0c0]`}>
+            <div className={`h-6 ${WIN98.borderInset} flex items-center px-2 text-xs gap-4 bg-[#c0c0c0] text-black`}>
                 <span className="w-32 truncate border-r border-gray-400 pr-2">Állapot: {restaurantData?.is_open ? 'Nyitva' : 'Zárva'}</span>
                 <span className="flex-1 truncate">Felhasználó: Kész</span>
                 <span className="border-l border-gray-400 pl-2">v4.0.98</span>
@@ -188,7 +188,7 @@ const TabButton = ({ id, label, active, set }) => (
             border-t-2 border-l-2 border-r-2 
             ${active === id
                 ? 'bg-[#c0c0c0] border-t-white border-l-white border-r-black text-black z-20 pb-1.5 -mb-1'
-                : 'bg-[#b0b0b0] border-t-white border-l-white border-r-gray-600 text-gray-700 mb-0'
+                : 'bg-[#b0b0b0] border-t-white border-l-white border-r-gray-600 text-black mb-0'
             }
         `}
     >
@@ -406,7 +406,7 @@ function OrderList({ restaurantId }) {
                     </tbody>
                 </table>
                 {orders.length === 0 && (
-                    <div className="p-10 text-center text-gray-400">Nincs megjeleníthető adat.</div>
+                    <div className="p-10 text-center text-black">Nincs megjeleníthető adat.</div>
                 )}
             </div>
 
@@ -607,7 +607,7 @@ function MenuEditor({ restaurantId }) {
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <h4 className="font-bold text-xs truncate">{item.name}</h4>
-                                        <p className="text-[10px] text-gray-500 truncate">{item.price} Ft</p>
+                                        <p className="text-[10px] text-black truncate">{item.price} Ft</p>
                                     </div>
                                     <div className="flex flex-col gap-1">
                                         <button onClick={() => openItemModal(cat.id, item)} className={`${WIN98.btn} py-0 px-1 text-[10px]`}>✏️</button>
@@ -617,7 +617,7 @@ function MenuEditor({ restaurantId }) {
                                     </div>
                                 </div>
                             ))}
-                            <button onClick={() => openItemModal(cat.id)} className="w-full h-12 border border-dashed border-gray-400 flex items-center justify-center text-gray-500 text-xs hover:bg-gray-100">
+                            <button onClick={() => openItemModal(cat.id)} className="w-full h-12 border border-dashed border-gray-400 flex items-center justify-center text-black text-xs hover:bg-gray-100">
                                 + Új Fájl
                             </button>
                         </div>
@@ -660,7 +660,7 @@ function MenuEditor({ restaurantId }) {
                                                 <input type="file" accept="image/*" className="hidden" onChange={e => setFormData({ ...formData, imageFile: e.target.files[0] })} />
                                             </label>
                                         </div>
-                                        <div className="text-[10px] text-gray-500">Vagy add meg az URL-t kézzel:</div>
+                                        <div className="text-[10px] text-black">Vagy add meg az URL-t kézzel:</div>
                                         <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none`} value={formData.image_url} onChange={e => setFormData({ ...formData, image_url: e.target.value })} />
                                     </div>
                                 </>
@@ -755,7 +755,7 @@ function SalesSummary({ restaurantId }) {
                     <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
                         <div className="mb-2"><IoTime className="inline text-2xl text-gray-400" /></div>
                         <h3 className="text-2xl font-bold font-mono">{stats.daily.toLocaleString()} Ft</h3>
-                        <p className="text-xs text-gray-500 mt-1">Mai forgalom</p>
+                        <p className="text-xs text-black mt-1">Mai forgalom</p>
                     </div>
                 </div>
 
@@ -767,7 +767,7 @@ function SalesSummary({ restaurantId }) {
                     <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
                         <div className="mb-2"><IoStatsChart className="inline text-2xl text-gray-400" /></div>
                         <h3 className="text-2xl font-bold font-mono">{stats.weekly.toLocaleString()} Ft</h3>
-                        <p className="text-xs text-gray-500 mt-1">E heti forgalom</p>
+                        <p className="text-xs text-black mt-1">E heti forgalom</p>
                     </div>
                 </div>
 
@@ -790,7 +790,7 @@ function SalesSummary({ restaurantId }) {
                                 ))}
                             </div>
                         </div>
-                        <p className="text-[10px] text-gray-400 mt-1">Hónap állapota: 70%</p>
+                        <p className="text-[10px] text-black mt-1">Hónap állapota: 70%</p>
                     </div>
                 </div>
             </div>
@@ -922,7 +922,7 @@ function ProfileEditor({ restaurantId }) {
                             {form.image_url ? (
                                 <img src={form.image_url} alt="Cover" className="w-full h-full object-cover" />
                             ) : (
-                                <span className="text-xs text-gray-500">Nincs Kép</span>
+                                <span className="text-xs text-black">Nincs Kép</span>
                             )}
                         </div>
                         <div className="flex-1 space-y-2">
@@ -1088,7 +1088,7 @@ function HelpModal({ onClose }) {
                         <ul className="list-disc pl-5 space-y-1">
                             <li><strong>Értesítés:</strong> Új rendeléskor csengés hallható, és a sor <span className="bg-yellow-300 px-1 font-bold">SÁRGA</span> színűvé válik.</li>
                             <li><strong>Státuszok:</strong>
-                                <ul className="list-circle pl-5 mt-1 text-gray-700">
+                                <ul className="list-circle pl-5 mt-1 text-black">
                                     <li><span className="bg-red-600 text-white px-1 text-xs">ÚJ</span>: Azonnal reagálni kell!</li>
                                     <li><span className="bg-yellow-200 px-1 text-xs">ELFOGADVA</span>: Készítés alatt.</li>
                                     <li><span className="bg-green-200 px-1 text-xs">KÉSZ</span>: Kiszállítva.</li>
@@ -1133,17 +1133,17 @@ function OrderDetailModal({ order, onClose, onStatusChange, onPrint }) {
                     <div className="flex justify-between items-start border-b-2 border-gray-200 pb-2 mb-2">
                         <div>
                             <h2 className="text-xl font-bold">{order.customer_name}</h2>
-                            <p className="text-gray-600">{order.customer_phone}</p>
+                            <p className="text-black">{order.customer_phone}</p>
                         </div>
                         <div className="text-right">
                             <p className="font-mono text-lg font-bold">{order.total_price} Ft</p>
-                            <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleString()}</p>
+                            <p className="text-xs text-black">{new Date(order.created_at).toLocaleString()}</p>
                         </div>
                     </div>
 
                     {/* Address */}
                     <div className="mb-4 bg-yellow-50 p-2 border border-yellow-200">
-                        <p className="font-bold text-xs text-gray-500 uppercase">Szállítási Cím:</p>
+                        <p className="font-bold text-xs text-black uppercase">Szállítási Cím:</p>
                         <p className="text-lg leading-tight">{order.customer_address}</p>
                         {order.customer_note && (
                             <p className="mt-2 text-red-600 font-bold">⚠️ Megjegyzés: {order.customer_note}</p>
@@ -1152,7 +1152,7 @@ function OrderDetailModal({ order, onClose, onStatusChange, onPrint }) {
 
                     {/* Items */}
                     <div className="mb-4">
-                        <p className="font-bold text-xs text-gray-500 uppercase mb-1">Rendelt Tételek:</p>
+                        <p className="font-bold text-xs text-black uppercase mb-1">Rendelt Tételek:</p>
                         <ul className="space-y-1 border-t border-gray-200 pt-1">
                             {order.items?.map((item, idx) => (
                                 <li key={idx} className="flex justify-between items-center text-sm">
@@ -1308,7 +1308,7 @@ function SearchPanel({ restaurantId }) {
             {/* Results List */}
             <div className={`flex-1 ${WIN98.borderInset} bg-white overflow-y-auto`}>
                 {hasSearched && results.length === 0 ? (
-                    <div className="p-10 text-center text-gray-500">
+                    <div className="p-10 text-center text-black">
                         <p className="font-bold text-lg mb-2">Nincs találat.</p>
                         <p className="text-sm">Próbáld más névvel vagy címmel.</p>
                     </div>
@@ -1347,7 +1347,7 @@ function SearchPanel({ restaurantId }) {
                                 </tr>
                             ))}
                             {!hasSearched && (
-                                <tr className="text-gray-400 italic">
+                                <tr className="text-black italic">
                                     <td colSpan={6} className="p-4 text-center">Írj be valamit a kereséshez...</td>
                                 </tr>
                             )}
