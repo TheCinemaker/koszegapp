@@ -13,15 +13,18 @@ import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 // --- HELPER FUNCTIONS ---
 const getOrderStatusText = (status) => {
     const map = {
+        'new': 'Új kérés',
         'pending': 'Függőben',
         'accepted': 'Elfogadva',
         'preparing': 'Készül',
-        'delivering': 'Futárnál',
-        'completed': 'Kész',
+        'ready': 'Kész',
+        'delivered': 'Kézbesítve',
+        'rejected': 'Elutasítva',
         'cancelled': 'Törölve'
     };
     return map[status] || status;
 };
+
 
 // --- RESTAURANT CARD (Same as good version) ---
 const RestaurantCard = ({ restaurant, onClick, index }) => (

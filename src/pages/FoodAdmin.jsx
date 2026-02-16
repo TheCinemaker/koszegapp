@@ -19,6 +19,22 @@ const WIN98 = {
     btn: 'bg-[#c0c0c0] active:border-t-black active:border-l-black active:border-r-white active:border-b-white px-3 py-1 text-sm active:translate-y-px',
 };
 
+// Helper function to translate status to Hungarian
+const getStatusText = (status) => {
+    const map = {
+        'new': 'ÚJ KÉRÉS!',
+        'pending': 'Függőben',
+        'accepted': 'Elfogadva',
+        'preparing': 'Készül',
+        'ready': 'Kész',
+        'delivered': 'Kézbesítve',
+        'rejected': 'Elutasítva',
+        'cancelled': 'Törölve'
+    };
+    return map[status] || status;
+};
+
+
 export default function FoodAdmin() {
     const { user, logout, loading } = useAuth();
     const navigate = useNavigate();
@@ -350,21 +366,21 @@ function OrderList({ restaurantId }) {
                                     }
                                 `}
                             >
-                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'}`}>{new Date(order.created_at).toLocaleTimeString()}</td>
-                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} font-bold`}>{order.customer_name}</td>
-                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-xs truncate max-w-[150px]`} title={order.customer_address}>{order.customer_address}</td>
-                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-xs italic`}>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-black`}>{new Date(order.created_at).toLocaleTimeString()}</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} font-bold text-black`}>{order.customer_name}</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-xs truncate max-w-[150px] text-black`} title={order.customer_address}>{order.customer_address}</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-xs italic text-black`}>
                                     {order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}
                                     {order.customer_note && <span className={`font-bold ml-1 ${order.status === 'new' ? 'text-yellow-300' : 'text-red-500 group-hover:text-yellow-300'}`}> (! {order.customer_note})</span>}
                                 </td>
-                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-right`}>{order.total_price} Ft</td>
+                                <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-right text-black`}>{order.total_price} Ft</td>
                                 <td className={`p-1 border-r ${order.status === 'new' ? 'border-red-400' : 'border-gray-200'} text-center`}>
                                     <span className={`px-1 text-xs uppercase font-bold 
                                         ${order.status === 'new' ? 'bg-red-600 text-white' :
                                             order.status === 'accepted' ? 'bg-yellow-200 text-black' :
                                                 order.status === 'ready' ? 'bg-blue-200 text-black' : 'bg-green-200 text-black'}
                                      `}>
-                                        {order.status === 'new' ? 'ÚJ KÉRÉS!' : order.status}
+                                        {getStatusText(order.status)}
                                     </span>
                                 </td>
                                 <td className="p-1 flex gap-1 justify-center">
