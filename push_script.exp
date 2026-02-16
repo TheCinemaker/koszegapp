@@ -1,6 +1,0 @@
-#!/usr/bin/expect
-set timeout 60
-spawn git push origin main
-expect "Enter passphrase for key"
-send "Nyanyuska_0169\r"
-expect eof
