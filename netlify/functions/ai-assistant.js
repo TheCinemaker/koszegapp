@@ -314,35 +314,62 @@ export async function handler(event) {
         const context = await gatherContext(query);
         const contextString = buildContextString(context);
 
-        // Initialize Gemini model
-        const model = genAI.getGenerativeModel({
+        // Initialize Gemini models
+        const modelFlash = genAI.getGenerativeModel({
             model: 'gemini-2.0-flash',
             systemInstruction: SYSTEM_PROMPT,
             tools: [
                 { functionDeclarations: functions },
-                { googleSearch: {} }, // Enable Google Search Grounding relative to request
+                { googleSearch: {} },
             ],
         });
 
-        // Build conversation history
-        const history = conversationHistory.map((msg) => ({
+        // Fallback model (older but might have separate quota)
+        const modelPro = genAI.getGenerativeModel({
+            model: 'gemini-pro',
+            systemInstruction: SYSTEM_PROMPT,
+            tools: [
+                { functionDeclarations: functions },
+                // Google Search NOT enabled for Pro to save tokens/complexity on fallback
+            ],
+        });
+
+        // Build conversation history - LIMIT to last 6 messages to save tokens
+        const history = conversationHistory.slice(-6).map((msg) => ({
             role: msg.role === 'user' ? 'user' : 'model',
             parts: [{ text: msg.content }],
         }));
 
-        // Start chat session
-        const chat = model.startChat({
-            history,
-            generationConfig: {
-                temperature: 0.7,
-                maxOutputTokens: 500,
-            },
-        });
-
         // Send message with context
         const fullQuery = `${contextString}\n\nFELHASZNÁLÓ KÉRDÉSE: ${query}`;
-        const result = await chat.sendMessage(fullQuery);
-        const response = result.response;
+
+        let result;
+        let response;
+
+        try {
+            // Try with primary model (Flash 2.0)
+            const chat = modelFlash.startChat({
+                history,
+                generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+            });
+            result = await chat.sendMessage(fullQuery);
+            response = result.response;
+        } catch (error) {
+            // Check for Rate Limit (429) - Retry with fallback
+            if (error.message?.includes('429') || error.status === 429 || error.message?.includes('Too Many Requests')) {
+                console.warn('Gemini 2.0 Flash Rate Limit exceeded. Switching to fallback (gemini-pro)...');
+
+                // Retry with fallback model (Pro 1.0)
+                const chatFallback = modelPro.startChat({
+                    history,
+                    generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+                });
+                result = await chatFallback.sendMessage(fullQuery);
+                response = result.response;
+            } else {
+                throw error; // Re-throw other errors
+            }
+        }
 
         // Check for function calls FIRST
         const functionCalls = response.functionCalls();
