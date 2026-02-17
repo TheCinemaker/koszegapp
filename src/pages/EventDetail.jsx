@@ -20,6 +20,82 @@ import { motion } from 'framer-motion';
 import GhostImage from '../components/GhostImage';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
+// Zoomable Image Modal Component
+function ImageModal({ src, onClose }) {
+  const [zoom, setZoom] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY * -0.001;
+    const newZoom = Math.min(Math.max(1, zoom + delta), 5);
+    setZoom(newZoom);
+    if (newZoom === 1) setPosition({ x: 0, y: 0 });
+  };
+
+  const handleMouseDown = (e) => {
+    if (zoom > 1) {
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging && zoom > 1) {
+      setPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 z-[10000] w-12 h-12 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all"
+      >
+        <span className="text-2xl">×</span>
+      </button>
+
+      <div
+        className="relative w-full h-full flex items-center justify-center overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
+        <img
+          src={src}
+          alt="Event poster"
+          className="max-w-full max-h-full object-contain transition-transform duration-200"
+          style={{
+            transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
+            cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in'
+          }}
+          draggable={false}
+        />
+      </div>
+
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full border border-white/20 text-white text-sm">
+        {zoom === 1 ? 'Görgess a nagyításhoz' : `${Math.round(zoom * 100)}%`}
+      </div>
+    </div>
+  );
+}
+
+
 function parseDateRange(evt) {
   if (evt?.date) {
     const s = parseISO(evt.date);
@@ -66,6 +142,7 @@ export default function EventDetail() {
   const [evt, setEvt] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showImageModal, setShowImageModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -150,20 +227,34 @@ export default function EventDetail() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-purple-500 selection:text-white relative">
       <Toaster position="top-right" />
 
+      {/* Zoomable Image Modal */}
+      {showImageModal && evt.image && evt.image !== 'balkep_default.jpg' && (
+        <ImageModal
+          src={`/images/events/${evt.image}`}
+          onClose={() => setShowImageModal(false)}
+        />
+      )}
+
       {/* GLOBAL BACKGROUND NOISE */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       {/* --- HERO IMAGE SECTION --- */}
       <div className="relative h-[65vh] w-full overflow-hidden">
-        {evt.image && evt.image !== 'balkep_default.jpg' ? (
-          <ParallaxImage
-            src={`/images/events/${evt.image}`}
-            className="w-full h-full"
-            scale={1.15}
-          />
-        ) : (
-          <GhostImage className="w-full h-full" />
-        )}
+        <div
+          onClick={() => setShowImageModal(true)}
+          className="cursor-zoom-in hover:opacity-95 transition-opacity w-full h-full"
+          title="Kattints a nagyításhoz"
+        >
+          {evt.image && evt.image !== 'balkep_default.jpg' ? (
+            <ParallaxImage
+              src={`/images/events/${evt.image}`}
+              className="w-full h-full"
+              scale={1.15}
+            />
+          ) : (
+            <GhostImage className="w-full h-full" />
+          )}
+        </div>
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 z-10" />
