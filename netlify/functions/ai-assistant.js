@@ -1,7 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createClient } from '@supabase/supabase-js';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const supabase = createClient(
@@ -28,12 +26,15 @@ ELÉRHETŐ FUNKCIÓK:
 - Parkolók keresése
 - Szabadidős programok
 - Navigáció az app-ban
+- Parkolójegy vásárlás
+- Sürgősségi hívás (112)
 
 PÉLDA VÁLASZOK:
 - "3 program van holnap: Koncert a várban 18:00-kor..."
 - "Ajánlom a Jurisics várat! Ez Kőszeg jelképe, 1532-ben..."
 - "Mutatom is, itt a KoszegEats! Mit keressek neked? Pizza?"
-- "Megnyitom az eseményeket és mutatom a mai programokat!"`;
+- "Megnyitom az eseményeket és mutatom a mai programokat!"
+- "Azonnal hívom a 112-t!"`;
 
 // Available functions for the AI
 const functions = [
@@ -102,12 +103,14 @@ const functions = [
     },
 ];
 
-// Read JSON file helper
+// Read JSON file helper - use fetch from deployed URL
 async function readJSON(filename) {
     try {
-        const filePath = join(process.cwd(), 'public', 'data', filename);
-        const content = await readFile(filePath, 'utf-8');
-        return JSON.parse(content);
+        // In production, fetch from the deployed site
+        const baseUrl = process.env.URL || 'https://koszegapp.hu';
+        const response = await fetch(`${baseUrl}/data/${filename}`);
+        if (!response.ok) return null;
+        return await response.json();
     } catch (error) {
         console.error(`Error reading ${filename}:`, error);
         return null;
@@ -282,7 +285,7 @@ export async function handler(event) {
 
         // Initialize Gemini model
         const model = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash-exp',
+            model: 'gemini-1.5-flash',
             systemInstruction: SYSTEM_PROMPT,
         });
 
