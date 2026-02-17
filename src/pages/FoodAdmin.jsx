@@ -635,24 +635,24 @@ function MenuEditor({ restaurantId }) {
                         </div>
                         <form onSubmit={showCatModal ? saveCategory : saveItem} className="p-4 space-y-4">
                             <div className="space-y-1">
-                                <label className="text-xs">Név:</label>
+                                <label className="text-xs text-black">Név:</label>
                                 <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} autoFocus value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required />
                             </div>
 
                             {!showCatModal && (
                                 <>
                                     <div className="space-y-1">
-                                        <label className="text-xs">Leírás:</label>
+                                        <label className="text-xs text-black">Leírás:</label>
                                         <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-xs">Ár (HUF):</label>
+                                        <label className="text-xs text-black">Ár (HUF):</label>
                                         <input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} required />
                                     </div>
 
                                     {/* Retro Image Upload */}
                                     <div className="space-y-1">
-                                        <label className="text-xs">Kép forrása:</label>
+                                        <label className="text-xs text-black">Kép forrása:</label>
                                         <div className="flex gap-1">
                                             <input className={`flex-1 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none`} value={formData.imageFile ? formData.imageFile.name : (formData.image_url || '')} readOnly />
                                             <label className={`${WIN98.btn} cursor-pointer`}>
@@ -754,7 +754,7 @@ function SalesSummary({ restaurantId }) {
                     </div>
                     <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
                         <div className="mb-2"><IoTime className="inline text-2xl text-gray-400" /></div>
-                        <h3 className="text-2xl font-bold font-mono">{stats.daily.toLocaleString()} Ft</h3>
+                        <h3 className="text-2xl font-bold font-mono text-black">{stats.daily.toLocaleString()} Ft</h3>
                         <p className="text-xs text-black mt-1">Mai forgalom</p>
                     </div>
                 </div>
@@ -766,7 +766,7 @@ function SalesSummary({ restaurantId }) {
                     </div>
                     <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
                         <div className="mb-2"><IoStatsChart className="inline text-2xl text-gray-400" /></div>
-                        <h3 className="text-2xl font-bold font-mono">{stats.weekly.toLocaleString()} Ft</h3>
+                        <h3 className="text-2xl font-bold font-mono text-black">{stats.weekly.toLocaleString()} Ft</h3>
                         <p className="text-xs text-black mt-1">E heti forgalom</p>
                     </div>
                 </div>
@@ -778,7 +778,7 @@ function SalesSummary({ restaurantId }) {
                     </div>
                     <div className={`p-4 text-center ${WIN98.borderInset} bg-white`}>
                         <div className="mb-2"><IoStatsChart className="inline text-2xl text-gray-400" /></div>
-                        <h3 className="text-2xl font-bold font-mono">{stats.monthly.toLocaleString()} Ft</h3>
+                        <h3 className="text-2xl font-bold font-mono text-black">{stats.monthly.toLocaleString()} Ft</h3>
 
                         {/* Retro Progress Bar */}
                         <div className={`mt-3 h-4 ${WIN98.borderInset} bg-gray-200 relative`}>
@@ -913,7 +913,7 @@ function ProfileEditor({ restaurantId }) {
 
             {/* Basic Info */}
             <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
-                <legend className="px-1 font-bold text-sm">Alapadatok</legend>
+                <legend className="px-1 font-bold text-sm text-black">Alapadatok</legend>
                 <div className="grid md:grid-cols-2 gap-4 p-2">
 
                     {/* Image Upload */}
@@ -935,19 +935,19 @@ function ProfileEditor({ restaurantId }) {
                     </div>
 
                     <div className="space-y-1">
-                        <label className="text-xs">Étterem Neve:</label>
+                        <label className="text-xs text-black">Étterem Neve:</label>
                         <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
                     </div>
                     <div className="space-y-1">
-                        <label className="text-xs">Telefonszám:</label>
+                        <label className="text-xs text-black">Telefonszám:</label>
                         <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
                     </div>
                     <div className="space-y-1 md:col-span-2">
-                        <label className="text-xs">Cím:</label>
+                        <label className="text-xs text-black">Cím:</label>
                         <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
                     </div>
                     <div className="space-y-1 md:col-span-2">
-                        <label className="text-xs">Rövid leírás (Szlogen):</label>
+                        <label className="text-xs text-black">Rövid leírás (Szlogen):</label>
                         <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
                     </div>
                 </div>
@@ -955,10 +955,10 @@ function ProfileEditor({ restaurantId }) {
 
             {/* Opening Hours & Delivery */}
             <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
-                <legend className="px-1 font-bold text-sm">Nyitvatartás & Szállítás</legend>
+                <legend className="px-1 font-bold text-sm text-black">Nyitvatartás & Szállítás</legend>
                 <div className="grid md:grid-cols-2 gap-4 p-2">
                     <div className="space-y-1">
-                        <label className="text-xs">Nyitvatartás:</label>
+                        <label className="text-xs text-black">Nyitvatartás:</label>
                         <input className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} placeholder="H-V: 10-22" value={form.opening_hours} onChange={e => setForm({ ...form, opening_hours: e.target.value })} />
                     </div>
 
@@ -971,13 +971,13 @@ function ProfileEditor({ restaurantId }) {
                                 onChange={e => setForm({ ...form, has_delivery: e.target.checked })}
                                 className="accent-black"
                             />
-                            <label htmlFor="hasDelivery" className="text-xs cursor-pointer select-none">Házhozszállítás engedélyezése</label>
+                            <label htmlFor="hasDelivery" className="text-xs cursor-pointer select-none text-black">Házhozszállítás engedélyezése</label>
                         </div>
                         <input disabled={!form.has_delivery} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none ${!form.has_delivery ? 'bg-gray-200 text-gray-500' : ''}`} placeholder="30-45 perc" value={form.delivery_time} onChange={e => setForm({ ...form, delivery_time: e.target.value })} />
                     </div>
 
                     <div className="space-y-1">
-                        <label className="text-xs">Min. Rendelés (Ft):</label>
+                        <label className="text-xs text-black">Min. Rendelés (Ft):</label>
                         <input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none`} value={form.min_order_value} onChange={e => setForm({ ...form, min_order_value: e.target.value })} />
                     </div>
                 </div>
@@ -985,14 +985,14 @@ function ProfileEditor({ restaurantId }) {
 
             {/* News & Promos */}
             <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
-                <legend className="px-1 font-bold text-sm">Hírek & Akciók</legend>
+                <legend className="px-1 font-bold text-sm text-black">Hírek & Akciók</legend>
                 <div className="space-y-4 p-2">
 
                     {/* Daily Menu */}
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <input type="checkbox" checked={form.settings.show_daily_menu} onChange={() => toggleSetting('show_daily_menu')} className="accent-black" />
-                            <label className="text-xs font-bold">Napi Menü (Szöveges)</label>
+                            <label className="text-xs font-bold text-black">Napi Menü (Szöveges)</label>
                         </div>
                         <textarea rows={3} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none font-mono`} placeholder="Hétfő: Leves..." value={form.daily_menu} onChange={e => setForm({ ...form, daily_menu: e.target.value })} />
                     </div>
@@ -1001,7 +1001,7 @@ function ProfileEditor({ restaurantId }) {
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <input type="checkbox" checked={form.settings.show_news} onChange={() => toggleSetting('show_news')} className="accent-black" />
-                            <label className="text-xs font-bold">Hírek</label>
+                            <label className="text-xs font-bold text-black">Hírek</label>
                         </div>
                         <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={form.news} onChange={e => setForm({ ...form, news: e.target.value })} />
                     </div>
@@ -1010,7 +1010,7 @@ function ProfileEditor({ restaurantId }) {
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <input type="checkbox" checked={form.settings.show_promotions} onChange={() => toggleSetting('show_promotions')} className="accent-black" />
-                            <label className="text-xs font-bold">Akciók</label>
+                            <label className="text-xs font-bold text-black">Akciók</label>
                         </div>
                         <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={form.promotions} onChange={e => setForm({ ...form, promotions: e.target.value })} />
                     </div>
@@ -1045,7 +1045,7 @@ function QuickDelivery({ restaurantId }) {
 
     return (
         <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
-            <legend className="px-1 font-bold text-xs">Gyors Kiszállítási Idő</legend>
+            <legend className="px-1 font-bold text-xs text-black">Gyors Kiszállítási Idő</legend>
             <div className="flex items-center justify-between gap-4 p-2">
                 <div className="flex items-center gap-3 bg-black text-green-500 font-mono px-4 py-2 border-4 border-gray-400 border-inset">
                     <p className="text-xl font-bold tracking-widest">{time}</p>
@@ -1071,7 +1071,7 @@ function QuickDelivery({ restaurantId }) {
 function HelpModal({ onClose }) {
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
-            <div className="absolute inset-0 bg-black/50 pointer-events-auto" onClick={onClose} />
+            <div className="absolute inset-0 pointer-events-auto" onClick={onClose} />
             <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-full max-w-2xl pointer-events-auto shadow-xl max-h-[80vh] flex flex-col`}>
                 <div className={WIN98.titleBar}>
                     <div className="flex items-center gap-2">
@@ -1288,7 +1288,7 @@ function SearchPanel({ restaurantId }) {
             <div className="p-2 bg-[#c0c0c0] mb-2 border-2 border-white border-b-black border-r-black">
                 <form onSubmit={handleSearch} className="flex gap-2 items-end">
                     <div className="flex-1 space-y-1">
-                        <label className="text-xs font-bold">Keresés (Név, Cím, Tel):</label>
+                        <label className="text-xs font-bold text-black">Keresés (Név, Cím, Tel):</label>
                         <div className="flex gap-2">
                             <input
                                 autoFocus
