@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoCarSport, IoPhonePortraitOutline, IoSend, IoLocate, IoCheckmarkCircle, IoTimeOutline, IoStopCircleOutline, IoPlayCircleOutline } from 'react-icons/io5';
@@ -8,6 +9,7 @@ import { triggerHaptic, HapticType } from '../utils/haptics';
 
 export default function SMSParkingCard() {
     const { t } = useTranslation('parking');
+    const location = useLocation();
     const [plate, setPlate] = useState('');
     const [carrier, setCarrier] = useState('30');
     const [zone, setZone] = useState('green'); // 'green' | 'red' | 'free'
@@ -15,6 +17,13 @@ export default function SMSParkingCard() {
     const [isLocating, setIsLocating] = useState(false);
     const [locationError, setLocationError] = useState(null);
     const [isPaidPeriod, setIsPaidPeriod] = useState(true);
+
+    // Set license plate from AI navigation
+    useEffect(() => {
+        if (location.state?.licensePlate) {
+            setPlate(location.state.licensePlate);
+        }
+    }, [location]);
 
     const currentZone = t(`smsCard.zones.${zone}`, { returnObjects: true });
     const isFreeZone = zone === 'free';

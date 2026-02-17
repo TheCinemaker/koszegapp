@@ -38,9 +38,20 @@ export default function AIAssistant() {
             case 'navigate_to_leisure':
                 navigate('/leisure');
                 break;
+            case 'buy_parking_ticket':
+                navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '' } });
+                break;
+            case 'call_emergency':
+                handleEmergencyCall(action.params?.service);
+                break;
             default:
                 break;
         }
+    };
+
+    const handleEmergencyCall = (service) => {
+        // Use 112 (EU emergency number) for all emergencies
+        window.location.href = 'tel:112';
     };
 
     const sendMessage = async () => {

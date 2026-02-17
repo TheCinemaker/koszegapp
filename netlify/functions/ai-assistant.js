@@ -72,6 +72,34 @@ const functions = [
         description: 'Navigate to the leisure activities page',
         parameters: { type: 'object', properties: {} },
     },
+    {
+        name: 'buy_parking_ticket',
+        description: 'Navigate to parking page to buy a parking ticket with optional license plate pre-fill',
+        parameters: {
+            type: 'object',
+            properties: {
+                licensePlate: {
+                    type: 'string',
+                    description: 'License plate number to pre-fill (e.g., ABC123)',
+                },
+            },
+        },
+    },
+    {
+        name: 'call_emergency',
+        description: 'Immediately call emergency services (112 - EU emergency number) for ambulance, fire, or police',
+        parameters: {
+            type: 'object',
+            properties: {
+                service: {
+                    type: 'string',
+                    enum: ['ambulance', 'fire', 'police', 'emergency'],
+                    description: 'Type of emergency service needed',
+                },
+            },
+            required: ['service'],
+        },
+    },
 ];
 
 // Read JSON file helper
