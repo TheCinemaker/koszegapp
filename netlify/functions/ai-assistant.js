@@ -307,6 +307,7 @@ export async function handler(event) {
         const model = genAI.getGenerativeModel({
             model: 'gemini-1.5-flash',
             systemInstruction: SYSTEM_PROMPT,
+            tools: [{ functionDeclarations: functions }], // Pass tools to model
         });
 
         // Build conversation history
@@ -328,11 +329,11 @@ export async function handler(event) {
         const fullQuery = `${contextString}\n\nFELHASZNÁLÓ KÉRDÉSE: ${query}`;
         const result = await chat.sendMessage(fullQuery);
         const response = result.response;
-        const text = response.text();
 
-        // Check for function calls
+        // Check for function calls FIRST
         const functionCalls = response.functionCalls();
         let action = null;
+        let text = '';
 
         if (functionCalls && functionCalls.length > 0) {
             const call = functionCalls[0];
@@ -340,6 +341,27 @@ export async function handler(event) {
                 type: call.name,
                 params: call.args || {},
             };
+
+            // If function call exists, generate friendly text based on action
+            const actionMessages = {
+                navigate_to_events: 'Megnyitom az eseményeket!',
+                navigate_to_food: 'Megnyitom a KoszegEats-t!',
+                navigate_to_parking: 'Megnyitom a parkolókat!',
+                navigate_to_attractions: 'Megnyitom a látnivalókat!',
+                navigate_to_hotels: 'Megnyitom a szállásokat!',
+                navigate_to_leisure: 'Megnyitom a szabadidős programokat!',
+                buy_parking_ticket: 'Megnyitom a parkolójegy vásárlást!',
+                call_emergency: 'Azonnal hívom a 112-t!',
+            };
+            text = actionMessages[action.type] || 'Rendben, intézem!';
+        } else {
+            // Only try to get text if no function call, otherwise it might throw
+            try {
+                text = response.text();
+            } catch (e) {
+                console.error('Error getting text from response:', e);
+                text = 'Sajnálom, nem értettem pontosan.';
+            }
         }
 
         return {
