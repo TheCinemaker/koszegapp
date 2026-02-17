@@ -353,12 +353,14 @@ export async function handler(event) {
         };
     } catch (error) {
         console.error('AI Assistant Error:', error);
+        // Return 200 with error message to see it in frontend console instead of generic 500
         return {
-            statusCode: 500,
+            statusCode: 200,
             headers,
             body: JSON.stringify({
-                error: 'Failed to process request',
-                details: error.message,
+                role: 'assistant',
+                content: `Sajnálom, hiba történt a rendszerben. (Hibakód: ${error.message})`,
+                debug: error.stack
             }),
         };
     }
