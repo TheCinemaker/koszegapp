@@ -260,10 +260,10 @@ export default function EventDetail() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 z-10 pointer-events-none" />
 
         {/* --- NAVIGATION --- */}
-        <div className="absolute top-6 left-6 z-50">
+        <div className="absolute top-6 left-6 z-50 pointer-events-none">
           <button
             onClick={() => navigate('/events')}
-            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/40 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group"
+            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/40 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group pointer-events-auto"
           >
             <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
           </button>
@@ -271,7 +271,7 @@ export default function EventDetail() {
 
         {/* Hero Title (Parallaxed) */}
         <motion.div
-          className="absolute bottom-16 left-6 right-6 z-20"
+          className="absolute bottom-16 left-6 right-6 z-20 pointer-events-none"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}

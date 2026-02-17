@@ -145,7 +145,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         {!isPast && onGeneratePass && (
           <button
             onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
-            className="absolute top-4 left-20 hover:scale-105 active:scale-95 transition-all"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 hover:scale-105 active:scale-95 transition-all z-20"
             title={t('addToWallet')}
           >
             <img
