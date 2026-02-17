@@ -684,6 +684,9 @@ function MenuEditor({ restaurantId }) {
 function SalesSummary({ restaurantId }) {
     const [stats, setStats] = useState({ daily: 0, weekly: 0, monthly: 0 });
     const [loading, setLoading] = useState(true);
+    const [productStats, setProductStats] = useState([]);
+    const [productPeriod, setProductPeriod] = useState('daily'); // 'daily', 'weekly', 'monthly'
+    const [loadingProducts, setLoadingProducts] = useState(true);
 
     useEffect(() => {
         if (!restaurantId) return;
@@ -737,6 +740,78 @@ function SalesSummary({ restaurantId }) {
 
         fetchStats();
     }, [restaurantId]);
+
+    // Fetch product statistics
+    useEffect(() => {
+        if (!restaurantId) return;
+
+        const fetchProductStats = async () => {
+            setLoadingProducts(true);
+
+            const now = new Date();
+            let startDate;
+
+            if (productPeriod === 'daily') {
+                startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            } else if (productPeriod === 'weekly') {
+                startDate = new Date(now);
+                startDate.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1));
+                startDate.setHours(0, 0, 0, 0);
+            } else {
+                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('order_items')
+                    .select(`
+                        menu_item_id,
+                        name,
+                        quantity,
+                        price,
+                        order:orders!inner(
+                            restaurant_id,
+                            status,
+                            created_at
+                        )
+                    `)
+                    .eq('order.restaurant_id', restaurantId)
+                    .eq('order.status', 'delivered')
+                    .gte('order.created_at', startDate.toISOString());
+
+                if (error) {
+                    console.error('Error fetching product stats:', error);
+                    setLoadingProducts(false);
+                    return;
+                }
+
+                // Group by menu item
+                const grouped = {};
+                data.forEach(item => {
+                    const key = item.menu_item_id || item.name;
+                    if (!grouped[key]) {
+                        grouped[key] = {
+                            name: item.name,
+                            totalQuantity: 0,
+                            totalRevenue: 0
+                        };
+                    }
+                    grouped[key].totalQuantity += item.quantity;
+                    grouped[key].totalRevenue += item.quantity * item.price;
+                });
+
+                // Convert to array and sort by quantity
+                const statsArray = Object.values(grouped).sort((a, b) => b.totalQuantity - a.totalQuantity);
+                setProductStats(statsArray.slice(0, 10)); // Top 10
+                setLoadingProducts(false);
+            } catch (err) {
+                console.error('Error:', err);
+                setLoadingProducts(false);
+            }
+        };
+
+        fetchProductStats();
+    }, [restaurantId, productPeriod]);
 
     if (loading) return <div className="p-10 text-center text-sm">Adatok feldolgozása...</div>;
 
@@ -794,6 +869,66 @@ function SalesSummary({ restaurantId }) {
                     </div>
                 </div>
             </div>
+
+            {/* Product Statistics Section */}
+            <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1`}>
+                <div className={WIN98.titleBar + " mx-0 mb-1"}>
+                    <span>📊 Termék Statisztika</span>
+                </div>
+
+                {/* Period Filter Tabs */}
+                <div className="flex gap-1 p-1 mb-2">
+                    <button
+                        onClick={() => setProductPeriod('daily')}
+                        className={`${WIN98.btn} px-3 py-1 text-xs ${productPeriod === 'daily' ? 'bg-blue-200 font-bold' : ''}`}
+                    >
+                        Mai
+                    </button>
+                    <button
+                        onClick={() => setProductPeriod('weekly')}
+                        className={`${WIN98.btn} px-3 py-1 text-xs ${productPeriod === 'weekly' ? 'bg-blue-200 font-bold' : ''}`}
+                    >
+                        Heti
+                    </button>
+                    <button
+                        onClick={() => setProductPeriod('monthly')}
+                        className={`${WIN98.btn} px-3 py-1 text-xs ${productPeriod === 'monthly' ? 'bg-blue-200 font-bold' : ''}`}
+                    >
+                        Havi
+                    </button>
+                </div>
+
+                {/* Product Stats Table */}
+                <div className={`${WIN98.borderInset} bg-white overflow-auto max-h-[400px]`}>
+                    {loadingProducts ? (
+                        <div className="p-4 text-center text-sm text-black">Adatok betöltése...</div>
+                    ) : productStats.length === 0 ? (
+                        <div className="p-4 text-center text-sm text-black">Nincs adat a kiválasztott időszakra.</div>
+                    ) : (
+                        <table className="w-full text-left border-collapse">
+                            <thead className="bg-[#c0c0c0] sticky top-0">
+                                <tr>
+                                    <th className="p-2 border border-r-black border-b-black border-l-white border-t-white text-xs font-bold text-black">#</th>
+                                    <th className="p-2 border border-r-black border-b-black border-l-white border-t-white text-xs font-bold text-black">Termék Név</th>
+                                    <th className="p-2 border border-r-black border-b-black border-l-white border-t-white text-xs font-bold text-black text-right">Eladott DB</th>
+                                    <th className="p-2 border border-r-black border-b-black border-l-white border-t-white text-xs font-bold text-black text-right">Bevétel</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white text-sm">
+                                {productStats.map((product, index) => (
+                                    <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
+                                        <td className="p-2 text-black">{index + 1}</td>
+                                        <td className="p-2 font-bold text-black">{product.name}</td>
+                                        <td className="p-2 text-right text-black">{product.totalQuantity} db</td>
+                                        <td className="p-2 text-right font-mono text-black">{product.totalRevenue.toLocaleString()} Ft</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            </div>
+
 
             <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-2 flex items-start gap-3`}>
                 <div className="text-3xl">ℹ️</div>
