@@ -354,10 +354,13 @@ export default function EventDetail() {
                       {/* Apple Wallet Button */}
                       <button
                         onClick={handleGeneratePass}
-                        className="w-full bg-black text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all border border-gray-800"
+                        className="w-full flex items-center justify-center hover:scale-[1.02] transition-all"
                       >
-                        <FaApple className="text-xl" />
-                        <span className="text-sm">Hozzáadás: Apple Wallet</span>
+                        <img
+                          src="/images/apple_badges/addtoapplewallet.png"
+                          alt="Add to Apple Wallet"
+                          className="h-12 w-auto"
+                        />
                       </button>
 
                       {evt.link && (
