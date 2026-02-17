@@ -140,25 +140,31 @@ async function gatherContext(query) {
 
     // Always load key data
     try {
-        // Supabase: Events
-        const { data: events } = await supabase
-            .from('events')
-            .select('*')
-            .gte('date', new Date().toISOString().split('T')[0])
-            .order('date', { ascending: true })
-            .limit(5);
-        if (events) context.events = events;
+        // Supabase: Events (Only if query mentions events/programs/when/where)
+        if (lowerQuery.includes('program') || lowerQuery.includes('esemény') || lowerQuery.includes('mikor') || lowerQuery.includes('hová') || lowerQuery.includes('mit csinál') || lowerQuery.includes('koncert') || lowerQuery.includes('fesztivál')) {
+            const { data: events } = await supabase
+                .from('events')
+                .select('*')
+                .gte('date', new Date().toISOString().split('T')[0])
+                .order('date', { ascending: true })
+                .limit(5);
+            if (events) context.events = events;
+        }
 
-        // Supabase: Restaurants
-        const { data: restaurants } = await supabase
-            .from('restaurants')
-            .select('*')
-            .limit(10);
-        if (restaurants) context.restaurants = restaurants;
+        // Supabase: Restaurants (Only if query mentions food/restaurants/eating)
+        if (lowerQuery.includes('étel') || lowerQuery.includes('étterem') || lowerQuery.includes('enni') || lowerQuery.includes('éhes') || lowerQuery.includes('kaja') || lowerQuery.includes('vacsora') || lowerQuery.includes('ebéd') || lowerQuery.includes('reggeli')) {
+            const { data: restaurants } = await supabase
+                .from('restaurants')
+                .select('*')
+                .limit(10);
+            if (restaurants) context.restaurants = restaurants;
+        }
 
-        // JSON: Attractions
-        const attractions = await readJSON('attractions.json');
-        if (attractions) context.attractions = attractions;
+        // JSON: Attractions (Only if query mentions seeing/visiting/attractions)
+        if (lowerQuery.includes('látnivaló') || lowerQuery.includes('nevezetesség') || lowerQuery.includes('megnéz') || lowerQuery.includes('torony') || lowerQuery.includes('vár') || lowerQuery.includes('templom') || lowerQuery.includes('múzeum')) {
+            const attractions = await readJSON('attractions.json');
+            if (attractions) context.attractions = attractions;
+        }
 
         // JSON: Hotels
         if (lowerQuery.includes('szállás') || lowerQuery.includes('hotel')) {
