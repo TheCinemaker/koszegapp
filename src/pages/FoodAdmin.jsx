@@ -105,7 +105,7 @@ export default function FoodAdmin() {
     };
 
     return (
-        <div className={`min-h-screen ${WIN98.bg} p-1 md:p-2 overflow-hidden flex flex-col font-sans text-sm`}>
+        <div className={`min-h-screen ${WIN98.bg} p-1 md:p-2 overflow-hidden flex flex-col font-sans text-sm`} style={{ color: '#000000' }}>
             <FoodAdminDashboard restaurantId={restaurantId} onLogout={handleLogout} />
         </div>
     );
