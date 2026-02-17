@@ -146,14 +146,14 @@ async function gatherContext(query) {
             .select('*')
             .gte('date', new Date().toISOString().split('T')[0])
             .order('date', { ascending: true })
-            .limit(10);
+            .limit(5);
         if (events) context.events = events;
 
         // Supabase: Restaurants
         const { data: restaurants } = await supabase
             .from('restaurants')
             .select('*')
-            .limit(20);
+            .limit(10);
         if (restaurants) context.restaurants = restaurants;
 
         // JSON: Attractions
@@ -232,15 +232,15 @@ function buildContextString(context) {
 
     if (context.attractions?.length > 0) {
         contextStr += 'LÁTNIVALÓK:\n';
-        context.attractions.slice(0, 10).forEach(a => {
-            contextStr += `- ${a.name}: ${a.description?.substring(0, 100) || 'Kőszeg egyik látnivalója'}...\n`;
+        context.attractions.slice(0, 5).forEach(a => {
+            contextStr += `- ${a.name}: ${a.description?.substring(0, 50) || 'Kőszeg egyik látnivalója'}...\n`;
         });
         contextStr += '\n';
     }
 
     if (context.restaurants?.length > 0) {
         contextStr += 'ÉTTERMEK:\n';
-        context.restaurants.slice(0, 10).forEach(r => {
+        context.restaurants.slice(0, 5).forEach(r => {
             contextStr += `- ${r.name} (${r.address || 'Kőszeg'})\n`;
         });
         contextStr += '\n';
@@ -248,7 +248,7 @@ function buildContextString(context) {
 
     if (context.hotels?.length > 0) {
         contextStr += 'SZÁLLÁSOK:\n';
-        context.hotels.slice(0, 5).forEach(h => {
+        context.hotels.slice(0, 3).forEach(h => {
             contextStr += `- ${h.name} (${h.address || 'Kőszeg'})\n`;
         });
         contextStr += '\n';
@@ -256,7 +256,7 @@ function buildContextString(context) {
 
     if (context.parking?.length > 0) {
         contextStr += 'PARKOLÓK:\n';
-        context.parking.slice(0, 5).forEach(p => {
+        context.parking.slice(0, 3).forEach(p => {
             contextStr += `- ${p.name} (${p.address || 'Kőszeg'})\n`;
         });
         contextStr += '\n';
@@ -310,7 +310,7 @@ export async function handler(event) {
 
         // Initialize Gemini model
         const model = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-1.5-flash',
             systemInstruction: SYSTEM_PROMPT,
             tools: [
                 { functionDeclarations: functions },
