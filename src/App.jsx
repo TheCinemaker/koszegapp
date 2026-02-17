@@ -18,6 +18,7 @@ import {
   IoHomeOutline
 } from 'react-icons/io5';
 import { triggerHaptic, HapticType } from './utils/haptics';
+import AIAssistant from './components/AIAssistant';
 
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
@@ -434,6 +435,9 @@ function MainAppContent() {
           )} */}
           </>
         )}
+
+        {/* AI Assistant */}
+        <AIAssistant />
       </div>
     </>
   );
