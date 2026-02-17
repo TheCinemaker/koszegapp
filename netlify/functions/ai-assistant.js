@@ -1,10 +1,21 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createClient } from '@supabase/supabase-js';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Validate environment variables
+if (!process.env.GEMINI_API_KEY) {
+    console.error('GEMINI_API_KEY is missing!');
+}
+if (!process.env.VITE_SUPABASE_URL) {
+    console.error('VITE_SUPABASE_URL is missing!');
+}
+if (!process.env.VITE_SUPABASE_ANON_KEY) {
+    console.error('VITE_SUPABASE_ANON_KEY is missing!');
+}
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'dummy-key');
 const supabase = createClient(
-    process.env.VITE_SUPABASE_URL,
-    process.env.VITE_SUPABASE_ANON_KEY
+    process.env.VITE_SUPABASE_URL || 'https://dummy.supabase.co',
+    process.env.VITE_SUPABASE_ANON_KEY || 'dummy-key'
 );
 
 // System prompt for the AI assistant
@@ -269,6 +280,13 @@ export async function handler(event) {
     }
 
     try {
+        console.log('AI Assistant function called');
+
+        // Check environment variables
+        if (!process.env.GEMINI_API_KEY) {
+            throw new Error('GEMINI_API_KEY environment variable is missing');
+        }
+
         const { query, conversationHistory = [] } = JSON.parse(event.body);
 
         if (!query) {
@@ -278,6 +296,8 @@ export async function handler(event) {
                 body: JSON.stringify({ error: 'Query is required' }),
             };
         }
+
+        console.log('Query received:', query);
 
         // Gather context from all sources
         const context = await gatherContext(query);
