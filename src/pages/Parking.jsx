@@ -21,8 +21,6 @@ export default function Parking() {
   const [parkingSpots, setParkingSpots] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
 
   useEffect(() => {
     setLoading(true);
@@ -32,24 +30,7 @@ export default function Parking() {
       .finally(() => setLoading(false));
   }, []);
 
-  const types = useMemo(() => {
-    return ['Minden', 'Ingyenes', 'Fizetős'];
-  }, []);
 
-  const filteredSpots = useMemo(() => {
-    return parkingSpots.filter(spot => {
-      const matchesSearch = spot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        spot.address?.toLowerCase().includes(searchTerm.toLowerCase());
-
-      const isPaid = isParkingPaidNow(spot.hours);
-      let matchesType = true;
-
-      if (filterType === 'Ingyenes') matchesType = isPaid === false;
-      if (filterType === 'Fizetős') matchesType = isPaid === true;
-
-      return matchesSearch && matchesType;
-    });
-  }, [parkingSpots, searchTerm, filterType]);
 
   if (loading) {
     return (
@@ -86,61 +67,19 @@ export default function Parking() {
           <SMSParkingCard />
         </FadeUp>
 
-        {/* 2. SEARCH & CONTROLS */}
-        <FadeUp delay={0.1} className="mb-6 space-y-4">
-          {/* Search Bar */}
-          <div className="relative group h-12">
-            <div className="absolute inset-0 bg-gradient-to-r from-zinc-500/20 to-stone-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative flex h-full shadow-sm rounded-2xl overflow-hidden bg-white/70 dark:bg-black/30 backdrop-blur-xl border border-white/50 dark:border-white/10 group-hover:shadow-lg transition-all duration-300">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder={t('searchPlaceholder')}
-                className="flex-1 h-full px-5 bg-transparent
-                           text-sm font-medium text-gray-900 dark:text-gray-100
-                           placeholder-gray-500 dark:placeholder-gray-400
-                           focus:outline-none"
-              />
-              <div className="w-12 h-full flex items-center justify-center text-gray-400 group-focus-within:text-zinc-500 transition-colors">
-                <IoSearchOutline className="text-xl" />
-              </div>
-            </div>
-          </div>
-
-          {/* Filters & Map Button Row */}
-          <div className="flex items-center gap-3">
-            {/* Scrollable Pills */}
-            <div className="flex-1 flex items-center gap-2 overflow-x-auto pb-2 flex-nowrap scrollbar-hide mask-image-linear-gradient">
-              {types.map(type => (
-                <button
-                  key={type}
-                  onClick={() => setFilterType(type === 'Minden' ? 'all' : type)}
-                  className={`
-                       flex-shrink-0 px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all duration-300 border
-                       ${(filterType === type || (filterType === 'all' && type === 'Minden'))
-                      ? 'bg-zinc-800 dark:bg-white text-white dark:text-black border-transparent shadow-lg scale-105'
-                      : 'bg-white/40 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-white/30 hover:bg-white/60 dark:hover:bg-white/10'
-                    }
-                     `}
-                >
-                  {type === 'Minden' ? t('all') : type === 'Ingyenes' ? t('free') : t('paid')}
-                </button>
-              ))}
-            </div>
-
-            {/* Map Button - Compact iOS 26 Style */}
-            <Link to="/parking-map" className="flex-shrink-0 relative group overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] w-12 h-12 flex items-center justify-center border border-white/40 bg-white/50 dark:bg-black/30 backdrop-blur-md">
-              <IoMapOutline className="text-xl text-zinc-600 dark:text-zinc-400" />
-            </Link>
-          </div>
+        {/* 2. MAP BUTTON */}
+        <FadeUp delay={0.1} className="mb-6 flex justify-end">
+          {/* Map Button - Compact iOS 26 Style */}
+          <Link to="/parking-map" className="flex-shrink-0 relative group overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] w-12 h-12 flex items-center justify-center border border-white/40 bg-white/50 dark:bg-black/30 backdrop-blur-md">
+            <IoMapOutline className="text-xl text-zinc-600 dark:text-zinc-400" />
+          </Link>
         </FadeUp>
 
         {/* 3. PARKING GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
-            {filteredSpots.length > 0 ? (
-              filteredSpots.map((spot, index) => {
+            {parkingSpots.length > 0 ? (
+              parkingSpots.map((spot, index) => {
                 const isPaid = isParkingPaidNow(spot.hours);
                 return (
                   <FadeUp
