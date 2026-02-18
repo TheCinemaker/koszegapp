@@ -1,6 +1,9 @@
 /**
- * ❤️ SmartTriggerEngine - The Brain of the Proactive Layer
- * Updated for Multi-Mode Intelligence
+ * ❤️ SmartTriggerEngine 2.0
+ * 
+ * Advanced deterministic logic for the Proactive AI Layer.
+ * Supports: Remote, Approaching, City modes.
+ * Rules: Time, Day, Weather, Location, History.
  */
 
 import { getAppMode } from "../core/ContextEngine";
@@ -15,30 +18,56 @@ export function getSmartTrigger({
 }) {
 
     const now = Date.now();
-    // Throttling: 2 hours global cooldown for ANY proactive message
-    const TWO_HOURS = 2 * 60 * 60 * 1000;
+    // Global Throttling: 2 hours between ANY proactive trigger
+    const THROTTLE_TIME = 2 * 60 * 60 * 1000;
 
-    if (lastShown && now - lastShown < TWO_HOURS) return null;
+    if (lastShown && now - lastShown < THROTTLE_TIME) return null;
 
     const mode = getAppMode(location);
-    console.log("🧠 Context Mode:", mode);
+    const dayOfWeek = new Date().getDay(); // 0 = Sunday, 1 = Monday...
+    console.log(`🧠 SmartEngine 2.0 | Mode: ${mode} | Hour: ${hour} | Day: ${dayOfWeek}`);
 
-    // --- MODE 1: REMOTE (Planning) ---
+    // ==========================================
+    // 1️⃣ REMOTE MODE (Planning)
+    // ==========================================
     if (mode === 'remote') {
-        // Only suggest if we haven't ignored planning
-        if (!userBehavior?.ignoredPlanning) {
+        if (userBehavior?.ignoredPlanning) return null;
+
+        // A) Evening (Hotels) - 19:00 - 23:00
+        if (hour >= 19 && hour <= 23 && !userBehavior?.ignoredHotels) {
             return {
-                id: "remote_planning",
-                type: "planning",
-                text: "✨ Tervezed a látogatást Kőszegen? Megmutassam a közelgő programokat?",
-                action: "navigate_to_events",
-                priority: 5
+                id: "remote_hotels",
+                type: "hotel",
+                text: "Szállást keresel Kőszegen? Segítek a legjobbat megtalálni.",
+                action: "navigate_to_hotels",
+                priority: 6
             };
         }
-        return null;
+
+        // B) Start of Week (Events) - Mon/Tue
+        if ((dayOfWeek === 1 || dayOfWeek === 2) && !userBehavior?.ignoredEvents) {
+            return {
+                id: "remote_weekend_plan",
+                type: "event",
+                text: "Hétvégi kirándulás terve? Nézd meg a kőszegi programokat!",
+                action: "navigate_to_events",
+                priority: 7
+            };
+        }
+
+        // C) Default Planning
+        return {
+            id: "remote_planning",
+            type: "planning",
+            text: "Kőszegre készülsz? Megmutassam a következő eseményeket?",
+            action: "navigate_to_events",
+            priority: 5
+        };
     }
 
-    // --- MODE 2: APPROACHING (Transition) ---
+    // ==========================================
+    // 2️⃣ APPROACHING MODE (Transition)
+    // ==========================================
     if (mode === 'approaching') {
         if (!userBehavior?.ignoredParking) {
             return {
@@ -52,25 +81,24 @@ export function getSmartTrigger({
         return null;
     }
 
-    // --- MODE 3: CITY (Full Intelligence) ---
+    // ==========================================
+    // 3️⃣ CITY MODE (Full Experience)
+    // ==========================================
     if (mode === 'city') {
-        // Constants for logic
-        const isDinnerTime = hour >= 18 && hour <= 20;
-        const isLunchTime = hour >= 12 && hour <= 14;
 
-        // --- SCENARIO A: DINNER NUDGE ---
-        if (isDinnerTime && !userBehavior?.ignoredDinner) {
+        // A) DINNER (18:00 - 20:30)
+        if (hour >= 18 && hour <= 20 && !userBehavior?.ignoredDinner) {
             return {
                 id: "dinner_nudge",
                 type: "food",
-                text: "🍷 Vacsoraidő van a Fő téren. Mutassak egy hangulatos éttermet?",
+                text: "🍷 Vacsoraidő! Mutassak egy hangulatos éttermet?",
                 action: "navigate_to_food",
                 priority: 10
             };
         }
 
-        // --- SCENARIO B: LUNCH NUDGE ---
-        if (isLunchTime && !userBehavior?.ignoredLunch) {
+        // B) LUNCH (12:00 - 14:00)
+        if (hour >= 12 && hour <= 14 && !userBehavior?.ignoredLunch) {
             return {
                 id: "lunch_nudge",
                 type: "food",
@@ -80,31 +108,31 @@ export function getSmartTrigger({
             };
         }
 
-        // --- SCENARIO C: UPCOMING EVENT ---
+        // C) EVENTS (Starting in < 60 min)
         if (events && events.length > 0) {
             const upcomingEvent = events.find(e => {
                 const start = new Date(e.start_time || e.date).getTime();
                 const diffMinutes = (start - now) / (1000 * 60);
-                return diffMinutes > 0 && diffMinutes <= 60; // Starts in 1 hour
+                return diffMinutes > 0 && diffMinutes <= 60;
             });
 
             if (upcomingEvent) {
                 return {
                     id: `event_${upcomingEvent.id}`,
                     type: "event",
-                    text: `🎵 "${upcomingEvent.name}" hamarosan kezdődik (kb. ${Math.ceil((new Date(upcomingEvent.start_time || upcomingEvent.date) - now) / 60000)} perc).`,
+                    text: `🎵 "${upcomingEvent.name}" hamarosan kezdődik. Érdekel?`,
                     action: "navigate_to_events",
-                    priority: 20 // High priority
+                    priority: 20
                 };
             }
         }
 
-        // --- SCENARIO D: RAIN ---
+        // D) RAIN
         if (weather?.isRainy && !userBehavior?.ignoredRain) {
             return {
                 id: "rain_program",
                 type: "attraction",
-                text: "🌧️ Borús idő van. Mutassak beltéri programokat?",
+                text: "🌧️ Esik az eső? Mutatok fedett programokat.",
                 action: "navigate_to_attractions",
                 priority: 5
             };

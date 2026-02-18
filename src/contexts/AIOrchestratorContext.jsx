@@ -13,13 +13,29 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
     const [suggestion, setSuggestion] = useState(null);
     const [userLocation, setUserLocation] = useState(null); // { lat, lng, distanceToMainSquare }
 
-    // Tracking user behavior (could be persisted to localStorage)
-    const [userBehavior, setUserBehavior] = useState({
-        ignoredDinner: false,
-        ignoredLunch: false,
-        ignoredRain: false,
-        lastShown: null
+    // Tracking user behavior with persistence
+    const [userBehavior, setUserBehavior] = useState(() => {
+        try {
+            const saved = localStorage.getItem('ai_user_behavior');
+            return saved ? JSON.parse(saved) : {
+                ignoredDinner: false,
+                ignoredLunch: false,
+                ignoredRain: false,
+                ignoredPlanning: false,
+                ignoredParking: false,
+                ignoredHotels: false,
+                ignoredEvents: false,
+                lastShown: null
+            };
+        } catch (e) {
+            console.warn("Error reading behavior from storage", e);
+            return { lastShown: null };
+        }
     });
+
+    useEffect(() => {
+        localStorage.setItem('ai_user_behavior', JSON.stringify(userBehavior));
+    }, [userBehavior]);
 
     const MAIN_SQUARE = { lat: 47.3883538, lng: 16.5421414 }; // Fő tér coords
 
