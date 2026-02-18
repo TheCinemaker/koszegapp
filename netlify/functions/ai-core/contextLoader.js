@@ -69,11 +69,21 @@ async function loadEvents() {
 }
 
 async function loadRestaurants() {
-    const { data: restaurants } = await supabase
-        .from('restaurants')
-        .select('*')
-        .limit(10);
-    return restaurants || [];
+    try {
+        const { data: restaurants } = await supabase
+            .from('restaurants')
+            .select('*')
+            .limit(10);
+
+        if (restaurants && restaurants.length > 0) return restaurants;
+
+        // Fallback to local JSON
+        const local = await readJSON('restaurants.json');
+        return local ? local.slice(0, 10) : [];
+    } catch (e) {
+        const local = await readJSON('restaurants.json');
+        return local ? local.slice(0, 10) : [];
+    }
 }
 
 async function loadPopularFood() {

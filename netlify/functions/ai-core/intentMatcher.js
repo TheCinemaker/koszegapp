@@ -3,7 +3,7 @@ export function detectIntent(query) {
 
     // Food & Drink (Combined for Decision Router)
     if (/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizz|burger|tészta|kávé|sör|ebéd|vacsor|reggeli|éhes|szomjas/.test(q)) {
-        return 'food_general';
+        return 'food';
     }
 
     // Events & Programs

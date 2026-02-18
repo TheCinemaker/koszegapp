@@ -50,11 +50,19 @@ const query = process.argv[2] || "Milyen programok vannak ma?";
 console.log(`\n🤖 AI Teszt indítása: "${query}"`);
 console.log("------------------------------------------------");
 
+const TEST_QUERY = "éttermek";
+const TEST_CONTEXT = {
+    mode: "city",
+    location: { lat: 47.388, lng: 16.541 },
+    distanceToMainSquare: 100
+};
+
 const mockEvent = {
     httpMethod: 'POST',
     body: JSON.stringify({
-        query: query,
-        conversationHistory: []
+        query: TEST_QUERY,
+        conversationHistory: [],
+        context: TEST_CONTEXT
     })
 };
 
