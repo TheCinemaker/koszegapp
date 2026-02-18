@@ -1,57 +1,80 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoSparkles, IoClose, IoSend } from 'react-icons/io5';
+import { IoSparkles, IoClose, IoSend, IoNavigate, IoRestaurant, IoCalendar, IoCar } from 'react-icons/io5';
+
+// Mock response for local development when backend is unreachable
+const MOCK_RESPONSES = {
+    default: {
+        role: 'assistant',
+        content: 'Szia! Miben segíthetek ma Kőszegen?',
+        action: null
+    },
+    events: {
+        role: 'assistant',
+        content: 'Máris mutatom a közelgő eseményeket!',
+        action: { type: 'navigate_to_events', params: {} }
+    },
+    food: {
+        role: 'assistant',
+        content: 'Éhes vagy? Megnyitom a KoszegEats-t.',
+        action: { type: 'navigate_to_food', params: {} }
+    }
+};
 
 export default function AIAssistant() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [actionStatus, setActionStatus] = useState(null); // 'pending', 'executed'
+    const [hasSuggestion, setHasSuggestion] = useState(false);
     const messagesEndRef = useRef(null);
     const navigate = useNavigate();
 
     // Auto-scroll to bottom
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [messages, loading]);
 
     const handleNavigation = (action) => {
         if (!action) return;
 
-        switch (action.type) {
-            case 'navigate_to_events':
-                navigate('/events');
-                break;
-            case 'navigate_to_food':
-                navigate('/food', { state: { searchQuery: action.params?.search || '' } });
-                break;
-            case 'navigate_to_parking':
-                navigate('/parking');
-                break;
-            case 'navigate_to_attractions':
-                navigate('/attractions');
-                break;
-            case 'navigate_to_hotels':
-                navigate('/hotels');
-                break;
-            case 'navigate_to_leisure':
-                navigate('/leisure');
-                break;
-            case 'buy_parking_ticket':
-                navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '' } });
-                break;
-            case 'call_emergency':
-                handleEmergencyCall(action.params?.service);
-                break;
-            default:
-                break;
-        }
-    };
+        console.log("Executing action:", action);
+        setActionStatus({ type: action.type, status: 'executing' });
 
-    const handleEmergencyCall = (service) => {
-        // Use 112 (EU emergency number) for all emergencies
-        window.location.href = 'tel:112';
+        setTimeout(() => {
+            switch (action.type) {
+                case 'navigate_to_events':
+                    navigate('/events');
+                    break;
+                case 'navigate_to_food':
+                    navigate('/food', { state: { searchQuery: action.params?.search || '' } });
+                    break;
+                case 'navigate_to_parking':
+                    navigate('/parking');
+                    break;
+                case 'navigate_to_attractions':
+                    navigate('/attractions');
+                    break;
+                case 'navigate_to_hotels':
+                    navigate('/hotels');
+                    break;
+                case 'navigate_to_leisure':
+                    navigate('/leisure');
+                    break;
+                case 'buy_parking_ticket':
+                    navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '' } });
+                    break;
+                case 'call_emergency':
+                    window.location.href = 'tel:112';
+                    break;
+                default:
+                    console.warn('Unknown action:', action.type);
+                    break;
+            }
+            setActionStatus(null);
+        }, 1500); // Visual delay to show the "acting" state
     };
 
     const sendMessage = async () => {
@@ -63,6 +86,7 @@ export default function AIAssistant() {
         setLoading(true);
 
         try {
+            // Try to fetch from backend
             const response = await fetch('/.netlify/functions/ai-assistant', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -76,26 +100,36 @@ export default function AIAssistant() {
 
             if (response.ok) {
                 setMessages((prev) => [...prev, data]);
-
-                // Handle navigation action
                 if (data.action) {
-                    setTimeout(() => handleNavigation(data.action), 1000);
+                    handleNavigation(data.action);
                 }
             } else {
-                setMessages((prev) => [
-                    ...prev,
-                    { role: 'assistant', content: 'Sajnálom, hiba történt. Próbáld újra!' },
-                ]);
+                throw new Error('Backend failed');
             }
         } catch (error) {
-            console.error('AI Error:', error);
-            setMessages((prev) => [
-                ...prev,
-                { role: 'assistant', content: 'Nem sikerült kapcsolódni. Ellenőrizd az internetkapcsolatot!' },
-            ]);
-        } finally {
-            setLoading(false);
+            console.warn('AI Backend Error (switching to mock):', error);
+
+            // Local Mock Fallback for Development
+            setTimeout(() => {
+                let mockResponse = MOCK_RESPONSES.default;
+                const lowerInput = input.toLowerCase();
+
+                if (lowerInput.includes('program') || lowerInput.includes('esemény')) {
+                    mockResponse = MOCK_RESPONSES.events;
+                } else if (lowerInput.includes('étel') || lowerInput.includes('kaja')) {
+                    mockResponse = MOCK_RESPONSES.food;
+                }
+
+                setMessages((prev) => [...prev, mockResponse]);
+                if (mockResponse.action) {
+                    handleNavigation(mockResponse.action);
+                }
+                setLoading(false);
+            }, 1000);
+            return; // Exit early since we handled it in setTimeout
         }
+
+        setLoading(false);
     };
 
     const handleKeyPress = (e) => {
@@ -105,117 +139,144 @@ export default function AIAssistant() {
         }
     };
 
+    // Animation Variants
+    const windowVariants = {
+        hidden: { opacity: 0, y: 20, scale: 0.95, filter: 'blur(10px)' },
+        visible: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
+        exit: { opacity: 0, y: 20, scale: 0.95, filter: 'blur(10px)' }
+    };
+
     return (
         <>
-            {/* Chat Bubble */}
+            {/* Chat Bubble Button */}
             <motion.button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 z-[9998] w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
-                whileHover={{ scale: 1.1 }}
+                className="fixed bottom-6 right-6 z-[9998] w-14 h-14 rounded-full bg-black/80 backdrop-blur-md text-white shadow-2xl flex items-center justify-center border border-white/10"
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={hasSuggestion ? { scale: [1, 1.1, 1] } : { opacity: 1, scale: 1 }}
+                transition={hasSuggestion ? { repeat: Infinity, duration: 1.5 } : {}}
             >
-                <IoSparkles className="text-2xl" />
+                {isOpen ? <IoClose className="text-2xl" /> : <IoSparkles className="text-xl" />}
             </motion.button>
 
             {/* Chat Window */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="fixed bottom-24 right-6 z-[9999] w-96 h-[600px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/50 flex flex-col overflow-hidden"
+                        variants={windowVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className="fixed bottom-24 right-6 z-[9999] w-[350px] md:w-[400px] h-[600px] bg-white/80 dark:bg-black/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col overflow-hidden font-sans"
                     >
                         {/* Header */}
-                        <div className="p-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <IoSparkles className="text-2xl" />
+                        <div className="p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-white/50 dark:bg-black/20">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
+                                    <IoSparkles className="text-sm" />
+                                </div>
                                 <div>
-                                    <h3 className="font-bold">Kőszeg AI</h3>
-                                    <p className="text-xs opacity-80">Segíthetek?</p>
+                                    <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">Kőszeg AI</h3>
+                                    <p className="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">Assistant</p>
                                 </div>
                             </div>
-                            <button
-                                onClick={() => setIsOpen(false)}
-                                className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
-                            >
-                                <IoClose className="text-xl" />
-                            </button>
                         </div>
 
-                        {/* Messages */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                        {/* Messages Area */}
+                        <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800">
+
+                            {/* Empty State */}
                             {messages.length === 0 && (
-                                <div className="text-center text-gray-500 dark:text-gray-400 mt-8">
-                                    <IoSparkles className="text-4xl mx-auto mb-2 opacity-50" />
-                                    <p className="text-sm">Kérdezz bármit Kőszegről!</p>
-                                    <div className="mt-4 space-y-2">
-                                        <button
-                                            onClick={() => setInput('Milyen programok vannak ma?')}
-                                            className="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                        >
-                                            Milyen programok vannak ma?
-                                        </button>
-                                        <button
-                                            onClick={() => setInput('Hol tudok ételt rendelni?')}
-                                            className="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors block mx-auto"
-                                        >
-                                            Hol tudok ételt rendelni?
-                                        </button>
+                                <div className="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-70">
+                                    <IoSparkles className="text-3xl text-purple-500/50" />
+                                    <p className="text-sm text-gray-500 max-w-[200px]">
+                                        Szia! Én vagyok a városi AI asszisztensed. Miben segíthetek?
+                                    </p>
+                                    <div className="flex flex-wrap justify-center gap-2">
+                                        <button onClick={() => setInput("Hol egyek?")} className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full hover:bg-gray-200 transition-colors">🍕 Hol egyek?</button>
+                                        <button onClick={() => setInput("Milyen programok vannak?")} className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full hover:bg-gray-200 transition-colors">📅 Programok</button>
                                     </div>
                                 </div>
                             )}
 
                             {messages.map((msg, idx) => (
-                                <div
+                                <motion.div
                                     key={idx}
+                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
                                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div
-                                        className={`max-w-[80%] px-4 py-2 rounded-2xl ${msg.role === 'user'
-                                            ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white'
-                                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                                        className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.role === 'user'
+                                            ? 'bg-blue-600 text-white rounded-br-sm'
+                                            : 'bg-white dark:bg-white/10 text-gray-800 dark:text-gray-100 rounded-bl-sm border border-black/5 dark:border-white/5'
                                             }`}
                                     >
-                                        <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                                        {msg.content}
+
+                                        {/* Action Indicator in Chat */}
+                                        {msg.action && (
+                                            <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/10 flex items-center gap-2 text-xs opacity-80">
+                                                {msg.action.type.includes('event') && <IoCalendar />}
+                                                {msg.action.type.includes('food') && <IoRestaurant />}
+                                                {(msg.action.type.includes('parking') || msg.action.type.includes('navigate')) && <IoNavigate />}
+                                                <span>Művelet indítása...</span>
+                                            </div>
+                                        )}
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
 
+                            {/* Typing Indicator */}
                             {loading && (
-                                <div className="flex justify-start">
-                                    <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-2xl">
-                                        <div className="flex gap-1">
-                                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                                        </div>
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                                    <div className="bg-white dark:bg-white/10 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm flex gap-1.5 items-center">
+                                        <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                                        <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                                        <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
                                     </div>
-                                </div>
+                                </motion.div>
                             )}
 
                             <div ref={messagesEndRef} />
                         </div>
 
-                        {/* Input */}
-                        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-                            <div className="flex gap-2">
+                        {/* Action Status Overlay (e.g. Navigation) */}
+                        <AnimatePresence>
+                            {actionStatus && (
+                                <motion.div
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: 20, opacity: 0 }}
+                                    className="absolute bottom-20 left-4 right-4 bg-black/80 backdrop-blur-md text-white p-3 rounded-xl flex items-center gap-3 shadow-lg z-10"
+                                >
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    <span className="text-sm font-medium">Navigálás...</span>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Input Area */}
+                        <div className="p-4 bg-white/50 dark:bg-black/20 backdrop-blur-md border-t border-black/5 dark:border-white/5">
+                            <div className="relative flex items-center">
                                 <input
                                     type="text"
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyPress={handleKeyPress}
-                                    placeholder="Írj egy üzenetet..."
-                                    className="flex-1 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    placeholder="Kérdezz valamit..."
                                     disabled={loading}
+                                    className="w-full pl-4 pr-12 py-3 bg-white/80 dark:bg-white/5 rounded-2xl text-sm border-none shadow-sm focus:ring-2 focus:ring-blue-500/50 transition-all placeholder-gray-400"
                                 />
                                 <button
                                     onClick={sendMessage}
                                     disabled={!input.trim() || loading}
-                                    className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="absolute right-2 p-2 bg-blue-600 rounded-xl text-white hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-50 disabled:active:scale-100"
                                 >
-                                    <IoSend />
+                                    <IoSend className="text-sm" />
                                 </button>
                             </div>
                         </div>

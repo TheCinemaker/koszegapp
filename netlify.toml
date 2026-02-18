@@ -22,7 +22,6 @@
   schedule = "0 5 * * *"  # 5 AM UTC = 6 AM CET
 
 [dev]
-  command = "npm run dev"
-  targetPort = 3000
-  port = 8888
-  publish = "dist"
+  framework = "vite"
+  port = 9999
+  targetPort = 5173

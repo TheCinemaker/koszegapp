@@ -118,7 +118,7 @@ export default function Leisure() {
                 }
                `}
             >
-            >
+
               {type === 'Minden' ? t('all') : type === 'Kedvenceim' ? t('favorites') : type}
             </button>
           ))}

@@ -11,6 +11,7 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@google/generative-ai@~0.24.1",
         "npm:@supabase/supabase-js@^2.90.1",
         "npm:@vitejs/plugin-react@3",
         "npm:aframe@^1.4.2",
@@ -18,21 +19,25 @@
         "npm:canvas-confetti@^1.9.4",
         "npm:cheerio@^1.1.0",
         "npm:date-fns@^4.1.0",
-        "npm:dotenv@^17.2.3",
         "npm:framer-motion@^12.23.26",
         "npm:fuse.js@^7.1.0",
         "npm:google-auth-library@^10.5.0",
         "npm:google-it@^1.6.4",
         "npm:googlethis@^1.8.0",
+        "npm:html5-qrcode@^2.3.8",
         "npm:i18next@22",
+        "npm:jimp@^1.6.0",
         "npm:jsonwebtoken@^9.0.3",
         "npm:jspdf-autotable@^5.0.7",
         "npm:jspdf@4",
         "npm:leaflet@^1.9.4",
         "npm:lucide-react@0.562",
         "npm:mind-ar@^1.2.5",
-        "npm:node-fetch@^3.3.2",
+        "npm:netlify-cli@^23.15.1",
+        "npm:node-fetch@^2.7.0",
+        "npm:node-forge@^1.3.3",
         "npm:openai@^5.8.2",
+        "npm:passkit-generator@^3.5.7",
         "npm:pdf-parse@^1.1.1",
         "npm:postcss@8",
         "npm:qrcode@^1.5.4",
@@ -44,8 +49,12 @@
         "npm:react-qr-reader@^3.0.0-beta-1",
         "npm:react-router-dom@^7.6.3",
         "npm:react@18",
+        "npm:resend@^6.9.1",
+        "npm:stripe@^20.3.0",
+        "npm:suncalc@^1.9.0",
         "npm:tailwindcss@3",
         "npm:undici@^7.11.0",
+        "npm:util@~0.12.5",
         "npm:vite@4"
       ]
     }

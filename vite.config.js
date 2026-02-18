@@ -6,14 +6,14 @@ export default defineConfig({
   base: '/',
   plugins: [react()],
   server: {
-    port: 3000,
-    proxy: {
-      '/.netlify/functions': {
-        target: 'http://localhost:8888',
-        changeOrigin: true,
-        secure: false
-      }
-    }
+    port: 5173,
+    host: true, // Listen on all addresses
+    strictPort: true,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      clientPort: 9999, // Connect via the Netlify proxy port
+    },
   },
   resolve: {
     alias: {
@@ -23,25 +23,8 @@ export default defineConfig({
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    // Avoid exposing all process.env to prevent secret leaks
-    'process.env': {}
   },
   optimizeDeps: {
     include: ['fuse.js']
-  },
-  build: {
-    rollupOptions: {
-      external: [
-        'node-fetch',
-        'openai',
-        'cheerio',
-        'google-it',
-        'googlethis',
-        'pdf-parse',
-        'fs',
-        'path',
-        'os'
-      ]
-    }
   }
 });
