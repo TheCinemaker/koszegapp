@@ -3,70 +3,52 @@ import { SYSTEM_PROMPT } from './prompts.js';
 
 export async function generateResponse({ intent, query, context, history }) {
     // Intelligent Routing: Hybrid Data Layer
-    // Only enable Google Search if local context is insufficient
-    // This saves tokens and latency (and billing).
-
     const hasLocalData =
         (context.events && context.events.length > 0) ||
         (context.attractions && context.attractions.length > 0) ||
         (context.restaurants && context.restaurants.length > 0) ||
         (context.hotels && context.hotels.length > 0);
 
-    // If no local data found OR intent is specifically external/general/unknown
     const enableSearch = !hasLocalData || ['general_info', 'unknown'].includes(intent);
 
-    if (enableSearch) {
-        console.log(`🌍 Hybrid Layer: Enabling Google Search (Intent: ${intent}, LocalData: ${hasLocalData})`);
-    }
-
     // 1. Select Model
-    // Refactored to use the new object-based signature
     const model = getModel({
         enableSearch,
         systemInstruction: SYSTEM_PROMPT
     });
 
     // 2. Prepare Context
-    // Inject Current Time for accurate temporal reasoning
     const now = new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" });
     const contextString = Object.keys(context).length > 0 ? JSON.stringify(context, null, 2) : "Nincs extra adat.";
 
-    // Apple-level Context Injection & Enforce JSON
-    // 🧠 PRO JAVÍTÁS: Explicit App Mode & Distance
     const fullPrompt = `
 AKTUÁLIS IDŐ: ${now}
 
 FELHASZNÁLÓ KONTEXTUS:
 - App mode: ${context.mode || 'unknown'}
 - Távolság Kőszeg főtértől: ${context.distanceToMainSquare ? Math.round(context.distanceToMainSquare) + ' méter' : 'Ismeretlen'}
-- Felhasználó jelenleg: ${context.mode === 'remote' ? 'NEM tartózkodik Kőszegen (TÁVOLI FELHASZNÁLÓ)' : 'Kőszegen tartózkodik (HELYI FELHASZNÁLÓ)'}
+- Felhasználó: ${context.mode === 'remote' ? 'NEM' : 'IGEN'}, Kőszegen tartózkodik.
 
 KONTEXTUS ADATOK (${intent}):
 ${contextString}
 
-DÖNTÉS MOTOR (Ezt kötelező követni, ha van):
+DÖNTÉS MOTOR:
 ${context.decision ? JSON.stringify(context.decision) : "Nincs kényszerített döntés."}
 
-KERESETT ÉTELEK (Ha releváns):
+KERESETT ÉTELEK:
 ${context.menuItems ? JSON.stringify(context.menuItems, null, 2) : "Nincs találat."}
 
 KÉRDÉS:
 ${query}
 
-UTASÍTÁS (FONTOS):
-1. Ha a felhasználó REMOTE (nem Kőszegi):
-   - NE indíts navigációt ("navigate_to_..."), kivéve ha kifejezetten útvonalat kér.
-   - Inkább adj információt ("A Kékfény étterem híres a pizzájáról...").
-   - Rendelést ne ajánlj fel, mert messze van.
-2. Ha használtad a Google Keresést, a talált információt foglald össze röviden.
-3. MINDENKÉPPEN JSON formátumban válaszolj!
+UTASÍTÁS:
+MINDENKÉPPEN JSON-ben válaszolj ("text" és "action" mezőkkel).
 `;
 
-    // 3. Prepare History (Convert to Gemini Format)
-    // History should NOT contain the system prompt, as that's handled by the model config
+    // 3. Prepare History
     const chatHistory = history.map(msg => ({
         role: msg.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: msg.content || "" }] // Safety guard
+        parts: [{ text: msg.content || "" }]
     }));
 
     // 4. Start Chat
@@ -79,37 +61,45 @@ UTASÍTÁS (FONTOS):
         const result = await chat.sendMessage(fullPrompt);
         const raw = result.response.text();
 
-        // 6. Parse JSON Robustly (Regex Extraction)
-        // Find the first JSON object in the response (handles markdown, extra text)
+        let parsed = null;
+
+        // Try to parse JSON from text
         const jsonMatch = raw.match(/\{[\s\S]*\}/);
-
-        if (!jsonMatch) {
-            console.warn("No JSON found in model response, raw:", raw);
-            throw new Error("No JSON found in model response");
+        if (jsonMatch) {
+            try {
+                parsed = JSON.parse(jsonMatch[0]);
+            } catch (e) {
+                console.warn("JSON Parse failed, trying function fallback");
+            }
         }
 
-        const parsed = JSON.parse(jsonMatch[0]);
-
-        // Basic schema guard
-        if (typeof parsed.text !== "string") {
-            throw new Error("Invalid schema: 'text' field is missing or not a string");
+        // 🧠 NATIVE TOOL CALL FALLBACK
+        // If Gemini returns a function call instead of JSON text
+        if (!parsed) {
+            const calls = result.response.functionCalls();
+            if (calls && calls.length > 0) {
+                console.log("🛠️ Tool-Call Fallback:", calls[0].name);
+                parsed = {
+                    text: "Parancs végrehajtása...",
+                    action: { type: calls[0].name, params: calls[0].args },
+                    confidence: 1.0
+                };
+            }
         }
 
-        if (!("confidence" in parsed)) {
-            parsed.confidence = 0.8; // Default confidence
+        if (!parsed) {
+            throw new Error("No JSON or FunctionCall found");
         }
 
-        if (!("action" in parsed)) {
-            parsed.action = null;
-        }
+        // Schema defaults
+        if (!parsed.text) parsed.text = "Sikerült!";
+        if (!parsed.action) parsed.action = null;
 
         // 🛡️ ENTERPRISE SAFEGUARD: Block Non-Public Features
-        // Food, Game, Tickets are under development
-        // "navigate_to_food" is strictly forbidden for now (ordering not public).
         if (parsed.action && (
-            parsed.action.type.includes('navigate_to_food') ||
-            parsed.action.type.includes('navigate_to_game') ||
-            parsed.action.type.includes('navigate_to_tickets')
+            parsed.action.type.includes('food') ||
+            parsed.action.type.includes('game') ||
+            parsed.action.type.includes('ticket')
         )) {
             console.log("🛡️ BLOCKED Restricted Action:", parsed.action.type);
             parsed.action = null;
@@ -117,10 +107,9 @@ UTASÍTÁS (FONTOS):
 
         return parsed;
     } catch (e) {
-        console.warn('Response generation or parsing failed:', e);
-        // Best effort fallback
+        console.warn('Response generation failed:', e);
         return {
-            text: "Elnézést, egy technikai hiba miatt nem tudom feldolgozni a kérést. Próbáld újra később.",
+            text: "Elnézést, technikai hiba történt. Próbáld újra később.",
             action: null,
             confidence: 0.0
         };
