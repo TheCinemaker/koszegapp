@@ -4,21 +4,106 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoSparkles, IoClose, IoSend, IoNavigate, IoRestaurant, IoCalendar, IoCar } from 'react-icons/io5';
 import { AIOrchestratorContext } from '../contexts/AIOrchestratorContext';
 import { LocationContext } from '../contexts/LocationContext';
-import { useAuth } from '../contexts/AuthContext'; // Import Auth
+import { useAuth } from '../contexts/AuthContext';
 import { getAppMode } from '../core/ContextEngine';
 import { getUserContext, updateAppMode } from '../core/UserContextEngine';
 import { inferMovement } from '../core/MovementEngine';
 
-// ... MOCK_RESPONSES ...
+// Mock response for local development when backend is unreachable
+const MOCK_RESPONSES = {
+    default: {
+        role: 'assistant',
+        content: 'Szia! Miben segíthetek ma Kőszegen?',
+        action: null
+    },
+    events: {
+        role: 'assistant',
+        content: 'Máris mutatom a közelgő eseményeket!',
+        action: { type: 'navigate_to_events', params: {} }
+    },
+    food: {
+        role: 'assistant',
+        content: 'Éhes vagy? Megnyitom a KoszegEats-t.',
+        action: { type: 'navigate_to_food', params: {} }
+    }
+};
 
 export default function AIAssistant() {
-    const { user } = useAuth(); // Get User
-    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision } = useContext(AIOrchestratorContext);
+    const { user } = useAuth();
+    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision, userLocation } = useContext(AIOrchestratorContext);
     const { location } = useContext(LocationContext);
 
-    // ... useEffect ...
+    // Sync Location & Mode to Global Context
+    useEffect(() => {
+        if (!location) return;
+        const mode = getAppMode(location);
+        updateAppMode(mode);
+    }, [location]);
 
-    // ... state ...
+    const [isOpen, setIsOpen] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [actionStatus, setActionStatus] = useState(null); // 'pending', 'executed'
+    const messagesEndRef = useRef(null);
+    const navigate = useNavigate();
+
+    // Handle suggestion click (proactive message injection)
+    const handleSuggestionClick = () => {
+        const activeSuggestion = acceptSuggestion();
+        if (activeSuggestion) {
+            setIsOpen(true);
+            setMessages(prev => [
+                ...prev,
+                { role: 'assistant', content: activeSuggestion.text, action: { type: activeSuggestion.action }, isProactive: true }
+            ]);
+        }
+    };
+
+    // Auto-scroll to bottom
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages, loading]);
+
+    const handleNavigation = (action) => {
+        if (!action) return;
+
+        console.log("Executing action:", action);
+        setActionStatus({ type: action.type, status: 'executing' });
+
+        setTimeout(() => {
+            switch (action.type) {
+                case 'navigate_to_events':
+                    navigate('/events');
+                    break;
+                case 'navigate_to_food':
+                    navigate('/food', { state: { searchQuery: action.params?.search || '' } });
+                    break;
+                case 'navigate_to_parking':
+                    navigate('/parking');
+                    break;
+                case 'navigate_to_attractions':
+                    navigate('/attractions');
+                    break;
+                case 'navigate_to_hotels':
+                    navigate('/hotels');
+                    break;
+                case 'navigate_to_leisure':
+                    navigate('/leisure');
+                    break;
+                case 'buy_parking_ticket':
+                    navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '' } });
+                    break;
+                case 'call_emergency':
+                    window.location.href = 'tel:112';
+                    break;
+                default:
+                    console.warn('Unknown action:', action.type);
+                    break;
+            }
+            setActionStatus(null);
+        }, 1500); // Visual delay to show the "acting" state
+    };
 
     const sendMessage = async () => {
         if (!input.trim() || loading) return;
@@ -40,9 +125,10 @@ export default function AIAssistant() {
                     query: input,
                     conversationHistory: messages,
                     context: {
-                        userId: user?.id, // 🔑 PASS USER ID
+                        userId: user?.id,
                         mode: getAppMode(location),
-                        location: location,
+                        location: userLocation || location,
+                        distanceToMainSquare: userLocation?.distanceToMainSquare,
                         behavior: suggestion,
                         // 🌍 Global Context V4
                         speed: userCtx.speed,
@@ -63,7 +149,6 @@ export default function AIAssistant() {
                 if (data.debug?.intent) {
                     const i = data.debug.intent;
                     if (['events', 'accommodation', 'general_info', 'planning'].includes(i)) {
-                        // Dynamically import to avoid circular dependency issues if any
                         import('../ai/BehaviorEngine').then(({ setTravelIntent }) => {
                             setTravelIntent(true);
                         });
@@ -83,16 +168,6 @@ export default function AIAssistant() {
                         timestamp: new Date().toISOString(),
                         ...data.debug
                     });
-                }
-
-                // Debug Log
-                if (data.debug || data.action) {
-                    // We need to access setLastDecision from context. 
-                    // But we only destructured suggestion, acceptSuggestion, dismiss from context above.
-                    // I need to update the destructuring in the component body first.
-                    // IMPORTANT: I cannot update the destructuring here because I am inside sendMessage.
-                    // I must update the main component body first. 
-                    // This tool call will fail if I try to access variables not in scope.
                 }
 
             } else {
@@ -118,7 +193,7 @@ export default function AIAssistant() {
                 }
                 setLoading(false);
             }, 1000);
-            return; // Exit early since we handled it in setTimeout
+            return;
         }
 
         setLoading(false);
@@ -272,7 +347,7 @@ export default function AIAssistant() {
                             <div ref={messagesEndRef} />
                         </div>
 
-                        {/* Action Status Overlay (e.g. Navigation) */}
+                        {/* Action Status Overlay */}
                         <AnimatePresence>
                             {actionStatus && (
                                 <motion.div
