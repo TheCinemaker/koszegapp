@@ -1,9 +1,9 @@
 /**
- * ❤️ SmartTriggerEngine 2.0
+ * ❤️ SmartTriggerEngine 2.0 - Refined
  * 
  * Advanced deterministic logic for the Proactive AI Layer.
  * Supports: Remote, Approaching, City modes.
- * Rules: Time, Day, Weather, Location, History.
+ * Features: Candidate collection, Priority sorting, Throttling, Randomness.
  */
 
 import { getAppMode } from "../core/ContextEngine";
@@ -27,42 +27,51 @@ export function getSmartTrigger({
     const dayOfWeek = new Date().getDay(); // 0 = Sunday, 1 = Monday...
     console.log(`🧠 SmartEngine 2.0 | Mode: ${mode} | Hour: ${hour} | Day: ${dayOfWeek}`);
 
+    const candidates = [];
+
     // ==========================================
     // 1️⃣ REMOTE MODE (Planning)
     // ==========================================
     if (mode === 'remote') {
-        if (userBehavior?.ignoredPlanning) return null;
-
-        // A) Evening (Hotels) - 19:00 - 23:00
-        if (hour >= 19 && hour <= 23 && !userBehavior?.ignoredHotels) {
-            return {
-                id: "remote_hotels",
-                type: "hotel",
-                text: "Szállást keresel Kőszegen? Segítek a legjobbat megtalálni.",
-                action: "navigate_to_hotels",
-                priority: 6
-            };
+        // Apple-style: Don't always trigger (40% chance of returning null)
+        // Less intrusive.
+        if (Math.random() > 0.6) {
+            console.log("🎲 Randomly skipping remote trigger (Apple-style silence)");
+            return null;
         }
 
-        // B) Start of Week (Events) - Mon/Tue
-        if ((dayOfWeek === 1 || dayOfWeek === 2) && !userBehavior?.ignoredEvents) {
-            return {
-                id: "remote_weekend_plan",
-                type: "event",
-                text: "Hétvégi kirándulás terve? Nézd meg a kőszegi programokat!",
+        if (!userBehavior?.ignoredPlanning) {
+            // A) Evening (Hotels) - 19:00 - 23:00
+            if (hour >= 19 && hour <= 23 && !userBehavior?.ignoredHotels) {
+                candidates.push({
+                    id: "remote_hotels",
+                    type: "hotel",
+                    text: "Szállást keresel Kőszegen? Segítek a legjobbat megtalálni.",
+                    action: "navigate_to_hotels",
+                    priority: 6
+                });
+            }
+
+            // B) Start of Week (Events) - Mon/Tue
+            if ((dayOfWeek === 1 || dayOfWeek === 2) && !userBehavior?.ignoredEvents) {
+                candidates.push({
+                    id: "remote_weekend_plan",
+                    type: "event",
+                    text: "Hétvégi kirándulás terve? Nézd meg a kőszegi programokat!",
+                    action: "navigate_to_events",
+                    priority: 7
+                });
+            }
+
+            // C) Default Planning
+            candidates.push({
+                id: "remote_planning",
+                type: "planning",
+                text: "Kőszegre készülsz? Megmutassam a következő eseményeket?",
                 action: "navigate_to_events",
-                priority: 7
-            };
+                priority: 5
+            });
         }
-
-        // C) Default Planning
-        return {
-            id: "remote_planning",
-            type: "planning",
-            text: "Kőszegre készülsz? Megmutassam a következő eseményeket?",
-            action: "navigate_to_events",
-            priority: 5
-        };
     }
 
     // ==========================================
@@ -70,15 +79,14 @@ export function getSmartTrigger({
     // ==========================================
     if (mode === 'approaching') {
         if (!userBehavior?.ignoredParking) {
-            return {
+            candidates.push({
                 id: "approaching_parking",
                 type: "parking",
                 text: "🚗 Úton Kőszeg felé? Segítsek parkolót találni?",
                 action: "navigate_to_parking",
                 priority: 8
-            };
+            });
         }
-        return null;
     }
 
     // ==========================================
@@ -88,27 +96,27 @@ export function getSmartTrigger({
 
         // A) DINNER (18:00 - 20:30)
         if (hour >= 18 && hour <= 20 && !userBehavior?.ignoredDinner) {
-            return {
+            candidates.push({
                 id: "dinner_nudge",
                 type: "food",
                 text: "🍷 Vacsoraidő! Mutassak egy hangulatos éttermet?",
                 action: "navigate_to_food",
                 priority: 10
-            };
+            });
         }
 
         // B) LUNCH (12:00 - 14:00)
         if (hour >= 12 && hour <= 14 && !userBehavior?.ignoredLunch) {
-            return {
+            candidates.push({
                 id: "lunch_nudge",
                 type: "food",
                 text: "🍽️ Ebédidő! Ismersz jó helyet a közelben?",
                 action: "navigate_to_food",
                 priority: 8
-            };
+            });
         }
 
-        // C) EVENTS (Starting in < 60 min)
+        // C) EVENTS (Starting in < 60 min) - HIGHEST PRIORITY
         if (events && events.length > 0) {
             const upcomingEvent = events.find(e => {
                 const start = new Date(e.start_time || e.date).getTime();
@@ -117,27 +125,33 @@ export function getSmartTrigger({
             });
 
             if (upcomingEvent) {
-                return {
+                candidates.push({
                     id: `event_${upcomingEvent.id}`,
                     type: "event",
                     text: `🎵 "${upcomingEvent.name}" hamarosan kezdődik. Érdekel?`,
                     action: "navigate_to_events",
-                    priority: 20
-                };
+                    priority: 20 // Higher than dinner/lunch
+                });
             }
         }
 
         // D) RAIN
         if (weather?.isRainy && !userBehavior?.ignoredRain) {
-            return {
+            candidates.push({
                 id: "rain_program",
                 type: "attraction",
                 text: "🌧️ Esik az eső? Mutatok fedett programokat.",
                 action: "navigate_to_attractions",
                 priority: 5
-            };
+            });
         }
     }
 
-    return null;
+    // Return the best candidate
+    if (candidates.length === 0) return null;
+
+    // Sort by priority (DESCENDING)
+    const bestCandidate = candidates.sort((a, b) => b.priority - a.priority)[0];
+    console.log("🏆 Winning Trigger:", bestCandidate);
+    return bestCandidate;
 }
