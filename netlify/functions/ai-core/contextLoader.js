@@ -122,24 +122,20 @@ export async function loadContext(intent, query) {
             };
 
         case 'attractions':
-            return {
-                attractions: await readJSON('attractions.json')
-            };
+            const attractions = await readJSON('attractions.json');
+            return attractions ? { attractions } : {};
 
         case 'hotels':
-            return {
-                hotels: await readJSON('hotels.json')
-            };
+            const hotels = await readJSON('hotels.json');
+            return hotels ? { hotels } : {};
 
         case 'parking':
-            return {
-                parking: await readJSON('parking.json')
-            };
+            const parking = await readJSON('parking.json');
+            return parking ? { parking } : {};
 
         case 'leisure':
-            return {
-                leisure: await readJSON('leisure.json')
-            };
+            const leisure = await readJSON('leisure.json');
+            return leisure ? { leisure } : {};
 
         case 'unknown':
         case 'smalltalk':
