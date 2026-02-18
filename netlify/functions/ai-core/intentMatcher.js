@@ -1,8 +1,10 @@
 export function detectIntent(query) {
     const q = query.toLowerCase();
 
-    // Food & Drink
-    if (/enni|inni|étel|ital|étterem|kávé|pizz|bár|borozó|cukrászda|ebéd|vacsor|reggeli|éhes|szomjas/.test(q)) return 'food';
+    // Food & Drink (Combined for Decision Router)
+    if (/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizz|burger|tészta|kávé|sör|ebéd|vacsor|reggeli|éhes|szomjas/.test(q)) {
+        return 'food_general';
+    }
 
     // Events & Programs
     if (/program|esemény|koncert|mozi|színház|fesztivál|buli|mikor|hétvégén|ma este/.test(q)) return 'events';

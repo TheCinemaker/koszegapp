@@ -38,6 +38,9 @@ AKTUÁLIS IDŐ: ${now}
 KONTEXTUS ADATOK (${intent}):
 ${contextString}
 
+DÖNTÉS MOTOR (Ezt kötelező követni, ha van):
+${context.decision ? JSON.stringify(context.decision) : "Nincs kényszerített döntés."}
+
 KÉRDÉS:
 ${query}
 
