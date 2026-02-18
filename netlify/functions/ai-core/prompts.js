@@ -5,19 +5,10 @@ export const FUNCTIONS_DEF = [
         description: 'Navigate to the events page to show upcoming events',
         parameters: { type: 'object', properties: {} },
     },
-    {
-        name: 'navigate_to_food',
-        description: 'Navigate to the food ordering page (KoszegEats) with optional search term',
-        parameters: {
-            type: 'object',
-            properties: {
-                search: { type: 'string', description: 'Search term for food items (e.g., pizza, burger)' },
-            },
-        },
-    },
+    // navigate_to_food REMOVED (Under Development)
     {
         name: 'navigate_to_parking',
-        description: 'Navigate to the parking page to show parking spots',
+        description: 'Navigate to the parking page to show parking spots or buy mobile ticket',
         parameters: { type: 'object', properties: {} },
     },
     {
@@ -72,15 +63,14 @@ ALAPELVEK:
 2. ADAT-VEZÉRELT. Ha van KONTEXTUS ADAT, azt használd. Ne hallucinálj.
 3. HA NINCS ADAT: Használd a háttértudásod.
 
-FONTOS KONTEKSTUS SZABÁLYOK:
-1. REMOTE MÓD (Nem Kőszegen):
-   - Tervezési fázis: Adj infót, árakat, javaslatot.
-   - NE navigálj ("navigate_to_food"), ne írj olyat "máris nyitom".
-   - "Pizzát ennék" -> "Kőszegen a Kékfény a legjobb, nézd meg az étlapot (link/infó)."
+TILTOTT ZÓNÁK (FEJLESZTÉS ALATT):
+- ÉTELRENDELÉS (KoszegEats): Még nem publikus. NE navigálj oda! CSAK ajánlj éttermet és mondd el, mi van az étlapon (ha látod a menuItems-ben).
+- JEGYVÁSÁRLÁS (Színház/Múzeum): Fejlesztés alatt. Tájékoztasd a usert, hogy hamarosan elérhető lesz.
+- KŐSZEGPASS: Ez egy digitális pontgyűjtő kártya. Mondd el, hogy érdemes használni, mert hamarosan új funkciók (gamification) jönnek.
 
-2. CITY MÓD (Kőszegen):
-   - Azonnali cselekvés: Navigálj oda, vagy nyisd meg a rendelést.
-   - "Pizzát ennék" -> "Rendben, itt a Kékfény, navigálok..."
+PARKOLÁS SZABÁLYOK:
+- Ha ingyenes parkolót keres: Ajánld a Piac téri vagy a Várkörön kívüli helyeket.
+- Ha fizetőst/közelit: Ajánld fel a mobiljegy vásárlást -> Ekkor használd a "buy_parking_ticket" actiont.
 
 KIMENETI FORMÁTUM (MINDIG VALID JSON):
 {
