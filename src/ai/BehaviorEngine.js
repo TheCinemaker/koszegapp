@@ -32,6 +32,13 @@ export function resetBehaviorProfile() {
     localStorage.removeItem("ignore_parking");
 }
 
+export function setTravelIntent(value) {
+    const profile = getUserProfile();
+    profile.travelIntent = value;
+    localStorage.setItem("user_profile", JSON.stringify(profile));
+    console.log(`🧠 Behavior Update: Travel Intent set to ${value}`);
+}
+
 // 🧠 Deep Learning: User Interests
 export function getUserProfile() {
     try {

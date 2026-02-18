@@ -99,7 +99,13 @@ export function getSmartTrigger({
     // ===============================
     if (mode === 'remote') {
 
-        const scoreBase = 12;
+        // Only trigger remote planning if user explicitly shows travel intent
+        // (learned from conversation history via Behavior Engine)
+        if (!userBehavior?.travelIntent) {
+            return null;
+        }
+
+        const scoreBase = 18; // Increased priority for explicitly interested users
         // Boost if user is interested in events
         const interestBoost = getBoost(userProfile?.eventInterest);
 

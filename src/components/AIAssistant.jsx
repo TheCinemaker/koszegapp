@@ -133,6 +133,18 @@ export default function AIAssistant() {
 
             if (response.ok) {
                 setMessages((prev) => [...prev, data]);
+
+                // 🧠 Learn from Intent
+                if (data.debug?.intent) {
+                    const i = data.debug.intent;
+                    if (['events', 'accommodation', 'general_info', 'planning'].includes(i)) {
+                        // Dynamically import to avoid circular dependency issues if any
+                        import('../ai/BehaviorEngine').then(({ setTravelIntent }) => {
+                            setTravelIntent(true);
+                        });
+                    }
+                }
+
                 if (data.action) {
                     handleNavigation(data.action);
                 }
