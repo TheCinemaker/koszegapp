@@ -1,9 +1,11 @@
 /**
- * ❤️ SmartTriggerEngine 2.0 - Refined
+ * ❤️ SmartTriggerEngine 3.0 - Apple Intelligence Level
  * 
- * Advanced deterministic logic for the Proactive AI Layer.
- * Supports: Remote, Approaching, City modes.
- * Features: Candidate collection, Priority sorting, Throttling, Randomness.
+ * deterministic
+ * dynamic scoring
+ * weighted
+ * threshold-based
+ * contextual
  */
 
 import { getAppMode } from "../core/ContextEngine";
@@ -25,7 +27,7 @@ export function getSmartTrigger({
 
     const mode = getAppMode(location);
     const dayOfWeek = new Date().getDay(); // 0 = Sunday, 1 = Monday...
-    console.log(`🧠 SmartEngine 2.0 | Mode: ${mode} | Hour: ${hour} | Day: ${dayOfWeek}`);
+    console.log(`🧠 SmartEngine 3.0 | Mode: ${mode} | Hour: ${hour} | Day: ${dayOfWeek}`);
 
     const candidates = [];
 
@@ -33,13 +35,6 @@ export function getSmartTrigger({
     // 1️⃣ REMOTE MODE (Planning)
     // ==========================================
     if (mode === 'remote') {
-        // Apple-style: Don't always trigger (40% chance of returning null)
-        // Less intrusive.
-        if (Math.random() > 0.6) {
-            console.log("🎲 Randomly skipping remote trigger (Apple-style silence)");
-            return null;
-        }
-
         if (!userBehavior?.ignoredPlanning) {
             // A) Evening (Hotels) - 19:00 - 23:00
             if (hour >= 19 && hour <= 23 && !userBehavior?.ignoredHotels) {
@@ -48,7 +43,7 @@ export function getSmartTrigger({
                     type: "hotel",
                     text: "Szállást keresel Kőszegen? Segítek a legjobbat megtalálni.",
                     action: "navigate_to_hotels",
-                    priority: 6
+                    priority: 13 // Passes threshold
                 });
             }
 
@@ -59,17 +54,18 @@ export function getSmartTrigger({
                     type: "event",
                     text: "Hétvégi kirándulás terve? Nézd meg a kőszegi programokat!",
                     action: "navigate_to_events",
-                    priority: 7
+                    priority: 14 // Stronger than basic
                 });
             }
 
             // C) Default Planning
+            // Lower priority, barely passes threshold
             candidates.push({
                 id: "remote_planning",
                 type: "planning",
                 text: "Kőszegre készülsz? Megmutassam a következő eseményeket?",
                 action: "navigate_to_events",
-                priority: 5
+                priority: 12 // Minimum to trigger
             });
         }
     }
@@ -84,7 +80,7 @@ export function getSmartTrigger({
                 type: "parking",
                 text: "🚗 Úton Kőszeg felé? Segítsek parkolót találni?",
                 action: "navigate_to_parking",
-                priority: 8
+                priority: 15 // High relevance context
             });
         }
     }
@@ -94,14 +90,24 @@ export function getSmartTrigger({
     // ==========================================
     if (mode === 'city') {
 
-        // A) DINNER (18:00 - 20:30)
+        // A) DINNER (Dynamic Scoring)
+        // Peak at 19:00 (1140 minutes)
         if (hour >= 18 && hour <= 20 && !userBehavior?.ignoredDinner) {
+
+            // Calculate proximity to 19:00 in 10-minute chunks
+            const currentMinutes = hour * 60 + new Date().getMinutes();
+            const peakMinutes = 19 * 60;
+            const diff = Math.abs(currentMinutes - peakMinutes);
+            // 0 min diff -> 10 weight
+            // 60 min diff -> 4 weight
+            const timeWeight = Math.max(0, 10 - Math.floor(diff / 10));
+
             candidates.push({
                 id: "dinner_nudge",
                 type: "food",
-                text: "🍷 Vacsoraidő! Mutassak egy hangulatos éttermet?",
+                text: "Vacsoraidő. Mutassak egy jó helyet?",
                 action: "navigate_to_food",
-                priority: 10
+                priority: 10 + timeWeight // Range: 10 - 20
             });
         }
 
@@ -112,25 +118,38 @@ export function getSmartTrigger({
                 type: "food",
                 text: "🍽️ Ebédidő! Ismersz jó helyet a közelben?",
                 action: "navigate_to_food",
-                priority: 8
+                priority: 12 // Static for now, passes threshold
             });
         }
 
-        // C) EVENTS (Starting in < 60 min) - HIGHEST PRIORITY
+        // C) EVENTS (Dynamic Logic)
         if (events && events.length > 0) {
-            const upcomingEvent = events.find(e => {
-                const start = new Date(e.start_time || e.date).getTime();
-                const diffMinutes = (start - now) / (1000 * 60);
-                return diffMinutes > 0 && diffMinutes <= 60;
-            });
+            const upcomingEvent = events
+                .map(e => {
+                    const start = new Date(e.start_time || e.date).getTime();
+                    const diffMinutes = (start - now) / (1000 * 60);
+                    return { ...e, diffMinutes };
+                })
+                // Filter: Starts in 0-120 mins
+                .filter(e => e.diffMinutes > 0 && e.diffMinutes <= 120)
+                .sort((a, b) => a.diffMinutes - b.diffMinutes)[0]; // Closest one
 
             if (upcomingEvent) {
+                // Urgency Weight: Closer = Higher
+                // 0 min -> 30 weight
+                // 30 min -> 0 weight (Wait, user formula was max(0, 30 - diffMinutes))
+                // This means events > 30 mins away get 0 weight?
+                // User requested: priority = 15 + urgencyWeight.
+                // If diff is 60 mins -> weight 0 -> Priority 15.
+                // If diff is 5 mins -> weight 25 -> Priority 40.
+                const urgencyWeight = Math.max(0, 30 - upcomingEvent.diffMinutes);
+
                 candidates.push({
                     id: `event_${upcomingEvent.id}`,
                     type: "event",
-                    text: `🎵 "${upcomingEvent.name}" hamarosan kezdődik. Érdekel?`,
+                    text: `"${upcomingEvent.name}" hamarosan kezdődik.`,
                     action: "navigate_to_events",
-                    priority: 20 // Higher than dinner/lunch
+                    priority: 15 + urgencyWeight // Range: 15 - 45
                 });
             }
         }
@@ -142,16 +161,23 @@ export function getSmartTrigger({
                 type: "attraction",
                 text: "🌧️ Esik az eső? Mutatok fedett programokat.",
                 action: "navigate_to_attractions",
-                priority: 5
+                priority: 14 // Boosted to pass threshold
             });
         }
     }
 
-    // Return the best candidate
     if (candidates.length === 0) return null;
 
     // Sort by priority (DESCENDING)
     const bestCandidate = candidates.sort((a, b) => b.priority - a.priority)[0];
-    console.log("🏆 Winning Trigger:", bestCandidate);
+
+    // 🔥 APPLE THRESHOLD LOGIC
+    const MIN_SCORE = 12;
+    if (bestCandidate.priority < MIN_SCORE) {
+        console.log(`🤫 No trigger - Best candidate (${bestCandidate.priority}) below threshold (${MIN_SCORE})`);
+        return null; // Silence is premium
+    }
+
+    console.log(`🏆 Winning Trigger: ${bestCandidate.id} (Score: ${bestCandidate.priority})`);
     return bestCandidate;
 }
