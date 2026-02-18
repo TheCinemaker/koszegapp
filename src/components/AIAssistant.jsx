@@ -29,7 +29,7 @@ const MOCK_RESPONSES = {
 };
 
 export default function AIAssistant() {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision, userLocation } = useContext(AIOrchestratorContext);
     const { location } = useContext(LocationContext);
 
@@ -126,11 +126,11 @@ export default function AIAssistant() {
                     conversationHistory: messages,
                     context: {
                         userId: user?.id,
+                        authToken: token, // 🔐 Pass JWT for RLS
                         mode: getAppMode(location),
                         location: userLocation || location,
                         distanceToMainSquare: userLocation?.distanceToMainSquare,
-                        behavior: suggestion,
-                        // 🌍 Global Context V4
+                        // ...
                         speed: userCtx.speed,
                         movement: movement,
                         lastPage: userCtx.lastPage,

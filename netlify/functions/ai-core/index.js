@@ -59,7 +59,8 @@ export async function runAI({ query, history, frontendContext }) {
 
         // 📝 LOGGING (Fire & Forget)
         logInteraction({
-            userId,
+            userId: frontendContext?.userId,
+            authToken: frontendContext?.authToken, // 🔥 Use JWT
             query,
             intent,
             action: result.action,
