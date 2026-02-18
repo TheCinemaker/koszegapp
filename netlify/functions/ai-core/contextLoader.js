@@ -20,13 +20,52 @@ async function readJSON(filename) {
 
 // Data loaders
 async function loadEvents() {
-    const { data: events } = await supabase
-        .from('events')
-        .select('*')
-        .gte('date', new Date().toISOString().split('T')[0])
-        .order('date', { ascending: true })
-        .limit(5);
-    return events || [];
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const { data: events, error } = await supabase
+            .from('events')
+            .select('*')
+            .gte('date', today)
+            .order('date', { ascending: true })
+            .limit(10); // Fetch more initially to allow filtering
+
+        if (error) {
+            console.error('Error fetching events:', error);
+            return [];
+        }
+
+        const now = new Date();
+
+        // Backend filtering: Remove events that have already ended
+        // Assumption: If no end time, event lasts 2 hours from start time
+        const activeEvents = events.filter(event => {
+            if (!event.time && !event.start_time) {
+                // No specific time -> Treat as all-day event (valid for today)
+                return true;
+            }
+
+            const timeString = event.time || event.start_time;
+            try {
+                // Combine date and time to get start timestamp
+                // Handle potential format issues if time doesn't match HH:mm
+                const eventStart = new Date(`${event.date}T${timeString}`);
+
+                // Implicit 2-hour duration
+                const eventEnd = new Date(eventStart.getTime() + 2 * 60 * 60 * 1000);
+
+                return eventEnd > now;
+            } catch (e) {
+                console.warn(`Invalid date/time for event ${event.id}:`, e);
+                return true; // Keep on error to be safe
+            }
+        });
+
+        // Return top 5 active events
+        return activeEvents.slice(0, 5);
+    } catch (err) {
+        console.error('Unexpected error in loadEvents:', err);
+        return [];
+    }
 }
 
 async function loadRestaurants() {

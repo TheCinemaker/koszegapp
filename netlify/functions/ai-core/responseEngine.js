@@ -7,9 +7,13 @@ export async function generateResponse({ intent, query, context, history }) {
     const model = getModel("response", SYSTEM_PROMPT);
 
     // 2. Prepare Context
+    // Inject Current Time for accurate temporal reasoning
+    const now = new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" });
     const contextString = Object.keys(context).length > 0 ? JSON.stringify(context, null, 2) : "Nincs extra adat.";
 
     const fullPrompt = `
+AKTUÁLIS IDŐ: ${now}
+
 KONTEXTUS ADATOK (${intent}):
 ${contextString}
 
