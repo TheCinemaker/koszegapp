@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import AttractionsMap from '../components/AttractionsMap';
 import AttractionDetailModal from '../components/AttractionDetailModal';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
+import { LocationContext } from '../contexts/LocationContext';
 import {
   IoListOutline,
   IoMapOutline,
@@ -75,24 +76,28 @@ export default function Attractions() {
       return nameMatch || descriptionMatch || tagsMatch;
     });
 
-  const handleLocateMe = () => {
-    if (!navigator.geolocation) {
-      setLocationError(t('locationError.unsupported'));
-      return;
+  /* Location Context Integration */
+  const { location, requestLocation } = React.useContext(LocationContext);
+
+  useEffect(() => {
+    if (location) {
+      console.log("📍 Attractions Page sees location:", location);
+      setUserPosition([location.lat, location.lng]);
+      setIsLocating(false);
     }
+  }, [location]);
+
+  const handleLocateMe = () => {
     setIsLocating(true);
     setLocationError('');
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setUserPosition([latitude, longitude]);
-        setIsLocating(false);
-      },
-      () => {
-        setLocationError(t('locationError.permission'));
-        setIsLocating(false);
+    requestLocation();
+
+    // Fallback error handling if requestLocation fails silentl or doesn't update (though context logs error)
+    setTimeout(() => {
+      if (!location && isLocating) {
+        // Optional timeout logic
       }
-    );
+    }, 10000);
   };
 
   if (loading) return (

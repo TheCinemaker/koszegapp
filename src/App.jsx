@@ -65,11 +65,15 @@ const MaintenancePage = lazyWithRetry(() => import('./pages/Maintenance.jsx'));
 const ARView = lazyWithRetry(() => import('./pages/ARView.jsx'));
 const CityPass = lazyWithRetry(() => import('./pages/CityPass.jsx'));
 
+import { LocationProvider } from './contexts/LocationContext';
+
 // A LÉNYEG: A FŐ APP KOMPONENS CSAK A PROVIDERT ÁLLÍTJA BE
 export default function App() {
   return (
     <AuthProvider>
-      <MainAppContent />
+      <LocationProvider>
+        <MainAppContent />
+      </LocationProvider>
     </AuthProvider>
   );
 }
