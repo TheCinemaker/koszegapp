@@ -106,40 +106,60 @@ async function loadPopularFood() {
     return [];
 }
 
-export async function loadContext(intent, query) {
+async function loadRecentLogs(userId) {
+    if (!userId) return [];
+
+    const { data } = await supabase
+        .from('ai_logs')
+        .select('intent, action, created_at')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+    return data ? data.map(log => `(Previous Intent: ${log.intent}, Action: ${log.action})`).join('; ') : '';
+}
+
+export async function loadContext(intent, query, userId) {
     console.log(`Loading context for intent: ${intent}`);
+
+    // Always fetch recent history for context continuity
+    const recentHistory = await loadRecentLogs(userId);
+
+    const baseContext = { recentHistory };
 
     switch (intent) {
         case 'food':
             return {
+                ...baseContext,
                 restaurants: await loadRestaurants(),
                 popular: await loadPopularFood()
             };
 
         case 'events':
             return {
+                ...baseContext,
                 events: await loadEvents()
             };
 
         case 'attractions':
             const attractions = await readJSON('attractions.json');
-            return attractions ? { attractions } : {};
+            return attractions ? { ...baseContext, attractions } : baseContext;
 
         case 'hotels':
             const hotels = await readJSON('hotels.json');
-            return hotels ? { hotels } : {};
+            return hotels ? { ...baseContext, hotels } : baseContext;
 
         case 'parking':
             const parking = await readJSON('parking.json');
-            return parking ? { parking } : {};
+            return parking ? { ...baseContext, parking } : baseContext;
 
         case 'leisure':
             const leisure = await readJSON('leisure.json');
-            return leisure ? { leisure } : {};
+            return leisure ? { ...baseContext, leisure } : baseContext;
 
         case 'unknown':
         case 'smalltalk':
         default:
-            return {};
+            return baseContext;
     }
 }

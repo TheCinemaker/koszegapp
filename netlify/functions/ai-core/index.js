@@ -42,7 +42,8 @@ export async function runAI({ query, history, frontendContext }) {
 
         console.time("CONTEXT_LOAD");
         // 2. Load Context (Backend data)
-        const backendContext = await loadContext(intent, query);
+        const userId = frontendContext?.userId;
+        const backendContext = await loadContext(intent, query, userId);
         console.timeEnd("CONTEXT_LOAD");
 
         console.time("GENERATE_RESPONSE");

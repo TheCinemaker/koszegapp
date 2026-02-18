@@ -2,107 +2,23 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoSparkles, IoClose, IoSend, IoNavigate, IoRestaurant, IoCalendar, IoCar } from 'react-icons/io5';
-import { AIOrchestratorContext } from '../contexts/AIOrchestratorContext'; // Import Context
+import { AIOrchestratorContext } from '../contexts/AIOrchestratorContext';
 import { LocationContext } from '../contexts/LocationContext';
+import { useAuth } from '../contexts/AuthContext'; // Import Auth
 import { getAppMode } from '../core/ContextEngine';
-import { getUserContext, updateAppMode } from '../core/UserContextEngine'; // New Global Context
+import { getUserContext, updateAppMode } from '../core/UserContextEngine';
 import { inferMovement } from '../core/MovementEngine';
 
-// Mock response for local development when backend is unreachable
-const MOCK_RESPONSES = {
-    default: {
-        role: 'assistant',
-        content: 'Szia! Miben segíthetek ma Kőszegen?',
-        action: null
-    },
-    events: {
-        role: 'assistant',
-        content: 'Máris mutatom a közelgő eseményeket!',
-        action: { type: 'navigate_to_events', params: {} }
-    },
-    food: {
-        role: 'assistant',
-        content: 'Éhes vagy? Megnyitom a KoszegEats-t.',
-        action: { type: 'navigate_to_food', params: {} }
-    }
-};
+// ... MOCK_RESPONSES ...
 
 export default function AIAssistant() {
-    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision } = useContext(AIOrchestratorContext); // Consume Context
+    const { user } = useAuth(); // Get User
+    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision } = useContext(AIOrchestratorContext);
     const { location } = useContext(LocationContext);
 
-    // Sync Location & Mode to Global Context
-    useEffect(() => {
-        if (!location) return;
-        const mode = getAppMode(location);
-        updateAppMode(mode);
-    }, [location]);
+    // ... useEffect ...
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [actionStatus, setActionStatus] = useState(null); // 'pending', 'executed'
-    // const [hasSuggestion, setHasSuggestion] = useState(false); // Removed local state, replaced by context
-    const messagesEndRef = useRef(null);
-    const navigate = useNavigate();
-
-    // Handle suggestion click (proactive message injection)
-    const handleSuggestionClick = () => {
-        const activeSuggestion = acceptSuggestion();
-        if (activeSuggestion) {
-            setIsOpen(true);
-            setMessages(prev => [
-                ...prev,
-                { role: 'assistant', content: activeSuggestion.text, action: { type: activeSuggestion.action }, isProactive: true }
-            ]);
-        }
-    };
-
-    // Auto-scroll to bottom
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, loading]);
-
-    const handleNavigation = (action) => {
-        if (!action) return;
-
-        console.log("Executing action:", action);
-        setActionStatus({ type: action.type, status: 'executing' });
-
-        setTimeout(() => {
-            switch (action.type) {
-                case 'navigate_to_events':
-                    navigate('/events');
-                    break;
-                case 'navigate_to_food':
-                    navigate('/food', { state: { searchQuery: action.params?.search || '' } });
-                    break;
-                case 'navigate_to_parking':
-                    navigate('/parking');
-                    break;
-                case 'navigate_to_attractions':
-                    navigate('/attractions');
-                    break;
-                case 'navigate_to_hotels':
-                    navigate('/hotels');
-                    break;
-                case 'navigate_to_leisure':
-                    navigate('/leisure');
-                    break;
-                case 'buy_parking_ticket':
-                    navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '' } });
-                    break;
-                case 'call_emergency':
-                    window.location.href = 'tel:112';
-                    break;
-                default:
-                    console.warn('Unknown action:', action.type);
-                    break;
-            }
-            setActionStatus(null);
-        }, 1500); // Visual delay to show the "acting" state
-    };
+    // ... state ...
 
     const sendMessage = async () => {
         if (!input.trim() || loading) return;
@@ -124,6 +40,7 @@ export default function AIAssistant() {
                     query: input,
                     conversationHistory: messages,
                     context: {
+                        userId: user?.id, // 🔑 PASS USER ID
                         mode: getAppMode(location),
                         location: location,
                         behavior: suggestion,
