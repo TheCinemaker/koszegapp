@@ -3,6 +3,7 @@ import { loadContext } from './contextLoader.js';
 import { generateResponse } from './responseEngine.js';
 import { getFallbackResponse } from './fallbackEngine.js';
 import { decideFoodAction } from './decisionRouter.js';
+import { searchMenu } from './foodSearch.js';
 
 export async function runAI({ query, history, frontendContext }) {
     try {
@@ -12,6 +13,7 @@ export async function runAI({ query, history, frontendContext }) {
         console.timeEnd("INTENT_MATCH");
 
         let decision = null;
+        let menuItems = [];
 
         // 🧠 Decision Router (Situational Inference)
         if (intent === 'food_general') {
@@ -21,6 +23,17 @@ export async function runAI({ query, history, frontendContext }) {
             const decisionResult = decideFoodAction({ query, appMode: mode, hour });
             decision = decisionResult.action;
             intent = decisionResult.intent; // Refine intent (food_place vs food_delivery)
+
+            // 🍔 Supabase Power Search
+            if (decisionResult.fetchMenu) {
+                // Extract search term from query (simple heuristic)
+                // Remove trigger words to get product name
+                const cleanQuery = query.replace(/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizzéria|szeretnék|kérek/gi, "").trim();
+                // Ensure query is not empty or too short
+                if (cleanQuery.length > 2) {
+                    menuItems = await searchMenu(cleanQuery);
+                }
+            }
 
             console.log(`🧠 Decision Optimized: ${intent} -> ${decision.type}`);
         }
