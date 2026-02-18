@@ -12,23 +12,26 @@ export async function generateResponse({ intent, query, context, history }) {
         (context.restaurants && context.restaurants.length > 0) ||
         (context.hotels && context.hotels.length > 0);
 
-    // If no local data found OR intent is specifically external/general
-    const enableSearch = !hasLocalData || intent === 'general_info';
-
-    const tools = enableSearch ? [{ googleSearch: {} }] : [];
+    // If no local data found OR intent is specifically external/general/unknown
+    const enableSearch = !hasLocalData || ['general_info', 'unknown'].includes(intent);
 
     if (enableSearch) {
-        console.log("🌍 Hybrid Layer: Enabling Google Search (No local data / General Intent)");
+        console.log(`🌍 Hybrid Layer: Enabling Google Search (Intent: ${intent}, LocalData: ${hasLocalData})`);
     }
 
     // 1. Select Model
-    const model = getModel("response", SYSTEM_PROMPT, tools);
+    // Refactored to use the new object-based signature
+    const model = getModel({
+        enableSearch,
+        systemInstruction: SYSTEM_PROMPT
+    });
 
     // 2. Prepare Context
     // Inject Current Time for accurate temporal reasoning
     const now = new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" });
     const contextString = Object.keys(context).length > 0 ? JSON.stringify(context, null, 2) : "Nincs extra adat.";
 
+    // Apple-level Context Injection & Enforce JSON
     const fullPrompt = `
 AKTUÁLIS IDŐ: ${now}
 
@@ -37,6 +40,11 @@ ${contextString}
 
 KÉRDÉS:
 ${query}
+
+UTASÍTÁS:
+Ha használtad a Google Keresést, a talált információt foglald össze röviden a válaszban ("text" mező).
+NE csak másold be a keresési eredményt.
+MINDENKÉPPEN JSON formátumban válaszolj!
 `;
 
     // 3. Prepare History (Convert to Gemini Format)
