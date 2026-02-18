@@ -73,29 +73,62 @@ export default function AIAssistant() {
 
         setTimeout(() => {
             switch (action.type) {
+                case 'navigate_to_home':
+                    navigate('/');
+                    break;
                 case 'navigate_to_events':
                     navigate('/events');
                     break;
+                case 'navigate_to_event_detail':
+                    navigate(`/events/${action.params?.id}`);
+                    break;
                 case 'navigate_to_food':
-                    navigate('/food', { state: { searchQuery: action.params?.search || '' } });
+                    console.log("Blocked food navigation"); // Safe fallback
                     break;
                 case 'navigate_to_parking':
                     navigate('/parking');
                     break;
+                case 'navigate_to_parking_detail':
+                    navigate(`/parking/${action.params?.id}`);
+                    break;
                 case 'navigate_to_attractions':
                     navigate('/attractions');
+                    break;
+                case 'navigate_to_attraction_detail':
+                    navigate(`/attractions/${action.params?.id}`);
                     break;
                 case 'navigate_to_hotels':
                     navigate('/hotels');
                     break;
+                case 'navigate_to_hotel_detail':
+                    navigate(`/hotels/${action.params?.id}`);
+                    break;
                 case 'navigate_to_leisure':
                     navigate('/leisure');
                     break;
+                case 'navigate_to_leisure_detail':
+                    navigate(`/leisure/${action.params?.id}`);
+                    break;
+                case 'navigate_to_pass':
+                    navigate('/pass');
+                    break;
+                case 'navigate_to_info':
+                    navigate('/info');
+                    break;
                 case 'buy_parking_ticket':
-                    navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '' } });
+                    navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '', zone: action.params?.zone || '' } });
                     break;
                 case 'call_emergency':
                     window.location.href = 'tel:112';
+                    break;
+                case 'call_phone':
+                    if (action.params?.number) {
+                        window.location.href = `tel:${action.params.number}`;
+                    }
+                    break;
+                case 'add_to_wallet':
+                    // Proactive Walltet Integration Demo
+                    alert(`🎟️ Esemény jegy hozzáadva az Apple Wallet-hez! (Event ID: ${action.params?.eventId})`);
                     break;
                 default:
                     console.warn('Unknown action:', action.type);
