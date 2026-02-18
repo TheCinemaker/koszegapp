@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { getSmartTrigger } from "../ai/SmartTriggerEngine";
 import { getBehaviorProfile, registerUserIgnore, getUserProfile } from "../ai/BehaviorEngine";
-import { getUserContext } from "../core/UserContextEngine";
+import { getSmartTrigger } from "../ai/SmartTriggerEngine";
+import { getBehaviorProfile, registerUserIgnore, getUserProfile } from "../ai/BehaviorEngine";
+import { getUserContext, updateLocation } from "../core/UserContextEngine";
 
 export const AIOrchestratorContext = createContext();
 
@@ -45,6 +47,9 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
 
                 console.log("📍 User Location:", { latitude, longitude, dist });
                 setUserLocation({ lat: latitude, lng: longitude, distanceToMainSquare: dist });
+
+                // Sync to Global Context (for Debug Panel & AI)
+                updateLocation({ latitude, longitude });
             }, (error) => {
                 console.warn("Location access denied or error:", error);
             });
