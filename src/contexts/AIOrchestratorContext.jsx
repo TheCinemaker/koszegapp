@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { getSmartTrigger } from "../ai/SmartTriggerEngine";
-import { getBehaviorProfile, registerUserIgnore } from "../ai/BehaviorEngine";
+import { getBehaviorProfile, registerUserIgnore, getUserProfile } from "../ai/BehaviorEngine";
 
 export const AIOrchestratorContext = createContext();
 
@@ -61,7 +61,8 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
             weather: weather,
             events: appData.events || [],
             lastShown: parseInt(localStorage.getItem('ai_last_shown') || 0),
-            userBehavior: userBehavior
+            userBehavior: userBehavior,
+            userProfile: getUserProfile()
         });
 
         if (trigger) {

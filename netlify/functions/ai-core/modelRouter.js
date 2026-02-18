@@ -3,7 +3,7 @@ import { SYSTEM_PROMPT } from "./prompts.js";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-export function getModel(type = "default", systemInstruction = null) {
+export function getModel(type = "default", systemInstruction = null, tools = []) {
     // Single efficient model for all response generation
     const modelName = "gemini-2.5-flash";
 
@@ -17,6 +17,10 @@ export function getModel(type = "default", systemInstruction = null) {
 
     if (systemInstruction) {
         config.systemInstruction = systemInstruction;
+    }
+
+    if (tools.length > 0) {
+        config.tools = tools;
     }
 
     return genAI.getGenerativeModel(config);

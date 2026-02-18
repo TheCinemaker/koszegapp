@@ -121,6 +121,11 @@ export default function AIAssistant() {
                 body: JSON.stringify({
                     query: input,
                     conversationHistory: messages,
+                    context: {
+                        mode: getAppMode(location),
+                        location: location,
+                        behavior: suggestion // We can pass the current suggestion or user behavior
+                    }
                 }),
             });
 

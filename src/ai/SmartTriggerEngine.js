@@ -10,7 +10,7 @@ export function getSmartTrigger({
     events,
     lastShown,
     userBehavior,
-    userHistory
+    userProfile // { foodInterest: 10, eventInterest: 5 ... }
 }) {
 
     const now = Date.now();
@@ -19,6 +19,9 @@ export function getSmartTrigger({
 
     const mode = getAppMode(location);
     const candidates = [];
+
+    // Interest Boost Calculation (Max +5 boost)
+    const getBoost = (interest) => Math.min(5, (interest || 0) / 5);
 
     // ===============================
     // CITY MODE (REAL EXPERIENCE)
@@ -30,10 +33,10 @@ export function getSmartTrigger({
 
             const minutesFromPeak = Math.abs((hour * 60) - (19 * 60));
             const timeWeight = Math.max(0, 12 - Math.floor(minutesFromPeak / 8));
-
             const behaviorPenalty = userBehavior?.ignoredDinner ? -8 : 0;
+            const interestBoost = getBoost(userProfile?.foodInterest);
 
-            const score = 20 + timeWeight + behaviorPenalty;
+            const score = 20 + timeWeight + interestBoost + behaviorPenalty;
 
             candidates.push({
                 id: "dinner",
@@ -47,7 +50,6 @@ export function getSmartTrigger({
         // 🔥 UPCOMING EVENTS
         if (events?.length > 0) {
 
-            // Fix: accessing 1st item directly might be unsafe if filter returns empty
             const enriched = events
                 .map(e => {
                     const start = new Date(e.start_time || e.date).getTime();
@@ -62,8 +64,9 @@ export function getSmartTrigger({
                 const e = enriched[0];
                 const urgency = Math.max(0, 40 - e.diff);
                 const behaviorPenalty = userBehavior?.ignoredEvents ? -10 : 0;
+                const interestBoost = getBoost(userProfile?.eventInterest);
 
-                const score = 25 + urgency + behaviorPenalty;
+                const score = 25 + urgency + interestBoost + behaviorPenalty;
 
                 candidates.push({
                     id: `event_${e.id}`,
@@ -79,13 +82,14 @@ export function getSmartTrigger({
         if (weather?.isRainy) {
 
             const behaviorPenalty = userBehavior?.ignoredRain ? -6 : 0;
+            const interestBoost = getBoost(userProfile?.attractionInterest);
 
             candidates.push({
                 id: "rain",
                 type: "attraction",
                 text: "Esik az eső. Mutassak fedett programokat?",
                 action: "navigate_to_attractions",
-                priority: 18 + behaviorPenalty
+                priority: 18 + interestBoost + behaviorPenalty
             });
         }
     }
@@ -96,13 +100,15 @@ export function getSmartTrigger({
     if (mode === 'remote') {
 
         const scoreBase = 12;
+        // Boost if user is interested in events
+        const interestBoost = getBoost(userProfile?.eventInterest);
 
         candidates.push({
             id: "planning",
             type: "planning",
             text: "Megmutassam a közelgő programokat Kőszegen?",
             action: "navigate_to_events",
-            priority: scoreBase
+            priority: scoreBase + interestBoost
         });
     }
 

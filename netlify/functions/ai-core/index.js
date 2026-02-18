@@ -3,7 +3,7 @@ import { loadContext } from './contextLoader.js';
 import { generateResponse } from './responseEngine.js';
 import { getFallbackResponse } from './fallbackEngine.js';
 
-export async function runAI({ query, history }) {
+export async function runAI({ query, history, frontendContext }) {
     try {
         console.time("INTENT_MATCH");
         // 1. Detect Intent (Rule-based, 0 latency)
@@ -12,8 +12,8 @@ export async function runAI({ query, history }) {
         console.log(`Intent detected: ${intent}`);
 
         console.time("CONTEXT_LOAD");
-        // 2. Load Context
-        const context = await loadContext(intent, query);
+        // 2. Load Context (Backend data)
+        const backendContext = await loadContext(intent, query);
         console.timeEnd("CONTEXT_LOAD");
 
         console.time("GENERATE_RESPONSE");
@@ -21,7 +21,7 @@ export async function runAI({ query, history }) {
         const result = await generateResponse({
             intent,
             query,
-            context,
+            context: { ...backendContext, ...frontendContext }, // Merge contexts
             history
         });
         console.timeEnd("GENERATE_RESPONSE");

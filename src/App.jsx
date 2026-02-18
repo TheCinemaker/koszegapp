@@ -66,6 +66,7 @@ const ARView = lazyWithRetry(() => import('./pages/ARView.jsx'));
 const CityPass = lazyWithRetry(() => import('./pages/CityPass.jsx'));
 
 import { LocationProvider } from './contexts/LocationContext';
+import { updateInterest } from './ai/BehaviorEngine';
 
 // A LÉNYEG: A FŐ APP KOMPONENS CSAK A PROVIDERT ÁLLÍTJA BE
 export default function App() {
@@ -89,6 +90,29 @@ function MainAppContent() {
   const location = useLocation();
   const { dark, toggleDark } = useContext(DarkModeContext);
   const { favorites, isFavorite, pruneFavorites } = useFavorites();
+
+  // 🧠 Page Tracking for Behavior Engine
+  useEffect(() => {
+    const start = Date.now();
+
+    return () => {
+      const duration = Date.now() - start;
+
+      // If spent > 10s on specific pages, boost interest
+      if (duration > 10000) {
+        if (location.pathname.includes("food") || location.pathname.includes("gasztro")) {
+          updateInterest("foodInterest", 2);
+        }
+        if (location.pathname.includes("events")) {
+          updateInterest("eventInterest", 2);
+        }
+        if (location.pathname.includes("attractions")) {
+          updateInterest("attractionInterest", 2);
+        }
+      }
+    };
+  }, [location.pathname]);
+
   const favoritesRef = useRef(null);
 
   const [weather, setWeather] = useState({ icon: '', temp: '--' });

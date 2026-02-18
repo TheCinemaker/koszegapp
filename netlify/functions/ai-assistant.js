@@ -16,7 +16,7 @@ export async function handler(event) {
             throw new Error("No body provided");
         }
 
-        const { query, conversationHistory = [] } = JSON.parse(event.body);
+        const { query, conversationHistory = [], context = {} } = JSON.parse(event.body);
 
         if (!query) {
             return {
@@ -29,7 +29,8 @@ export async function handler(event) {
         // Run the AI Engine
         const result = await runAI({
             query,
-            history: conversationHistory
+            history: conversationHistory,
+            frontendContext: context // Pass rich context (mode, location, behavior)
         });
 
         // Ensure result has the expected structure for frontend

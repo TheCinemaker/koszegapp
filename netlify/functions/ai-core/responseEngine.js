@@ -2,9 +2,27 @@ import { getModel } from './modelRouter.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 
 export async function generateResponse({ intent, query, context, history }) {
-    // 1. Select Model (response model with system instruction from modelRouter)
-    // We pass the SYSTEM_PROMPT text to getModel so it can set it as systemInstruction
-    const model = getModel("response", SYSTEM_PROMPT);
+    // Intelligent Routing: Hybrid Data Layer
+    // Only enable Google Search if local context is insufficient
+    // This saves tokens and latency (and billing).
+
+    const hasLocalData =
+        (context.events && context.events.length > 0) ||
+        (context.attractions && context.attractions.length > 0) ||
+        (context.restaurants && context.restaurants.length > 0) ||
+        (context.hotels && context.hotels.length > 0);
+
+    // If no local data found OR intent is specifically external/general
+    const enableSearch = !hasLocalData || intent === 'general_info';
+
+    const tools = enableSearch ? [{ googleSearch: {} }] : [];
+
+    if (enableSearch) {
+        console.log("🌍 Hybrid Layer: Enabling Google Search (No local data / General Intent)");
+    }
+
+    // 1. Select Model
+    const model = getModel("response", SYSTEM_PROMPT, tools);
 
     // 2. Prepare Context
     // Inject Current Time for accurate temporal reasoning

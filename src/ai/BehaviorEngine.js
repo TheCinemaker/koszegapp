@@ -31,3 +31,19 @@ export function resetBehaviorProfile() {
     localStorage.removeItem("ignore_planning");
     localStorage.removeItem("ignore_parking");
 }
+
+// 🧠 Deep Learning: User Interests
+export function getUserProfile() {
+    try {
+        return JSON.parse(localStorage.getItem("user_profile") || "{}");
+    } catch {
+        return {};
+    }
+}
+
+export function updateInterest(type, delta) {
+    const profile = getUserProfile();
+    profile[type] = (profile[type] || 0) + delta;
+    localStorage.setItem("user_profile", JSON.stringify(profile));
+    console.log(`🧠 Interest Updated: ${type} +${delta} (Total: ${profile[type]})`);
+}
