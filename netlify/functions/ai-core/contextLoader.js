@@ -21,28 +21,29 @@ async function readJSON(filename) {
 // Data loaders
 async function loadEvents() {
     try {
+        // ALWAYS Load local JSON data FIRST
+        const localEvents = await readJSON('events.json') || [];
+
+        // Use Supabase only as a secondary check for very new items
         let dbEvents = [];
         try {
             const today = new Date().toISOString().split('T')[0];
-            const { data, error } = await supabase
+            const { data } = await supabase
                 .from('events')
                 .select('*')
                 .gte('date', today)
                 .order('date', { ascending: true })
                 .limit(20);
-            if (!error) dbEvents = data || [];
+            dbEvents = data || [];
         } catch (e) {
-            console.warn("Supabase loadEvents failed, falling back to JSON only.");
+            console.warn("Supabase loadEvents failed");
         }
 
-        // Always load local JSON data too
-        const localEvents = await readJSON('events.json') || [];
-
         // Merge (Avoid duplicates by ID)
-        const combined = [...dbEvents];
-        const seenIds = new Set(dbEvents.map(e => String(e.id)));
+        const combined = [...localEvents];
+        const seenIds = new Set(localEvents.map(e => String(e.id)));
 
-        localEvents.forEach(evt => {
+        dbEvents.forEach(evt => {
             if (!seenIds.has(String(evt.id))) {
                 combined.push(evt);
                 seenIds.add(String(evt.id));
@@ -53,7 +54,6 @@ async function loadEvents() {
         const activeEvents = combined.filter(event => {
             if (!event.date) return false;
 
-            // Basic date check (is today or future)
             const eventDate = new Date(event.date);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -64,15 +64,14 @@ async function loadEvents() {
             const timeString = event.time || event.start_time;
             try {
                 const eventStart = new Date(`${event.date}T${timeString}`);
-                const eventEnd = new Date(eventStart.getTime() + 4 * 60 * 60 * 1000); // 4h duration assumption
+                const eventEnd = new Date(eventStart.getTime() + 4 * 60 * 60 * 1000);
                 return eventEnd > now;
             } catch (e) {
                 return true;
             }
         });
 
-        // Return more events (top 15) to give LLM better search space
-        return activeEvents.slice(0, 15);
+        return activeEvents.slice(0, 20); // Give 20 events to AI
     } catch (err) {
         console.error('Unexpected error in loadEvents:', err);
         return [];
@@ -80,106 +79,102 @@ async function loadEvents() {
 }
 
 async function loadRestaurants() {
+    // Priority: local JSON
+    const local = await readJSON('restaurants.json') || [];
     try {
-        const { data: restaurants } = await supabase
-            .from('restaurants')
-            .select('*')
-            .limit(10);
-
-        if (restaurants && restaurants.length > 0) return restaurants;
-
-        // Fallback to local JSON
-        const local = await readJSON('restaurants.json');
-        return local ? local.slice(0, 10) : [];
-    } catch (e) {
-        const local = await readJSON('restaurants.json');
-        return local ? local.slice(0, 10) : [];
-    }
+        const { data: db } = await supabase.from('restaurants').select('*').limit(5);
+        if (db) {
+            const seenNames = new Set(local.map(r => r.name.toLowerCase()));
+            db.forEach(r => {
+                if (!seenNames.has(r.name.toLowerCase())) {
+                    local.push(r);
+                }
+            });
+        }
+    } catch (e) { }
+    return local.slice(0, 15);
 }
 
 async function loadPopularFood() {
-    const today = new Date().toISOString().split('T')[0];
-    const { data: orders } = await supabase
-        .from('orders')
-        .select('id')
-        .gte('created_at', `${today}T00:00:00`)
-        .lte('created_at', `${today}T23:59:59`);
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const { data: orders } = await supabase
+            .from('orders')
+            .select('id')
+            .gte('created_at', `${today}T00:00:00`)
+            .lte('created_at', `${today}T23:59:59`);
 
-    if (orders && orders.length > 0) {
-        const orderIds = orders.map(o => o.id);
-        const { data: orderItems } = await supabase
-            .from('order_items')
-            .select('item_name, quantity')
-            .in('order_id', orderIds);
+        if (orders && orders.length > 0) {
+            const orderIds = orders.map(o => o.id);
+            const { data: orderItems } = await supabase
+                .from('order_items')
+                .select('item_name, quantity')
+                .in('order_id', orderIds);
 
-        if (orderItems && orderItems.length > 0) {
-            const itemCounts = {};
-            orderItems.forEach(item => {
-                itemCounts[item.item_name] = (itemCounts[item.item_name] || 0) + item.quantity;
-            });
-
-            return Object.entries(itemCounts)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 5)
-                .map(([name, count]) => ({ name, count }));
+            if (orderItems && orderItems.length > 0) {
+                const itemCounts = {};
+                orderItems.forEach(item => {
+                    itemCounts[item.item_name] = (itemCounts[item.item_name] || 0) + item.quantity;
+                });
+                return Object.entries(itemCounts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count }));
+            }
         }
-    }
+    } catch (e) { }
     return [];
 }
 
 async function loadRecentLogs(userId) {
-    if (!userId) return [];
-
-    const { data } = await supabase
-        .from('ai_logs')
-        .select('intent, action, created_at')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false })
-        .limit(5);
-
-    return data ? data.map(log => `(Previous Intent: ${log.intent}, Action: ${log.action})`).join('; ') : '';
+    if (!userId) return '';
+    try {
+        const { data } = await supabase
+            .from('ai_logs')
+            .select('intent, action, created_at')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(5);
+        return data ? data.map(log => `(Prev: ${log.intent}, Act: ${log.action})`).join('; ') : '';
+    } catch (e) { return ''; }
 }
 
 export async function loadContext(intent, query, userId) {
-    console.log(`Loading context for intent: ${intent}`);
+    console.log(`🧠 LOADING MASTER CONTEXT for: ${intent}`);
 
-    // Always fetch recent history for context continuity
-    const recentHistory = await loadRecentLogs(userId);
+    const [recentHistory, events, restaurants, attractions, hotels, leisure, info, parking] = await Promise.all([
+        loadRecentLogs(userId),
+        loadEvents(),
+        loadRestaurants(),
+        readJSON('attractions.json'),
+        readJSON('hotels.json'),
+        readJSON('leisure.json'),
+        readJSON('info.json'),
+        readJSON('parking.json')
+    ]);
 
-    const baseContext = { recentHistory };
+    const baseContext = {
+        recentHistory,
+        currentQuery: query,
+        appData: {
+            events: (events || []).slice(0, 15),
+            restaurants: (restaurants || []).slice(0, 10),
+            attractions: (attractions || []).slice(0, 10),
+            hotels: (hotels || []).slice(0, 8),
+            leisure: (leisure || []).slice(0, 8),
+            info: (info || []).slice(0, 5),
+            parking: (parking || [])
+        }
+    };
 
+    // Filter context specifically for the intent to save tokens but keep Master knowledge
     switch (intent) {
         case 'food':
-            return {
-                ...baseContext,
-                restaurants: await loadRestaurants(),
-                popular: await loadPopularFood()
-            };
-
+            return { ...baseContext, popular: await loadPopularFood() };
         case 'events':
-            return {
-                ...baseContext,
-                events: await loadEvents()
-            };
-
         case 'attractions':
-            const attractions = await readJSON('attractions.json');
-            return attractions ? { ...baseContext, attractions } : baseContext;
-
         case 'hotels':
-            const hotels = await readJSON('hotels.json');
-            return hotels ? { ...baseContext, hotels } : baseContext;
-
         case 'parking':
-            const parking = await readJSON('parking.json');
-            return parking ? { ...baseContext, parking } : baseContext;
-
         case 'leisure':
-            const leisure = await readJSON('leisure.json');
-            return leisure ? { ...baseContext, leisure } : baseContext;
-
-        case 'unknown':
-        case 'smalltalk':
+        case 'emergency':
+        case 'navigation':
         default:
             return baseContext;
     }
