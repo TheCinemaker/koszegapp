@@ -1,112 +1,111 @@
 import React, { createContext, useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// Assuming AuthContext handles user state - adjusting import based on standard conventions or previous files if visible. 
-// If AuthContext doesn't exist, I will mock it or check file list first. 
-// *Checking previous contexts or just proceeding carefully.*
-// The user provided code uses: import { useAuth } from "./AuthContext";
-// I will stick to that provided snippet.
 import { useAuth } from "./AuthContext";
+import { getSmartTrigger } from "../ai/SmartTriggerEngine";
 
 export const AIOrchestratorContext = createContext();
 
 export function AIOrchestratorProvider({ children, appData, weather }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user } = useAuth(); // Assuming AuthContext is correct
 
     const [suggestion, setSuggestion] = useState(null);
-    const cooldownRef = useRef({});
-    // eslint-disable-next-line no-unused-vars
-    const sessionStartRef = useRef(Date.now());
+    const [userLocation, setUserLocation] = useState(null); // { lat, lng, distanceToMainSquare }
 
-    const COOLDOWN = 15 * 60 * 1000; // 15 minutes
+    // Tracking user behavior (could be persisted to localStorage)
+    const [userBehavior, setUserBehavior] = useState({
+        ignoredDinner: false,
+        ignoredLunch: false,
+        ignoredRain: false,
+        lastShown: null
+    });
 
-    const isHome = location.pathname === "/";
-    const now = new Date();
-    const hour = now.getHours();
+    const MAIN_SQUARE = { lat: 47.3883538, lng: 16.5421414 }; // Fő tér coords
 
-    const isOnCooldown = (key) => {
-        return cooldownRef.current[key] && cooldownRef.current[key] > Date.now();
-    };
+    // Calculate distance in meters
+    const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+        var dLon = deg2rad(lon2 - lon1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2)
+            ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c; // Distance in km
+        return d * 1000; // Meters
+    }
 
-    const setCooldown = (key) => {
-        cooldownRef.current[key] = Date.now() + COOLDOWN;
-    };
+    const deg2rad = (deg) => {
+        return deg * (Math.PI / 180)
+    }
 
+    // 1. Get Location (One-off or Watch)
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                const dist = getDistanceFromLatLonInKm(latitude, longitude, MAIN_SQUARE.lat, MAIN_SQUARE.lng);
+
+                console.log("📍 User Location:", { latitude, longitude, dist });
+                setUserLocation({ lat: latitude, lng: longitude, distanceToMainSquare: dist });
+            }, (error) => {
+                console.warn("Location access denied or error:", error);
+            });
+        }
+    }, [location.pathname]); // Re-check on nav change (simulate dynamic check)
+
+    // 2. Evaluate Smart Triggers
     useEffect(() => {
         if (!appData || appData.loading) return;
 
-        evaluate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname, appData, weather, user]);
+        // Run the engine
+        const trigger = getSmartTrigger({
+            location: userLocation,
+            hour: new Date().getHours(),
+            weather: weather, // Function should handle if weather is null
+            events: appData.events || [],
+            lastShown: userBehavior.lastShown,
+            userBehavior: userBehavior
+        });
 
-    function evaluate() {
-        if (!isHome) return;
-
-        // 1️⃣ First session suggestion
-        if (!user && !isOnCooldown("first_visit")) {
-            setSuggestion({
-                text: "Fedezd fel Kőszeg legszebb látnivalóit.",
-                action: () => {
-                    navigate("/attractions");
-                    dismiss();
-                }
-            });
-            setCooldown("first_visit");
-            return;
+        if (trigger) {
+            console.log("💡 Smart Trigger:", trigger);
+            setSuggestion(trigger);
+        } else {
+            setSuggestion(null);
         }
 
-        // 2️⃣ Upcoming event within 30 minutes
-        if (!isOnCooldown("event") && appData.events) {
-            const upcoming = appData.events.find(e => {
-                const eventDate = new Date(e.start_time || e.date); // Adjust property name as needed based on data structure
-                return eventDate > now && (eventDate - now) < 30 * 60 * 1000;
-            });
+    }, [userLocation, appData, weather, userBehavior]);
 
-            if (upcoming) {
-                setSuggestion({
-                    text: `${upcoming.name} 30 percen belül kezdődik.`,
-                    action: () => {
-                        navigate(`/events/${upcoming.id}`);
-                        dismiss();
-                    }
-                });
-                setCooldown("event");
-                return;
+    // Actions
+    const dismiss = () => {
+        if (suggestion) {
+            // Update behavior based on type
+            if (suggestion.type === 'food') {
+                const hour = new Date().getHours();
+                if (hour >= 18) setUserBehavior(prev => ({ ...prev, ignoredDinner: true }));
+                if (hour >= 12 && hour <= 14) setUserBehavior(prev => ({ ...prev, ignoredLunch: true }));
             }
-        }
+            if (suggestion.type === 'rain') setUserBehavior(prev => ({ ...prev, ignoredRain: true }));
 
-        // 3️⃣ Dinner intelligence
-        if (!isOnCooldown("dinner") && hour >= 18 && hour <= 20) {
-            setSuggestion({
-                text: "Ideje vacsorázni. Megmutassam a legjobb helyeket?",
-                action: () => {
-                    navigate("/food"); // Changed from /gastronomy to /food based on known routes
-                    dismiss();
-                }
-            });
-            setCooldown("dinner");
-            return;
+            setUserBehavior(prev => ({ ...prev, lastShown: Date.now() }));
         }
+        setSuggestion(null);
+    };
 
-        // 4️⃣ Rain-based logic
-        if (!isOnCooldown("rain") && weather?.icon?.includes("09")) {
-            setSuggestion({
-                text: "Esős idő. Mutatok beltéri programokat.",
-                action: () => {
-                    navigate("/attractions");
-                    dismiss();
-                }
-            });
-            setCooldown("rain");
-            return;
-        }
-    }
-
-    const dismiss = () => setSuggestion(null);
+    const acceptSuggestion = () => {
+        // Logic handled by UI consuming the context (e.g. opening chat)
+        // But we should record that we showed it
+        setUserBehavior(prev => ({ ...prev, lastShown: Date.now() }));
+        setSuggestion(null); // Clear active suggestion
+        return suggestion;
+    };
 
     return (
-        <AIOrchestratorContext.Provider value={{ suggestion, dismiss }}>
+        <AIOrchestratorContext.Provider value={{ suggestion, dismiss, acceptSuggestion, userLocation }}>
             {children}
         </AIOrchestratorContext.Provider>
     );

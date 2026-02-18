@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoSparkles, IoClose, IoSend, IoNavigate, IoRestaurant, IoCalendar, IoCar } from 'react-icons/io5';
+import { AIOrchestratorContext } from '../contexts/AIOrchestratorContext'; // Import Context
 
 // Mock response for local development when backend is unreachable
 const MOCK_RESPONSES = {
@@ -23,14 +24,30 @@ const MOCK_RESPONSES = {
 };
 
 export default function AIAssistant() {
+    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion } = useContext(AIOrchestratorContext); // Consume Context
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [actionStatus, setActionStatus] = useState(null); // 'pending', 'executed'
-    const [hasSuggestion, setHasSuggestion] = useState(false);
+    // const [hasSuggestion, setHasSuggestion] = useState(false); // Removed local state, replaced by context
     const messagesEndRef = useRef(null);
     const navigate = useNavigate();
+
+    // Handle suggestion click (proactive message injection)
+    const handleSuggestionClick = () => {
+        const activeSuggestion = acceptSuggestion();
+        if (activeSuggestion) {
+            setIsOpen(true);
+            setMessages(prev => [
+                ...prev,
+                { role: 'assistant', content: activeSuggestion.text, action: { type: activeSuggestion.action }, isProactive: true }
+            ]);
+            // If the suggestion has an action, we might want to auto-navigate or just wait for user to confirm in chat?
+            // The user prompt said: "Ha rányomsz → AI segít." (If you click -> AI helps).
+            // So appending the message is good. The AI "offered" it.
+        }
+    };
 
     // Auto-scroll to bottom
     useEffect(() => {
@@ -148,15 +165,51 @@ export default function AIAssistant() {
 
     return (
         <>
+            {/* Smart Suggestion Bubble (Layer 2) */}
+            <AnimatePresence>
+                {suggestion && !isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.9, x: 20 }}
+                        animate={{ opacity: 1, y: 0, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, y: 10, x: 20 }}
+                        onClick={handleSuggestionClick}
+                        className="fixed bottom-24 right-6 z-[9990] max-w-[280px] bg-white dark:bg-[#1a1d2d] border border-gray-200 dark:border-white/10 p-4 rounded-2xl shadow-xl flex items-center gap-3 cursor-pointer hover:shadow-2xl transition-all"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center shrink-0">
+                            {suggestion.type === 'food' ? <IoRestaurant className="text-blue-600 dark:text-blue-400" /> :
+                                suggestion.type === 'event' ? <IoCalendar className="text-purple-600 dark:text-purple-400" /> :
+                                    <IoSparkles className="text-amber-500" />}
+                        </div>
+                        <div className="flex-1">
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 leading-snug">
+                                {suggestion.text}
+                            </p>
+                        </div>
+                        <button
+                            onClick={(e) => { e.stopPropagation(); dismissSuggestion(); }}
+                            className="p-1 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full text-gray-400"
+                        >
+                            <IoClose size={16} />
+                        </button>
+
+                        {/* Speech bubble tail */}
+                        <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white dark:bg-[#1a1d2d] border-r border-b border-gray-200 dark:border-white/10 rotate-45" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Chat Bubble Button */}
             <motion.button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 z-[9998] w-14 h-14 rounded-full bg-black/80 backdrop-blur-md text-white shadow-2xl flex items-center justify-center border border-white/10"
+                className={`fixed bottom-6 right-6 z-[9998] w-14 h-14 rounded-full ${suggestion ? 'bg-indigo-600' : 'bg-black/80'} backdrop-blur-md text-white shadow-2xl flex items-center justify-center border border-white/10`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, scale: 0 }}
-                animate={hasSuggestion ? { scale: [1, 1.1, 1] } : { opacity: 1, scale: 1 }}
-                transition={hasSuggestion ? { repeat: Infinity, duration: 1.5 } : {}}
+                animate={suggestion ? {
+                    scale: [1, 1.1, 1],
+                    boxShadow: ["0px 0px 0px rgba(79, 70, 229, 0)", "0px 0px 20px rgba(79, 70, 229, 0.6)", "0px 0px 0px rgba(79, 70, 229, 0)"]
+                } : { opacity: 1, scale: 1 }}
+                transition={suggestion ? { repeat: Infinity, duration: 2 } : {}}
             >
                 {isOpen ? <IoClose className="text-2xl" /> : <IoSparkles className="text-xl" />}
             </motion.button>
