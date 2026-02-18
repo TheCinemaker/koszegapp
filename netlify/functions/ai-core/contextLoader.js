@@ -27,7 +27,7 @@ async function loadEvents() {
             .select('*')
             .gte('date', today)
             .order('date', { ascending: true })
-            .limit(10); // Fetch more initially to allow filtering
+            .limit(40); // Increased to cover future month requests (e.g. March)
 
         if (error) {
             console.error('Error fetching events:', error);

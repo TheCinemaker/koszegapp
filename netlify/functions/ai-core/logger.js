@@ -7,8 +7,7 @@ const supabase = createClient(
 );
 
 export async function logInteraction({ userId, authToken, query, intent, action, response, context }) {
-    if (!userId) return;
-
+    // 📝 Log everything, but memory only works for logged-in users
     try {
         // 🔐 IMPORTANT: Use the user's token to satisfy RLS
         if (authToken) {
