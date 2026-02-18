@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { getSmartTrigger } from "../ai/SmartTriggerEngine";
 import { getBehaviorProfile, registerUserIgnore, getUserProfile } from "../ai/BehaviorEngine";
+import { getUserContext } from "../core/UserContextEngine";
 
 export const AIOrchestratorContext = createContext();
 
@@ -55,8 +56,11 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
         if (!appData || appData.loading) return;
 
         // Run the engine
+        const ctx = getUserContext();
+
         const trigger = getSmartTrigger({
             location: userLocation,
+            velocity: { speed: ctx.speed, movement: ctx.movement }, // New Context Data
             hour: new Date().getHours(),
             weather: weather,
             events: appData.events || [],
