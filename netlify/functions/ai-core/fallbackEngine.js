@@ -1,4 +1,4 @@
-export function fallbackResponse(query) {
+export function getFallbackResponse(query) {
     return {
         text: "Sajnálom, technikai hiba történt. Azonban itt vannak a legfontosabb események és információk.",
         action: {

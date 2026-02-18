@@ -1,37 +1,35 @@
-import { classifyIntent } from './intentClassifier.js';
+import { detectIntent } from './intentMatcher.js'; // Rule-based
 import { loadContext } from './contextLoader.js';
 import { generateResponse } from './responseEngine.js';
-import { fallbackResponse } from './fallbackEngine.js';
+import { getFallbackResponse } from './fallbackEngine.js';
 
 export async function runAI({ query, history }) {
-    console.time('AI_RUN');
     try {
-        // 1. Intent Classification
-        console.time('INTENT');
-        const intent = await classifyIntent(query);
-        console.timeEnd('INTENT');
+        console.time("INTENT_MATCH");
+        // 1. Detect Intent (Rule-based, 0 latency)
+        const intent = detectIntent(query);
+        console.timeEnd("INTENT_MATCH");
         console.log(`Intent detected: ${intent}`);
 
+        console.time("CONTEXT_LOAD");
         // 2. Load Context
-        console.time('CONTEXT');
         const context = await loadContext(intent, query);
-        console.timeEnd('CONTEXT');
+        console.timeEnd("CONTEXT_LOAD");
 
-        // 3. Generate Response
-        console.time('GENERATE');
+        console.time("GENERATE_RESPONSE");
+        // 3. Generate Response (Single LLM Call)
         const result = await generateResponse({
             intent,
             query,
             context,
             history
         });
-        console.timeEnd('GENERATE');
+        console.timeEnd("GENERATE_RESPONSE");
 
-        console.timeEnd('AI_RUN');
         return result;
 
     } catch (error) {
-        console.error("AI Core global error:", error);
-        return fallbackResponse(query);
+        console.error("AI run failed:", error);
+        return getFallbackResponse(query);
     }
 }

@@ -1,39 +1,23 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { CONFIG } from './config.js';
+import { SYSTEM_PROMPT } from "./prompts.js";
 
-const genAI = new GoogleGenerativeAI(CONFIG.GEMINI_API_KEY || 'dummy-key');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-export function getModel(type) {
-    switch (type) {
-        case "classifier":
-            return genAI.getGenerativeModel({
-                model: "gemini-2.5-flash",
-                generationConfig: {
-                    temperature: 0.3,
-                    maxOutputTokens: 20
-                }
-            });
+export function getModel(type = "default", systemInstruction = null) {
+    // Single efficient model for all response generation
+    const modelName = "gemini-2.5-flash";
 
-        case "complex":
-            return genAI.getGenerativeModel({
-                model: "gemini-2.5-pro",
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 1000
-                }
-            });
+    const config = {
+        model: modelName,
+        generationConfig: {
+            temperature: 0.7, // Slightly creative but focused
+            maxOutputTokens: 1000,
+        }
+    };
 
-        case "default":
-        default:
-            return genAI.getGenerativeModel({
-                model: "gemini-2.5-flash",
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 800
-                },
-                tools: [
-                    { googleSearch: {} } // Enable search for default model
-                ]
-            });
+    if (systemInstruction) {
+        config.systemInstruction = systemInstruction;
     }
+
+    return genAI.getGenerativeModel(config);
 }
