@@ -170,7 +170,8 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
                 acceptSuggestion,
                 userLocation,
                 lastDecision,
-                setLastDecision // EXPOSED FOR AIAssistant.jsx
+                setLastDecision, // EXPOSED FOR AIAssistant.jsx
+                weather
             }}
         >
             {children}

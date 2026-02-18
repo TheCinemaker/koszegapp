@@ -30,7 +30,7 @@ const MOCK_RESPONSES = {
 
 export default function AIAssistant() {
     const { user, token } = useAuth();
-    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision, userLocation } = useContext(AIOrchestratorContext);
+    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision, userLocation, weather } = useContext(AIOrchestratorContext);
     const { location } = useContext(LocationContext);
 
     // Sync Location & Mode to Global Context
@@ -163,7 +163,7 @@ export default function AIAssistant() {
                         mode: getAppMode(location),
                         location: userLocation || location,
                         distanceToMainSquare: userLocation?.distanceToMainSquare,
-                        // ...
+                        weather: weather, // 🌤️ Weather awareness
                         speed: userCtx.speed,
                         movement: movement,
                         lastPage: userCtx.lastPage,

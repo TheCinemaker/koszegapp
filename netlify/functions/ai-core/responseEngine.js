@@ -24,7 +24,8 @@ export async function generateResponse({ intent, query, context, history }) {
     const fullPrompt = `
 AKTUÁLIS IDŐ: ${now}
 
-FELHASZNÁLÓ KONTEXTUS:
+KÖRNYEZET:
+- Időjárás: ${context.weather ? `${context.weather.temp}°C, ikon: ${context.weather.icon}` : 'Ismeretlen'}
 - App mode: ${context.mode || 'unknown'}
 - Távolság Kőszeg főtértől: ${context.distanceToMainSquare ? Math.round(context.distanceToMainSquare) + ' méter' : 'Ismeretlen'}
 - Felhasználó: ${context.mode === 'remote' ? 'NEM' : 'IGEN'}, Kőszegen tartózkodik.
