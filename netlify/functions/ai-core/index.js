@@ -37,7 +37,7 @@ export async function runAI({ query, history, frontendContext }) {
         const result = await generateResponse({
             intent,
             query,
-            context: { ...backendContext, ...frontendContext, decision }, // Pass decision
+            context: { ...backendContext, ...frontendContext, decision, menuItems }, // Pass menu items
             history
         });
         console.timeEnd("GENERATE_RESPONSE");

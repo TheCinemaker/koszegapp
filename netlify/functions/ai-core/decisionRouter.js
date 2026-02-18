@@ -43,7 +43,8 @@ export function decideFoodAction({
     } else {
         return {
             action: { type: "navigate_to_food", params: { search: "food" } },
-            intent: "food_delivery"
+            intent: "food_delivery",
+            fetchMenu: true // Trigger backend search
         };
     }
 }

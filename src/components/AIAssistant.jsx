@@ -5,6 +5,8 @@ import { IoSparkles, IoClose, IoSend, IoNavigate, IoRestaurant, IoCalendar, IoCa
 import { AIOrchestratorContext } from '../contexts/AIOrchestratorContext'; // Import Context
 import { LocationContext } from '../contexts/LocationContext';
 import { getAppMode } from '../core/ContextEngine';
+import { getUserContext, updateAppMode } from '../core/UserContextEngine'; // New Global Context
+import { inferMovement } from '../core/MovementEngine';
 
 // Mock response for local development when backend is unreachable
 const MOCK_RESPONSES = {
@@ -29,11 +31,11 @@ export default function AIAssistant() {
     const { suggestion, acceptSuggestion, dismiss: dismissSuggestion } = useContext(AIOrchestratorContext); // Consume Context
     const { location } = useContext(LocationContext);
 
-    // Mode Detection Logging
+    // Sync Location & Mode to Global Context
     useEffect(() => {
         if (!location) return;
         const mode = getAppMode(location);
-        console.log("APP MODE:", mode);
+        updateAppMode(mode);
     }, [location]);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +56,6 @@ export default function AIAssistant() {
                 ...prev,
                 { role: 'assistant', content: activeSuggestion.text, action: { type: activeSuggestion.action }, isProactive: true }
             ]);
-            // If the suggestion has an action, we might want to auto-navigate or just wait for user to confirm in chat?
-            // The user prompt said: "Ha rányomsz → AI segít." (If you click -> AI helps).
-            // So appending the message is good. The AI "offered" it.
         }
     };
 
@@ -108,6 +107,9 @@ export default function AIAssistant() {
     const sendMessage = async () => {
         if (!input.trim() || loading) return;
 
+        const userCtx = getUserContext();
+        const movement = inferMovement(userCtx.speed);
+
         const userMessage = { role: 'user', content: input };
         setMessages((prev) => [...prev, userMessage]);
         setInput('');
@@ -124,7 +126,13 @@ export default function AIAssistant() {
                     context: {
                         mode: getAppMode(location),
                         location: location,
-                        behavior: suggestion // We can pass the current suggestion or user behavior
+                        behavior: suggestion,
+                        // 🌍 Global Context V4
+                        speed: userCtx.speed,
+                        movement: movement,
+                        lastPage: userCtx.lastPage,
+                        timeOnPage: userCtx.timeOnPage,
+                        lastSearch: userCtx.lastSearch
                     }
                 }),
             });

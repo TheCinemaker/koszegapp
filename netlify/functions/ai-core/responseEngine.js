@@ -41,6 +41,9 @@ ${contextString}
 DÖNTÉS MOTOR (Ezt kötelező követni, ha van):
 ${context.decision ? JSON.stringify(context.decision) : "Nincs kényszerített döntés."}
 
+KERESETT ÉTELEK (Ha releváns):
+${context.menuItems ? JSON.stringify(context.menuItems, null, 2) : "Nincs találat."}
+
 KÉRDÉS:
 ${query}
 
