@@ -103,13 +103,16 @@ UTASÍTÁS (FONTOS):
             parsed.action = null;
         }
 
-        // 🛡️ ENTERPRISE SAFEGUARD: Remote Mode Validation
-        // If user is remote, prevent implicit navigation commands that make no sense
-        if (context.mode === 'remote' && parsed.action && parsed.action.type.startsWith('navigate_to_food')) {
-            console.log("🛡️ BLOCKED Remote Navigation: User is not in city.");
-            parsed.action = null; // Kill the action
-            // Optional workflow: Change text to explain? 
-            // Trusting LLM to have handled text correctly via prompt, but action is killed for safety.
+        // 🛡️ ENTERPRISE SAFEGUARD: Block Non-Public Features
+        // Food, Game, Tickets are under development
+        // "navigate_to_food" is strictly forbidden for now (ordering not public).
+        if (parsed.action && (
+            parsed.action.type.includes('navigate_to_food') ||
+            parsed.action.type.includes('navigate_to_game') ||
+            parsed.action.type.includes('navigate_to_tickets')
+        )) {
+            console.log("🛡️ BLOCKED Restricted Action:", parsed.action.type);
+            parsed.action = null;
         }
 
         return parsed;
