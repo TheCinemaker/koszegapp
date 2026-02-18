@@ -29,6 +29,17 @@ export function decideFoodAction({
     // Late night -> Delivery (less places open, more likely home)
     if (hour >= 21) deliveryScore += 5;
 
+    // 🛑 REMOTE OVERRIDE
+    // If user is remote (Rostock), they CANNOT order or visit.
+    // They are "Planning". We should fetch data but NOT navigate immediately.
+    if (appMode === 'remote') {
+        return {
+            action: null, // Don't force navigation to Eats
+            intent: "food_planning",
+            fetchMenu: true // But DO fetch data so AI can talk about it
+        };
+    }
+
     console.log(`⚖️ Decision Router: Place ${placeScore} vs Delivery ${deliveryScore}`);
 
     // Linguistic override: if user explicitly says "rendelni", deliveryScore is high (10+). 
