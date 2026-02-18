@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState, useRef } from "react";
 import { useAuth } from "./AuthContext";
 import { getSmartTrigger } from "../ai/SmartTriggerEngine";
-import { getBehaviorProfile, registerUserIgnore, getUserProfile } from "../ai/BehaviorEngine";
+import { getBehaviorProfile, registerUserIgnore, getUserProfile, initBehaviorEngine, updateInterest } from "../ai/BehaviorEngine";
 import { getUserContext, updateLocation } from "../core/UserContextEngine";
 
 export const AIOrchestratorContext = createContext();
@@ -35,6 +35,13 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c * 1000;
     };
+
+    // 0️⃣ INIT BEHAVIOR on User Load (Supabase Sync)
+    useEffect(() => {
+        if (user?.id) {
+            initBehaviorEngine(user.id);
+        }
+    }, [user?.id]);
 
     // ==========================================
     // 1️⃣ LIVE LOCATION TRACKING (Apple-style)
@@ -132,7 +139,7 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
     const dismiss = () => {
         if (!suggestion) return;
 
-        registerUserIgnore(suggestion.type);
+        registerUserIgnore(suggestion.type, user?.id); // Pass UserId for Cloud Sync
         setUserBehavior(getBehaviorProfile());
 
         localStorage.setItem("ai_last_shown", Date.now());
@@ -144,6 +151,11 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
         if (!suggestion) return null;
 
         localStorage.setItem("ai_last_shown", Date.now());
+
+        // Positive Reinforcement (Deep Memory)
+        if (suggestion.category && user?.id) {
+            updateInterest(suggestion.category, 0.1, user.id);
+        }
 
         const current = suggestion;
         setSuggestion(null);
