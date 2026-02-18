@@ -4,6 +4,7 @@ import { generateResponse } from './responseEngine.js';
 import { getFallbackResponse } from './fallbackEngine.js';
 import { decideFoodAction } from './decisionRouter.js';
 import { searchMenu } from './foodSearch.js';
+import { logInteraction } from './logger.js'; // Import Logger
 
 export async function runAI({ query, history, frontendContext }) {
     try {
@@ -55,6 +56,16 @@ export async function runAI({ query, history, frontendContext }) {
             history
         });
         console.timeEnd("GENERATE_RESPONSE");
+
+        // 📝 LOGGING (Fire & Forget)
+        logInteraction({
+            userId,
+            query,
+            intent,
+            action: result.action,
+            response: result.text,
+            context: { mode: frontendContext?.mode, location: frontendContext?.location }
+        });
 
         return result;
 
