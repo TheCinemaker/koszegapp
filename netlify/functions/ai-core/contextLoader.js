@@ -21,47 +21,58 @@ async function readJSON(filename) {
 // Data loaders
 async function loadEvents() {
     try {
-        const today = new Date().toISOString().split('T')[0];
-        const { data: events, error } = await supabase
-            .from('events')
-            .select('*')
-            .gte('date', today)
-            .order('date', { ascending: true })
-            .limit(40); // Increased to cover future month requests (e.g. March)
-
-        if (error) {
-            console.error('Error fetching events:', error);
-            return [];
+        let dbEvents = [];
+        try {
+            const today = new Date().toISOString().split('T')[0];
+            const { data, error } = await supabase
+                .from('events')
+                .select('*')
+                .gte('date', today)
+                .order('date', { ascending: true })
+                .limit(20);
+            if (!error) dbEvents = data || [];
+        } catch (e) {
+            console.warn("Supabase loadEvents failed, falling back to JSON only.");
         }
 
-        const now = new Date();
+        // Always load local JSON data too
+        const localEvents = await readJSON('events.json') || [];
 
-        // Backend filtering: Remove events that have already ended
-        // Assumption: If no end time, event lasts 2 hours from start time
-        const activeEvents = events.filter(event => {
-            if (!event.time && !event.start_time) {
-                // No specific time -> Treat as all-day event (valid for today)
-                return true;
-            }
+        // Merge (Avoid duplicates by ID)
+        const combined = [...dbEvents];
+        const seenIds = new Set(dbEvents.map(e => String(e.id)));
 
-            const timeString = event.time || event.start_time;
-            try {
-                // Combine date and time to get start timestamp
-                // Handle potential format issues if time doesn't match HH:mm
-                const eventStart = new Date(`${event.date}T${timeString}`);
-
-                // Implicit 2-hour duration
-                const eventEnd = new Date(eventStart.getTime() + 2 * 60 * 60 * 1000);
-
-                return eventEnd > now;
-            } catch (e) {
-                console.warn(`Invalid date/time for event ${event.id}:`, e);
-                return true; // Keep on error to be safe
+        localEvents.forEach(evt => {
+            if (!seenIds.has(String(evt.id))) {
+                combined.push(evt);
+                seenIds.add(String(evt.id));
             }
         });
 
-        // Return top 5 active events
-        return activeEvents.slice(0, 5);
+        const now = new Date();
+        const activeEvents = combined.filter(event => {
+            if (!event.date) return false;
+
+            // Basic date check (is today or future)
+            const eventDate = new Date(event.date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (eventDate < today) return false;
+
+            if (!event.time && !event.start_time) return true;
+
+            const timeString = event.time || event.start_time;
+            try {
+                const eventStart = new Date(`${event.date}T${timeString}`);
+                const eventEnd = new Date(eventStart.getTime() + 4 * 60 * 60 * 1000); // 4h duration assumption
+                return eventEnd > now;
+            } catch (e) {
+                return true;
+            }
+        });
+
+        // Return more events (top 15) to give LLM better search space
+        return activeEvents.slice(0, 15);
     } catch (err) {
         console.error('Unexpected error in loadEvents:', err);
         return [];

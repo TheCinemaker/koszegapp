@@ -60,12 +60,13 @@ MINDENKÉPPEN JSON-ben válaszolj ("text" és "action" mezőkkel).
     // 5. Generate Response
     try {
         const result = await chat.sendMessage(fullPrompt);
-        const raw = result.response.text();
+        const response = result.response;
+        const rawText = response.text();
 
         let parsed = null;
 
         // Try to parse JSON from text
-        const jsonMatch = raw.match(/\{[\s\S]*\}/);
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
             try {
                 parsed = JSON.parse(jsonMatch[0]);
@@ -77,14 +78,18 @@ MINDENKÉPPEN JSON-ben válaszolj ("text" és "action" mezőkkel).
         // 🧠 NATIVE TOOL CALL FALLBACK
         // If Gemini returns a function call instead of JSON text
         if (!parsed) {
-            const calls = result.response.functionCalls();
-            if (calls && calls.length > 0) {
-                console.log("🛠️ Tool-Call Fallback:", calls[0].name);
-                parsed = {
-                    text: "Parancs végrehajtása...",
-                    action: { type: calls[0].name, params: calls[0].args },
-                    confidence: 1.0
-                };
+            try {
+                const calls = response.functionCalls();
+                if (calls && calls.length > 0) {
+                    console.log("🛠️ Tool-Call Fallback:", calls[0].name);
+                    parsed = {
+                        text: "Parancs végrehajtása...",
+                        action: { type: calls[0].name, params: calls[0].args },
+                        confidence: 1.0
+                    };
+                }
+            } catch (fe) {
+                console.warn("No function calls found in response.");
             }
         }
 

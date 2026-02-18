@@ -7,7 +7,7 @@ export function detectIntent(query) {
     }
 
     // Events & Programs
-    if (/program|esemény|koncert|mozi|színház|fesztivál|buli|mikor|hétvégén|ma este/.test(q)) return 'events';
+    if (/program|esemény|koncert|mozi|színház|fesztivál|buli|mikor|hétvégén|ma este|jegye|wallet|belépő/.test(q)) return 'events';
 
     // Attractions & Sightseeing
     if (/látnivaló|műemlék|vár|templom|kilátó|múzeum|séta|túra|nevezetesség|szobor|tér/.test(q)) return 'attractions';
