@@ -130,6 +130,12 @@ export default function AIAssistant() {
                     // Proactive Walltet Integration Demo
                     alert(`🎟️ Esemény jegy hozzáadva az Apple Wallet-hez! (Event ID: ${action.params?.eventId})`);
                     break;
+                case 'open_external_map':
+                    if (action.params?.lat && action.params?.lng) {
+                        const url = `https://www.google.com/maps/dir/?api=1&destination=${action.params.lat},${action.params.lng}`;
+                        window.open(url, '_blank');
+                    }
+                    break;
                 default:
                     console.warn('Unknown action:', action.type);
                     break;

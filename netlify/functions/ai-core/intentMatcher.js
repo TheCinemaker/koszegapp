@@ -25,7 +25,7 @@ export function detectIntent(query) {
     if (/segítség|orvos|patika|gyógyszertár|rendőr|mentő|tűzoltó|kórház|ügyelet/.test(q)) return 'emergency';
 
     // Navigation & Location
-    if (/hol van|hogy jutok|merre|térkép|útvonal/.test(q)) return 'navigation';
+    if (/hol van|hogy jutok|merre|térkép|útvonal|navigál|oda/.test(q)) return 'navigation';
 
     // Greetings & Smalltalk
     if (/^szia|^heló|^hali|^jó napot|^üdv|^hogy vagy|^mizu|^köszönöm/.test(q)) return 'smalltalk';

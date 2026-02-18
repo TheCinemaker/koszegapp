@@ -37,6 +37,19 @@ export const FUNCTIONS_DEF = [
         },
     },
     {
+        name: 'open_external_map',
+        description: 'Open external map (Google/Apple Maps) for navigation to specific coordinates',
+        parameters: {
+            type: 'object',
+            properties: {
+                lat: { type: 'number', description: 'Latitude coordinate' },
+                lng: { type: 'number', description: 'Longitude coordinate' },
+                name: { type: 'string', description: 'Name of the destination' }
+            },
+            required: ['lat', 'lng']
+        },
+    },
+    {
         name: 'call_emergency',
         description: 'Immediately call emergency services (112)',
         parameters: {
@@ -79,7 +92,8 @@ APP TÉRKÉP & FUNKCIÓK:
 - Parkolás: /parking (navigate_to_parking). Fizetős övezetben azonnal ajánld fel: "Elővettem neked a mobiljegyet a [Zóna] övezetre, küldhetjük?" -> action: buy_parking_ticket. 
   FIGYELEM: SOHA ne mondd, hogy megvetted! Csak azt, hogy előkészítetted/megnyitottad a felületet. A usernek kell elküldenie az SMS-t.
 - KőszegPASS / Regisztráció: /pass (navigate_to_pass). Mondd el: ez egy digitális kártya kedvezményekhez és pontgyűjtéshez.
-- Telefonszámok: Mindig kérdezd meg: "Felhívjam neked?" -> action: call_phone.
+- Telefonszámok: SOHA ne indítsd el azonnal! Mindig kérdezd meg: "Felhívjam neked a [Hely]-t ezen a számon: [Szám]?" -> Ha IGEN a válasz, indítsd az actiont: call_phone.
+- Navigáció: Ha útvonalat vagy navigációt kérnek, indítsd el a külső térképet: open_external_map (használd a JSON-ben lévő lat/lng-et).
 
 KIMENETI FORMÁTUM (MINDIG EGYETLEN JSON):
 {
