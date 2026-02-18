@@ -32,8 +32,14 @@ export async function generateResponse({ intent, query, context, history }) {
     const contextString = Object.keys(context).length > 0 ? JSON.stringify(context, null, 2) : "Nincs extra adat.";
 
     // Apple-level Context Injection & Enforce JSON
+    // 🧠 PRO JAVÍTÁS: Explicit App Mode & Distance
     const fullPrompt = `
 AKTUÁLIS IDŐ: ${now}
+
+FELHASZNÁLÓ KONTEXTUS:
+- App mode: ${context.mode || 'unknown'}
+- Távolság Kőszeg főtértől: ${context.distanceToMainSquare ? Math.round(context.distanceToMainSquare) + ' méter' : 'Ismeretlen'}
+- Felhasználó jelenleg: ${context.mode === 'remote' ? 'NEM tartózkodik Kőszegen (TÁVOLI FELHASZNÁLÓ)' : 'Kőszegen tartózkodik (HELYI FELHASZNÁLÓ)'}
 
 KONTEXTUS ADATOK (${intent}):
 ${contextString}
@@ -47,10 +53,13 @@ ${context.menuItems ? JSON.stringify(context.menuItems, null, 2) : "Nincs talál
 KÉRDÉS:
 ${query}
 
-UTASÍTÁS:
-Ha használtad a Google Keresést, a talált információt foglald össze röviden a válaszban ("text" mező).
-NE csak másold be a keresési eredményt.
-MINDENKÉPPEN JSON formátumban válaszolj!
+UTASÍTÁS (FONTOS):
+1. Ha a felhasználó REMOTE (nem Kőszegi):
+   - NE indíts navigációt ("navigate_to_..."), kivéve ha kifejezetten útvonalat kér.
+   - Inkább adj információt ("A Kékfény étterem híres a pizzájáról...").
+   - Rendelést ne ajánlj fel, mert messze van.
+2. Ha használtad a Google Keresést, a talált információt foglald össze röviden.
+3. MINDENKÉPPEN JSON formátumban válaszolj!
 `;
 
     // 3. Prepare History (Convert to Gemini Format)
@@ -92,6 +101,15 @@ MINDENKÉPPEN JSON formátumban válaszolj!
 
         if (!("action" in parsed)) {
             parsed.action = null;
+        }
+
+        // 🛡️ ENTERPRISE SAFEGUARD: Remote Mode Validation
+        // If user is remote, prevent implicit navigation commands that make no sense
+        if (context.mode === 'remote' && parsed.action && parsed.action.type.startsWith('navigate_to_food')) {
+            console.log("🛡️ BLOCKED Remote Navigation: User is not in city.");
+            parsed.action = null; // Kill the action
+            // Optional workflow: Change text to explain? 
+            // Trusting LLM to have handled text correctly via prompt, but action is killed for safety.
         }
 
         return parsed;
