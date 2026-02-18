@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { createContext, useEffect, useState, useRef } from "react";
 import { useAuth } from "./AuthContext";
 import { getSmartTrigger } from "../ai/SmartTriggerEngine";
 import { getBehaviorProfile, registerUserIgnore, getUserProfile } from "../ai/BehaviorEngine";
@@ -8,106 +7,160 @@ import { getUserContext, updateLocation } from "../core/UserContextEngine";
 export const AIOrchestratorContext = createContext();
 
 export function AIOrchestratorProvider({ children, appData, weather }) {
-    const location = useLocation();
-    const navigate = useNavigate();
     const { user } = useAuth();
 
     const [suggestion, setSuggestion] = useState(null);
-    const [userLocation, setUserLocation] = useState(null); // { lat, lng, distanceToMainSquare }
-
-    // Tracking user behavior (fetched from BehaviorEngine)
+    const [userLocation, setUserLocation] = useState(null);
     const [userBehavior, setUserBehavior] = useState(getBehaviorProfile());
+    const [lastDecision, setLastDecision] = useState(null);
 
-    const MAIN_SQUARE = { lat: 47.3883538, lng: 16.5421414 }; // Fő tér coords
+    const triggerCooldownRef = useRef(false);
 
-    // Helpers
+    const MAIN_SQUARE = { lat: 47.3883538, lng: 16.5421414 };
+
     const deg2rad = (deg) => deg * (Math.PI / 180);
 
-    const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2 - lat1);
-        var dLon = deg2rad(lon2 - lon1);
-        var a =
+    const getDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371;
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+
+        const a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c; // Distance in km
-        return d * 1000; // Meters
+            Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c * 1000;
     };
 
-    // 1. Get Location
+    // ==========================================
+    // 1️⃣ LIVE LOCATION TRACKING (Apple-style)
+    // ==========================================
     useEffect(() => {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const { latitude, longitude } = position.coords;
-                const dist = getDistanceFromLatLonInKm(latitude, longitude, MAIN_SQUARE.lat, MAIN_SQUARE.lng);
+        if (!("geolocation" in navigator)) return;
 
-                console.log("📍 User Location:", { latitude, longitude, dist });
-                setUserLocation({ lat: latitude, lng: longitude, distanceToMainSquare: dist });
+        const watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                const { latitude, longitude, speed } = position.coords;
 
-                // Sync to Global Context (for Debug Panel & AI)
-                updateLocation({ latitude, longitude });
-            }, (error) => {
-                console.warn("Location access denied or error:", error);
-            });
-        }
-    }, [location.pathname]);
+                const dist = getDistance(
+                    latitude,
+                    longitude,
+                    MAIN_SQUARE.lat,
+                    MAIN_SQUARE.lng
+                );
 
-    // 2. Evaluate Smart Triggers
+                const locationPayload = {
+                    lat: latitude,
+                    lng: longitude,
+                    distanceToMainSquare: dist,
+                    speed: speed || 0
+                };
+
+                setUserLocation(locationPayload);
+
+                updateLocation({
+                    latitude,
+                    longitude,
+                    speed: speed || 0
+                });
+
+                // console.log("📍 LIVE:", locationPayload);
+            },
+            (err) => console.warn("Location error:", err),
+            {
+                enableHighAccuracy: true,
+                maximumAge: 10000,
+                timeout: 15000
+            }
+        );
+
+        return () => navigator.geolocation.clearWatch(watchId);
+    }, []);
+
+    // ==========================================
+    // 2️⃣ SMART TRIGGER EVALUATION
+    // ==========================================
     useEffect(() => {
         if (!appData || appData.loading) return;
+        if (!userLocation) return;
 
-        // Run the engine
+        if (triggerCooldownRef.current) return;
+
         const ctx = getUserContext();
 
         const trigger = getSmartTrigger({
             location: userLocation,
-            velocity: { speed: ctx.speed, movement: ctx.movement }, // New Context Data
+            velocity: { speed: ctx.speed, movement: ctx.movement },
             hour: new Date().getHours(),
-            weather: weather,
+            weather,
             events: appData.events || [],
-            lastShown: parseInt(localStorage.getItem('ai_last_shown') || 0),
-            userBehavior: userBehavior,
+            lastShown: parseInt(localStorage.getItem("ai_last_shown") || 0),
+            userBehavior,
             userProfile: getUserProfile()
         });
 
-        if (trigger) {
-            console.log("💡 Smart Trigger:", trigger);
-            setSuggestion(trigger);
-        } else {
-            setSuggestion(null);
-        }
+        if (!trigger) return;
 
-    }, [userLocation, appData, weather, userBehavior]);
+        console.log("💡 Trigger:", trigger);
 
-    // Actions
+        setSuggestion(trigger);
+        setLastDecision({
+            trigger,
+            timestamp: Date.now()
+        });
+
+        triggerCooldownRef.current = true;
+
+        setTimeout(() => {
+            triggerCooldownRef.current = false;
+        }, 60000); // 1 perc lokális cooldown (hogy ne villogjon)
+
+    }, [
+        userLocation,
+        weather,
+        userBehavior,
+        appData?.events?.length
+    ]);
+
+    // ==========================================
+    // 3️⃣ ACTIONS
+    // ==========================================
     const dismiss = () => {
-        if (suggestion) {
-            registerUserIgnore(suggestion.type);
-            setUserBehavior(getBehaviorProfile()); // Update state to reflect new penalty
+        if (!suggestion) return;
 
-            const now = Date.now();
-            localStorage.setItem('ai_last_shown', now);
-        }
+        registerUserIgnore(suggestion.type);
+        setUserBehavior(getBehaviorProfile());
+
+        localStorage.setItem("ai_last_shown", Date.now());
+
         setSuggestion(null);
     };
 
     const acceptSuggestion = () => {
-        const now = Date.now();
-        localStorage.setItem('ai_last_shown', now);
+        if (!suggestion) return null;
 
-        // Return suggestion logic to UI
-        const currentSuggestion = suggestion;
+        localStorage.setItem("ai_last_shown", Date.now());
+
+        const current = suggestion;
         setSuggestion(null);
-        return currentSuggestion;
+        return current;
     };
 
-    // Debugging / Logging
-    const [lastDecision, setLastDecision] = useState(null);
-
     return (
-        <AIOrchestratorContext.Provider value={{ suggestion, dismiss, acceptSuggestion, userLocation, lastDecision, setLastDecision }}>
+        <AIOrchestratorContext.Provider
+            value={{
+                suggestion,
+                dismiss,
+                acceptSuggestion,
+                userLocation,
+                lastDecision,
+                setLastDecision // EXPOSED FOR AIAssistant.jsx
+            }}
+        >
             {children}
         </AIOrchestratorContext.Provider>
     );
