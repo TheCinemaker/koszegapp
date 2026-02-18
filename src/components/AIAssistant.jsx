@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoSparkles, IoClose, IoSend, IoNavigate, IoRestaurant, IoCalendar, IoCar } from 'react-icons/io5';
 import { AIOrchestratorContext } from '../contexts/AIOrchestratorContext'; // Import Context
+import { LocationContext } from '../contexts/LocationContext';
+import { getAppMode } from '../core/ContextEngine';
 
 // Mock response for local development when backend is unreachable
 const MOCK_RESPONSES = {
@@ -25,6 +27,15 @@ const MOCK_RESPONSES = {
 
 export default function AIAssistant() {
     const { suggestion, acceptSuggestion, dismiss: dismissSuggestion } = useContext(AIOrchestratorContext); // Consume Context
+    const { location } = useContext(LocationContext);
+
+    // Mode Detection Logging
+    useEffect(() => {
+        if (!location) return;
+        const mode = getAppMode(location);
+        console.log("APP MODE:", mode);
+    }, [location]);
+
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
