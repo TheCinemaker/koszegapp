@@ -28,7 +28,7 @@ const MOCK_RESPONSES = {
 };
 
 export default function AIAssistant() {
-    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion } = useContext(AIOrchestratorContext); // Consume Context
+    const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision } = useContext(AIOrchestratorContext); // Consume Context
     const { location } = useContext(LocationContext);
 
     // Sync Location & Mode to Global Context
@@ -156,6 +156,28 @@ export default function AIAssistant() {
                 if (data.action) {
                     handleNavigation(data.action);
                 }
+
+                // 🐛 Debug Logging
+                if (data.debug || data.action) {
+                    setLastDecision({
+                        intent: data.debug?.intent || 'unknown',
+                        action: data.action,
+                        score: data.debug?.score,
+                        timestamp: new Date().toISOString(),
+                        ...data.debug
+                    });
+                }
+
+                // Debug Log
+                if (data.debug || data.action) {
+                    // We need to access setLastDecision from context. 
+                    // But we only destructured suggestion, acceptSuggestion, dismiss from context above.
+                    // I need to update the destructuring in the component body first.
+                    // IMPORTANT: I cannot update the destructuring here because I am inside sendMessage.
+                    // I must update the main component body first. 
+                    // This tool call will fail if I try to access variables not in scope.
+                }
+
             } else {
                 throw new Error('Backend failed');
             }

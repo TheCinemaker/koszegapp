@@ -21,6 +21,7 @@ import { triggerHaptic, HapticType } from './utils/haptics';
 import AIAssistant from './components/AIAssistant';
 import { AIOrchestratorProvider } from './contexts/AIOrchestratorContext.jsx';
 import AISmartLayer from './components/AISmartLayer.jsx';
+import AIDebugPanel from './components/AIDebugPanel.jsx';
 
 import Home from './pages/Home';
 import Attractions from './pages/Attractions';
@@ -140,6 +141,35 @@ function MainAppContent() {
 
   // --- MAINTENANCE MODE LOGIC ---
   const [maintenanceMode, setMaintenanceMode] = useState(false); // Devben nyitva, élesben karbantartás
+
+  // 🧑‍💻 Developer Mode Flag
+  const [devMode, setDevMode] = useState(
+    localStorage.getItem("dev_mode") === "true"
+  );
+  const logoTapCount = useRef(0);
+  const logoTapTimer = useRef(null);
+
+  const handleSecretTap = () => {
+    navigate('/');
+
+    // 5 taps within 2 seconds toggles dev mode
+    logoTapCount.current += 1;
+    clearTimeout(logoTapTimer.current);
+
+    logoTapTimer.current = setTimeout(() => {
+      logoTapCount.current = 0;
+    }, 2000);
+
+    if (logoTapCount.current === 5) {
+      const newState = !devMode;
+      setDevMode(newState);
+      localStorage.setItem("dev_mode", newState);
+      if (newState) alert("👨‍💻 Developer Mode Activated");
+      else alert("Developer Mode Deactivated");
+      logoTapCount.current = 0;
+    }
+  };
+
 
   useEffect(() => {
     // 1. Ellenőrizzük, hogy van-e bypass kulcs a localStorage-ban
@@ -313,7 +343,7 @@ function MainAppContent() {
 
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                     <img
-                      onClick={() => navigate('/')}
+                      onClick={handleSecretTap}
                       src="/images/koeszeg_logo_nobg.png"
                       alt="KőszegAPP logo"
                       className="w-8 h-8 sm:w-10 sm:h-10 hover:rotate-12 transition-transform duration-500 cursor-pointer drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]"
@@ -470,6 +500,7 @@ function MainAppContent() {
           {/* AI Assistant */}
           <AISmartLayer />
           <AIAssistant />
+          {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>
       </div>
     </>

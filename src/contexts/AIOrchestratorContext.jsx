@@ -96,8 +96,11 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
         return currentSuggestion;
     };
 
+    // Debugging / Logging
+    const [lastDecision, setLastDecision] = useState(null);
+
     return (
-        <AIOrchestratorContext.Provider value={{ suggestion, dismiss, acceptSuggestion, userLocation }}>
+        <AIOrchestratorContext.Provider value={{ suggestion, dismiss, acceptSuggestion, userLocation, lastDecision, setLastDecision }}>
             {children}
         </AIOrchestratorContext.Provider>
     );
