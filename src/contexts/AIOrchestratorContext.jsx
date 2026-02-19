@@ -133,6 +133,9 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
         appData?.events?.length
     ]);
 
+    // Clear suggestion when location changes significantly or on some event
+    // For now, let's just make sure it's clearable.
+
     // ==========================================
     // 3️⃣ ACTIONS
     // ==========================================

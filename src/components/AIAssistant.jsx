@@ -95,23 +95,23 @@ export default function AIAssistant() {
         setActionStatus(action.type);
         setTimeout(() => {
             switch (action.type) {
-                case 'navigate_to_home': navigate('/'); break;
-                case 'navigate_to_events': navigate('/events'); break;
-                case 'navigate_to_event_detail': navigate(`/events/${action.params?.id}`); break;
+                case 'navigate_to_home': navigate('/'); setViewMode('closed'); break;
+                case 'navigate_to_events': navigate('/events'); setViewMode('closed'); break;
+                case 'navigate_to_event_detail': navigate(`/events/${action.params?.id}`); setViewMode('closed'); break;
                 case 'navigate_to_food':
                 case 'navigate_to_tickets':
                 case 'navigate_to_game':
                     toast("Ez a funkció hamarosan elérhető! 🚧"); break;
-                case 'navigate_to_parking': navigate('/parking'); break;
-                case 'navigate_to_parking_detail': navigate(`/parking/${action.params?.id}`); break;
-                case 'navigate_to_attractions': navigate('/attractions'); break;
-                case 'navigate_to_attraction_detail': navigate(`/attractions/${action.params?.id}`); break;
-                case 'navigate_to_hotels': navigate('/hotels'); break;
-                case 'navigate_to_hotel_detail': navigate(`/hotels/${action.params?.id}`); break;
-                case 'navigate_to_leisure': navigate('/leisure'); break;
-                case 'navigate_to_leisure_detail': navigate(`/leisure/${action.params?.id}`); break;
-                case 'navigate_to_pass': navigate('/pass'); break;
-                case 'navigate_to_info': navigate('/info'); break;
+                case 'navigate_to_parking': navigate('/parking'); setViewMode('closed'); break;
+                case 'navigate_to_parking_detail': navigate(`/parking/${action.params?.id}`); setViewMode('closed'); break;
+                case 'navigate_to_attractions': navigate('/attractions'); setViewMode('closed'); break;
+                case 'navigate_to_attraction_detail': navigate(`/attractions/${action.params?.id}`); setViewMode('closed'); break;
+                case 'navigate_to_hotels': navigate('/hotels'); setViewMode('closed'); break;
+                case 'navigate_to_hotel_detail': navigate(`/hotels/${action.params?.id}`); setViewMode('closed'); break;
+                case 'navigate_to_leisure': navigate('/leisure'); setViewMode('closed'); break;
+                case 'navigate_to_leisure_detail': navigate(`/leisure/${action.params?.id}`); setViewMode('closed'); break;
+                case 'navigate_to_pass': navigate('/pass'); setViewMode('closed'); break;
+                case 'navigate_to_info': navigate('/info'); setViewMode('closed'); break;
                 case 'buy_parking_ticket':
                     navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '', zone: action.params?.zone || '', carrier: action.params?.carrier || '', autoGPS: action.params?.useGPS || false } });
                     // Enter peek mode
@@ -352,7 +352,7 @@ export default function AIAssistant() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    className="absolute inset-x-0 top-0 h-[90px] z-20 flex items-center justify-center px-6"
+                                    className="absolute inset-x-0 top-0 h-[90px] z-20 flex items-center justify-between px-6"
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg animate-bounce">
@@ -362,6 +362,12 @@ export default function AIAssistant() {
                                             {peekMessage}
                                         </p>
                                     </div>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setViewMode('closed'); }}
+                                        className="w-8 h-8 rounded-full bg-black/10 dark:bg-white/20 flex items-center justify-center text-gray-800 dark:text-white hover:bg-black/20 transition-all pointer-events-auto"
+                                    >
+                                        <IoClose size={16} />
+                                    </button>
                                 </motion.div>
                             )}
                         </AnimatePresence>

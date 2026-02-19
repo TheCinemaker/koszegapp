@@ -85,7 +85,7 @@ export function getSmartTrigger({
             });
         }
 
-        // � UPCOMING EVENTS
+        //  UPCOMING EVENTS
         if (events?.length > 0) {
             // Sort by closeness
             const closest = events
@@ -131,6 +131,24 @@ export function getSmartTrigger({
                 type: "attraction",
                 text: "Esik az eső. Mutassak fedett programokat?",
                 action: "navigate_to_attractions",
+                priority: score
+            });
+        }
+
+        // 🅿️ PARKING SUGGESTION (Only during paid hours)
+        const isFreeParking = (hour >= 18 || hour < 8) || (new Date().getDay() === 0) || (new Date().getDay() === 6 && hour >= 12);
+        if (!isFreeParking && velocity?.movement === 'car') {
+            const score = calculateScore({
+                timeScore: 0.8,
+                interestScore: 0.7,
+                specialBoost: 15
+            });
+
+            candidates.push({
+                id: "parking_needed",
+                type: "parking",
+                text: "Látom, hogy megérkeztél. Segítsek a parkolásban?",
+                action: "navigate_to_parking",
                 priority: score
             });
         }
