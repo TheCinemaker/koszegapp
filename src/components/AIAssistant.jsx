@@ -434,6 +434,7 @@ export default function AIAssistant() {
 
                                 <div ref={messagesEndRef} />
                             </div>
+                        )}
 
                         {/* Action Status Overlay */}
                         <AnimatePresence>
