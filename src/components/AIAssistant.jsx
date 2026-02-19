@@ -224,7 +224,11 @@ export default function AIAssistant() {
                     break;
             }
             setActionStatus(null);
-            setIsCompact(true);
+
+            // ✅ ONLY shrink if navigating to a DETAIL page
+            if (action.type.includes('_detail')) {
+                setIsCompact(true);
+            }
         }, 1500); // Visual delay to show the "acting" state
     };
 

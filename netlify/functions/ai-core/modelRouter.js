@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export function getModel({ enableSearch = false, systemInstruction = null } = {}) {
     // Single efficient model for all response generation
-    const modelName = "gemini-2.5-flash";
+    const modelName = "gemini-2.0-flash";
 
     const config = {
         model: modelName,
