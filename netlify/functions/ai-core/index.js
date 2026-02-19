@@ -57,8 +57,8 @@ export async function runAI({ query, history, frontendContext }) {
         });
         console.timeEnd("GENERATE_RESPONSE");
 
-        // 📝 LOGGING (Wait for completion)
-        await logInteraction({
+        // 📝 LOGGING (Non-blocking)
+        logInteraction({
             userId: frontendContext?.userId,
             authToken: frontendContext?.authToken, // 🔥 Use JWT
             query,
@@ -66,7 +66,7 @@ export async function runAI({ query, history, frontendContext }) {
             action: result.action,
             response: result.text,
             context: { mode: frontendContext?.mode, location: frontendContext?.location }
-        });
+        }).catch(e => console.warn('Log failed silently:', e));
 
         return { ...result, intent };
 

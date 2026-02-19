@@ -96,7 +96,15 @@ MINDENKÉPPEN JSON-ben válaszolj ("text" és "action" mezőkkel).
         }
 
         if (!parsed) {
-            throw new Error("No JSON or FunctionCall found");
+            // Ha van rawText, használjuk azt szövegként
+            if (rawText && rawText.length > 10) {
+                return {
+                    text: rawText.replace(/```json|```/g, '').trim(),
+                    action: null,
+                    confidence: 0.5
+                };
+            }
+            throw new Error("Empty response");
         }
 
         // Schema defaults

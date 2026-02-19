@@ -58,8 +58,8 @@ export async function handler(event) {
             headers,
             body: JSON.stringify({
                 role: 'assistant',
-                content: "Most nem tudok válaszolni, de megmutatom a fő programokat.",
-                action: { type: "navigate_to_events", params: {} },
+                content: "Nem értettem pontosan, miben segíthetek? Parkolást, programot vagy látnivalót keresel?",
+                action: null,
                 debug: process.env.NODE_ENV === 'development' ? error.message : undefined
             })
         };
