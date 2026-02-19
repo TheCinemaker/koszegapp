@@ -68,7 +68,7 @@ export async function runAI({ query, history, frontendContext }) {
             context: { mode: frontendContext?.mode, location: frontendContext?.location }
         });
 
-        return result;
+        return { ...result, intent };
 
     } catch (error) {
         console.error("AI run failed:", error);
