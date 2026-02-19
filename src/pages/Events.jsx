@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'; // Added import
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { fetchEvents } from '../api';
-import UniversalNav from '../components/UniversalNav'; // ADDED IMPORT
 import {
   format,
   parseISO,
