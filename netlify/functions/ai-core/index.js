@@ -36,7 +36,7 @@ export async function runAI({ query, history, frontendContext }) {
                 }
             }
 
-            console.log(`🧠 Decision Optimized: ${intent} -> ${decision.type}`);
+            console.log(`🧠 Decision Optimized: ${intent} -> ${decision?.type || 'no action'}`);
         }
 
         console.log(`Intent detected: ${intent}`);

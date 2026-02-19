@@ -28,9 +28,9 @@ AKTUÁLIS IDŐ: ${now}
 
 KÖRNYEZET:
 - Időjárás: ${context.weather ? `${context.weather.temp}°C, ikon: ${context.weather.icon}` : 'Ismeretlen'}
-- App mode: ${context.mode || 'unknown'}
-- Távolság Kőszeg főtértől: ${context.distanceToMainSquare ? Math.round(context.distanceToMainSquare) + ' méter' : 'Ismeretlen'}
-- Felhasználó: ${context.mode === 'remote' ? 'NEM' : 'IGEN'}, Kőszegen tartózkodik.
+- Felhasználó távolsága a főtértől: ${context.distanceToMainSquare ? Math.round(context.distanceToMainSquare) + ' méter' : 'Ismeretlen'}
+- Felhasználó Kőszegen van-e: ${context.distanceToMainSquare && context.distanceToMainSquare < 5000 ? 'IGEN' : context.distanceToMainSquare ? 'NEM - TÁVOL VAN, ne üdvözöld helyi userként!' : 'ISMERETLEN - ne feltételezd hogy ott van!'}
+- App mode: ${context.mode || 'ismeretlen'}
 
 KONTEXTUS ADATOK (${intent}):
 ${contextString}

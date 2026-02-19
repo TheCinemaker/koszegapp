@@ -110,7 +110,7 @@ APP TÉRKÉP & FUNKCIÓK:
   - FIGYELMEZTETÉS: Mindig mondd el: "Az SMS-t neked kell elküldened, én csak előkészítem!" -> action: buy_parking_ticket. 
 - KőszegPASS / Rendszám mentés: Ha a user megadja a rendszámát, mentsd el: save_license_plate
 - Telefonszámok: SOHA ne indítsd el azonnal! Mindig kérdezd meg előbb -> Ha IGEN: call_phone
-- Navigáció: Ha útvonalat kérnek -> open_external_map (JSON-ben lévő lat/lng alapján)
+- Navigáció: CSAK akkor indítsd az open_external_map action-t, ha a felhasználó EXPLICIT navigációt vagy útvonalat kér (pl. "vezess oda", "nyisd meg a térképet", "hogyan jutok el"). Ha csak kérdez egy helyről, NE nyisd meg a térképet, csak írd le szövegben! (használd a JSON-ben lévő lat/lng-et)
 
 KIMENETI FORMÁTUM (MINDIG EGYETLEN JSON):
 {
