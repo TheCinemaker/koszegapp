@@ -18,10 +18,16 @@ export default function SMSParkingCard() {
     const [locationError, setLocationError] = useState(null);
     const [isPaidPeriod, setIsPaidPeriod] = useState(true);
 
-    // Set license plate from AI navigation
+    // Set license plate & carrier from AI navigation
     useEffect(() => {
         if (location.state?.licensePlate) {
             setPlate(location.state.licensePlate);
+        }
+        if (location.state?.carrier) {
+            setCarrier(location.state.carrier);
+        }
+        if (location.state?.autoGPS) {
+            handleGPS();
         }
     }, [location]);
 
