@@ -8,6 +8,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { getAppMode } from '../core/ContextEngine';
 import { getUserContext, updateAppMode } from '../core/UserContextEngine';
 import { inferMovement } from '../core/MovementEngine';
+import { fetchEventById } from '../api';
+import { toast } from 'react-hot-toast';
 
 // Mock response for local development when backend is unreachable
 const MOCK_RESPONSES = {
@@ -127,8 +129,38 @@ export default function AIAssistant() {
                     }
                     break;
                 case 'add_to_wallet':
-                    // Proactive Walltet Integration Demo
-                    alert(`🎟️ Esemény jegy hozzáadva az Apple Wallet-hez! (Event ID: ${action.params?.eventId})`);
+                    if (action.params?.eventId) {
+                        const eventId = action.params.eventId;
+                        const toastId = toast.loading("Wallet Pass készítése...");
+                        fetchEventById(eventId).then(async (evt) => {
+                            if (!evt) throw new Error('Esemény nem található');
+
+                            const res = await fetch('/.netlify/functions/create-event-pass', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(evt),
+                            });
+
+                            if (!res.ok) {
+                                const err = await res.json();
+                                throw new Error(err.error || 'Generálási hiba');
+                            }
+
+                            const blob = await res.blob();
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `event-${evt.id}.pkpass`;
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                            window.URL.revokeObjectURL(url);
+                            toast.success("Hozzáadva a Wallet-hez!", { id: toastId });
+                        }).catch(err => {
+                            console.error(err);
+                            toast.error(`Hiba: ${err.message}`, { id: toastId });
+                        });
+                    }
                     break;
                 case 'open_external_map':
                     if (action.params?.lat && action.params?.lng) {
