@@ -115,7 +115,9 @@ export default function AIAssistant() {
                     navigate(`/events/${action.params?.id}`);
                     break;
                 case 'navigate_to_food':
-                    navigate('/food'); // ✅ Re-enabled in prompt logic earlier
+                case 'navigate_to_tickets':
+                case 'navigate_to_game':
+                    toast("⏳ Ez a funkció hamarosan elérhető lesz! 🚧", { icon: '🚧' });
                     break;
                 case 'navigate_to_parking':
                     navigate('/parking');

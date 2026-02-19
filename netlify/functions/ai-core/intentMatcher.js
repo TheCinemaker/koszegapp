@@ -1,9 +1,12 @@
 export function detectIntent(query) {
     const q = query.toLowerCase();
 
-    // Food & Drink (Combined for Decision Router)
+    // 🚫 TILTOTT ZÓNÁK - elsőként ellenőrizd!
+    if (/koszeg1532|1532|jegyrendelés|ticket|játék|game|ételrendelés/.test(q)) return 'restricted';
+
+    // Food & Drink - JAVÍTVA: food_general (nem food!)
     if (/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizz|burger|tészta|kávé|sör|ebéd|vacsor|reggeli|éhes|szomjas/.test(q)) {
-        return 'food';
+        return 'food_general';
     }
 
     // Events & Programs
@@ -15,8 +18,8 @@ export function detectIntent(query) {
     // Accomodation
     if (/szállás|hotel|panzió|kemping|apartman|szoba|vendégház|alvás/.test(q)) return 'hotels';
 
-    // Parking & Transport
-    if (/parkol|mélygarázs|jegy|automata|megállni|autó|busz|vonat/.test(q)) return 'parking';
+    // Parking & Transport - JAVÍTVA: parkoló, parkolhatok, parkolni hozzáadva
+    if (/parkol|parkoló|parkolhatok|parkolni|mélygarázs|automata|megállni/.test(q)) return 'parking';
 
     // Leisure & Sport
     if (/sport|túra|bicikli|kerékpár|játszótér|futás|edzés|szabadidő/.test(q)) return 'leisure';

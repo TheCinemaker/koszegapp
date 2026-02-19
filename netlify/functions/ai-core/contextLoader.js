@@ -180,7 +180,9 @@ export async function loadContext(intent, query, userId) {
 
     // Filter context specifically for the intent to save tokens but keep Master knowledge
     switch (intent) {
-        case 'food':
+        case 'restricted':
+            return baseContext; // Ne tölts be semmit extra
+        case 'food_general':
             return { ...baseContext, popular: await loadPopularFood() };
         case 'events':
         case 'attractions':
