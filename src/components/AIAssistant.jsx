@@ -10,6 +10,7 @@ import { getUserContext, updateAppMode } from '../core/UserContextEngine';
 import { inferMovement } from '../core/MovementEngine';
 import { fetchEventById } from '../api';
 import { toast } from 'react-hot-toast';
+import { supabase } from '../lib/supabaseClient'; // ✅ ÚJ IMPORT
 
 // Mock response for local development when backend is unreachable
 const MOCK_RESPONSES = {
@@ -29,6 +30,34 @@ const MOCK_RESPONSES = {
         action: { type: 'navigate_to_food', params: {} }
     }
 };
+
+// ✅ ÚJ: Supabase-be mentés helper függvény
+async function saveConversationToSupabase({ userId, userMessage, assistantMessage, context }) {
+    try {
+        const { error } = await supabase.from('ai_conversations').insert({
+            user_id: userId || null,
+            user_message: userMessage,
+            assistant_message: assistantMessage?.content || '',
+            action_type: assistantMessage?.action?.type || null,
+            action_params: assistantMessage?.action?.params || null,
+            intent: assistantMessage?.debug?.intent || null,
+            mode: context?.mode || null,
+            location_lat: context?.location?.lat || null,
+            location_lng: context?.location?.lng || null,
+            weather: context?.weather || null,
+            movement: context?.movement || null,
+            created_at: new Date().toISOString()
+        });
+
+        if (error) {
+            console.warn('Supabase mentési hiba:', error.message);
+        } else {
+            console.log('✅ Beszélgetés elmentve Supabase-be');
+        }
+    } catch (err) {
+        console.warn('Supabase mentés sikertelen:', err);
+    }
+}
 
 export default function AIAssistant() {
     const { user, token } = useAuth();
@@ -86,7 +115,7 @@ export default function AIAssistant() {
                     navigate(`/events/${action.params?.id}`);
                     break;
                 case 'navigate_to_food':
-                    console.log("Blocked food navigation"); // Safe fallback
+                    navigate('/food'); // ✅ Re-enabled in prompt logic earlier
                     break;
                 case 'navigate_to_parking':
                     navigate('/parking');
@@ -119,7 +148,14 @@ export default function AIAssistant() {
                     navigate('/info');
                     break;
                 case 'buy_parking_ticket':
-                    navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '', zone: action.params?.zone || '' } });
+                    navigate('/parking', {
+                        state: {
+                            licensePlate: action.params?.licensePlate || '',
+                            zone: action.params?.zone || '',
+                            carrier: action.params?.carrier || '',
+                            autoGPS: action.params?.useGPS || false
+                        }
+                    });
                     break;
                 case 'call_emergency':
                     window.location.href = 'tel:112';
@@ -197,11 +233,27 @@ export default function AIAssistant() {
 
         const userCtx = getUserContext();
         const movement = inferMovement(userCtx.speed);
+        const currentInput = input; // ✅ Mentjük el, mielőtt töröljük
 
-        const userMessage = { role: 'user', content: input };
+        const userMessage = { role: 'user', content: currentInput };
         setMessages((prev) => [...prev, userMessage]);
         setInput('');
         setLoading(true);
+
+        // ✅ Közös context objektum – mentéshez és API híváshoz is
+        const requestContext = {
+            userId: user?.id,
+            authToken: token, // 🔐 Pass JWT for RLS
+            mode: getAppMode(location),
+            location: userLocation || location,
+            distanceToMainSquare: userLocation?.distanceToMainSquare,
+            weather: weather, // 🌤️ Weather awareness
+            speed: userCtx.speed,
+            movement: movement,
+            lastPage: userCtx.lastPage,
+            timeOnPage: userCtx.timeOnPage,
+            lastSearch: userCtx.lastSearch
+        };
 
         try {
             // Try to fetch from backend
@@ -209,21 +261,9 @@ export default function AIAssistant() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    query: input,
+                    query: currentInput,
                     conversationHistory: messages,
-                    context: {
-                        userId: user?.id,
-                        authToken: token, // 🔐 Pass JWT for RLS
-                        mode: getAppMode(location),
-                        location: userLocation || location,
-                        distanceToMainSquare: userLocation?.distanceToMainSquare,
-                        weather: weather, // 🌤️ Weather awareness
-                        speed: userCtx.speed,
-                        movement: movement,
-                        lastPage: userCtx.lastPage,
-                        timeOnPage: userCtx.timeOnPage,
-                        lastSearch: userCtx.lastSearch
-                    }
+                    context: requestContext
                 }),
             });
 
@@ -231,6 +271,14 @@ export default function AIAssistant() {
 
             if (response.ok) {
                 setMessages((prev) => [...prev, data]);
+
+                // ✅ SUPABASE MENTÉS – sikeres AI válasz után
+                await saveConversationToSupabase({
+                    userId: user?.id,
+                    userMessage: currentInput,
+                    assistantMessage: data,
+                    context: requestContext
+                });
 
                 // 🧠 Learn from Intent
                 if (data.debug?.intent) {
@@ -264,9 +312,9 @@ export default function AIAssistant() {
             console.warn('AI Backend Error (switching to mock):', error);
 
             // Local Mock Fallback for Development
-            setTimeout(() => {
+            setTimeout(async () => {
                 let mockResponse = MOCK_RESPONSES.default;
-                const lowerInput = input.toLowerCase();
+                const lowerInput = currentInput.toLowerCase();
 
                 if (lowerInput.includes('program') || lowerInput.includes('esemény')) {
                     mockResponse = MOCK_RESPONSES.events;
@@ -275,6 +323,15 @@ export default function AIAssistant() {
                 }
 
                 setMessages((prev) => [...prev, mockResponse]);
+
+                // ✅ SUPABASE MENTÉS – mock válasznál is
+                await saveConversationToSupabase({
+                    userId: user?.id,
+                    userMessage: currentInput,
+                    assistantMessage: mockResponse,
+                    context: requestContext
+                });
+
                 if (mockResponse.action) {
                     handleNavigation(mockResponse.action);
                 }
