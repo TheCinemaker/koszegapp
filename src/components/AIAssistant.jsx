@@ -344,7 +344,7 @@ export default function AIAssistant() {
                         animate="visible"
                         exit="exit"
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="fixed bottom-24 right-6 z-[9999] w-[350px] md:w-[400px] h-[600px] bg-white/80 dark:bg-black/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col overflow-hidden font-sans"
+                        className="fixed bottom-24 right-4 left-4 md:left-auto md:right-6 z-[9999] w-auto md:w-[400px] h-auto max-h-[calc(100dvh-120px)] bg-white/80 dark:bg-black/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col overflow-hidden font-sans"
                     >
                         {/* Header */}
                         <div className="p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-white/50 dark:bg-black/20">
@@ -443,7 +443,7 @@ export default function AIAssistant() {
                                     onKeyPress={handleKeyPress}
                                     placeholder="Kérdezz valamit..."
                                     disabled={loading}
-                                    className="w-full pl-4 pr-12 py-3 bg-white/80 dark:bg-white/5 rounded-2xl text-sm border-none shadow-sm focus:ring-2 focus:ring-blue-500/50 transition-all placeholder-gray-400"
+                                    className="w-full pl-4 pr-12 py-3 bg-white/80 dark:bg-white/5 rounded-2xl text-[16px] border-none shadow-sm focus:ring-2 focus:ring-blue-500/50 transition-all placeholder-gray-400"
                                 />
                                 <button
                                     onClick={sendMessage}
