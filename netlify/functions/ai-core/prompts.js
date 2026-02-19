@@ -5,10 +5,14 @@ export const FUNCTIONS_DEF = [
         description: 'Navigate to the events page to show upcoming events',
         parameters: { type: 'object', properties: {} },
     },
-    // navigate_to_food REMOVED (Under Development)
+    {
+        name: 'navigate_to_food',
+        description: 'Nagiváció a KoszegEats oldalra, ételrendeléshez vagy éttermek böngészéséhez.',
+        parameters: { type: 'object', properties: {} },
+    },
     {
         name: 'navigate_to_parking',
-        description: 'Navigate to the parking page to show parking spots or buy mobile ticket',
+        description: 'Navigate to the parking page to show parking spots',
         parameters: { type: 'object', properties: {} },
     },
     {
@@ -28,13 +32,27 @@ export const FUNCTIONS_DEF = [
     },
     {
         name: 'buy_parking_ticket',
-        description: 'Navigate to parking page to buy a parking ticket with optional license plate pre-fill',
+        description: 'Parkolóautómatához navigálás. Params: zone (red/green), licensePlate (opcionális), carrier (20/30/70 - opcionális), useGPS (boolean - opcionális).',
         parameters: {
             type: 'object',
             properties: {
-                licensePlate: { type: 'string', description: 'License plate number' },
+                zone: { type: 'string' },
+                licensePlate: { type: 'string' },
+                carrier: { type: 'string' },
+                useGPS: { type: 'boolean' }
             },
         },
+    },
+    {
+        name: 'save_license_plate',
+        description: 'Rendszám elmentése a profilba.',
+        parameters: {
+            type: 'object',
+            properties: {
+                licensePlate: { type: 'string' }
+            },
+            required: ['licensePlate']
+        }
     },
     {
         name: 'open_external_map',
@@ -83,15 +101,18 @@ ALAPELVEK:
 
 BIZTONSÁGI ÉS MODERÁCIÓS SZABÁLYOK:
 - POLITIKA: Szigorúan TILOS politikai témákról beszélni.
-- KÁROMKODÁS: Ha a felhasználó káromkodik, kérd meg udvariasan, hogy ne tegye. Ha folytatja, köszönj el és ne válaszolj többet.
-- TILTOTT ZÓNÁK: NE navigálj a /food, /game, /tickets oldalakra! (Csak információt adj róluk).
+- KÁROMKODÁS: Ha a felhasználó káromkodik, kérd meg udvariasan, hogy ne tegye.
+- TILTOTT ZÓNÁK: NINCSENEK. Minden funkció (parking, food, game) elérhető!
 
 APP TÉRKÉP & FUNKCIÓK:
 - Látnivalók: /attractions (navigate_to_attractions)
 - Események: /events (navigate_to_events). Ajánld fel a lehetőséget: "Hozzáadjam az Apple Wallet-hez a jegyet?" -> Csak ha IGEN a válasz, indítsd az actiont: add_to_wallet.
-- Parkolás: /parking (navigate_to_parking). Fizetős övezetben azonnal ajánld fel: "Elővettem neked a mobiljegyet a [Zóna] övezetre, küldhetjük?" -> action: buy_parking_ticket. 
-  FIGYELEM: SOHA ne mondd, hogy megvetted! Csak azt, hogy előkészítetted/megnyitottad a felületet. A usernek kell elküldenie az SMS-t.
-- KőszegPASS / Regisztráció: /pass (navigate_to_pass). Mondd el: ez egy digitális kártya kedvezményekhez és pontgyűjtéshez.
+- Parkolás: /parking (navigate_to_parking). 
+  - Ha tudod a user rendszámát, MINDIG írd bele a buy_parking_ticket action-be! 
+  - Ha kérik a GPS-t, használd az useGPS: true paramétert.
+  - MINDIG kérdezz az előhívóra (20/30/70), ha nem tudod.
+  - FIGYELMEZTETÉS: Mindig mondd el: "Az SMS-t neked kell elküldened, én csak előkészítem!" -> action: buy_parking_ticket. 
+- KőszegPASS / Rendszám mentés: Ha a user megadja a rendszámát, mentsd el a save_license_plate action-nel!
 - Telefonszámok: SOHA ne indítsd el azonnal! Mindig kérdezd meg: "Felhívjam neked a [Hely]-t ezen a számon: [Szám]?" -> Ha IGEN a válasz, indítsd az actiont: call_phone.
 - Navigáció: Ha útvonalat vagy navigációt kérnek, indítsd el a külső térképet: open_external_map (használd a JSON-ben lévő lat/lng-et).
 
@@ -103,11 +124,10 @@ KIMENETI FORMÁTUM (MINDIG EGYETLEN JSON):
 }
 
 ELÉRHETŐ AKCIÓK (action):
-- navigate_to_home, navigate_to_attractions, navigate_to_events, navigate_to_parking
+- navigate_to_home, navigate_to_attractions, navigate_to_events, navigate_to_parking, navigate_to_food
 - navigate_to_hotels, navigate_to_leisure, navigate_to_info, navigate_to_pass
-- call_phone (params: number)
+- call_phone (params: number), save_license_plate (params: licensePlate)
 - add_to_wallet (params: eventId)
-- buy_parking_ticket (params: zone, licensePlate)
+- buy_parking_ticket (params: zone, licensePlate, carrier, useGPS)
 - call_emergency (params: service)
-- search_web (automatikus fallback)
 `;

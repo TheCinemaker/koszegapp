@@ -3,11 +3,13 @@ import { SYSTEM_PROMPT } from './prompts.js';
 
 export async function generateResponse({ intent, query, context, history }) {
     // Intelligent Routing: Hybrid Data Layer
+    const appData = context.appData || {};
     const hasLocalData =
-        (context.events && context.events.length > 0) ||
-        (context.attractions && context.attractions.length > 0) ||
-        (context.restaurants && context.restaurants.length > 0) ||
-        (context.hotels && context.hotels.length > 0);
+        (appData.events && appData.events.length > 0) ||
+        (appData.attractions && appData.attractions.length > 0) ||
+        (appData.restaurants && appData.restaurants.length > 0) ||
+        (appData.hotels && appData.hotels.length > 0) ||
+        (appData.parking && appData.parking.length > 0);
 
     const enableSearch = !hasLocalData || ['general_info', 'unknown'].includes(intent);
 
@@ -100,16 +102,6 @@ MINDENKÉPPEN JSON-ben válaszolj ("text" és "action" mezőkkel).
         // Schema defaults
         if (!parsed.text) parsed.text = "Sikerült!";
         if (!parsed.action) parsed.action = null;
-
-        // 🛡️ ENTERPRISE SAFEGUARD: Block Non-Public Features
-        if (parsed.action && (
-            parsed.action.type.includes('food') ||
-            parsed.action.type.includes('game') ||
-            parsed.action.type.includes('ticket')
-        )) {
-            console.log("🛡️ BLOCKED Restricted Action:", parsed.action.type);
-            parsed.action = null;
-        }
 
         return parsed;
     } catch (e) {
