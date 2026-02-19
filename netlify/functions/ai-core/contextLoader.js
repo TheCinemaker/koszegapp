@@ -136,11 +136,24 @@ async function loadRecentLogs(userId) {
     } catch (e) { return ''; }
 }
 
+async function loadUserProfile(userId) {
+    if (!userId) return null;
+    try {
+        const { data } = await supabase
+            .from('koszegpass_users')
+            .select('full_name, license_plate, card_type, points')
+            .eq('id', userId)
+            .single();
+        return data;
+    } catch (e) { return null; }
+}
+
 export async function loadContext(intent, query, userId) {
     console.log(`🧠 LOADING MASTER CONTEXT for: ${intent}`);
 
-    const [recentHistory, events, restaurants, attractions, hotels, leisure, info, parking] = await Promise.all([
+    const [recentHistory, profile, events, restaurants, attractions, hotels, leisure, info, parking] = await Promise.all([
         loadRecentLogs(userId),
+        loadUserProfile(userId),
         loadEvents(),
         loadRestaurants(),
         readJSON('attractions.json'),
@@ -152,6 +165,7 @@ export async function loadContext(intent, query, userId) {
 
     const baseContext = {
         recentHistory,
+        userProfile: profile,
         currentQuery: query,
         appData: {
             events: (events || []).slice(0, 15),

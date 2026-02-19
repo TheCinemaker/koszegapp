@@ -163,6 +163,20 @@ export default function AIAssistant() {
                         });
                     }
                     break;
+                case 'save_license_plate':
+                    if (action.params?.licensePlate && user?.id) {
+                        toast.promise(
+                            import('../lib/supabaseClient').then(({ supabase }) =>
+                                supabase.from('koszegpass_users').update({ license_plate: action.params.licensePlate }).eq('id', user.id)
+                            ),
+                            {
+                                loading: 'Rendszám mentése...',
+                                success: 'Rendszám elmentve! ✅',
+                                error: 'Hiba a mentés során.'
+                            }
+                        );
+                    }
+                    break;
                 case 'open_external_map':
                     if (action.params?.lat && action.params?.lng) {
                         const url = `https://www.google.com/maps/dir/?api=1&destination=${action.params.lat},${action.params.lng}`;
