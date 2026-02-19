@@ -47,6 +47,7 @@ export default function AIAssistant() {
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [actionStatus, setActionStatus] = useState(null); // 'pending', 'executed'
+    const [isCompact, setIsCompact] = useState(false);
     const messagesEndRef = useRef(null);
     const navigate = useNavigate();
 
@@ -173,6 +174,7 @@ export default function AIAssistant() {
                     break;
             }
             setActionStatus(null);
+            setIsCompact(true);
         }, 1500); // Visual delay to show the "acting" state
     };
 
@@ -344,79 +346,80 @@ export default function AIAssistant() {
                         animate="visible"
                         exit="exit"
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="fixed bottom-24 right-4 left-4 md:left-auto md:right-6 z-[9999] w-auto md:w-[400px] h-auto max-h-[calc(100dvh-120px)] bg-white/80 dark:bg-black/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col overflow-hidden font-sans"
+                        className={`fixed bottom-24 right-4 left-4 md:left-auto md:right-6 z-[9999] w-auto md:w-[400px] bg-white/80 dark:bg-black/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col overflow-hidden font-sans transition-all duration-700 ${isCompact ? 'h-[100px]' : 'h-auto max-h-[calc(100dvh-120px)]'}`}
                     >
                         {/* Header */}
-                        <div className="p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-white/50 dark:bg-black/20">
+                        <div className="p-3 border-b border-black/5 dark:border-white/5 flex items-center justify-between bg-white/50 dark:bg-black/20 shrink-0">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
                                     <IoSparkles className="text-sm" />
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">Kőszeg AI</h3>
-                                    <p className="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">Assistant</p>
+                                    <p className="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">{isCompact ? 'Figyelek...' : 'Asszisztens'}</p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Messages Area */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800">
+                        {/* Messages Area - Hidden in compact mode */}
+                        {!isCompact && (
+                            <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800">
 
-                            {/* Empty State */}
-                            {messages.length === 0 && (
-                                <div className="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-70">
-                                    <IoSparkles className="text-3xl text-purple-500/50" />
-                                    <p className="text-sm text-gray-500 max-w-[200px]">
-                                        Szia! Én vagyok a városi AI asszisztensed. Miben segíthetek?
-                                    </p>
-                                    <div className="flex flex-wrap justify-center gap-2">
-                                        <button onClick={() => setInput("Hol egyek?")} className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full hover:bg-gray-200 transition-colors">🍕 Hol egyek?</button>
-                                        <button onClick={() => setInput("Milyen programok vannak?")} className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full hover:bg-gray-200 transition-colors">📅 Programok</button>
+                                {/* Empty State */}
+                                {messages.length === 0 && (
+                                    <div className="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-70">
+                                        <IoSparkles className="text-3xl text-purple-500/50" />
+                                        <p className="text-sm text-gray-500 max-w-[200px]">
+                                            Szia! Én vagyok a városi AI asszisztensed. Miben segíthetek?
+                                        </p>
+                                        <div className="flex flex-wrap justify-center gap-2">
+                                            <button onClick={() => setInput("Hol egyek?")} className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full hover:bg-gray-200 transition-colors">🍕 Hol egyek?</button>
+                                            <button onClick={() => setInput("Milyen programok vannak?")} className="text-xs px-3 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full hover:bg-gray-200 transition-colors">📅 Programok</button>
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
 
-                            {messages.map((msg, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                                >
-                                    <div
-                                        className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.role === 'user'
-                                            ? 'bg-blue-600 text-white rounded-br-sm'
-                                            : 'bg-white dark:bg-white/10 text-gray-800 dark:text-gray-100 rounded-bl-sm border border-black/5 dark:border-white/5'
-                                            }`}
+                                {messages.map((msg, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                                     >
-                                        {msg.content}
+                                        <div
+                                            className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.role === 'user'
+                                                ? 'bg-blue-600 text-white rounded-br-sm'
+                                                : 'bg-white dark:bg-white/10 text-gray-800 dark:text-gray-100 rounded-bl-sm border border-black/5 dark:border-white/5'
+                                                }`}
+                                        >
+                                            {msg.content}
 
-                                        {/* Action Indicator in Chat */}
-                                        {msg.action && (
-                                            <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/10 flex items-center gap-2 text-xs opacity-80">
-                                                {msg.action.type.includes('event') && <IoCalendar />}
-                                                {msg.action.type.includes('food') && <IoRestaurant />}
-                                                {(msg.action.type.includes('parking') || msg.action.type.includes('navigate')) && <IoNavigate />}
-                                                <span>Művelet indítása...</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                </motion.div>
-                            ))}
+                                            {/* Action Indicator in Chat */}
+                                            {msg.action && (
+                                                <div className="mt-3 pt-3 border-t border-black/5 dark:border-white/10 flex items-center gap-2 text-xs opacity-80">
+                                                    {msg.action.type.includes('event') && <IoCalendar />}
+                                                    {msg.action.type.includes('food') && <IoRestaurant />}
+                                                    {(msg.action.type.includes('parking') || msg.action.type.includes('navigate')) && <IoNavigate />}
+                                                    <span>Művelet indítása...</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                ))}
 
-                            {/* Typing Indicator */}
-                            {loading && (
-                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-                                    <div className="bg-white dark:bg-white/10 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm flex gap-1.5 items-center">
-                                        <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
-                                        <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
-                                        <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
-                                    </div>
-                                </motion.div>
-                            )}
+                                {/* Typing Indicator */}
+                                {loading && (
+                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                                        <div className="bg-white dark:bg-white/10 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm flex gap-1.5 items-center">
+                                            <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                                            <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                                            <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                                        </div>
+                                    </motion.div>
+                                )}
 
-                            <div ref={messagesEndRef} />
-                        </div>
+                                <div ref={messagesEndRef} />
+                            </div>
 
                         {/* Action Status Overlay */}
                         <AnimatePresence>
@@ -439,7 +442,13 @@ export default function AIAssistant() {
                                 <input
                                     type="text"
                                     value={input}
-                                    onChange={(e) => setInput(e.target.value)}
+                                    onChange={(e) => {
+                                        setInput(e.target.value);
+                                        if (isCompact) setIsCompact(false);
+                                    }}
+                                    onFocus={() => {
+                                        if (isCompact) setIsCompact(false);
+                                    }}
                                     onKeyPress={handleKeyPress}
                                     placeholder="Kérdezz valamit..."
                                     disabled={loading}
