@@ -17,23 +17,24 @@ export async function logInteraction({ userId, authToken, query, intent, action,
             });
         }
 
+        console.log(`📝 Attempting to log: ${intent} for user: ${userId || 'Anonymous'}`);
+
         const payload = {
-            user_id: userId,
+            user_id: userId || null,
             intent: intent,
             action: action ? action.type : null,
-            context: context,
+            context: context || {},
             metadata: {
                 query: query,
                 response: response,
                 ...context
-            },
-            created_at: new Date().toISOString()
+            }
         };
 
         const { data, error } = await supabase
             .from('ai_logs')
             .insert(payload)
-            .select(); // Select back to confirm
+            .select();
 
         if (error) {
             console.error('❌ Supabase Log Error:', JSON.stringify(error, null, 2));
