@@ -115,7 +115,7 @@ MINDENKÉPPEN JSON-ben válaszolj ("text" és "action" mezőkkel).
     } catch (e) {
         console.warn('Response generation failed:', e);
         return {
-            text: "Elnézést, technikai hiba történt. Próbáld újra később.",
+            text: "Nem értettem pontosan. Miben segíthetek? Parkolást, programot, látnivalót vagy szállást keresel?",
             action: null,
             confidence: 0.0
         };
