@@ -56,7 +56,16 @@ export default function AIAssistant() {
         updateAppMode(getAppMode(location));
     }, [location]);
 
-    const [isOpen, setIsOpen] = useState(false);
+    const PEEK_MESSAGES = [
+        "Itt vagyok ám, ne aggódj! 😉",
+        "Csak figyelek a háttérből... 👀",
+        "Ha elakadnál, csak szólj! ✨",
+        "Itt dekkolok lent, amíg parkolsz! 🚗",
+        "Pöccints fel, ha kellek! 🚀"
+    ];
+
+    const [viewMode, setViewMode] = useState('closed'); // 'closed', 'full', 'peek'
+    const [peekMessage, setPeekMessage] = useState(PEEK_MESSAGES[0]);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
@@ -68,14 +77,14 @@ export default function AIAssistant() {
     const handleSuggestionClick = () => {
         const activeSuggestion = acceptSuggestion();
         if (activeSuggestion) {
-            setIsOpen(true);
+            setViewMode('full');
             setMessages(prev => [...prev, { role: 'assistant', content: activeSuggestion.text, action: { type: activeSuggestion.action }, isProactive: true }]);
         }
     };
 
     useEffect(() => {
-        if (isOpen) setTimeout(() => inputRef.current?.focus(), 450);
-    }, [isOpen]);
+        if (viewMode === 'full') setTimeout(() => inputRef.current?.focus(), 450);
+    }, [viewMode]);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -105,6 +114,11 @@ export default function AIAssistant() {
                 case 'navigate_to_info': navigate('/info'); break;
                 case 'buy_parking_ticket':
                     navigate('/parking', { state: { licensePlate: action.params?.licensePlate || '', zone: action.params?.zone || '', carrier: action.params?.carrier || '', autoGPS: action.params?.useGPS || false } });
+                    // Enter peek mode
+                    setTimeout(() => {
+                        setPeekMessage(PEEK_MESSAGES[Math.floor(Math.random() * PEEK_MESSAGES.length)]);
+                        setViewMode('peek');
+                    }, 1500);
                     break;
                 case 'call_emergency': window.location.href = 'tel:112'; break;
                 case 'call_phone':
@@ -208,7 +222,7 @@ export default function AIAssistant() {
         <>
             {/* ── Suggestion Bubble ── */}
             <AnimatePresence>
-                {suggestion && !isOpen && (
+                {suggestion && viewMode === 'closed' && (
                     <motion.div
                         initial={{ opacity: 0, y: 14, scale: 0.93 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -241,13 +255,13 @@ export default function AIAssistant() {
 
             {/* ── FAB ── */}
             <motion.button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setViewMode(viewMode === 'full' ? 'closed' : 'full')}
                 className="fixed bottom-[72px] right-4 z-[9998] w-12 h-12 rounded-full flex items-center justify-center
                     bg-gradient-to-br from-indigo-500 to-purple-600
                     border border-white/20
                     shadow-[0_4px_20px_rgba(99,102,241,0.45)]"
                 whileTap={{ scale: 0.9 }}
-                animate={suggestion && !isOpen ? {
+                animate={suggestion && viewMode === 'closed' ? {
                     scale: [1, 1.1, 1],
                     boxShadow: ['0 4px 20px rgba(99,102,241,0.4)', '0 4px 28px rgba(99,102,241,0.75)', '0 4px 20px rgba(99,102,241,0.4)'],
                     transition: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' }
@@ -255,24 +269,24 @@ export default function AIAssistant() {
             >
                 <AnimatePresence mode="wait">
                     <motion.div
-                        key={isOpen ? 'close' : 'open'}
+                        key={viewMode === 'full' ? 'close' : 'open'}
                         initial={{ rotate: -45, opacity: 0, scale: 0.5 }}
                         animate={{ rotate: 0, opacity: 1, scale: 1 }}
                         exit={{ rotate: 45, opacity: 0, scale: 0.5 }}
                         transition={{ duration: 0.16, ease: 'easeOut' }}
                     >
-                        {isOpen ? <IoChevronDown className="text-white text-xl" /> : <IoSparkles className="text-white text-lg" />}
+                        {viewMode === 'full' ? <IoChevronDown className="text-white text-xl" /> : <IoSparkles className="text-white text-lg" />}
                     </motion.div>
                 </AnimatePresence>
             </motion.button>
 
             {/* ── Backdrop ── */}
             <AnimatePresence>
-                {isOpen && (
+                {viewMode === 'full' && (
                     <motion.div
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setViewMode('closed')}
                         className="fixed inset-0 z-[9995] bg-black/25 backdrop-blur-[2px]"
                     />
                 )}
@@ -280,13 +294,14 @@ export default function AIAssistant() {
 
             {/* ── Sheet ── */}
             <AnimatePresence>
-                {isOpen && (
+                {viewMode !== 'closed' && (
                     <motion.div
                         initial={{ y: '100%' }}
-                        animate={{ y: 0 }}
+                        animate={{ y: viewMode === 'peek' ? 'calc(100% - 90px)' : 0 }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', stiffness: 340, damping: 38, mass: 0.9 }}
-                        className="fixed bottom-0 left-0 right-0 z-[9999] flex flex-col overflow-hidden"
+                        onClick={() => { if (viewMode === 'peek') setViewMode('full'); }}
+                        className="fixed bottom-0 left-0 right-0 z-[9999] flex flex-col overflow-hidden cursor-pointer sm:cursor-default"
                         style={{
                             height: 'calc(100dvh - 64px)',
                             borderRadius: '28px 28px 0 0',
@@ -324,11 +339,32 @@ export default function AIAssistant() {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => setIsOpen(false)}
+                            <button onClick={(e) => { e.stopPropagation(); setViewMode('closed'); }}
                                 className="w-8 h-8 rounded-full bg-black/6 dark:bg-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-black/10 active:scale-90 transition-all">
                                 <IoClose size={15} />
                             </button>
                         </div>
+
+                        {/* Peek Content Overlay */}
+                        <AnimatePresence>
+                            {viewMode === 'peek' && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="absolute inset-x-0 top-0 h-[90px] z-20 flex items-center justify-center px-6"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg animate-bounce">
+                                            <IoSparkles className="text-white text-xs" />
+                                        </div>
+                                        <p className="text-[14px] font-bold text-gray-800 dark:text-white tracking-tight">
+                                            {peekMessage}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Divider */}
                         <div className="relative z-10 h-px mx-5 bg-black/5 dark:bg-white/8 shrink-0" />
