@@ -141,19 +141,43 @@ async function loadUserProfile(userId) {
     try {
         const { data } = await supabase
             .from('koszegpass_users')
-            .select('full_name, license_plate, card_type, points')
+            .select('full_name, card_type, points') // license_plate ELTÁVOLÍTVA - több autó miatt
             .eq('id', userId)
             .single();
         return data;
     } catch (e) { return null; }
 }
 
+// ✅ ÚJ: Felhasználó autóinak betöltése
+async function loadUserVehicles(userId) {
+    if (!userId) return [];
+    try {
+        const { data, error } = await supabase
+            .from('user_vehicles')
+            .select('id, license_plate, nickname, carrier, is_default')
+            .eq('user_id', userId)
+            .order('is_default', { ascending: false }) // default autó először
+            .order('created_at', { ascending: true });
+
+        if (error) {
+            console.warn('loadUserVehicles failed:', error.message);
+            return [];
+        }
+
+        return data || [];
+    } catch (e) {
+        console.warn('loadUserVehicles exception:', e);
+        return [];
+    }
+}
+
 export async function loadContext(intent, query, userId) {
     console.log(`🧠 LOADING MASTER CONTEXT for: ${intent}`);
 
-    const [recentHistory, profile, events, restaurants, attractions, hotels, leisure, info, parking] = await Promise.all([
+    const [recentHistory, profile, vehicles, events, restaurants, attractions, hotels, leisure, info, parking] = await Promise.all([
         loadRecentLogs(userId),
         loadUserProfile(userId),
+        loadUserVehicles(userId), // ✅ ÚJ
         loadEvents(),
         loadRestaurants(),
         readJSON('attractions.json'),
@@ -166,6 +190,7 @@ export async function loadContext(intent, query, userId) {
     const baseContext = {
         recentHistory,
         userProfile: profile,
+        userVehicles: vehicles, // ✅ ÚJ - az AI látja az összes autót
         currentQuery: query,
         appData: {
             events: (events || []).slice(0, 15),
@@ -178,10 +203,9 @@ export async function loadContext(intent, query, userId) {
         }
     };
 
-    // Filter context specifically for the intent to save tokens but keep Master knowledge
     switch (intent) {
         case 'restricted':
-            return baseContext; // Ne tölts be semmit extra
+            return baseContext;
         case 'food_general':
             return { ...baseContext, popular: await loadPopularFood() };
         case 'events':

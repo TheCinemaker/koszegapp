@@ -125,13 +125,20 @@ export default function AIAssistant() {
                         }).catch(err => toast.error(`Hiba: ${err.message}`, { id: toastId }));
                     }
                     break;
-                case 'save_license_plate':
+                case 'save_license_plate': // legacy fallback
+                case 'save_vehicle':
                     if (action.params?.licensePlate && user?.id) {
                         toast.promise(
                             import('../lib/supabaseClient').then(({ supabase }) =>
-                                supabase.from('koszegpass_users').update({ license_plate: action.params.licensePlate }).eq('id', user.id)
+                                supabase.from('user_vehicles').insert({
+                                    user_id: user.id,
+                                    license_plate: action.params.licensePlate.toUpperCase(),
+                                    nickname: action.params.nickname || null,
+                                    carrier: action.params.carrier || '70',
+                                    is_default: action.params.isDefault || false,
+                                })
                             ),
-                            { loading: 'Mentés...', success: 'Rendszám elmentve! ✅', error: 'Hiba.' }
+                            { loading: 'Autó mentése...', success: 'Autó elmentve! 🚗', error: 'Hiba a mentés során.' }
                         );
                     }
                     break;
@@ -389,8 +396,8 @@ export default function AIAssistant() {
                                         </div>
                                     )}
                                     <div className={`max-w-[78%] px-4 py-2.5 text-[14px] leading-relaxed ${msg.role === 'user'
-                                            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-[18px] rounded-br-[4px] shadow-[0_2px_12px_rgba(99,102,241,0.35)]'
-                                            : 'bg-white/60 dark:bg-white/8 backdrop-blur-sm text-gray-800 dark:text-gray-100 rounded-[18px] rounded-bl-[4px] border border-white/60 dark:border-white/10 shadow-sm'
+                                        ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-[18px] rounded-br-[4px] shadow-[0_2px_12px_rgba(99,102,241,0.35)]'
+                                        : 'bg-white/60 dark:bg-white/8 backdrop-blur-sm text-gray-800 dark:text-gray-100 rounded-[18px] rounded-bl-[4px] border border-white/60 dark:border-white/10 shadow-sm'
                                         }`}>
                                         {msg.content}
                                         {msg.action?.type && (
