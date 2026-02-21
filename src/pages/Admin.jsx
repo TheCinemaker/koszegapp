@@ -859,13 +859,32 @@ function RestaurantForm({ initial, onCancel, onSave, onDelete }) {
     const tags = tagsInput.split(",").map(t => t.trim()).filter(Boolean);
     const amenities = amenitiesInput.split(",").map(t => t.trim()).filter(Boolean);
     const [lat, lng] = coordsInput.split(",").map(c => parseFloat(c));
-    onSave({ ...v, tags, amenities, coords: { lat: lat || 0, lng: lng || 0 }, createdBy: v.createdBy || user.id });
+    onSave({ ...v, tags, amenities, coords: { lat: lat || 0, lng: lng || 0 }, createdBy: v.createdBy || user.id, tier: v.tier || 'standard' });
   };
 
   return (
     <FormModal title="Gasztronómia" onCancel={onCancel}>
       <form onSubmit={(e) => { e.preventDefault(); handleSave(); }} className="flex flex-col h-full p-6 space-y-4">
-        <FormRow><FormField label="ID"><TextInput value={v.id} onChange={e => setV({ ...v, id: e.target.value })} /></FormField><FormField label="Név"><TextInput value={v.name} onChange={e => setV({ ...v, name: e.target.value })} /></FormField></FormRow>
+        <FormRow>
+          <FormField label="ID"><TextInput value={v.id} onChange={e => setV({ ...v, id: e.target.value })} /></FormField>
+          <FormField label="Név"><TextInput value={v.name} onChange={e => setV({ ...v, name: e.target.value })} /></FormField>
+        </FormRow>
+
+        {/* 🔥 MARKETING TIER SELECTOR */}
+        <div className="bg-yellow-50 dark:bg-yellow-900/10 p-4 border border-yellow-200 dark:border-yellow-700/30 rounded-xl mb-2">
+          <FormField label="Partner Szint (AI Prioritás) 🏆">
+            <select
+              className={inputClasses}
+              value={v.tier || 'standard'}
+              onChange={e => setV({ ...v, tier: e.target.value })}
+            >
+              <option value="standard">Alap (Standard)</option>
+              <option value="silver">🥈 Ezüst Partner (Kiemelt)</option>
+              <option value="gold">🥇 Arany Partner (Top Prioritás)</option>
+            </select>
+          </FormField>
+        </div>
+
         <FormRow><FormField label="Cím"><TextInput value={v.address} onChange={e => setV({ ...v, address: e.target.value })} /></FormField><FormField label="Típus"><TextInput value={v.type} onChange={e => setV({ ...v, type: e.target.value })} /></FormField></FormRow>
         <FormField label="Koordináták"><CoordsInput value={coordsInput} onChange={e => setCoordsInput(e.target.value)} /></FormField>
         <FormField label="Leírás"><TextArea value={v.description} onChange={e => setV({ ...v, description: e.target.value })} /></FormField>

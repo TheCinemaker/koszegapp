@@ -6,14 +6,9 @@ export default defineConfig({
   base: '/',
   plugins: [react()],
   server: {
-    port: 5173,
+    port: 3002,
     host: true, // Listen on all addresses
     strictPort: true,
-    hmr: {
-      protocol: 'ws',
-      host: 'localhost',
-      clientPort: 9999, // Connect via the Netlify proxy port
-    },
   },
   resolve: {
     alias: {

@@ -23,5 +23,5 @@
 
 [dev]
   framework = "vite"
-  port = 9999
+  port = 3002
   targetPort = 5173

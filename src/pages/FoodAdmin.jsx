@@ -150,7 +150,8 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
                 {/* Tabs */}
                 <div className="flex items-end pl-2 gap-0.5 relative z-10 -mb-[2px]">
                     <TabButton id="orders" label="Rendelések" active={activeTab} set={setActiveTab} />
-                    <TabButton id="menu" label="Étlap Szerkesztő" active={activeTab} set={setActiveTab} />
+                    <TabButton id="menu" label="Étlap" active={activeTab} set={setActiveTab} />
+                    <TabButton id="marketing" label="⚡ Marketing" active={activeTab} set={setActiveTab} />
                     <TabButton id="search" label="Keresés" active={activeTab} set={setActiveTab} />
                     <TabButton id="stats" label="Kimutatások" active={activeTab} set={setActiveTab} />
                     <TabButton id="profile" label="Beállítások" active={activeTab} set={setActiveTab} />
@@ -162,6 +163,7 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
                     <div className="max-w-full mx-auto">
                         {activeTab === 'orders' && <OrderList restaurantId={restaurantId} />}
                         {activeTab === 'menu' && <MenuEditor restaurantId={restaurantId} />}
+                        {activeTab === 'marketing' && <MarketingPanel restaurantId={restaurantId} />}
                         {activeTab === 'search' && <SearchPanel restaurantId={restaurantId} />}
                         {activeTab === 'stats' && <SalesSummary restaurantId={restaurantId} />}
                         {activeTab === 'profile' && <ProfileEditor restaurantId={restaurantId} />}
@@ -1502,6 +1504,206 @@ function SearchPanel({ restaurantId }) {
                     onStatusChange={handleStatusChange}
                     onPrint={printReceipt}
                 />
+            )}
+        </div>
+    );
+}
+
+// --- 6. MARKETING PANEL (FLASH SALE & MYSTERY BOX) ---
+function MarketingPanel({ restaurantId }) {
+    const [loading, setLoading] = useState(true);
+    const [flashSale, setFlashSale] = useState({
+        active: false,
+        discount: "20%",
+        message: "Minden pizzára!",
+        end_time: ""
+    });
+    const [mysteryBox, setMysteryBox] = useState([]);
+    const [showBoxModal, setShowBoxModal] = useState(false);
+    const [editingBox, setEditingBox] = useState(null);
+    const [boxForm, setBoxForm] = useState({ name: '', original_price: '', discounted_price: '', items_left: 1, pickup_time: '', description: '' });
+
+    // Load Data
+    useEffect(() => {
+        if (!restaurantId) return;
+        const loadMarketing = async () => {
+            const { data } = await supabase.from('restaurants').select('flash_sale, mystery_box').eq('id', restaurantId).single();
+            if (data) {
+                if (data.flash_sale) setFlashSale({ ...data.flash_sale });
+                if (data.mystery_box) setMysteryBox(data.mystery_box);
+            }
+            setLoading(false);
+        };
+        loadMarketing();
+    }, [restaurantId]);
+
+    // Flash Sale Logic
+    const saveFlashSale = async () => {
+        const { error } = await supabase.from('restaurants').update({ flash_sale: flashSale }).eq('id', restaurantId);
+        if (error) toast.error("Hiba a mentéskor");
+        else toast.success("Flash Sale frissítve! ⚡");
+    };
+
+    // Mystery Box Logic
+    const saveMysteryBox = async () => {
+        let newBoxes = [...mysteryBox];
+        if (editingBox) {
+            newBoxes = newBoxes.map(b => b.id === editingBox.id ? { ...boxForm, id: editingBox.id } : b);
+        } else {
+            newBoxes.push({ ...boxForm, id: `mb_${Date.now()}` });
+        }
+
+        const { error } = await supabase.from('restaurants').update({ mystery_box: newBoxes }).eq('id', restaurantId);
+
+        if (error) {
+            toast.error("Hiba a mentéskor");
+        } else {
+            setMysteryBox(newBoxes);
+            setShowBoxModal(false);
+            toast.success("Mystery Box mentve! 🎁");
+        }
+    };
+
+    const deleteBox = async (id) => {
+        if (!window.confirm("Biztos törlöd ezt a csomagot?")) return;
+        const newBoxes = mysteryBox.filter(b => b.id !== id);
+        const { error } = await supabase.from('restaurants').update({ mystery_box: newBoxes }).eq('id', restaurantId);
+        if (error) toast.error("Hiba a törléskor");
+        else {
+            setMysteryBox(newBoxes);
+            toast.success("Törölve.");
+        }
+    };
+
+    const openBoxModal = (box = null) => {
+        setEditingBox(box);
+        setBoxForm(box || { name: 'Meglepetés Csomag', original_price: '3000', discounted_price: '1500', items_left: 3, pickup_time: '20:00-21:00', description: 'Megmaradt finomságok...' });
+        setShowBoxModal(true);
+    };
+
+    if (loading) return <div className="p-10 text-center">Betöltés...</div>;
+
+    return (
+        <div className="max-w-4xl mx-auto space-y-6 pb-20">
+            {/* FLASH SALE SECTION */}
+            <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1`}>
+                <div className={`${WIN98.titleBar} mx-0 mb-1 bg-gradient-to-r from-red-800 to-orange-600`}>
+                    <span>⚡ FLASH SALE (Villámakció)</span>
+                </div>
+                <div className={`p-4 ${WIN98.borderInset} bg-white`}>
+                    <p className="text-sm mb-4 text-gray-600">
+                        Indíts azonnali akciót, amit a közeledben lévő felhasználók <strong>kiemelt értesítésként</strong> kapnak meg!
+                        Csak akkor használd, ha tényleg akció van, mert 2 óra múlva automatikusan lejár.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                        <div className="flex gap-2 items-center md:col-span-2 bg-yellow-100 p-2 border border-yellow-300">
+                            <input
+                                type="checkbox"
+                                className="w-5 h-5 accent-red-600"
+                                checked={flashSale.active}
+                                onChange={e => setFlashSale({ ...flashSale, active: e.target.checked })}
+                            />
+                            <span className="font-bold text-red-600">AKCIÓ AKTIVÁLÁSA</span>
+                        </div>
+
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold">Kedvezmény (pl. -20% vagy 1+1):</label>
+                            <input className={`w-full ${WIN98.borderInset} px-2 py-1`} value={flashSale.discount} onChange={e => setFlashSale({ ...flashSale, discount: e.target.value })} />
+                        </div>
+
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold">Lejárat Ideje:</label>
+                            <input type="datetime-local" className={`w-full ${WIN98.borderInset} px-2 py-1`} value={flashSale.end_time} onChange={e => setFlashSale({ ...flashSale, end_time: e.target.value })} />
+                            <div className="flex gap-2 mt-1">
+                                <button onClick={() => {
+                                    const d = new Date(); d.setHours(d.getHours() + 1);
+                                    setFlashSale({ ...flashSale, end_time: d.toISOString().slice(0, 16) });
+                                }} className="text-[10px] underline text-blue-600">+1 Óra</button>
+                                <button onClick={() => {
+                                    const d = new Date(); d.setHours(d.getHours() + 2);
+                                    setFlashSale({ ...flashSale, end_time: d.toISOString().slice(0, 16) });
+                                }} className="text-[10px] underline text-blue-600">+2 Óra</button>
+                            </div>
+                        </div>
+
+                        <div className="space-y-1 md:col-span-2">
+                            <label className="text-xs font-bold">Rövid Üzenet (pl. Minden Pizzára):</label>
+                            <input className={`w-full ${WIN98.borderInset} px-2 py-1`} value={flashSale.message} onChange={e => setFlashSale({ ...flashSale, message: e.target.value })} />
+                        </div>
+                    </div>
+
+                    <button onClick={saveFlashSale} className={`${WIN98.btn} w-full font-bold py-2 bg-red-100`}>
+                        💾 Flash Sale Mentése
+                    </button>
+                </div>
+            </div>
+
+            {/* MYSTERY BOX SECTION */}
+            <div className={`${WIN98.windowBg} ${WIN98.borderOutset} p-1`}>
+                <div className={`${WIN98.titleBar} mx-0 mb-1 bg-gradient-to-r from-purple-800 to-indigo-600`}>
+                    <span>🎁 MYSTERY BOX (Ételmentés)</span>
+                </div>
+                <div className={`p-4 ${WIN98.borderInset} bg-white`}>
+                    <p className="text-sm mb-4 text-gray-600">
+                        Zárás előtt maradt ételek? Add el őket csomagban, kedvezményesen!
+                        A rendszer automatikusan szól a felhasználóknak, ha közeledik az átvételi idő.
+                    </p>
+
+                    <button onClick={() => openBoxModal()} className={`${WIN98.btn} mb-4 flex items-center gap-2`}>
+                        <IoAddCircle className="text-lg" /> Új Csomag Hozzáadása
+                    </button>
+
+                    <div className="space-y-2">
+                        {mysteryBox.map(box => (
+                            <div key={box.id} className="border border-gray-300 p-2 flex justify-between items-center bg-gray-50">
+                                <div>
+                                    <h4 className="font-bold">{box.name} ({box.items_left} db maradt)</h4>
+                                    <p className="text-xs text-gray-500">Átvétel: {box.pickup_time} | Ár: {box.discounted_price} Ft <s className="text-gray-400">{box.original_price} Ft</s></p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => openBoxModal(box)} className={`${WIN98.btn} text-xs`}>Szerk.</button>
+                                    <button onClick={() => deleteBox(box.id)} className={`${WIN98.btn} text-xs text-red-600`}>Törlés</button>
+                                </div>
+                            </div>
+                        ))}
+                        {mysteryBox.length === 0 && <p className="text-center text-gray-400 italic">Nincs aktív csomag.</p>}
+                    </div>
+                </div>
+            </div>
+
+            {/* BOX MODAL */}
+            {showBoxModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50">
+                    <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-full max-w-md p-1 shadow-2xl`}>
+                        <div className={WIN98.titleBar}>
+                            <span>{editingBox ? 'Csomag Szerkesztése' : 'Új Csomag'}</span>
+                            <button onClick={() => setShowBoxModal(false)} className={`${WIN98.btn} px-2 py-0`}>x</button>
+                        </div>
+                        <div className={`p-4 ${WIN98.borderInset} bg-white space-y-3 mt-1`}>
+                            <div>
+                                <label className="text-xs font-bold">Név:</label>
+                                <input className={`w-full ${WIN98.borderInset} px-2 py-1`} value={boxForm.name} onChange={e => setBoxForm({ ...boxForm, name: e.target.value })} />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div><label className="text-xs font-bold">Eredeti Ár:</label><input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1`} value={boxForm.original_price} onChange={e => setBoxForm({ ...boxForm, original_price: e.target.value })} /></div>
+                                <div><label className="text-xs font-bold">Akciós Ár:</label><input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1`} value={boxForm.discounted_price} onChange={e => setBoxForm({ ...boxForm, discounted_price: e.target.value })} /></div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <div><label className="text-xs font-bold">Darabszám:</label><input type="number" className={`w-full ${WIN98.borderInset} px-2 py-1`} value={boxForm.items_left} onChange={e => setBoxForm({ ...boxForm, items_left: e.target.value })} /></div>
+                                <div><label className="text-xs font-bold">Átvétel (pl. 20:00-21:00):</label><input className={`w-full ${WIN98.borderInset} px-2 py-1`} value={boxForm.pickup_time} onChange={e => setBoxForm({ ...boxForm, pickup_time: e.target.value })} /></div>
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold">Leírás:</label>
+                                <textarea className={`w-full ${WIN98.borderInset} px-2 py-1`} rows={2} value={boxForm.description} onChange={e => setBoxForm({ ...boxForm, description: e.target.value })} />
+                            </div>
+                            <div className="flex justify-end gap-2 pt-2">
+                                <button onClick={() => setShowBoxModal(false)} className={`${WIN98.btn}`}>Mégse</button>
+                                <button onClick={saveMysteryBox} className={`${WIN98.btn} font-bold`}>Mentés</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

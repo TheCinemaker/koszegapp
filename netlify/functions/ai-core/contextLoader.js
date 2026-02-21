@@ -98,7 +98,25 @@ async function loadRestaurants() {
     try {
         const { data: db } = await supabase.from('restaurants').select('*').limit(5);
         if (db) {
-            const seenNames = new Set(local.map(r => r.name.toLowerCase()));
+            // Create a map of DB entries by normalized name for faster lookup
+            const dbMap = new Map(db.map(r => [r.name.toLowerCase(), r]));
+            const seenNames = new Set();
+
+            // 1. Merge DB data INTO local items if match found (Dynamic Update)
+            local.forEach(r => {
+                const key = r.name.toLowerCase();
+                seenNames.add(key);
+                if (dbMap.has(key)) {
+                    const dbItem = dbMap.get(key);
+                    // Inject dynamic fields from Supabase (Owner Controls)
+                    if (dbItem.flash_sale) r.flash_sale = dbItem.flash_sale;
+                    if (dbItem.mystery_box) r.mystery_box = dbItem.mystery_box;
+                    if (dbItem.tier) r.tier = dbItem.tier; // Allow DB override for Tier too
+                    // if (dbItem.is_open !== undefined) r.is_open = dbItem.is_open; // Future: Opening status
+                }
+            });
+
+            // 2. Add NEW items from DB that aren't in local
             db.forEach(r => {
                 if (!seenNames.has(r.name.toLowerCase())) {
                     local.push(r);
@@ -106,6 +124,15 @@ async function loadRestaurants() {
             });
         }
     } catch (e) { }
+    // 💰 PAID PRIORITY SORTING (Gold > Silver > Standard)
+    const tierScore = (tier) => {
+        if (tier === 'gold') return 3;
+        if (tier === 'silver') return 2;
+        return 1;
+    };
+
+    local.sort((a, b) => tierScore(b.tier) - tierScore(a.tier));
+
     return local.slice(0, 40);
 }
 

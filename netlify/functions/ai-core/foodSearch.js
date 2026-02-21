@@ -32,12 +32,14 @@ export async function searchMenu(query) {
                 is_available,
                 restaurant_id,
                 restaurants (
-                    name
+                    name,
+                    tier
                 )
             `)
             .eq('is_available', true)
             .or(`name.ilike.${searchTerm},description.ilike.${searchTerm}`)
-            .limit(5); // Limit to top 5 matches to save token context
+            //.order('restaurants(tier)', { ascending: false }) // Ideal if Supabase relation sorting worked easily, but we'll do in JS
+            .limit(10); // Limit higher to allow filtering
 
         if (error) {
             console.error("Supabase Search Error:", error);
@@ -45,11 +47,26 @@ export async function searchMenu(query) {
         }
 
         console.timeEnd("SUPABASE_SEARCH");
-        return data.map(item => ({
+
+        // 💰 PAID PRIORITY SORTING
+        const tierScore = (tier) => {
+            if (tier === 'gold') return 3;
+            if (tier === 'silver') return 2;
+            return 1;
+        };
+
+        const sortedData = data.sort((a, b) => {
+            const tierA = a.restaurants?.tier;
+            const tierB = b.restaurants?.tier;
+            return tierScore(tierB) - tierScore(tierA);
+        });
+
+        return sortedData.slice(0, 5).map(item => ({
             item: item.name,
             price: item.price,
             description: item.description,
-            place: item.restaurants?.name
+            place: item.restaurants?.name,
+            isPremium: item.restaurants?.tier === 'gold' || item.restaurants?.tier === 'silver'
         }));
 
     } catch (err) {

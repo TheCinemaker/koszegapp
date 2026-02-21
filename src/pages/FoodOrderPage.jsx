@@ -58,6 +58,20 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
                 </div>
             </div>
             <div className="p-4 relative z-10 flex-1 flex flex-col">
+                {/* MARKETING BADGES */}
+                <div className="flex flex-col gap-1 items-start mb-2">
+                    {restaurant.flash_sale?.active && (
+                        <span className="px-2 py-0.5 rounded-md bg-red-600 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-red-400">
+                            ⚡ FLASH SALE
+                        </span>
+                    )}
+                    {restaurant.mystery_box?.length > 0 && (
+                        <span className="px-2 py-0.5 rounded-md bg-indigo-600 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-indigo-400">
+                            🎁 Ételmentés
+                        </span>
+                    )}
+                </div>
+
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">{restaurant.name}</h3>
                 <div className="flex flex-wrap gap-1.5 mb-2 min-h-[20px]">
                     {restaurant.promotions && <span className="text-[9px] font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-red-100 dark:border-red-900/30"><IoGift className="text-[10px]" /> <span className="truncate max-w-[120px]">{restaurant.promotions}</span></span>}
@@ -319,6 +333,7 @@ export default function FoodOrderPage() {
         }).subscribe();
         return () => supabase.removeChannel(chan);
     }, [user]);
+
     if (authLoading) {
         return (
             <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] flex justify-center items-center">
@@ -326,6 +341,45 @@ export default function FoodOrderPage() {
             </div>
         );
     }
+
+    // 4. Mystery Box Enforcement & Mutual Exclusivity
+    const hasMysteryBox = items.some(i => i.is_mystery_box);
+
+    // Reset filter to delivery if cart becomes empty to prevent getting "stuck" in collection mode
+    useEffect(() => {
+        if (hasMysteryBox) {
+            setFilterType('collection');
+            if (isCartOpen) toast("🥡 Mystery Box csak személyes átvétellel kérhető!", { id: 'mb-pickup-toast' });
+        } else if (items.length === 0) {
+            setFilterType('delivery');
+        }
+    }, [hasMysteryBox, isCartOpen, items.length]);
+
+    // Custom Add Item handler to enforce rules
+    const handleAddItem = (item) => {
+        const isAddingMystery = item.is_mystery_box;
+        const hasNormalItems = items.some(i => !i.is_mystery_box);
+
+        // Rule 1: Cannot add Normal item if Mystery Box in cart
+        if (!isAddingMystery && hasMysteryBox) {
+            toast.error("🥡 Mystery Box mellé nem rendelhető más étel! Kérlek, rendeld meg külön.", { icon: '🚫' });
+            return;
+        }
+
+        // Rule 2: Cannot add Mystery Box if Normal item in cart
+        if (isAddingMystery && hasNormalItems) {
+            toast.error("🥡 Mystery Box csak önmagában rendelhető! Kérlek, ürítsd ki a kosarat.", { icon: '🚫' });
+            return;
+        }
+
+        addItem(item);
+        if (isAddingMystery) {
+            toast.success("🎁 Mystery Box a kosárban! (Csak személyes átvétel)", { duration: 4000 });
+        } else {
+            toast.success("Hozzáadva a kosárhoz! 🛒");
+        }
+    };
+
 
     return (
         <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-x-hidden pb-24 font-sans transition-colors duration-300">
@@ -402,7 +456,7 @@ export default function FoodOrderPage() {
 
                     {/* RIGHT: Delivery/Collection Slider */}
                     <div className={view === 'restaurants' ? 'block' : 'opacity-0 pointer-events-none'}>
-                        <DeliveryCollectionSlider value={filterType} onChange={setFilterType} />
+                        <DeliveryCollectionSlider value={filterType} onChange={hasMysteryBox ? () => toast.error("Mystery Box miatt csak elvitel lehetséges!") : setFilterType} disabled={hasMysteryBox} />
                     </div>
                 </div>
             </div>
@@ -444,8 +498,13 @@ export default function FoodOrderPage() {
                     {view === 'menu' && selectedRestaurant && (
                         <div className="pb-24">
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/60 dark:bg-[#1a1c2e]/60 backdrop-blur-[30px] rounded-[2rem] p-5 border border-white/60 dark:border-white/10 shadow-xl mb-6 relative overflow-hidden">
+                                {selectedRestaurant.flash_sale?.active && (
+                                    <div className="absolute top-0 left-0 right-0 bg-red-600 text-white text-center text-xs font-bold py-1 uppercase tracking-widest z-20">
+                                        ⚡ {selectedRestaurant.flash_sale.message || 'FLASH SALE!'} (-{selectedRestaurant.flash_sale.discount})
+                                    </div>
+                                )}
                                 <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
-                                <div className="flex flex-col md:flex-row gap-5 relative z-10">
+                                <div className={`flex flex-col md:flex-row gap-5 relative z-10 ${selectedRestaurant.flash_sale?.active ? 'pt-6' : ''}`}>
                                     <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0">
                                         {selectedRestaurant.image_url ? <ParallaxImage src={selectedRestaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-zinc-800" />}
                                     </div>
@@ -460,12 +519,57 @@ export default function FoodOrderPage() {
                                     </div>
                                 </div>
                             </motion.div>
+
+                            {/* MYSTERY BOX SECTION */}
+                            {selectedRestaurant.mystery_box?.length > 0 && (
+                                <div className="mb-8 p-4 bg-gradient-to-r from-indigo-900/20 to-purple-900/20 border border-indigo-500/30 rounded-[2rem] relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-indigo-500/5 backdrop-blur-sm -z-10" />
+                                    <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-indigo-400 dark:text-indigo-300 pl-1">
+                                        <span className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm shadow-md">🎁</span>
+                                        Ételmentés (Mystery Box)
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {selectedRestaurant.mystery_box.map(box => (
+                                            <div key={box.id} className="bg-white/80 dark:bg-[#1a1c2e]/80 rounded-[1.5rem] p-3 border border-indigo-200 dark:border-indigo-900/50 flex items-center gap-3 relative overflow-hidden group">
+                                                <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">
+                                                    ❓
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-bold text-sm text-gray-900 dark:text-white truncate">{box.name}</h4>
+                                                    <div className="flex items-baseline gap-2">
+                                                        <span className="text-indigo-600 dark:text-indigo-400 font-bold text-sm">{box.discounted_price} Ft</span>
+                                                        <span className="text-gray-400 text-[10px] line-through">{box.original_price} Ft</span>
+                                                    </div>
+                                                    <div className="text-[10px] text-gray-500 mt-1 flex items-center gap-1">
+                                                        <IoTime className="text-indigo-400" /> Átvétel: {box.pickup_time}
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => handleAddItem({
+                                                        id: `mb-${box.id}`,
+                                                        name: box.name,
+                                                        price: box.discounted_price,
+                                                        quantity: 1,
+                                                        is_mystery_box: true,
+                                                        restaurant_id: selectedRestaurant.id,
+                                                        // placeholder image
+                                                        image_url: 'https://cdn-icons-png.flaticon.com/512/5726/5726678.png'
+                                                    })}
+                                                    className="h-8 px-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-full shadow-md transition-colors"
+                                                >
+                                                    Kosárba
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                             {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
                                 <div className="space-y-8">
                                     {categories.map((category) => (
                                         <div key={category.id} id={`cat-${category.id}`}>
                                             <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{category.items.map(item => <MenuItemCard key={item.id} item={item} onAdd={() => addItem({ ...item, restaurant_id: selectedRestaurant.id })} />)}</div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{category.items.map(item => <MenuItemCard key={item.id} item={item} onAdd={() => handleAddItem({ ...item, restaurant_id: selectedRestaurant.id })} />)}</div>
                                         </div>
                                     ))}
                                     {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
@@ -513,7 +617,7 @@ export default function FoodOrderPage() {
             </div>
 
             <AnimatePresence>
-                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} />}
+                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} />}
             </AnimatePresence>
         </div>
     );
@@ -570,7 +674,7 @@ function SearchBarWithTypewriter({ value, onChange }) {
 }
 
 // 3. SLIDER TOGGLE (Drag based)
-function DeliveryCollectionSlider({ value, onChange }) {
+function DeliveryCollectionSlider({ value, onChange, disabled }) {
     // Shrunk dimensions: Container 160px, Handle moves 80px
     const WIDTH = 80;
     const x = useMotionValue(value === "delivery" ? 0 : WIDTH);
@@ -580,7 +684,7 @@ function DeliveryCollectionSlider({ value, onChange }) {
     }, [value]);
 
     return (
-        <div className="relative w-[160px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5 mx-auto lg:mx-0">
+        <div className={`relative w-[160px] h-8 bg-white dark:bg-zinc-800/60 backdrop-blur-md rounded-full p-1 flex items-center shadow-sm border border-gray-100 dark:border-white/5 mx-auto lg:mx-0 ${disabled ? 'opacity-50 grayscale' : ''}`}>
 
             {/* Background labels */}
             <div className="absolute inset-0 flex text-[9px] font-bold text-gray-400 uppercase tracking-wider select-none pointer-events-none">
@@ -594,12 +698,13 @@ function DeliveryCollectionSlider({ value, onChange }) {
 
             {/* Draggable pill */}
             <motion.div
-                drag="x"
+                drag={disabled ? false : "x"}
                 dragConstraints={{ left: 0, right: WIDTH }}
                 dragElastic={0.1}
                 dragMomentum={false}
                 style={{ x }}
                 onDragEnd={() => {
+                    if (disabled) return;
                     const currentX = x.get();
                     if (currentX > WIDTH / 2) {
                         onChange("collection");
@@ -607,7 +712,7 @@ function DeliveryCollectionSlider({ value, onChange }) {
                         onChange("delivery");
                     }
                 }}
-                onTap={() => onChange(value === 'delivery' ? 'collection' : 'delivery')}
+                onTap={() => { if (!disabled) onChange(value === 'delivery' ? 'collection' : 'delivery') }}
                 animate={{ x: value === "delivery" ? 0 : WIDTH }}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 className="absolute w-1/2 h-6 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full shadow-md flex items-center justify-center gap-1 text-[9px] font-bold cursor-grab active:cursor-grabbing z-10"
@@ -702,8 +807,7 @@ function MyOrdersList({ user }) {
         </div>
     );
 }
-function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId }) {
-    const { user } = useAuth();
+function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user }) {
     const [step, setStep] = useState('cart');
     const [form, setForm] = useState({ name: '', phone: '', address: '', note: '', paymentMethod: 'cash' });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -738,7 +842,12 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
             await Promise.all(Object.keys(ordersByRestaurant).map(rId =>
                 placeOrder({
                     restaurantId: rId,
-                    customer: { ...form, userId: user?.id }, // form now includes paymentMethod
+                    customer: {
+                        ...form,
+                        userId: user?.id,
+                        // If collection, override address
+                        address: orderType === 'collection' ? 'Személyes átvétel' : form.address
+                    },
                     cartItems: ordersByRestaurant[rId]
                 })
             ));
@@ -761,13 +870,32 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                 <div className="p-6 border-b border-black/5 dark:border-white/5 flex items-center justify-between"><h2 className="text-lg font-black">{step === 'cart' ? 'Kosarad 🛒' : 'Befejezés ✨'}</h2><button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:scale-110 transition-transform"><IoClose /></button></div>
                 <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
                     {items.length === 0 ? <div className="h-full flex flex-col items-center justify-center text-gray-400"><IoBasket className="text-5xl mb-3 opacity-20" /><p className="text-sm">Még üres...</p></div> :
-                        step === 'cart' ? <div className="space-y-3">{items.map(item => (<div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5"><div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">{item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}</div><div className="flex-1 min-w-0"><h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4><p className="text-[10px] text-amber-600 font-bold">{item.price} Ft</p></div><div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm"><button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button><span className="text-xs font-bold w-3 text-center">{item.quantity}</span><button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button></div></div>))}</div> :
+                        step === 'cart' ?
+                            <div className="space-y-3">
+                                {orderType === 'collection' && (
+                                    <div className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 p-3 rounded-xl text-center text-xs font-bold border border-amber-200 dark:border-amber-900/50">
+                                        🚶 Személyes átvétel kiválasztva
+                                    </div>
+                                )}
+                                {items.map(item => (<div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5"><div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">{item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}</div><div className="flex-1 min-w-0"><h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4><p className="text-[10px] text-amber-600 font-bold">{item.price} Ft</p></div><div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm"><button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button><span className="text-xs font-bold w-3 text-center">{item.quantity}</span><button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button></div></div>))}
+                                <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center font-black text-lg">
+                                    <span>Összesen:</span>
+                                    <span>{total} Ft</span>
+                                </div>
+                                <button onClick={() => setStep('checkout')} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 mt-4 active:scale-95 transition-transform">Tovább a fizetéshez</button>
+                            </div> :
                             <form id="checkout-form" onSubmit={handleSubmit} className="space-y-4">
                                 <div className="space-y-2">
                                     <input required type="text" placeholder="Név" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
                                     <input required type="tel" placeholder="Telefonszám" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
-                                    <input required type="text" placeholder="Cím" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
-                                    <textarea rows={3} placeholder="Megjegyzés futárnak..." className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm resize-none" value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} />
+                                    {orderType !== 'collection' ? (
+                                        <input required type="text" placeholder="Cím" className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm" value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} />
+                                    ) : (
+                                        <div className="p-3 rounded-xl bg-gray-100 dark:bg-white/5 text-gray-500 text-xs font-bold text-center border border-dashed border-gray-300 dark:border-white/10">
+                                            📍 Cím nem szükséges (Személyes átvétel)
+                                        </div>
+                                    )}
+                                    <textarea rows={3} placeholder="Megjegyzés..." className="w-full p-3 rounded-xl bg-gray-50 dark:bg-white/5 border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-black transition-all outline-none font-bold text-sm resize-none" value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} />
                                 </div>
 
                                 {/* PAYMENT METHOD SELECTION */}
@@ -788,7 +916,7 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                                             className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'card_terminal' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
                                         >
                                             <div className="text-lg">💳</div>
-                                            <span className="text-[10px] font-bold">Kártya (Futárnál)</span>
+                                            <span className="text-[10px] font-bold">Kártya</span>
                                         </button>
                                         <button
                                             type="button"
@@ -800,10 +928,13 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                                         </button>
                                     </div>
                                 </div>
+                                <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2">
+                                    {isSubmitting ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div> : <span>Rendelés leadása</span>}
+                                </button>
+                                <button type="button" onClick={() => setStep('cart')} className="w-full py-2 text-zinc-500 text-xs font-bold hover:text-amber-500 transition-colors">Vissza a kosárhoz</button>
                             </form>
                     }
                 </div>
-                {items.length > 0 && <div className="p-6 bg-white dark:bg-zinc-900 border-t border-black/5 dark:border-white/5 pb-10"><div className="flex justify-between items-end mb-4"><span className="text-gray-500 font-bold text-sm">Végösszeg (+{Math.floor(total / 100)} pont)</span><span className="text-2xl font-black text-amber-500">{total.toLocaleString('hu-HU')} Ft</span></div>{step === 'cart' ? <button onClick={() => setStep('checkout')} className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl shadow-xl shadow-amber-500/20 active:scale-95 transition-all text-base">Fizetés</button> : <div className="flex gap-3"><button type="button" onClick={() => setStep('cart')} className="px-5 py-3 bg-gray-100 dark:bg-white/10 font-bold rounded-xl hover:bg-gray-200 transition-colors text-sm">Vissza</button><button type="submit" form="checkout-form" disabled={isSubmitting} className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-black rounded-xl shadow-xl shadow-green-500/20 active:scale-95 transition-all text-base flex justify-center">{isSubmitting ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Rendelés Leadása'}</button></div>}</div>}
             </motion.div>
         </div>
     );

@@ -105,6 +105,7 @@ export function AIOrchestratorProvider({ children, appData, weather }) {
             hour: new Date().getHours(),
             weather,
             events: appData.events || [],
+            restaurants: appData.restaurants || [],
             lastShown: parseInt(localStorage.getItem("ai_last_shown") || 0),
             userBehavior,
             userProfile: getUserProfile()
