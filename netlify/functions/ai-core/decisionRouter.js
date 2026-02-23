@@ -135,11 +135,11 @@ export function scoreItem(item, context) {
 
     // 6. Persona-driven scoring (Brutal Intelligence)
     if (persona === 'tourist' && item.priority >= 8) {
-        score += 2;
+        score += 3;
         reasons.personaTouristBoost = true;
     }
     if (persona === 'local' && (item.walkingDistanceFromCenter <= 3 || item.type === 'service')) {
-        score += 2;
+        score += 3;
         reasons.personaLocalBoost = true;
     }
 
@@ -147,6 +147,21 @@ export function scoreItem(item, context) {
     if (aiProfile?.indoor_preference > 7 && item.indoor) {
         score += 4;
         reasons.memoryIndoorBoost = true;
+    }
+
+    // 💰 PARTNER TIER BOOST (Sales Strategy)
+    if (item.tier === 'gold') {
+        score += 10;
+        reasons.tierGoldBoost = true;
+    } else if (item.tier === 'silver') {
+        score += 5;
+        reasons.tierSilverBoost = true;
+    }
+
+    // 🎁 MYSTERY BOX BOOST
+    if (item.mystery_box && item.mystery_box.length > 0) {
+        score += 7;
+        reasons.mysteryBoxBoost = true;
     }
 
     return { score, reasons };

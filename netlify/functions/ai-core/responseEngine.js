@@ -173,20 +173,20 @@ function generateItineraryResponse(query, context) {
 }
 
 function getThreshold(intent) {
-    if (intent === 'events') return 0.75;
-    if (intent === 'attractions') return 0.7;
-    if (intent.includes('food')) return 0.6;
-    return 0.8;
+    return 0.9; // Higher threshold to favor LLM's natural tone
 }
 
 function buildSlimContext(context) {
     const decision = context.decision;
     return {
-        recommendations: decision?.topRecommendations?.slice(0, 3).map(r => ({
+        recommendations: decision?.topRecommendations?.slice(0, 10).map(r => ({
             id: r.id,
             name: r.name,
             description: r.description,
-            score: r.aiScore
+            score: r.aiScore,
+            tags: r.tags,
+            location: r.location,
+            mystery_box: !!(r.mystery_box && r.mystery_box.length > 0)
         })) || [],
         signals: decision?.signals || {},
         allIntents: context.allIntents || [],
@@ -196,7 +196,10 @@ function buildSlimContext(context) {
 
 function normalizeOutput(parsed, decision) {
     if (!parsed.text) parsed.text = "Rendben!";
-    if (!parsed.action) parsed.action = decision?.action || null;
+    if (!parsed.action) {
+        // Only use deterministic action if LLM didn't provide one
+        parsed.action = decision?.action || null;
+    }
     if (!parsed.confidence) parsed.confidence = decision?.confidence || 0.5;
     return parsed;
 }
