@@ -20,6 +20,18 @@ async function readJSON(filename) {
     }
 }
 
+// Helper to read Markdown data
+async function readMarkdown(filename) {
+    try {
+        const response = await fetch(`${CONFIG.BASE_URL}/data/${filename}`);
+        if (!response.ok) return '';
+        return await response.text();
+    } catch (error) {
+        console.error(`Error reading ${filename}:`, error);
+        return '';
+    }
+}
+
 // Data loaders
 async function loadEvents() {
     try {
@@ -178,11 +190,13 @@ export async function loadContext(intents, query, userId, frontendContext = {}) 
     console.log(`🧠 LOADING SLIM CONTEXT for: ${intents.join(', ')}`);
 
     // 1. Load Base Data & Personality (CONCURRENTLY)
-    const [recentHistory, profile, vehicles, aiProfile] = await Promise.all([
+    const [recentHistory, profile, vehicles, aiProfile, koszegKnowledge, kalandiaKnowledge] = await Promise.all([
         loadRecentLogs(userId),
         loadUserProfile(userId),
         loadUserVehicles(userId),
-        loadAIProfile(userId)
+        loadAIProfile(userId),
+        readMarkdown('koszeg_knowledge.md'),
+        readMarkdown('kalandia_knowledge.md')
     ]);
 
     const weather = frontendContext.weather || { raining: false, temp: 20 };
@@ -200,6 +214,10 @@ export async function loadContext(intents, query, userId, frontendContext = {}) 
         currentQuery: query,
         weather,
         appMode,
+        knowledge: {
+            koszeg: koszegKnowledge,
+            kalandia: kalandiaKnowledge
+        },
         appData: {}
     };
 

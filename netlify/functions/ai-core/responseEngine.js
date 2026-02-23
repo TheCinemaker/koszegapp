@@ -71,6 +71,10 @@ AKTUÁLIS IDŐ: ${now}
 PERSONA: ${persona}
 DETEKTÁLT SZÁNDÉKOK: ${JSON.stringify(slimContext.allIntents)}
 
+TUDÁSBÁZIS (EXTERN):
+${slimContext.knowledge?.koszeg || ''}
+${slimContext.knowledge?.kalandia || ''}
+
 TOP AJÁNLÁSOK:
 ${JSON.stringify(slimContext.recommendations, null, 2)}
 
@@ -185,7 +189,8 @@ function buildSlimContext(context) {
             score: r.aiScore
         })) || [],
         signals: decision?.signals || {},
-        allIntents: context.allIntents || []
+        allIntents: context.allIntents || [],
+        knowledge: context.knowledge || {}
     };
 }
 
