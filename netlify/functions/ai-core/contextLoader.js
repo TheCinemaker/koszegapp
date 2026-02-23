@@ -106,7 +106,7 @@ async function loadRestaurants() {
             });
         }
     } catch (e) { }
-    return local.slice(0, 15);
+    return local.slice(0, 40);
 }
 
 async function loadPopularFood() {

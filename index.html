@@ -10,12 +10,18 @@
   <title>KőszegAPP</title>
 
   <script type="module">
-    import { injectIntoGlobalHook } from "/@react-refresh";
-    if (typeof window !== 'undefined') {
-      injectIntoGlobalHook(window);
-      window.$RefreshReg$ = () => { };
-      window.$RefreshSig$ = () => (type) => type;
-      window.__vite_plugin_react_preamble_installed__ = true;
+    // ONLY run react-refresh preamble in development to avoid build errors
+    if (location.hostname === 'localhost' || location.hostname.includes('127.0.0.1')) {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.innerHTML = `
+        import { injectIntoGlobalHook } from "/@react-refresh";
+        injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => { };
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+      `;
+      document.head.appendChild(script);
     }
   </script>
 
