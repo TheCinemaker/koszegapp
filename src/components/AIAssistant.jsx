@@ -46,6 +46,25 @@ const QUICK_ACTIONS = [
     { label: 'Szállás', icon: IoBedOutline, query: 'Hol szállhatok meg?' },
 ];
 
+const getActionDetails = (action) => {
+    if (!action) return null;
+    switch (action.type) {
+        case 'navigate_to_events': return { label: 'Események megnyitása 📅', icon: IoTicketOutline };
+        case 'navigate_to_event_detail': return { label: 'Esemény részletei ℹ️', icon: IoTicketOutline };
+        case 'navigate_to_parking': return { label: 'Parkolás megnyitása 🚗', icon: IoCarOutline };
+        case 'navigate_to_attractions': return { label: 'Látnivalók megnyitása 🏰', icon: IoTelescopeOutline };
+        case 'navigate_to_hotels': return { label: 'Szállások megnyitása 🏨', icon: IoBedOutline };
+        case 'navigate_to_leisure': return { label: 'Szabadidő megnyitása 🌳', icon: IoTelescopeOutline };
+        case 'navigate_to_pass': return { label: 'KőszegPASS megnyitása 💳', icon: IoSparkles };
+        case 'navigate_to_info': return { label: 'Információk megnyitása ℹ️', icon: IoSparkles };
+        case 'buy_parking_ticket': return { label: `Parkolás indítása (${action.params?.licensePlate || 'Rendszám'}) 🎫`, icon: IoCarOutline };
+        case 'open_external_map': return { label: 'Útvonaltervezés indítása 📍', icon: IoNavigate };
+        case 'call_phone': return { label: 'Hívás indítása 📞', icon: IoSparkles };
+        case 'call_emergency': return { label: 'SEGÍTSÉGKÉRÉS (112) 🆘', icon: IoSparkles, isUrgent: true };
+        default: return null;
+    }
+};
+
 export default function AIAssistant() {
     const { user, token } = useAuth();
     const { suggestion, acceptSuggestion, dismiss: dismissSuggestion, setLastDecision, userLocation, weather } = useContext(AIOrchestratorContext);
@@ -199,7 +218,15 @@ export default function AIAssistant() {
                     if (['events', 'accommodation', 'general_info', 'planning'].includes(i))
                         import('../ai/BehaviorEngine').then(({ setTravelIntent }) => setTravelIntent(true));
                 }
-                if (data.action) handleNavigation(data.action);
+                if (data.action) {
+                    // background actions (no navigation) can still be auto-triggered
+                    const noAutoRun = ['navigate_to', 'buy_parking_ticket', 'open_external_map', 'call_phone', 'call_emergency'];
+                    const isNavAction = noAutoRun.some(prefix => data.action.type.startsWith(prefix));
+
+                    if (!isNavAction) {
+                        handleNavigation(data.action);
+                    }
+                }
                 if (data.debug || data.action)
                     setLastDecision({ intent: data.debug?.intent || 'unknown', action: data.action, score: data.debug?.score, timestamp: new Date().toISOString(), ...data.debug });
             } else throw new Error('Backend failed');
@@ -442,10 +469,25 @@ export default function AIAssistant() {
                                         : 'bg-white/60 dark:bg-white/8 backdrop-blur-sm text-gray-800 dark:text-gray-100 rounded-[18px] rounded-bl-[4px] border border-white/60 dark:border-white/10 shadow-sm'
                                         }`}>
                                         {msg.content}
-                                        {msg.action?.type && (
-                                            <div className="mt-1.5 pt-1.5 border-t border-white/20 dark:border-white/10 text-[11px] opacity-55 flex items-center gap-1">
-                                                <IoNavigate size={10} /><span>Megnyitás...</span>
-                                            </div>
+                                        {msg.action && getActionDetails(msg.action) && (
+                                            <motion.button
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.96 }}
+                                                onClick={(e) => { e.stopPropagation(); handleNavigation(msg.action); }}
+                                                className={`
+                                                    mt-3 w-full flex items-center justify-between gap-3 px-4 py-3
+                                                    rounded-xl shadow-sm border transition-all
+                                                    ${getActionDetails(msg.action).isUrgent
+                                                        ? 'bg-red-500 text-white border-red-400 font-bold'
+                                                        : 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border-indigo-100 dark:border-indigo-800/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60'}
+                                                `}
+                                            >
+                                                <div className="flex items-center gap-2.5">
+                                                    {React.createElement(getActionDetails(msg.action).icon, { className: "text-lg shrink-0" })}
+                                                    <span className="font-bold text-[13px]">{getActionDetails(msg.action).label}</span>
+                                                </div>
+                                                <IoNavigate className="opacity-50" size={14} />
+                                            </motion.button>
                                         )}
                                     </div>
                                 </motion.div>
