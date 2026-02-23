@@ -22,7 +22,6 @@ export async function runAI({ query, history, frontendContext }) {
             }
         }
 
-        let decision = null;
         let menuItems = [];
         let topRecommendations = [];
 
@@ -38,21 +37,19 @@ export async function runAI({ query, history, frontendContext }) {
         };
 
         console.time("DECISION_ROUTER");
-        const decisionResult = decideAction({
+        const decision = decideAction({
             intents,
             query,
             context: decisionContext
         });
         console.timeEnd("DECISION_ROUTER");
 
-        decision = decisionResult;
-        const primaryIntent = decisionResult.intent;
-        topRecommendations = decisionResult.topRecommendations || [];
+        const primaryIntent = decision.primaryIntent;
+        topRecommendations = decision.primaryRecommendations || [];
+        const allResolvedIntents = [primaryIntent, ...(decision.secondaryIntents || [])];
 
-        const allResolvedIntents = decisionResult.intents || [primaryIntent];
-
-        // 🍔 Special Food Search (Trigger if any intent involves food)
-        if (intents.some(i => i.includes('food')) || allResolvedIntents.some(i => i.includes('food'))) {
+        // 🍔 Special Food Search (Trigger if primary or original intent involves food)
+        if (intents.some(i => i?.includes('food')) || (primaryIntent && primaryIntent.includes('food'))) {
             const cleanQuery = query.replace(/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizzéria|szeretnék|kérek/gi, "").trim();
             if (cleanQuery.length > 2) {
                 console.time("FOOD_SEARCH");
@@ -75,8 +72,8 @@ export async function runAI({ query, history, frontendContext }) {
 
         // 🧠 LEARNING (Non-blocking)
         const userId = frontendContext?.userId;
-        if (userId && decisionResult) {
-            updateAIProfile(userId, decisionResult).catch(e => console.error('❌ Learning failed:', e.message));
+        if (userId && decision) {
+            updateAIProfile(userId, decision).catch(e => console.error('❌ Learning failed:', e.message));
         }
 
         // 📝 LOGGING (Non-blocking)
@@ -90,7 +87,16 @@ export async function runAI({ query, history, frontendContext }) {
             context: { mode: frontendContext?.mode, location: frontendContext?.location, allIntents: allResolvedIntents }
         }).catch(e => console.error('❌ Log failed:', e.message));
 
-        return { ...result, intent: primaryIntent, topRecommendations };
+        return {
+            ...result,
+            intent: primaryIntent,
+            topRecommendations,
+            metadata: {
+                primaryIntent,
+                secondaryIntents: decision.secondaryIntents,
+                topRecommendations // This is primaryRecommendations internally
+            }
+        };
 
     } catch (error) {
         console.error("AI run failed:", error);

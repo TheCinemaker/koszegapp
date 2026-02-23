@@ -17,13 +17,13 @@ export function detectPersona(context, query) {
         return "tourist";
     }
 
-    // 2. Specific local-only topics
-    if (/hol parkoljak|jegy|automata|szemétszállítás|okmányiroda|hivatali/.test(q)) {
+    // 2. Specific local-only topics (Synced with intentMatcher + added local services)
+    if (/parkol|rendszám|jegy|zóna|fizetés|szemétszállítás|okmányiroda|hivatali|ügyelet|patika|orvos/.test(q)) {
         return "local";
     }
 
     // 3. Tourist topics
-    if (/látnivaló|program|mit érdemes|történet|legenda|szállás/.test(q)) {
+    if (/látnivaló|műemlék|templom|vár|múzeum|legenda|szállás|szoba|panzió/.test(q)) {
         return "tourist";
     }
 

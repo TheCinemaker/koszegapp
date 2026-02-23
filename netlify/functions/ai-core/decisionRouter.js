@@ -31,15 +31,18 @@ export function detectExplicitMatch(query, list) {
 
 export function calculateConfidence(list) {
     if (!list || list.length === 0) return 0;
+
     const best = list[0].aiScore;
-    if (list.length === 1) return Math.min(1, best / 10);
+    const second = list[1]?.aiScore || 0;
 
-    // Improved: Combine relative difference and absolute quality
-    const absoluteQuality = best;
-    const relativeDiff = best - list[1].aiScore;
+    // Confidence 3.0: Balanced Quality/Difference Model
+    const relative = Math.max(0, best - second);
+    const absolute = best / 15; // normalized to realistic max score (e.g., 15)
 
-    // (relativeDiff / 10) * (absoluteQuality / 10) - scaled
-    return Math.min(1, Math.max(0.1, (relativeDiff / 10) * (absoluteQuality / 10)));
+    // Formula: 60% relative gap, 40% absolute quality
+    const confidence = (relative * 0.6) + (absolute * 0.4);
+
+    return Math.min(1, Math.max(0.1, confidence / 10));
 }
 
 export function scoreItem(item, context) {
@@ -133,13 +136,13 @@ export function scoreItem(item, context) {
         score += 2;
     }
 
-    // 6. Persona-driven scoring (Brutal Intelligence)
+    // 6. Persona-driven scoring (Balanced)
     if (persona === 'tourist' && item.priority >= 8) {
-        score += 3;
+        score += 2;
         reasons.personaTouristBoost = true;
     }
-    if (persona === 'local' && (item.walkingDistanceFromCenter <= 3 || item.type === 'service')) {
-        score += 3;
+    if (persona === 'local' && (typeof item.walkingDistanceFromCenter === 'number' && item.walkingDistanceFromCenter <= 3 || item.type === 'service')) {
+        score += 2;
         reasons.personaLocalBoost = true;
     }
 
@@ -149,12 +152,12 @@ export function scoreItem(item, context) {
         reasons.memoryIndoorBoost = true;
     }
 
-    // 💰 PARTNER TIER BOOST (Sales Strategy)
+    // 💰 PARTNER TIER BOOST (Normalized Strategy)
     if (item.tier === 'gold') {
-        score += 10;
+        score += 4;
         reasons.tierGoldBoost = true;
     } else if (item.tier === 'silver') {
-        score += 5;
+        score += 2;
         reasons.tierSilverBoost = true;
     }
 
@@ -167,8 +170,24 @@ export function scoreItem(item, context) {
     return { score, reasons };
 }
 
+const INTENT_PRIORITY = {
+    emergency: 100,
+    parking: 90,
+    itinerary: 70,
+    food_place: 60,
+    food_general: 60,
+    attractions: 50,
+    events: 40,
+    hotels: 30,
+    leisure: 20,
+    navigation: 10
+};
+
 export function decideAction({ intents, query, context }) {
     if (!Array.isArray(intents)) intents = [intents];
+
+    // 1️⃣ Priority Sort: Business Brain First
+    intents.sort((a, b) => (INTENT_PRIORITY[b] || 0) - (INTENT_PRIORITY[a] || 0));
 
     const { appData, weather, appMode, userProfile, aiProfile, persona, sessionMemory } = context;
     const signals = extractSignals(query);
@@ -182,8 +201,9 @@ export function decideAction({ intents, query, context }) {
         const { score, reasons } = scoreItem(sessionReferral, scoringContext);
         return {
             action: null,
-            intent: sessionReferral.type === 'attraction' ? 'attraction_detail' : 'restaurant_detail',
-            topRecommendations: [{ ...sessionReferral, aiScore: score, aiReasons: reasons }],
+            primaryIntent: sessionReferral.type === 'attraction' ? 'attraction_detail' : 'restaurant_detail',
+            primaryRecommendations: [{ ...sessionReferral, aiScore: score, aiReasons: reasons }],
+            secondaryIntents: [],
             confidence: 1.0,
             signals,
             reasoning: { ...reasons, explicitMatch: true, sessionReferral: true },
@@ -274,11 +294,31 @@ export function decideAction({ intents, query, context }) {
         if (intent === 'parking') {
             const scored = processList(appData.parking);
             const confidence = calculateConfidence(scored);
+
+            // Deterministic Parking: If license plate detected, force 1.0 confidence
+            const normalizedPlate = query.toLowerCase().replace(/[^a-z0-9]/gi, '');
+            const hasPlateMatch = normalizedPlate.match(/[a-z]{3,4}\d{3}/i);
+
+            if (hasPlateMatch) {
+                // HARD OVERRIDE: Business Parking Flow (Decision Router 3.0)
+                const plate = hasPlateMatch[0].toUpperCase();
+                return {
+                    primaryIntent: 'parking',
+                    primaryRecommendations: scored.slice(0, 1),
+                    secondaryIntents: intents.filter(i => i !== 'parking'),
+                    action: { type: "start_parking_payment", plate: plate },
+                    confidence: 1.0,
+                    signals,
+                    reasoning: { ...scored[0]?.aiReasons, explicitMatch: true },
+                    persona
+                };
+            }
+
             results.push({
                 type: 'recommendation',
                 intent: 'parking',
                 scored,
-                confidence,
+                confidence: confidence,
                 action: (appMode !== 'remote' && confidence > 0.5)
                     ? { type: "navigate_to_parking", params: { bestMatch: scored[0]?.id } }
                     : null
@@ -289,24 +329,28 @@ export function decideAction({ intents, query, context }) {
     // Merge results into one composite decision
     if (results.length === 0) return { action: null, intent: intents[0], intents, signals, persona };
 
-    // Simple priority: explicit > first intent
-    const primary = results.find(r => r.type === 'explicit') || results[0];
+    // FIX #3: Refactor to Decision Router 3.0 Schema
+    // At this point, results[0] is guaranteed to be the highest priority intent
+    const primary = (results[0].type === 'explicit' || !results[0].scored?.length)
+        ? results[0]
+        : (results.find(r => r.type === 'explicit' && r.intent.includes(results[0].intent)) || results[0]);
 
-    const compositeRecommendations = results.flatMap(r => r.scored || [r.item]).slice(0, 5);
+    const primaryRecommendations = primary.type === 'explicit'
+        ? [primary.item]
+        : (primary.scored?.slice(0, 5) || []);
 
-    // Cross-enrich the best recommendation
-    const best = compositeRecommendations[0];
+    const best = primaryRecommendations[0];
     if (best) {
         best.nearbyFood = best.nearbyFood || findClosest(best, appData.restaurants);
         best.nearbyParking = best.nearbyParking || findClosest(best, appData.parking);
     }
 
     return {
+        primaryIntent: primary.intent,
+        primaryRecommendations: primaryRecommendations,
+        secondaryIntents: results.map(r => r.intent).filter(i => i !== primary.intent),
         action: primary.action || null,
-        intent: primary.intent,
-        intents: results.map(r => r.intent), // List of all resolved intents
-        topRecommendations: compositeRecommendations,
-        confidence: primary.confidence || 1.0,
+        confidence: typeof primary.confidence === 'number' ? primary.confidence : 0.5,
         signals,
         reasoning: best?.aiReasons,
         persona

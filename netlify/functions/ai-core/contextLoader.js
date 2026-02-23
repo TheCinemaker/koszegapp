@@ -12,23 +12,25 @@ const supabase = createClient(
 async function readJSON(filename) {
     try {
         const response = await fetch(`${CONFIG.BASE_URL}/data/${filename}`);
-        if (!response.ok) return null;
+        if (!response.ok) {
+            console.warn(`Data missing: ${filename} (Status: ${response.status})`);
+            return null;
+        }
         return await response.json();
     } catch (error) {
-        console.error(`Error reading ${filename}:`, error);
-        return null;
+        console.error(`Fetch error for ${filename}:`, error);
+        return null; // Graceful degradation
     }
 }
 
-// Helper to read Markdown data
 async function readMarkdown(filename) {
     try {
         const response = await fetch(`${CONFIG.BASE_URL}/data/${filename}`);
         if (!response.ok) return '';
-        return await response.text();
+        const text = await response.text();
+        return text || '';
     } catch (error) {
-        console.error(`Error reading ${filename}:`, error);
-        return '';
+        return ''; // Return empty string instead of crashing
     }
 }
 

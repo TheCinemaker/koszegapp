@@ -9,6 +9,7 @@ export async function generateResponse({ intent, query, context, history }) {
 
     const decision = context.decision || null;
     const persona = decision?.persona || 'hybrid';
+    const topRecommendations = decision?.primaryRecommendations || [];
     const now = new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" });
 
     // ===============================
@@ -19,14 +20,49 @@ export async function generateResponse({ intent, query, context, history }) {
     }
 
     // ===============================
-    // 2️⃣ EXPLICIT MATCH – ALWAYS OVERRIDE
+    // 2️⃣ EMERGENCY & PARKING OVERRIDES (Hardened Business Brain)
+    // ===============================
+    if (intent === 'emergency') {
+        if (topRecommendations?.length > 0) {
+            const item = topRecommendations[0];
+            return {
+                text: `SEGÍTSÉG: ${item.name} - ${item.details || item.description}. Haladéktalanul javaslom az irányt!`,
+                action: decision.action || { type: "navigate_to_emergency" },
+                confidence: 1.0
+            };
+        }
+        return {
+            text: "Azonnal segítek. Kérlek írd meg pontosan mi a baj, vagy keresd fel a legközelebbi orvosi ügyeletet a listában.",
+            action: decision.action || { type: "navigate_to_emergency" },
+            confidence: 0.9
+        };
+    }
+
+    if (intent === 'parking') {
+        if (topRecommendations?.length > 0) {
+            const item = topRecommendations[0];
+            return {
+                text: `PARKOLÁS: A legjobb lehetőség a ${item.name}. ${item.description}`,
+                action: decision.action || { type: "navigate_to_parking" },
+                confidence: typeof decision?.confidence === 'number' ? decision.confidence : 0.8
+            };
+        }
+        return {
+            text: "Segítek parkolni! Kőszeg belvárosa fizetős övezet. Kérlek írd meg a rendszámodat, vagy nézd meg a térképen a szabad helyeket.",
+            action: decision.action || { type: "navigate_to_parking" },
+            confidence: 0.8
+        };
+    }
+
+    // ===============================
+    // 3️⃣ EXPLICIT MATCH – ALWAYS OVERRIDE
     // ===============================
     if (
         decision &&
         decision.reasoning?.explicitMatch &&
-        decision.topRecommendations?.length > 0
+        topRecommendations?.length > 0
     ) {
-        const item = decision.topRecommendations[0];
+        const item = topRecommendations[0];
         return {
             text: buildExplicitResponse(item, persona),
             action: null,
@@ -35,14 +71,14 @@ export async function generateResponse({ intent, query, context, history }) {
     }
 
     // ===============================
-    // 3️⃣ HIGH CONFIDENCE → DETERMINISTIC (with humor & cross-links)
+    // 4️⃣ HIGH CONFIDENCE → DETERMINISTIC (with humor & cross-links)
     // ===============================
     if (
         decision &&
         decision.confidence >= getThreshold(intent) &&
-        decision.topRecommendations?.length > 0
+        topRecommendations?.length > 0
     ) {
-        const best = decision.topRecommendations[0];
+        const best = topRecommendations[0];
 
         return {
             text: buildDeterministicResponse(best, decision, persona),
@@ -85,9 +121,10 @@ CONFIDENCE SZINT: ${decision?.confidence || 0}
 
 INSTRUKCIÓK:
 - Stílus: ${persona === 'tourist' ? 'Inspiráló idegenvezető' : 'Hatékony helyi segítő'}.
-- Csak a TOP ajánlásokat használd.
+- SOHA ne találj ki adatot. CSAK a TOP AJÁNLÁSOK listájából válassz!
+- Ha a keresett hely nincs a listában, ne próbáld kitalálni, inkább tegyél fel egyetlen konkrét pontosító kérdést.
 - Ha a confidence alacsony, kérdezz vissza.
-- ${persona === 'tourist' ? 'Dobj be egy apró kőszegi érdekességet (harangozás, Jurisics legenda stb.).' : 'Legyél lényegretörő.'}
+- ${persona === 'tourist' ? 'Dobj be egy apró kőszegi érdekességet a történelemből.' : 'Legyél lényegretörő.'}
 - JSON-ben válaszolj.
 `;
 
@@ -152,8 +189,16 @@ function buildDeterministicResponse(best, decision, persona) {
         text += `Parkolni a legkényelmesebben a ${best.nearbyParking.name}-nál tudsz. `;
     }
 
-    // 3. Humor / Persona Flavor
-
+    // 3. Humor / Persona Flavor (Apple Style)
+    if (persona === 'tourist' && Math.random() > 0.6) {
+        const flavors = [
+            "És ne feledd: ha 11-kor megszólal a harang, az Kőszegen a győzelem jele! 😉",
+            "Szerintem le fog nyűgözni a város hangulata.",
+            "Kőszeg tele van titkos történetekkel, ez csak az egyik közülük.",
+            "Jó szívvel ajánlom, igazi kőszegi élmény lesz!"
+        ];
+        text += flavors[Math.floor(Math.random() * flavors.length)];
+    }
 
     return text.trim();
 }
@@ -171,13 +216,20 @@ function generateItineraryResponse(query, context) {
 }
 
 function getThreshold(intent) {
-    return 0.9; // Higher threshold to favor LLM's natural tone
+    if (intent === 'parking') return 0.4;
+    if (intent === 'emergency') return 0.4;
+    if (intent === 'attractions') return 0.6;
+    if (intent.includes('food')) return 0.6;
+    if (intent === 'events') return 0.65;
+    return 0.8;
 }
 
 function buildSlimContext(context) {
     const decision = context.decision;
+    const topRecommendations = decision?.primaryRecommendations || [];
+
     return {
-        recommendations: decision?.topRecommendations?.slice(0, 15).map(r => ({
+        recommendations: topRecommendations.slice(0, 5).map(r => ({
             id: r.id,
             name: r.name,
             description: r.description,
@@ -198,7 +250,7 @@ function normalizeOutput(parsed, decision) {
         // Only use deterministic action if LLM didn't provide one
         parsed.action = decision?.action || null;
     }
-    if (!parsed.confidence) parsed.confidence = decision?.confidence || 0.5;
+    if (typeof parsed.confidence !== 'number') parsed.confidence = decision?.confidence || 0.5;
     return parsed;
 }
 
