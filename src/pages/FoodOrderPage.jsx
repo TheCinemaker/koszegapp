@@ -60,11 +60,7 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
             <div className="p-4 relative z-10 flex-1 flex flex-col">
                 {/* MARKETING BADGES */}
                 <div className="flex flex-col gap-1 items-start mb-2">
-                    {restaurant.flash_sale?.active && (
-                        <span className="px-2 py-0.5 rounded-md bg-red-600 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-red-400">
-                            ⚡ FLASH SALE
-                        </span>
-                    )}
+
                     {restaurant.mystery_box?.length > 0 && (
                         <span className="px-2 py-0.5 rounded-md bg-indigo-600 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-indigo-400">
                             🎁 Ételmentés
@@ -498,11 +494,7 @@ export default function FoodOrderPage() {
                     {view === 'menu' && selectedRestaurant && (
                         <div className="pb-24">
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/60 dark:bg-[#1a1c2e]/60 backdrop-blur-[30px] rounded-[2rem] p-5 border border-white/60 dark:border-white/10 shadow-xl mb-6 relative overflow-hidden">
-                                {selectedRestaurant.flash_sale?.active && (
-                                    <div className="absolute top-0 left-0 right-0 bg-red-600 text-white text-center text-xs font-bold py-1 uppercase tracking-widest z-20">
-                                        ⚡ {selectedRestaurant.flash_sale.message || 'FLASH SALE!'} (-{selectedRestaurant.flash_sale.discount})
-                                    </div>
-                                )}
+
                                 <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
                                 <div className={`flex flex-col md:flex-row gap-5 relative z-10 ${selectedRestaurant.flash_sale?.active ? 'pt-6' : ''}`}>
                                     <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0">

@@ -1518,6 +1518,7 @@ function MarketingPanel({ restaurantId }) {
         message: "Minden pizzára!",
         end_time: ""
     });
+
     const [mysteryBox, setMysteryBox] = useState([]);
     const [showBoxModal, setShowBoxModal] = useState(false);
     const [editingBox, setEditingBox] = useState(null);
@@ -1537,13 +1538,13 @@ function MarketingPanel({ restaurantId }) {
         loadMarketing();
     }, [restaurantId]);
 
+
     // Flash Sale Logic
     const saveFlashSale = async () => {
         const { error } = await supabase.from('restaurants').update({ flash_sale: flashSale }).eq('id', restaurantId);
         if (error) toast.error("Hiba a mentéskor");
         else toast.success("Flash Sale frissítve! ⚡");
     };
-
     // Mystery Box Logic
     const saveMysteryBox = async () => {
         let newBoxes = [...mysteryBox];

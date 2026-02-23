@@ -44,13 +44,7 @@ export default function GastroCard({ restaurant }) {
             </span>
           </div>
         )}
-        {restaurant.flash_sale?.active && (
-          <div className="absolute top-3 left-3 z-20">
-            <span className="px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1">
-              ⚡ FLASH SALE
-            </span>
-          </div>
-        )}
+
 
         {/* Favorite Button (Floating) */}
         <button

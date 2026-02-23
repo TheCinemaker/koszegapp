@@ -109,7 +109,7 @@ async function loadRestaurants() {
                 if (dbMap.has(key)) {
                     const dbItem = dbMap.get(key);
                     // Inject dynamic fields from Supabase (Owner Controls)
-                    if (dbItem.flash_sale) r.flash_sale = dbItem.flash_sale;
+
                     if (dbItem.mystery_box) r.mystery_box = dbItem.mystery_box;
                     if (dbItem.tier) r.tier = dbItem.tier; // Allow DB override for Tier too
                     // if (dbItem.is_open !== undefined) r.is_open = dbItem.is_open; // Future: Opening status

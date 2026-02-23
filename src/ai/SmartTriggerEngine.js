@@ -136,30 +136,7 @@ export function getSmartTrigger({
             });
         }
 
-        // ⚡ FLASH SALE TRIGGER (Highest Priority)
-        // Check all restaurants for active flash sales
-        const flashSaleRestaurant = (restaurants || []).find(r =>
-            r.flash_sale?.active &&
-            new Date(r.flash_sale.end_time) > now
-        );
 
-        if (flashSaleRestaurant) {
-            // Calculate distance if location is available
-            let pDistance = 9999;
-            if (location) {
-                // Simple distance check (Haversine not needed for rough check, but let's assume close enough or ignore distance for now to FORCE test)
-                // Actually, let's just trigger it if it exists for now.
-            }
-
-            const score = 95; // Very high priority
-            candidates.push({
-                id: `flash_${flashSaleRestaurant.id}`,
-                type: "flash_sale",
-                text: `⚡ FLASH SALE! A ${flashSaleRestaurant.name} ${flashSaleRestaurant.flash_sale.discount} kedvezményt ad! Siess, ${new Date(flashSaleRestaurant.flash_sale.end_time).getHours()}:00-ig tart!`,
-                action: "navigate_to_food",
-                priority: score
-            });
-        }
 
         // 🎁 MYSTERY BOX TRIGGER
         // Check for available mystery boxes near pickup time

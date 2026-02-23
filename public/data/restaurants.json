@@ -151,12 +151,6 @@
     "facebook": "https://www.facebook.com/kekfeny",
     "delivery": true,
     "open_all_year": true,
-    "flash_sale": {
-      "active": true,
-      "discount": "20%",
-      "message": "Ma minden pizza 20% kedvezménnyel!",
-      "end_time": "2026-12-31T23:59:59"
-    },
     "description": "Nápolyi stílusú pizzák és magyaros ételek a Főtéren, saját pizzakemencével, hangulatos terasszal és klimatizált belső térrel.",
     "details": "A Kékfény Étterem Kőszeg egyik legismertebb vendéglője, nevét jellegzetes kék épületéről kapta. Tavasztól őszig napfényes terasza, illetve klimatizált belső tere biztosít kényelmes élményt. Kínálatukban szerepelnek egyedi tésztájú nápolyi stílusú pizzák, napi menü, saláták, desszertek, koktélok és helyi Kőszegi Sör. Saját pizza kemencében készülnek, catering- és házhozszállítási szolgáltatást is biztosítanak, valamint alkalmasak zárt körű rendezvények lebonyolítására. Nyitvatartás H–Cs: 08:00–22:00, P–Szo: 08:00–23:00, V: 10:00–22:00; zárva ünnepekkor (dec 24–26, jan 1) :contentReference[oaicite:1]{index=1}.",
     "priority": 8,
