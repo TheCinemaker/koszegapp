@@ -138,7 +138,7 @@ function buildDeterministicResponse(best, decision, persona) {
     else if (reasons.rainPreferenceBoost) text = "Látom fedett helyet keresel, ezt javaslom: ";
     else if (reasons.heatBoost) text = "Ebben a nagy hőségben érdemes bemenekülni ide: ";
     else if (reasons.timeMatch) text = "Mivel kevés időd van, ezt ajánlom: ";
-    else if (reasons.romanticBoost) text = "Ha romantikus hangulatban vagytok, ezt nézzétek meg: ";
+    else if (reasons.romanticBoost) text = "Ha romantikus hangulatban vagy, ezt nézd meg: ";
     else if (reasons.familyBoost) text = "Gyerekkkel ez egy biztos választás: ";
     else text = "Ezt ajánlom neked: ";
 
@@ -146,16 +146,14 @@ function buildDeterministicResponse(best, decision, persona) {
 
     // 2. Cross-category Enrichment
     if (best.nearbyFood) {
-        text += `Utána pedig beugorhattok a közeli ${best.nearbyFood.name}-ba egy kávéra. `;
+        text += `Utána pedig beugorhatsz a közeli ${best.nearbyFood.name}-ba egy kávéra. `;
     }
     if (best.nearbyParking && persona === 'local') {
         text += `Parkolni a legkényelmesebben a ${best.nearbyParking.name}-nál tudsz. `;
     }
 
     // 3. Humor / Persona Flavor
-    if (persona === 'tourist' && decision.confidence > 0.85) {
-        text += " És ha 11-kor megszólal a harang, az nem véletlen, az is nektek szól 😉";
-    }
+
 
     return text.trim();
 }
@@ -166,7 +164,7 @@ function buildDeterministicResponse(best, decision, persona) {
 function generateItineraryResponse(query, context) {
     // Simplified logic for now
     return {
-        text: "Örömmel tervezek neked egy többnapos programot! Kezdjétek a Jurisics-várral, ebédeljetek a várnál, délután pedig egy séta a Csónakázó-tónál tökéletes lenne. Holnapra pedig...",
+        text: "Örömmel tervezek neked egy többnapos programot! Kezdj a Jurisics-várral, ebédelj a várnál, délután pedig egy séta a Csónakázó-tónál tökéletes lenne. Holnapra pedig...",
         action: null,
         confidence: 0.8
     };
@@ -179,7 +177,7 @@ function getThreshold(intent) {
 function buildSlimContext(context) {
     const decision = context.decision;
     return {
-        recommendations: decision?.topRecommendations?.slice(0, 10).map(r => ({
+        recommendations: decision?.topRecommendations?.slice(0, 15).map(r => ({
             id: r.id,
             name: r.name,
             description: r.description,
