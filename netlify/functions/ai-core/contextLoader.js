@@ -1,9 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 import { CONFIG } from './config.js';
+import { loadAIProfile } from './personalityEngine.js';
+import { detectPersona } from './personalityEngine.js';
 
 const supabase = createClient(
-    CONFIG.SUPABASE_URL || 'https://dummy.supabase.co',
-    CONFIG.SUPABASE_ANON_KEY || 'dummy-key'
+    CONFIG.SUPABASE_URL || 'https://missing.supabase.co',
+    CONFIG.SUPABASE_SERVICE_ROLE_KEY || CONFIG.SUPABASE_ANON_KEY || 'missing-key'
 );
 
 // Helper to read JSON data
@@ -171,51 +173,89 @@ async function loadUserVehicles(userId) {
     }
 }
 
-export async function loadContext(intent, query, userId) {
-    console.log(`🧠 LOADING MASTER CONTEXT for: ${intent}`);
+export async function loadContext(intents, query, userId, frontendContext = {}) {
+    if (!Array.isArray(intents)) intents = [intents];
+    console.log(`🧠 LOADING SLIM CONTEXT for: ${intents.join(', ')}`);
 
-    const [recentHistory, profile, vehicles, events, restaurants, attractions, hotels, leisure, info, parking] = await Promise.all([
+    // 1. Load Base Data & Personality (CONCURRENTLY)
+    const [recentHistory, profile, vehicles, aiProfile] = await Promise.all([
         loadRecentLogs(userId),
         loadUserProfile(userId),
-        loadUserVehicles(userId), // ✅ ÚJ
-        loadEvents(),
-        loadRestaurants(),
-        readJSON('attractions.json'),
-        readJSON('hotels.json'),
-        readJSON('leisure.json'),
-        readJSON('info.json'),
-        readJSON('parking.json')
+        loadUserVehicles(userId),
+        loadAIProfile(userId)
     ]);
+
+    const weather = frontendContext.weather || { raining: false, temp: 20 };
+    const appMode = frontendContext.appMode || 'remote';
+
+    // 2. Persona Detection
+    const persona = detectPersona({ appMode, distanceToMainSquare: frontendContext.distanceToMainSquare }, query);
 
     const baseContext = {
         recentHistory,
         userProfile: profile,
-        userVehicles: vehicles, // ✅ ÚJ - az AI látja az összes autót
+        userVehicles: vehicles,
+        aiProfile,
+        persona,
         currentQuery: query,
-        appData: {
-            events: (events || []).slice(0, 15),
-            restaurants: (restaurants || []).slice(0, 10),
-            attractions: (attractions || []).slice(0, 10),
-            hotels: (hotels || []).slice(0, 8),
-            leisure: (leisure || []).slice(0, 8),
-            info: (info || []).slice(0, 5),
-            parking: (parking || [])
-        }
+        weather,
+        appMode,
+        appData: {}
     };
 
-    switch (intent) {
-        case 'restricted':
-            return baseContext;
-        case 'food_general':
-            return { ...baseContext, popular: await loadPopularFood() };
-        case 'events':
-        case 'attractions':
-        case 'hotels':
-        case 'parking':
-        case 'leisure':
-        case 'emergency':
-        case 'navigation':
-        default:
-            return baseContext;
-    }
+    // 3. Multi-Intent Data Loading
+    const loadTasks = intents.map(async (intent) => {
+        switch (intent) {
+            case 'food_general':
+            case 'food_place':
+            case 'food_delivery':
+                if (!baseContext.appData.restaurants) {
+                    baseContext.appData.restaurants = await loadRestaurants();
+                    baseContext.popular = await loadPopularFood();
+                }
+                break;
+
+            case 'events':
+                if (!baseContext.appData.events) {
+                    baseContext.appData.events = await loadEvents();
+                }
+                break;
+
+            case 'attractions':
+            case 'itinerary':
+                if (!baseContext.appData.attractions) {
+                    baseContext.appData.attractions = await readJSON('attractions.json');
+                }
+                break;
+
+            case 'parking':
+                if (!baseContext.appData.parking) {
+                    baseContext.appData.parking = await readJSON('parking.json');
+                }
+                break;
+
+            case 'hotels':
+                if (!baseContext.appData.hotels) {
+                    baseContext.appData.hotels = await readJSON('hotels.json');
+                }
+                break;
+
+            case 'leisure':
+                if (!baseContext.appData.leisure) {
+                    baseContext.appData.leisure = await readJSON('leisure.json');
+                }
+                break;
+
+            case 'info':
+            case 'emergency':
+                if (!baseContext.appData.info) {
+                    baseContext.appData.info = await readJSON('info.json');
+                }
+                break;
+        }
+    });
+
+    await Promise.all(loadTasks);
+
+    return baseContext;
 }

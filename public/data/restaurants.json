@@ -44,7 +44,12 @@
     "delivery": false,
     "open_all_year": true,
     "description": "Hangulatos étterem és panzió Kőszeg történelmi főterén. Helyben készült pizzák, magyaros és nemzetközi fogások, barátságos, családias hangulatban.",
-    "details": "A Portré Étterem és Panzió egész évben várja vendégeit a város szívében, tágas terasszal, modern, klimatizált belső térrel, reggelizési lehetőséggel, panziószobákkal. Az étlapon mediterrán, magyaros és olaszos ételek, házi pizzák, friss saláták, desszertek, valamint gyermekmenü is megtalálható. Ideális választás családoknak, pároknak és kisebb csoportoknak, akár rendezvények, céges ebédek, vacsorák lebonyolításához is."
+    "details": "A Portré Étterem és Panzió egész évben várja vendégeit a város szívében, tágas terasszal, modern, klimatizált belső térrel, reggelizési lehetőséggel, panziószobákkal. Az étlapon mediterrán, magyaros és olaszos ételek, házi pizzák, friss saláták, desszertek, valamint gyermekmenü is megtalálható. Ideális választás családoknak, pároknak és kisebb csoportoknak, akár rendezvények, céges ebédek, vacsorák lebonyolításához is.",
+    "priority": 9,
+    "rainSafe": true,
+    "childFriendly": true,
+    "duration": "medium",
+    "romantic": 8
   },
   {
     "id": "gastro-2",
@@ -88,7 +93,12 @@
     "delivery": false,
     "open_all_year": true,
     "description": "Boutique hotel és étterem a kőszegi Fő téren, prémium szobákkal, elegáns kávézóval, mediterrán és magyaros konyhával, saját pizzériával és szezonális fagyizóval.",
-    "details": "Az Ibrahim Boutique Hotel & Étterem teljesen megújult, stílusos belső terekkel, minőségi szálláshelyekkel, tágas, panorámás terasszal várja vendégeit. Az étteremben magyar és mediterrán fogások, prémium pizzák, kézműves desszertek, minőségi borok, kávékülönlegességek és nyáron fagylaltpult is található. Ideális hely pároknak, családoknak és üzleti utazóknak is. Rendezvények, családi események, kisebb meetingek számára különterem bérelhető. Bankkártya, wifi, klimatizált terek, boutique szállás egész évben."
+    "details": "Az Ibrahim Boutique Hotel & Étterem teljesen megújult, stílusos belső terekkel, minőségi szálláshelyekkel, tágas, panorámás terasszal várja vendégeit. Az étteremben magyar és mediterrán fogások, prémium pizzák, kézműves desszertek, minőségi borok, kávékülönlegességek és nyáron fagylaltpult is található. Ideális hely pároknak, családoknak és üzleti utazóknak is. Rendezvények, családi események, kisebb meetingek számára különterem bérelhető. Bankkártya, wifi, klimatizált terek, boutique szállás egész évben.",
+    "priority": 9,
+    "rainSafe": true,
+    "childFriendly": true,
+    "duration": "medium",
+    "romantic": 9
   },
   {
     "id": "gastro-3",
@@ -128,7 +138,12 @@
     "delivery": true,
     "open_all_year": true,
     "description": "Nápolyi stílusú pizzák és magyaros ételek a Főtéren, saját pizzakemencével, hangulatos terasszal és klimatizált belső térrel.",
-    "details": "A Kékfény Étterem Kőszeg egyik legismertebb vendéglője, nevét jellegzetes kék épületéről kapta. Tavasztól őszig napfényes terasza, illetve klimatizált belső tere biztosít kényelmes élményt. Kínálatukban szerepelnek egyedi tésztájú nápolyi stílusú pizzák, napi menü, saláták, desszertek, koktélok és helyi Kőszegi Sör. Saját pizza kemencében készülnek, catering- és házhozszállítási szolgáltatást is biztosítanak, valamint alkalmasak zárt körű rendezvények lebonyolítására. Nyitvatartás H–Cs: 08:00–22:00, P–Szo: 08:00–23:00, V: 10:00–22:00; zárva ünnepekkor (dec 24–26, jan 1) :contentReference[oaicite:1]{index=1}."
+    "details": "A Kékfény Étterem Kőszeg egyik legismertebb vendéglője, nevét jellegzetes kék épületéről kapta. Tavasztól őszig napfényes terasza, illetve klimatizált belső tere biztosít kényelmes élményt. Kínálatukban szerepelnek egyedi tésztájú nápolyi stílusú pizzák, napi menü, saláták, desszertek, koktélok és helyi Kőszegi Sör. Saját pizza kemencében készülnek, catering- és házhozszállítási szolgáltatást is biztosítanak, valamint alkalmasak zárt körű rendezvények lebonyolítására. Nyitvatartás H–Cs: 08:00–22:00, P–Szo: 08:00–23:00, V: 10:00–22:00; zárva ünnepekkor (dec 24–26, jan 1) :contentReference[oaicite:1]{index=1}.",
+    "priority": 8,
+    "rainSafe": true,
+    "childFriendly": true,
+    "duration": "medium",
+    "romantic": 6
   },
   {
     "id": "gastro-4",

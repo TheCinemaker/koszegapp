@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { CONFIG } from './config.js';
 
 const supabase = createClient(
-    CONFIG.SUPABASE_URL || 'https://dummy.supabase.co',
-    CONFIG.SUPABASE_ANON_KEY || 'dummy-key'
+    CONFIG.SUPABASE_URL || 'https://missing.supabase.co',
+    CONFIG.SUPABASE_SERVICE_ROLE_KEY || CONFIG.SUPABASE_ANON_KEY || 'missing-key'
 );
 
 export async function logInteraction({ userId, authToken, query, intent, action, response, context }) {

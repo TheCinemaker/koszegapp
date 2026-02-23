@@ -54,15 +54,14 @@ export async function handler(event) {
     } catch (error) {
         console.error('Handler error:', error);
         return {
-            statusCode: 200, // Return 200 to show error in UI
+            statusCode: 200, // Return 200 so UI shows the error instead of falling back to mock
             headers,
             body: JSON.stringify({
                 role: 'assistant',
-                content: "Nem értettem pontosan, miben segíthetek? Parkolást, programot vagy látnivalót keresel?",
+                content: `🔴 BACKEND ERROR: ${error.message}${error.stack ? '\n\n' + error.stack : ''}`,
                 action: null,
-                debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+                debug: error.message
             })
         };
     }
 }
-

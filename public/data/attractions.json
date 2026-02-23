@@ -20,7 +20,17 @@
       "lng": 16.538482
     },
     "image": "/images/jurisics_var.jpg",
-    "imageDark": "/images/attractions/dark/var_dark.jpg"
+    "imageDark": "/images/attractions/dark/var_dark.jpg",
+    "priority": 10,
+    "rainSafe": true,
+    "childFriendly": true,
+    "duration": "medium",
+    "romantic": 7,
+    "indoor": true,
+    "walkingDistanceFromCenter": 2,
+    "bestSeason": [
+      "all"
+    ]
   },
   {
     "id": "attraction-2",
@@ -39,7 +49,17 @@
       "lat": 47.3881338,
       "lng": 16.5395646
     },
-    "image": "/images/zwinger_oregtorony.jpg"
+    "image": "/images/zwinger_oregtorony.jpg",
+    "priority": 8,
+    "rainSafe": true,
+    "childFriendly": true,
+    "duration": "short",
+    "romantic": 5,
+    "indoor": true,
+    "walkingDistanceFromCenter": 3,
+    "bestSeason": [
+      "all"
+    ]
   },
   {
     "id": "attraction-3",
@@ -58,7 +78,17 @@
       "lat": 47.3886545,
       "lng": 16.5411174
     },
-    "image": "/images/hosok_tornya.jpg"
+    "image": "/images/hosok_tornya.jpg",
+    "priority": 9,
+    "rainSafe": true,
+    "childFriendly": true,
+    "duration": "short",
+    "romantic": 6,
+    "indoor": true,
+    "walkingDistanceFromCenter": 0,
+    "bestSeason": [
+      "all"
+    ]
   },
   {
     "id": "attraction-4",
@@ -76,7 +106,12 @@
       "lat": 47.3888005,
       "lng": 16.5407038
     },
-    "image": "/images/varoshaza.jpg"
+    "image": "/images/varoshaza.jpg",
+    "priority": 7,
+    "rainSafe": true,
+    "childFriendly": false,
+    "duration": "short",
+    "romantic": 4
   },
   {
     "id": "attraction-5",
@@ -247,7 +282,7 @@
     "id": "attraction-15",
     "name": "Református templom",
     "category": "Templomok & vallás",
-    "description": "1996-ban épült modern templom, ószövetségi sátort idéző formával.",
+    "description": "1996-ben épült modern templom, ószövetségi sátort idéző formával.",
     "details": "A Várkör mentén álló, modern építészeti alkotás központi tere az ószövetségi sátorra emlékeztet. Minimalista belső tere és a közösségi terek teszik a városrész fontos szakrális és közösségi helyszínévé.",
     "tags": [
       "templom",

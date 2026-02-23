@@ -1,38 +1,59 @@
 export function detectIntent(query) {
     const q = query.toLowerCase();
+    const detected = [];
 
-    // 🚫 TILTOTT ZÓNÁK - elsőként ellenőrizd!
-    if (/koszeg1532|1532|jegyrendelés|ticket|játék|game|ételrendelés/.test(q)) return 'restricted';
+    // 🚫 TILTOTT ZÓNÁK
+    if (/koszeg1532|1532|jegyrendelés|ticket|játék|game|ételrendelés/.test(q)) return ['restricted'];
 
-    // Food & Drink - JAVÍTVA: food_general (nem food!)
-    if (/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizz|burger|tészta|kávé|sör|ebéd|vacsor|reggeli|éhes|szomjas/.test(q)) {
-        return 'food_general';
+    // 1. Food
+    if (/étterem|ebéd|vacsora|gasztro|pizza|kávé|süti|cukrász|ennék|eszek|enni|beülni|reggeli|kocsma|borozó|fagy|gyors/.test(q)) {
+        detected.push('food_general');
     }
 
-    // Events & Programs
-    if (/program|esemény|koncert|mozi|színház|fesztivál|buli|mikor|hétvégén|ma este|jegye|wallet|belépő/.test(q)) return 'events';
+    // 2. Attractions & Sights (including time combinations)
+    if (/látnivaló|műemlék|templom|vár|múzeum|szobor|kilátó|túra|séta|park|tó|nézzek meg|látni|érdekessé|csinál/.test(q) || (/ór/.test(q) && /megnéz|csinál|ajánlj/.test(q))) {
+        detected.push('attractions');
+    }
 
-    // Attractions & Sightseeing
-    if (/látnivaló|műemlék|vár|templom|kilátó|múzeum|séta|túra|nevezetesség|szobor|tér/.test(q)) return 'attractions';
+    // 3. Events & Programs
+    if (/program|esemény|koncert|fesztivál|kiállítás|buli|szórakozás|mozi|színház|mai|hétvégi/.test(q)) {
+        detected.push('events');
+    }
 
     // Accomodation
-    if (/szállás|hotel|panzió|kemping|apartman|szoba|vendégház|alvás/.test(q)) return 'hotels';
+    if (/szállás|hotel|panzió|kemping|apartman|szoba|vendégház|alvás/.test(q)) {
+        detected.push('hotels');
+    }
 
-    // Parking & Transport - JAVÍTVA: parkoló, parkolhatok, parkolni hozzáadva
-    if (/parkol|parkoló|parkolhatok|parkolni|mélygarázs|automata|megállni/.test(q)) return 'parking';
+    // Parking & Transport
+    if (/parkol|parkoló|parkolhatok|parkolni|mélygarázs|automata|megállni/.test(q)) {
+        detected.push('parking');
+    }
 
     // Leisure & Sport
-    if (/sport|túra|bicikli|kerékpár|játszótér|futás|edzés|szabadidő/.test(q)) return 'leisure';
+    if (/sport|túra|bicikli|kerékpár|játszótér|futás|edzés|szabadidő/.test(q)) {
+        detected.push('leisure');
+    }
 
     // Emergency & Services
-    if (/segítség|orvos|patika|gyógyszertár|rendőr|mentő|tűzoltó|kórház|ügyelet/.test(q)) return 'emergency';
+    if (/segítség|orvos|patika|gyógyszertár|rendőr|mentő|tűzoltó|kórház|ügyelet/.test(q)) {
+        detected.push('emergency');
+    }
 
     // Navigation & Location
-    if (/hol van|hogy jutok|merre|térkép|útvonal|navigál|oda/.test(q)) return 'navigation';
+    if (/hol van|hogy jutok|merre|térkép|útvonal|navigál|oda/.test(q)) {
+        detected.push('navigation');
+    }
+
+    // Itinerary & Planning
+    if (/útiterv|terv|napra jövünk|napos program|mit csináljunk|ajánlj egy napot/.test(q)) {
+        detected.push('itinerary');
+    }
 
     // Greetings & Smalltalk
-    if (/^szia|^heló|^hali|^jó napot|^üdv|^hogy vagy|^mizu|^köszönöm/.test(q)) return 'smalltalk';
+    if (/^szia|^heló|^hali|^jó napot|^üdv|^hogy vagy|^mizu|^köszönöm/.test(q) && detected.length === 0) {
+        return ['smalltalk'];
+    }
 
-    // Default
-    return 'unknown';
+    return detected.length > 0 ? detected : ['unknown'];
 }

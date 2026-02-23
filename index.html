@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html lang="hu">
-  <head>
-    <link rel="icon" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Zeyada&display=swap" rel="stylesheet">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KőszegAPP</title>
 
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#A16207">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<head>
+  <link rel="icon" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Zeyada&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KőszegAPP</title>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0XMCLKMTC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <script type="module">
+    import { injectIntoGlobalHook } from "/@react-refresh";
+    if (typeof window !== 'undefined') {
+      injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => { };
+      window.$RefreshSig$ = () => (type) => type;
+      window.__vite_plugin_react_preamble_installed__ = true;
+    }
+  </script>
 
-      gtag('config', 'G-D0XMCLKMTC');
-    </script>
-    
-    <!-- Lazy képbetöltés -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function(){
-        document.querySelectorAll('img').forEach(function(img){
-          if(!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
-        });
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#A16207">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0XMCLKMTC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-D0XMCLKMTC');
+  </script>
+
+  <!-- Lazy képbetöltés -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll('img').forEach(function (img) {
+        if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
       });
-    </script>
+    });
+  </script>
 
-  </head>
-  <body class="bg-gray-50 text-gray-800">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

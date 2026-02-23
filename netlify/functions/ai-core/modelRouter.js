@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { SYSTEM_PROMPT } from "./prompts.js";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'missing-api-key');
 
 export function getModel({ enableSearch = false, systemInstruction = null } = {}) {
     // Single efficient model for all response generation
