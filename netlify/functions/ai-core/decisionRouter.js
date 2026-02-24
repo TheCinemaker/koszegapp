@@ -300,17 +300,18 @@ export function decideAction({ intents, query, context }) {
             const hasPlateMatch = normalizedPlate.match(/[a-z]{3,4}\d{3}/i);
 
             if (hasPlateMatch) {
-                // HARD OVERRIDE: Business Parking Flow (Decision Router 3.0)
+                // HARD OVERRIDE: TISZTA PARKOLÁS - MINDEN MÁST IGNORÁLJ!
                 const plate = hasPlateMatch[0].toUpperCase();
                 return {
                     primaryIntent: 'parking',
                     primaryRecommendations: scored.slice(0, 1),
-                    secondaryIntents: intents.filter(i => i !== 'parking'),
+                    secondaryIntents: [], // FONTOS: ÜRES, NE LEGYENEK MÁS INTENTEK!
                     action: { type: "start_parking_payment", plate: plate },
                     confidence: 1.0,
                     signals,
-                    reasoning: { ...scored[0]?.aiReasons, explicitMatch: true },
-                    persona
+                    reasoning: { explicitMatch: true, licensePlateDetected: true },
+                    persona,
+                    pureParkingFlow: true // ÚJ FLAG: jelzi, hogy ez tiszta parkolás
                 };
             }
 

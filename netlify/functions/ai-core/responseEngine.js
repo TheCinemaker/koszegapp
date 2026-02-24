@@ -118,12 +118,27 @@ function buildPrompt({ now, allIntents, slimContext, decision, query }) {
         ).join('\n')
         : '  (nincs mentett autó)';
 
-    const dataSection = buildDataSection(slimContext);
+    // 🔥 Ha pure parking flow, CSAK a parkolási adatokat add át!
+    const isPureParking = decision?.pureParkingFlow === true;
+    const dataSection = isPureParking
+        ? buildParkingOnlyContext(slimContext)
+        : buildDataSection(slimContext);
+
+    const effectiveIntents = isPureParking ? ['parking'] : allIntents;
+
+    const parkingInstruction = isPureParking
+        ? `🔴 FONTOS - PURE PARKING FLOW:
+- A felhasználó CSAK parkolási jegyet szeretne vásárolni
+- NE ajánlj SEMMILYEN éttermet, kávézót, látnivalót!
+- NE kérdezz "Amíg intézed, mit ajánlhatok?" - féle kérdéseket!
+- Ha megvan a rendszám, azonnal add vissza az action-t
+- A válasz végén csak ennyit mondj: "Miben segíthetek még?"`
+        : `Ha parkolás van a szándékok között ÉS fizetős az idő: ELŐSZÖR intézd el a parkolást (kérd a rendszámot ha kell), AZTÁN ajánlj látnivalót/éttermet`;
 
     return `
 AKTUÁLIS IDŐ: ${now}
 PERSONA: ${slimContext.persona || 'hybrid'}
-DETEKTÁLT SZÁNDÉKOK (prioritás szerint): ${allIntents.join(' → ')}
+DETEKTÁLT SZÁNDÉKOK (prioritás szerint): ${effectiveIntents.join(' → ')}
 
 ━━━ FELHASZNÁLÓ AUTÓI ━━━
 ${vehicleList}
@@ -131,22 +146,38 @@ ${vehicleList}
 ━━━ TOP AJÁNLÁSOK (előre szűrt és pontozva) ━━━
 ${JSON.stringify(slimContext.recommendations?.slice(0, 5), null, 2)}
 
-━━━ TELJES ADAT-KONTEXTUS ━━━
+━━━ ADAT-KONTEXTUS ━━━
 ${dataSection}
 
-━━━ TUDÁSBÁZIS ━━━
-${slimContext.knowledge?.koszeg ? slimContext.knowledge.koszeg.substring(0, 1500) : ''}
-
-━━━ JELZÉSEK ━━━
+━━━ JELSZÁMOK ━━━
 ${JSON.stringify(slimContext.signals, null, 2)}
 
 INSTRUKCIÓK:
-- PRIORITÁS SORREND: ${allIntents.join(' > ')}
-- Ha parkolás van a szándékok között ÉS fizetős az idő: ELŐSZÖR intézd el a parkolást (kérd a rendszámot ha kell), AZTÁN ajánlj látnivalót/éttermet
-- SOHA ne találj ki helyet! Csak a fenti ADAT-KONTEXTUSBÓL ajánlj
+- PRIORITÁS SORREND: ${effectiveIntents.join(' > ')}
+- ${parkingInstruction}
+- SOH A ne találj ki helyet! Csak a fenti ADAT-KONTEXTUSBÓL ajánlj
 - Ha nincs meg az adat a listában, mondd: "Erről pontos infóm nincs, de ajánlom helyette: [létező hely]"
 - Válaszolj KIZÁRÓLAG JSON-ban: {"text": "...", "action": {...} | null, "confidence": 0.0-1.0}
 `;
+}
+
+/**
+ * Builds PARKING-ONLY context - used during pure parking flow
+ */
+function buildParkingOnlyContext(slimContext) {
+    const sections = [];
+
+    if (slimContext.parking?.length > 0) {
+        sections.push(`PARKOLÓK:\n` +
+            slimContext.parking.slice(0, 5).map(p =>
+                `  - ${p.name} | Zóna: ${p.zone || '?'} | ${p.description || ''} | Ár: ${p.price || '?'}`
+            ).join('\n')
+        );
+    } else {
+        sections.push('(parkolási adatok átmenetileg nem elérhetők - GPS alapján kerül meghatározásra)');
+    }
+
+    return sections.join('\n\n');
 }
 
 /**
@@ -206,6 +237,9 @@ function buildSlimContext(context) {
     const topRecommendations = decision?.primaryRecommendations || [];
     const appData = context.appData || {};
 
+    // 🔥 Ha pure parking flow, CSAK a parkolási adatokat tartsd meg!
+    const isPureParking = decision?.pureParkingFlow === true;
+
     return {
         recommendations: topRecommendations.slice(0, 5).map(r => ({
             id: r.id,
@@ -217,18 +251,19 @@ function buildSlimContext(context) {
             address: r.address,
             phone: r.phone,
         })),
-        restaurants: appData.restaurants || [],
-        attractions: appData.attractions || [],
-        events: appData.events || [],
-        parking: appData.parking || [],
-        hotels: appData.hotels || [],
-        leisure: appData.leisure || [],
-        info: appData.info || [],
+        // Feltételes adat-betöltés: pure parking esetén minden más üres!
+        restaurants: isPureParking ? [] : (appData.restaurants || []),
+        attractions: isPureParking ? [] : (appData.attractions || []),
+        events: isPureParking ? [] : (appData.events || []),
+        parking: appData.parking || [], // Ezt mindig betöltjük
+        hotels: isPureParking ? [] : (appData.hotels || []),
+        leisure: isPureParking ? [] : (appData.leisure || []),
+        info: isPureParking ? [] : (appData.info || []),
         userVehicles: context.userVehicles || [],
         userProfile: context.userProfile || null,
         signals: decision?.signals || {},
-        allIntents: context.allIntents || [],
-        knowledge: context.knowledge || {},
+        allIntents: isPureParking ? ['parking'] : (context.allIntents || []),
+        knowledge: isPureParking ? {} : (context.knowledge || {}), // Tudásbázis sem kell pure parkingnál
         persona: decision?.persona || context.persona || 'hybrid'
     };
 }
