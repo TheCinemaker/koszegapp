@@ -2,98 +2,36 @@ import { getModel } from './modelRouter.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 
 /**
- * RESPONSE ENGINE 4.0 (Urban Brain)
- * persona-aware, deterministic override, cross-linked, humor-enhanced
+ * RESPONSE ENGINE 5.0 (KőszegAI Brain)
+ * - Smalltalk fast path (no web search, no data context needed)
+ * - Multi-intent LLM orchestration with full data context
+ * - Anti-hallucination: LLM only has real data to reference
  */
 export async function generateResponse({ intent, query, context, history }) {
 
     const decision = context.decision || null;
-    const persona = decision?.persona || 'hybrid';
-    const topRecommendations = decision?.primaryRecommendations || [];
     const now = new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" });
+    const allIntents = context.allIntents || [intent];
 
     // ===============================
-    // 1️⃣ ITINERARY LOGIC – CUSTOM GENERATION
+    // FAST PATH: Smalltalk & simple conversation
+    // Web search + startChat combo breaks Gemini API - handle separately
     // ===============================
-    if (intent === 'itinerary') {
-        return generateItineraryResponse(query, context);
+    if (intent === 'smalltalk' || (intent === 'unknown' && allIntents.length <= 1)) {
+        return generateSmallTalk({ query, history, now });
     }
 
     // ===============================
-    // 2️⃣ EMERGENCY & PARKING OVERRIDES (Hardened Business Brain)
-    // ===============================
-    if (intent === 'emergency') {
-        if (topRecommendations?.length > 0) {
-            const item = topRecommendations[0];
-            return {
-                text: `SEGÍTSÉG: ${item.name} - ${item.details || item.description}. Haladéktalanul javaslom az irányt!`,
-                action: decision.action || { type: "navigate_to_emergency" },
-                confidence: 1.0
-            };
-        }
-        return {
-            text: "Azonnal segítek. Kérlek írd meg pontosan mi a baj, vagy keresd fel a legközelebbi orvosi ügyeletet a listában.",
-            action: decision.action || { type: "navigate_to_emergency" },
-            confidence: 0.9
-        };
-    }
-
-    if (intent === 'parking') {
-        if (topRecommendations?.length > 0) {
-            const item = topRecommendations[0];
-            return {
-                text: `PARKOLÁS: A legjobb lehetőség a ${item.name}. ${item.description}`,
-                action: decision.action || { type: "navigate_to_parking" },
-                confidence: typeof decision?.confidence === 'number' ? decision.confidence : 0.8
-            };
-        }
-        return {
-            text: "Segítek parkolni! Kőszeg belvárosa fizetős övezet. Kérlek írd meg a rendszámodat, vagy nézd meg a térképen a szabad helyeket.",
-            action: decision.action || { type: "navigate_to_parking" },
-            confidence: 0.8
-        };
-    }
-
-    // ===============================
-    // 3️⃣ EXPLICIT MATCH – ALWAYS OVERRIDE
-    // ===============================
-    if (
-        decision &&
-        decision.reasoning?.explicitMatch &&
-        topRecommendations?.length > 0
-    ) {
-        const item = topRecommendations[0];
-        return {
-            text: buildExplicitResponse(item, persona),
-            action: null,
-            confidence: 1.0
-        };
-    }
-
-    // ===============================
-    // 4️⃣ HIGH CONFIDENCE → DETERMINISTIC (with humor & cross-links)
-    // ===============================
-    if (
-        decision &&
-        decision.confidence >= getThreshold(intent) &&
-        topRecommendations?.length > 0
-    ) {
-        const best = topRecommendations[0];
-
-        return {
-            text: buildDeterministicResponse(best, decision, persona),
-            action: decision.action || null,
-            confidence: decision.confidence
-        };
-    }
-
-    // ===============================
-    // 4️⃣ LLM FALLBACK (SLIM CONTEXT)
+    // MAIN PATH: LLM with full context (multi-intent orchestration)
     // ===============================
     const slimContext = buildSlimContext(context);
 
+    // Only enable web search for truly external unknown queries (not for known intents)
+    const hasRecommendations = decision?.primaryRecommendations?.length > 0;
+    const needsWebSearch = intent === 'unknown' && !hasRecommendations;
+
     const model = getModel({
-        enableSearch: false,
+        enableSearch: needsWebSearch,
         systemInstruction: SYSTEM_PROMPT
     });
 
@@ -102,31 +40,7 @@ export async function generateResponse({ intent, query, context, history }) {
         parts: [{ text: msg.content || "" }]
     }));
 
-    const prompt = `
-AKTUÁLIS IDŐ: ${now}
-PERSONA: ${persona}
-DETEKTÁLT SZÁNDÉKOK: ${JSON.stringify(slimContext.allIntents)}
-
-TUDÁSBÁZIS (EXTERN):
-${slimContext.knowledge?.koszeg || ''}
-${slimContext.knowledge?.kalandia || ''}
-
-TOP AJÁNLÁSOK:
-${JSON.stringify(slimContext.recommendations, null, 2)}
-
-FELHASZNÁLÓI JELZÉSEK:
-${JSON.stringify(slimContext.signals, null, 2)}
-
-CONFIDENCE SZINT: ${decision?.confidence || 0}
-
-INSTRUKCIÓK:
-- Stílus: ${persona === 'tourist' ? 'Inspiráló idegenvezető' : 'Hatékony helyi segítő'}.
-- SOHA ne találj ki adatot. CSAK a TOP AJÁNLÁSOK listájából válassz!
-- Ha a keresett hely nincs a listában, ne próbáld kitalálni, inkább tegyél fel egyetlen konkrét pontosító kérdést.
-- Ha a confidence alacsony, kérdezz vissza.
-- ${persona === 'tourist' ? 'Dobj be egy apró kőszegi érdekességet a történelemből.' : 'Legyél lényegretörő.'}
-- JSON-ben válaszolj.
-`;
+    const prompt = buildPrompt({ now, allIntents, slimContext, decision, query });
 
     const chat = model.startChat({ history: chatHistory });
 
@@ -136,16 +50,20 @@ INSTRUKCIÓK:
 
         const jsonMatch = rawText.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
-            const parsed = JSON.parse(jsonMatch[0]);
-            return normalizeOutput(parsed, decision);
+            try {
+                const parsed = JSON.parse(jsonMatch[0]);
+                return normalizeOutput(parsed, decision);
+            } catch (_) {
+                return fallbackText(rawText, decision);
+            }
         }
 
         return fallbackText(rawText, decision);
 
     } catch (e) {
-        console.warn('Response generation failed:', e);
+        console.warn('Response generation failed:', e.message);
         return {
-            text: "Most nem vagyok teljesen biztos a legjobb választásban. Pontosítanál egy kicsit?",
+            text: "Hmm, most nem tudok választ adni. Kérdezz rá másképp, segítek!",
             action: null,
             confidence: 0.3
         };
@@ -153,101 +71,171 @@ INSTRUKCIÓK:
 }
 
 /**
- * 4.0 - Explicit Response with Persona
+ * Fast path for greetings and basic conversation
+ * Uses minimal prompt, no data context, no web search
  */
-function buildExplicitResponse(item, persona) {
-    const base = `${item.name} – ${item.details || item.description}`;
-    if (persona === 'tourist') {
-        return `Mesélek egy kicsit erről: ${base} Biztosan imádni fogod!`;
+async function generateSmallTalk({ query, history, now }) {
+    const model = getModel({ enableSearch: false, systemInstruction: SYSTEM_PROMPT });
+
+    const chatHistory = history.map(msg => ({
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.content || '' }]
+    }));
+
+    const simplePrompt = `AKTUÁLIS IDŐ: ${now}
+
+A felhasználó üzenete: "${query}"
+
+Ez egy egyszerű köszönés vagy általános kérdés. Válaszolj természetesen, barátságosan, magyarul – ahogy egy kőszegi barát tenné. Ha köszön, köszönj vissza és kérdezd meg mivel segíthetsz Kőszegen. MAX 2 mondat.
+
+Válaszolj KIZÁRÓLAG ebben a JSON formátumban:
+{"text": "...", "action": null, "confidence": 1.0}`;
+
+    try {
+        const chat = model.startChat({ history: chatHistory });
+        const result = await chat.sendMessage(simplePrompt);
+        const rawText = result.response.text();
+
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+            try { return JSON.parse(jsonMatch[0]); } catch (_) { }
+        }
+        // If LLM returns plain text, use it directly
+        return { text: rawText.replace(/```json|```/g, '').trim(), action: null, confidence: 0.9 };
+    } catch (e) {
+        console.warn('Smalltalk generation failed:', e.message);
+        return { text: 'Szia! Miben segíthetek Kőszegen? 😊', action: null, confidence: 0.8 };
     }
-    return `Itt vannak a részletek: ${base}`;
 }
 
 /**
- * 4.0 - Deterministic Response with Humor & Cross-links
+ * Builds the main LLM prompt with full data context
  */
-function buildDeterministicResponse(best, decision, persona) {
-    const reasons = decision.reasoning || {};
-    let text = "";
+function buildPrompt({ now, allIntents, slimContext, decision, query }) {
+    const vehicleList = slimContext.userVehicles?.length > 0
+        ? slimContext.userVehicles.map(v =>
+            `  - ${v.license_plate}${v.nickname ? ` (${v.nickname})` : ''}${v.is_default ? ' ✓ alapértelmezett' : ''}${v.carrier ? `, előhívó: ${v.carrier}` : ''}`
+        ).join('\n')
+        : '  (nincs mentett autó)';
 
-    // 1. Contextual Intro
-    if (reasons.rainBoost) text = "Mivel most esik az eső, ezt javaslom: ";
-    else if (reasons.rainPreferenceBoost) text = "Látom fedett helyet keresel, ezt javaslom: ";
-    else if (reasons.heatBoost) text = "Ebben a nagy hőségben érdemes bemenekülni ide: ";
-    else if (reasons.timeMatch) text = "Mivel kevés időd van, ezt ajánlom: ";
-    else if (reasons.romanticBoost) text = "Ha romantikus hangulatban vagy, ezt nézd meg: ";
-    else if (reasons.familyBoost) text = "Gyerekkkel ez egy biztos választás: ";
-    else text = "Ezt ajánlom neked: ";
+    const dataSection = buildDataSection(slimContext);
 
-    text += `${best.name}. ${best.description} `;
+    return `
+AKTUÁLIS IDŐ: ${now}
+PERSONA: ${slimContext.persona || 'hybrid'}
+DETEKTÁLT SZÁNDÉKOK (prioritás szerint): ${allIntents.join(' → ')}
 
-    // 2. Cross-category Enrichment
-    if (best.nearbyFood) {
-        text += `Utána pedig beugorhatsz a közeli ${best.nearbyFood.name}-ba egy kávéra. `;
-    }
-    if (best.nearbyParking && persona === 'local') {
-        text += `Parkolni a legkényelmesebben a ${best.nearbyParking.name}-nál tudsz. `;
-    }
+━━━ FELHASZNÁLÓ AUTÓI ━━━
+${vehicleList}
 
-    // 3. Humor / Persona Flavor (Apple Style)
-    if (persona === 'tourist' && Math.random() > 0.6) {
-        const flavors = [
-            "És ne feledd: ha 11-kor megszólal a harang, az Kőszegen a győzelem jele! 😉",
-            "Szerintem le fog nyűgözni a város hangulata.",
-            "Kőszeg tele van titkos történetekkel, ez csak az egyik közülük.",
-            "Jó szívvel ajánlom, igazi kőszegi élmény lesz!"
-        ];
-        text += flavors[Math.floor(Math.random() * flavors.length)];
-    }
+━━━ TOP AJÁNLÁSOK (előre szűrt és pontozva) ━━━
+${JSON.stringify(slimContext.recommendations?.slice(0, 5), null, 2)}
 
-    return text.trim();
+━━━ TELJES ADAT-KONTEXTUS ━━━
+${dataSection}
+
+━━━ TUDÁSBÁZIS ━━━
+${slimContext.knowledge?.koszeg ? slimContext.knowledge.koszeg.substring(0, 1500) : ''}
+
+━━━ JELZÉSEK ━━━
+${JSON.stringify(slimContext.signals, null, 2)}
+
+INSTRUKCIÓK:
+- PRIORITÁS SORREND: ${allIntents.join(' > ')}
+- Ha parkolás van a szándékok között ÉS fizetős az idő: ELŐSZÖR intézd el a parkolást (kérd a rendszámot ha kell), AZTÁN ajánlj látnivalót/éttermet
+- SOHA ne találj ki helyet! Csak a fenti ADAT-KONTEXTUSBÓL ajánlj
+- Ha nincs meg az adat a listában, mondd: "Erről pontos infóm nincs, de ajánlom helyette: [létező hely]"
+- Válaszolj KIZÁRÓLAG JSON-ban: {"text": "...", "action": {...} | null, "confidence": 0.0-1.0}
+`;
 }
 
 /**
- * 4.0 - Basic Multi-day Itinerary skeleton
+ * Builds a concise data section from all available context categories
  */
-function generateItineraryResponse(query, context) {
-    // Simplified logic for now
-    return {
-        text: "Örömmel tervezek neked egy többnapos programot! Kezdj a Jurisics-várral, ebédelj a várnál, délután pedig egy séta a Csónakázó-tónál tökéletes lenne. Holnapra pedig...",
-        action: null,
-        confidence: 0.8
-    };
+function buildDataSection(slimContext) {
+    const sections = [];
+
+    if (slimContext.restaurants?.length > 0) {
+        sections.push(`ÉTTERMEK/KÁVÉZÓK (${slimContext.restaurants.length} db):\n` +
+            slimContext.restaurants.slice(0, 20).map(r =>
+                `  - ${r.name} | ${r.type || ''} | ${(r.tags || []).join(', ')} | ${r.address || ''}`
+            ).join('\n')
+        );
+    }
+
+    if (slimContext.attractions?.length > 0) {
+        sections.push(`LÁTNIVALÓK (${slimContext.attractions.length} db):\n` +
+            slimContext.attractions.slice(0, 10).map(a =>
+                `  - ${a.name} | ${(a.description || '').substring(0, 80)}`
+            ).join('\n')
+        );
+    }
+
+    if (slimContext.events?.length > 0) {
+        sections.push(`KÖZELGŐ PROGRAMOK:\n` +
+            slimContext.events.slice(0, 5).map(e =>
+                `  - ${e.name} | ${e.date} ${e.time || ''} | ${e.location || ''}`
+            ).join('\n')
+        );
+    }
+
+    if (slimContext.parking?.length > 0) {
+        sections.push(`PARKOLÓK:\n` +
+            slimContext.parking.slice(0, 5).map(p =>
+                `  - ${p.name} | Zóna: ${p.zone || '?'} | ${p.description || ''}`
+            ).join('\n')
+        );
+    }
+
+    if (slimContext.leisure?.length > 0) {
+        sections.push(`SZABADIDŐ/SÉTA:\n` +
+            slimContext.leisure.slice(0, 5).map(l =>
+                `  - ${l.name} | ${(l.description || '').substring(0, 60)}`
+            ).join('\n')
+        );
+    }
+
+    return sections.length > 0 ? sections.join('\n\n') : '(nincs betöltött adat)';
 }
 
-function getThreshold(intent) {
-    if (intent === 'parking') return 0.4;
-    if (intent === 'emergency') return 0.4;
-    if (intent === 'attractions') return 0.6;
-    if (intent.includes('food')) return 0.6;
-    if (intent === 'events') return 0.65;
-    return 0.8;
-}
-
+/**
+ * Builds slim context with ALL available data categories
+ */
 function buildSlimContext(context) {
     const decision = context.decision;
     const topRecommendations = decision?.primaryRecommendations || [];
+    const appData = context.appData || {};
 
     return {
         recommendations: topRecommendations.slice(0, 5).map(r => ({
             id: r.id,
             name: r.name,
+            type: r.type,
             description: r.description,
             score: r.aiScore,
             tags: r.tags,
-            location: r.location,
-            mystery_box: !!(r.mystery_box && r.mystery_box.length > 0)
-        })) || [],
+            address: r.address,
+            phone: r.phone,
+        })),
+        restaurants: appData.restaurants || [],
+        attractions: appData.attractions || [],
+        events: appData.events || [],
+        parking: appData.parking || [],
+        hotels: appData.hotels || [],
+        leisure: appData.leisure || [],
+        info: appData.info || [],
+        userVehicles: context.userVehicles || [],
+        userProfile: context.userProfile || null,
         signals: decision?.signals || {},
         allIntents: context.allIntents || [],
-        knowledge: context.knowledge || {}
+        knowledge: context.knowledge || {},
+        persona: decision?.persona || context.persona || 'hybrid'
     };
 }
 
 function normalizeOutput(parsed, decision) {
     if (!parsed.text) parsed.text = "Rendben!";
-    if (!parsed.action) {
-        // Only use deterministic action if LLM didn't provide one
+    if (parsed.action === undefined) {
         parsed.action = decision?.action || null;
     }
     if (typeof parsed.confidence !== 'number') parsed.confidence = decision?.confidence || 0.5;
