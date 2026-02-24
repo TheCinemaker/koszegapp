@@ -9,12 +9,14 @@
 
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
   included_files = [
     "netlify/functions/certs/*",
     "netlify/functions/icon.png",
     "netlify/functions/icon@2x.png",
     "netlify/functions/logo.png",
-    "netlify/functions/logo@2x.png"
+    "netlify/functions/logo@2x.png",
+    "public/data/*.json"
   ]
 
 # Scheduled function: Daily pass generator (runs every morning at 6 AM CET)
