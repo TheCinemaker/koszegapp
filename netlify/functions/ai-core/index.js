@@ -1,11 +1,17 @@
-import { detectIntent } from './intentMatcher.js'; // Rule-based
+import { detectIntent } from './intentMatcher.js';
 import { loadContext } from './contextLoader.js';
 import { generateResponse } from './responseEngine.js';
 import { getFallbackResponse } from './fallbackEngine.js';
 import { decideAction } from './decisionRouter.js';
 import { searchMenu } from './foodSearch.js';
-import { logInteraction } from './logger.js'; // Import Logger
+import { logInteraction } from './logger.js';
 import { updateAIProfile } from './personalityEngine.js';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY
+);
 
 export async function runAI({ query, history, frontendContext }) {
     try {
@@ -44,11 +50,12 @@ export async function runAI({ query, history, frontendContext }) {
         });
         console.timeEnd("DECISION_ROUTER");
 
+        const userId = frontendContext?.userId;
         const primaryIntent = decision.primaryIntent;
         topRecommendations = decision.primaryRecommendations || [];
         const allResolvedIntents = [primaryIntent, ...(decision.secondaryIntents || [])];
 
-        // 🍔 Special Food Search (Trigger if primary or original intent involves food)
+        // 🍔 Special Food Search
         if (intents.some(i => i?.includes('food')) || (primaryIntent && primaryIntent.includes('food'))) {
             const cleanQuery = query.replace(/rendel|házhoz|kiszállítás|futár|enni|beülni|étterem|pizzéria|szeretnék|kérek/gi, "").trim();
             if (cleanQuery.length > 2) {
@@ -61,7 +68,6 @@ export async function runAI({ query, history, frontendContext }) {
         console.log(`🧠 Decision Optimized: ${primaryIntent} -> ${decision?.action?.type || 'no action'} (Total Intents: ${allResolvedIntents.join(', ')})`);
 
         console.time("GENERATE_RESPONSE");
-        // 3. Generate Response (Single LLM Call)
         const result = await generateResponse({
             intent: primaryIntent,
             query,
@@ -70,15 +76,34 @@ export async function runAI({ query, history, frontendContext }) {
         });
         console.timeEnd("GENERATE_RESPONSE");
 
+        // 💾 AUTO SAVE VEHICLE (szerver-oldali, frontend körút nélkül)
+        // Ha új rendszámot detektált a decisionRouter ÉS a user be van jelentkezve, mentsük el automatikusan
+        if (decision?.pureParkingFlow && decision?.detectedPlate && userId) {
+            const detectedPlate = decision.detectedPlate;
+            const knownPlates = (backendContext.userVehicles || []).map(v => v.license_plate?.toUpperCase());
+
+            if (!knownPlates.includes(detectedPlate)) {
+                // Új rendszám – mentjük (non-blocking)
+                supabase.from('user_vehicles').insert({
+                    user_id: userId,
+                    license_plate: detectedPlate,
+                    carrier: '70', // alapértelmezett előhívó, LLM majd megkérdezi
+                    is_default: knownPlates.length === 0, // első autó legyen alapértelmezett
+                }).then(({ error }) => {
+                    if (error) console.warn('⚠️ Auto-save vehicle failed:', error.message);
+                    else console.log(`✅ Auto-saved new vehicle: ${detectedPlate} for user ${userId}`);
+                });
+            }
+        }
+
         // 🧠 LEARNING (Non-blocking)
-        const userId = frontendContext?.userId;
         if (userId && decision) {
             updateAIProfile(userId, decision).catch(e => console.error('❌ Learning failed:', e.message));
         }
 
         // 📝 LOGGING (Non-blocking)
         logInteraction({
-            userId: userId,
+            userId,
             authToken: frontendContext?.authToken,
             query,
             intent: primaryIntent,
@@ -94,7 +119,7 @@ export async function runAI({ query, history, frontendContext }) {
             metadata: {
                 primaryIntent,
                 secondaryIntents: decision.secondaryIntents,
-                topRecommendations // This is primaryRecommendations internally
+                topRecommendations
             }
         };
 

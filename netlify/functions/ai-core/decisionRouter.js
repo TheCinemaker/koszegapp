@@ -306,12 +306,19 @@ export function decideAction({ intents, query, context }) {
                     primaryIntent: 'parking',
                     primaryRecommendations: scored.slice(0, 1),
                     secondaryIntents: [], // FONTOS: ÜRES, NE LEGYENEK MÁS INTENTEK!
-                    action: { type: "start_parking_payment", plate: plate },
+                    action: {
+                        type: "buy_parking_ticket",
+                        params: {
+                            licensePlate: plate,
+                            useGPS: true
+                        }
+                    },
                     confidence: 1.0,
                     signals,
                     reasoning: { explicitMatch: true, licensePlateDetected: true },
                     persona,
-                    pureParkingFlow: true // ÚJ FLAG: jelzi, hogy ez tiszta parkolás
+                    pureParkingFlow: true,       // ÚJ FLAG: jelzi, hogy ez tiszta parkolás
+                    detectedPlate: plate         // A detektált rendszám (save előtt ellenőrzendő)
                 };
             }
 
