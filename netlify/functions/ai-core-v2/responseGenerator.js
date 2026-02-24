@@ -1,18 +1,21 @@
 /**
- * responseGenerator.js – ai-core-v2 (v5 final)
+ * responseGenerator.js – ai-core-v2 (v6 final)
  *
- * - Deterministic structured responses for parking/consent flows
+ * - Deterministic structured responses for parking/consent/arrival flows
  * - Reads REAL data from local JSON files (no hallucination)
- * - LLM (Gemini) ONLY used for natural Hungarian language formatting
- * - GPS-aware: shows distances, prioritized near places
+ * - LLM ONLY used for natural Hungarian language formatting
+ * - GPS-aware, weather-aware, profile-aware (via rankingEngineV2)
  */
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
-import { rankByDistance, filterNearby } from './rankingEngine.js';
+import { filterNearby } from './rankingEngine.js';
+import { rankPlaces } from './rankingEngineV2.js';
 import { buildItinerary } from './itineraryEngine.js';
 import { applyPersonality } from './personalityLayer.js';
+import { buildArrivalMessage } from './situationAnalyzer.js';
+import { getForecastForTime, parseArrivalTime } from './forecastService.js';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const dataPath = join(__dir, '../../../public/data');
@@ -25,7 +28,7 @@ function load(file) {
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 const PERSONA = `Te a KőszegAPP barátságos, rövid és szókimondó asszisztense vagy, név nélkül.
-Magyar, tömör, természetes hangneme van. Tegező. Max 2-3 mondat.
+Magyar, tömör, természetes hangnemet használsz. Tegező. Max 2-3 mondat.
 Soha ne találj ki helyet vagy adatot ami nincs megadva neked!
 Ha van távolság adat, mondd meg ("innen kb X km").`;
 
@@ -44,8 +47,9 @@ async function llm(prompt, fallback) {
     }
 }
 
-export async function generateResponse({ replyType, state, context, query, intents }) {
+export async function generateResponse({ replyType, state, context, weather, profile, query, intents }) {
     const { location, mobility, isLunch, isEvening } = context || {};
+    const speed = context?.speed ?? null;
 
     switch (replyType) {
 
@@ -58,7 +62,7 @@ export async function generateResponse({ replyType, state, context, query, inten
             return { text, action: null };
         }
 
-        // ── PARKING FLOW (teljesen determinisztikus szövegek) ─────────────
+        // ── PARKING (teljesen determinisztikus) ───────────────────────────
         case 'ask_plate':
             return { text: 'Add meg a rendszámodat és elindítom a parkolást! 🚗', action: null };
 
@@ -67,34 +71,33 @@ export async function generateResponse({ replyType, state, context, query, inten
 
         case 'confirm_parking':
             return {
-                text: `${state.tempData?.licensePlate} rendszámmal ${state.tempData?.duration} órára indítsam? Körülbelül fizetős zóna – mehet? ✅`,
+                text: `${state.tempData?.licensePlate} rendszámmal ${state.tempData?.duration} órára indítsam? Mehet? ✅`,
                 action: null
             };
 
         case 'ask_save_consent':
             return {
-                text: `Parkolás kész! Elmenthetem a ${state.tempData?.licensePlate} rendszámot, hogy jövőre ne kelljen begépelni? 💾`,
+                text: `Parkolás kész! Elmenthetem a ${state.tempData?.licensePlate} rendszámot jövőre? 💾`,
                 action: null
             };
 
         case 'parking_success':
             return {
-                text: 'Megnyitom a parkolóoldalt – az SMS küldés gombra kell majd nyomni. Jó sétát Kőszegen! 🚗',
-                action: null // injected by index.js from executeAction
+                text: 'Megnyitom a parkolóoldalt – az SMS gombra kell nyomni. Jó sétát Kőszegen! 🚗',
+                action: null
             };
 
         case 'parking_cancelled':
             return { text: 'Töröltük a parkolást. Miben segíthetek még?', action: null };
 
-        // ── FOOD SEARCH (JSON alapú, geo-rendezve) ────────────────────────
+        // ── FOOD (rankingEngineV2: GPS + weather + profile + revenue) ─────
         case 'food_search': {
             const all = load('restaurants.json');
-            const top = location
-                ? filterNearby(all, location, 3, 4)
-                : all.slice(0, 4);
+            const ranked = rankPlaces(all, { weather, profile, speed });
+            const top = location ? filterNearby(ranked, location, 3, 4) : ranked.slice(0, 4);
 
             if (top.length === 0) {
-                return { text: 'Éttermet nem találtam az adatbázisban. Megnyissam az étterem oldalt?', action: { type: 'navigate_to_food', params: {} } };
+                return { text: 'Éttermet nem találtam. Megnyissam az étterem oldalt?', action: { type: 'navigate_to_food', params: {} } };
             }
 
             const list = top.map(r => {
@@ -102,42 +105,45 @@ export async function generateResponse({ replyType, state, context, query, inten
                 return `${r.name}${dist}`;
             }).join(', ');
 
-            const timeNote = isLunch ? 'Ebédidő van!' : isEvening ? 'Vacsorára is gondoltam.' : '';
+            const weatherNote = weather?.isRain ? '☂️ Most esik – beltéri helyeket javaslok. ' : '';
+            const timeNote = isLunch ? 'Ebédidő. ' : isEvening ? 'Vacsorára idő. ' : '';
             const text = await llm(
-                `${timeNote} Ajánlj ezek közül éttermet Kőszegen röviden: ${list}. Ne találj ki semmit.`,
+                `${weatherNote}${timeNote}Ajánlj ezek közül éttermet Kőszegen röviden: ${list}. Ne találj ki semmit.`,
                 `Íme a legközelebbi helyek: ${list}.`
             );
-            return { text, action: null };
+            return { text, _rankedPlaces: ranked, action: null };
         }
 
-        // ── ATTRACTIONS (JSON alapú, geo-rendezve) ────────────────────────
+        // ── ATTRACTIONS (geo + idő + weather alapján) ─────────────────────
         case 'attractions': {
             const all = load('attractions.json');
+            const ranked = rankPlaces(all, { weather, profile, speed });
             const top = location
-                ? filterNearby(all, location, 5, 4)
-                : all.sort((a, b) => (b.priority || 0) - (a.priority || 0)).slice(0, 4);
+                ? filterNearby(ranked, location, 5, 4)
+                : ranked.slice(0, 4);
 
             const list = top.map(a => {
                 const dist = a._distanceKm != null && a._distanceKm < Infinity ? ` (${a._distanceKm} km)` : '';
                 return `${a.name}${dist}`;
             }).join(', ');
 
+            const weatherNote = weather?.isRain ? '☂️ Esős az idő – fedett látnivalókat ajánlom. ' : '';
             const text = await llm(
-                `Mutasd be röviden ezeket a kőszegi látnivalókat: ${list}. Max 2 mondat.`,
-                `Kőszeg legjobb látnivalói a közelben: ${list}.`
+                `${weatherNote}Mutasd be röviden ezeket a kőszegi látnivalókat: ${list}. Max 2 mondat.`,
+                `Kőszeg legjobb látnivalói: ${list}.`
             );
-            return { text, action: null };
+            return { text, _rankedPlaces: ranked, action: null };
         }
 
         // ── ITINERARY (food + attractions együtt) ─────────────────────────
         case 'build_itinerary': {
             const plan = buildItinerary({ intents: intents || [], context });
             if (plan.length === 0) {
-                return { text: 'Nem találtam programot a közelben. Próbáljuk meg pontosítani?', action: null };
+                return { text: 'Nem találtam programot a közelben. Pontosítsuk?', action: null };
             }
             const summary = plan.map(p => p.name).filter(Boolean).join(', ');
             const text = await llm(
-                `Összeállítottam egy Kőszeg-programot: ${summary}. Mutatod be természetesen és röviden${mobility === 'walking' ? ' (gyalog van)' : ''}?`,
+                `Összeállítottam egy Kőszeg-programot: ${summary}. Mutasd be természetesen${mobility === 'walking' ? ' (gyalog van)' : ''}.`,
                 `A közelben: ${summary}.`
             );
             return { text, action: null };
@@ -152,7 +158,7 @@ export async function generateResponse({ replyType, state, context, query, inten
                 .map(e => e.title || e.name);
 
             if (upcoming.length === 0) {
-                return { text: 'A közeljövőben nincs meghirdetett esemény az adatbázisban.', action: { type: 'navigate_to_events', params: {} } };
+                return { text: 'Nincs közelgő esemény az adatbázisban.', action: { type: 'navigate_to_events', params: {} } };
             }
             const text = await llm(
                 `Kőszegi közelgő programok: ${upcoming.join(', ')}. Ajánld röviden.`,
@@ -173,22 +179,52 @@ export async function generateResponse({ replyType, state, context, query, inten
 
         // ── NAVIGATION ───────────────────────────────────────────────────
         case 'offer_navigation':
-            return {
-                text: 'Látom a pozíciódat! Hova navigáljalak? Add meg a célpontot.',
-                action: null
-            };
+            return { text: 'Látom a pozíciódat! Hova navigáljalak?', action: null };
 
         case 'ask_destination':
             return { text: 'Hova szeretnél menni? Add meg a célpontot és megnyitom a navigációt.', action: null };
 
+        // ── ARRIVAL PLANNING ─────────────────────────────────────────────
+        case 'ask_arrival_time': {
+            const situation = context?.situation || {};
+            return {
+                text: buildArrivalMessage(situation.distanceKm || '?', situation.approaching),
+                action: null
+            };
+        }
+
+        case 'arrival_planning': {
+            const arrivalTs = parseArrivalTime(query);
+            if (!arrivalTs) {
+                return { text: 'Nem értettem mikor érkezel. Próbáld: "holnap 15 óra" vagy "pénteken délután".', action: null };
+            }
+            const lat = location?.lat ?? 47.3895;
+            const lng = location?.lng ?? 16.541;
+            const forecast = await getForecastForTime(lat, lng, arrivalTs);
+
+            if (!forecast) {
+                return { text: 'Előrejelzés nem elérhető, de szívesen segítek a programtervezésben!', action: null };
+            }
+
+            const all = [...load('restaurants.json'), ...load('attractions.json')];
+            const ranked = rankPlaces(all, { weather: forecast, profile, speed: 0 });
+            const top3 = ranked.slice(0, 3).map(p => p.name).filter(Boolean);
+            const weatherDesc = forecast.isRain
+                ? '☂️ Esőt mutat a rendszer – beltéri hangulatos helyeket javaslok.'
+                : '☀️ Szép idő várható – kültéri programra is megyünk!';
+
+            const text = await llm(
+                `${weatherDesc} Érkezésre előkészített program: ${top3.join(', ')}. Mutasd be röviden.`,
+                `${weatherDesc} Javaslom: ${top3.join(', ')}.`
+            );
+            return { text, _rankedPlaces: ranked, action: null };
+        }
+
         // ── EMERGENCY ────────────────────────────────────────────────────
         case 'emergency':
-            return {
-                text: '🆘 Azonnal hívom a segélyszolgálatot!',
-                action: { type: 'call_emergency', params: {} }
-            };
+            return { text: '🆘 Azonnal hívom a segélyszolgálatot!', action: { type: 'call_emergency', params: {} } };
 
-        // ── NORMAL (LLM fallback) ──────────────────────────────────────
+        // ── NORMAL (LLM fallback) ─────────────────────────────────────────
         case 'normal':
         default: {
             const text = await llm(

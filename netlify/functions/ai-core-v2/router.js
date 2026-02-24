@@ -50,6 +50,15 @@ export function routeConversation({ intents, entities, state, context, query }) 
         };
     }
 
+    // Direct plate at idle (no 'parkol' keyword, just e.g. "AAAM340")
+    if (state.phase === 'idle' && entities.licensePlate && !intents.includes('parking')) {
+        return {
+            newState: { ...state, phase: 'parking_collect_duration', tempData: { licensePlate: entities.licensePlate } },
+            replyType: 'ask_duration',
+            action: null
+        };
+    }
+
     if (state.phase === 'parking_collect_plate' && entities.licensePlate) {
         return {
             newState: { ...state, phase: 'parking_collect_duration', tempData: { licensePlate: entities.licensePlate } },
@@ -81,6 +90,8 @@ export function routeConversation({ intents, entities, state, context, query }) 
                 action: null
             };
         }
+        // User said something unclear – re-prompt (don't fall through!)
+        return { newState: state, replyType: 'confirm_parking', action: null };
     }
 
     if (state.phase === 'parking_save_consent') {
@@ -98,6 +109,8 @@ export function routeConversation({ intents, entities, state, context, query }) 
                 action: { type: 'start_parking_only', params: state.tempData }
             };
         }
+        // User said something unclear – re-prompt consent
+        return { newState: state, replyType: 'ask_save_consent', action: null };
     }
 
     // ── Non-parking intents ──────────────────────────────────────────────
@@ -105,6 +118,27 @@ export function routeConversation({ intents, entities, state, context, query }) 
 }
 
 function routeNonParking({ intents, state, context, query }) {
+
+    // Arrival planning: not in city + leisure intent → ask when arriving
+    const notInCity = context.situation?.status === 'not_in_city';
+    const leisureIntent = intents.some(i => ['food', 'attractions', 'events', 'hotels'].includes(i));
+
+    if (notInCity && leisureIntent && state.phase !== 'arrival_planning') {
+        return {
+            newState: { ...state, phase: 'arrival_planning' },
+            replyType: 'ask_arrival_time',
+            action: null
+        };
+    }
+
+    // User answered with arrival time
+    if (state.phase === 'arrival_planning') {
+        return {
+            newState: { ...state, phase: 'idle' },
+            replyType: 'arrival_planning',
+            action: null
+        };
+    }
 
     // Multi-intent: food + attractions → build itinerary
     if (intents.includes('food') && intents.includes('attractions')) {
