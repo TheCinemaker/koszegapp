@@ -5,11 +5,9 @@
  */
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
-import { join, dirname } from 'path';
-import { rankByDistance } from './rankingEngine.js';
+import { join } from 'path';
 
-const __dir = dirname(fileURLToPath(import.meta.url));
-const dataPath = join(__dir, '../../../public/data');
+const dataPath = join(process.cwd(), 'public/data');
 
 function load(file) {
     try { return JSON.parse(readFileSync(join(dataPath, file), 'utf8')); }

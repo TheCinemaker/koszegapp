@@ -6,14 +6,11 @@
  * When data is migrated to Supabase, swap readJson() for a supabase query.
  */
 import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { join, dirname } from 'path';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { join } from 'path';
 
 function loadRestaurants() {
     try {
-        const filePath = join(__dirname, '../../../../public/data/restaurants.json');
+        const filePath = join(process.cwd(), 'public/data/restaurants.json');
         return JSON.parse(readFileSync(filePath, 'utf8'));
     } catch {
         return [];

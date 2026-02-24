@@ -8,8 +8,7 @@
  */
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { join, dirname } from 'path';
+import { join } from 'path';
 import { filterNearby } from './rankingEngine.js';
 import { rankPlaces } from './rankingEngineV2.js';
 import { buildItinerary } from './itineraryEngine.js';
@@ -17,24 +16,29 @@ import { applyPersonality } from './personalityLayer.js';
 import { buildArrivalMessage } from './situationAnalyzer.js';
 import { getForecastForTime, parseArrivalTime } from './forecastService.js';
 
-const __dir = dirname(fileURLToPath(import.meta.url));
-const dataPath = join(__dir, '../../../public/data');
+// process.cwd() = /var/task on Netlify, project root locally
+// Works in both ESM and CJS bundled mode (no import.meta.url)
+const dataPath = join(process.cwd(), 'public/data');
 
 function load(file) {
     try { return JSON.parse(readFileSync(join(dataPath, file), 'utf8')); }
     catch { return []; }
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Deferred – instantiated at call time, not module load, to avoid init crashes
+function getGenAI() {
+    return new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+}
 
 const PERSONA = `Te a KőszegAPP barátságos, rövid és szókimondó asszisztense vagy, név nélkül.
 Magyar, tömör, természetes hangnemet használsz. Tegező. Max 2-3 mondat.
 Soha ne találj ki helyet vagy adatot ami nincs megadva neked!
 Ha van távolság adat, mondd meg ("innen kb X km").`;
 
+
 async function llm(prompt, fallback) {
     try {
-        const model = genAI.getGenerativeModel({
+        const model = getGenAI().getGenerativeModel({
             model: 'gemini-2.0-flash',
             systemInstruction: PERSONA,
             generationConfig: { temperature: 0.55, maxOutputTokens: 220 }
