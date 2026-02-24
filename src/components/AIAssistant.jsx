@@ -49,6 +49,7 @@ const QUICK_ACTIONS = [
 const getActionDetails = (action) => {
     if (!action) return null;
     switch (action.type) {
+        case 'open_navigation': return { label: `Útvonal megnyitása: ${action.params?.label || ''} 📍`, icon: IoNavigate };
         case 'navigate_to_events': return { label: 'Események megnyitása 📅', icon: IoTicketOutline };
         case 'navigate_to_event_detail': return { label: 'Esemény részletei ℹ️', icon: IoTicketOutline };
         case 'navigate_to_parking': return { label: 'Parkolás megnyitása 🚗', icon: IoCarOutline };
@@ -205,8 +206,16 @@ export default function AIAssistant() {
         };
 
         try {
+            // Get fresh JWT session for RLS-compliant backend (v2)
+            const { data: { session } } = await supabase.auth.getSession();
+            const jwtToken = session?.access_token;
+
             const response = await fetch('/.netlify/functions/ai-assistant', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(jwtToken ? { 'Authorization': `Bearer ${jwtToken}` } : {})
+                },
                 body: JSON.stringify({ query: currentInput, conversationHistory: messages, context: requestContext }),
             });
             const data = await response.json();
@@ -219,8 +228,8 @@ export default function AIAssistant() {
                         import('../ai/BehaviorEngine').then(({ setTravelIntent }) => setTravelIntent(true));
                 }
                 if (data.action) {
-                    // background actions (no navigation) can still be auto-triggered
-                    const noAutoRun = ['navigate_to', 'buy_parking_ticket', 'open_external_map', 'call_phone', 'call_emergency'];
+                    // Background actions auto-trigger; navigation/external actions show button
+                    const noAutoRun = ['navigate_to', 'buy_parking_ticket', 'open_external_map', 'open_navigation', 'call_phone', 'call_emergency'];
                     const isNavAction = noAutoRun.some(prefix => data.action.type.startsWith(prefix));
 
                     if (!isNavAction) {

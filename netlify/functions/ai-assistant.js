@@ -1,9 +1,16 @@
-import { runAI } from './ai-core/index.js';
+/**
+ * ai-assistant.js – KőszegAI v2.1 Entry Point
+ * Netlify serverless function.
+ * 
+ * CRITICAL: Frontend MUST send Authorization: Bearer <JWT> header.
+ * Without it, Supabase RLS will reject all DB writes.
+ */
+import { runAI } from './ai-core-v2/index.js';
 
 export async function handler(event) {
     const headers = {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
     };
 
@@ -12,9 +19,7 @@ export async function handler(event) {
     }
 
     try {
-        if (!event.body) {
-            throw new Error("No body provided");
-        }
+        if (!event.body) throw new Error("No body provided");
 
         const { query, conversationHistory = [], context = {} } = JSON.parse(event.body);
 
@@ -22,20 +27,21 @@ export async function handler(event) {
             return {
                 statusCode: 400,
                 headers,
-                body: JSON.stringify({ error: 'Query is required' }),
+                body: JSON.stringify({ error: 'Query is required' })
             };
         }
 
-        // Run the AI Engine
+        // Extract JWT from Authorization header
+        const token = event.headers.authorization?.replace('Bearer ', '')
+            || event.headers.Authorization?.replace('Bearer ', '');
+
+        // Run v2 AI Engine
         const result = await runAI({
             query,
             history: conversationHistory,
-            frontendContext: context // Pass rich context (mode, location, behavior)
+            frontendContext: context,
+            token
         });
-
-        // Ensure result has the expected structure for frontend
-        // Frontend expects: { role: 'assistant', content: string, action: object }
-        // AI Core returns: { text: string, action: object, confidence: number }
 
         return {
             statusCode: 200,
@@ -43,22 +49,18 @@ export async function handler(event) {
             body: JSON.stringify({
                 role: 'assistant',
                 content: result.text,
-                action: result.action,
-                debug: {
-                    confidence: result.confidence,
-                    intent: result.intent // If we passed intent through, but we didn't in runAI return.
-                }
-            }),
+                action: result.action ?? null
+            })
         };
 
     } catch (error) {
-        console.error('Handler error:', error);
+        console.error('AI handler error:', error);
         return {
-            statusCode: 200, // Return 200 so UI shows the error instead of falling back to mock
+            statusCode: 200, // Return 200 so UI shows the error gracefully
             headers,
             body: JSON.stringify({
                 role: 'assistant',
-                content: `🔴 BACKEND ERROR: ${error.message}${error.stack ? '\n\n' + error.stack : ''}`,
+                content: `Sajnos hiba történt: ${error.message}`,
                 action: null,
                 debug: error.message
             })
