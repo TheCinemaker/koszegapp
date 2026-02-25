@@ -22,13 +22,55 @@ export function routeConversation({ intents, entities, state, context, query }) 
         };
     }
 
-    // ── Parking INFO (question, not command) ─────────────────────────────
+    // ── Parking INFO (kérdés, nem parancs) ────────────────────────────
     if (intents.includes('parking_info')) {
-        return {
-            newState: { ...state, phase: 'idle' },
-            replyType: 'parking_info',
-            action: null
-        };
+        // Ha már folyamatban van valami, elsőként azt kezeljük
+        if (state.phase !== 'idle') {
+            return { newState: state, replyType: 'continue_current_flow', action: null };
+        }
+
+        const someoneInCity = context.situation?.anyoneInCity || false;
+        const wifeInCity = context.situation?.wifeInCity || false;
+        const userInCity = context.situation?.userStatus === 'in_city';
+
+        if (!someoneInCity) {
+            return {
+                newState: { ...state, phase: 'arrival_planning' },
+                replyType: 'parking_info_not_in_city',
+                action: null
+            };
+        }
+        if (wifeInCity) {
+            return {
+                newState: { ...state, phase: 'parking_offer_wife' },
+                replyType: 'parking_info_wife_there',
+                action: null
+            };
+        }
+        if (userInCity) {
+            return {
+                newState: { ...state, phase: 'parking_offer_user' },
+                replyType: 'parking_info_user_there',
+                action: null
+            };
+        }
+        return { newState: state, replyType: 'parking_info', action: null };
+    }
+
+    // ── Parking offer ────────────────────────────────────────
+    if (state.phase === 'parking_offer_wife' || state.phase === 'parking_offer_user') {
+        if (/igen|persze|oké|rendben|indítsd|szeretném/i.test(query)) {
+            if (entities.licensePlate) {
+                return {
+                    newState: { ...state, phase: 'parking_collect_duration', tempData: { licensePlate: entities.licensePlate } },
+                    replyType: 'ask_duration', action: null
+                };
+            }
+            return { newState: { ...state, phase: 'parking_collect_plate' }, replyType: 'ask_plate', action: null };
+        }
+        if (/nem|mégse|kösz|nem kell/i.test(query)) {
+            return { newState: { phase: 'idle', tempData: {} }, replyType: 'parking_offer_declined', action: null };
+        }
     }
 
     // ── Mid-flow: user abandons parking/arrival, switches topic ──────────

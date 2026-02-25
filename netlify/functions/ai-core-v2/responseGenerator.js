@@ -51,9 +51,14 @@ async function llm(prompt, fallback) {
     }
 }
 
-export async function generateResponse({ replyType, state, context, weather, profile, query, intents }) {
+export async function generateResponse({ replyType, query, state, context, profile, weather, intents }) {
     const { location, mobility, isLunch, isEvening } = context || {};
     const speed = context?.speed ?? null;
+
+    // Segédfüggvény változatos válaszokhoz
+    function randomMessage(messages) {
+        return messages[Math.floor(Math.random() * messages.length)];
+    }
 
     switch (replyType) {
 
@@ -68,42 +73,134 @@ export async function generateResponse({ replyType, state, context, weather, pro
 
         // ── PARKING (teljesen determinisztikus) ───────────────────────────
         case 'ask_plate':
-            return { text: 'Add meg a rendszámodat és elindítom a parkolást! 🚗', action: null };
+            return {
+                text: randomMessage([
+                    'Add meg a rendszámodat és elindítom a parkolást! 🚗',
+                    'Kérem a rendszámot, és mehet az SMS parkolás!',
+                    'Rendszámot kérek szépen, és csináljuk!'
+                ]), action: null
+            };
 
         case 'ask_duration':
-            return { text: `Rendben, ${state.tempData?.licensePlate} – hány órára parkoljak? (pl. "2 óra")`, action: null };
+            return {
+                text: randomMessage([
+                    `Rendben, ${state.tempData?.licensePlate || 'ezzel a rendszámmal'} – hány órára parkoljak? (pl. "2 óra")`,
+                    `Oké, ${state.tempData?.licensePlate} – mennyi időre szóljon a jegy?`,
+                    `Már csak az időtartam kell! Hány órára?`
+                ]), action: null
+            };
 
         case 'confirm_parking':
             return {
-                text: `${state.tempData?.licensePlate} rendszámmal ${state.tempData?.duration} órára indítsam? Mehet? ✅`,
-                action: null
+                text: randomMessage([
+                    `${state.tempData?.licensePlate} rendszámmal ${state.tempData?.duration} órára indítsam? Mehet? ✅`,
+                    `Akkor ${state.tempData?.licensePlate}, ${state.tempData?.duration} óra. Így jó lesz?`,
+                    `Megerősíted? ${state.tempData?.licensePlate} – ${state.tempData?.duration} óra.`
+                ]), action: null
             };
 
         case 'ask_save_consent':
             return {
-                text: `Parkolás kész! Elmenthetem a ${state.tempData?.licensePlate} rendszámot jövőre? 💾`,
-                action: null
+                text: randomMessage([
+                    `Parkolás kész! Elmenthetem a ${state.tempData?.licensePlate} rendszámot jövőre? 💾`,
+                    `El is menthetném a ${state.tempData?.licensePlate} rendszámot, hogy legközelebb gyorsabb legyen. Megtehetem?`,
+                    `Érdemes elmenteni a ${state.tempData?.licensePlate} rendszámot? Ha igen, legközelebb gyorsabb lesz!`
+                ]), action: null
             };
 
         case 'parking_success':
             return {
-                text: 'Megnyitom a parkolóoldalt – az SMS gombra kell nyomni. Jó sétát Kőszegen! 🚗',
-                action: null
+                text: randomMessage([
+                    'Megnyitom a parkolóoldalt – az SMS gombra kell nyomni. Jó sétát Kőszegen! 🚗',
+                    'Kész! Az SMS gombra nyomj, és indulhat a parkolás. Jó szórakozást!',
+                    'Minden oké, mehet a parkolás! Az SMS gombot keresd. Ha gond van, szólj!'
+                ]), action: null
             };
 
         case 'parking_cancelled':
-            return { text: 'Töröltük a parkolást. Miben segíthetek még?', action: null };
+            return {
+                text: randomMessage([
+                    'Töröltük a parkolást. Miben segíthetek még?',
+                    'Oké, töröltük. Ha mégis kell, szólj!',
+                    'Rendben, nincs parkolás. Miben segíthetek?'
+                ]), action: null
+            };
 
+        case 'parking_offer_declined':
+            return {
+                text: randomMessage([
+                    'Rendben, ha mégis kell, szólj! 😊',
+                    'Oké, akkor majd ha kell, jelezz!',
+                    'Semmi gond, itt vagyok ha kellek!',
+                    'Rendicsek! Mással tudok segíteni?'
+                ]), action: null
+            };
+
+        case 'parking_offer_clarify':
+            return {
+                text: randomMessage([
+                    'Bocsi, nem értettem pontosan. Indítsam a parkolást? (igen/nem)',
+                    'Elnezést, zavar van a levegőben... Indíthatom?',
+                    'Nem egészen világos. Akkor csináljuk vagy ne?'
+                ]), action: null
+            };
+
+        case 'continue_current_flow':
+            return {
+                text: randomMessage([
+                    'Még nem fejeztük be az előzőt. Hogyan tovább?',
+                    'Előbb ezt zárjuk le: hogyan tovább?',
+                    'Hol is tartottunk? Segíts, kérlek!'
+                ]), action: null
+            };
+
+        // Valós kőszegi árak: I. zóna (piros): 440 Ft/h, II. zóna (zöld): 320 Ft/h
+        // Díjköteles: H-P 8:00–17:00 | Szombat-vasárnap INGYENES!
         case 'parking_info':
             return {
-                text: 'Kőszegen a belvárosban fizető parkolózónák vannak. Kék zóna: 100-200 Ft/óra, SMS-es parkolójeggyel. Szólj ha indítsam!',
-                action: null
+                text: randomMessage([
+                    'Kőszegen két zóna van: Piros (belváros): 440 Ft/óra, Zöld (külső): 320 Ft/óra. SMS-sel is megy. Szólj ha indítsam!',
+                    'Díjfizetés H-P 8:00–17:00 között: Piros zóna 440 Ft/h, Zöld zóna 320 Ft/h. Szombaton-vasárnap ingyenes! 🎉',
+                    'Parkolás? Piros zóna 440 Ft/h, Zöld 320 Ft/h, de szombat-vasárnap mindenhol ingyenes! SMS-el is fizethetsz.'
+                ]), action: null
+            };
+
+        case 'parking_info_not_in_city':
+            return {
+                text: randomMessage([
+                    'Kőszegen van fizetős parkolás: Piros zóna 440 Ft/h, Zöld zóna 320 Ft/h. Szombaton-vasárnap ingyenes! Amikor megérkezel, szólj és elindítom.',
+                    'Még nem vagy itt, de ha odaértél, szólj! Piros 440 Ft/h, Zöld 320 Ft/h, H-P 8–17 közt. 🚗',
+                    'Addig is: Piros zóna 440 Ft/h, Zöld 320 Ft/h, szombaton-vasárnap ingyenes. Ha itt vagy, csináljuk!'
+                ]), action: null
+            };
+
+        case 'parking_info_user_there':
+            return {
+                text: randomMessage([
+                    'Ha már itt vagy, akkor nyugodtan indíthatjuk! Add meg a rendszámot és csináljuk. 💪',
+                    'Király, akkor most itt vagy! Add a rendszámot és mehet az SMS parkolás.',
+                    'Szuper, akkor már parkolhatsz is! Kérem a rendszámot, és indulhat.',
+                    'Akkor gyerünk! Milyen rendszámra szóljon a parkolás?'
+                ]), action: null
+            };
+
+        case 'parking_info_wife_there':
+            return {
+                text: randomMessage([
+                    'Ha a feleséged már ott van Kőszegen, akkor neki indulhat a parkolás! Add meg a rendszámát. 💪',
+                    'Akkor a feleséged már ott van! Neki vegyek parkolójegyet? Add meg a rendszámát!',
+                    'De jó, a feleséged már Kőszegen van! Ő nyugodtan parkolhat. Kérem a rendszámát!',
+                    'Feleséged már ott van? Akkor neki kéne parkolójegy? Add meg a rendszámát!'
+                ]), action: null
             };
 
         case 'parking_not_in_city':
             return {
-                text: 'Kőszegen van fizetős parkolás. Amikor megérkezel, szólj és elindítom az SMS parkolást!',
-                action: null
+                text: randomMessage([
+                    'Kőszegen van fizetős parkolás. Amikor megérkezel, szólj és elindítom az SMS parkolást! 🚗',
+                    'Még nem vagy Kőszegen, de ha odaértél, szólj – pár kattintással megvan a jegy.',
+                    'Ha megérkezel, jelezz – elindítom a parkolást. Piros 440 Ft/h, Zöld 320 Ft/h.'
+                ]), action: null
             };
 
         // ── FOOD (rankingEngineV2: GPS + weather + profile + revenue) ─────

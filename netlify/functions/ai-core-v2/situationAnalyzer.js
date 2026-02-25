@@ -70,15 +70,16 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
  * Többféle, emberi hangvételű üzenetek
  * Nem LLM – determinisztikus, de változatos
  */
-export function buildArrivalMessage(situation) {
-    const { userDistance, approaching, wifeInCity } = situation;
+export function buildArrivalMessage(situation, wifeInCity = false) {
+    const { userDistance, approaching } = situation;
 
     // Ha a feleség már ott van
     if (wifeInCity) {
         const messages = [
             "Ó, a feleséged már ott van Kőszegen! Akkor ő már nyugodtan sétálhat, amíg te odaérsz. 😊 Mikor érkezel te?",
             "De jó, a feleséged már Kőszegen van! Akkor addig ő felfedezhet, te pedig nyugodtan vezethetsz. Mikorra várhatlak?",
-            "Akkor a feleséged már birtokba vette Kőszeget! 🏰 Mikor csatlakozol hozzá?"
+            "Akkor a feleséged már birtokba vette Kőszeget! 🏰 Mikor csatlakozol hozzá?",
+            "A feleséged már ott van? Akkor ő már nyugodtan kereshet egy jó kávézót! Te mikor érkezel?"
         ];
         return messages[Math.floor(Math.random() * messages.length)];
     }
@@ -86,9 +87,10 @@ export function buildArrivalMessage(situation) {
     // Ha úton van a user
     if (approaching) {
         const messages = [
-            `Már úton vagy Kőszeg felé (kb. ${userDistance} km)! 🚗 Mondd, mikorra tervezed az érkezést? Addig kitalálok egy jó programot az időjárás függvényében.`,
+            `Már úton vagy Kőszeg felé (kb. ${userDistance} km)! 🚗 Mondd, mikorra tervezed az érkezést?`,
             `Ahha, szép lassan közeledsz! ${userDistance} km és itt is vagy. Mikor várhatlak pontosan?`,
-            `Már csak ${userDistance} km! Csak dugóba ne keveredj! Szóval mikor érkezel? 😅`
+            `Már csak ${userDistance} km! Mikor érkezel? Addig kitalálok egy jó programot.`,
+            `${userDistance} km van hátra. Mennyi idő múlva érkezel?`
         ];
         return messages[Math.floor(Math.random() * messages.length)];
     }
@@ -98,13 +100,19 @@ export function buildArrivalMessage(situation) {
         const messages = [
             `Hűha, még ${userDistance} km-re vagy Kőszegtől! Azért egy kis előzetes programtervezés belefér. Mikor érkezel?`,
             `Még ${userDistance} km, de ne aggódj, megéri az út! Mikor várható az érkezés?`,
-            `Még messze vagy, de addig is: mikor érkezel? Addig kiguglizom a legjobb programokat!`
+            `Még messze vagy, de addig is: mikor érkezel? Addig kiguglizom a legjobb programokat!`,
+            `${userDistance} km. Azért egy jó program belefér előre. Mikorra várható az érkezés?`
         ];
         return messages[Math.floor(Math.random() * messages.length)];
     }
 
     // Alapértelmezett
-    return `Látom még nem vagy Kőszegen (${userDistance} km). 😄 Mikor érkezel? Megnézem az időjárást és úgy tervezek neked programot.`;
+    const defaultMessages = [
+        `Látom még nem vagy Kőszegen (${userDistance} km). 😄 Mikor érkezel?`,
+        `${userDistance} km-re vagy. Mikor várható az érkezés?`,
+        `Még nem vagy itt (${userDistance} km). Mondd, mikor érkezel?`
+    ];
+    return defaultMessages[Math.floor(Math.random() * defaultMessages.length)];
 }
 
 export function buildParkingMessage(situation) {
