@@ -1,3 +1,6 @@
+import { detectMobilityFromSpeed } from './mobilityEngine.js';
+import { getState } from './stateRepository.js';
+
 export async function loadContext(frontendContext) {
     const location = frontendContext?.location || null;
     const speed = frontendContext?.speed ?? null;

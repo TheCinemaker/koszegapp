@@ -104,8 +104,9 @@ export async function runAI({ query, history, frontendContext, token }) {
         // 5️⃣ STATE — DB for logged-in users, frontend-provided for guests
         // Guest users pass back the state the backend returned last turn (stateless pattern)
         let state;
+        const sessionId = frontendContext?.sessionId || null;
         if (token && userId !== 'guest') {
-            state = await getState(userId, token);
+            state = await getState(userId, sessionId, token);
         } else {
             // Guest: trust frontend-provided state (sent back from previous response)
             state = frontendContext?.sessionState || { phase: 'idle', tempData: {}, mobility: null };
@@ -124,7 +125,7 @@ export async function runAI({ query, history, frontendContext, token }) {
             : null;
 
         // 9️⃣ PERSIST STATE (RLS via JWT)
-        await saveState(userId, routing.newState, token);
+        await saveState(userId, sessionId, routing.newState, token);
 
         // 🧠 LOG UNKNOWN PHRASES (non-blocking, for AI training)
         const isUnknown = intents.includes('unknown') || routing.replyType === 'normal';
