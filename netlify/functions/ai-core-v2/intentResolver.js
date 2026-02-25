@@ -4,7 +4,23 @@
  * Applies priority ordering (parking > emergency > food > attractions > navigation > smalltalk).
  */
 
-const PRIORITY = ['emergency', 'parking', 'food', 'attractions', 'hotels', 'navigation', 'events', 'smalltalk', 'unknown'];
+const PRIORITY = [
+    'emergency',        // mindent felülír
+    'parking',          // parkolás indítás
+    'parking_info',     // parkolás info
+    'food',             // éttermek
+    'attractions',      // látnivalók
+    'tours',            // túraútvonalak
+    'events',           // programok
+    'hotels',           // szállások
+    'shopping',         // vásárlás
+    'practical',        // wc, atm, info
+    'families',         // gyerekekkel
+    'accessibility',    // speciális igények
+    'navigation',       // útvonaltervezés
+    'smalltalk',        // köszönés
+    'unknown'           // ismeretlen
+];
 
 export function resolveIntents(intents) {
     if (!Array.isArray(intents)) intents = [intents];

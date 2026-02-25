@@ -79,7 +79,18 @@ function scorePlace(place, { weather, profile, speed }) {
         if (profile.indoor_preference > 0.7 && flags.isIndoor) score += 10;
         if (profile.indoor_preference < 0.3 && flags.isOutdoor) score += 8;
         if (profile.romantic_score > 0.5 && place.romantic > 6) score += 8;
-        if (profile.family_score > 0.5 && place.childFriendly) score += 8;
+        if (profile.family_score > 0.5 && place.childFriendly) score += 12;
+
+        // 🔥 ÚJ: konkrétabb preferenciák
+        if (profile.pizza_preference > 0.7 && (place.tags?.includes('pizzéria') || place.name?.toLowerCase().includes('pizza'))) {
+            score += 15;
+        }
+        if (profile.culture_score > 0.6 && (place.type === 'attraction' || place.tags?.includes('múzeum') || place.tags?.includes('történelem'))) {
+            score += 10;
+        }
+        if (profile.outdoor_score > 0.6 && flags.isOutdoor && (place.type === 'leisure' || place.tags?.includes('túra'))) {
+            score += 10;
+        }
     }
 
     // ── REVENUE / MONETIZATION ────────────────────────────────────────────

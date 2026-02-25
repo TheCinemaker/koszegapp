@@ -28,7 +28,10 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
         status: 'unknown',
         anyoneInCity: false,
         wifeInCity: false,
-        approaching: false
+        approaching: false,
+        withKids: false,
+        withDog: false,
+        preferIndoor: false
     };
 
     // USER helyzete GPS alapján
@@ -43,6 +46,12 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
             situation.status = 'not_in_city';
             situation.distanceKm = Math.round(distanceKm);
             situation.approaching = speed > 10 && distanceKm < 30;
+
+            // 1. Mennyi idő múlva érkezik? (Ha közeledik és van sebesség)
+            if (situation.approaching && speed > 0) {
+                const timeMinutes = (situation.distanceKm / speed) * 60;
+                situation.arrivalInMinutes = Math.round(timeMinutes);
+            }
         }
     }
 
@@ -58,6 +67,20 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
         situation.wifeInCity = true;
         situation.anyoneInCity = true;
         situation.whoIsThere = 'wife';
+    }
+
+    // 2. Több családtag detektálás
+    if (/(gyerek|gyermek|kicsik|család)/.test(lastUserMessages)) {
+        situation.withKids = true;
+    }
+    if (/(kutya|eb|dog|kutyus)/.test(lastUserMessages)) {
+        situation.withDog = true;
+    }
+
+    // 3. Időjárás hatása
+    if (frontendContext.weather?.isRain) {
+        situation.weatherEffect = 'rain';
+        situation.preferIndoor = true;
     }
 
     // Ha a user már bent van VAGY a feleség bent van
@@ -86,10 +109,11 @@ export function buildArrivalMessage(situation, wifeInCity = false) {
 
     // Ha úton van a user
     if (approaching) {
+        const timeStr = situation.arrivalInMinutes ? ` (kb. ${situation.arrivalInMinutes} perc)` : '';
         const messages = [
-            `Már úton vagy Kőszeg felé (kb. ${distanceKm} km)! 🚗 Mondd, mikorra tervezed az érkezést?`,
-            `Ahha, szép lassan közeledsz! ${distanceKm} km és itt is vagy. Mikor várhatlak pontosan?`,
-            `Már csak ${distanceKm} km! Mikor érkezel? Addig kitalálok egy jó programot.`,
+            `Már úton vagy Kőszeg felé (kb. ${distanceKm} km${timeStr})! 🚗 Mondd, mikorra tervezed az érkezést?`,
+            `Ahha, szép lassan közeledsz! ${distanceKm} km és itt is vagy${timeStr}. Mikor várhatlak pontosan?`,
+            `Már csak ${distanceKm} km${timeStr}! Mikor érkezel? Addig kitalálok egy jó programot.`,
             `${distanceKm} km van hátra. Mennyi idő múlva érkezel?`
         ];
         return messages[Math.floor(Math.random() * messages.length)];

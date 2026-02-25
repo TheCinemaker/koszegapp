@@ -190,12 +190,14 @@ export function routeConversation({ intents, entities, state, context, query }) 
 }
 
 function routeNonParking({ intents, state, context, query }) {
-
-    // Arrival planning: not in city + leisure intent → ask when arriving
+    const entities = context.entities || {};
     const notInCity = context.situation?.status === 'not_in_city';
-    const leisureIntent = intents.some(i => ['food', 'attractions', 'events', 'hotels'].includes(i));
 
-    if (notInCity && leisureIntent && state.phase !== 'arrival_planning') {
+    // ── 1. ARRIVAL PLANNING (Ha nem vagy itt, de látni akarsz valamit) ──
+    const needsInCityData = intents.some(i => ['food', 'attractions', 'events', 'hotels', 'tours', 'shopping', 'practical'].includes(i));
+
+    // Ha nem vagy a városban, és adatot kérsz, de még nincs meg az érkezési idő
+    if (notInCity && needsInCityData && state.phase !== 'arrival_planning' && !state.tempData?.arrivalTime) {
         return {
             newState: { ...state, phase: 'arrival_planning' },
             replyType: 'ask_arrival_time',
@@ -203,23 +205,67 @@ function routeNonParking({ intents, state, context, query }) {
         };
     }
 
-    // User answered with arrival time
-    if (state.phase === 'arrival_planning') {
-        // Mentsd el az érkezési időt!
+    // Felhasználó válaszolt az érkezési időre (még benne maradunk a fázisban a nyugtázásig)
+    if (state.phase === 'arrival_planning' && !state.tempData?.arrivalTime) {
         return {
             newState: {
                 ...state,
-                phase: 'idle',
-                tempData: {
-                    ...state.tempData,
-                    arrivalTime: query,
-                    arrivalProcessed: true
-                }
+                phase: 'arrival_planning', // Benne maradunk!
+                tempData: { ...state.tempData, arrivalTime: query, arrivalProcessed: false }
             },
-            replyType: 'arrival_time_received',  // ÚJ replyType!
+            replyType: 'arrival_time_received',
             action: null
         };
     }
+
+    // Érkezési idő utáni első "igazi" kérés nyugtázása
+    if (state.tempData?.arrivalTime && !state.tempData.arrivalProcessed) {
+        return {
+            newState: {
+                ...state,
+                phase: 'idle', // Most már kimehetünk idle-be
+                tempData: { ...state.tempData, arrivalProcessed: true }
+            },
+            replyType: 'arrival_time_acknowledged',
+            action: null
+        };
+    }
+
+    // ── 2. SPECIÁLIS ÁGAK (Időjárás, Család, stb.) ─────────────────────
+
+    // Időjárás alapú (eső) – EZ MINDENT FELÜLÍR az érintett intenteknél
+    if (context.weather?.isRain && intents.some(i => ['food', 'attractions', 'tours'].includes(i))) {
+        return { newState: state, replyType: 'rainy_day_recommendations', action: null };
+    }
+
+    // Családbarát – EZ ELŐBB VAN, mint a sima attractions
+    if (entities.withKids && (intents.includes('attractions') || intents.includes('families'))) {
+        return { newState: state, replyType: 'families', action: null };
+    }
+
+    // ── 3. ÚJ INTENTEK KEZELÉSE ───────────────────────────────────────
+
+    if (intents.includes('tours')) {
+        return { newState: state, replyType: 'tours', action: null };
+    }
+
+    if (intents.includes('shopping')) {
+        return { newState: state, replyType: 'shopping', action: null };
+    }
+
+    if (intents.includes('practical')) {
+        return { newState: state, replyType: 'practical', action: null };
+    }
+
+    if (intents.includes('families')) {
+        return { newState: state, replyType: 'families', action: null };
+    }
+
+    if (intents.includes('accessibility')) {
+        return { newState: state, replyType: 'accessibility', action: null };
+    }
+
+    // ── 4. ALAP INTENTEK ──────────────────────────────────────────────
 
     // Multi-intent: food + attractions → build itinerary
     if (intents.includes('food') && intents.includes('attractions')) {
@@ -254,5 +300,6 @@ function routeNonParking({ intents, state, context, query }) {
         return { newState: { ...state, phase: 'idle' }, replyType: 'greeting', action: null };
     }
 
+    // Ha semmi sem talált, akkor a megszokott normal (LLM fallback)
     return { newState: state, replyType: 'normal', action: null };
 }

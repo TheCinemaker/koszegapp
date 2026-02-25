@@ -38,6 +38,8 @@ export async function getState(userId, sessionId, token) {
                 phase: data.phase,
                 tempData: data.temp_data || {},
                 mobility: data.mobility,
+                lastIntent: data.last_intent || [],
+                lastReplyType: data.last_reply_type || null,
                 isGuest: true
             };
         } catch (e) {
@@ -55,7 +57,13 @@ export async function getState(userId, sessionId, token) {
             .maybeSingle();
 
         if (!data) return { phase: 'idle', tempData: {}, mobility: null };
-        return { phase: data.phase, tempData: data.temp_data || {}, mobility: data.mobility };
+        return {
+            phase: data.phase,
+            tempData: data.temp_data || {},
+            mobility: data.mobility,
+            lastIntent: data.last_intent || [],
+            lastReplyType: data.last_reply_type || null
+        };
     } catch {
         return { phase: 'idle', tempData: {}, mobility: null };
     }
@@ -67,6 +75,8 @@ export async function saveState(userId, sessionId, state, token) {
             phase: state.phase,
             temp_data: state.tempData || {},
             mobility: state.mobility || null,
+            last_intent: state.lastIntent || [],
+            last_reply_type: state.lastReplyType || null,
             updated_at: new Date().toISOString()
         };
 

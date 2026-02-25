@@ -246,8 +246,9 @@ export async function generateResponse({ replyType, query, state, context, profi
 
         // ── FOOD (rankingEngineV2: GPS + weather + profile + revenue) ─────
         case 'food_search': {
-            const restaurants = load('restaurants.json');
-            const ranked = rankPlaces(restaurants, { weather, profile, speed });
+            // Használjuk a searchCityData-t, hogy a kulcsszavak (pl. pizza) is működjenek
+            const matches = searchCityData(query, ['food']);
+            const ranked = rankPlaces(matches.length > 0 ? matches : load('restaurants.json'), { weather, profile, speed });
             const top = location ? filterNearby(ranked, location, 3, 4) : ranked.slice(0, 4);
 
             if (top.length === 0) {
@@ -257,11 +258,10 @@ export async function generateResponse({ replyType, query, state, context, profi
                 };
             }
 
-            // 🔥 NINCS LLM! Szépen összerakjuk a választ a JSON alapján:
             const restaurantList = top.map(r => {
                 const dist = r._distanceKm ? ` (${r._distanceKm} km)` : '';
-                const pizza = r.tags?.includes('pizzéria') ? '🍕' : '';
-                return `${pizza} ${r.name}${dist}`;
+                const pizza = (r.tags?.includes('pizzéria') || r.name?.toLowerCase().includes('pizza')) ? '🍕' : '';
+                return `${pizza} ${r.name || r.title}${dist}`;
             }).join(', ');
 
             const weatherNote = weather?.isRain ? '☂️ Esős idő – beltéri helyek: ' : '';
@@ -270,6 +270,20 @@ export async function generateResponse({ replyType, query, state, context, profi
             return {
                 text: `${weatherNote}${timeNote}${restaurantList}. További részletek az appban!`,
                 action: { type: 'navigate_to_food', params: {} }
+            };
+        }
+
+        // ── RAINY DAY RECOMMENDATIONS ────────────────────────────────────
+        case 'rainy_day_recommendations': {
+            const attractions = load('attractions.json').filter(a => a.rainSafe);
+            const restaurants = load('restaurants.json').filter(r => r.tags?.includes('beltéri') || r.type === 'cukrászda');
+
+            const places = [...attractions, ...restaurants].slice(0, 3);
+            const list = places.map(p => p.name).join(', ');
+
+            return {
+                text: `☂️ Esik az eső, így inkább beltéri programokat ajánlok: ${list}. Mind esőbiztos hely!`,
+                action: null
             };
         }
 
@@ -408,9 +422,19 @@ export async function generateResponse({ replyType, query, state, context, profi
         // ── ARRIVAL PLANNING ─────────────────────────────────────────────
         case 'ask_arrival_time': {
             const situation = context?.situation || {};
-            // situationAnalyzer.js buildArrivalMessage(situation, wifeInCity)
             return {
                 text: buildArrivalMessage(situation, situation.wifeInCity),
+                action: null
+            };
+        }
+
+        case 'arrival_time_acknowledged': {
+            return {
+                text: randomMessage([
+                    `Vettem, akkor ${state.tempData.arrivalTime} múlva találkozunk! Addig is, miben segíthetek?`,
+                    `Rendben, számolok az érkezéseddel (${state.tempData.arrivalTime}). Mit nézzünk meg Kőszegen?`,
+                    `Szuper, várlak! ${state.tempData.arrivalTime} múlva itt vagy. Mondd, mi érdekel Kőszegen?`
+                ]),
                 action: null
             };
         }

@@ -24,6 +24,7 @@ import { routeConversation } from './router.js';
 import { executeAction } from './actionExecutor.js';
 import { generateResponse } from './responseGenerator.js';
 import { resolveIntents } from './intentResolver.js';
+import { saveConversationToSupabase } from './loggingService.js';
 import { createClient } from '@supabase/supabase-js';
 
 // 🧠 PHRASE LOGGER: ismeretlen kérdezgetések mentése AI tanításhoz
@@ -155,6 +156,21 @@ export async function runAI({ query, history, frontendContext, token }) {
         const secondarySuggestion = (!isInFlow && response._rankedPlaces?.length > 3)
             ? response._rankedPlaces[3]
             : null;
+
+        // 1️⃣2️⃣ LOG TO AI_CONVERSATIONS (non-blocking)
+        saveConversationToSupabase({
+            userId,
+            sessionId,
+            userMessage: query,
+            assistantMessage: response.text,
+            context: {
+                ...context,
+                intents,
+                entities,
+                phase: routing.newState.phase
+            },
+            token
+        }); // intentionally NOT awaited
 
         return {
             text: response.text,
