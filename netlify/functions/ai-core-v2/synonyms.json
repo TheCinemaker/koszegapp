@@ -1,0 +1,13 @@
+{
+    "_comment": "Auto-extended by autoUpdateSynonyms() when frequency >= 10 and corrected_intent is set in Supabase.",
+    "parking": [],
+    "parking_info": [],
+    "food": [],
+    "attractions": [],
+    "navigation": [],
+    "hotels": [],
+    "events": [],
+    "planning": [],
+    "smalltalk": [],
+    "emergency": []
+}
