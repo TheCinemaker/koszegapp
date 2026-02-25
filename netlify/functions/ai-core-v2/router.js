@@ -22,6 +22,20 @@ export function routeConversation({ intents, entities, state, context, query }) 
         };
     }
 
+    // ── 🚨 HA NEM VAGY KŐSZEGEN, MINDIG JELEZZÜK! ───────────────
+    const notInCity = context.situation?.status === 'not_in_city';
+    const wantsAnyCityService = intents.some(i =>
+        ['food', 'attractions', 'parking', 'parking_info', 'events', 'hotels', 'build_itinerary'].includes(i)
+    );
+
+    if (notInCity && wantsAnyCityService && state.phase === 'idle') {
+        return {
+            newState: { ...state, phase: 'arrival_planning' },
+            replyType: 'ask_arrival_time',
+            action: null
+        };
+    }
+
     // ── Parking INFO (kérdés, nem parancs) ────────────────────────────
     if (intents.includes('parking_info')) {
         // Ha már folyamatban van valami, elsőként azt kezeljük

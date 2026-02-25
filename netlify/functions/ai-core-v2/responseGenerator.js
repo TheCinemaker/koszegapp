@@ -248,19 +248,6 @@ export async function generateResponse({ replyType, query, state, context, profi
             return { text, _rankedPlaces: ranked, action: null };
         }
 
-        // ── ITINERARY (food + attractions együtt) ─────────────────────────
-        case 'build_itinerary': {
-            const plan = buildItinerary({ intents: intents || [], context });
-            if (plan.length === 0) {
-                return { text: 'Nem találtam programot a közelben. Pontosítsuk?', action: null };
-            }
-            const summary = plan.map(p => p.name).filter(Boolean).join(', ');
-            const text = await llm(
-                `Összeállítottam egy Kőszeg-programot: ${summary}. Mutasd be természetesen${mobility === 'walking' ? ' (gyalog van)' : ''}.`,
-                `A közelben: ${summary}.`
-            );
-            return { text, action: null };
-        }
 
         // ── EVENTS ────────────────────────────────────────────────────────
         case 'events': {
