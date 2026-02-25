@@ -6,6 +6,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join } from 'path';
+import { rankByDistance } from './rankingEngine.js';
 
 const dataPath = join(process.cwd(), 'public/data');
 
