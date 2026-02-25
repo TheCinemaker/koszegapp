@@ -22,20 +22,6 @@ export function routeConversation({ intents, entities, state, context, query }) 
         };
     }
 
-    // ── 🚨 HA NEM VAGY KŐSZEGEN, MINDIG JELEZZÜK! ───────────────
-    const notInCity = context.situation?.status === 'not_in_city';
-    const wantsAnyCityService = intents.some(i =>
-        ['food', 'attractions', 'parking', 'parking_info', 'events', 'hotels', 'build_itinerary'].includes(i)
-    );
-
-    if (notInCity && wantsAnyCityService && state.phase === 'idle') {
-        return {
-            newState: { ...state, phase: 'arrival_planning' },
-            replyType: 'ask_arrival_time',
-            action: null
-        };
-    }
-
     // ── Parking INFO (kérdés, nem parancs) ────────────────────────────
     if (intents.includes('parking_info')) {
         // Ha már folyamatban van valami, elsőként azt kezeljük
@@ -190,32 +176,46 @@ export function routeConversation({ intents, entities, state, context, query }) 
 }
 
 function routeNonParking({ intents, state, context, query }) {
+    const q = query.toLowerCase();
     const entities = context.entities || {};
     const notInCity = context.situation?.status === 'not_in_city';
 
     // ── 1. ARRIVAL PLANNING (Ha nem vagy itt, de látni akarsz valamit) ──
     const needsInCityData = intents.some(i => ['food', 'attractions', 'events', 'hotels', 'tours', 'shopping', 'practical'].includes(i));
 
-    // Ha nem vagy a városban, és adatot kérsz, de még nincs meg az érkezési idő
-    if (notInCity && needsInCityData && state.phase !== 'arrival_planning' && !state.tempData?.arrivalTime) {
+    // Ha nem vagy itt, és még nem tudjuk mikor jössz, ÉS még nem is kérdeztük meg ebben a sessionben
+    if (notInCity && needsInCityData && !state.tempData?.arrivalTime && !state.tempData?.arrivalAsked) {
         return {
-            newState: { ...state, phase: 'arrival_planning' },
+            newState: {
+                ...state,
+                phase: 'arrival_planning',
+                tempData: { ...state.tempData, arrivalAsked: true }
+            },
             replyType: 'ask_arrival_time',
             action: null
         };
     }
 
-    // Felhasználó válaszolt az érkezési időre (még benne maradunk a fázisban a nyugtázásig)
-    if (state.phase === 'arrival_planning' && !state.tempData?.arrivalTime) {
+    // Felhasználó válaszol az érkezési időre (csak ha tényleg időt mond!)
+    const isTimeResponse = /(ma|holnap|hétfő|kedd|szerda|csütörtök|péntek|szombat|vasárnap|óra|dél|perc|körül|ekkor)/i.test(q) || entities.time;
+
+    if (state.phase === 'arrival_planning' && isTimeResponse && !state.tempData?.arrivalTime) {
         return {
             newState: {
                 ...state,
-                phase: 'arrival_planning', // Benne maradunk!
-                tempData: { ...state.tempData, arrivalTime: query, arrivalProcessed: false }
+                phase: 'arrival_planning',
+                tempData: { ...state.tempData, arrivalTime: q, arrivalProcessed: false }
             },
             replyType: 'arrival_time_received',
             action: null
         };
+    }
+
+    // Ha arrival_planning-ben vagyunk, de NEM időt mondott, hanem valami mást kért (pl. sütit)
+    // Akkor lépjünk ki a fázisból és válaszoljunk a kérésre!
+    if (state.phase === 'arrival_planning' && !isTimeResponse && needsInCityData) {
+        state.phase = 'idle';
+        // Folytatjuk a többi ággal...
     }
 
     // Érkezési idő utáni első "igazi" kérés nyugtázása
@@ -223,7 +223,7 @@ function routeNonParking({ intents, state, context, query }) {
         return {
             newState: {
                 ...state,
-                phase: 'idle', // Most már kimehetünk idle-be
+                phase: 'idle',
                 tempData: { ...state.tempData, arrivalProcessed: true }
             },
             replyType: 'arrival_time_acknowledged',

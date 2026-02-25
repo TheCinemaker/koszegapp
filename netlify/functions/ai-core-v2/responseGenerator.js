@@ -64,8 +64,26 @@ export async function generateResponse({ replyType, query, state, context, profi
      * UNIVERZÁLIS KERESŐ - Átnézi az összes JSON fájlt a kulcsszavak alapján.
      * Zéró hallucináció: Csak azt adja vissza, ami benne van.
      */
-    function searchCityData(query, targetIntents) {
+    function searchCityData(query, targetIntents, loc) {
         const q = query.toLowerCase();
+        let results = [];
+
+        // 🔥 Keresési szinonimák a mélyebb kereséshez
+        const synonyms = {
+            'cukrászda': ['cukrászda', 'cukrászdát', 'sütemény', 'süti', 'torta', 'desszert', 'édes', 'kávézó', 'fagyi', 'fagylalt'],
+            'pizzéria': ['pizza', 'pizzéria', 'pizzás', 'olasz', 'étterem'],
+            'étterem': ['étterem', 'enni', 'ebéd', 'vacsora', 'kaja', 'vendéglő']
+        };
+
+        // Melyik kategóriát keressük?
+        let targetCategory = null;
+        for (const [cat, words] of Object.entries(synonyms)) {
+            if (words.some(w => q.includes(w))) {
+                targetCategory = cat;
+                break;
+            }
+        }
+
         const pools = {
             food: load('restaurants.json'),
             attractions: load('attractions.json'),
@@ -76,29 +94,41 @@ export async function generateResponse({ replyType, query, state, context, profi
             events: load('events.json')
         };
 
-        let results = [];
-
-        // Melyik pool-okban keressünk az intentek alapján?
-        const activePools = targetIntents.length > 0 ? targetIntents.filter(i => pools[i]) : Object.keys(pools);
-
-        activePools.forEach(poolKey => {
-            const data = pools[poolKey];
-            data.forEach(item => {
-                const searchStr = `${item.name || ''} ${item.title || ''} ${item.description || ''} ${item.content || ''} ${(item.tags || []).join(' ')}`.toLowerCase();
-
-                // Egyszerű kulcsszó egyezés
-                if (q.split(' ').some(word => word.length > 2 && searchStr.includes(word))) {
-                    results.push({ ...item, _source: poolKey });
-                }
-            });
-        });
-
-        // Távolság alapú rendezés ha van helyzet
-        if (location && results.length > 0) {
-            results = filterNearby(results, location, 10, results.length);
+        // 1. Speciális szűrés kategória alapján
+        if (targetCategory === 'cukrászda' || targetCategory === 'pizzéria') {
+            results = pools.food.filter(p =>
+                (p.tags || []).includes(targetCategory) ||
+                (p.name || '').toLowerCase().includes(targetCategory === 'pizzéria' ? 'pizza' : 'cukrászda') ||
+                (targetCategory === 'cukrászda' && (p.tags || []).includes('kávézó'))
+            );
         }
 
-        return results;
+        // 2. Ha nincs célzott találat, jöhet a kulcsszavas keresés
+        if (results.length === 0) {
+            const activePools = targetIntents && targetIntents.length > 0 ? targetIntents.filter(i => pools[i]) : Object.keys(pools);
+
+            activePools.forEach(poolKey => {
+                const data = pools[poolKey];
+                data.forEach(item => {
+                    const text = `${item.name || ''} ${item.title || ''} ${item.description || ''} ${item.content || ''} ${(item.tags || []).join(' ')}`.toLowerCase();
+                    if (q.split(' ').some(word => word.length > 2 && text.includes(word))) {
+                        if (!results.some(r => r.name === item.name)) {
+                            results.push({ ...item, _source: poolKey });
+                        }
+                    }
+                });
+            });
+        }
+
+        // 3. Távolság alapú rendezés ha van helyzet
+        if (loc && results.length > 0) {
+            results = filterNearby(results, loc, 10, 3);
+        }
+
+        return results.slice(0, 3).map(p => ({
+            ...p,
+            _distanceKm: p._distanceKm || null
+        }));
     }
 
     switch (replyType) {
@@ -515,14 +545,17 @@ export async function generateResponse({ replyType, query, state, context, profi
         // ── NORMAL (LLM fallback) ─────────────────────────────────────────
         case 'normal':
         default: {
-            // Megpróbáljuk a JSON keresőt először
-            const matches = searchCityData(query, []);
+            // Megpróbáljuk a JSON keresőt először (átadjuk a helyzetet is)
+            const matches = searchCityData(query, [], location);
             if (matches.length > 0) {
-                const item = matches[0];
-                const dist = item._distanceKm ? ` (innen ${item._distanceKm} km)` : '';
+                const results = matches.map(p => {
+                    const dist = p._distanceKm ? ` (${p._distanceKm} km)` : '';
+                    return `${p.name || p.title}${dist}`;
+                }).join(', ');
+
                 return {
-                    text: `Ezt találtam neked: ${item.name || item.title}${dist}. ${item.description || item.content || ''}`,
-                    action: null
+                    text: `Ezt találtam neked Kőszegen: ${results}. Nézd meg az appban a részleteket!`,
+                    action: intents.includes('food') ? { type: 'navigate_to_food', params: {} } : { type: 'navigate_to_attractions', params: {} }
                 };
             }
 
