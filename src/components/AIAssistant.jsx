@@ -17,9 +17,13 @@ const MOCK_RESPONSES = {
     events: { role: 'assistant', content: 'Máris mutatom a közelgő eseményeket!', action: { type: 'navigate_to_events', params: {} } }
 };
 
-async function saveConversationToSupabase({ userId, userMessage, assistantMessage, context }) {
+const SESSION_ID_KEY = 'koszeg_session_id';
+const SESSION_STATE_KEY = 'koszeg_session_state';
+
+async function saveConversationToSupabase({ sessionId, userId, userMessage, assistantMessage, context }) {
     try {
         const { error } = await supabase.from('ai_conversations').insert({
+            session_id: sessionId || null,
             user_id: userId || null,
             user_message: userMessage,
             assistant_message: assistantMessage?.content || '',
@@ -90,8 +94,28 @@ export default function AIAssistant() {
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [actionStatus, setActionStatus] = useState(null);
-    // State machine phase persists here for guest users (stateless passback pattern)
-    const [sessionState, setSessionState] = useState({ phase: 'idle', tempData: {} });
+    // 1. Persistent sessionId (survives page reload)
+    const [sessionId] = useState(() => {
+        const saved = localStorage.getItem(SESSION_ID_KEY);
+        if (saved) return saved;
+        const newId = 'session_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem(SESSION_ID_KEY, newId);
+        return newId;
+    });
+
+    // 2. Persistent sessionState (state machine phase, survives page reload)
+    const [sessionState, setSessionState] = useState(() => {
+        try {
+            const saved = localStorage.getItem(SESSION_STATE_KEY);
+            return saved ? JSON.parse(saved) : { phase: 'idle', tempData: {} };
+        } catch { return { phase: 'idle', tempData: {} }; }
+    });
+
+    // 3. Save sessionState to localStorage on every change
+    useEffect(() => {
+        localStorage.setItem(SESSION_STATE_KEY, JSON.stringify(sessionState));
+    }, [sessionState]);
+
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
     const navigate = useNavigate();
@@ -197,21 +221,17 @@ export default function AIAssistant() {
         setInput('');
         setLoading(true);
 
-        const guestId = user?.id || (() => {
-            let id = localStorage.getItem('koszeg_guest_id');
-            if (!id) { id = 'guest_' + Math.random().toString(36).slice(2); localStorage.setItem('koszeg_guest_id', id); }
-            return id;
-        })();
-
         const requestContext = {
-            userId: guestId, authToken: token,
+            sessionId: sessionId,
+            userId: user?.id || null,
+            authToken: token,
             mode: getAppMode(location),
             location: userLocation || location,
             distanceToMainSquare: userLocation?.distanceToMainSquare,
             weather, speed: userCtx.speed,
             movement: inferMovement(userCtx.speed),
             lastPage: userCtx.lastPage, timeOnPage: userCtx.timeOnPage, lastSearch: userCtx.lastSearch,
-            sessionState: user ? undefined : sessionState  // guests pass state back
+            sessionState: user ? undefined : sessionState
         };
 
         try {
@@ -230,9 +250,8 @@ export default function AIAssistant() {
             const data = await response.json();
             if (response.ok) {
                 setMessages(prev => [...prev, data]);
-                // Update session state machine for guests
                 if (data.sessionState) setSessionState(data.sessionState);
-                await saveConversationToSupabase({ userId: guestId, userMessage: currentInput, assistantMessage: data, context: requestContext });
+                await saveConversationToSupabase({ sessionId, userId: user?.id, userMessage: currentInput, assistantMessage: data, context: requestContext });
                 if (data.debug?.intent) {
                     const i = data.debug.intent;
                     if (['events', 'accommodation', 'general_info', 'planning'].includes(i))
@@ -256,7 +275,7 @@ export default function AIAssistant() {
                 const mock = currentInput.toLowerCase().includes('program') || currentInput.toLowerCase().includes('esemény')
                     ? MOCK_RESPONSES.events : MOCK_RESPONSES.default;
                 setMessages(prev => [...prev, mock]);
-                await saveConversationToSupabase({ userId: user?.id, userMessage: currentInput, assistantMessage: mock, context: requestContext });
+                await saveConversationToSupabase({ sessionId, userId: user?.id, userMessage: currentInput, assistantMessage: mock, context: requestContext });
                 if (mock.action) handleNavigation(mock.action);
                 setLoading(false);
             }, 900);
