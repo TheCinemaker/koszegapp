@@ -49,7 +49,7 @@ function findIntentsFromSynonyms(q) {
  */
 function isEmergency(q) {
     const emergencyWords = [
-        'patika', 'orvos', 'mentő', 'rendőr', 'baleset',
+        'orvos', 'mentő', 'rendőr', 'baleset',
         'rosszul', 'segítség', 'ügyelet', 'mentők', 'kórház'
     ];
     return emergencyWords.some(word => q.includes(word));

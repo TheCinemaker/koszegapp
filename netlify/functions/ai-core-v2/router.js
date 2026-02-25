@@ -185,15 +185,25 @@ function routeNonParking({ intents, state, context, query }) {
 
     // Ha nem vagy itt, és még nem tudjuk mikor jössz, ÉS még nem is kérdeztük meg ebben a sessionben
     if (notInCity && needsInCityData && !state.tempData?.arrivalTime && !state.tempData?.arrivalAsked) {
-        return {
-            newState: {
-                ...state,
-                phase: 'arrival_planning',
-                tempData: { ...state.tempData, arrivalAsked: true }
-            },
-            replyType: 'ask_arrival_time',
-            action: null
-        };
+        // CSAK akkor szakítsuk meg a folyamatot, ha nincs konkrétabb kérdés (pl. csak beköszönt vagy általánosságban érdeklődik)
+        const specificIntents = intents.filter(i => !['smalltalk', 'unknown', 'greeting'].includes(i));
+        const isStrictService = intents.includes('parking') || intents.includes('build_itinerary');
+
+        if (specificIntents.length === 0 || isStrictService) {
+            return {
+                newState: {
+                    ...state,
+                    phase: 'arrival_planning',
+                    tempData: { ...state.tempData, arrivalAsked: true }
+                },
+                replyType: 'ask_arrival_time',
+                action: null
+            };
+        }
+
+        // Ha van konkrét kérdés (pl. pizza), akkor csak jegyezzük fel a fázist, de engedjük át a kérést!
+        state.phase = 'arrival_planning';
+        state.tempData = { ...state.tempData, arrivalAsked: true };
     }
 
     // Felhasználó válaszol az érkezési időre (csak ha tényleg időt mond!)

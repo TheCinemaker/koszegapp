@@ -139,7 +139,10 @@ export async function generateResponse({ replyType, query, state, context, profi
 
         // 3. Távolság alapú rendezés ha van helyzet
         if (loc && results.length > 0) {
-            results = filterNearby(results, loc, 15, 5); // Kicsit bőkezűbb sugár
+            const dist = results[0]._distanceKm || 0;
+            // Ha 15km-en kívül van a user, ne szűrjünk le nullára, csak rendezzünk
+            const radius = dist > 15 ? dist + 5 : 15;
+            results = filterNearby(results, loc, radius, 5);
         }
 
         return results.slice(0, 3).map(p => ({

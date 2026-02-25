@@ -33,7 +33,10 @@ export async function getState(userId, sessionId, token) {
 
         try {
             // Vendég: session_id alapján keresünk
-            const { data } = await client()
+            const c = client();
+            if (!c) return { phase: 'idle', tempData: {}, mobility: null };
+
+            const { data } = await c
                 .from('conversation_state')
                 .select('*')
                 .eq('session_id', sessionId)
@@ -57,7 +60,10 @@ export async function getState(userId, sessionId, token) {
 
     // Bejelentkezett user: user_id alapján keresünk
     try {
-        const { data } = await client(token)
+        const c = client(token);
+        if (!c) return { phase: 'idle', tempData: {}, mobility: null };
+
+        const { data } = await c
             .from('conversation_state')
             .select('*')
             .eq('user_id', userId)
@@ -91,7 +97,10 @@ export async function saveState(userId, sessionId, state, token) {
         if (!token || !userId) {
             if (!sessionId) return; // Nincs sessionId se → skip
 
-            const { error } = await client()
+            const c = client();
+            if (!c) return;
+
+            const { error } = await c
                 .from('conversation_state')
                 .upsert({
                     session_id: sessionId,
@@ -103,7 +112,10 @@ export async function saveState(userId, sessionId, state, token) {
         }
 
         // Bejelentkezett user: user_id-val mentünk
-        const { error } = await client(token)
+        const c = client(token);
+        if (!c) return;
+
+        const { error } = await c
             .from('conversation_state')
             .upsert({
                 user_id: userId,
