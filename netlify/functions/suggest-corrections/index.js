@@ -16,7 +16,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 const THRESHOLD = 10;
-const SYNONYMS_PATH = join(process.cwd(), 'netlify/functions/ai-core-v2/synonyms.json');
+const SYNONYMS_PATH = join(process.cwd(), 'public/data/synonyms.json');
 
 function supabase() {
     return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);

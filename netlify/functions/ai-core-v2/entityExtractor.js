@@ -5,10 +5,10 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-// Szótár betöltése (readFileSync-el a biztos kompatibilitásért)
+// Szótár betöltése
 let synonyms = {};
 try {
-    const synonymsPath = join(process.cwd(), 'netlify/functions/ai-core-v2/synonyms.json');
+    const synonymsPath = join(process.cwd(), 'public/data/synonyms.json');
     synonyms = JSON.parse(readFileSync(synonymsPath, 'utf8'));
 } catch (err) {
     console.warn('entityExtractor: synonyms.json not found or invalid');

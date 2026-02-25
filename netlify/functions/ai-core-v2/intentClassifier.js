@@ -10,7 +10,7 @@ import { join } from 'path';
 // Load synonyms once at cold start (updated automatically by suggest-corrections)
 let SYNONYMS = {};
 try {
-    SYNONYMS = JSON.parse(readFileSync(join(process.cwd(), 'netlify/functions/ai-core-v2/synonyms.json'), 'utf8'));
+    SYNONYMS = JSON.parse(readFileSync(join(process.cwd(), 'public/data/synonyms.json'), 'utf8'));
 } catch {
     // Synonyms file missing or invalid → silently use empty
 }
