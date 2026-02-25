@@ -206,22 +206,29 @@ export async function generateResponse({ replyType, query, state, context, profi
         // ── FOOD (rankingEngineV2: GPS + weather + profile + revenue) ─────
         case 'food_search': {
             const restaurants = load('restaurants.json');
-            const query = context.query?.toLowerCase() || '';
-            const wantsPizza = query.includes('pizza') || query.includes('pizzát');
+            const ranked = rankPlaces(restaurants, { weather, profile, speed });
+            const top = location ? filterNearby(ranked, location, 3, 4) : ranked.slice(0, 4);
 
-            let filtered = restaurants;
-            if (wantsPizza) {
-                filtered = restaurants.filter(r =>
-                    r.tags?.includes('pizzéria') ||
-                    r.name?.toLowerCase().includes('pizza')
-                );
+            if (top.length === 0) {
+                return {
+                    text: 'Éttermet nem találtam a közelben. Nézz körül az étterem oldalon!',
+                    action: { type: 'navigate_to_food', params: {} }
+                };
             }
 
-            const top = filtered.slice(0, 3).map(r => r.name).join(', ');
+            // 🔥 NINCS LLM! Szépen összerakjuk a választ a JSON alapján:
+            const restaurantList = top.map(r => {
+                const dist = r._distanceKm ? ` (${r._distanceKm} km)` : '';
+                const pizza = r.tags?.includes('pizzéria') ? '🍕' : '';
+                return `${pizza} ${r.name}${dist}`;
+            }).join(', ');
+
+            const weatherNote = weather?.isRain ? '☂️ Esős idő – beltéri helyek: ' : '';
+            const timeNote = isLunch ? 'Ebédidőben ajánlom: ' : isEvening ? 'Vacsorára: ' : '';
 
             return {
-                text: `Találtam néhány helyet: ${top}. Nézd meg a részleteket az appban!`,
-                action: { type: 'navigate_to_food' }
+                text: `${weatherNote}${timeNote}${restaurantList}. További részletek az appban!`,
+                action: { type: 'navigate_to_food', params: {} }
             };
         }
 
@@ -234,16 +241,15 @@ export async function generateResponse({ replyType, query, state, context, profi
                 : ranked.slice(0, 4);
 
             const list = top.map(a => {
-                const dist = a._distanceKm != null && a._distanceKm < Infinity ? ` (${a._distanceKm} km)` : '';
-                return `${a.name}${dist}`;
+                const dist = a._distanceKm ? ` (${a._distanceKm} km)` : '';
+                const rainSafe = a.rainSafe ? '☂️' : '';
+                return `${rainSafe} ${a.name}${dist}`;
             }).join(', ');
 
-            const weatherNote = weather?.isRain ? '☂️ Esős az idő – fedett látnivalókat ajánlom. ' : '';
-            const text = await llm(
-                `${weatherNote}Mutasd be röviden ezeket a kőszegi látnivalókat: ${list}. Max 2 mondat.`,
-                `Kőszeg legjobb látnivalói: ${list}.`
-            );
-            return { text, _rankedPlaces: ranked, action: null };
+            return {
+                text: `Látnivalók a közelben: ${list}.`,
+                action: { type: 'navigate_to_attractions' }
+            };
         }
 
 
@@ -253,26 +259,27 @@ export async function generateResponse({ replyType, query, state, context, profi
             const upcoming = events
                 .filter(e => new Date(e.date || e.start_date) >= new Date())
                 .slice(0, 3)
-                .map(e => e.title || e.name);
+                .map(e => e.title || e.name)
+                .join(', ');
 
-            if (upcoming.length === 0) {
+            if (!upcoming) {
                 return { text: 'Nincs közelgő esemény az adatbázisban.', action: { type: 'navigate_to_events', params: {} } };
             }
-            const text = await llm(
-                `Kőszegi közelgő programok: ${upcoming.join(', ')}. Ajánld röviden.`,
-                `Közelgő programok: ${upcoming.join(', ')}.`
-            );
-            return { text, action: { type: 'navigate_to_events', params: {} } };
+
+            return {
+                text: `Közelgő programok: ${upcoming}.`,
+                action: { type: 'navigate_to_events' }
+            };
         }
 
         // ── HOTELS ───────────────────────────────────────────────────────
         case 'hotels': {
-            const all = load('hotels.json');
-            const top = (location ? filterNearby(all, location, 5, 3) : all.slice(0, 3)).map(h => h.name);
-            const text = top.length
-                ? await llm(`Kőszegi szálláslehetőségek: ${top.join(', ')}. Ajánld röviden.`, `Szállások: ${top.join(', ')}.`)
-                : 'Szállások listáját itt találod:';
-            return { text, action: { type: 'navigate_to_hotels', params: {} } };
+            const hotels = load('hotels.json');
+            const top = hotels.slice(0, 3).map(h => h.name).join(', ');
+            return {
+                text: `Szállások Kőszegen: ${top}.`,
+                action: { type: 'navigate_to_hotels' }
+            };
         }
 
         // ── NAVIGATION ───────────────────────────────────────────────────
