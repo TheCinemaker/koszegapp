@@ -27,10 +27,11 @@ import { resolveIntents } from './intentResolver.js';
 
 export async function runAI({ query, history, frontendContext, token }) {
     try {
-        if (!token) throw new Error("JWT token missing");
-        if (!frontendContext?.userId) throw new Error("userId missing");
+        if (!frontendContext?.userId && !token) {
+            console.warn('ai-core-v2: guest session (no JWT, no userId)');
+        }
 
-        const userId = frontendContext.userId;
+        const userId = frontendContext?.userId || 'guest';
 
         // 1️⃣ INTENT + ENTITIES
         const rawIntents = detectIntent(query);

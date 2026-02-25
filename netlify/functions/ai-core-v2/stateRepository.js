@@ -18,37 +18,39 @@ function client(token) {
 }
 
 export async function getState(userId, token) {
-    const supabase = client(token);
-
-    const { data } = await supabase
-        .from('conversation_state')
-        .select('*')
-        .eq('user_id', userId)
-        .single();
-
-    if (!data) {
+    // No token = guest user → return default state, skip DB
+    if (!token || !userId) {
         return { phase: 'idle', tempData: {}, mobility: null };
     }
+    try {
+        const { data } = await client(token)
+            .from('conversation_state')
+            .select('*')
+            .eq('user_id', userId)
+            .single();
 
-    return {
-        phase: data.phase,
-        tempData: data.temp_data || {},
-        mobility: data.mobility
-    };
+        if (!data) return { phase: 'idle', tempData: {}, mobility: null };
+        return { phase: data.phase, tempData: data.temp_data || {}, mobility: data.mobility };
+    } catch {
+        return { phase: 'idle', tempData: {}, mobility: null };
+    }
 }
 
 export async function saveState(userId, state, token) {
-    const supabase = client(token);
-
-    const { error } = await supabase
-        .from('conversation_state')
-        .upsert({
-            user_id: userId,
-            phase: state.phase,
-            temp_data: state.tempData || {},
-            mobility: state.mobility || null,
-            updated_at: new Date().toISOString()
-        }, { onConflict: 'user_id' });
-
-    if (error) console.error('saveState error:', error.message);
+    // No token = guest user → skip DB write silently
+    if (!token || !userId) return;
+    try {
+        const { error } = await client(token)
+            .from('conversation_state')
+            .upsert({
+                user_id: userId,
+                phase: state.phase,
+                temp_data: state.tempData || {},
+                mobility: state.mobility || null,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'user_id' });
+        if (error) console.warn('saveState error:', error.message);
+    } catch (e) {
+        console.warn('saveState exception:', e.message);
+    }
 }
