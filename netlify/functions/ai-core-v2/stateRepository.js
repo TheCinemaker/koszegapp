@@ -5,10 +5,17 @@
 import { createClient } from '@supabase/supabase-js';
 
 function client(token) {
-    // Ha nincs token, anon client (RLS továbbra is véd)
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_ANON_KEY;
+
+    if (!url || !key) {
+        console.warn('⚠️ Supabase environment variables (URL/KEY) are missing! State persistence and logging are DISABLED.');
+        return null;
+    }
+
     return createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
+        url,
+        key,
         token ? {
             global: {
                 headers: { Authorization: `Bearer ${token}` }

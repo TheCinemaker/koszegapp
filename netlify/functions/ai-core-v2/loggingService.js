@@ -5,10 +5,15 @@
 import { createClient } from '@supabase/supabase-js';
 
 export async function saveConversationToSupabase({ userId, sessionId, userMessage, assistantMessage, context, token }) {
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_ANON_KEY;
+
+    if (!url || !key) return; // Silent skip if keys are missing
+
     try {
         const supabase = createClient(
-            process.env.SUPABASE_URL,
-            process.env.SUPABASE_ANON_KEY,
+            url,
+            key,
             token ? {
                 global: {
                     headers: { Authorization: `Bearer ${token}` }

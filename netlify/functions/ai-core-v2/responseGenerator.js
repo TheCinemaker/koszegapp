@@ -61,24 +61,36 @@ export async function generateResponse({ replyType, query, state, context, profi
     }
 
     /**
+     * Szó normalizálása: kisbetű, írásjelek eltávolítása, alapvető ragozás kezelése.
+     */
+    function normalize(word) {
+        return word.toLowerCase()
+            .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, "")
+            .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
+            .replace(/ó/g, 'o').replace(/ö/g, 'o').replace(/ő/g, 'o')
+            .replace(/ú/g, 'u').replace(/ü/g, 'u').replace(/ű/g, 'u');
+    }
+
+    /**
      * UNIVERZÁLIS KERESŐ - Átnézi az összes JSON fájlt a kulcsszavak alapján.
      * Zéró hallucináció: Csak azt adja vissza, ami benne van.
      */
     function searchCityData(query, targetIntents, loc) {
         const q = query.toLowerCase();
+        const qWords = q.split(/\s+/).map(normalize).filter(w => w.length > 2);
         let results = [];
 
         // 🔥 Keresési szinonimák a mélyebb kereséshez
         const synonyms = {
-            'cukrászda': ['cukrászda', 'cukrászdát', 'sütemény', 'süti', 'torta', 'desszert', 'édes', 'kávézó', 'fagyi', 'fagylalt'],
-            'pizzéria': ['pizza', 'pizzéria', 'pizzás', 'olasz', 'étterem'],
-            'étterem': ['étterem', 'enni', 'ebéd', 'vacsora', 'kaja', 'vendéglő']
+            'cukrászda': ['cukraszda', 'sutemeny', 'suti', 'torta', 'desszert', 'edes', 'kavezo', 'fagyi', 'fagylalt'],
+            'pizzéria': ['pizza', 'pizzeria', 'pizzas', 'olasz', 'etterem'],
+            'étterem': ['etterem', 'enni', 'ebed', 'vacsora', 'kaja', 'vendeglo']
         };
 
         // Melyik kategóriát keressük?
         let targetCategory = null;
         for (const [cat, words] of Object.entries(synonyms)) {
-            if (words.some(w => q.includes(w))) {
+            if (words.some(w => qWords.some(qw => qw.includes(w) || w.includes(qw)))) {
                 targetCategory = cat;
                 break;
             }
@@ -96,11 +108,13 @@ export async function generateResponse({ replyType, query, state, context, profi
 
         // 1. Speciális szűrés kategória alapján
         if (targetCategory === 'cukrászda' || targetCategory === 'pizzéria') {
-            results = pools.food.filter(p =>
-                (p.tags || []).includes(targetCategory) ||
-                (p.name || '').toLowerCase().includes(targetCategory === 'pizzéria' ? 'pizza' : 'cukrászda') ||
-                (targetCategory === 'cukrászda' && (p.tags || []).includes('kávézó'))
-            );
+            results = pools.food.filter(p => {
+                const pTags = (p.tags || []).map(normalize);
+                const pName = normalize(p.name || '');
+                return pTags.includes(normalize(targetCategory)) ||
+                    pName.includes(targetCategory === 'pizzéria' ? 'pizza' : 'cukraszda') ||
+                    (targetCategory === 'cukrászda' && pTags.includes('kavezo'));
+            });
         }
 
         // 2. Ha nincs célzott találat, jöhet a kulcsszavas keresés
@@ -110,9 +124,12 @@ export async function generateResponse({ replyType, query, state, context, profi
             activePools.forEach(poolKey => {
                 const data = pools[poolKey];
                 data.forEach(item => {
-                    const text = `${item.name || ''} ${item.title || ''} ${item.description || ''} ${item.content || ''} ${(item.tags || []).join(' ')}`.toLowerCase();
-                    if (q.split(' ').some(word => word.length > 2 && text.includes(word))) {
-                        if (!results.some(r => r.name === item.name)) {
+                    const text = normalize(`${item.name || ''} ${item.title || ''} ${item.description || ''} ${item.content || ''} ${(item.tags || []).join(' ')}`);
+                    const textWords = text.split(/\s+/).filter(w => w.length > 2);
+
+                    // Kétirányú egyezés: vagy a keresőszó van benne a szövegben, vagy fordítva
+                    if (qWords.some(qw => text.includes(qw) || textWords.some(tw => qw.includes(tw) || tw.includes(qw)))) {
+                        if (!results.some(r => r.name === (item.name || item.title))) {
                             results.push({ ...item, _source: poolKey });
                         }
                     }
@@ -122,11 +139,12 @@ export async function generateResponse({ replyType, query, state, context, profi
 
         // 3. Távolság alapú rendezés ha van helyzet
         if (loc && results.length > 0) {
-            results = filterNearby(results, loc, 10, 3);
+            results = filterNearby(results, loc, 15, 5); // Kicsit bőkezűbb sugár
         }
 
         return results.slice(0, 3).map(p => ({
             ...p,
+            name: p.name || p.title,
             _distanceKm: p._distanceKm || null
         }));
     }

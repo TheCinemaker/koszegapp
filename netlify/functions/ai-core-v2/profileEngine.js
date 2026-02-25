@@ -6,16 +6,22 @@
 import { createClient } from '@supabase/supabase-js';
 
 function client(token) {
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_ANON_KEY;
+    if (!url || !key) return null;
+
     return createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
+        url,
+        key,
         { global: { headers: { Authorization: `Bearer ${token}` } } }
     );
 }
 
 export async function getUserProfile(userId, token) {
     try {
-        const { data } = await client(token)
+        const c = client(token);
+        if (!c) return null;
+        const { data } = await c
             .from('user_profiles')
             .select('*')
             .eq('user_id', userId)
