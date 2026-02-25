@@ -77,30 +77,35 @@ export async function generateResponse({ replyType, query, state, context, profi
     // =====================================================
     function searchInCategory(category, searchTerm) {
         const q = normalize(searchTerm);
-        const qWords = q.split(/\s+/).filter(w => w.length > 2);
+        const qWords = q.split(/\s+/).filter(w => w.length > 1);
         const results = [];
 
-        // ÉTTERMEK, CUKRÁSZDÁK, PIZZÉRIÁK
+        function matches(targetText, queryWords) {
+            if (!targetText) return false;
+            const targetWords = normalize(targetText).split(/\s+/).filter(w => w.length > 1);
+            // Kétirányú tartalmazás: vagy a keresett szó része a célnak, vagy fordítva
+            return queryWords.some(qw =>
+                targetWords.some(tw => tw.includes(qw) || qw.includes(tw))
+            );
+        }
+
+        // ÉTTERMEK
         if (category === 'food' || category === 'all') {
             const places = load('restaurants.json');
             places.forEach(p => {
-                const name = normalize(p.name || '');
-                const tags = (p.tags || []).join(' ').toLowerCase();
-                const allText = `${name} ${normalize(tags)}`;
+                const name = p.name || '';
+                const tags = (p.tags || []).join(' ');
+                const allText = `${name} ${tags}`;
 
                 if ((q.includes('cukraszda') || q.includes('sutemeny')) &&
-                    (allText.includes('cukraszda') || allText.includes('suti'))) {
+                    (normalize(allText).includes('cukraszda') || normalize(allText).includes('suti'))) {
                     results.push({ ...p, type: 'cukrászda', category: 'food' });
                 }
                 else if ((q.includes('pizza') || q.includes('pizzeri')) &&
-                    (allText.includes('pizza') || allText.includes('pizzeri'))) {
+                    (normalize(allText).includes('pizza') || normalize(allText).includes('pizzeri'))) {
                     results.push({ ...p, type: 'pizzéria', category: 'food' });
                 }
-                else if ((q.includes('etterem') || q.includes('enni') || q.includes('kaja')) &&
-                    (allText.includes('etterem') || allText.includes('vendeglo'))) {
-                    results.push({ ...p, type: 'étterem', category: 'food' });
-                }
-                else if (qWords.some(qw => allText.includes(qw))) {
+                else if (matches(allText, qWords)) {
                     results.push({ ...p, category: 'food' });
                 }
             });
@@ -110,41 +115,33 @@ export async function generateResponse({ replyType, query, state, context, profi
         if (category === 'attractions' || category === 'all') {
             const places = load('attractions.json');
             places.forEach(p => {
-                const name = normalize(p.name || '');
-                const desc = normalize(p.description || '');
-                const allText = `${name} ${desc}`;
-                if (q.includes('var') || q.includes('templom') || q.includes('muzeum') || qWords.some(qw => allText.includes(qw))) {
+                if (matches(`${p.name} ${p.description}`, qWords)) {
                     results.push({ ...p, category: 'attraction' });
                 }
             });
         }
 
-        // GYAKORLATI INFÓK (patika, wc, atm)
+        // GYAKORLATI INFÓK
         if (category === 'practical' || category === 'all') {
             const places = load('info.json');
             places.forEach(p => {
-                const title = normalize(p.title || '');
-                const content = normalize(p.content || '');
+                const title = p.title || '';
+                const content = p.content || '';
                 const allText = `${title} ${content}`;
+                const allTextNorm = normalize(allText);
 
-                // Patika vs Patikamúzeum
-                if (q.includes('patika') && !q.includes('muzeum')) {
-                    if ((allText.includes('patika') || allText.includes('gyogyszertar')) && !allText.includes('muzeum')) {
+                const isPharmacySearch = q.includes('patika') || q.includes('gyogyszertar') || q.includes('gyogyszer');
+                const isMuseumSearch = q.includes('muzeum') || q.includes('patikamuzeum');
+
+                if (isPharmacySearch && !isMuseumSearch) {
+                    if ((allTextNorm.includes('patika') || allTextNorm.includes('gyogyszertar')) && !allTextNorm.includes('muzeum')) {
                         results.push({ ...p, type: 'pharmacy', category: 'practical' });
                     }
-                } else if (q.includes('patikamuzeum') || (q.includes('patika') && q.includes('muzeum'))) {
-                    if (allText.includes('patikamuzeum')) {
+                } else if (isMuseumSearch) {
+                    if (allTextNorm.includes('patikamuzeum') || (allTextNorm.includes('patika') && allTextNorm.includes('muzeum'))) {
                         results.push({ ...p, type: 'museum', category: 'practical' });
                     }
-                } else if (q.includes('wc') || q.includes('mosdo') || q.includes('vece')) {
-                    if (allText.includes('wc') || allText.includes('mosdo') || allText.includes('vece') || allText.includes('mosdó')) {
-                        results.push({ ...p, type: 'wc', category: 'practical' });
-                    }
-                } else if (q.includes('atm') || q.includes('penz') || q.includes('bank') || q.includes('automata')) {
-                    if (allText.includes('atm') || allText.includes('penz') || allText.includes('bank') || allText.includes('automata')) {
-                        results.push({ ...p, type: 'atm', category: 'practical' });
-                    }
-                } else if (qWords.some(qw => allText.includes(qw))) {
+                } else if (matches(allText, qWords)) {
                     results.push({ ...p, category: 'practical' });
                 }
             });
@@ -154,16 +151,12 @@ export async function generateResponse({ replyType, query, state, context, profi
         if (category === 'history' || category === 'all') {
             const places = load('hidden_gems.json');
             places.forEach(p => {
-                const name = normalize(p.name || '');
-                const desc = normalize(p.description || p.content || '');
-                const allText = `${name} ${desc}`;
-                if (allText.includes('ostrom') || allText.includes('1532') || qWords.some(qw => allText.includes(qw))) {
+                if (matches(`${p.name} ${p.description} ${p.content}`, qWords) || q.includes('1532') || q.includes('ostrom')) {
                     results.push({ ...p, category: 'history' });
                 }
             });
         }
 
-        // Távolság alapú rendezés & 15km+ korlát feloldása
         if (location && results.length > 0) {
             const ranked = rankPlaces(results, { weather, profile, speed });
             const topDist = ranked[0]._distanceKm || 0;

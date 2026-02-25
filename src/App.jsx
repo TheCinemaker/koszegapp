@@ -497,9 +497,9 @@ function MainAppContent() {
             </>
           )}
 
-          {/* AI Assistant */}
-          <AISmartLayer />
-          <AIAssistant />
+          {/* AI Assistant (OFF) */}
+          {/* <AISmartLayer /> */}
+          {/* <AIAssistant /> */}
           {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>
       </div>
