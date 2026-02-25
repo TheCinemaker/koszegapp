@@ -4,12 +4,13 @@
  */
 import { createClient } from '@supabase/supabase-js';
 
+const IN_MEMORY_CACHE = new Map();
+
 function client(token) {
     const url = process.env.SUPABASE_URL;
     const key = process.env.SUPABASE_ANON_KEY;
 
     if (!url || !key) {
-        console.warn('⚠️ Supabase environment variables (URL/KEY) are missing! State persistence and logging are DISABLED.');
         return null;
     }
 
@@ -34,7 +35,10 @@ export async function getState(userId, sessionId, token) {
         try {
             // Vendég: session_id alapján keresünk
             const c = client();
-            if (!c) return { phase: 'idle', tempData: {}, mobility: null };
+            if (!c) {
+                if (sessionId && IN_MEMORY_CACHE.has(sessionId)) return IN_MEMORY_CACHE.get(sessionId);
+                return { phase: 'idle', tempData: {}, mobility: null };
+            }
 
             const { data } = await c
                 .from('conversation_state')
@@ -42,7 +46,10 @@ export async function getState(userId, sessionId, token) {
                 .eq('session_id', sessionId)
                 .maybeSingle(); // single helyett maybeSingle, hogy ne dobjon hibát ha nincs
 
-            if (!data) return { phase: 'idle', tempData: {}, mobility: null };
+            if (!data) {
+                if (sessionId && IN_MEMORY_CACHE.has(sessionId)) return IN_MEMORY_CACHE.get(sessionId);
+                return { phase: 'idle', tempData: {}, mobility: null };
+            }
 
             return {
                 phase: data.phase,
@@ -61,7 +68,10 @@ export async function getState(userId, sessionId, token) {
     // Bejelentkezett user: user_id alapján keresünk
     try {
         const c = client(token);
-        if (!c) return { phase: 'idle', tempData: {}, mobility: null };
+        if (!c) {
+            if (userId && IN_MEMORY_CACHE.has(userId)) return IN_MEMORY_CACHE.get(userId);
+            return { phase: 'idle', tempData: {}, mobility: null };
+        }
 
         const { data } = await c
             .from('conversation_state')
@@ -69,7 +79,10 @@ export async function getState(userId, sessionId, token) {
             .eq('user_id', userId)
             .maybeSingle();
 
-        if (!data) return { phase: 'idle', tempData: {}, mobility: null };
+        if (!data) {
+            if (userId && IN_MEMORY_CACHE.has(userId)) return IN_MEMORY_CACHE.get(userId);
+            return { phase: 'idle', tempData: {}, mobility: null };
+        }
         return {
             phase: data.phase,
             tempData: data.temp_data || {},
@@ -98,7 +111,10 @@ export async function saveState(userId, sessionId, state, token) {
             if (!sessionId) return; // Nincs sessionId se → skip
 
             const c = client();
-            if (!c) return;
+            if (!c) {
+                if (sessionId) IN_MEMORY_CACHE.set(sessionId, state);
+                return;
+            }
 
             const { error } = await c
                 .from('conversation_state')
@@ -107,13 +123,19 @@ export async function saveState(userId, sessionId, state, token) {
                     ...dbState
                 }, { onConflict: 'session_id' });
 
-            if (error) console.warn('saveState guest error:', error.message);
+            if (error) {
+                console.warn('saveState guest error:', error.message);
+                if (sessionId) IN_MEMORY_CACHE.set(sessionId, state);
+            }
             return;
         }
 
         // Bejelentkezett user: user_id-val mentünk
         const c = client(token);
-        if (!c) return;
+        if (!c) {
+            if (userId) IN_MEMORY_CACHE.set(userId, state);
+            return;
+        }
 
         const { error } = await c
             .from('conversation_state')
@@ -122,7 +144,10 @@ export async function saveState(userId, sessionId, state, token) {
                 ...dbState
             }, { onConflict: 'user_id' });
 
-        if (error) console.warn('saveState error:', error.message);
+        if (error) {
+            console.warn('saveState error:', error.message);
+            if (userId) IN_MEMORY_CACHE.set(userId, state);
+        }
     } catch (e) {
         console.warn('saveState exception:', e.message);
     }

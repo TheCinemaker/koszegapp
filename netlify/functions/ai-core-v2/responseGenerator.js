@@ -31,12 +31,13 @@ function getGenAI() {
 }
 
 const PERSONA = `Te a KőszegAPP barátságos, közvetlen asszisztense vagy. 
-Magyarul beszélsz, tegező formában. Rövid, max 2-3 mondatos válaszokat adj.
-Válaszolj változatosan, természetesen, mintha egy haverod beszélgetne veled.
+Magyarul beszélsz, tegező formában. Rövid, lényegre törő válaszokat adj (max 2-3 mondat).
+A válaszod elején MINDIG a kért információt add meg, ne kertelj!
+Válaszolj természetesen, mintha egy haverod beszélgetne veled.
 De SOHA ne találj ki helyet, adatot, történelmi eseményt vagy bármit!
 Csak a megadott listából dolgozhatsz. Válaszaidba ne írj olyan tényt ami nincs a listában.
 Ha a felhasználó olyat kérdez, ami nincs az adatbázisban, ajánld fel, hogy keress a Google-on.
-Legyél segítőkész, de pontos. A távolságokat („innen kb. X km”) mindig említsd meg, ha van ilyen adat!`;
+A távolságokat („innen kb. X km”) mindig említsd meg, ha van ilyen adat!`;
 
 async function llm(prompt, fallback) {
     if (!process.env.GEMINI_API_KEY) return fallback;
@@ -128,7 +129,7 @@ export async function generateResponse({ replyType, query, state, context, profi
 
                 // Patika vs Patikamúzeum
                 if (q.includes('patika') && !q.includes('muzeum')) {
-                    if (allText.includes('patika') && !allText.includes('muzeum')) {
+                    if ((allText.includes('patika') || allText.includes('gyogyszertar')) && !allText.includes('muzeum')) {
                         results.push({ ...p, type: 'pharmacy', category: 'practical' });
                     }
                 } else if (q.includes('patikamuzeum') || (q.includes('patika') && q.includes('muzeum'))) {
@@ -136,11 +137,11 @@ export async function generateResponse({ replyType, query, state, context, profi
                         results.push({ ...p, type: 'museum', category: 'practical' });
                     }
                 } else if (q.includes('wc') || q.includes('mosdo') || q.includes('vece')) {
-                    if (allText.includes('wc') || allText.includes('mosdo')) {
+                    if (allText.includes('wc') || allText.includes('mosdo') || allText.includes('vece') || allText.includes('mosdó')) {
                         results.push({ ...p, type: 'wc', category: 'practical' });
                     }
-                } else if (q.includes('atm') || q.includes('penz') || q.includes('bank')) {
-                    if (allText.includes('atm') || allText.includes('penz') || allText.includes('bank')) {
+                } else if (q.includes('atm') || q.includes('penz') || q.includes('bank') || q.includes('automata')) {
+                    if (allText.includes('atm') || allText.includes('penz') || allText.includes('bank') || allText.includes('automata')) {
                         results.push({ ...p, type: 'atm', category: 'practical' });
                     }
                 } else if (qWords.some(qw => allText.includes(qw))) {
@@ -345,8 +346,8 @@ export async function generateResponse({ replyType, query, state, context, profi
             const placesList = results.map(r => `${r.name} (${r._distanceKm ? r._distanceKm + ' km' : 'itt Kőszegen'})`).join(', ');
 
             const text = await llm(
-                `Találtam ezeket a helyeket a felhasználó kérésére ("${query}"): ${placesList}. 
-                 Ajánld fel neki változatosan, említsd meg a távolságokat is!`,
+                `A felhasználó éttermet keres: "${query}". Találtam ezeket a helyeket: ${placesList}. 
+                 Sorold fel őket és a távolságokat! Legyél rövid és segítőkész.`,
                 `Találtam néhány szuper helyet: ${placesList}.`
             );
 
@@ -408,7 +409,8 @@ export async function generateResponse({ replyType, query, state, context, profi
             }
 
             const text = await llm(
-                `Találtam találatokat a kérésre: ${placesList}. Mondd el neki közvetlenül!`,
+                `ADATOK: ${placesList}. A felhasználó kérése: "${query}". 
+                 Add meg a pontos adatokat (nyitvatartás, cím, telefon), amik a listában vannak! Ne kérdezz vissza, csak add át az infót!`,
                 `Találtam: ${placesList}.`
             );
 
