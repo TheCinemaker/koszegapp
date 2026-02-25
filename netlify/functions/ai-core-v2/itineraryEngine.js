@@ -23,15 +23,23 @@ function load(file) {
  * - requested intents (food, attractions, etc.)
  */
 export function buildItinerary({ intents, context }) {
-    const { location, mobility, isLunch, isEvening, hour } = context;
-
+    const { location, mobility, isLunch, isEvening, hour, situation } = context;
     const plan = [];
+
+    // 🔥 1. HA NEM VAGY KŐSZEGEN, NE CSINÁLJ SEMMIT!
+    if (situation?.status === 'not_in_city') {
+        return []; // Üres terv → majd a responseGenerator figyelmeztet
+    }
+
+    // 🔥 2. HASZNÁLJUK A VÁROSKÖZPONTOT, HA NINCS GPS
+    const effectiveLocation = location || { lat: 47.3895, lng: 16.541 };
+
     const maxAttractions = mobility === 'walking' ? 2 : 3;
 
-    // Attractions
+    // 🔥 3. ATTRACTIONS – CSAK HA KÉRTÉK
     if (intents.includes('attractions')) {
         const attractions = load('attractions.json');
-        const ranked = rankByDistance(attractions, location);
+        const ranked = rankByDistance(attractions, effectiveLocation);
         plan.push(...ranked.slice(0, maxAttractions).map(a => ({
             type: 'attraction',
             name: a.name,
@@ -41,22 +49,42 @@ export function buildItinerary({ intents, context }) {
         })));
     }
 
-    // Food – only suggest if lunch/evening time or explicitly requested
+    // 🔥 4. FOOD – SZŰRJÜNK KATEGÓRIA SZERINT IS!
     if (intents.includes('food') || isLunch || isEvening) {
         const restaurants = load('restaurants.json');
-        const ranked = rankByDistance(restaurants, location);
+
+        // Ha pizzát keres, csak pizzériákat hozzon
+        const query = context.query?.toLowerCase() || '';
+        const wantsPizza = query.includes('pizza') || query.includes('pizzát');
+
+        let filtered = restaurants;
+        if (wantsPizza) {
+            filtered = restaurants.filter(r =>
+                r.tags?.includes('pizzéria') ||
+                r.name?.toLowerCase().includes('pizza') ||
+                r.type === 'pizzéria'
+            );
+        }
+
+        // Ha nincs pizzéria, akkor jöhet bármi
+        if (filtered.length === 0) {
+            filtered = restaurants;
+        }
+
+        const ranked = rankByDistance(filtered, effectiveLocation);
         const top = ranked.slice(0, 2).map(r => ({
             type: 'food',
             name: r.name,
             address: r.address,
             distanceKm: r._distanceKm,
-            coords: r.coords
+            coords: r.coords,
+            tags: r.tags // segítség a response-nek
         }));
         plan.push(...top);
     }
 
-    // Events – always check
-    if (intents.includes('events') || plan.length < 2) {
+    // 🔥 5. EVENTS – CSAK HA KÉRTÉK!
+    if (intents.includes('events')) {
         const events = load('events.json');
         const upcoming = events
             .filter(e => new Date(e.date) >= new Date())

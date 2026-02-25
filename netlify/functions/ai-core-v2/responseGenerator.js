@@ -333,6 +333,37 @@ export async function generateResponse({ replyType, query, state, context, profi
             return { text, _rankedPlaces: ranked, action: null };
         }
 
+        case 'build_itinerary': {
+            const plan = buildItinerary({ intents, context });
+
+            // Ha nem vagy a városban
+            if (context.situation?.status === 'not_in_city') {
+                return {
+                    text: `Még ${context.situation.userDistance} km-re vagy Kőszegtől. Ha odaértél, segítek programot választani! Mikor érkezel?`,
+                    action: null
+                };
+            }
+
+            // Ha nincs terv
+            if (plan.length === 0) {
+                return {
+                    text: 'Nem találtam programot a közelben. Pontosítsd, mit szeretnél?',
+                    action: null
+                };
+            }
+
+            // Szépen összerakjuk a tervet
+            const places = plan.map(p => p.name).join(' → ');
+            const distances = plan.filter(p => p.distanceKm).map(p =>
+                `${p.name} (${Math.round(p.distanceKm * 10) / 10} km)`
+            ).join(', ');
+
+            return {
+                text: `Összeraktam neked egy kis programot: ${places}. ${distances ? `Mind ${distances} környékén van.` : ''}`,
+                action: null
+            };
+        }
+
         // ── EMERGENCY ────────────────────────────────────────────────────
         case 'emergency':
             return { text: '🆘 Azonnal hívom a segélyszolgálatot!', action: { type: 'call_emergency', params: {} } };

@@ -35,7 +35,7 @@ async function logUnknownPhrase(query, context, userId, sessionId) {
         );
         await supabase.rpc('increment_unknown_phrase', {
             p_query: query,
-            p_context: context ? JSON.stringify(context) : null,
+            p_context: context || null,
             p_user_id: userId || null,
             p_session_id: sessionId || null
         });
@@ -104,8 +104,9 @@ export async function runAI({ query, history, frontendContext, token }) {
         if (isUnknown) {
             const sessionId = frontendContext?.sessionId || null;
             logUnknownPhrase(query, {
+                intent: intents[0] || 'unknown',
                 mode: context.mode,
-                situation: situation.userStatus,
+                situation: situation.status,
                 phase: routing.newState.phase
             }, userId, sessionId); // intentionally NOT awaited – fire and forget
         }

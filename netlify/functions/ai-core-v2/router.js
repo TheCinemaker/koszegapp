@@ -31,7 +31,7 @@ export function routeConversation({ intents, entities, state, context, query }) 
 
         const someoneInCity = context.situation?.anyoneInCity || false;
         const wifeInCity = context.situation?.wifeInCity || false;
-        const userInCity = context.situation?.userStatus === 'in_city';
+        const userInCity = context.situation?.status === 'in_city';
 
         if (!someoneInCity) {
             return {

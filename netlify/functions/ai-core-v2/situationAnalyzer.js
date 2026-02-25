@@ -25,7 +25,7 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
     // Alaphelyzet
     let situation = {
         speed,
-        userStatus: 'unknown',
+        status: 'unknown',
         anyoneInCity: false,
         wifeInCity: false,
         approaching: false
@@ -36,11 +36,11 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
         const distanceKm = haversineKm({ lat: loc.lat, lng: loc.lng }, KOSZEG);
 
         if (distanceKm <= CITY_RADIUS_KM) {
-            situation.userStatus = 'in_city';
+            situation.status = 'in_city';
             situation.userDistance = parseFloat(distanceKm.toFixed(2));
             situation.anyoneInCity = true;
         } else {
-            situation.userStatus = 'not_in_city';
+            situation.status = 'not_in_city';
             situation.userDistance = Math.round(distanceKm);
             situation.approaching = speed > 10 && distanceKm < 30;
         }
@@ -61,7 +61,7 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
     }
 
     // Ha a user már bent van VAGY a feleség bent van
-    situation.canParkNow = situation.userStatus === 'in_city' || situation.wifeInCity;
+    situation.canParkNow = situation.status === 'in_city' || situation.wifeInCity;
 
     return situation;
 }
