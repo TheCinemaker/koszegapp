@@ -158,17 +158,27 @@
                 "ostrom",
                 "török",
                 "őskor",
-                "középkor"
+                "középkor",
+                "vár",
+                "jurisics",
+                "1532",
+                "ostroma",
+                "csata",
+                "emlékmű"
             ],
             "slang": [
                 "régmúlt",
-                "régi idők"
+                "régi idők",
+                "múltbéli",
+                "hösök"
             ],
             "phrases": [
                 "mikor volt az ostrom",
                 "ki volt Jurisics",
                 "vár története",
-                "mi történt 1532-ben"
+                "mi történt 1532-ben",
+                "kőszegi ostrom",
+                "törökök elleni"
             ]
         },
         "attractions": {
@@ -180,11 +190,17 @@
                 "kilátó",
                 "szobor",
                 "kapu",
-                "zsinagóga"
+                "zsinagóga",
+                "hősök",
+                "torony",
+                "patikamúzeum",
+                "tábornokház"
             ],
             "slang": [
                 "érdekesség",
-                "néznivaló"
+                "néznivaló",
+                "turistahely",
+                "műemlék"
             ],
             "phrases": [
                 "mit érdemes megnézni",
@@ -201,22 +217,37 @@
                 "ebéd",
                 "vacsora",
                 "reggeli",
-                "kórház",
                 "cukrászda",
                 "fagyi",
-                "pizza"
+                "pizza",
+                "pizzéria",
+                "pékség",
+                "sütemény",
+                "süti",
+                "torta",
+                "kávézó",
+                "kávé",
+                "olasz",
+                "magyaros",
+                "vendéglő",
+                "kifőzde"
             ],
             "slang": [
                 "falatozó",
                 "büfé",
-                "kifőzde",
-                "beharapni"
+                "beharapni",
+                "csámcsogni",
+                "kajálda",
+                "ebédelni",
+                "vacsorázni"
             ],
             "phrases": [
                 "hol lehet jót enni",
                 "éhes vagyok",
                 "ajánlj egy éttermet",
-                "pizzát ennék"
+                "pizzát ennék",
+                "süti és kávé",
+                "hova menjünk ebédelni"
             ]
         },
         "tours": {

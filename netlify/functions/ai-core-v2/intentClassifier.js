@@ -17,26 +17,37 @@ try {
 }
 
 /**
+ * Szó normalizálása: kisbetű, írásjelek eltávolítása, alapvető ragozás kezelése.
+ */
+function normalize(word) {
+    if (!word) return "";
+    return word.toLowerCase()
+        .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, "")
+        .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
+        .replace(/ó/g, 'o').replace(/ö/g, 'o').replace(/ő/g, 'o')
+        .replace(/ú/g, 'u').replace(/ü/g, 'u').replace(/ű/g, 'u');
+}
+
+/**
  * Szinonimaszótár keresés – ez az EGYETLEN forrás!
  */
-function findIntentsFromSynonyms(q) {
+function findIntentsFromSynonyms(query) {
+    const qNormalized = normalize(query);
     const intents = [];
 
     for (const [category, subcategories] of Object.entries(SYNONYMS.categories)) {
-        // Összegyűjtünk minden szót a kategóriából
         const allWords = [];
-
         if (typeof subcategories === 'object') {
-            // Struktúra: { basic: [], slang: [], phrases: [] }
             Object.values(subcategories).forEach(words => {
-                if (Array.isArray(words)) {
-                    allWords.push(...words);
-                }
+                if (Array.isArray(words)) allWords.push(...words);
             });
         }
 
-        // Ha bármelyik szó szerepel a query-ben
-        if (allWords.some(word => q.includes(word.toLowerCase()))) {
+        // Egyezés keresése: normalized query vs normalized synonym
+        if (allWords.some(word => {
+            const wNorm = normalize(word);
+            return qNormalized.includes(wNorm) || wNorm.includes(qNormalized);
+        })) {
             intents.push(category);
         }
     }
