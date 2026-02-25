@@ -33,12 +33,39 @@ async function logUnknownPhrase(query, context, userId, sessionId) {
             process.env.SUPABASE_URL,
             process.env.SUPABASE_ANON_KEY
         );
-        await supabase.rpc('increment_unknown_phrase', {
-            p_query: query,
-            p_context: context || null,
-            p_user_id: userId || null,
-            p_session_id: sessionId || null
-        });
+
+        // Először nézd meg, van-e már ilyen query
+        const { data: existing } = await supabase
+            .from('unknown_phrases')
+            .select('id, frequency')
+            .eq('query', query)
+            .maybeSingle();
+
+        if (existing) {
+            // Ha van, növeld a frequency-t
+            await supabase
+                .from('unknown_phrases')
+                .update({
+                    frequency: existing.frequency + 1,
+                    last_seen: new Date().toISOString(),
+                    context: context
+                })
+                .eq('id', existing.id);
+        } else {
+            // Ha nincs, szúrd be
+            await supabase
+                .from('unknown_phrases')
+                .insert({
+                    query: query,
+                    context: context,
+                    user_id: userId,
+                    session_id: sessionId,
+                    frequency: 1,
+                    first_seen: new Date().toISOString(),
+                    last_seen: new Date().toISOString(),
+                    reviewed: false
+                });
+        }
     } catch (err) {
         console.warn('Failed to log unknown phrase:', err.message);
     }
