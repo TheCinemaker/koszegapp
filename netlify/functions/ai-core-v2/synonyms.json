@@ -1,13 +1,191 @@
 {
-    "_comment": "Auto-extended by autoUpdateSynonyms() when frequency >= 10 and corrected_intent is set in Supabase.",
-    "parking": [],
-    "parking_info": [],
-    "food": [],
-    "attractions": [],
-    "navigation": [],
-    "hotels": [],
-    "events": [],
-    "planning": [],
-    "smalltalk": [],
-    "emergency": []
+    "wife": {
+        "basic": [
+            "feleség",
+            "asszony",
+            "párom",
+            "nejem",
+            "hitvesem"
+        ],
+        "slang": [
+            "öregem",
+            "cícám",
+            "drágám",
+            "baba",
+            "édesem",
+            "cukimuki",
+            "mamikám"
+        ],
+        "phrases": [
+            "a fele",
+            "a jobbik felem",
+            "a drága",
+            "a nejem",
+            "az asszony"
+        ]
+    },
+    "husband": {
+        "basic": [
+            "férj",
+            "uram",
+            "párom",
+            "hitvesem"
+        ],
+        "slang": [
+            "öregem",
+            "drágám",
+            "cukimuki",
+            "apukám",
+            "a férjem"
+        ],
+        "phrases": [
+            "a férjem",
+            "az uram"
+        ]
+    },
+    "child": {
+        "basic": [
+            "gyerek",
+            "gyermek",
+            "kölyök",
+            "csemete"
+        ],
+        "slang": [
+            "srác",
+            "lurkó",
+            "krapek",
+            "pici",
+            "kicsi",
+            "apróság",
+            "baba"
+        ],
+        "phrases": [
+            "a fiam",
+            "a lányom",
+            "a gyerekem",
+            "a kisfiam",
+            "a kislányom"
+        ]
+    },
+    "friend": {
+        "basic": [
+            "barát",
+            "haver",
+            "cimbora",
+            "társ"
+        ],
+        "slang": [
+            "cimbike",
+            "pajti",
+            "tesó",
+            "bratyó",
+            "cimbi",
+            "komám",
+            "brát"
+        ],
+        "phrases": [
+            "a barátom",
+            "a haverom",
+            "a cimborám"
+        ]
+    },
+    "already_there": {
+        "basic": [
+            "már ott van",
+            "ott van",
+            "bent van",
+            "kint van",
+            "ott van már"
+        ],
+        "slang": [
+            "már bent",
+            "már kint",
+            "belül van",
+            "bent van már"
+        ],
+        "phrases": [
+            "már a városban",
+            "már Kőszegen",
+            "ott van Kőszegen"
+        ]
+    },
+    "on_the_way": {
+        "basic": [
+            "érkezem",
+            "jövök",
+            "megyek",
+            "indulok",
+            "úton vagyok"
+        ],
+        "slang": [
+            "megyek már",
+            "jövök már",
+            "közeledek",
+            "majdnem ott vagyok",
+            "már úton"
+        ],
+        "phrases": [
+            "már úton",
+            "úton vagyok",
+            "megyek Kőszegre",
+            "érkezek"
+        ]
+    },
+    "now": {
+        "basic": [
+            "most",
+            "azonnal",
+            "rögtön",
+            "nyomban",
+            "mindjárt"
+        ],
+        "slang": [
+            "most rögtön",
+            "most azonnal",
+            "gyorsan",
+            "stimmel"
+        ],
+        "phrases": [
+            "most kell",
+            "most kéne",
+            "most indítsd"
+        ]
+    },
+    "food": {
+        "basic": [
+            "enni",
+            "étel",
+            "kaja"
+        ],
+        "slang": [
+            "zabálni",
+            "bekajálni",
+            "befalni",
+            "enni valamit"
+        ],
+        "phrases": [
+            "megennék",
+            "ennék",
+            "enék",
+            "enék valamit",
+            "enni szeretnék"
+        ]
+    },
+    "parking": {
+        "basic": [
+            "parkolás",
+            "parkolójegy",
+            "parkolni"
+        ],
+        "slang": [
+            "parkol",
+            "parkolhatok",
+            "parkolnék"
+        ],
+        "phrases": [
+            "parkolni szeretnék",
+            "parkolójegy kell",
+            "parkolni akarok"
+        ]
+    }
 }
