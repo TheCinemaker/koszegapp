@@ -24,6 +24,25 @@ import { routeConversation } from './router.js';
 import { executeAction } from './actionExecutor.js';
 import { generateResponse } from './responseGenerator.js';
 import { resolveIntents } from './intentResolver.js';
+import { createClient } from '@supabase/supabase-js';
+
+// 🧠 PHRASE LOGGER: ismeretlen kérdezgetések mentése AI tanításhoz
+async function logUnknownPhrase(query, context, userId, sessionId) {
+    try {
+        const supabase = createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_ANON_KEY
+        );
+        await supabase.rpc('increment_unknown_phrase', {
+            p_query: query,
+            p_context: context ? JSON.stringify(context) : null,
+            p_user_id: userId || null,
+            p_session_id: sessionId || null
+        });
+    } catch (err) {
+        console.warn('Failed to log unknown phrase:', err.message);
+    }
+}
 
 export async function runAI({ query, history, frontendContext, token }) {
     try {
@@ -79,6 +98,17 @@ export async function runAI({ query, history, frontendContext, token }) {
 
         // 9️⃣ PERSIST STATE (RLS via JWT)
         await saveState(userId, routing.newState, token);
+
+        // 🧠 LOG UNKNOWN PHRASES (non-blocking, for AI training)
+        const isUnknown = intents.includes('unknown') || routing.replyType === 'normal';
+        if (isUnknown) {
+            const sessionId = frontendContext?.sessionId || null;
+            logUnknownPhrase(query, {
+                mode: context.mode,
+                situation: situation.userStatus,
+                phase: routing.newState.phase
+            }, userId, sessionId); // intentionally NOT awaited – fire and forget
+        }
 
         // 🔟 GENERATE RESPONSE (JSON + rankingEngineV2 + LLM text)
         const response = await generateResponse({
