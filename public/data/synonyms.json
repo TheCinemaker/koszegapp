@@ -152,426 +152,234 @@
                 "most indítsd"
             ]
         },
-        "food": {
+        "history": {
             "basic": [
-                "enni",
-                "étel",
-                "kaja"
+                "történelem",
+                "ostrom",
+                "török",
+                "őskor",
+                "középkor"
             ],
             "slang": [
-                "zabálni",
-                "bekajálni",
-                "befalni",
-                "enni valamit"
+                "régmúlt",
+                "régi idők"
             ],
             "phrases": [
-                "megennék",
-                "ennék",
-                "enék",
-                "enék valamit",
-                "enni szeretnék"
+                "mikor volt az ostrom",
+                "ki volt Jurisics",
+                "vár története",
+                "mi történt 1532-ben"
             ]
         },
-        "parking": {
-            "basic": [
-                "parkolás",
-                "parkolójegy",
-                "parkolni"
-            ],
-            "slang": [
-                "parkol",
-                "parkolhatok",
-                "parkolnék"
-            ],
-            "phrases": [
-                "parkolni szeretnék",
-                "parkolójegy kell",
-                "parkolni akarok"
-            ]
-        },
-        "attractions_castle": {
+        "attractions": {
             "basic": [
                 "vár",
-                "erőd",
-                "Jurisics",
-                "várkastély",
-                "várrom"
-            ],
-            "slang": [
-                "várhegy",
-                "várudvar"
-            ],
-            "phrases": [
-                "megnézném a várat",
-                "a várba mennék"
-            ]
-        },
-        "attractions_church": {
-            "basic": [
-                "templom",
-                "bazilika",
-                "kápolna",
-                "Szent Jakab",
-                "plébánia"
-            ],
-            "slang": [
-                "templomocska"
-            ],
-            "phrases": [
-                "megyek a templomba"
-            ]
-        },
-        "attractions_museum": {
-            "basic": [
                 "múzeum",
-                "kiállítás",
-                "tárlat",
-                "Patikamúzeum",
-                "gyűjtemény"
-            ],
-            "slang": [],
-            "phrases": [
-                "megnézném a múzeumot"
-            ]
-        },
-        "food_pizza": {
-            "basic": [
-                "pizza",
-                "pizzéria",
-                "pizzás",
-                "olasz"
+                "látnivaló",
+                "templom",
+                "kilátó",
+                "szobor",
+                "kapu",
+                "zsinagóga"
             ],
             "slang": [
-                "pizza hely",
-                "pizzázni"
+                "érdekesség",
+                "néznivaló"
             ],
             "phrases": [
-                "ennék egy pizzát",
-                "hol van pizza"
+                "mit érdemes megnézni",
+                "hol van a vár",
+                "nyitvatartás",
+                "belépő árak"
             ]
         },
-        "food_hungarian": {
+        "food": {
             "basic": [
-                "magyaros",
-                "pörkölt",
-                "gulyás",
-                "magyar konyha"
-            ],
-            "slang": [
-                "magyar kaja",
-                "házias ízek"
-            ],
-            "phrases": [
-                "magyar ételt szeretnék"
-            ]
-        },
-        "food_icecream": {
-            "basic": [
-                "fagyi",
-                "fagylalt",
-                "jégkrém",
-                "fagyizó"
-            ],
-            "slang": [
-                "fagyi hely",
-                "jég"
-            ],
-            "phrases": [
-                "ennék egy fagyit"
-            ]
-        },
-        "food_cafe": {
-            "basic": [
-                "kávézó",
-                "presszó",
+                "étterem",
+                "kaja",
+                "enni",
+                "ebéd",
+                "vacsora",
+                "reggeli",
+                "kórház",
                 "cukrászda",
-                "kávéház"
+                "fagyi",
+                "pizza"
             ],
             "slang": [
-                "kávé",
-                "presszó",
-                "cuki"
+                "falatozó",
+                "büfé",
+                "kifőzde",
+                "beharapni"
             ],
             "phrases": [
-                "meginnék egy kávét"
+                "hol lehet jót enni",
+                "éhes vagyok",
+                "ajánlj egy éttermet",
+                "pizzát ennék"
             ]
         },
-        "hiking_trail": {
+        "tours": {
             "basic": [
                 "túra",
+                "kirándulás",
                 "ösvény",
-                "út",
-                "tanösvény"
+                "Írottkő",
+                "tanösvény",
+                "séta",
+                "bicikli",
+                "bringa"
             ],
             "slang": [
-                "túrázás",
-                "kirándulás"
+                "kutyagolás",
+                "hegymászás"
             ],
             "phrases": [
-                "szeretnék túrázni"
+                "hova lehet túrázni",
+                "szép kilátás",
+                "erdei játszótér",
+                "bringa bérlés"
             ]
         },
-        "hiking_viewpoint": {
+        "events": {
             "basic": [
-                "kilátó",
-                "kilátópont",
-                "panoráma",
-                "kilátóhely"
-            ],
-            "slang": [
-                "kilátótorony"
-            ],
-            "phrases": [
-                "honnan szép a kilátás"
-            ]
-        },
-        "hiking_forest": {
-            "basic": [
-                "erdő",
-                "liget",
-                "parkerdő"
-            ],
-            "slang": [],
-            "phrases": [
-                "megyek az erdőbe"
-            ]
-        },
-        "hiking_spring": {
-            "basic": [
-                "forrás",
-                "patak",
-                "vízesés",
-                "Hétforrás"
-            ],
-            "slang": [],
-            "phrases": [
-                "merre van a forrás"
-            ]
-        },
-        "events_concert": {
-            "basic": [
+                "program",
+                "esemény",
                 "koncert",
-                "zene",
-                "előadás",
-                "fesztivál"
-            ],
-            "slang": [
-                "koncert",
-                "zene"
-            ],
-            "phrases": [
-                "lesz ma koncert"
-            ]
-        },
-        "events_theater": {
-            "basic": [
+                "fesztivál",
                 "színház",
-                "Várszínház",
-                "előadás",
-                "színdarab"
-            ],
-            "slang": [],
-            "phrases": [
-                "megyek színházba"
-            ]
-        },
-        "events_market": {
-            "basic": [
                 "vásár",
-                "piac",
-                "bazár",
+                "kiállítás"
+            ],
+            "slang": [
+                "buli",
+                "rendezvény"
+            ],
+            "phrases": [
+                "mi lesz ma este",
+                "hétvégi program",
+                "Várszínház előadás",
                 "adventi vásár"
-            ],
-            "slang": [],
-            "phrases": [
-                "lesz vásár?"
             ]
         },
-        "accommodation_hotel": {
+        "hotels": {
             "basic": [
-                "szálloda",
+                "szállás",
                 "hotel",
-                "panzió"
-            ],
-            "slang": [
-                "hotel",
-                "szállás"
-            ],
-            "phrases": [
-                "hol lehet megszállni"
-            ]
-        },
-        "accommodation_guesthouse": {
-            "basic": [
-                "vendégház",
                 "panzió",
-                "apartman"
-            ],
-            "slang": [
+                "apartman",
+                "camping",
                 "vendégház"
             ],
-            "phrases": [
-                "keresek szállást"
-            ]
-        },
-        "parking_zone": {
-            "basic": [
-                "zóna",
-                "fizetős",
-                "ingyenes parkoló"
-            ],
-            "slang": [],
-            "phrases": [
-                "ingyen lehet parkolni?"
-            ]
-        },
-        "parking_sms": {
-            "basic": [
-                "SMS parkolás",
-                "mobilparkolás"
-            ],
             "slang": [
-                "sms",
-                "parkolós sms"
+                "alsóhely",
+                "kvártély"
             ],
             "phrases": [
-                "hogy kell sms-ben fizetni"
+                "hol lehet megszállni",
+                "olcsó szállás",
+                "romantikus szállás"
             ]
         },
-        "transport_bus": {
+        "transport": {
             "basic": [
+                "parkolás",
                 "busz",
-                "buszállomás",
-                "megálló"
+                "taxi",
+                "vonat",
+                "autó",
+                "elektromos töltő"
             ],
             "slang": [
-                "buszmegálló"
+                "kocsi",
+                "bringa"
             ],
             "phrases": [
-                "mikor jön a busz"
+                "hol lehet parkolni",
+                "ingyenes parkoló",
+                "mikor jön a busz",
+                "taxiszolgáltatás"
             ]
         },
-        "transport_bike": {
+        "shopping": {
             "basic": [
-                "bicikli",
-                "bringa",
-                "kerékpár",
-                "bérlés"
+                "bolt",
+                "üzlet",
+                "piac",
+                "ajándék",
+                "szuvenír",
+                "kézműves",
+                "borbolt",
+                "abc"
             ],
             "slang": [
-                "bringa",
-                "bicaj"
+                "vásárolni",
+                "biznisz"
             ],
             "phrases": [
-                "hol lehet bicajt bérelni"
+                "hol lehet ajándékot venni",
+                "helyi termékek",
+                "nyitvatartás vasárnap"
             ]
         },
-        "weather_rain": {
-            "basic": [
-                "eső",
-                "esik",
-                "zápor",
-                "zivatar"
-            ],
-            "slang": [
-                "esős"
-            ],
-            "phrases": [
-                "esni fog?"
-            ]
-        },
-        "weather_sunny": {
-            "basic": [
-                "süt a nap",
-                "napos",
-                "derült",
-                "szép idő"
-            ],
-            "slang": [
-                "szép idő"
-            ],
-            "phrases": [
-                "milyen idő lesz"
-            ]
-        },
-        "practical_toilet": {
+        "practical": {
             "basic": [
                 "wc",
                 "mosdó",
-                "illetőség",
-                "vécé"
-            ],
-            "slang": [
-                "wc",
-                "vécé"
-            ],
-            "phrases": [
-                "hol van wc"
-            ]
-        },
-        "practical_pharmacy": {
-            "basic": [
-                "patika",
-                "gyógyszertár"
-            ],
-            "slang": [
-                "patika"
-            ],
-            "phrases": [
-                "hol van patika"
-            ]
-        },
-        "practical_atm": {
-            "basic": [
                 "atm",
-                "bankautomata",
-                "pénzkiadó"
-            ],
-            "slang": [
-                "pénzkiadó"
-            ],
-            "phrases": [
-                "hol vehetek fel pénzt"
-            ]
-        },
-        "practical_info": {
-            "basic": [
+                "bank",
+                "posta",
+                "wifi",
+                "töltés",
                 "tourinform",
-                "információ",
-                "turistainfo"
+                "gyógyszertár",
+                "orvos"
             ],
             "slang": [
-                "info"
+                "nyilvános wc",
+                "pénzkiadó"
             ],
             "phrases": [
-                "hol a turistainfo"
+                "hol van mosdó",
+                "legközelebbi atm",
+                "orvosi ügyelet",
+                "pénzváltó"
             ]
         },
-        "family_kids": {
+        "families": {
             "basic": [
                 "gyerek",
                 "család",
-                "gyermek",
-                "kicsik"
+                "játszótér",
+                "állatsimogató",
+                "baba"
             ],
             "slang": [
-                "gyerekek"
+                "kicsik",
+                "lurkók"
             ],
             "phrases": [
-                "gyerekkel jövök"
+                "hova menjünk gyerekkel",
+                "bababarát étterem",
+                "családi belépő"
             ]
         },
-        "family_playground": {
+        "accessibility": {
             "basic": [
-                "játszótér",
-                "hinta",
-                "csúszda"
+                "akadálymentes",
+                "kutyabarát",
+                "gluténmentes",
+                "laktózmentes",
+                "allergén"
             ],
             "slang": [
-                "játszi"
+                "kerekeszék",
+                "kutyás"
             ],
             "phrases": [
-                "hol van játszótér"
+                "hol ehet a kutya",
+                "mozgáskorlátozott bejárat",
+                "mentes étel"
             ]
         }
     }

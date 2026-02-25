@@ -60,6 +60,47 @@ export async function generateResponse({ replyType, query, state, context, profi
         return messages[Math.floor(Math.random() * messages.length)];
     }
 
+    /**
+     * UNIVERZÁLIS KERESŐ - Átnézi az összes JSON fájlt a kulcsszavak alapján.
+     * Zéró hallucináció: Csak azt adja vissza, ami benne van.
+     */
+    function searchCityData(query, targetIntents) {
+        const q = query.toLowerCase();
+        const pools = {
+            food: load('restaurants.json'),
+            attractions: load('attractions.json'),
+            tours: load('leisure.json'),
+            history: load('hidden_gems.json'),
+            practical: load('info.json'),
+            hotels: load('hotels.json'),
+            events: load('events.json')
+        };
+
+        let results = [];
+
+        // Melyik pool-okban keressünk az intentek alapján?
+        const activePools = targetIntents.length > 0 ? targetIntents.filter(i => pools[i]) : Object.keys(pools);
+
+        activePools.forEach(poolKey => {
+            const data = pools[poolKey];
+            data.forEach(item => {
+                const searchStr = `${item.name || ''} ${item.title || ''} ${item.description || ''} ${item.content || ''} ${(item.tags || []).join(' ')}`.toLowerCase();
+
+                // Egyszerű kulcsszó egyezés
+                if (q.split(' ').some(word => word.length > 2 && searchStr.includes(word))) {
+                    results.push({ ...item, _source: poolKey });
+                }
+            });
+        });
+
+        // Távolság alapú rendezés ha van helyzet
+        if (location && results.length > 0) {
+            results = filterNearby(results, location, 10, results.length);
+        }
+
+        return results;
+    }
+
     switch (replyType) {
 
         // ── GREETING ──────────────────────────────────────────────────────
@@ -252,6 +293,81 @@ export async function generateResponse({ replyType, query, state, context, profi
             };
         }
 
+        // ── TOURS (Hiking, Biking) ───────────────────────────────────────
+        case 'tours': {
+            const hikes = load('leisure.json');
+            const ranked = rankPlaces(hikes, { weather, profile, speed });
+            const top = location ? filterNearby(ranked, location, 10, 3) : ranked.slice(0, 3);
+
+            if (top.length === 0) return { text: 'Sajnos nem találtam túraútvonalat a közeledben.', action: null };
+
+            const list = top.map(h => {
+                const dist = h._distanceKm ? ` (${h._distanceKm} km)` : '';
+                return `🥾 ${h.name}${dist}`;
+            }).join(', ');
+
+            return { text: `Túrázási lehetőségek: ${list}.`, action: null };
+        }
+
+        // ── HISTORY ──────────────────────────────────────────────────────
+        case 'history': {
+            const history = load('hidden_gems.json');
+            const top = searchCityData(query, ['history']).slice(0, 2);
+
+            if (top.length === 0) {
+                return { text: 'Erről a történelmi eseményről vagy helyről nincs pontos adatom a rendszerben.', action: null };
+            }
+
+            const item = top[0];
+            const dist = item._distanceKm ? ` (innen ${item._distanceKm} km)` : '';
+            return { text: `🏰 ${item.name}${dist}: ${item.description || item.content}`, action: null };
+        }
+
+        // ── PRACTICAL (ATM, WC, Pharmacy) ───────────────────────────────
+        case 'practical': {
+            const matches = searchCityData(query, ['practical']);
+            if (matches.length === 0) return { text: 'Sajnos nem találtam ilyen szolgáltatást vagy helyet az adatbázisban.', action: null };
+
+            const top = matches.slice(0, 3);
+            const list = top.map(m => {
+                const dist = m._distanceKm ? ` (${m._distanceKm} km)` : '';
+                const icon = m.icon === 'FaRestroom' ? '🚻' : m.icon === 'FaParking' ? '🅿️' : m.icon === 'FaPills' ? '💊' : '📍';
+                return `${icon} ${m.title || m.name}${dist}`;
+            }).join(', ');
+
+            return { text: `Ezt találtam: ${list}.`, action: null };
+        }
+
+        // ── SHOPPING ─────────────────────────────────────────────────────
+        case 'shopping': {
+            const matches = searchCityData(query, ['shopping', 'food']); // Bolt és kaja is lehet shopping
+            if (matches.length === 0) return { text: 'Sajnos nem találtam boltot vagy kézműves helyet a rendszerben.', action: null };
+
+            const top = matches.slice(0, 3);
+            const list = top.map(m => {
+                const dist = m._distanceKm ? ` (${m._distanceKm} km)` : '';
+                return `🛍️ ${m.name || m.title}${dist}`;
+            }).join(', ');
+
+            return { text: `Vásárlási lehetőségek: ${list}.`, action: null };
+        }
+
+        // ── FAMILIES & ACCESSIBILITY ─────────────────────────────────────
+        case 'families':
+        case 'accessibility': {
+            const matches = searchCityData(query, []); // Mindenhol keresünk
+            const filtered = matches.filter(m => {
+                const text = JSON.stringify(m).toLowerCase();
+                if (replyType === 'families') return text.includes('gyerek') || text.includes('játszótér') || text.includes('család');
+                return text.includes('akadálymentes') || text.includes('kutya') || text.includes('glutén') || text.includes('laktóz');
+            });
+
+            if (filtered.length === 0) return { text: 'Sajnos nem találtam speciális igényeknek megfelelő helyet az adatbázisban.', action: null };
+
+            const list = filtered.slice(0, 3).map(m => `📍 ${m.name || m.title}`).join(', ');
+            return { text: `Ezt ajánlom: ${list}.`, action: null };
+        }
+
 
         // ── EVENTS ────────────────────────────────────────────────────────
         case 'events': {
@@ -375,9 +491,21 @@ export async function generateResponse({ replyType, query, state, context, profi
         // ── NORMAL (LLM fallback) ─────────────────────────────────────────
         case 'normal':
         default: {
+            // Megpróbáljuk a JSON keresőt először
+            const matches = searchCityData(query, []);
+            if (matches.length > 0) {
+                const item = matches[0];
+                const dist = item._distanceKm ? ` (innen ${item._distanceKm} km)` : '';
+                return {
+                    text: `Ezt találtam neked: ${item.name || item.title}${dist}. ${item.description || item.content || ''}`,
+                    action: null
+                };
+            }
+
+            // Ha semmi nincs a JSON-ben, a PERSONA tiltja a hallucinációt
             const text = await llm(
-                `Kőszegen vagyunk. A felhasználó kérdezte: "${query}". Válaszolj röviden és segítőkészen. Ha nem tudod, mondd: "Erről nincs pontos adatom."`,
-                'Pontosítanád a kérdést? Szívesen segítek!'
+                `Kőszegen vagyunk. A felhasználó kérdezte: "${query}". Ha nem tudod a választ a helyi JSON adatok nélkül, mondd kerek-perec: "Sajnos erről nincs információm az adatbázisomban." Soha ne találj ki választ!`,
+                'Sajnos erről nincs információm az adatbázisomban. Kérdezz valami mást Kőszegről!'
             );
             return { text, action: null };
         }

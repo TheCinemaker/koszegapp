@@ -1,15 +1,13 @@
-/**
- * contextLoader.js – ai-core-v2
- * Loads GPS, speed, mobility, time and weather from frontend context.
- * All data comes from frontend — no external API calls here.
- */
-import { detectMobilityFromSpeed } from './mobilityEngine.js';
-
 export async function loadContext(frontendContext) {
     const location = frontendContext?.location || null;
     const speed = frontendContext?.speed ?? null;
     const weather = frontendContext?.weather || null;
     const mode = frontendContext?.mode || 'city';
+
+    // 🆕 Session kezelés
+    const sessionId = frontendContext?.sessionId || null;
+    const userId = frontendContext?.userId || null;
+    const token = frontendContext?.token || null;
 
     const mobility = frontendContext?.mobility || detectMobilityFromSpeed(speed);
 
@@ -20,13 +18,28 @@ export async function loadContext(frontendContext) {
     const isAfternoon = hour >= 14 && hour < 18;
     const isEvening = hour >= 18 && hour < 22;
 
+    // 🆕 Beszélgetés állapotának betöltése
+    let conversationState = await getState(userId, sessionId, token);
+
     return {
-        location,     // { lat, lng }
-        speed,        // km/h or null
-        mobility,     // 'walking' | 'bike' | 'car' | null
-        weather,      // from frontend
+        location,
+        speed,
+        mobility,
+        weather,
         mode,
         hour,
-        isMorning, isLunch, isAfternoon, isEvening
+        isMorning, isLunch, isAfternoon, isEvening,
+
+        // 🔥 ÚJ: session info
+        sessionId,
+        userId,
+        token,
+
+        // 🔥 ÚJ: beszélgetés állapota
+        conversation: conversationState,
+
+        // 🔥 ÚJ: meta
+        isGuest: !userId || !token,
+        timestamp: now.toISOString()
     };
 }

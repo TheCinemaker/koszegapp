@@ -37,16 +37,26 @@ export function detectIntent(query) {
         intents.push('parking');
     }
 
-    // Food: café, coffee, 'innék', 'ennék', 'kóstolnék'
-    if (/pizza|étterem|enni|kávé|kávézó|fagylalt|büfé|kaja|hamburger|burger|kebab|kebap|lángos|bor|fröccs|innék|ennék|kóstolnék/.test(q)) intents.push('food');
+    // Food: café, coffee, 'innék', 'ennék', 'kóstolnék', reggeli
+    if (/pizza|étterem|enni|kávé|kávézó|fagylalt|fagyi|fagyiz|cukrászda|büfé|kaja|hamburger|burger|kebab|kebap|lángos|bor|fröccs|innék|ennék|reggeli|kóstolnék/.test(q)) intents.push('food');
 
-    // Attractions: 'megnéznék', 'felfedez'
-    if (/vár|látnivaló|múzeum|séta|néznék|megnéznék|kirándulás|látnék|felfedez/.test(q)) intents.push('attractions');
+    // Attractions: 'megnéznék', 'felfedez', 'történelem', 'ostrom'
+    if (/vár|látnivaló|múzeum|séta|néznék|megnéznék|kirándulás|látnék|felfedez|történelem|ostrom|emlékmű/.test(q)) intents.push('attractions', 'history');
 
-    if (/merre|hol van|hogyan jutok|vezess|térkép|útvonal/.test(q)) intents.push('navigation');
-    if (/patika|orvos|mentő|rendőr|baleset|rosszul|segítség/.test(q)) intents.push('emergency');
-    if (/szállás|hotel|panzió|ágy|éjszaka/.test(q)) intents.push('hotels');
-    if (/program|esemény|fesztivál|koncert|előadás/.test(q)) intents.push('events');
+    if (/merre|hol van|hogyan jutok|vezess|térkép|útvonal|mennyi idő/.test(q)) intents.push('navigation');
+    if (/patika|orvos|mentő|rendőr|baleset|rosszul|segítség|ügyelet/.test(q)) {
+        intents.push('emergency');
+        intents.push('practical');
+    }
+    if (/szállás|hotel|panzió|ágy|éjszaka|camping|apartman/.test(q)) intents.push('hotels');
+    if (/program|esemény|fesztivál|koncert|előadás|ma este|hétvégén/.test(q)) intents.push('events');
+
+    // New Tourist Intents
+    if (/túra|túrázni|írottkő|kilátó|tanösvény|bicikli|bringa|kerékpár/.test(q)) intents.push('tours');
+    if (/ajándék|szuvenír|vásárlás|bolt|piac|kézműves|helyi termék|borbolt|abc|nyitva/.test(q)) intents.push('shopping');
+    if (/wc|mosdó|atm|bankautomata|pénz|posta|wifi|töltés|információs iroda|tourinform|csomagmegőrző/.test(q)) intents.push('practical');
+    if (/játszótér|gyerek|család|babakocsi|állatsimogató|kisgyerek/.test(q)) intents.push('families');
+    if (/akadálymentes|mozgáskorlátozott|kutya|kutyabarát|gluténmentes|laktózmentes/.test(q)) intents.push('accessibility');
 
     // 🧠 Synonym check: AI-learned patterns from unknown_phrases
     if (intents.length === 0) {
