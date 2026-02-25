@@ -205,26 +205,24 @@ export async function generateResponse({ replyType, query, state, context, profi
 
         // ── FOOD (rankingEngineV2: GPS + weather + profile + revenue) ─────
         case 'food_search': {
-            const all = load('restaurants.json');
-            const ranked = rankPlaces(all, { weather, profile, speed });
-            const top = location ? filterNearby(ranked, location, 3, 4) : ranked.slice(0, 4);
+            const restaurants = load('restaurants.json');
+            const query = context.query?.toLowerCase() || '';
+            const wantsPizza = query.includes('pizza') || query.includes('pizzát');
 
-            if (top.length === 0) {
-                return { text: 'Éttermet nem találtam. Megnyissam az étterem oldalt?', action: { type: 'navigate_to_food', params: {} } };
+            let filtered = restaurants;
+            if (wantsPizza) {
+                filtered = restaurants.filter(r =>
+                    r.tags?.includes('pizzéria') ||
+                    r.name?.toLowerCase().includes('pizza')
+                );
             }
 
-            const list = top.map(r => {
-                const dist = r._distanceKm != null && r._distanceKm < Infinity ? ` (${r._distanceKm} km)` : '';
-                return `${r.name}${dist}`;
-            }).join(', ');
+            const top = filtered.slice(0, 3).map(r => r.name).join(', ');
 
-            const weatherNote = weather?.isRain ? '☂️ Most esik – beltéri helyeket javaslok. ' : '';
-            const timeNote = isLunch ? 'Ebédidő. ' : isEvening ? 'Vacsorára idő. ' : '';
-            const text = await llm(
-                `${weatherNote}${timeNote}Ajánlj ezek közül éttermet Kőszegen röviden: ${list}. Ne találj ki semmit.`,
-                `Íme a legközelebbi helyek: ${list}.`
-            );
-            return { text, _rankedPlaces: ranked, action: null };
+            return {
+                text: `Találtam néhány helyet: ${top}. Nézd meg a részleteket az appban!`,
+                action: { type: 'navigate_to_food' }
+            };
         }
 
         // ── ATTRACTIONS (geo + idő + weather alapján) ─────────────────────
@@ -287,8 +285,20 @@ export async function generateResponse({ replyType, query, state, context, profi
         // ── ARRIVAL PLANNING ─────────────────────────────────────────────
         case 'ask_arrival_time': {
             const situation = context?.situation || {};
+            // situationAnalyzer.js buildArrivalMessage(situation, wifeInCity)
             return {
-                text: buildArrivalMessage(situation.distanceKm || '?', situation.approaching),
+                text: buildArrivalMessage(situation, situation.wifeInCity),
+                action: null
+            };
+        }
+
+        case 'arrival_time_received': {
+            return {
+                text: randomMessage([
+                    `Oké, ${state.tempData.arrivalTime} múlva érkezel. Mit nézzünk addig?`,
+                    `Rendben, ${state.tempData.arrivalTime}. Milyen program érdekel?`,
+                    `${state.tempData.arrivalTime} – addig is segítek keresni! Mit szeretnél?`
+                ]),
                 action: null
             };
         }

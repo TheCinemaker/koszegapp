@@ -205,9 +205,18 @@ function routeNonParking({ intents, state, context, query }) {
 
     // User answered with arrival time
     if (state.phase === 'arrival_planning') {
+        // Mentsd el az érkezési időt!
         return {
-            newState: { ...state, phase: 'idle' },
-            replyType: 'arrival_planning',
+            newState: {
+                ...state,
+                phase: 'idle',
+                tempData: {
+                    ...state.tempData,
+                    arrivalTime: query,
+                    arrivalProcessed: true
+                }
+            },
+            replyType: 'arrival_time_received',  // ÚJ replyType!
             action: null
         };
     }

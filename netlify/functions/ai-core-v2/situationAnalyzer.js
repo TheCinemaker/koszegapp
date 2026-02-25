@@ -37,11 +37,11 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
 
         if (distanceKm <= CITY_RADIUS_KM) {
             situation.status = 'in_city';
-            situation.userDistance = parseFloat(distanceKm.toFixed(2));
+            situation.distanceKm = parseFloat(distanceKm.toFixed(2));
             situation.anyoneInCity = true;
         } else {
             situation.status = 'not_in_city';
-            situation.userDistance = Math.round(distanceKm);
+            situation.distanceKm = Math.round(distanceKm);
             situation.approaching = speed > 10 && distanceKm < 30;
         }
     }
@@ -71,7 +71,7 @@ export function analyzeSituation(frontendContext, conversationContext = {}) {
  * Nem LLM – determinisztikus, de változatos
  */
 export function buildArrivalMessage(situation, wifeInCity = false) {
-    const { userDistance, approaching } = situation;
+    const { distanceKm, approaching } = situation;
 
     // Ha a feleség már ott van
     if (wifeInCity) {
@@ -87,30 +87,30 @@ export function buildArrivalMessage(situation, wifeInCity = false) {
     // Ha úton van a user
     if (approaching) {
         const messages = [
-            `Már úton vagy Kőszeg felé (kb. ${userDistance} km)! 🚗 Mondd, mikorra tervezed az érkezést?`,
-            `Ahha, szép lassan közeledsz! ${userDistance} km és itt is vagy. Mikor várhatlak pontosan?`,
-            `Már csak ${userDistance} km! Mikor érkezel? Addig kitalálok egy jó programot.`,
-            `${userDistance} km van hátra. Mennyi idő múlva érkezel?`
+            `Már úton vagy Kőszeg felé (kb. ${distanceKm} km)! 🚗 Mondd, mikorra tervezed az érkezést?`,
+            `Ahha, szép lassan közeledsz! ${distanceKm} km és itt is vagy. Mikor várhatlak pontosan?`,
+            `Már csak ${distanceKm} km! Mikor érkezel? Addig kitalálok egy jó programot.`,
+            `${distanceKm} km van hátra. Mennyi idő múlva érkezel?`
         ];
         return messages[Math.floor(Math.random() * messages.length)];
     }
 
     // Ha még messze van
-    if (userDistance > 30) {
+    if (distanceKm > 30) {
         const messages = [
-            `Hűha, még ${userDistance} km-re vagy Kőszegtől! Azért egy kis előzetes programtervezés belefér. Mikor érkezel?`,
-            `Még ${userDistance} km, de ne aggódj, megéri az út! Mikor várható az érkezés?`,
+            `Hűha, még ${distanceKm} km-re vagy Kőszegtől! Azért egy kis előzetes programtervezés belefér. Mikor érkezel?`,
+            `Még ${distanceKm} km, de ne aggódj, megéri az út! Mikor várható az érkezés?`,
             `Még messze vagy, de addig is: mikor érkezel? Addig kiguglizom a legjobb programokat!`,
-            `${userDistance} km. Azért egy jó program belefér előre. Mikorra várható az érkezés?`
+            `${distanceKm} km. Azért egy jó program belefér előre. Mikorra várható az érkezés?`
         ];
         return messages[Math.floor(Math.random() * messages.length)];
     }
 
     // Alapértelmezett
     const defaultMessages = [
-        `Látom még nem vagy Kőszegen (${userDistance} km). 😄 Mikor érkezel?`,
-        `${userDistance} km-re vagy. Mikor várható az érkezés?`,
-        `Még nem vagy itt (${userDistance} km). Mondd, mikor érkezel?`
+        `Látom még nem vagy Kőszegen (${distanceKm} km). 😄 Mikor érkezel?`,
+        `${distanceKm} km-re vagy. Mikor várható az érkezés?`,
+        `Még nem vagy itt (${distanceKm} km). Mondd, mikor érkezel?`
     ];
     return defaultMessages[Math.floor(Math.random() * defaultMessages.length)];
 }
