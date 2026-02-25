@@ -50,9 +50,23 @@ export function parseArrivalTime(query) {
     const q = query.toLowerCase();
     const now = new Date();
 
-    // Time extraction: "15:00", "15h", "15 óra"
-    const timeMatch = q.match(/(\d{1,2})[:h\s]?(\d{2})?\s*(?:óra|h)?/);
-    const hour = timeMatch ? parseInt(timeMatch[1], 10) : 14; // default 14:00
+    // "X óra múlva" → hours from now
+    const hoursMatch = q.match(/(\d+)\s*óra\s*múlva/);
+    if (hoursMatch) {
+        const ms = parseInt(hoursMatch[1], 10) * 3600 * 1000;
+        return now.getTime() + ms;
+    }
+
+    // "X perc múlva" → minutes from now
+    const minutesMatch = q.match(/(\d+)\s*perc\s*múlva/);
+    if (minutesMatch) {
+        const ms = parseInt(minutesMatch[1], 10) * 60 * 1000;
+        return now.getTime() + ms;
+    }
+
+    // Time extraction: "15:00", "15h", "15 óra" (only when paired with day word)
+    const timeMatch = q.match(/(\d{1,2})[:h](\d{2})?/);
+    const hour = timeMatch ? parseInt(timeMatch[1], 10) : 14;
     const minute = timeMatch?.[2] ? parseInt(timeMatch[2], 10) : 0;
 
     const target = new Date(now);
@@ -60,13 +74,18 @@ export function parseArrivalTime(query) {
     target.setMilliseconds(0);
     target.setHours(hour, minute);
 
+    if (q.includes('holnapután')) {
+        target.setDate(target.getDate() + 2);
+        return target.getTime();
+    }
+
     if (q.includes('holnap') || q.includes('tomorrow')) {
         target.setDate(target.getDate() + 1);
         return target.getTime();
     }
 
     if (q.includes('ma') || q.includes('today')) {
-        if (target <= now) target.setDate(target.getDate() + 1); // if past, next day
+        if (target <= now) target.setDate(target.getDate() + 1);
         return target.getTime();
     }
 
@@ -80,12 +99,12 @@ export function parseArrivalTime(query) {
         }
     }
 
-    // Numeric "X nap múlva"
+    // "X nap múlva"
     const daysMatch = q.match(/(\d+)\s*nap\s*múlva/);
     if (daysMatch) {
         target.setDate(target.getDate() + parseInt(daysMatch[1], 10));
         return target.getTime();
     }
 
-    return null; // could not parse
+    return null;
 }

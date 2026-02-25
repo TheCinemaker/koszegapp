@@ -22,20 +22,36 @@ export function routeConversation({ intents, entities, state, context, query }) 
         };
     }
 
-    // ── Mid-flow: user abandons parking, switches topic ──────────────────
-    const isInParkingFlow = state.phase?.startsWith('parking_');
+    // ── Parking INFO (question, not command) ─────────────────────────────
+    if (intents.includes('parking_info')) {
+        return {
+            newState: { ...state, phase: 'idle' },
+            replyType: 'parking_info',
+            action: null
+        };
+    }
+
+    // ── Mid-flow: user abandons parking/arrival, switches topic ──────────
+    const isInFlow = state.phase?.startsWith('parking_') || state.phase === 'arrival_planning';
     const wantsOtherNow = !intents.includes('parking') && intents.some(i =>
         ['food', 'attractions', 'navigation', 'events', 'hotels'].includes(i)
     );
-    if (isInParkingFlow && wantsOtherNow) {
-        // Let it fall through to normal handling with reset
+    if (isInFlow && wantsOtherNow) {
         return routeNonParking({ intents, entities, state: { phase: 'idle', tempData: {}, mobility: context.mobility }, context, query });
     }
 
     // ── PARKING FLOW (deterministic state machine) ───────────────────────
+    const inCity = context.situation?.status === 'in_city' || context.situation?.status == null;
 
-    // Parking intent with plate already in message → skip to duration
+    // Parking intent → only start flow if user is IN the city
     if (intents.includes('parking') && state.phase === 'idle') {
+        if (!inCity) {
+            return {
+                newState: state,
+                replyType: 'parking_not_in_city',
+                action: null
+            };
+        }
         if (entities.licensePlate) {
             return {
                 newState: { ...state, phase: 'parking_collect_duration', tempData: { licensePlate: entities.licensePlate } },
@@ -50,8 +66,8 @@ export function routeConversation({ intents, entities, state, context, query }) 
         };
     }
 
-    // Direct plate at idle (no 'parkol' keyword, just e.g. "AAAM340")
-    if (state.phase === 'idle' && entities.licensePlate && !intents.includes('parking')) {
+    // Direct plate at idle (only if in city)
+    if (state.phase === 'idle' && entities.licensePlate && !intents.includes('parking') && inCity) {
         return {
             newState: { ...state, phase: 'parking_collect_duration', tempData: { licensePlate: entities.licensePlate } },
             replyType: 'ask_duration',

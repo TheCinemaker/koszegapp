@@ -90,6 +90,8 @@ export default function AIAssistant() {
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [actionStatus, setActionStatus] = useState(null);
+    // State machine phase persists here for guest users (stateless passback pattern)
+    const [sessionState, setSessionState] = useState({ phase: 'idle', tempData: {} });
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
     const navigate = useNavigate();
@@ -195,14 +197,21 @@ export default function AIAssistant() {
         setInput('');
         setLoading(true);
 
+        const guestId = user?.id || (() => {
+            let id = localStorage.getItem('koszeg_guest_id');
+            if (!id) { id = 'guest_' + Math.random().toString(36).slice(2); localStorage.setItem('koszeg_guest_id', id); }
+            return id;
+        })();
+
         const requestContext = {
-            userId: user?.id, authToken: token,
+            userId: guestId, authToken: token,
             mode: getAppMode(location),
             location: userLocation || location,
             distanceToMainSquare: userLocation?.distanceToMainSquare,
             weather, speed: userCtx.speed,
             movement: inferMovement(userCtx.speed),
-            lastPage: userCtx.lastPage, timeOnPage: userCtx.timeOnPage, lastSearch: userCtx.lastSearch
+            lastPage: userCtx.lastPage, timeOnPage: userCtx.timeOnPage, lastSearch: userCtx.lastSearch,
+            sessionState: user ? undefined : sessionState  // guests pass state back
         };
 
         try {
@@ -221,7 +230,9 @@ export default function AIAssistant() {
             const data = await response.json();
             if (response.ok) {
                 setMessages(prev => [...prev, data]);
-                await saveConversationToSupabase({ userId: user?.id, userMessage: currentInput, assistantMessage: data, context: requestContext });
+                // Update session state machine for guests
+                if (data.sessionState) setSessionState(data.sessionState);
+                await saveConversationToSupabase({ userId: guestId, userMessage: currentInput, assistantMessage: data, context: requestContext });
                 if (data.debug?.intent) {
                     const i = data.debug.intent;
                     if (['events', 'accommodation', 'general_info', 'planning'].includes(i))

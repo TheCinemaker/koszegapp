@@ -94,6 +94,18 @@ export async function generateResponse({ replyType, state, context, weather, pro
         case 'parking_cancelled':
             return { text: 'Töröltük a parkolást. Miben segíthetek még?', action: null };
 
+        case 'parking_info':
+            return {
+                text: 'Kőszegen a belvárosban fizető parkolózónák vannak. Kék zóna: 100-200 Ft/óra, SMS-es parkolójeggyel. Szólj ha indítsam!',
+                action: null
+            };
+
+        case 'parking_not_in_city':
+            return {
+                text: 'Kőszegen van fizetős parkolás. Amikor megérkezel, szólj és elindítom az SMS parkolást!',
+                action: null
+            };
+
         // ── FOOD (rankingEngineV2: GPS + weather + profile + revenue) ─────
         case 'food_search': {
             const all = load('restaurants.json');

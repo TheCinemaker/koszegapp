@@ -55,8 +55,15 @@ export async function runAI({ query, history, frontendContext, token }) {
         }
         context.weather = weather;
 
-        // 5️⃣ STATE (RLS via JWT)
-        const state = await getState(userId, token);
+        // 5️⃣ STATE — DB for logged-in users, frontend-provided for guests
+        // Guest users pass back the state the backend returned last turn (stateless pattern)
+        let state;
+        if (token && userId !== 'guest') {
+            state = await getState(userId, token);
+        } else {
+            // Guest: trust frontend-provided state (sent back from previous response)
+            state = frontendContext?.sessionState || { phase: 'idle', tempData: {}, mobility: null };
+        }
 
         // 6️⃣ USER PROFILE (null for new users, silent fail)
         const profile = await getUserProfile(userId, token);
@@ -93,6 +100,7 @@ export async function runAI({ query, history, frontendContext, token }) {
         return {
             text: response.text,
             action: frontendAction ?? response.action ?? null,
+            newState: routing.newState,   // ← frontend caches this, sends back next turn
             ...(secondarySuggestion ? { upsell: secondarySuggestion } : {})
         };
 

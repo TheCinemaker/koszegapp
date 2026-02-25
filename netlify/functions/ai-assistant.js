@@ -49,7 +49,8 @@ export async function handler(event) {
             body: JSON.stringify({
                 role: 'assistant',
                 content: result.text,
-                action: result.action ?? null
+                action: result.action ?? null,
+                sessionState: result.newState ?? null  // ← guest state passback
             })
         };
 
