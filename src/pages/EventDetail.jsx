@@ -14,7 +14,8 @@ import {
   IoTicketOutline,
   IoShareSocialOutline,
   IoCloseOutline,
-  IoBedOutline
+  IoBedOutline,
+  IoCalendarClearOutline
 } from 'react-icons/io5';
 import { FaApple } from "react-icons/fa";
 import { Toaster, toast } from 'react-hot-toast';
@@ -22,7 +23,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import GhostImage from '../components/GhostImage';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
-import { shouldShowBookingBubble, getBookingDatesFromEvent } from '../utils/bookingUtils';
+import { shouldShowBookingBubble, getBookingDatesFromEvent, getDistanceKm } from '../utils/bookingUtils';
 import { LocationContext } from '../contexts/LocationContext';
 
 // Zoomable Image Modal Component
@@ -30,7 +31,7 @@ function ImageModal({ src, onClose }) {
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: e.clientX - position.x, y: e.clientY - position.y });
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const handleWheel = (e) => {
     e.preventDefault();
@@ -384,56 +385,80 @@ export default function EventDetail() {
               <div className="lg:col-span-4 space-y-6">
                 {/* Action Card */}
                 <FadeUp delay={0.1}>
-                  <div className="bg-gray-100 dark:bg-black/30 p-8 rounded-[2.5rem] border border-gray-200 dark:border-white/10 text-center">
-                    <IoTicketOutline className="text-5xl text-purple-500 mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Részt veszel?</h3>
-                    <p className="text-gray-500 dark:text-gray-400 mb-8">Ne felejtsd el később!</p>
+                  <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-[2rem] border border-gray-200 dark:border-white/10 relative overflow-hidden group">
+                    <div className="relative z-10">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500">
+                          <IoTicketOutline className="text-xl" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-tight">Részt veszel?</h3>
+                          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Ne felejtsd el később!</p>
+                        </div>
+                      </div>
 
-                    <div className="space-y-3">
-                      {/* Apple Wallet Button */}
-                      <button
-                        onClick={handleGeneratePass}
-                        className="w-full flex items-center justify-center hover:scale-[1.02] transition-all"
-                      >
-                        <img
-                          src="/images/apple_badges/addtoapplewallet.png"
-                          alt="Add to Apple Wallet"
-                          className="h-12 w-auto"
-                        />
-                      </button>
-
-                      {evt.link && (
-                        <motion.a
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          href={evt.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl transition-all"
+                      <div className="grid grid-cols-1 gap-2.5">
+                        {/* Apple Wallet Button (Keep original) */}
+                        <button
+                          onClick={handleGeneratePass}
+                          className="w-full flex items-center justify-center hover:scale-[1.02] active:scale-95 transition-all outline-none"
                         >
-                          <IoGlobeOutline className="text-xl" />
-                          Hivatalos Oldal
-                        </motion.a>
-                      )}
-                      <button
-                        onClick={() => {
-                          if (navigator.share) {
-                            navigator.share({
-                              title: evt.name,
-                              text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
-                              url: window.location.href,
-                            }).catch(console.error);
-                          } else {
-                            // Fallback for browsers that don't support Web Share API
-                            navigator.clipboard.writeText(window.location.href);
-                            alert('Link másolva a vágólapra!');
-                          }
-                        }}
-                        className="w-full bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-300 dark:hover:bg-white/20 transition-all"
-                      >
-                        <IoShareSocialOutline className="text-xl" />
-                        Megosztás
-                      </button>
+                          <img
+                            src="/images/apple_badges/addtoapplewallet.png"
+                            alt="Add to Apple Wallet"
+                            className="h-11 w-auto"
+                          />
+                        </button>
+
+                        {/* Booking Button - Only if > 100km away */}
+                        {location && (getDistanceKm(location.lat, location.lng, 47.389, 16.540) > 100) && (
+                          <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={handleBookingClick}
+                            className="w-full h-11 bg-blue-600 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20"
+                          >
+                            <IoBedOutline className="text-base" />
+                            Szállás foglalása
+                          </motion.button>
+                        )}
+
+                        <div className="grid grid-cols-2 gap-2.5">
+                          {evt.link && (
+                            <motion.a
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              href={evt.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="h-11 bg-white dark:bg-white/10 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-gray-200 dark:border-white/5"
+                            >
+                              <IoGlobeOutline className="text-sm" />
+                              Weboldal
+                            </motion.a>
+                          )}
+                          <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => {
+                              if (navigator.share) {
+                                navigator.share({
+                                  title: evt.name,
+                                  text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
+                                  url: window.location.href,
+                                }).catch(console.error);
+                              } else {
+                                navigator.clipboard.writeText(window.location.href);
+                                toast.success('Link másolva!');
+                              }
+                            }}
+                            className="h-11 bg-white dark:bg-white/10 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-gray-200 dark:border-white/5"
+                          >
+                            <IoShareSocialOutline className="text-sm" />
+                            Megosztás
+                          </motion.button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </FadeUp>

@@ -31,17 +31,17 @@ export function shouldShowBookingBubble(userLat, userLng, event) {
     const eventDate = new Date(event.date);
     const now = new Date();
 
-    const isFutureEvent = eventDate > now;
-    const isFar = distance > 30; // 30km threshold
+    // Normalize to handle "today" correctly
+    const eventEnd = new Date(eventDate);
+    eventEnd.setHours(23, 59, 59, 999);
+
+    const isUpcoming = eventEnd > now;
+    const isVeryFar = distance > 100; // Trigger bubble only if > 100km away as requested
 
     // Dismissed flag
     const isDismissed = localStorage.getItem(`booking_bubble_dismissed_${event.id}`);
 
-    // Only big events or far away users
-    const isBigEvent = event.kiemelt === true || event.kiemelt === "1";
-    const isVeryFar = distance > 60;
-
-    return isFutureEvent && isFar && !isDismissed && (isBigEvent || isVeryFar);
+    return isUpcoming && isVeryFar && !isDismissed;
 }
 
 /**

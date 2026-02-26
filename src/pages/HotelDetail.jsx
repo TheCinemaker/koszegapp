@@ -56,6 +56,21 @@ export default function HotelDetail() {
     );
   }
 
+  const handleBooking = () => {
+    if (!hotel) return;
+    const baseUrl = "https://www.booking.com/searchresults.html";
+    const params = new URLSearchParams({
+      ss: hotel.name,
+      aid: "7885594",
+      label: `cj-7885594`,
+      utm_source: "cj",
+      utm_medium: "affiliate",
+      utm_campaign: "7885594",
+      utm_content: "hotel_detail"
+    });
+    window.open(`${baseUrl}?${params.toString()}`, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-violet-500 selection:text-white">
 
@@ -175,14 +190,30 @@ export default function HotelDetail() {
                 {/* Contact Actions */}
                 <FadeUp delay={0.2}>
                   <div className="grid grid-cols-1 gap-3">
+                    {/* Booking Button - Primary Action */}
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleBooking}
+                      className="bg-[#007AFF] text-white p-4 rounded-2xl flex items-center justify-start gap-4 shadow-lg shadow-blue-500/20 transition-all border border-transparent"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <IoBedOutline className="text-xl" />
+                      </div>
+                      <div className="text-left">
+                        <span className="block font-black text-xs uppercase tracking-tight leading-none">Foglalás</span>
+                        <span className="text-[10px] opacity-80 font-bold uppercase tracking-tighter">A Booking.com-on</span>
+                      </div>
+                    </motion.button>
+
                     {hotel.website && (
                       <a
                         href={hotel.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="bg-violet-600 hover:bg-violet-500 text-white p-4 rounded-2xl flex items-center justify-start gap-4 shadow-lg shadow-violet-600/20 transition-all hover:scale-[1.02]"
+                        className="bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white p-4 rounded-2xl flex items-center justify-start gap-4 hover:bg-gray-200 dark:hover:bg-white/10 transition-all border border-gray-200 dark:border-white/10"
                       >
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><IoGlobeOutline className="text-xl" /></div>
+                        <div className="w-10 h-10 rounded-full bg-violet-500/10 flex items-center justify-center"><IoGlobeOutline className="text-xl text-violet-500" /></div>
                         <span className="font-bold">Hivatalos Weboldal</span>
                       </a>
                     )}

@@ -140,28 +140,14 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
           <div className="text-2xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
         </div>
 
-        {/* Apple Wallet Badge (Official Apple Badge) */}
-        {!isPast && onGeneratePass && (
-          <button
-            onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 hover:scale-105 active:scale-95 transition-all z-20"
-            title={t('addToWallet')}
-          >
-            <img
-              src="/images/apple_badges/addtoapplewallet.png"
-              alt="Add to Apple Wallet"
-              className="h-10 w-auto"
-            />
-          </button>
-        )}
 
         {/* Favorite Button (Floating) */}
         {!isPast && (
           <button
             onClick={(e) => { e.preventDefault(); toggleFavorite(evt.id); }}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-rose-500 transition-all shadow-lg active:scale-90"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/60 dark:bg-white/20 backdrop-blur-md border border-white/40 dark:border-white/30 flex items-center justify-center text-zinc-900 dark:text-white hover:bg-white dark:hover:bg-white hover:text-rose-600 dark:hover:text-rose-500 transition-all shadow-lg active:scale-90"
           >
-            {isFavorite ? <FaHeart className="text-rose-500 drop-shadow-md" /> : <FaRegHeart />}
+            {isFavorite ? <FaHeart className="text-rose-600 dark:text-rose-500 drop-shadow-md" /> : <FaRegHeart className="text-zinc-900 dark:text-white" />}
           </button>
         )}
 
@@ -176,39 +162,60 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
       </div>
 
       {/* Content */}
-      <div className="p-5 relative">
-        <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 mb-2 line-clamp-2 leading-tight min-h-[3.5rem]">
-          {evt.name}
-        </h3>
+      <div className="p-5 relative space-y-4">
+        <div>
+          <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 mb-2 line-clamp-2 leading-tight min-h-[3.5rem]">
+            {evt.name}
+          </h3>
 
-        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
-          {evt.location && (
-            <span className="flex items-center gap-1 truncate max-w-[60%]">
-              <FaMapMarkerAlt className="text-indigo-500 shrink-0" />
-              <span className="truncate">{evt.location}</span>
-            </span>
-          )}
-          <span className="mx-1">•</span>
-          <span>{timeStr}</span>
+          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            {evt.location && (
+              <span className="flex items-center gap-1 truncate max-w-[60%]">
+                <FaMapMarkerAlt className="text-indigo-500 shrink-0" />
+                <span className="truncate">{evt.location}</span>
+              </span>
+            )}
+            <span className="mx-1">•</span>
+            <span>{timeStr}</span>
+          </div>
         </div>
 
-        {/* Action Bar */}
-        <div className="flex items-center gap-2 mt-auto">
+        {/* Action Buttons Box */}
+        <div className="space-y-2.5">
+          {/* Top Row: Wallet & Calendar */}
+          {!isPast && (
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
+                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10"
+                title={t('addToWallet')}
+              >
+                <img
+                  src="/images/apple_badges/addtoapplewallet.png"
+                  alt="Add to Apple Wallet"
+                  className="h-7 w-auto dark:invert"
+                />
+              </button>
+
+              <a
+                href={`data:text/calendar;charset=utf8,${encodeURIComponent(toICS(evt))}`}
+                download={`${evt.name.replace(/\s+/g, '_')}.ics`}
+                className="h-11 flex items-center justify-center gap-2 rounded-xl bg-transparent text-gray-900 dark:text-white font-bold text-[10px] uppercase tracking-wider hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
+                title={t('saveToCalendar')}
+              >
+                <FaCalendarPlus className="text-indigo-500 text-sm" />
+                Naptár
+              </a>
+            </div>
+          )}
+
+          {/* Bottom Row: Details */}
           <Link
             to={`/events/${evt.id}`}
-            className="flex-1 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-bold text-center text-sm hover:bg-indigo-600 hover:text-white transition-colors duration-300"
+            className="block w-full py-3.5 rounded-xl bg-indigo-600 text-white font-bold text-center text-sm shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition-all active:scale-[0.98]"
           >
-            Részletek
+            {t('details') || 'Részletek'}
           </Link>
-
-          <a
-            href={`data:text/calendar;charset=utf8,${encodeURIComponent(toICS(evt))}`}
-            download={`${evt.name.replace(/\s+/g, '_')}.ics`}
-            className="w-12 h-11 flex items-center justify-center rounded-xl bg-indigo-50/50 dark:bg-gray-700/30 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-600 hover:text-white transition-colors border border-indigo-100 dark:border-gray-600"
-            title={t('saveToCalendar')}
-          >
-            <FaCalendarPlus />
-          </a>
         </div>
       </div>
     </div>
