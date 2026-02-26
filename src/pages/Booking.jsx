@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import { FadeUp } from '../components/AppleMotion';
 import toast from 'react-hot-toast';
 
+
 export default function Booking() {
     const { t } = useTranslation('booking');
     const navigate = useNavigate();
@@ -17,9 +18,8 @@ export default function Booking() {
     const { location } = useContext(LocationContext);
 
     // CJ Affiliate / Booking.com IDs
-    // User mentioned: 7885594
     const CJ_PID = "7885594";
-    const BOOKING_AID = "7885594"; // Using CJ PID for consistency as requested
+    const BOOKING_AID = "7885594";
 
     // Default dates
     const today = new Date();
@@ -28,11 +28,21 @@ export default function Booking() {
     const dayAfter = new Date(today);
     dayAfter.setDate(dayAfter.getDate() + 2);
 
+    const [searchCity, setSearchCity] = useState("");
     const [checkIn, setCheckIn] = useState(searchParams.get('checkin') || tomorrow.toISOString().split('T')[0]);
     const [checkOut, setCheckOut] = useState(searchParams.get('checkout') || dayAfter.toISOString().split('T')[0]);
     const [guests, setGuests] = useState(2);
     const [showResults, setShowResults] = useState(false);
     const [searchUrl, setSearchUrl] = useState("");
+
+    // Initialize destination based on location
+    useEffect(() => {
+        if (location && !searchCity) {
+            setSearchCity(getDynamicDestination(location.lat, location.lng));
+        } else if (!searchCity) {
+            setSearchCity("Kőszeg");
+        }
+    }, [location]);
 
     const handleSearch = (e) => {
         if (e) e.preventDefault();
@@ -42,10 +52,9 @@ export default function Booking() {
             return;
         }
 
-        const destination = getDynamicDestination(location?.lat, location?.lng);
         const baseUrl = "https://www.booking.com/searchresults.html";
         const params = new URLSearchParams({
-            ss: destination,
+            ss: searchCity || "Kőszeg",
             checkin: checkIn,
             checkout: checkOut,
             group_adults: guests,
@@ -71,7 +80,7 @@ export default function Booking() {
     };
 
     return (
-        <div className="min-h-screen pb-24 relative overflow-hidden bg-[#fbfbfd] dark:bg-[#000000]">
+        <div className="min-h-screen pb-24 relative overflow-hidden transition-colors duration-500">
 
             {/* --- PREMIUM BACKGROUND ELEMENTS --- */}
             <div className="fixed inset-0 pointer-events-none z-0">
@@ -87,12 +96,12 @@ export default function Booking() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => showResults ? setShowResults(false) : navigate('/')}
-                        className="w-10 h-10 rounded-2xl bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm flex items-center justify-center transition-all"
+                        className="w-10 h-10 rounded-full bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm flex items-center justify-center transition-all"
                     >
                         <FaArrowLeft className="text-gray-800 dark:text-white text-sm" />
                     </motion.button>
 
-                    <h1 className="text-sm font-black uppercase tracking-[0.2em] text-gray-900 dark:text-white">
+                    <h1 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                         {showResults ? "Találatok" : t('title')}
                     </h1>
 
@@ -115,29 +124,37 @@ export default function Booking() {
                                 <h2 className="text-lg font-black text-gray-900 dark:text-white tracking-tight leading-tight">
                                     {t('heroTitle')}
                                 </h2>
-                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mt-0.5">
+                                <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-tighter mt-0.5">
                                     {t('heroSubtitle')}
                                 </p>
                             </div>
 
                             {/* Slim Form */}
-                            <form onSubmit={handleSearch} className="p-5 space-y-3">
+                            <form onSubmit={handleSearch} className="p-5 space-y-4">
 
                                 {/* Destination - Input Style */}
-                                <div className="space-y-1">
-                                    <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 px-1">
+                                <div className="space-y-1.5">
+                                    <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 px-1">
                                         {t('labelDestination')}
                                     </label>
-                                    <div className="w-full h-11 bg-gray-100/50 dark:bg-black/40 border border-transparent rounded-2xl flex items-center px-4 font-bold text-gray-700 dark:text-gray-300 text-sm">
-                                        <IoMapOutline className="mr-2 text-blue-500" />
-                                        Kőszeg
+                                    <div className="relative group">
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 pointer-events-none transition-transform group-focus-within:scale-110">
+                                            <IoMapOutline className="text-lg" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            value={searchCity}
+                                            onChange={(e) => setSearchCity(e.target.value)}
+                                            placeholder="Hova utazol?"
+                                            className="w-full h-12 bg-white/60 dark:bg-black/40 border border-white/20 dark:border-white/5 rounded-2xl pl-11 pr-4 font-bold text-gray-800 dark:text-gray-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all"
+                                        />
                                     </div>
                                 </div>
 
-                                {/* Dates Row - More compact */}
+                                {/* Dates Row */}
                                 <div className="grid grid-cols-2 gap-3">
                                     <div className="space-y-1">
-                                        <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 px-1">
+                                        <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 px-1">
                                             {t('labelCheckIn')}
                                         </label>
                                         <input
@@ -145,11 +162,11 @@ export default function Booking() {
                                             value={checkIn}
                                             onChange={(e) => setCheckIn(e.target.value)}
                                             min={today.toISOString().split('T')[0]}
-                                            className="w-full h-11 bg-white/60 dark:bg-black/60 border border-white dark:border-white/10 rounded-2xl px-4 text-[11px] font-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all"
+                                            className="w-full h-12 bg-white/60 dark:bg-black/60 border border-white dark:border-white/10 rounded-2xl px-4 text-[11px] font-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all"
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 px-1">
+                                        <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 px-1">
                                             {t('labelCheckOut')}
                                         </label>
                                         <input
@@ -157,21 +174,21 @@ export default function Booking() {
                                             value={checkOut}
                                             onChange={(e) => setCheckOut(e.target.value)}
                                             min={checkIn}
-                                            className="w-full h-11 bg-white/60 dark:bg-black/60 border border-white dark:border-white/10 rounded-2xl px-4 text-[11px] font-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all"
+                                            className="w-full h-12 bg-white/60 dark:bg-black/60 border border-white dark:border-white/10 rounded-2xl px-4 text-[11px] font-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all"
                                         />
                                     </div>
                                 </div>
 
-                                {/* Guests - Compact dynamic feel */}
+                                {/* Guests */}
                                 <div className="space-y-1">
-                                    <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 px-1">
+                                    <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 px-1">
                                         {t('labelGuests')}
                                     </label>
                                     <div className="relative">
                                         <select
                                             value={guests}
                                             onChange={(e) => setGuests(parseInt(e.target.value))}
-                                            className="w-full h-11 bg-white/60 dark:bg-black/60 border border-white dark:border-white/10 rounded-2xl px-4 text-xs font-black text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none appearance-none transition-all"
+                                            className="w-full h-12 bg-white/60 dark:bg-black/60 border border-white dark:border-white/10 rounded-2xl px-4 text-xs font-black text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none appearance-none transition-all"
                                         >
                                             {[1, 2, 3, 4, 5, 6].map(n => (
                                                 <option key={n} value={n} className="bg-white dark:bg-gray-800">{n} {t('personCount')}</option>
@@ -183,18 +200,18 @@ export default function Booking() {
                                     </div>
                                 </div>
 
-                                {/* Compact Premium CTA */}
+                                {/* Search Button - Standard Apple Height */}
                                 <motion.button
                                     whileHover={{ scale: 1.01 }}
                                     whileTap={{ scale: 0.97 }}
                                     type="submit"
-                                    className="w-full h-13 bg-[#007AFF] text-white rounded-2xl font-semibold text-base shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 transition-all"
+                                    className="w-full h-12 bg-[#007AFF] text-white rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 transition-all mt-2"
                                 >
                                     <FaSearch className="text-xs opacity-80" />
                                     {t('btnSearch')}
                                 </motion.button>
 
-                                <p className="text-[9px] text-gray-400 text-center font-bold opacity-60 leading-tight uppercase tracking-tighter">
+                                <p className="text-[9px] text-gray-500 dark:text-gray-400 text-center font-bold opacity-70 leading-tight uppercase tracking-tighter pt-1">
                                     {t('disclaimer')}
                                 </p>
                             </form>
