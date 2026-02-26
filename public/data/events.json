@@ -16,7 +16,7 @@
       "természet",
       "program"
     ],
-    "image": "farsangi_tura_2026.png",
+    "image": "farsangi_tura.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -80,7 +80,7 @@
       "program",
       "Lukácsháza"
     ],
-    "image": "bollerverseny_2026.png",
+    "image": "bollerverseny.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "Böllérfesztivál"
@@ -102,7 +102,7 @@
       "gyógynövény",
       "program"
     ],
-    "image": "madar.jpg",
+    "image": "medve_virag.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -123,7 +123,7 @@
       "verseny",
       "program"
     ],
-    "image": "muveszeti_szemle_2026.png",
+    "image": "muveszeti_szemle.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -163,7 +163,7 @@
       "verseny",
       "program"
     ],
-    "image": "muveszeti_szemle_2026.png",
+    "image": "muveszeti_szemle.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -184,7 +184,7 @@
       "program",
       "nők"
     ],
-    "image": "konyv.jpg",
+    "image": "polcok_menten.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -206,7 +206,7 @@
       "családi",
       "Bozsok"
     ],
-    "image": "madarles.jpg",
+    "image": "madarvedelem.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -228,7 +228,7 @@
       "program",
       "könyvtár"
     ],
-    "image": "konyv.jpg",
+    "image": "acelanyak.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -250,7 +250,7 @@
       "történelem",
       "program"
     ],
-    "image": "szinhaz.jpeg",
+    "image": "orokosok.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "Ősbemutató"
@@ -292,7 +292,7 @@
       "verseny",
       "program"
     ],
-    "image": "muveszeti_szemle_2026.png",
+    "image": "muveszeti_szemle.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -314,7 +314,7 @@
       "program",
       "tánc"
     ],
-    "image": "muveszeti_szemle_2026.png",
+    "image": "muveszeti_szemle.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -335,7 +335,7 @@
       "gála",
       "nemzeti ünnep"
     ],
-    "image": "muveszeti_szemle_2026.png",
+    "image": "muveszeti_szemle.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "Ünnepi Gála"
@@ -356,7 +356,7 @@
       "művészet",
       "program"
     ],
-    "image": "agocs.png",
+    "image": "lepcsok.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -377,7 +377,7 @@
       "kórus",
       "program"
     ],
-    "image": "concordia.png",
+    "image": "requiem.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -398,7 +398,7 @@
       "kézműves",
       "program"
     ],
-    "image": "advent_kezmuves.jpg",
+    "image": "event_default.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -570,7 +570,7 @@
       "madarak",
       "tavasz"
     ],
-    "image": "madar-1770108951533.jpg",
+    "image": "event_default.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
@@ -724,7 +724,7 @@
     "tags": [
       "mulatság"
     ],
-    "image": "hagyomany-1768894148547.jpg",
+    "image": "hagyomany.jpg",
     "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
     "highlight": false,
     "highlightLabel": ""
