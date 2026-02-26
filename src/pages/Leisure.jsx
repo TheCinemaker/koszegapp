@@ -28,7 +28,13 @@ export default function Leisure() {
 
   const types = useMemo(() => {
     const base = Array.from(new Set(list.map(item => item.category || 'Egyéb'))).filter(Boolean);
-    return ['Minden', 'Kedvenceim', ...base];
+    // Move alpannonia categories to the front if they exist
+    const sortedBase = base.sort((a, b) => {
+      if (a.toLowerCase().includes('alpannonia')) return -1;
+      if (b.toLowerCase().includes('alpannonia')) return 1;
+      return a.localeCompare(b, 'hu');
+    });
+    return ['Minden', 'Kedvenceim', ...sortedBase];
   }, [list]);
 
   const filteredList = useMemo(() => {
@@ -150,6 +156,17 @@ export default function Leisure() {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
+                    {/* Alpannonia Badge Index Overlay */}
+                    {item.category && item.category.toLowerCase().includes('alpannonia') && (
+                      <div className="absolute top-3 left-3 z-20">
+                        <img
+                          src={`/images/leisure/${item.category.toLowerCase().includes('hard') ? 'alpannonia-hard-index10.jpg' : 'alpannonia-light-index9.jpg'}`}
+                          alt="alpannonia index"
+                          className="w-10 h-10 rounded-full border border-white/40 shadow-lg object-cover"
+                        />
+                      </div>
+                    )}
+
                     <div className="absolute bottom-3 left-4 right-4 text-white">
                       <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider mb-1 opacity-90">
                         <FaHiking /> {item.category || t('defaultCategory')}
@@ -187,9 +204,12 @@ export default function Leisure() {
                       )}
                       <Link
                         to={`/leisure/${item.id}`}
-                        className="px-4 py-2 rounded-full bg-lime-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-lime-500/30 group-hover:bg-lime-500 transition-colors"
+                        className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-lg transition-colors ${item.external
+                          ? 'bg-amber-600 text-white shadow-amber-500/30 hover:bg-amber-500'
+                          : 'bg-lime-600 text-white shadow-lime-500/30 group-hover:bg-lime-500'
+                          }`}
                       >
-                        {t('details')}
+                        {item.external ? 'Külső oldal' : t('details')}
                       </Link>
                     </div>
                   </div>

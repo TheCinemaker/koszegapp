@@ -334,5 +334,293 @@
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=47.39206,16.53867",
     "moreInfoUrl": "https://koszeg.hu/hu/koszeg/tobbnyomon/kiralyvolgyi-tanosveny-48.html",
     "gpxUrl": null
+  },
+  {
+    "id": "light-1",
+    "category": "alpannonia® light",
+    "name": "1. Kőszegi esszencia",
+    "shortDescription": "Kb. 8 km, 2-3 óra. Könnyű körtúra Kőszeg természeti értékei mentén.",
+    "description": "Ember és természet kézen fogva: Kőszeg, a természeti értékekben gazdag, „zöld” kisváros, feledhetetlen helyszínekkel.\n\nÚtvonal: Kőszeg, Természetvédelmi Látogatóközpont (Aradi vértanúk parkja) - Kálvária templom - Csónakázó-tó – Gyöngyös part EGYMI – Piac, natúrparki faóriások tanösvény – Belváros, Diáksétány várfal - Látogatóközpont.",
+    "image": "Terkep_1._light_koertura (1).jpg",
+    "coords": {
+      "lat": 47.3842,
+      "lng": 16.5491
+    },
+    "lengthKm": 8,
+    "type": "hike"
+  },
+  {
+    "id": "light-2",
+    "category": "alpannonia® light",
+    "name": "2. Óriásplatán a tükörben (Peresznye)",
+    "shortDescription": "Kb. 5 km, 1,5 óra. Peresznye rejtett gyöngyszemei, tóval és óriás fákkal.",
+    "description": "Peresznye horvát natúrparki település egy rejtett gyöngyszem, tóval, natúrparki óriás fákkal (a natúrpark legnagyobb platánja és feketefenyője is itt lakik!), hangulatos horvát múzeummal.\n\nÚtvonal: Peresznye, tó park előtt - Peresznye Hunyadi u., Dózsa u., Radnóti u. - szántók Horvátzsidány felé – Szociális otthon – „hegyi kertek” Kiszsidány felé – tó park.",
+    "image": "Terkep_2._light_koertura.jpg",
+    "coords": {
+      "lat": 47.4125,
+      "lng": 16.6384
+    },
+    "lengthKm": 5,
+    "type": "hike"
+  },
+  {
+    "id": "light-3",
+    "category": "alpannonia® light",
+    "name": "3. Határokon át térben és időben... (Kőszeg - Rattersdorf)",
+    "shortDescription": "Kb. 15 km, 5 óra. Határtalan természet, vízélmény, erdő és források.",
+    "description": "Határtalan természet… vízélmény, erdő, forrás, elmélyülés… Felszabadító érzés úgy sétálni a természetben, mintha nem is léteznének országhatárok…\n\nÚtvonal: Kőszeg, Kálvária utcai túracsomópont - Andalgó – Rattersdorf (Ausztria) – egykori erdei határátkelő – erdei aszfaltos út - Hétforrás - Saint Germain kereszt (Ausztria) - Trianoni kereszt – Kálvária templom – Kálvária utca.",
+    "image": "Terkep_3._light_koertura.jpg",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5401
+    },
+    "lengthKm": 15,
+    "type": "hike"
+  },
+  {
+    "id": "light-4",
+    "category": "alpannonia® light",
+    "name": "4. Évmilliók nyomában… (Bozsok)",
+    "shortDescription": "Kb. 7 km, 2,5 óra. Vadregényes sziklák és barlangok Bozsok környékén.",
+    "description": "A bozsoki Széles-kő és a Kalapos-kövek környéke a Kőszegi-hegység legvadregényesebb része. A Széles-kő alá lesétálva érezzük a hatalmas sziklák és az évmilliók erejét.\n\nÚtvonal: Bozsok, Sibrik kastély - kéktúra, Malomporta mögött - Széles-kő - Kalapos-kövek - Holler barlang – Határmenti Vigadó étterem - aszfaltos út – kerékpár út - Bozsok.",
+    "image": "Terkep_4._light_koertura.jpg",
+    "coords": {
+      "lat": 47.3333,
+      "lng": 16.4833
+    },
+    "lengthKm": 7,
+    "type": "hike"
+  },
+  {
+    "id": "light-5",
+    "category": "alpannonia® light",
+    "name": "5. Forrásvidék… (Kiszsidány – Horvátzsidány)",
+    "shortDescription": "10-14 km, 3-4 óra. Tiszta források és vágtázó lovak a natúrparkban.",
+    "description": "Forrásvidék a természetben: a kiszsidányi forrás igazi natúrparki leg…: legegészségesebb vizű, legtisztább forrásunk. Forrásvidék a kultúrában: a horvátzsidányi Marton-szálláson a szabad lovak látványa a honfoglalás idejébe repít vissza.\n\nÚtvonal: Kiszsidány, forrás - Horvátzsidány közötti erdő – mező – Marton-szállás – Peruska Mária kápolna – csepregi erdő – kiszsidányi erdő – Kecske-forrás – Kiszsidány.",
+    "image": "Terkep_5._light_koertura.jpg",
+    "coords": {
+      "lat": 47.4167,
+      "lng": 16.6167
+    },
+    "lengthKm": 14,
+    "type": "hike"
+  },
+  {
+    "id": "light-6",
+    "category": "alpannonia® light",
+    "name": "6. Betyárok és lovagok (Csepreg)",
+    "shortDescription": "Kb. 6,5 km, 2-2,5 óra. Erdei tavak, betyárfa és finom csepregi borok.",
+    "description": "A csepregi erdők és tavak igazi natúrparki gyöngyszemek. Rejtett kincsek, mint az egykori Rumi ház, a lovagfenyő, a betyárfa és a Bene-tó vízélménye.\n\nÚtvonal: Csepreg, Bene-tó - Bene-tó körüli kertek – Betyár fa – kiszsidányi kereszteződés - erdei kunyhó – Rumi-ház – Hanga kapu – Bene-tó.",
+    "image": "Terkep_6._light_koertura.jpg",
+    "coords": {
+      "lat": 47.4,
+      "lng": 16.7
+    },
+    "lengthKm": 6.5,
+    "type": "hike"
+  },
+  {
+    "id": "light-7",
+    "category": "alpannonia® light",
+    "name": "7. Őzzé vált fiú… (Ólmod)",
+    "shortDescription": "Kb. 6 km, 2 óra. Csendes horvát zsákfalu, kulturális kincsek és az Őz-kút.",
+    "description": "Ólmod egy natúrparki, határmenti horvát zsákfalu, utánozhatatlan hangulattal. Kulturális kincsek a múzeumban és természetközeli értékek az Őz-kútnál.\n\nÚtvonal: Ólmod, helytörténeti gyűjtemény - Ólmod Fenyő u. Mária szobor - Belovich-kápolna – kőszegi Őz-kút – Ólmod volt határőrs – Ólmod.",
+    "image": "Terkep_7._light_koertura.jpg",
+    "coords": {
+      "lat": 47.4158,
+      "lng": 16.5914
+    },
+    "lengthKm": 6,
+    "type": "hike"
+  },
+  {
+    "id": "light-8",
+    "category": "alpannonia® light",
+    "name": "8. Évezredek útja… (Velem)",
+    "shortDescription": "Kb. 5 km, 2 óra. Harmónia és életigenlés a Szent Vid hegyen és forrásoknál.",
+    "description": "A velemi Szent Vid hegyre felkapaszkodva önkéntelenül is hatással van ránk az egykori emberek és a természet harmóniája, majd a forrásoknál megpihenve újabb lehetőséget kapunk az elmélyülésre.\n\nÚtvonal: Velem, Petőfi utca - Szent-Vid hegy, Szent Vid kápolna, kéktúra emlékmű - Gyertyán-forrás - Jávor-kút – Borha forrás - Terv út – erdei pihenő - Velem.",
+    "image": "Terkep_8._light_koertura.jpg",
+    "coords": {
+      "lat": 47.3461,
+      "lng": 16.4889
+    },
+    "lengthKm": 5,
+    "type": "hike"
+  },
+  {
+    "id": "light-9",
+    "category": "alpannonia® light",
+    "name": "9. Kalandos pápaszem…(Kőszegdoroszló - Lukácsháza - Gyöngyösfalu)",
+    "shortDescription": "Kb. 10,5 km, 4,5 óra. Vízélmény, kilátás és kalandpark az útvonal mentén.",
+    "description": "Kőszegdoroszló patakjának „vízélménye”, a lukácsházi szőlőhegy kemencéiben sült finomságok illata keveredik a gyöngyösfalui kalandpark izgalmaival.\n\nÚtvonal: Kőszegdoroszló faluház - kőszegdoroszlói erdő – Lukácsháza Csömötei-kilátó - Gyöngyösfalu 200 éves körtefa – Holdfényliget – Lukácsháza kilátó – aszfaltos út – lukácsházi erdő - Kőszegdoroszló.",
+    "image": "Terkep_9._light_koertura.jpg",
+    "coords": {
+      "lat": 47.3333,
+      "lng": 16.5833
+    },
+    "lengthKm": 10.5,
+    "type": "hike"
+  },
+  {
+    "id": "light-10",
+    "category": "alpannonia® light",
+    "name": "10. Elvarázsolt pincék… (Cák)",
+    "shortDescription": "Kb. 6,5 km, 2 óra. Természetesség, atlaszcédrus és elvarázsolt boronafalas pincék.",
+    "description": "A Gerebincs-forrás természetessége, a natúrparki védett atlaszcédrus, a boronafalas öreg pincék – elvarázsolt hangulatot adnak ajándékba az erre járónak.\n\nÚtvonal: Cák, játszótér - cáki erdő – Terv út - Gerebincs forrás – kőszegszerdahelyi atlaszcédrus – cáki műemlék pincesor - Cák.",
+    "image": "Terkep_10._light_koertura.jpg",
+    "coords": {
+      "lat": 47.35,
+      "lng": 16.5167
+    },
+    "lengthKm": 6.5,
+    "type": "hike"
+  },
+  {
+    "id": "light-11",
+    "category": "alpannonia® light",
+    "name": "11. Gesztenye… (Kőszegszerdahely - Velem)",
+    "shortDescription": "Kb. 7 km, 2,5 óra. Hatalmas gesztenyefák különleges hangulata a hegyoldalban.",
+    "description": "A velemi és kőszegszerdahelyi erdőben élő hatalmas gesztenyefák különleges hangulatot árasztanak, csak át kell adni magunkat az élménynek.\n\nÚtvonal: Kőszegszerdahely, templom - Kőszegszerdahely, Hegyi utca – Velem, Cáki utca – Velem, Hősök kapuja – Velem, Kút u. – velemi erdő piros jelzésen – Kőszegszerdahely, Zsáper-hegy – Kőszegszerdahely.",
+    "image": "Terkep_11._light_koertura.jpg",
+    "coords": {
+      "lat": 47.35,
+      "lng": 16.5
+    },
+    "lengthKm": 7,
+    "type": "hike"
+  },
+  {
+    "id": "light-12",
+    "category": "alpannonia® light",
+    "name": "12. Természet, művészet, bor, panoráma … (Kőszeg)",
+    "shortDescription": "Kb 3,5 km, 1,5 óra. Vadregényes szurdok, borterasz és határtalan panoráma.",
+    "description": "A városból csak néhány lépés a vadregényes szűk Ördögárok szurdok, majd kitágul a világ: Érezzük és élvezzük a natúrparki határtalan természetet a kilátópontokból.\n\nÚtvonal: Kőszeg, Kálvária utcai túracsomópont - Kálvária utca Hidegvölgy felé – Erdő utca – Ördögárok geológiai tanösvény – Szulejmán kilátó – Napostető borterasz – Trianoni kereszt – Kálvária templom - Koronaőrző bunker - Kálvária utca.",
+    "image": "Terkep_12._light_koertura.jpg",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5401
+    },
+    "lengthKm": 3.5,
+    "type": "hike"
+  },
+  {
+    "id": "hard-1",
+    "category": "alpannonia® hard",
+    "name": "1. alpannonia® hard - Kőszeg panorámakör",
+    "shortDescription": "Kb. 17 km. 10 pazar panoráma pont Kőszeg körül.",
+    "description": "Egy csokorba szedtük a városra pazar kilátást biztosító körülbelül 10 panoráma pontot a Kőszegi-hegység legszebb dűlőin keresztül.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 17,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-koszeg-panoramakoer/45862777/"
+  },
+  {
+    "id": "hard-2",
+    "category": "alpannonia® hard",
+    "name": "2. alpannonia® hard - Muflonok nyomában",
+    "shortDescription": "Kb. 29 km. Komoly túra a hegység Ausztria felé néző részén.",
+    "description": "A túra hossza és tematikája okán a komolyabb túrázók választása. Osztrák településeket érintve jutunk el a „Muflon-völgybe”, majd az Óház-kilátóhoz.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 29,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-muflonok-nyomaban/45862865/"
+  },
+  {
+    "id": "hard-3",
+    "category": "alpannonia® hard",
+    "name": "3. alpannonia® hard - Boldogasszony bora",
+    "shortDescription": "Kb. 14 km. Csepregi borospincék, horgásztavak és erdei betyárok.",
+    "description": "A túra során megismerkedünk a csepregi borokkal, a horgásztavak világával, az erdőben pedig boszorkányok és betyárok nyomait kutathatjuk.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 14,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-boldogasszony-bora/45874637/"
+  },
+  {
+    "id": "hard-4",
+    "category": "alpannonia® hard",
+    "name": "4. alpannonia® hard - Népek kohója",
+    "shortDescription": "Kb. 22 km. Kulturális utazás határmenti településeken át.",
+    "description": "Horvát, német, osztrák települések meglátogatása. Átéljük a szabad határátkelés élményét és a takaros falvak vendégszeretetét.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 22,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-nepek-kohoja/45874840/"
+  },
+  {
+    "id": "hard-5",
+    "category": "alpannonia® hard",
+    "name": "5. alpannonia® hard - Mezők, szántók, erdők",
+    "shortDescription": "Kb. 22 km. Kiadós túra Kőszeghegyalja mezőgazdasági területein.",
+    "description": "Zömében „napbarnítós”, kiadós túra. Pincék és gazdáik hívogatnak kóstolásra a Pogány-völgyben és a Csömöte-hegyen.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 22,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-mezok-szantok-erdok/45504805/"
+  },
+  {
+    "id": "hard-6",
+    "category": "alpannonia® hard",
+    "name": "6. alpannonia® hard - Hegymenet",
+    "shortDescription": "Kb. 12 km. Masszív szintemelkedés az Írottkő-kilátóig.",
+    "description": "Masszív igénybevétel: 500 m szintemelkedés 6 km alatt. Fáradozásainkért az Írottkő-kilátó (884m) pazar panorámája kárpótol.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 12,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-hegymenet/45875315/"
+  },
+  {
+    "id": "hard-7",
+    "category": "alpannonia® hard",
+    "name": "7. alpannonia® hard - Csúcs ez az érzés…",
+    "shortDescription": "Kb. 28 km. Bozsoktól az Írott-kőig, majd a rohonci tóig.",
+    "description": "Rejtélyes barlang, komoly mászás az Írott-kőig, majd lejtmenet Rohoncra a fürdőtóhoz és vissza Bozsokra.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 28,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-csucs-ez-az-erzes-/45875509/"
+  },
+  {
+    "id": "hard-8",
+    "category": "alpannonia® hard",
+    "name": "8. alpannonia® hard - Túra az elhagyott laktanyákhoz",
+    "shortDescription": "Kb. 27 km. 7 egykori katonai támaszpont és történelmi bunker.",
+    "description": "Komoly túra sok szintemelkedéssel. Érintjük a Keresztkúti őrsöt, Kendiget, Hétforrást és a Szálasi-bunkert is.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 27,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/alpokalja/alpannonia-hard-tura-az-elhagyott-laktanyakhoz/45875756/"
+  },
+  {
+    "id": "hard-9",
+    "category": "alpannonia® hard",
+    "name": "9. alpannonia® hard - Írottkő Natúrpark vándorlás",
+    "shortDescription": "Kb. 55 km. Embert próbáló, 10-13 órás vándorlás a Natúrparkban.",
+    "description": "Az igazán nagy kihívás: legalább 10-13 órás fárasztó túrázás az „hátizsákos apó” jelzést követve a Natúrpark falvain át.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 55,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/suedburgenland/alpannonia-hard-irottko-naturpark-vandorlas/45875992/"
+  },
+  {
+    "id": "hard-10",
+    "category": "alpannonia® hard",
+    "name": "10. alpannonia® hard - Szarvasűzés Mátyás királlyal",
+    "shortDescription": "Kb. 28 km. Városszalónaki vártól a hegyekbe és vissza.",
+    "description": "Kiadós túra nagy szintkülönbségekkel. A városszalónaki (Stadtschlaining) várból Mátyás királyunk szarvasai nyomába eredünk.\n\nFigyelem: Ez a túra külső oldalon nyílik meg!",
+    "image": "nagylightterkep.jpg",
+    "lengthKm": 28,
+    "type": "hike",
+    "external": true,
+    "moreInfoUrl": "https://www.outdooractive.com/hu/route/gyalogtura/suedburgenland/alpannonia-hard-szarvasuzes-matyas-kirallyal/45876605/"
   }
 ]

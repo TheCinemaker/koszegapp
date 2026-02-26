@@ -11,9 +11,11 @@ import {
   IoNavigateOutline,
   IoDownloadOutline,
   IoGlobeOutline,
-  IoStatsChartOutline
+  IoStatsChartOutline,
+  IoCloseOutline,
+  IoSearchOutline
 } from 'react-icons/io5';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import GhostImage from '../components/GhostImage';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 
@@ -23,6 +25,7 @@ export default function LeisureDetail() {
   const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showLightbox, setShowLightbox] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -59,7 +62,8 @@ export default function LeisureDetail() {
   }
 
   // Icon logic based on type
-  const getTypeIcon = (type) => {
+  const getTypeIcon = (type, category) => {
+    if (category && category.toLowerCase().includes('alpannonia')) return <IoWalkOutline />;
     switch (type) {
       case 'hike': return <IoWalkOutline />;
       case 'bike': return <IoBicycleOutline />;
@@ -68,7 +72,8 @@ export default function LeisureDetail() {
     }
   };
 
-  const getTypeName = (type) => {
+  const getTypeName = (type, category) => {
+    if (category) return category;
     switch (type) {
       case 'hike': return 'Túraútvonal';
       case 'park': return 'Park / Tanösvény';
@@ -85,7 +90,7 @@ export default function LeisureDetail() {
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       {/* --- HERO IMAGE SECTION --- */}
-      <div className="relative h-[65vh] w-full overflow-hidden">
+      <div className="relative h-[65vh] w-full overflow-hidden cursor-zoom-in" onClick={() => setShowLightbox(true)}>
         {item.image ? (
           <ParallaxImage
             src={`/images/leisure/${item.image}`}
@@ -99,10 +104,17 @@ export default function LeisureDetail() {
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 z-10" />
 
+        {/* Zoom Indicator */}
+        <div className="absolute top-6 right-6 z-20">
+          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-md border border-white/20 text-white">
+            <IoSearchOutline className="text-xl" />
+          </div>
+        </div>
+
         {/* --- NAVIGATION --- */}
         <div className="absolute top-6 left-6 z-50">
           <button
-            onClick={() => navigate('/leisure')}
+            onClick={(e) => { e.stopPropagation(); navigate('/leisure'); }}
             className="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/40 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group"
           >
             <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
@@ -111,14 +123,14 @@ export default function LeisureDetail() {
 
         {/* Hero Title (Parallaxed) */}
         <motion.div
-          className="absolute bottom-16 left-6 right-6 z-20"
+          className="absolute bottom-16 left-6 right-6 z-20 pointer-events-none"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex gap-2 mb-4">
-            <span className="px-4 py-1.5 rounded-full bg-teal-500/80 backdrop-blur-md text-white text-xs font-bold uppercase tracking-widest shadow-lg flex items-center gap-2">
-              {getTypeIcon(item.type)} {getTypeName(item.type)}
+            <span className={`px-4 py-1.5 rounded-full backdrop-blur-md text-white text-xs font-bold uppercase tracking-widest shadow-lg flex items-center gap-2 ${item.category?.toLowerCase().includes('hard') ? 'bg-amber-600/80' : 'bg-teal-500/80'}`}>
+              {getTypeIcon(item.type, item.category)} {getTypeName(item.type, item.category)}
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl tracking-tighter leading-none max-w-4xl">
@@ -126,6 +138,39 @@ export default function LeisureDetail() {
           </h1>
         </motion.div>
       </div>
+
+      {/* --- LIGHTBOX MODAL --- */}
+      <AnimatePresence>
+        {showLightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10"
+            onClick={() => setShowLightbox(false)}
+          >
+            <button
+              onClick={() => setShowLightbox(false)}
+              className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-2xl z-[110]"
+            >
+              <IoCloseOutline />
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={`/images/leisure/${item.image}`}
+                alt={item.name}
+                className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* --- CONTENT SHEET (GLASS CARD) --- */}
       <div className="relative -mt-10 px-4 z-20 max-w-7xl mx-auto">
@@ -198,9 +243,17 @@ export default function LeisureDetail() {
                         rel="noopener noreferrer"
                         className="bg-indigo-600 hover:bg-indigo-500 text-white p-4 rounded-2xl flex items-center justify-start gap-4 shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02]"
                       >
-                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><IoNavigateOutline className="text-xl" /></div>
-                        <span className="font-bold">Útvonaltervezés</span>
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${item.external ? 'bg-amber-400/20' : 'bg-white/20'}`}><IoNavigateOutline className="text-xl" /></div>
+                        <span className="font-bold">{item.external ? 'Túra megtekintése' : 'Útvonaltervezés'}</span>
                       </a>
+                    )}
+
+                    {item.external && (
+                      <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl">
+                        <p className="text-xs text-amber-800 dark:text-amber-200 font-medium">
+                          <strong>Figyelem:</strong> Ez a túra az OutdoorActive külső oldalon nyílik meg! Ott tölthető le a térkép és a GPX fájl is.
+                        </p>
+                      </div>
                     )}
 
                     {item.moreInfoUrl && (
