@@ -13,6 +13,7 @@ const EventDetail = lazyWithRetry(() => import('../pages/EventDetail'));
 const Gastronomy = lazyWithRetry(() => import('../pages/Gastronomy'));
 const RestaurantDetail = lazyWithRetry(() => import('../pages/RestaurantDetail'));
 const Hotels = lazyWithRetry(() => import('../pages/Hotels'));
+const Booking = lazyWithRetry(() => import('../pages/Booking'));
 const HotelDetail = lazyWithRetry(() => import('../pages/HotelDetail'));
 const Leisure = lazyWithRetry(() => import('../pages/Leisure'));
 const LeisureDetail = lazyWithRetry(() => import('../pages/LeisureDetail'));
@@ -109,6 +110,7 @@ export default function AnimatedRoutes({ appData }) {
 
           <Route path="/hotels" element={<PageWrapper><Hotels hotels={appData.hotels} loading={appData.loading} /></PageWrapper>} />
           <Route path="/hotels/:id" element={<PageWrapper><HotelDetail /></PageWrapper>} />
+          <Route path="/booking" element={<PageWrapper><Booking /></PageWrapper>} />
 
           <Route path="/leisure" element={<PageWrapper><Leisure leisure={appData.leisure} loading={appData.loading} /></PageWrapper>} />
           <Route path="/leisure/:id" element={<PageWrapper><LeisureDetail /></PageWrapper>} />

@@ -43,6 +43,10 @@
         "info": {
             "label": "Infó",
             "desc": "Hasznos tudás."
+        },
+        "booking": {
+            "label": "Booking",
+            "desc": "Szállásfoglalás."
         }
     },
     "comingSoon": "HAMAROSAN",

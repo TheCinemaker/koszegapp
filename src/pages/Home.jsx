@@ -27,11 +27,12 @@ export default function Home() {
     { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-2 row-span-1', delay: 0.05 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-1 row-span-1', delay: 0.1 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 row-span-1', delay: 0.15 },
-    { to: '/food', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 row-span-1', delay: 0.2 },
-    { to: '/tickets', label: t('sections.tickets.label'), desc: t('sections.tickets.desc'), icon: IoQrCode, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1', delay: 0.25, comingSoon: true },
+    { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 row-span-1', delay: 0.2 },
+    // { to: '/tickets', label: t('sections.tickets.label'), desc: t('sections.tickets.desc'), icon: IoQrCode, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1', delay: 0.25, comingSoon: true },
+    { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, gradient: 'from-blue-700 to-blue-900', span: 'col-span-1', delay: 0.25 },
     { to: '/hotels', label: t('sections.hotels.label'), desc: t('sections.hotels.desc'), icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1', delay: 0.3 },
     { to: '/weather', label: t('sections.weather.label'), desc: t('sections.weather.desc'), icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1', delay: 0.35 },
-    { to: '/game/intro', label: t('sections.game.label'), desc: t('sections.game.desc'), icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 row-span-1', delay: 0.4, comingSoon: true },
+    // { to: '/game/intro', label: t('sections.game.label'), desc: t('sections.game.desc'), icon: IoDiamondOutline, gradient: 'from-amber-500 to-yellow-700', span: 'col-span-2 row-span-1', delay: 0.4, comingSoon: true },
     { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, gradient: 'from-lime-500 to-green-700', span: 'col-span-1', delay: 0.45 },
     { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1', delay: 0.5 },
     { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-2 sm:col-span-1', delay: 0.55 },
@@ -112,24 +113,22 @@ export default function Home() {
                   </motion.p>
                 </div>
 
-                {/* Coming Soon Overlay (Centered) */}
+                {/* Coming Soon Overlay (Mysterious) */}
                 {sec.comingSoon && (
-                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px] rounded-[1.5rem]">
-                    <span className="text-lg font-black uppercase tracking-widest text-white drop-shadow-md transform -rotate-12 border-2 border-white/50 px-4 py-1 rounded-xl">
-                      {t('comingSoon')}
-                    </span>
+                  <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/10 dark:bg-black/40 backdrop-blur-[12px] transition-all duration-700 group-hover:backdrop-blur-[8px]">
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/50 animate-pulse" />
                   </div>
                 )}
 
-                {/* Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-200%] group-hover:animate-shine opacity-30 duration-1000" />
-
+                {/* Visual Lock for illegibility */}
+                {sec.comingSoon && (
+                  <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-50" />
+                )}
               </Link>
             </FadeUp>
           ))}
         </div>
       </div>
-
     </div>
   );
 }

@@ -1,0 +1,18 @@
+{
+    "title": "Szállásfoglalás",
+    "heroTitle": "Pihenj Kőszegen",
+    "heroSubtitle": "Találd meg a tökéletes szállást a Booking.com kínálatában, közvetlenül az appból.",
+    "labelDestination": "Úticél",
+    "labelCheckIn": "Érkezés",
+    "labelCheckOut": "Távozás",
+    "labelGuests": "Vendégek",
+    "personCount": "fő",
+    "btnSearch": "Szállások keresése",
+    "disclaimer": "A foglalás a Booking.com biztonságos felületén történik.",
+    "errorInvalidDates": "A távozás napja nem lehet korábban, mint az érkezésé.",
+    "redirecting": "Átirányítás a Booking.com oldalára...",
+    "perk1Title": "Ingyenes Lemondás",
+    "perk1Desc": "A legtöbb szálláshelynél rugalmasan módosíthatod a foglalásod.",
+    "perk2Title": "Hivatalos Partnerek",
+    "perk2Desc": "Közvetlen kapcsolat a város legjobb hoteljeivel és apartmanjaival."
+}

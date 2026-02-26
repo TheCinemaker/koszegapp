@@ -172,6 +172,13 @@ function MainAppContent() {
 
 
   useEffect(() => {
+    const handleDevModeChange = (e) => {
+      setDevMode(e.detail);
+    };
+    window.addEventListener('dev-mode-change', handleDevModeChange);
+    return () => window.removeEventListener('dev-mode-change', handleDevModeChange);
+  }, []);
+  useEffect(() => {
     // 1. Ellenőrizzük, hogy van-e bypass kulcs a localStorage-ban
     const isBypassed = localStorage.getItem('maintenance_bypass') === 'true';
 
@@ -342,21 +349,16 @@ function MainAppContent() {
                   <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
 
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-                    <img
-                      onClick={handleSecretTap}
-                      src="/images/koeszeg_logo_nobg.png"
-                      alt="KőszegAPP logo"
-                      className="w-8 h-8 sm:w-10 sm:h-10 hover:rotate-12 transition-transform duration-500 cursor-pointer drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]"
-                    />
                     <div
-                      onClick={() => navigate('/')}
-                      className="flex items-center gap-0.5 cursor-pointer whitespace-nowrap"
+                      onClick={handleSecretTap}
+                      className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-transform"
+                      style={{ fontFamily: "'Anton', sans-serif" }}
                     >
-                      <span className="text-base sm:text-xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
-                        Kőszeg
+                      <span className="text-xl sm:text-2xl font-normal text-slate-900 dark:text-white items-center tracking-wider uppercase text-readability-shadow">
+                        visit
                       </span>
-                      <span className="text-base sm:text-xl font-black bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent tracking-tight">
-                        APP
+                      <span className="text-xl sm:text-2xl font-normal bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent tracking-normal uppercase text-readability-shadow">
+                        Kőszeg
                       </span>
                     </div>
                   </div>
@@ -497,9 +499,13 @@ function MainAppContent() {
             </>
           )}
 
-          {/* AI Assistant (OFF) */}
-          {/* <AISmartLayer /> */}
-          {/* <AIAssistant /> */}
+          {/* AI Assistant (DEV ONLY) */}
+          {devMode && (
+            <>
+              {/* <AISmartLayer /> */}
+              <AIAssistant />
+            </>
+          )}
           {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>
       </div>

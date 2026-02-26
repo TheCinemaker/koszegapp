@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { fetchEventById } from '../api';
 import { format, parseISO, isValid, addHours } from 'date-fns';
 import { hu } from 'date-fns/locale';
@@ -11,21 +12,25 @@ import {
   IoMapOutline,
   IoCalendarOutline,
   IoTicketOutline,
-  IoShareSocialOutline
+  IoShareSocialOutline,
+  IoCloseOutline,
+  IoBedOutline
 } from 'react-icons/io5';
 import { FaApple } from "react-icons/fa";
 import { Toaster, toast } from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import GhostImage from '../components/GhostImage';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
+import { shouldShowBookingBubble, getBookingDatesFromEvent } from '../utils/bookingUtils';
+import { LocationContext } from '../contexts/LocationContext';
 
 // Zoomable Image Modal Component
 function ImageModal({ src, onClose }) {
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [dragStart, setDragStart] = useState({ x: e.clientX - position.x, y: e.clientY - position.y });
 
   const handleWheel = (e) => {
     e.preventDefault();
@@ -139,10 +144,13 @@ function parseDateRange(evt) {
 export default function EventDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { location, requestLocation } = useContext(LocationContext);
+  const { t } = useTranslation('booking');
   const [evt, setEvt] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showBubble, setShowBubble] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -154,6 +162,37 @@ export default function EventDetail() {
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
   }, [id]);
+
+  useEffect(() => {
+    if (!location) {
+      requestLocation();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (evt && location) {
+      const show = shouldShowBookingBubble(location.lat, location.lng, evt);
+      if (show) {
+        // Delay bubble for better UX
+        const timer = setTimeout(() => setShowBubble(true), 1500);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [evt, location]);
+
+  const handleDismissBubble = (e) => {
+    e.stopPropagation();
+    setShowBubble(false);
+    if (evt) {
+      localStorage.setItem(`booking_bubble_dismissed_${evt.id}`, 'true');
+    }
+  };
+
+  const handleBookingClick = () => {
+    if (!evt) return;
+    const { checkin, checkout } = getBookingDatesFromEvent(evt.date);
+    navigate(`/booking?checkin=${checkin}&checkout=${checkout}`);
+  };
 
   const handleGeneratePass = async () => {
     if (!evt) return;
@@ -415,7 +454,7 @@ export default function EventDetail() {
                   />
                   <div className="absolute bottom-6 left-6 bg-white/90 dark:bg-black/80 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20 shadow-lg">
                     <span className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                      <IoMapOutline /> Helyszín
+                      Helyszín
                     </span>
                   </div>
                 </div>
@@ -426,6 +465,48 @@ export default function EventDetail() {
         </FadeUp>
       </div>
 
+      {/* --- SMART BOOKING BUBBLE --- */}
+      <AnimatePresence>
+        {showBubble && (
+          <motion.div
+            initial={{ opacity: 0, y: 100, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 100, scale: 0.9 }}
+            className="fixed bottom-24 left-4 right-4 z-[100] sm:left-auto sm:right-6 sm:w-80"
+          >
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl border border-white dark:border-white/10 p-5 rounded-[2rem] shadow-2xl flex items-center gap-4 relative overflow-hidden group">
+              {/* Background Glow */}
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/10 blur-2xl rounded-full group-hover:bg-blue-500/20 transition-colors" />
+
+              <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30">
+                <IoBedOutline className="text-2xl text-white" />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <h4 className="text-sm font-black text-gray-900 dark:text-white leading-tight mb-0.5">
+                  {t('bubbleTitle')}
+                </h4>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-tight">
+                  {t('bubbleSubtitle')}
+                </p>
+                <button
+                  onClick={handleBookingClick}
+                  className="mt-2 text-xs font-black text-blue-600 dark:text-blue-400 flex items-center gap-1 hover:gap-2 transition-all"
+                >
+                  {t('bubbleBtn')} <span>→</span>
+                </button>
+              </div>
+
+              <button
+                onClick={handleDismissBubble}
+                className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 dark:bg-white/5 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors"
+              >
+                <IoCloseOutline className="text-lg" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

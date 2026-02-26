@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Footer() {
@@ -22,7 +22,27 @@ export default function Footer() {
                 <p className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-400 flex items-center justify-center gap-2">
                     <span>Design: Hidalmasi Erik</span>
                     <span className="opacity-50">•</span>
-                    <span className="opacity-70">✨ with AI</span>
+                    <span
+                        className="opacity-70 cursor-pointer select-none active:opacity-100 transition-opacity"
+                        onClick={() => {
+                            const now = Date.now();
+                            if (!window._aiClickCount) window._aiClickCount = 0;
+                            if (now - (window._aiLastClick || 0) > 1000) window._aiClickCount = 0;
+
+                            window._aiClickCount++;
+                            window._aiLastClick = now;
+
+                            if (window._aiClickCount === 3) {
+                                const current = localStorage.getItem('dev_mode') === 'true';
+                                const next = !current;
+                                localStorage.setItem('dev_mode', next);
+                                window.dispatchEvent(new CustomEvent('dev-mode-change', { detail: next }));
+                                window._aiClickCount = 0;
+                            }
+                        }}
+                    >
+                        ✨ with AI
+                    </span>
                     <span className="opacity-50">•</span>
                     <Link to="/adatvedelem" className="opacity-50 hover:opacity-100 transition-opacity hover:text-indigo-500">Adatvédelem</Link>
                     <span className="opacity-50">•</span>

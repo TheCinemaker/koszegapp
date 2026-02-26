@@ -91,21 +91,21 @@ export default function SearchBar() { // Refreshed
           onFocus={() => { if (q.trim().length > 1) setShowResults(true); }}
           placeholder={t('search.placeholder')}
           className="flex-1 h-9 px-4 rounded-xl
-                     bg-white/80 dark:bg-gray-800/80
+                     bg-white/90 dark:bg-gray-800/90
                      backdrop-blur-md
-                     border border-white/20 dark:border-gray-700/50
+                     border border-slate-300 dark:border-slate-600/50
                      text-sm text-gray-900 dark:text-gray-100
                      placeholder-gray-500 dark:placeholder-gray-400
                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30
                      transition-all duration-300
-                     hover:bg-white/90 dark:hover:bg-gray-800/90"
+                     shadow-sm"
         />
         <button
           type="submit"
           className="w-9 h-9 rounded-xl flex items-center justify-center
-                     bg-gradient-to-br from-indigo-500 to-purple-600
-                     text-white shadow-lg
-                     hover:from-indigo-600 hover:to-purple-700
+                     bg-gradient-to-br from-indigo-600 to-purple-800
+                     text-white shadow-lg border border-indigo-500/20
+                     hover:from-indigo-700 hover:to-purple-900
                      transition-all duration-300
                      hover:scale-105 active:scale-95
                      focus:outline-none focus:ring-2 focus:ring-indigo-500/50"

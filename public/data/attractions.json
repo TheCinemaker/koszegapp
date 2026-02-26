@@ -3,17 +3,19 @@
     "id": "attraction-1",
     "name": "Jurisics‑vár",
     "category": "Történelem & építészet",
-    "description": "A város szíve, későgótikus és korareneszánsz folyosóival a hazai várépítészet egyik ékköve.",
-    "details": "A 13. századi alapokkal rendelkező Jurisics-vár a 16. században nyerte el reneszánsz formáját, és a hős várkapitány, Jurisics Miklós nevét viseli. A várban ma a Jurisics Miklós Múzeum kiállításai láthatók, amelyek az 1532-es ostromnak, a város és a vár történetének állítanak emléket. Udvara a nyári Kőszegi Várszínház szabadtéri előadásainak helyszíne, tornyából pedig páratlan panoráma nyílik a belvárosra.",
+    "description": "Kőszeg ikonikus jelképe, ahol a történelem megelevenedik a gótikus falak között.",
+    "details": "A 13. századi alapokon nyugvó Jurisics-vár a magyar történelem egyik legdicsőbb helyszíne. Itt állította meg Jurisics Miklós maroknyi seregével a hatalmas török haderőt 1532-ben. A vár ma interaktív múzeumnak ad otthont, ahol bepillantást nyerhetünk a lovagkor mindennapjaiba, az ostrom részleteibe, és felkapaszkodhatunk a toronyba a lélegzetelállító városi panorámáért. Nyaranta a várszínház ad különleges hangulatot az udvarnak.",
     "tags": [
       "vár",
-      "erőd",
+      "történelem",
+      "páncélterem",
       "Jurisics Miklós",
-      "reneszánsz",
       "múzeum",
-      "kiállítás",
+      "kilátó",
       "panoráma",
-      "várszínház"
+      "várszínház",
+      "családi",
+      "interaktív"
     ],
     "coordinates": {
       "lat": 47.389692,
@@ -428,14 +430,17 @@
     "id": "attraction-24",
     "name": "Cáki Pincesor",
     "category": "Természet & néprajz",
-    "description": "Egyedülálló népi műemlékegyüttes a Kőszeg melletti Cák községben.",
-    "details": "A Kőszegi-hegység oldalában, egy gesztenyeligetben megbúvó, 18-19. századi zsúpfedeles, talpgerendás, boronafalú pincék a környék bor- és gyümölcstermesztésének állítanak emléket. Páratlan hangulatú, kihagyhatatlan látnivaló.",
+    "description": "Időutazás a múltba: zsúpfedeles pincék és szelídgesztenyések romantikus találkozása.",
+    "details": "A Kőszeg melletti Cák határában sorakozó pincesor Magyarország egyik legkülönlegesebb népi műemléke. A 18-19. századi, kőből és fából épült, zsúppal fedett kisméretű pincék ma is eredeti formájukban őrzik a környék bortermelő múltját. A hatalmas, évszázados szelídgesztenyefák árnyékában tett séta olyan, mintha egy skanzenbe csöppennénk, ahol megállt az idő.",
     "tags": [
       "pince",
       "néprajz",
       "műemlék",
       "Cák",
-      "kirándulás"
+      "gesztenye",
+      "romantikus",
+      "kirándulás",
+      "fotópont"
     ],
     "coordinates": {
       "lat": 47.3556863,

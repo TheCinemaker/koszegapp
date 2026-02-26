@@ -1,0 +1,18 @@
+{
+    "title": "Unterkunft buchen",
+    "heroTitle": "Übernachten in Kőszeg",
+    "heroSubtitle": "Finden Sie den perfekten Aufenthalt auf Booking.com, direkt aus der App.",
+    "labelDestination": "Reiseziel",
+    "labelCheckIn": "Ankunft",
+    "labelCheckOut": "Abreise",
+    "labelGuests": "Gäste",
+    "personCount": "Person(en)",
+    "btnSearch": "Unterkünfte suchen",
+    "disclaimer": "Die Buchung erfolgt auf der sicheren Plattform von Booking.com.",
+    "errorInvalidDates": "Das Abreisedatum darf nemals vor dem Ankunftsdatum liegen.",
+    "redirecting": "Booking.com wird geöffnet...",
+    "perk1Title": "Kostenlose Stornierung",
+    "perk1Desc": "Flexible Änderungen für die meisten Unterkünfte.",
+    "perk2Title": "Offizielle Partner",
+    "perk2Desc": "Direkte Verbindung zu den besten Hotels und Apartments der Stadt."
+}

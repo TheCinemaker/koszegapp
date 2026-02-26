@@ -2,14 +2,7 @@ import { triggerHaptic } from '../utils/haptics'; // Import utility
 import { useTranslation } from 'react-i18next'; // Hook
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import {
-  IoHomeOutline, IoCalendarOutline, IoRestaurantOutline, IoBedOutline,
-  IoBicycleOutline, IoCarOutline, IoMapOutline, IoCloudyNightOutline,
-  IoInformationCircleOutline, IoLocationOutline, IoPersonCircleOutline,
-  IoKeyOutline, IoHome, IoCalendar, IoRestaurant, IoBed, IoBicycle,
-  IoCar, IoMap, IoCloudyNight, IoInformationCircle, IoLocation,
-  IoPersonCircle, IoKey
-} from 'react-icons/io5';
+import { IoHomeOutline, IoCalendarOutline, IoRestaurantOutline, IoBedOutline, IoBicycleOutline, IoCarOutline, IoMapOutline, IoCloudyNightOutline, IoInformationCircleOutline, IoLocationOutline, IoPersonCircleOutline, IoKeyOutline, IoHome, IoCalendar, IoRestaurant, IoBed, IoBicycle, IoCar, IoMap, IoCloudyNight, IoInformationCircle, IoLocation, IoPersonCircle, IoKey, IoSearch, IoSearchOutline } from 'react-icons/io5';
 
 export default function FloatingNavbar() {
   const { t } = useTranslation(); // Hook
@@ -19,6 +12,7 @@ export default function FloatingNavbar() {
     { to: "/events", icon: IoCalendarOutline, activeIcon: IoCalendar, label: t('nav.events') },
     { to: "/gastronomy", icon: IoRestaurantOutline, activeIcon: IoRestaurant, label: t('nav.gastronomy') },
     { to: "/hotels", icon: IoBedOutline, activeIcon: IoBed, label: t('nav.hotels') },
+    { to: "/booking", icon: IoSearchOutline, activeIcon: IoSearch, label: t('nav.booking') },
     { to: "/leisure", icon: IoBicycleOutline, activeIcon: IoBicycle, label: t('nav.leisure') },
     { to: "/parking", icon: IoCarOutline, activeIcon: IoCar, label: t('nav.parking') },
     { to: "/live-map", icon: IoMapOutline, activeIcon: IoMap, label: t('nav.map') },

@@ -15,6 +15,7 @@ import huLeisure from './locales/hu/leisure.json';
 import huParking from './locales/hu/parking.json';
 import huAuth from './locales/hu/auth.json';
 import huPrivacy from './locales/hu/privacy.json';
+import huBooking from './locales/hu/booking.json';
 
 // EN
 import enCommon from './locales/en/common.json';
@@ -30,6 +31,7 @@ import enLeisure from './locales/en/leisure.json';
 import enParking from './locales/en/parking.json';
 import enAuth from './locales/en/auth.json';
 import enPrivacy from './locales/en/privacy.json';
+import enBooking from './locales/en/booking.json';
 
 // DE
 import deCommon from './locales/de/common.json';
@@ -45,6 +47,7 @@ import deLeisure from './locales/de/leisure.json';
 import deParking from './locales/de/parking.json';
 import deAuth from './locales/de/auth.json';
 import dePrivacy from './locales/de/privacy.json';
+import deBooking from './locales/de/booking.json';
 
 const resources = {
   hu: {
@@ -60,7 +63,8 @@ const resources = {
     leisure: huLeisure,
     parking: huParking,
     auth: huAuth,
-    privacy: huPrivacy
+    privacy: huPrivacy,
+    booking: huBooking
   },
   en: {
     common: enCommon,
@@ -75,7 +79,8 @@ const resources = {
     leisure: enLeisure,
     parking: enParking,
     auth: enAuth,
-    privacy: enPrivacy
+    privacy: enPrivacy,
+    booking: enBooking
   },
   de: {
     common: deCommon,
@@ -90,7 +95,8 @@ const resources = {
     leisure: deLeisure,
     parking: deParking,
     auth: deAuth,
-    privacy: dePrivacy
+    privacy: dePrivacy,
+    booking: deBooking
   }
 };
 
