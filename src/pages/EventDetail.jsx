@@ -397,31 +397,50 @@ export default function EventDetail() {
 
               {/* RIGHT COLUMN: Sidebar Actions */}
               <div className="lg:col-span-4 space-y-6">
-                {/* Actions Section - Redesigned to match Events.jsx */}
+                {/* Actions Section - Refined 3-column layout */}
                 <FadeUp delay={0.1}>
                   <div className="space-y-4">
-                    {/* Top Row: Wallet & Calendar */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* Primary Actions: Wallet, Calendar, Share */}
+                    <div className="grid grid-cols-3 gap-3">
                       <button
                         onClick={handleGeneratePass}
-                        className="h-14 flex items-center justify-center rounded-2xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10"
-                        title="Hozzáadás Apple Walthez"
+                        className="h-14 flex items-center justify-center rounded-2xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-2"
+                        title="Add to Apple Wallet"
                       >
                         <img
                           src="/images/apple_badges/addtoapplewallet.png"
                           alt="Add to Apple Wallet"
-                          className="h-8 w-auto dark:invert"
+                          className="h-8 w-auto min-w-0" // Removed dark:invert as the badge should stay original black usually, but user might prefer it. For now keeping original for compliance.
                         />
                       </button>
 
                       <a
                         href={`data:text/calendar;charset=utf8,${encodeURIComponent(evt ? toICS(evt, s, e) : '')}`}
                         download={`${evt?.name.replace(/\s+/g, '_')}.ics`}
-                        className="h-14 flex items-center justify-center gap-3 rounded-2xl bg-transparent text-gray-900 dark:text-white font-bold text-xs uppercase tracking-wider hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
+                        className="h-14 flex items-center justify-center rounded-2xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
+                        title="Esemény naptárhoz adása"
                       >
-                        <IoCalendarClearOutline className="text-blue-500 text-xl" />
-                        Naptár
+                        <IoCalendarClearOutline className="text-blue-500 text-2xl" />
                       </a>
+
+                      <button
+                        onClick={() => {
+                          if (navigator.share) {
+                            navigator.share({
+                              title: evt.name,
+                              text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
+                              url: window.location.href,
+                            }).catch(console.error);
+                          } else {
+                            navigator.clipboard.writeText(window.location.href);
+                            toast.success('Link másolva!');
+                          }
+                        }}
+                        className="h-14 flex items-center justify-center rounded-2xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
+                        title="Megosztás"
+                      >
+                        <IoShareSocialOutline className="text-purple-500 text-2xl" />
+                      </button>
                     </div>
 
                     {/* Booking Button - Large CTA if far away */}
@@ -437,42 +456,20 @@ export default function EventDetail() {
                       </motion.button>
                     )}
 
-                    {/* Secondary Actions */}
-                    <div className="grid grid-cols-2 gap-3">
-                      {evt.link && (
-                        <motion.a
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          href={evt.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="h-12 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-transparent dark:border-white/5"
-                        >
-                          <IoGlobeOutline className="text-sm text-purple-500" />
-                          Weboldal
-                        </motion.a>
-                      )}
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => {
-                          if (navigator.share) {
-                            navigator.share({
-                              title: evt.name,
-                              text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
-                              url: window.location.href,
-                            }).catch(console.error);
-                          } else {
-                            navigator.clipboard.writeText(window.location.href);
-                            toast.success('Link másolva!');
-                          }
-                        }}
-                        className="h-12 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-transparent dark:border-white/5"
+                    {/* Secondary Actions: Website */}
+                    {evt.link && (
+                      <motion.a
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        href={evt.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="h-12 w-full bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-transparent dark:border-white/5"
                       >
-                        <IoShareSocialOutline className="text-sm text-purple-500" />
-                        Megosztás
-                      </motion.button>
-                    </div>
+                        <IoGlobeOutline className="text-sm text-purple-500" />
+                        Hivatalos weboldal megnyitása
+                      </motion.a>
+                    )}
                   </div>
                 </FadeUp>
               </div>
