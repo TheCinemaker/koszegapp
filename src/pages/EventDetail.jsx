@@ -142,6 +142,19 @@ function parseDateRange(evt) {
   return { s: null, e: null };
 }
 
+function toICS(evt, s, e) {
+  if (!s || !e) return '';
+  const dt = (d) => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  return [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+    `SUMMARY:${evt.name}`,
+    `DTSTART:${dt(s)}`, `DTEND:${dt(e)}`,
+    `LOCATION:${evt.location || ''}`,
+    `DESCRIPTION:${(evt.description || '').replace(/\r?\n/g, ' ')}`,
+    'END:VEVENT', 'END:VCALENDAR'
+  ].join('\n');
+}
+
 export default function EventDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -303,7 +316,7 @@ export default function EventDetail() {
         <div className="absolute top-6 left-6 z-50 pointer-events-none">
           <button
             onClick={() => navigate('/events')}
-            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/40 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group pointer-events-auto"
+            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 text-gray-900 dark:text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group pointer-events-auto"
           >
             <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
           </button>
@@ -318,11 +331,11 @@ export default function EventDetail() {
         >
           <div className="flex gap-4 items-end mb-6">
             {/* Giant Calendar Date */}
-            <div className="shrink-0 w-24 h-24 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 overflow-hidden flex flex-col text-center shadow-2xl">
+            <div className="shrink-0 w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-3xl border border-white/30 dark:border-white/20 overflow-hidden flex flex-col text-center shadow-2xl">
               <div className="bg-red-500 text-white text-xs font-bold uppercase py-1.5 tracking-widest">
                 {monthName}
               </div>
-              <div className="flex-1 flex items-center justify-center text-4xl font-black text-white">
+              <div className="flex-1 flex items-center justify-center text-4xl font-black text-gray-900 dark:text-white">
                 {dayNumber}
               </div>
             </div>
@@ -357,18 +370,19 @@ export default function EventDetail() {
 
               {/* LEFT COLUMN: Main Info */}
               <div className="lg:col-span-8 space-y-8">
-                {/* Info Pills */}
-                <div className="flex flex-wrap gap-4">
-                  {timeText && (
-                    <div className="px-5 py-3 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center gap-3 text-purple-700 dark:text-purple-300">
-                      <IoTimeOutline className="text-xl" />
-                      <span className="font-bold text-lg">{timeText}</span>
+                {/* Info Bar (Merged Location & Time) */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-gray-500 dark:text-gray-400">
+                  {evt.location && (
+                    <div className="flex items-center gap-2">
+                      <IoLocationOutline className="text-blue-500 text-xl" />
+                      <span className="font-bold text-lg">{evt.location}</span>
                     </div>
                   )}
-                  {evt.location && (
-                    <div className="px-5 py-3 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                      <IoLocationOutline className="text-xl" />
-                      <span className="font-medium text-lg truncate max-w-[200px] md:max-w-none">{evt.location}</span>
+                  {(evt.location && timeText) && <span className="text-gray-300 dark:text-gray-700">•</span>}
+                  {timeText && (
+                    <div className="flex items-center gap-2">
+                      <IoTimeOutline className="text-blue-500 text-xl" />
+                      <span className="font-bold text-lg">{timeText}</span>
                     </div>
                   )}
                 </div>
@@ -383,82 +397,81 @@ export default function EventDetail() {
 
               {/* RIGHT COLUMN: Sidebar Actions */}
               <div className="lg:col-span-4 space-y-6">
-                {/* Action Card */}
+                {/* Actions Section - Redesigned to match Events.jsx */}
                 <FadeUp delay={0.1}>
-                  <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-[2rem] border border-gray-200 dark:border-white/10 relative overflow-hidden group">
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500">
-                          <IoTicketOutline className="text-xl" />
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-tight">Részt veszel?</h3>
-                          <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Ne felejtsd el később!</p>
-                        </div>
-                      </div>
+                  <div className="space-y-4">
+                    {/* Top Row: Wallet & Calendar */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <button
+                        onClick={handleGeneratePass}
+                        className="h-14 flex items-center justify-center rounded-2xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10"
+                        title="Hozzáadás Apple Walthez"
+                      >
+                        <img
+                          src="/images/apple_badges/addtoapplewallet.png"
+                          alt="Add to Apple Wallet"
+                          className="h-8 w-auto dark:invert"
+                        />
+                      </button>
 
-                      <div className="grid grid-cols-1 gap-2.5">
-                        {/* Apple Wallet Button (Keep original) */}
-                        <button
-                          onClick={handleGeneratePass}
-                          className="w-full flex items-center justify-center hover:scale-[1.02] active:scale-95 transition-all outline-none"
+                      <a
+                        href={`data:text/calendar;charset=utf8,${encodeURIComponent(evt ? toICS(evt, s, e) : '')}`}
+                        download={`${evt?.name.replace(/\s+/g, '_')}.ics`}
+                        className="h-14 flex items-center justify-center gap-3 rounded-2xl bg-transparent text-gray-900 dark:text-white font-bold text-xs uppercase tracking-wider hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
+                      >
+                        <IoCalendarClearOutline className="text-blue-500 text-xl" />
+                        Naptár
+                      </a>
+                    </div>
+
+                    {/* Booking Button - Large CTA if far away */}
+                    {location && (getDistanceKm(location.lat, location.lng, 47.389, 16.540) > 100) && (
+                      <motion.button
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        onClick={handleBookingClick}
+                        className="w-full py-4 bg-[#007AFF] text-white rounded-2xl font-black text-sm flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                      >
+                        <IoBedOutline className="text-xl" />
+                        FOGLALÁS A BOOKING-ON
+                      </motion.button>
+                    )}
+
+                    {/* Secondary Actions */}
+                    <div className="grid grid-cols-2 gap-3">
+                      {evt.link && (
+                        <motion.a
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          href={evt.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="h-12 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-transparent dark:border-white/5"
                         >
-                          <img
-                            src="/images/apple_badges/addtoapplewallet.png"
-                            alt="Add to Apple Wallet"
-                            className="h-11 w-auto"
-                          />
-                        </button>
-
-                        {/* Booking Button - Only if > 100km away */}
-                        {location && (getDistanceKm(location.lat, location.lng, 47.389, 16.540) > 100) && (
-                          <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={handleBookingClick}
-                            className="w-full h-11 bg-blue-600 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20"
-                          >
-                            <IoBedOutline className="text-base" />
-                            Szállás foglalása
-                          </motion.button>
-                        )}
-
-                        <div className="grid grid-cols-2 gap-2.5">
-                          {evt.link && (
-                            <motion.a
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              href={evt.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="h-11 bg-white dark:bg-white/10 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-gray-200 dark:border-white/5"
-                            >
-                              <IoGlobeOutline className="text-sm" />
-                              Weboldal
-                            </motion.a>
-                          )}
-                          <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => {
-                              if (navigator.share) {
-                                navigator.share({
-                                  title: evt.name,
-                                  text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
-                                  url: window.location.href,
-                                }).catch(console.error);
-                              } else {
-                                navigator.clipboard.writeText(window.location.href);
-                                toast.success('Link másolva!');
-                              }
-                            }}
-                            className="h-11 bg-white dark:bg-white/10 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-gray-200 dark:border-white/5"
-                          >
-                            <IoShareSocialOutline className="text-sm" />
-                            Megosztás
-                          </motion.button>
-                        </div>
-                      </div>
+                          <IoGlobeOutline className="text-sm text-purple-500" />
+                          Weboldal
+                        </motion.a>
+                      )}
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => {
+                          if (navigator.share) {
+                            navigator.share({
+                              title: evt.name,
+                              text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
+                              url: window.location.href,
+                            }).catch(console.error);
+                          } else {
+                            navigator.clipboard.writeText(window.location.href);
+                            toast.success('Link másolva!');
+                          }
+                        }}
+                        className="h-12 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-xl font-bold text-[10px] flex items-center justify-center gap-2 border border-transparent dark:border-white/5"
+                      >
+                        <IoShareSocialOutline className="text-sm text-purple-500" />
+                        Megosztás
+                      </motion.button>
                     </div>
                   </div>
                 </FadeUp>
