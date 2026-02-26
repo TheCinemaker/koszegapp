@@ -207,6 +207,18 @@ export default function LeisureDetail() {
                   </p>
                 </div>
 
+                {item.category?.toLowerCase().includes('alpannonia') && (
+                  <div className="mt-8 p-6 bg-teal-50 dark:bg-teal-900/20 border-2 border-dashed border-teal-200 dark:border-teal-800 rounded-[2rem] flex flex-col items-center text-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-600 dark:text-teal-400">
+                      <IoSearchOutline className="text-2xl animate-pulse" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-teal-800 dark:text-teal-200">Interaktív Térkép</h4>
+                      <p className="text-sm text-teal-600 dark:text-teal-400">A fenti képre kattintva megnyílik a részletes túratérkép!</p>
+                    </div>
+                  </div>
+                )}
+
               </div>
 
               {/* RIGHT COLUMN: Sidebar Stats & Actions */}
@@ -285,8 +297,8 @@ export default function LeisureDetail() {
               </div>
             </div>
 
-            {/* Map Section */}
-            {item.coords && (
+            {/* Map Section - Hidden for Alpannonia because they have their own image maps */}
+            {item.coords && !item.category?.toLowerCase().includes('alpannonia') && (
               <FadeUp delay={0.4} className="mt-16">
                 <div className="overflow-hidden rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-xl relative group h-96">
                   <iframe
