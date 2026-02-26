@@ -1,381 +1,22 @@
 [
   {
-    "id": "event-2026-012",
-    "name": "Gyógy Bál",
-    "date": "2026-01-31",
-    "end_date": "2026-01-31",
-    "time": "19:00",
-    "location": "Dr. Nagy László EGYMI díszterme",
+    "id": "new_1772109600001",
+    "name": "Hagyományos Farsangi Túra",
+    "date": "2026-02-28",
+    "time": "08:20",
+    "location": "Kőszeg Vasútállomás",
     "coords": {
-      "lat": 47.388133,
-      "lng": 16.542176
+      "lat": 47.3842,
+      "lng": 16.5491
     },
-    "description": "Egészségügyi és szociális dolgozók bálja (zártkörű/meghívásos jellegű lehet, érdeklődjön a szervezőknél).",
+    "description": "Idén is lesz Farsangi túra! Találkozó 8:20-kor a kőszegi vasútállomáson, indulás a 8:32-es vonattal. Útvonal: Kőszegfalva - Abért-tó - Temető - Szarvas-forrás - Auguszt Imre emlékkő - Őz-kút - Kőszeg. Táv: 10 km. Várható érkezés: 14:30. A túrát Németh Lászlóné vezeti, jelentkezni a +36 70 368 5084 telefonszámon lehet. A részvétel ingyenes!",
     "tags": [
-      "bál",
-      "közösség"
-    ],
-    "image": "balkep_default.jpg"
-  },
-  {
-    "id": "new_1768216786123",
-    "name": "🎭🎶 JELMEZES FÚVÓS FARSANG – 90’s HANGULATBAN! 🎶🎭",
-    "date": "2026-01-31",
-    "time": "19:00",
-    "location": "Béri Balog Ádám Általános Iskola",
-    "coords": {
-      "lat": 47.38175741140032,
-      "lng": 16.54607231546597
-    },
-    "description": "🎭🎶 JELMEZES FÚVÓS FARSANG – 90’s HANGULATBAN! 🎶🎭\nKészen álltok egy igazi farsangi bulira?\n2026. január 31-én a Béri Balog Ádám Általános Iskolában fergeteges hangulat, jelmezek és nosztalgikus 90-es évek várnak rátok!\n🎧🎤 A zenéről egész este a Music Club Zenekar gondoskodik, garantálva a táncot, a jókedvet és a felejthetetlen bulihangulatot.\n🎺✨ A Kőszeg Város Fúvószenekara sem marad ki az estéből:\negy különleges meglepetéssel készülünk, amiről egyelőre többet nem árulunk el… 😉\n🍽️🥂 A büfében az Alasz Pince – Panoráma Kóstoló finomságai és italai várnak benneteket.\n🎟️ Jegyár: 4.000 Ft\n🕖 Kapunyitás: 19:00\n🎫 Jegyvásárlás:\n• a zenekar tagjainál\n• e-mailben: kvfjegyek@gmail.com\n• telefonon: +36 30 290 0197\nJelmez fel, barátok össze, és indulhat a farsangi mulatság! 🕺💃✨",
-    "tags": [
-      "#JelmezesFúvósFarsang #MusicClubZenekar #KőszegVárosFúvószenekara #90sParty #Farsang2026 #Kőszeg"
-    ],
-    "image": "611659575_1648249896131291_5511655189766416841_n.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🎭🎶 JELMEZES FÚVÓS FARSANG – 90’s HANGULATBAN! 🎶🎭"
-  },
-  {
-    "id": "new_1768895081935",
-    "name": "2026. évi Magyar Snapszerbajnokság 1. selejtezőverseny",
-    "date": "2026-01-31",
-    "time": "10:00",
-    "location": "Corner söröző, Liszt Ferenc utca 1.",
-    "coords": {
-      "lat": 47.38729300528711,
-      "lng": 16.544162694943665
-    },
-    "description": "A 2026. évi Magyar Snapszerbajnokság 1. selejtezőversenyére Kőszegen kerül sor, a Corner sörözőben. A versenyhez helyszíni nevezéssel bárki csatlakozhat. További információ az eseményen belül hozzászólásként vagy privát üzenetben.",
-    "tags": [
-      "kártya",
-      "verseny"
-    ],
-    "image": "snapszer.jpg",
-    "createdBy": "38fc16ab-d8e3-4fda-9d86-9fe6e3fc08a4",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Apple Wallet DEMOevent",
-    "date": "2026-02-04",
-    "time": "10:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.389025,
-      "lng": 16.541018
-    },
-    "description": "This is a demo event created to test Apple Wallet behavior.\n\nIt is used to verify how event passes appear and become relevant in the Wallet.  \nNo real event is associated with this entry!!!",
-    "tags": [
-      "test",
-      "apple",
-      "wallet"
-    ],
-    "image": "wallet.png",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770129958714"
-  },
-  {
-    "id": "new_1767775724183",
-    "name": "Iparosbál",
-    "date": "2026-02-07",
-    "time": "19:00",
-    "location": "Jurisics vár lovagterme",
-    "coords": {
-      "lat": 47.389411806185876,
-      "lng": 16.538244651042913
-    },
-    "description": "A Kőszeg és Vidéke Vállalkozók Ipartestülete tisztelettel meghívja Önt és kísérőjét\na hagyományos jótékonysági Kőszegi Iparosbálra,\nahol a közösség, az összefogás és az elegancia találkozik.\n\n✨ Időpont: 2026. február 7. (szombat), 19:00\n🏰 Helyszín: a Jurisics vár patinás lovagterme\n\nEgy est, ahol a hagyományok életre kelnek,\na jó ügyek támogatást kapnak,\nés a bál valódi ünneppé válik.",
-    "tags": [
-      "bál"
-    ],
-    "image": "ipartestulet.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Légrády Péter - Picking, Blues és Whisky",
-    "date": "2026-02-07",
-    "time": "19:00",
-    "location": "Hotel Írottkő",
-    "coords": {
-      "lat": 47.38820394713575,
-      "lng": 16.542514524399124
-    },
-    "description": "Könnyed beszélgetés az amerikai zene történetéből - nagyon sok élő zenével.\nBeszélgető- és zenésztárs: Horváth György\nHelyszín: Hotel Írottkő - Drink bár, Kőszeg\n2026.02.07. szombat 19.00 óra\nFoglalás és további információ:\n+36 30 843 0331 ",
-    "tags": [],
-    "image": "legrady.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770109254996"
-  },
-  {
-    "name": "Világjárók klubja",
-    "date": "2026-02-11",
-    "time": "18:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "2026. február 11-én 18.00 órakor a Jurisics várban kerül megrendezésre a Világjárók Klubja, melynek témája:Tavasz Sydneyben.\nSzeretettel várjuk mindazokat, akik szeretnék megismerni ezt a várost egy képes útibeszámolón keresztül!\nElőadó: Lepold Ágnes\nA belépés ingyenes, de regisztrációhoz kötött!\nInformáció, regisztráció: Jurisics-vár Művelődési Központ és Várszínház (Kőszeg, Rajnis u. 9.) Telefon: 94/360-113 e-mail: gelencser@koszeg.hu",
-    "tags": [],
-    "image": "vilagjaro.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770109711580"
-  },
-  {
-    "name": "Lélektöltés patchwork kiállítás és francia sanzonest",
-    "date": "2026-02-12",
-    "time": "17:00",
-    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389579,
-      "lng": 16.542464
-    },
-    "description": "Szeretettel várunk mindenkit a Léleköltés című kiállításon, melyen a Savaria Foltműhely alkotásait tekinthetik meg!\nA kiállítást megnyitja: Trifusz Péter képzőművész\nKözreműködnek: Peltzer Géza és Korponay Zsófi\nA megnyitó után Egy kis Párizs címmel Edith Piaf legszebb dalai és virtuóz francia musették csendülnek fel a rendezvényteremben.\n2026. február 12.-március 28. között a kiállítás ingyenesen megtekinthető a könyvtár nyitvatartási idejében.\nA Savaria Foltműhely 2022-ben alakult egy baráti társaságból, közös alkotási vágyból és a textilművészet iránti szeretetből.\nÖten alkotjuk a műhelyt: Tali Juli, Wawzin Ágnes, Kiss Gáborné, Zsarnai Sándorné és Szabó Krisztina. Csoportunknak nincs vezetője – közösen döntünk mindenről, hiszen számunkra a közösség ereje, az egyenrangúság és az egymástól való tanulás a legfontosabb. Célunk, hogy a hagyományos és modern quilt technikák ötvözésével olyan textilművészeti alkotásokat hozzunk létre, amelyekben megjelenik mindannyiunk egyéni látásmódja, mégis egységes közösségi szellemet képviselnek.\nSzeretettel várunk mindenkit a kapcsolódó programokra is!\nTárlatvezetés az alkotókkal\n2026. február 24-én, kedden 17 órától.\nTavaszi patchwork kézműves foglalkozás 2026. február 28-án, szombaton 10-12 óra között.",
-    "tags": [
-      "kiállítás"
-    ],
-    "image": "patchwork.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770109091328"
-  },
-  {
-    "name": "Balog SZM bál",
-    "date": "2026-02-14",
-    "time": "19:30",
-    "location": "Béri Balog Ádám Általános Iskola tornacsarnoka",
-    "coords": {
-      "lat": 47.38173980859436,
-      "lng": 16.5461608612826
-    },
-    "description": "✨ Helyszín: Balog Iskola Sportcsarnoka, Kőszeg\n✨ Büfé: Kékfény étterem\n✨ Zene: Spektrum Band\n✨ Tombola, szelfigép, köszöntőital\n\n✨ HOLLYWOODI CSILLOGÁS ✨\nKőszegi hangulat\n\nBALOG SZM BEMUTATJA\n\n📅 2026.02.14. Szombat\n🕢 Kapunyitás: 19:30\n\n✨ Ragyogj a vörös szőnyegen, ma este te vagy a főszereplő! ✨\n\n🎟 Jegyárak:\n\nElővételben (asztalfoglalással): 4000 Ft\n\nHelyszínen: 4500 Ft\n\n💛 A bevétellel az iskola és a gyerekek programjait támogatjuk.\n\n🎫 Jegyek kaphatók:\n\naz iskola titkárságán (munkaidőben)\n\na Kékfény étteremben\n\nilletve a szervezőknél:\n\n📞 Berzlánovich Enikő: +36 20 490 4322\n📞 Lepold – Bíró Szilvia: +36 70 408 1476",
-    "tags": [
-      "bál",
-      "SZM",
-      "Balog",
-      "Csillogás"
-    ],
-    "image": "szmbal.jpg",
-    "createdBy": "8302a380-a78a-4292-a9bf-ed2f9e04297f",
-    "highlight": true,
-    "highlightLabel": "Hollywood-i csillogás",
-    "id": "new_1768500320153"
-  },
-  {
-    "id": "new_1767775970015",
-    "name": "Farsangfarka",
-    "date": "2026-02-17",
-    "time": "08:00",
-    "location": "Fő tér, városi intézmények és üzletek",
-    "coords": {
-      "lat": 47.38823957625676,
-      "lng": 16.54194868682723
-    },
-    "description": "🎭 Farsangfarka Kőszegen 🎭\nJelmezes farsangbúcsúztató egész napos programokkal\n\nKőszeg városa ismét színes forgataggá alakul, amikor elérkezik a farsang zárónapja. A Farsangfarka a tél búcsúztatásának és a vidámság ünnepének hagyományos alkalma, ahol jelmezek, mosolyok és közösségi élmények töltik meg a várost.\n\n🗓 Időpont: 2026. február 17. (kedd) | 08:00–18:00\n📍 Helyszín: Kőszeg – Fő tér, városi intézmények és üzletek\n🎉 Belépés: ingyenes\n\nEgész napos jelmezes programok, farsangi hangulat, meglepetések és közös ünneplés várja a kicsiket és nagyokat – méltó búcsút intve a farsang időszakának.",
-    "tags": [
-      "mulatság"
-    ],
-    "image": "farsangfarka.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1767776071453",
-    "name": "Agócs Julianna és Balog Benjámin népdalos estje",
-    "date": "2026-02-18",
-    "time": "17:00",
-    "location": "Zsinagóga",
-    "coords": {
-      "lat": 47.39140841063045,
-      "lng": 16.54151370919492
-    },
-    "description": "Agócs Julianna és Balog Benjámin népdalos estje",
-    "tags": [
-      "zenés est"
-    ],
-    "image": "agocs.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1767776343828",
-    "name": "Zsuffa Tünde író-olvasó találkozó",
-    "date": "2026-02-19",
-    "time": "17:00",
-    "location": "Városi könyvtár",
-    "coords": {
-      "lat": 47.389592464332196,
-      "lng": 16.54242965691677
-    },
-    "description": "író-olvasó találkozó",
-    "tags": [
-      "találkozó"
-    ],
-    "image": "zsuffa.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209687",
-    "name": "Kézműves foglalkozás",
-    "date": "2026-02-21",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
+      "túra",
+      "farsang",
+      "természet",
       "program"
     ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209688",
-    "name": "30 év 30 kép",
-    "date": "2026-02-21",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209689",
-    "name": "Zongoraest Binder Károllyal",
-    "date": "2026-02-24",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209690",
-    "name": "Ballet Camara – Tánc- és dobshow",
-    "date": "2026-02-24",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209691",
-    "name": "Harangszentelés",
-    "date": "2026-02-24",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209692",
-    "name": "Kommunizmus ÁLdozatainak Emléknapja",
-    "date": "2026-02-25",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209693",
-    "name": "BABA-MAMA JÁTSZÓHÁZ",
-    "date": "2026-02-25",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209694",
-    "name": "Téli Filmklub: A Barakkváros foglyai",
-    "date": "2026-02-26",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
+    "image": "farsangi_tura_2026.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -404,14 +45,16 @@
     "id": "new_1771696209695",
     "name": "Grencsó Trió",
     "date": "2026-02-28",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "19:00",
+    "location": "Zwinger Öregtorony",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.3892,
+      "lng": 16.5401
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Grencsó Trió koncert. Grencsó István: szaxofon, Kovács S. Zoltán: nagybőgő, Sárvári Kovács Zsolt: dob. Belépő: 4000 Ft. Jegyfoglalás: 20-413-3530.",
     "tags": [
+      "koncert",
+      "jazz",
       "program"
     ],
     "image": "event_default.jpg",
@@ -420,20 +63,46 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209696",
-    "name": "MEDVE-VIRÁG, VAGY GYÖNGY-HAGYMA",
+    "id": "new_1772109600002",
+    "name": "Pincés-kemencés böllérverseny Lukácsházán!",
     "date": "2026-02-28",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "07:00 - 17:30",
+    "location": "Lukácsháza, Csömötei-hegy",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.3197,
+      "lng": 16.6025
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "11 helyszín, 11 kóstolás! Látványölés, pörzsölés, barangolás a Csömötei hegyen pincéről pincére. Falusi disznótoros ízek, böllérfesztivál hangulat. Jegyek: elővételben 6.000 Ft, helyszínen 8.000 Ft. 14 éves kor alatt ingyenes. Jegyvétel: Tolnay Vendéglő, Közösségi ház, Csejtei bolt, Gencsapáti Xoda, Tourinform Szombathely.",
     "tags": [
+      "fesztivál",
+      "gasztro",
+      "családi",
+      "program",
+      "Lukácsháza"
+    ],
+    "image": "bollerverseny_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Böllérfesztivál"
+  },
+  {
+    "id": "new_1771696209696",
+    "name": "MEDVE-VIRÁG, VAGY GYÖNGY-HAGYMA?",
+    "date": "2026-02-28",
+    "time": "10:00 - 12:00",
+    "location": "Jurisics vár, KÖSZHÁZ",
+    "coords": {
+      "lat": 47.389412,
+      "lng": 16.538245
+    },
+    "description": "Mérgező növények és növényi mérgezések a lakókörnyezetünkben. Gyógynövények az emberi egészség szolgálatában. Előadó: Dr. Csaba Miklós gyógyszerész. Gyógynövény teázás! A belépés díjtalan.",
+    "tags": [
+      "előadás",
+      "egészség",
+      "gyógynövény",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "madar.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -442,17 +111,19 @@
     "id": "new_1771696209697",
     "name": "Művészeti Szemle - alsó tagozat",
     "date": "2026-03-02",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "14:00",
+    "location": "Jurisics-vár lovagterem",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Művészeti Szemle Kőszeg 2026 - alsó tagozat. Kategóriák: vers-próza, ének, hangszeres zene, tánc.",
     "tags": [
+      "művészet",
+      "verseny",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "muveszeti_szemle_2026.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -480,36 +151,62 @@
     "id": "new_1771696209699",
     "name": "Művészeti Szemle - felső tagozat",
     "date": "2026-03-03",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "14:00",
+    "location": "Jurisics-vár lovagterem",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Művészeti Szemle Kőszeg 2026 - felső tagozat. Kategóriák: vers-próza, ének, hangszeres zene, tánc.",
     "tags": [
+      "művészet",
+      "verseny",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "muveszeti_szemle_2026.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
   },
   {
     "id": "new_1771696209700",
-    "name": "Polcok mentén...",
+    "name": "'Polcok mentén...' 2. - Fókuszban a NŐK",
     "date": "2026-03-03",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "15:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "2026. március 3-án kedden 15 órától \"Polcok mentén…\" - középpontban a NŐK! Folytatódik a szubjektív könyvajánló-sorozat a felnőttrészlegen, melynek házigazdája Czagány Tünde, a könyvtár munkatársa. A belépés ingyenes!",
     "tags": [
-      "program"
+      "könyvtár",
+      "program",
+      "nők"
     ],
-    "image": "event_default.jpg",
+    "image": "konyv.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1772109600000",
+    "name": "Madárvédelem és odúbarkácsolás",
+    "date": "2026-03-04",
+    "time": "17:00",
+    "location": "Bozsok, Tűzoltó szertár",
+    "coords": {
+      "lat": 47.3333,
+      "lng": 16.4833
+    },
+    "description": "Natúrparki zöldülő természetbúvár programok: Madárvédelem és odúbarkácsolás. Illés Péter biológiatanár interaktív természetbúvár előadása odúbarkácsolással egybekötve a bozsoki Tűzoltó szertárnál. A belépés ingyenes!",
+    "tags": [
+      "természet",
+      "program",
+      "családi",
+      "Bozsok"
+    ],
+    "image": "madarles.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -519,38 +216,44 @@
     "name": "Kelbert Krisztina: Acélanyák",
     "date": "2026-03-05",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Kelbert Krisztina: Acélanyák. Vas vármegyei nők a haza szolgálatában a második világháború idején - Tavaszi szabadegyetemi előadás-sorozat 1. alkalma. Előadónk azt vizsgálja, hogy a Magyar Asszonyok Nemzeti Szövetsége (MANSZ) miként állította a nők munkáját a haza védelmének szolgálatába az 1930-as évek végétől. Megvizsgáljuk a hátországbeli feladatokat, úgymint: önkéntes honvédelmi munkaszolgálat, ápolónői munka, hadijótékonyság, légvédelmi szolgálat. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "konyv.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
   },
   {
     "id": "new_1771696209702",
-    "name": "Pünkösdi Lili: Örökösök",
+    "name": "Pünkösdi Lili: Örökösök – A hűség fogságában",
     "date": "2026-03-06",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "19:00",
+    "location": "Jurisics vár, Lovagterem",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "A Kőszegi Várszínház ősbemutatója. Szereplők: Őze Áron, Bánfalvi Eszter, Varga Izabella, Epres Attila, Tóth András. Rendező: Csiby Gergely. A történet 1426 őszén játszódik Kőszegen. Belépő: 4.000 Ft. Jegyrendelés: 94/360-113.",
     "tags": [
+      "színház",
+      "bemutató",
+      "történelem",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "szinhaz.jpeg",
     "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
+    "highlight": true,
+    "highlightLabel": "Ősbemutató"
   },
   {
     "name": "Egy fantasztikus meditatív kikapcsolódás, minőségi énidő Neked!",
@@ -577,17 +280,19 @@
     "id": "new_1771696209703",
     "name": "Művészeti Szemle - Középiskola",
     "date": "2026-03-10",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "14:00",
+    "location": "Jurisics-vár lovagterem",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Művészeti Szemle Kőszeg 2026 - középiskola. Kategóriák: vers-próza, ének, hangszeres zene, tánc. Ingyenes!",
     "tags": [
+      "művészet",
+      "verseny",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "muveszeti_szemle_2026.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -596,17 +301,20 @@
     "id": "new_1771696209704",
     "name": "Művészeti Szemle - Tánc",
     "date": "2026-03-11",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "14:00",
+    "location": "Jurisics-vár lovagterem",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Művészeti Szemle Kőszeg 2026 - tánc kategória. Ingyenes!",
     "tags": [
-      "program"
+      "művészet",
+      "verseny",
+      "program",
+      "tánc"
     ],
-    "image": "event_default.jpg",
+    "image": "muveszeti_szemle_2026.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -616,35 +324,60 @@
     "name": "Nemzeti Ünnep és Művészeti Szemle Gála",
     "date": "2026-03-13",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Jurisics-vár lovagterem",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Megemlékezés a Nemzeti Ünnep alkalmából és a Városi Művészeti Szemle díjátadó gálaműsora. Ingyenes!",
     "tags": [
+      "művészet",
+      "gála",
+      "nemzeti ünnep"
+    ],
+    "image": "muveszeti_szemle_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Ünnepi Gála"
+  },
+  {
+    "id": "new_1771696209706",
+    "name": "Erwin Birnmeyer 100 - Lépcsők",
+    "date": "2026-03-14",
+    "time": "17:00",
+    "location": "Jurisics-vár lovagterem",
+    "coords": {
+      "lat": 47.389412,
+      "lng": 16.538245
+    },
+    "description": "Kiállításmegnyitó. A Kőszegi Művészeti Egyesület és a Jurisics-vár Művelődési Központ és Várszínház Erwin Birnmeyer 100. születésnapja alkalmából nyitja a néhai művész gyűjteményes kiállítását. Ingyenes!",
+    "tags": [
+      "kiállítás",
+      "művészet",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "agocs.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209706",
-    "name": "Erwin Birnmeyer 100",
+    "id": "new_1772109600003",
+    "name": "Gabriel Fauré: REQUIEM",
     "date": "2026-03-14",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "19:00",
+    "location": "Jézus Szíve Plébániatemplom",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.3887,
+      "lng": 16.5415
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "A Concordia - Barátság Énekegyesület és a soproni Fidelissima Vegyeskar bemutatja: Gabriel Fauré: REQUIEM (Orgonás változat). Szólót énekel: Vágány Luca Sára (szoprán) és Pfeferlik Tamás (bariton). Vezényel: Szilágyi Miklós. Orgonán közreműködik: Kocsis Anna. Az esti szentmise után. Ingyenes!",
     "tags": [
+      "koncert",
+      "kórus",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "concordia.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -653,17 +386,19 @@
     "id": "new_1771696209707",
     "name": "Kézműves foglalkozás",
     "date": "2026-03-15",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00 - 16:30",
+    "location": "Jurisics vár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389412,
+      "lng": 16.538245
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "A Nemzeti Ünnep alkalmából a Jurisics vár családos látogatói kézműves foglalkozáson vehetnek részt. Ingyenes!",
     "tags": [
+      "családi",
+      "kézműves",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "advent_kezmuves.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
