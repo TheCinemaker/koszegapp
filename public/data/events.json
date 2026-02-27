@@ -383,10 +383,9 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209707",
     "name": "Kézműves foglalkozás",
     "date": "2026-03-15",
-    "time": "10:00 - 16:30",
+    "time": "10:00",
     "location": "Jurisics vár",
     "coords": {
       "lat": 47.389412,
@@ -398,10 +397,11 @@
       "kézműves",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "kokarda.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209707"
   },
   {
     "id": "new_1771696209708",
