@@ -404,7 +404,6 @@
     "id": "new_1771696209707"
   },
   {
-    "id": "new_1771696209708",
     "name": "Nagy Beáta: ,,Női lélek-női egészség\"",
     "date": "2026-03-17",
     "time": "17:00",
@@ -417,10 +416,11 @@
     "tags": [
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "beata.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209708"
   },
   {
     "id": "new_1771696209709",
