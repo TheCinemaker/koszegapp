@@ -345,6 +345,28 @@
     "id": "event-2026-1770634240873"
   },
   {
+    "id": "new_1772186400004",
+    "name": "Mesés kézműves foglalkozás Szabó Andreával",
+    "date": "2026-03-07",
+    "time": "09:30 - 12:00",
+    "location": "Chernel Kálmán Városi Könyvtár - Gyermekkönyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Mesés kézműves foglalkozás a gyermekkönyvtárban Szabó Andrea vezetésével minden korosztály számára. A belépés ingyenes!",
+    "tags": [
+      "kézműves",
+      "gyerekprogram",
+      "könyvtár",
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
     "id": "new_1771696209703",
     "name": "Művészeti Szemle - Középiskola",
     "date": "2026-03-10",
