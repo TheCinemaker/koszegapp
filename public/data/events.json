@@ -1,51 +1,5 @@
 [
   {
-    "id": "new_1772186400001",
-    "name": "Savaria Foltműhely: Léleköltés patchwork kiállítás",
-    "date": "2026-02-12",
-    "endDate": "2026-03-28",
-    "time": "Nyitvatartási időben",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. február 12-én nyílt meg a Savaria Foltműhely: Léleköltés című patchwork kiállítása. A Savaria Foltműhely 3 éve alakult egy baráti társaságból. Művészeti tevékenységének az Agora ad helyet, itt találkoznak egymással rendszeresen. A műhely jelenleg 5 taggal működik, vezetőjük nincsen: Kiss Gáborné Kató, Szabó Krisztina, Tali Juli, Wawzin Ágnes és Zsarnai Sándorné Kati. A kiállítás ingyenesen megtekinthető a könyvtár nyitvatartási idejében.",
-    "tags": [
-      "kiállítás",
-      "patchwork",
-      "művészet",
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1772186400002",
-    "name": "Promenád 2. – kiállítás",
-    "date": "2026-02-26",
-    "endDate": "2026-03-30",
-    "time": "10:00 - 17:00",
-    "location": "Jurisics-vár, Lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Promenád 2. kiállítás. Megtekinthető naponta 10:00 és 17:00 között, hétfő kivételével.",
-    "tags": [
-      "kiállítás",
-      "művészet",
-      "történelem",
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
     "id": "new_1772109600001",
     "name": "Hagyományos Farsangi Túra",
     "date": "2026-02-28",
@@ -345,10 +299,9 @@
     "id": "event-2026-1770634240873"
   },
   {
-    "id": "new_1772186400004",
     "name": "Mesés kézműves foglalkozás Szabó Andreával",
     "date": "2026-03-07",
-    "time": "09:30 - 12:00",
+    "time": "08:30",
     "location": "Chernel Kálmán Városi Könyvtár - Gyermekkönyvtár",
     "coords": {
       "lat": 47.389592,
@@ -361,10 +314,11 @@
       "könyvtár",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "kezmuves.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1772186400004"
   },
   {
     "id": "new_1771696209703",
@@ -405,29 +359,6 @@
       "tánc"
     ],
     "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1772186400007",
-    "name": "Interaktív élményórák óvodai és iskolai csoportoknak",
-    "date": "2026-03-11",
-    "endDate": "2026-03-12",
-    "time": "Egyeztetés szerint",
-    "location": "Jurisics vár, Lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Huszártörténelem és 1848/49-es interaktív élményórák. Hagyományőrző huszárok segítségével ismerhetik meg a diákok a fegyvereket és viseletet, majd játékos kvízzel zárul a program. Díj: 500 Ft/fő.",
-    "tags": [
-      "élményóra",
-      "történelem",
-      "gyerekprogram",
-      "program"
-    ],
-    "image": "event_default.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -586,7 +517,6 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1772186400008",
     "name": "Lőcsei Péter: Tüzes cipő(k)ben - előadás",
     "date": "2026-03-19",
     "time": "17:00",
@@ -604,7 +534,8 @@
     "image": "event_default.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1772186400008"
   },
   {
     "name": "Baradács Anett élményfestés",
