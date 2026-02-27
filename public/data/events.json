@@ -67,6 +67,7 @@
     "highlight": false,
     "highlightLabel": ""
   },
+  {
     "id": "new_1772109600001",
     "name": "Hagyományos Farsangi Túra",
     "date": "2026-02-28",
@@ -471,17 +472,21 @@
     "id": "new_1771696209707"
   },
   {
-    "name": "Nagy Beáta: ,,Női lélek-női egészség\"",
+    "name": "Nagy Beáta: „Női lélek – női egészség”",
     "date": "2026-03-17",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Nagy Beáta: „Női lélek – női egészség” – pszichológiai előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "pszichológia",
+      "egészség",
+      "program",
+      "könyvtár"
     ],
     "image": "beata.jpg",
     "createdBy": "admin",
@@ -491,17 +496,21 @@
   },
   {
     "id": "new_1771696209709",
-    "name": "Lőcsei Péter: Nők az irodalomban kiállításmegnyitó és Tüzes cipő(k)ben",
+    "name": "Lőcsei Péter: Nők az irodalomban",
     "date": "2026-03-19",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "16:30",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Lőcsei Péter: Nők az irodalomban kiállításmegnyitó és Tüzes cipők(b)en – Tavaszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "irodalom",
+      "kiállítás",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -532,15 +541,18 @@
     "id": "new_1771696209710",
     "name": "Tavaszi tánc és ének a Hajnalcsillag Néptáncegyüttessel",
     "date": "2026-03-21",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Tavaszi tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
     "tags": [
-      "program"
+      "néptánc",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -552,14 +564,18 @@
     "name": "Söptei Imre: Kőszeg szőlőgazdasága a 18. században",
     "date": "2026-03-24",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Söptei Imre: Kőszeg szőlőgazdasága a 18. században – Levéltári estek. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "levéltár",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -664,17 +680,21 @@
   },
   {
     "id": "new_1771696209716",
-    "name": "Budai Lotti: A történelemírás áldozatai avagy megrágalmazott nők a történelemben",
+    "name": "Budai Lotti: A történelemírás áldozatai",
     "date": "2026-04-09",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Budai Lotti: A történelemírás áldozatai avagy megrágalmazott nők a történelemben – Tavaszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "nők",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -683,17 +703,21 @@
   },
   {
     "id": "new_1771696209717",
-    "name": ",,Összeér\" Szép Renáta és Varga Bence",
+    "name": "„Összeér” Szép Renáta és Varga Bence",
     "date": "2026-04-10",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "„Összeér” Szép Renáta és Varga Bence – zenés irodalmi est. A belépés ingyenes!",
     "tags": [
-      "program"
+      "irodalom",
+      "zene",
+      "est",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -858,14 +882,18 @@
     "name": "Bilkei Irén: Régi idők asszonyai",
     "date": "2026-04-23",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Bilkei Irén: Régi idők asszonyai. Nők a középkorban – Tavaszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "nők",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -893,17 +921,20 @@
   },
   {
     "id": "new_1771696209724",
-    "name": ",,Dióhéj\" - tavaszi koncert a Kőszegi Vonósokkal",
+    "name": "„Dióhéj” – tavaszi koncert a Kőszegi Vonósokkal",
     "date": "2026-04-25",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "„Dióhéj” – tavaszi koncert a Kőszegi Vonósokkal. A belépés ingyenes!",
     "tags": [
-      "program"
+      "koncert",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -969,17 +1000,20 @@
   },
   {
     "id": "new_1771696209728",
-    "name": "Lőrinc László: 25 szelfi",
+    "name": "Lőrinc László: 25 selfie",
     "date": "2026-05-15",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Lőrinc László: 25 selfie – könyvbemutató. A belépés ingyenes!",
     "tags": [
-      "program"
+      "könyv",
+      "irodalom",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -990,15 +1024,18 @@
     "id": "new_1771696209729",
     "name": "Nyárindító tánc és ének a Hajnalcsillag Néptáncegyüttessel",
     "date": "2026-05-16",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Nyárindító tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
     "tags": [
-      "program"
+      "néptánc",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1010,14 +1047,17 @@
     "name": "Rozán Eszter: Álhírek és csodagyógyítók",
     "date": "2026-05-28",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Rozán Eszter: Álhírek és csodagyógyítók – Hogyan ismerjük fel, ha a pénztárcánkra vadásznak? A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "egészség",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1026,17 +1066,20 @@
   },
   {
     "id": "new_1771696209731",
-    "name": ",,Ébredés\"",
+    "name": "„Ébredés” – Kasztner Andrea és Rózsás Dorina kiállítása",
     "date": "2026-06-09",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "„Ébredés” – Kasztner Andrea és Rózsás Dorina kiállításmegnyitója. A belépés ingyenes!",
     "tags": [
-      "program"
+      "kiállítás",
+      "művészet",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1045,17 +1088,20 @@
   },
   {
     "id": "new_1771696209732",
-    "name": "Ünnepi Könyvhét",
+    "name": "Ünnepi Könyvhét – „Mi, magyarok…”",
     "date": "2026-06-11",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Ünnepi Könyvhét – „Mi, magyarok…” Közönségtalálkozó Sal Endre íróval. A belépés ingyenes!",
     "tags": [
-      "program"
+      "irodalom",
+      "találkozó",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1064,36 +1110,42 @@
   },
   {
     "id": "new_1771696209733",
-    "name": "Múzeumok Éjszakája rendezvényei",
+    "name": "Múzeumok Éjszakája",
     "date": "2026-06-20",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Kőszegi Városi Múzeum és Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Múzeumok Éjszakája rendezvényei Kőszegen. Részletes program hamarosan!",
     "tags": [
-      "program"
+      "múzeum",
+      "fesztivál",
+      "program",
+      "éjszaka"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
+    "highlight": true,
+    "highlightLabel": "Múzeumok Éjszakája"
   },
   {
     "id": "new_1771696209734",
     "name": "Berecz Mátyás: Fegyvert s vitézt éneklek",
     "date": "2026-08-08",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "14:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Berecz Mátyás: Fegyvert s vitézt éneklek – A török elleni harcok és az európai hadügyi forradalom. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1102,17 +1154,20 @@
   },
   {
     "id": "new_1771696209735",
-    "name": "Tangl Balázs: Hol éltek a katonák Kőszegen a boldog békeidők éveiben?",
+    "name": "Tangl Balázs: Hol éltek a katonák Kőszegen?",
     "date": "2026-09-03",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Tangl Balázs: Hol éltek a katonák Kőszegen a boldog békeidők éveiben? – Őszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1124,14 +1179,17 @@
     "name": "Keppel Csilla: Hadisebesültek görbe tükörben",
     "date": "2026-09-17",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Keppel Csilla: Hadisebesültek görbe tükörben – Őszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1140,22 +1198,26 @@
   },
   {
     "id": "new_1771696209737",
-    "name": "KULTURÁLIS ÖRÖKSÉG NAPJAI",
+    "name": "Kulturális Örökség Napjai",
     "date": "2026-09-19",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "endDate": "2026-09-20",
+    "time": "Egész nap",
+    "location": "Kőszegi Városi Múzeum és Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Kulturális Örökség Napjai Kőszegen. Ingyenesen látogatható műemlékek és különleges programok.",
     "tags": [
-      "program"
+      "műemlék",
+      "történelem",
+      "program",
+      "ingyenes"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
+    "highlight": true,
+    "highlightLabel": "Örökség Napok"
   },
   {
     "id": "new_1771696209738",
@@ -1181,14 +1243,17 @@
     "name": "Hideg István: Kőszeg a császári és királyi haditengerészet szolgálatában",
     "date": "2026-10-01",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Hideg István: Kőszeg a császári és királyi haditengerészet szolgálatában – Őszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1197,17 +1262,21 @@
   },
   {
     "id": "new_1771696209740",
-    "name": ",,Mozaikdarabkára hulló életek\"",
+    "name": "„Mozaikdarabkák hulló életek” – Fasching Zsuzsanna előadása",
     "date": "2026-10-06",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "„Mozaikdarabkák hulló életek” – Fasching Zsuzsanna zeneterapeuta előadása a demenciáról. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "zeneterápia",
+      "egészség",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1216,17 +1285,20 @@
   },
   {
     "id": "new_1771696209741",
-    "name": ",,Saját utakon\" Író-olvasó találkozó Mörk Leonórával",
+    "name": "„Saját utakon” – Mörk Leonóra író-olvasó találkozója",
     "date": "2026-10-07",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "„Saját utakon” – író-olvasó találkozó Mörk Leonórával. A belépés ingyenes!",
     "tags": [
-      "program"
+      "irodalom",
+      "találkozó",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1237,15 +1309,18 @@
     "id": "new_1771696209742",
     "name": "Őszi tánc és ének a Hajnalcsillag Néptáncegyüttessel",
     "date": "2026-10-10",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Őszi tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
     "tags": [
-      "program"
+      "néptánc",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1257,14 +1332,17 @@
     "name": "Németh Balázs: A Vas vármegyei császári és királyi 83. gyalogezred története",
     "date": "2026-10-15",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Németh Balázs: A Vas vármegyei császári és királyi 83. gyalogezred története – Őszi szabadegyetemi előadás. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1295,14 +1373,17 @@
     "name": "Lovass Tibor: A forgatókönyvtől a filmig",
     "date": "2026-10-29",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Lovass Tibor: A forgatókönyvtől a filmig – Téli filmklub. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "film",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1314,14 +1395,18 @@
     "name": "Simon Zsófia: A hóhér pallosa",
     "date": "2026-11-10",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Simon Zsófia: A hóhér pallosa – Levéltári estek. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "levéltár",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1333,14 +1418,17 @@
     "name": "Nemzetközi Speciális Filmfesztivál",
     "date": "2026-11-19",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Nemzetközi Speciális Filmfesztivál – Téli filmklub. A belépés ingyenes!",
     "tags": [
-      "program"
+      "filmfesztivál",
+      "mozi",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1351,15 +1439,18 @@
     "id": "new_1771696209748",
     "name": "Téli tánc és ének a Hajnalcsillag Néptáncegyüttessel",
     "date": "2026-11-28",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Téli tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
     "tags": [
-      "program"
+      "néptánc",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1390,14 +1481,17 @@
     "name": "Boros Ferenc: Magyar zenés filmek",
     "date": "2026-12-03",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Boros Ferenc: Magyar zenés filmek – Téli filmklub. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "film",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1406,17 +1500,20 @@
   },
   {
     "id": "new_1771696209751",
-    "name": ",,Dióhéj\" - téli koncert a Kőszegi Vonósokkal",
+    "name": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal",
     "date": "2026-12-05",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal. A belépés ingyenes!",
     "tags": [
-      "program"
+      "koncert",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1425,17 +1522,21 @@
   },
   {
     "id": "new_1771696209752",
-    "name": "Csiki István: A Szent Korona Kőszegen",
+    "name": "Csík István: A Szent Korona Kőszegen",
     "date": "2026-12-08",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Csík István: A Szent Korona Kőszegen – Levéltári estek. A belépés ingyenes!",
     "tags": [
-      "program"
+      "előadás",
+      "történelem",
+      "levéltár",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1444,17 +1545,20 @@
   },
   {
     "id": "new_1771696209753",
-    "name": "Lucázás",
+    "name": "Luca-nap",
     "date": "2026-12-12",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Luca-nap a könyvtárban. Hagyományőrző kézművesség és játékok. A belépés ingyenes!",
     "tags": [
-      "program"
+      "hagyomány",
+      "családi",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -1466,14 +1570,17 @@
     "name": "Karácsonyi műsor",
     "date": "2026-12-18",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389592,
+      "lng": 16.54243
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Karácsonyi ünnepi műsor a könyvtárban. A belépés ingyenes!",
     "tags": [
-      "program"
+      "ünnep",
+      "zene",
+      "program",
+      "könyvtár"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
