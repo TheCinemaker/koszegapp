@@ -1,5 +1,72 @@
 [
   {
+    "id": "new_1772186400001",
+    "name": "Léleköltés – patchwork kiállítás",
+    "date": "2026-02-26",
+    "endDate": "2026-03-15",
+    "time": "Nyitvatartási időben",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Léleköltés – válogatás a kőszegi patchwork klub munkáiból. A kiállítás megtekinthető a könyvtár nyitvatartási idejében. A belépés ingyenes!",
+    "tags": [
+      "kiállítás",
+      "patchwork",
+      "művészet",
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1772186400002",
+    "name": "Promenád 2. – kiállítás",
+    "date": "2026-02-26",
+    "endDate": "2026-03-30",
+    "time": "10:00 - 17:00",
+    "location": "Jurisics-vár, Lovagterem",
+    "coords": {
+      "lat": 47.389412,
+      "lng": 16.538245
+    },
+    "description": "Promenád 2. kiállítás. Megtekinthető naponta 10:00 és 17:00 között, hétfő kivételével.",
+    "tags": [
+      "kiállítás",
+      "művészet",
+      "történelem",
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1772186400003",
+    "name": "Téli Filmklub: A Barakkváros foglyai",
+    "date": "2026-02-26",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Téli Filmklub a könyvtárban. Vetítésre kerül: A Barakkváros foglyai. A belépés ingyenes!",
+    "tags": [
+      "film",
+      "mozi",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
     "id": "new_1772109600001",
     "name": "Hagyományos Farsangi Túra",
     "date": "2026-02-28",
