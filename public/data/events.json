@@ -1,16 +1,16 @@
 [
   {
     "id": "new_1772186400001",
-    "name": "Léleköltés – patchwork kiállítás",
-    "date": "2026-02-26",
-    "endDate": "2026-03-15",
+    "name": "Savaria Foltműhely: Léleköltés patchwork kiállítás",
+    "date": "2026-02-12",
+    "endDate": "2026-03-28",
     "time": "Nyitvatartási időben",
     "location": "Chernel Kálmán Városi Könyvtár",
     "coords": {
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Léleköltés – válogatás a kőszegi patchwork klub munkáiból. A kiállítás megtekinthető a könyvtár nyitvatartási idejében. A belépés ingyenes!",
+    "description": "2026. február 12-én nyílt meg a Savaria Foltműhely: Léleköltés című patchwork kiállítása. A Savaria Foltműhely 3 éve alakult egy baráti társaságból. Művészeti tevékenységének az Agora ad helyet, itt találkoznak egymással rendszeresen. A műhely jelenleg 5 taggal működik, vezetőjük nincsen: Kiss Gáborné Kató, Szabó Krisztina, Tali Juli, Wawzin Ágnes és Zsarnai Sándorné Kati. A kiállítás ingyenesen megtekinthető a könyvtár nyitvatartási idejében.",
     "tags": [
       "kiállítás",
       "patchwork",
@@ -46,28 +46,6 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1772186400003",
-    "name": "Téli Filmklub: A Barakkváros foglyai",
-    "date": "2026-02-26",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Téli Filmklub a könyvtárban. Vetítésre kerül: A Barakkváros foglyai. A belépés ingyenes!",
-    "tags": [
-      "film",
-      "mozi",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
     "id": "new_1772109600001",
     "name": "Hagyományos Farsangi Túra",
     "date": "2026-02-28",
@@ -85,6 +63,28 @@
       "program"
     ],
     "image": "farsangi_tura.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1772186400006",
+    "name": "Tavaszi patchwork családi kézműves délelőtt",
+    "date": "2026-02-28",
+    "time": "10:00 - 12:00",
+    "location": "Chernel Kálmán Városi Könyvtár, rendezvényterem",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Tavaszi patchwork családi kézműves délelőttre is várunk mindenkit 2026. február 28-án szombat délelőtt 10-12 óra között a rendezvényterembe.",
+    "tags": [
+      "kézműves",
+      "családi",
+      "program",
+      "patchwork"
+    ],
+    "image": "event_default.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -246,7 +246,7 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "2026. március 3-án kedden 15 órától \"Polcok mentén…\" - középpontban a NŐK! Folytatódik a szubjektív könyvajánló-sorozat a felnőttrészlegen, melynek házigazdája Czagány Tünde, a könyvtár munkatársa. A belépés ingyenes!",
+    "description": "2026. március 3-án kedden 15 órától \"Polcok mentén...\" - középpontban a NŐK! Folytatódik a szubjektív könyvajánló-sorozat a felnőttrészlegen, melynek házigazdája Czagány Tünde, a könyvtár munkatársa.",
     "tags": [
       "könyvtár",
       "program",
@@ -289,7 +289,7 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Kelbert Krisztina: Acélanyák. Vas vármegyei nők a haza szolgálatában a második világháború idején - Tavaszi szabadegyetemi előadás-sorozat 1. alkalma. Előadónk azt vizsgálja, hogy a Magyar Asszonyok Nemzeti Szövetsége (MANSZ) miként állította a nők munkáját a haza védelmének szolgálatába az 1930-as évek végétől. Megvizsgáljuk a hátországbeli feladatokat, úgymint: önkéntes honvédelmi munkaszolgálat, ápolónői munka, hadijótékonyság, légvédelmi szolgálat. A belépés ingyenes!",
+    "description": "2026. március 5. 17 óra Kelbert Krisztina: Acélanyák. Vas vármegyei nők a haza szolgálatában a második világháború idején - Tavaszi szabadegyetemi előadássorozat 1. alkalma. Előadónk azt vizsgálja, hogy Magyarországon a Horthy-korszakban működő konzervatív nőegyesület, a Magyar Asszonyok Nemzeti Szövetsége (MANSZ) miként állította a nők munkáját a haza védelmének szolgálatába. Megvizsgáljuk, hogy mely feladatokat rendeltek a nők hátországbeli háborús munkavégzéséhez: önkéntes honvédelmi munkaszolgálat, ápolónői munka, hadijótékonyság, légvédelmi szolgálat.",
     "tags": [
       "előadás",
       "történelem",
@@ -354,7 +354,7 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Mesés kézműves foglalkozás a gyermekkönyvtárban Szabó Andrea vezetésével minden korosztály számára. A belépés ingyenes!",
+    "description": "2026. március 7-én szombaton 9.30 - 12.00 óra között a gyermekkönyvtárban Szabó Andrea vezetésével mesés kézműves foglalkozást hirdetünk.",
     "tags": [
       "kézműves",
       "gyerekprogram",
@@ -408,6 +408,52 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "id": "new_1772186400007",
+    "name": "Interaktív élményórák óvodai és iskolai csoportoknak",
+    "date": "2026-03-11",
+    "endDate": "2026-03-12",
+    "time": "Egyeztetés szerint",
+    "location": "Jurisics vár, Lovagterem",
+    "coords": {
+      "lat": 47.389412,
+      "lng": 16.538245
+    },
+    "description": "Huszártörténelem és 1848/49-es interaktív élményórák. Hagyományőrző huszárok segítségével ismerhetik meg a diákok a fegyvereket és viseletet, majd játékos kvízzel zárul a program. Díj: 500 Ft/fő.",
+    "tags": [
+      "élményóra",
+      "történelem",
+      "gyerekprogram",
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "name": "Interaktív élményórák: Huszártörténelem és 1848/49",
+    "date": "2026-03-11",
+    "endDate": "2026-03-12",
+    "time": "Iskolai csoportoknak",
+    "location": "Kőszegi Városi Múzeum",
+    "description": "2026. március 11-12-én óvodai és iskolai osztályok számára interaktív élményórákat szervez a Kőszegi Városi Múzeum, Könyvtár és Levéltár múzeumi osztálya. A foglalkozáson hagyományőrző huszárok segítségével ismerhetik meg a diákok a huszárok fegyvereit és a viseletét, majd egy játékos kvízjátékkal ellenőrizhetik ismereteiket. Ár: 500 Ft/fő.",
+    "tags": [
+      "múzeum",
+      "történelem",
+      "iskola",
+      "program"
+    ],
+    "coords": {
+      "lat": 47.389412,
+      "lng": 16.538245
+    },
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1772180729218"
   },
   {
     "id": "new_1771696209705",
@@ -502,7 +548,7 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Nagy Beáta: „Női lélek – női egészség” – pszichológiai előadás. A belépés ingyenes!",
+    "description": "2026. március 17-én kedden 17 órakor kezdődik dr. Nagy Beáta klinikai szakpszichológus, szociológus, egyetemi adjunktus: \"Női lélek - női egészség\" tart pszichológiai előadást a rendezvényteremben szempontokat adva a lelki és testi jóllét megőrzéséhez.",
     "tags": [
       "előadás",
       "pszichológia",
@@ -518,7 +564,7 @@
   },
   {
     "id": "new_1771696209709",
-    "name": "Lőcsei Péter: Nők az irodalomban",
+    "name": "Nőírók, költőnők, „Nyugat-feleségek\" - kiállításmegnyitó",
     "date": "2026-03-19",
     "time": "16:30",
     "location": "Chernel Kálmán Városi Könyvtár",
@@ -526,13 +572,34 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Lőcsei Péter: Nők az irodalomban kiállításmegnyitó és Tüzes cipők(b)en – Tavaszi szabadegyetemi előadás. A belépés ingyenes!",
+    "description": "2026. március 19. 16.30 Lőcsei Péter: Nőírók, költőnők, „Nyugat-feleségek\" kiállításmegnyitóra várunk mindenkit szeretettel! A kiállításon láthatók lesznek az ismert és a részben elfeledett alkotók valóságos és átvitt értelmű arcképei: többek között Kaffka Margité, Török Sophie-é, Kosztolányiné Harmos Ilonáé, Tormay Cecile-é, Nemes Nagy Ágnesé, Galgóczi Erzsébeté és Agota Kristofé.",
+    "tags": [
+      "kiállítás",
+      "irodalom",
+      "nők",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1772186400008",
+    "name": "Lőcsei Péter: Tüzes cipő(k)ben - előadás",
+    "date": "2026-03-19",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár, rendezvényterem",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "2026. március 19. 17 óra Lőcsei Péter: Tüzes cipő(k)ben - Tavaszi szabadegyetemi előadássorozat 2. alkalma. Arról, hogy milyen a női alkotók szerepe az irodalomban. Aki megpróbálkozik a határok tágításával, az értelmetlen korlátok ledöntésével, gyakran találkozik értetlenséggel, elutasítással. Azok a költőnők, írónők, akik utat törtek, méltó figyelmet igényeltek, rendre tüzes cipőkben érezhették magukat.",
     "tags": [
       "előadás",
       "irodalom",
-      "kiállítás",
-      "program",
-      "könyvtár"
+      "program"
     ],
     "image": "event_default.jpg",
     "createdBy": "admin",
@@ -561,7 +628,7 @@
   },
   {
     "id": "new_1771696209710",
-    "name": "Tavaszi tánc és ének a Hajnalcsillag Néptáncegyüttessel",
+    "name": "Hajnalcsillag Néptáncegyüttes tavaszváró",
     "date": "2026-03-21",
     "time": "10:00",
     "location": "Chernel Kálmán Városi Könyvtár",
@@ -569,10 +636,11 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Tavaszi tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
+    "description": "2026. március 21-én, szombaton 10 órától szeretettel várjuk az óvodásokat és kisiskolásokat családjukkal a Hajnalcsillag Néptáncegyüttes tavaszváró játékos, mondókás foglalkozására. A foglalkozást Horváth Júlia vezeti.",
     "tags": [
       "néptánc",
       "zene",
+      "gyerekprogram",
       "program",
       "könyvtár"
     ],
@@ -591,7 +659,7 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Söptei Imre főlevéltáros előadása. A 17-18. században Kőszeg legnagyobb szőlőbirtokosa maga a város volt, ami a bevételek jelentős részét biztosította. Az előadás során szó esik a szőlőművelés akkori munkálatairól (robot, napszám, metszés), a városi csapszékekben mért borokról (Bauwein, Zehnts, Bergrecht), a klímaváltozásra utaló adatokról, és a „nemes város” polgárainak 1768-as megaláztatásáról. A rendezvény a Magyar Levéltárosok Egyesülete által meghirdetett „Nyitott Levéltárak” országos programsorozat keretében valósul meg. A belépés ingyenes!",
+    "description": "Március 24. 17 óra Söptei Imre főlevéltáros: Kőszeg szőlőgazdasága a 18. században. A 17-18. században a város Kőszeg legnagyobb szőlőbirtokosa volt, ez biztosította a bevételek jelentős részét. A levéltári forrásokból kiderül, miként végezték akkoriban a szőlőművelés alapvető munkálatait. A rendezvény a Magyar Levéltárosok Egyesülete által meghirdetett \"Nyitott Levéltárak\" 2025/2026. évi országos programsorozat keretében valósul meg.",
     "tags": [
       "előadás",
       "történelem",
@@ -680,6 +748,27 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1770108954728"
+  },
+  {
+    "name": "Húsvéti mesés kézműves foglalkozás",
+    "date": "2026-03-28",
+    "time": "09:30 - 12:00",
+    "location": "Chernel Kálmán Városi Könyvtár, gyermekkönyvtár",
+    "description": "2026. március 28-án szombaton 9.30 - 12.00 óra között a gyermekkönyvtárban Szabó Andrea vezetésével húsvéti mesés kézműves foglalkozást hirdetünk.",
+    "tags": [
+      "kézműves",
+      "gyerekprogram",
+      "húsvét"
+    ],
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1772180729220"
   },
   {
     "id": "new_1771696209715",
