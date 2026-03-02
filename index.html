@@ -7,14 +7,13 @@
     window.__vite_plugin_react_preamble_installed__ = true;
   </script>
   <script type="module">
-    try {
-      if (location.port === '3002' || (location.hostname === 'localhost' && location.port === '8888')) {
-        const { injectIntoGlobalHook } = await import("/@react-refresh");
+    if (location.port === '3002' || (location.hostname === 'localhost' && location.port === '8888')) {
+      import("/@react-refresh").then(({ injectIntoGlobalHook }) => {
         injectIntoGlobalHook(window);
         window.$RefreshReg$ = () => { };
         window.$RefreshSig$ = () => (type) => type;
-      }
-    } catch (e) { }
+      }).catch(() => { });
+    }
   </script>
   <link rel="icon" href="/favicon.png" />
 
