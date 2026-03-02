@@ -1,14 +1,14 @@
-const { createClient } = require('@supabase/supabase-js');
-const { jsPDF } = require('jspdf');
-const QRCode = require('qrcode');
-const { ticketConfig } = require('./lib/ticketConfig');
+import { createClient } from '@supabase/supabase-js';
+import { jsPDF } from 'jspdf';
+import QRCode from 'qrcode';
+import { ticketConfig } from './lib/ticketConfig.js';
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         const ticketId = event.queryStringParameters?.ticketId;
         if (!ticketId) {

@@ -161,6 +161,15 @@ export function scoreItem(item, context) {
         reasons.tierSilverBoost = true;
     }
 
+    // 💰 v6 Budget Logic
+    if (item.budget_level && aiProfile?.budget_level) {
+        if (item.budget_level <= aiProfile.budget_level) {
+            score += 2;
+        } else if (item.budget_level > aiProfile.budget_level + 1) {
+            score -= 5; // Too expensive
+        }
+    }
+
     // 🎁 MYSTERY BOX BOOST
     if (item.mystery_box && item.mystery_box.length > 0) {
         score += 7;
@@ -172,7 +181,9 @@ export function scoreItem(item, context) {
 
 const INTENT_PRIORITY = {
     emergency: 100,
-    parking: 90,
+    parking: 93,
+    tickets: 92,
+    booking: 91,
     itinerary: 70,
     food_place: 60,
     food_general: 60,
@@ -330,6 +341,31 @@ export function decideAction({ intents, query, context }) {
                 action: (appMode !== 'remote' && confidence > 0.5)
                     ? { type: "navigate_to_parking", params: { bestMatch: scored[0]?.id } }
                     : null
+            });
+        }
+
+        // 5. TICKETS LOGIC (Phase 37)
+        if (intent === 'tickets') {
+            const scored = processList(appData.ticket_events);
+            const confidence = calculateConfidence(scored);
+            results.push({
+                type: 'recommendation',
+                intent: 'tickets',
+                scored,
+                confidence: Math.max(0.8, confidence), // Boost confidence for business intent
+                action: { type: "navigate_to_tickets", params: { bestMatch: scored[0]?.id } }
+            });
+        }
+
+        // 6. BOOKING LOGIC (Phase 37)
+        if (intent === 'booking') {
+            const scored = processList(appData.hotels);
+            results.push({
+                type: 'recommendation',
+                intent: 'booking',
+                scored,
+                confidence: 0.9,
+                action: { type: "navigate_to_booking", params: { city: "Kőszeg" } }
             });
         }
     }

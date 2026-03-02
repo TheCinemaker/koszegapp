@@ -133,7 +133,8 @@ function buildPrompt({ now, allIntents, slimContext, decision, query }) {
 - NE kérdezz "Amíg intézed, mit ajánlhatok?" - féle kérdéseket!
 - Ha megvan a rendszám, azonnal add vissza az action-t
 - A válasz végén csak ennyit mondj: "Miben segíthetek még?"`
-        : `Ha parkolás van a szándékok között ÉS fizetős az idő: ELŐSZÖR intézd el a parkolást (kérd a rendszámot ha kell), AZTÁN ajánlj látnivalót/éttermet`;
+        : `Ha parkolás van a szándékok között ÉS fizetős az idő: ELŐSZÖR intézd el a parkolást (kérd a rendszámot ha kell), AZTÁN ajánlj látnivalót/éttermet. 
+           Ha jegyvásárlás (tickets) van a szándékok között, említsd meg az elérhető jegyeket a TICKETED EVENTS listából!`;
 
     return `
 AKTUÁLIS IDŐ: ${now}
@@ -197,7 +198,15 @@ function buildDataSection(slimContext) {
     if (slimContext.attractions?.length > 0) {
         sections.push(`LÁTNIVALÓK (${slimContext.attractions.length} db):\n` +
             slimContext.attractions.slice(0, 10).map(a =>
-                `  - ${a.name} | ${(a.description || '').substring(0, 80)}`
+                `  - ${a.name} | ${(a.description || '').substring(0, 80)} | Esőbiztos: ${a.rainSafe ? 'Igen' : 'Nem'} | Gyerekbarát: ${a.childFriendly ? 'Igen' : 'Nem'} | Történet: ${a.history_full || ''}`
+            ).join('\n')
+        );
+    }
+
+    if (slimContext.ticket_events?.length > 0) {
+        sections.push(`TICKETED EVENTS (Vásárolható jegyek):\n` +
+            slimContext.ticket_events.map(e =>
+                `  - ${e.name} | Ár: ${e.price} Ft | Dátum: ${e.date} | Helyszín: ${e.location}`
             ).join('\n')
         );
     }
@@ -255,6 +264,7 @@ function buildSlimContext(context) {
         restaurants: isPureParking ? [] : (appData.restaurants || []),
         attractions: isPureParking ? [] : (appData.attractions || []),
         events: isPureParking ? [] : (appData.events || []),
+        ticket_events: isPureParking ? [] : (appData.ticket_events || []),
         parking: appData.parking || [], // Ezt mindig betöltjük
         hotels: isPureParking ? [] : (appData.hotels || []),
         leisure: isPureParking ? [] : (appData.leisure || []),

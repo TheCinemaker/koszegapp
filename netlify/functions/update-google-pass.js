@@ -1,6 +1,7 @@
-const { GoogleAuth } = require('google-auth-library');
+import { GoogleAuth } from 'google-auth-library';
+import fetch from 'node-fetch';
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Make it a POST' };
     }

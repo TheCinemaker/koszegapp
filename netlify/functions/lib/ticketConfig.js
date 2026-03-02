@@ -1,8 +1,4 @@
-// Ticket System - Centralized Configuration Loader
-// Single source of truth for all ticket system settings
-
-// Load ticket config via require (ensures bundling)
-const ticketConfig = require('../ticket-config.json');
+import ticketConfig from '../ticket-config.json' with { type: 'json' };
 
 /**
  * Get the full application URL
@@ -61,7 +57,7 @@ const getWalletConfig = () => {
     };
 };
 
-module.exports = {
+export {
     ticketConfig,
     getAppUrl,
     isTestMode,

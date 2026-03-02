@@ -1,9 +1,14 @@
-const { PKPass } = require('passkit-generator');
-const fetch = require('node-fetch');
-const forge = require('node-forge');
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+import { PKPass } from 'passkit-generator';
+import fetch from 'node-fetch';
+import forge from 'node-forge';
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
+const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
 /*
   BOOTSTRAP SUBSCRIPTION PASS
@@ -68,7 +73,7 @@ async function getTodaysEvents() {
 
 /* -------------------- Handler -------------------- */
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         /* ---------- Certificates ---------- */
         const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));

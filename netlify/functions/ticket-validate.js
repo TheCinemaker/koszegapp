@@ -1,15 +1,15 @@
 // Ticket System - QR Code Validator
 // Validates and marks tickets as used
 
-const { ticketConfig } = require('./lib/ticketConfig');
-const { createClient } = require('@supabase/supabase-js');
+import { ticketConfig } from './lib/ticketConfig.js';
+import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     // CORS headers
     const headers = {
         'Access-Control-Allow-Origin': '*',

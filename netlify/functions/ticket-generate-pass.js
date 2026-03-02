@@ -1,17 +1,23 @@
 // Ticket System - Apple Wallet Pass Generator
 // Generates .pkpass file for Apple Wallet
 
-const { ticketConfig, getWalletConfig } = require('./lib/ticketConfig');
-const { createClient } = require('@supabase/supabase-js');
-const { PKPass } = require('passkit-generator');
-const path = require('path');
+import { ticketConfig, getWalletConfig } from './lib/ticketConfig.js';
+import { createClient } from '@supabase/supabase-js';
+import { PKPass } from 'passkit-generator';
+import fetch from 'node-fetch';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
+const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         const ticketId = event.queryStringParameters?.ticketId;
 

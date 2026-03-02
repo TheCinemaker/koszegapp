@@ -1,8 +1,13 @@
-const { PKPass } = require('passkit-generator');
-const fetch = require('node-fetch');
-const forge = require('node-forge');
-const fs = require('fs');
-const path = require('path');
+import { PKPass } from 'passkit-generator';
+import fetch from 'node-fetch';
+import forge from 'node-forge';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
+const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
 /*
   DAILY PASS DOWNLOAD ENDPOINT
@@ -56,7 +61,7 @@ async function getTodaysEvents() {
 
 /* -------------------- Handler -------------------- */
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         // Get today's events
         const todaysEvents = await getTodaysEvents();

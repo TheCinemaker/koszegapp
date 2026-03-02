@@ -1,18 +1,20 @@
 // Ticket System - Stripe Webhook Handler (Robust Version)
 // Handles raw body parsing, correct header casing, and explicit fetch
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { createClient } = require('@supabase/supabase-js');
-const crypto = require('crypto');
-const fetch = require('node-fetch');
-const { getAppUrl } = require('./lib/ticketConfig'); // Keep our config util
+import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
+import crypto from 'crypto';
+import fetch from 'node-fetch';
+import { getAppUrl } from './lib/ticketConfig.js';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     // Only allow POST
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };

@@ -42,17 +42,23 @@ export function detectIntent(query) {
         detected.push('events');
     }
 
-    // 7. Accommodation
-    if (/szállás|hotel|panzió|kemping|apartman|szoba|vendégház|aludni|ahol alszom/.test(q)) {
-        detected.push('hotels');
+    // 7. Accommodation & Booking
+    if (/szállás|hotel|panzió|kemping|apartman|szoba|vendégház|aludni|ahol alszom|foglalni|foglalás/.test(q)) {
+        detected.push('booking');
+    }
+    if (detected.includes('booking') && !detected.includes('hotels')) detected.push('hotels');
+
+    // 8. Tickets & Purchases
+    if (/jegy|belépő|ticket|vásárlás|venni|fizetni|vásárolni|jegyvásárlás/.test(q) && !detected.includes('parking')) {
+        detected.push('tickets');
     }
 
-    // 8. Navigation & Location
+    // 9. Navigation & Location
     if (/hol van|hogy jutok|merre|térkép|útvonal|navigál|hogyan érek|oda vezet/.test(q)) {
         detected.push('navigation');
     }
 
-    // 9. Itinerary & Planning (pár óra / egész nap / terv)
+    // 10. Itinerary & Planning (pár óra / egész nap / terv)
     if (/útiterv|programterv|napra jövünk|napos program|mit csináljunk|ajánlj egy napot|pár (óra|nap)|fél nap|egész nap|megyek kőszegre|mit nézzek|hova menjek|mit ajánlasz/.test(q)) {
         detected.push('itinerary');
     }

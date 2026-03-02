@@ -179,6 +179,24 @@ async function loadRecentLogs(userId) {
     } catch (e) { return ''; }
 }
 
+async function loadTicketEvents() {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const { data, error } = await supabase
+            .from('ticket_events')
+            .select('*')
+            .eq('status', 'active')
+            .gte('date', today)
+            .order('date', { ascending: true });
+
+        if (error) throw error;
+        return data || [];
+    } catch (error) {
+        console.warn('Error loading ticket events:', error);
+        return [];
+    }
+}
+
 async function loadUserProfile(userId) {
     if (!userId) return null;
     try {
@@ -297,6 +315,21 @@ export async function loadContext(intents, query, userId, frontendContext = {}) 
             case 'emergency':
                 if (!baseContext.appData.info) {
                     baseContext.appData.info = await readJSON('info.json');
+                }
+                break;
+
+            case 'tickets':
+                if (!baseContext.appData.ticket_events) {
+                    baseContext.appData.ticket_events = await loadTicketEvents();
+                }
+                if (!baseContext.appData.events) {
+                    baseContext.appData.events = await loadEvents();
+                }
+                break;
+
+            case 'booking':
+                if (!baseContext.appData.hotels) {
+                    baseContext.appData.hotels = await readJSON('hotels.json');
                 }
                 break;
         }

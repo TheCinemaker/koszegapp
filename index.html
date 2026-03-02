@@ -2,30 +2,21 @@
 <html lang="hu">
 
 <head>
-  <link rel="icon" href="/favicon.png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@100..900&family=Zeyada&display=swap" rel="stylesheet">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KőszegAPP</title>
-
+  <script>
+    // Synchronous flag to prevent Preamble detection errors
+    window.__vite_plugin_react_preamble_installed__ = true;
+  </script>
   <script type="module">
-    // ONLY run react-refresh preamble in development to avoid build errors
-    if (location.hostname === 'localhost' || location.hostname.includes('127.0.0.1')) {
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.innerHTML = `
-        import { injectIntoGlobalHook } from "/@react-refresh";
+    try {
+      if (location.port === '3002' || (location.hostname === 'localhost' && location.port === '8888')) {
+        const { injectIntoGlobalHook } = await import("/@react-refresh");
         injectIntoGlobalHook(window);
         window.$RefreshReg$ = () => { };
         window.$RefreshSig$ = () => (type) => type;
-        window.__vite_plugin_react_preamble_installed__ = true;
-      `;
-      document.head.appendChild(script);
-    }
+      }
+    } catch (e) { }
   </script>
+  <link rel="icon" href="/favicon.png" />
 
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#A16207">

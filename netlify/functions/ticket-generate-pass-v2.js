@@ -1,10 +1,15 @@
-const { PKPass } = require('passkit-generator');
-const fetch = require('node-fetch');
-const forge = require('node-forge');
-const fs = require('fs');
-const path = require('path');
-const { createClient } = require('@supabase/supabase-js');
-const { ticketConfig } = require('./lib/ticketConfig');
+import { PKPass } from 'passkit-generator';
+import fetch from 'node-fetch';
+import forge from 'node-forge';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { createClient } from '@supabase/supabase-js';
+import { ticketConfig } from './lib/ticketConfig.js';
+
+const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
+const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
 /* -------------------- Helpers -------------------- */
 async function getBuffer(url) {
@@ -51,7 +56,7 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         const ticketId = event.queryStringParameters?.ticketId;
         if (!ticketId) {

@@ -499,13 +499,11 @@ function MainAppContent() {
             </>
           )}
 
-          {/* AI Assistant (DEV ONLY) */}
-          {devMode && (
-            <>
-              {/* <AISmartLayer /> */}
-              <AIAssistant />
-            </>
-          )}
+          {/* AI Core System (Now Production Ready) */}
+          <AISmartLayer />
+          <AIAssistant />
+
+          {/* AI Debug Panel (STILL DEV ONLY) */}
           {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>
       </div>

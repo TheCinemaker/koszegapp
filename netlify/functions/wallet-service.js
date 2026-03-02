@@ -1,9 +1,14 @@
-const { createClient } = require('@supabase/supabase-js');
-const { PKPass } = require('passkit-generator');
-const fetch = require('node-fetch');
-const forge = require('node-forge');
-const fs = require('fs');
-const path = require('path');
+import { createClient } from '@supabase/supabase-js';
+import { PKPass } from 'passkit-generator';
+import fetch from 'node-fetch';
+import forge from 'node-forge';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
+const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
 /* -------------------- Configuration -------------------- */
 const supabase = createClient(
@@ -197,7 +202,7 @@ async function generateDailyPass(serialNumber) {
 }
 
 /* -------------------- Main Handler -------------------- */
-exports.handler = async (event) => {
+export const handler = async (event) => {
     const { httpMethod, path, headers, body, queryStringParameters } = event;
     console.log(`WALLET SERVICE REQUEST: ${httpMethod} ${path}`);
     console.log('Query Params:', queryStringParameters);

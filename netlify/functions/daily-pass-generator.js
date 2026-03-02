@@ -1,8 +1,13 @@
-const { createClient } = require('@supabase/supabase-js');
-const http2 = require('http2');
-const forge = require('node-forge');
-const fs = require('fs');
-const path = require('path');
+import { createClient } from '@supabase/supabase-js';
+import http2 from 'http2';
+import forge from 'node-forge';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
+const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
 /*
   DAILY PASS UPDATER (PUSH NOTIFICATION SENDER)
@@ -103,7 +108,7 @@ async function sendPushBatch(tokens, cert, key) {
 
 /* -------------------- Handler -------------------- */
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     try {
         console.log('🌅 Daily Pass Auto-Updater Started');
 

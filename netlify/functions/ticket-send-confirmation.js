@@ -1,10 +1,10 @@
 // Ticket System - Email Confirmation Sender
 // Sends ticket confirmation email with QR code
 
-const { ticketConfig, getEmailConfig, getAppUrl } = require('./lib/ticketConfig');
-const { Resend } = require('resend');
-const { createClient } = require('@supabase/supabase-js');
-const QRCode = require('qrcode');
+import { ticketConfig, getEmailConfig, getAppUrl } from './lib/ticketConfig.js';
+import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
+import QRCode from 'qrcode';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -14,7 +14,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   try {
     const { ticketId } = JSON.parse(event.body);
 

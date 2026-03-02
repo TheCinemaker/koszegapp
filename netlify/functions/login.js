@@ -1,8 +1,8 @@
 // netlify/functions/login.js
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const USERS = {
-  'admin': { 
+  'admin': {
     permissions: ['*'] // Az Admin mindent megtehet, minden fájlt kezelhet
   },
   'varos': {
@@ -12,14 +12,14 @@ const USERS = {
       'attractions:view_all', 'attractions:create', 'attractions:edit', 'attractions:delete',
       'info:view_all', 'info:edit',
       'restaurants:view_all', 'restaurants:edit' // Lehet, hogy csak ránéznek
-    ] 
+    ]
   },
-  'var': { 
+  'var': {
     // A Vár a saját eseményeit és a várhoz kötődő látnivalókat kezeli
     permissions: [
       'events:view_own', 'events:create', 'events:edit_own', 'events:delete_own'
       // Jövőben: 'attractions:edit_specific' (pl. csak a Vármúzeumot szerkesztheti)
-    ] 
+    ]
   },
   'tourinform': {
     // A Tourinform a turisztikai tartalmakért felel: események, szállások, szabadidő
@@ -27,17 +27,17 @@ const USERS = {
       'events:view_all', 'events:create', 'events:edit', 'events:delete',
       'hotels:view_all', 'hotels:create', 'hotels:edit', 'hotels:delete',
       'leisure:view_all', 'leisure:create', 'leisure:edit', 'leisure:delete'
-    ] 
+    ]
   },
-  'kulsos': { 
+  'kulsos': {
     // A Külsős Partner csak a saját eseményeit kezeli, mást nem is lát
     permissions: [
       'events:view_own', 'events:create', 'events:edit_own', 'events:delete_own'
-    ] 
+    ]
   }
 };
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -45,9 +45,9 @@ exports.handler = async (event) => {
   try {
     // ---- DIAGNOSZTIKAI SOR ----
     console.log('[login.js] JWT_SECRET:', process.env.JWT_SECRET ? `Létezik, hossza: ${process.env.JWT_SECRET.length}` : '!!! HIÁNYZIK !!!');
-    
+
     const { userId, password } = JSON.parse(event.body);
-    
+
     const passwordEnvVar = `ADMIN_PASSWORD_${userId.toUpperCase()}`;
     const correctPassword = process.env[passwordEnvVar];
 
@@ -61,22 +61,22 @@ exports.handler = async (event) => {
     }
 
     const token = jwt.sign(
-      { 
+      {
         id: userId,
-        permissions: userProfile.permissions 
-      }, 
+        permissions: userProfile.permissions
+      },
       process.env.JWT_SECRET,
       { expiresIn: '8h' }
     );
-    
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         token,
-        user: { 
+        user: {
           id: userId,
           permissions: userProfile.permissions
-        } 
+        }
       }),
     };
 

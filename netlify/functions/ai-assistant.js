@@ -5,7 +5,7 @@
  * CRITICAL: Frontend MUST send Authorization: Bearer <JWT> header.
  * Without it, Supabase RLS will reject all DB writes.
  */
-import { runAI } from './ai-core-v2/index.js';
+import { runAI } from './ai-core/index.js';
 
 export async function handler(event) {
     const headers = {

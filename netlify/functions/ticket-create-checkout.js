@@ -1,16 +1,19 @@
 // Ticket System - Stripe Checkout Session Creator
 // Creates a Stripe checkout session for ticket purchases
 
-const { ticketConfig, getStripeConfig } = require('./lib/ticketConfig');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { createClient } = require('@supabase/supabase-js');
+
+import { getStripeConfig } from './lib/ticketConfig.js';
+import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.VITE_SUPABASE_ANON_KEY
 );
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     // CORS headers
     const headers = {
         'Access-Control-Allow-Origin': '*',
