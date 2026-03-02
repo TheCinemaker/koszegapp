@@ -9,6 +9,20 @@ import { dirname } from 'path';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function getCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename),
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename);
+}
+
 // Helper to get buffer from URL
 async function getBuffer(url) {
     if (!url) return null;
@@ -70,8 +84,8 @@ export const handler = async (event, context) => {
 
         // 1. Read Certs from Files (Fix for Netlify 4KB Env Limit)
         // Paths are relative to the function file in Netlify Functions
-        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
-        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
+        const p12Path = getCertPath('pass.p12');
+        const wwdrPath = getCertPath('AppleWWDRCAG3.cer');
 
         if (!fs.existsSync(p12Path) || !fs.existsSync(wwdrPath)) {
             // Debug: List directory contents to help if it fails again

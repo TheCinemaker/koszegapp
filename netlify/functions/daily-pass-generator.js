@@ -9,6 +9,20 @@ import { dirname } from 'path';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function getCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename),
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename);
+}
+
 /*
   DAILY PASS UPDATER (PUSH NOTIFICATION SENDER)
   
@@ -130,7 +144,7 @@ export const handler = async (event) => {
         console.log(`Found ${tokens.length} unique devices to update.`);
 
         // 2. Load Certificates
-        const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
+        const p12Buffer = fs.readFileSync(getCertPath('pass.p12'));
         const { key, cert } = extractKeys(p12Buffer, process.env.APPLE_PASS_P12_PASSWORD);
 
         // 3. Send Pushes

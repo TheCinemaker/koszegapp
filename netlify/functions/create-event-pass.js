@@ -9,6 +9,20 @@ import { dirname } from 'path';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function getCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename),
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename);
+}
+
 /* -------------------- Helpers -------------------- */
 
 async function getBuffer(url) {
@@ -104,8 +118,8 @@ export const handler = async (event) => {
 
         /* ---------- Certificates ---------- */
 
-        const p12Path = path.resolve(__dirname, 'certs/pass.p12');
-        const wwdrPath = path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer');
+        const p12Path = getCertPath('pass.p12');
+        const wwdrPath = getCertPath('AppleWWDRCAG3.cer');
 
         const p12Buffer = fs.readFileSync(p12Path);
         const wwdrBuffer = fs.readFileSync(wwdrPath);

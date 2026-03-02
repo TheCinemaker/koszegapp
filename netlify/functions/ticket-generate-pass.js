@@ -12,6 +12,34 @@ import { dirname } from 'path';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function getCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename),
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename);
+}
+
+function getAssetPath(filename) {
+    const paths = [
+        path.join(__dirname, 'assets', filename),
+        path.join(__dirname, '..', 'assets', filename),
+        path.join(__dirname, 'netlify/functions/assets', filename),
+        path.join(process.cwd(), 'netlify/functions/assets', filename),
+        path.join(process.cwd(), 'assets', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'assets', filename);
+}
+
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -58,11 +86,11 @@ export const handler = async (event) => {
 
         // Create pass
         const pass = await PKPass.from({
-            model: path.resolve(__dirname, 'assets/ticket.pass'),
+            model: getAssetPath('ticket.pass'),
             certificates: {
-                wwdr: path.resolve(__dirname, 'certs/wwdr.pem'),
-                signerCert: path.resolve(__dirname, 'certs/signerCert.pem'),
-                signerKey: path.resolve(__dirname, 'certs/signerKey.pem'),
+                wwdr: getCertPath('wwdr.pem'),
+                signerCert: getCertPath('signerCert.pem'),
+                signerKey: getCertPath('signerKey.pem'),
                 signerKeyPassphrase: walletConfig.passphrase || ''
             }
         }, {

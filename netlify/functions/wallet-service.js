@@ -10,6 +10,20 @@ import { dirname } from 'path';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function resolveCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename),
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename);
+}
+
 /* -------------------- Configuration -------------------- */
 const supabase = createClient(
     process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL,
@@ -86,8 +100,8 @@ async function generateDailyPass(serialNumber) {
     expirationDate.setHours(0, 5, 0, 0); // Expire next day 00:05
 
     // Certificates
-    const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
-    const wwdrBuffer = fs.readFileSync(path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer'));
+    const p12Buffer = fs.readFileSync(resolveCertPath('pass.p12'));
+    const wwdrBuffer = fs.readFileSync(resolveCertPath('AppleWWDRCAG3.cer'));
 
     const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
     const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);

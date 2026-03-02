@@ -10,6 +10,20 @@ import { dirname } from 'path';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function getCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename),
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename);
+}
+
 /*
   BOOTSTRAP SUBSCRIPTION PASS
   
@@ -76,8 +90,8 @@ async function getTodaysEvents() {
 export const handler = async (event) => {
     try {
         /* ---------- Certificates ---------- */
-        const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
-        const wwdrBuffer = fs.readFileSync(path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer'));
+        const p12Buffer = fs.readFileSync(getCertPath('pass.p12'));
+        const wwdrBuffer = fs.readFileSync(getCertPath('AppleWWDRCAG3.cer'));
 
         const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
         const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
@@ -180,10 +194,10 @@ export const handler = async (event) => {
         /* ---------- Images ---------- */
 
         try {
-            const icon = fs.readFileSync(path.resolve(__dirname, 'icon.png'));
+            const icon = fs.readFileSync(path.join(__dirname, 'certs', 'icon.png'));
             pass.addBuffer('icon.png', icon);
 
-            const icon2x = fs.readFileSync(path.resolve(__dirname, 'icon@2x.png'));
+            const icon2x = fs.readFileSync(path.join(__dirname, 'certs', 'icon@2x.png'));
             pass.addBuffer('icon@2x.png', icon2x);
         } catch (e) {
             console.error('❌ ICON MISSING – PASS WILL FAIL ON IOS', e);
@@ -192,10 +206,10 @@ export const handler = async (event) => {
 
         // 🟡 LOGO OPCIONÁLIS
         try {
-            const logo = fs.readFileSync(path.resolve(__dirname, 'logo.png'));
+            const logo = fs.readFileSync(path.join(__dirname, 'certs', 'logo.png'));
             pass.addBuffer('logo.png', logo);
 
-            const logo2x = fs.readFileSync(path.resolve(__dirname, 'logo@2x.png'));
+            const logo2x = fs.readFileSync(path.join(__dirname, 'certs', 'logo@2x.png'));
             pass.addBuffer('logo@2x.png', logo2x);
         } catch (e) {
             console.warn('⚠️ Logo missing – continuing without logo');

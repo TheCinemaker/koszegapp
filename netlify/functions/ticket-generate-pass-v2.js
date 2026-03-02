@@ -11,6 +11,20 @@ import { ticketConfig } from './lib/ticketConfig.js';
 const __filename = typeof import.meta !== 'undefined' && import.meta.url ? fileURLToPath(import.meta.url) : '';
 const __dirname = typeof import.meta !== 'undefined' && import.meta.url ? dirname(__filename) : (typeof process !== 'undefined' ? process.cwd() : '');
 
+function getCertPath(filename) {
+    const paths = [
+        path.join(__dirname, 'certs', filename),
+        path.join(__dirname, '..', 'certs', filename), // In case we are in a subfolder
+        path.join(__dirname, 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'netlify/functions/certs', filename),
+        path.join(process.cwd(), 'certs', filename)
+    ];
+    for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+    }
+    return path.join(__dirname, 'certs', filename); // Fallback to original
+}
+
 /* -------------------- Helpers -------------------- */
 async function getBuffer(url) {
     if (!url) return null;
@@ -77,8 +91,8 @@ export const handler = async (event) => {
         const eventData = ticket.ticket_events;
 
         /* ---------- Tanúsítványok ---------- */
-        const p12Buffer = fs.readFileSync(path.resolve(__dirname, 'certs/pass.p12'));
-        const wwdrBuffer = fs.readFileSync(path.resolve(__dirname, 'certs/AppleWWDRCAG3.cer'));
+        const p12Buffer = fs.readFileSync(getCertPath('pass.p12'));
+        const wwdrBuffer = fs.readFileSync(getCertPath('AppleWWDRCAG3.cer'));
 
         const wwdrAsn1 = forge.asn1.fromDer(wwdrBuffer.toString('binary'));
         const wwdrCert = forge.pki.certificateFromAsn1(wwdrAsn1);
