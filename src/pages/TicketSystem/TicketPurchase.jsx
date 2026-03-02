@@ -13,6 +13,7 @@ export default function TicketPurchase() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [purchasing, setPurchasing] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('Mind');
 
     // Form state
     const [buyerName, setBuyerName] = useState('');
@@ -112,15 +113,45 @@ export default function TicketPurchase() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
             <div className="max-w-4xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                        🎟️ Jegyvásárlás
+                {/* Header with KőszegTICKET Branding */}
+                <div className="text-center mb-16">
+                    <div className="mb-4 flex items-center justify-center gap-1 opacity-90 scale-90 sm:scale-100">
+                        <span className="text-[11px] font-black uppercase tracking-[0.5em] text-indigo-600 dark:text-indigo-400">Kőszeg</span>
+                        <span className="text-[11px] font-light uppercase tracking-[0.5em] text-gray-500 dark:text-gray-400">TICKET</span>
+                    </div>
+                    <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tighter leading-none">
+                        Vedd meg a jegyed
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400">
-                        Válassz eseményt és vásárolj jegyet egyszerűen
+                    <p className="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-xl mx-auto">
+                        Válassz egy izgalmas programot, és biztosítsd a helyed egyszerűen, pár kattintással.
                     </p>
                 </div>
+
+                {/* Category Filter */}
+                {!selectedEvent && (
+                    <div className="mb-12">
+                        <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 mask-fade-right">
+                            {['Mind', ...new Set(events
+                                .filter(e => new Date(e.date) >= new Date().setHours(0, 0, 0, 0))
+                                .map(e => e.category || 'Egyéb'))].map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => {
+                                            setSelectedCategory(cat);
+                                            // trigger haptic if available
+                                            if (window.navigator?.vibrate) window.navigator.vibrate(10);
+                                        }}
+                                        className={`px-6 py-2.5 rounded-full whitespace-nowrap text-sm font-bold transition-all duration-300 border ${selectedCategory === cat
+                                            ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/30 scale-105'
+                                            : 'bg-white/50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-800'
+                                            }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                        </div>
+                    </div>
+                )}
 
                 {/* Events List */}
                 {!selectedEvent && (
@@ -133,43 +164,45 @@ export default function TicketPurchase() {
                                 </p>
                             </div>
                         ) : (
-                            events.map(event => (
-                                <div
-                                    key={event.id}
-                                    onClick={() => setSelectedEvent(event)}
-                                    className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-indigo-500"
-                                >
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                                        {event.name}
-                                    </h3>
+                            events
+                                .filter(event => selectedCategory === 'Mind' || event.category === selectedCategory || (selectedCategory === 'Egyéb' && !event.category))
+                                .map(event => (
+                                    <div
+                                        key={event.id}
+                                        onClick={() => setSelectedEvent(event)}
+                                        className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-indigo-500"
+                                    >
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                                            {event.name}
+                                        </h3>
 
-                                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                        <div className="flex items-center gap-2">
-                                            <FaCalendarAlt className="text-indigo-500" />
-                                            <span>{new Date(event.date).toLocaleDateString('hu-HU')} {event.time}</span>
+                                        <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                            <div className="flex items-center gap-2">
+                                                <FaCalendarAlt className="text-indigo-500" />
+                                                <span>{new Date(event.date).toLocaleDateString('hu-HU')} {event.time}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <FaMapMarkerAlt className="text-indigo-500" />
+                                                <span>{event.location}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <FaUsers className="text-indigo-500" />
+                                                <span>{event.capacity} fő kapacitás</span>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <FaMapMarkerAlt className="text-indigo-500" />
-                                            <span>{event.location}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <FaUsers className="text-indigo-500" />
-                                            <span>{event.capacity} fő kapacitás</span>
+
+                                        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-2xl font-bold text-indigo-600">
+                                                    {parseInt(event.price).toLocaleString()} Ft
+                                                </span>
+                                                <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                                                    Vásárlás
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-2xl font-bold text-indigo-600">
-                                                {parseInt(event.price).toLocaleString()} Ft
-                                            </span>
-                                            <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
-                                                Vásárlás
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
+                                ))
                         )}
                     </div>
                 )}
@@ -192,7 +225,7 @@ export default function TicketPurchase() {
                             {/* Buyer Name */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Neved
+                                    Neved <span className="text-gray-500 font-normal">(Kérjük, a valós nevedet add meg, mert a beléptetésnél kérhetik az azonosítást)</span>
                                 </label>
                                 <input
                                     type="text"
@@ -207,7 +240,7 @@ export default function TicketPurchase() {
                             {/* Buyer Email */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Email cím
+                                    Email cím <span className="text-gray-500 font-normal">(Pontos címet adj meg, mert ide küldjük a jegyedet)</span>
                                 </label>
                                 <input
                                     type="email"

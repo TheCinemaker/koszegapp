@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { fetchEventById } from '../api';
 import { format, parseISO, isValid, addHours } from 'date-fns';
@@ -158,6 +158,7 @@ function toICS(evt, s, e) {
 export default function EventDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const locationState = useLocation().state; // Get navigation state
   const { location, requestLocation } = useContext(LocationContext);
   const { t } = useTranslation('booking');
   const [evt, setEvt] = useState(null);
@@ -315,7 +316,13 @@ export default function EventDetail() {
         {/* --- NAVIGATION --- */}
         <div className="absolute top-6 left-6 z-50 pointer-events-none">
           <button
-            onClick={() => navigate('/events')}
+            onClick={() => {
+              if (locationState?.fromAttraction) {
+                navigate(`/attractions/${locationState.fromAttraction.id}`);
+              } else {
+                navigate('/events');
+              }
+            }}
             className="w-14 h-14 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 text-gray-900 dark:text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group pointer-events-auto"
           >
             <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
@@ -483,7 +490,7 @@ export default function EventDetail() {
                   <iframe
                     title="Térkép"
                     src={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}&z=16&output=embed`}
-                    className="w-full h-full border-0 grayscale-[50%] group-hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-full border-0 transition-all duration-700"
                     loading="lazy"
                     allowFullScreen
                   />

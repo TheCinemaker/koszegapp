@@ -23,6 +23,15 @@
     },
     "image": "/images/jurisics_var.jpg",
     "imageDark": "/images/attractions/dark/var_dark.jpg",
+    "history_full": "A 13. századi alapokon nyugvó Jurisics-vár Kőszeg legismertebb műemléke. 1532 augusztusában Jurisics Miklós várkapitány mintegy ezerfőnyi védősereggel 25 napon át állt ellen Szulejmán szultán hatalmas seregének. A vár ma interaktív múzeum, az Aranyszobában őrzik a híres 'Szőlő Jövésnek Könyvét'.",
+    "tips": "Ne hagyd ki a nyugati torony kilátóját és az interaktív fegyvertárat, ahol középkori páncélokat is felpróbálhatsz!",
+    "fun_fact": "Kőszegen minden nap 11 órakor is szólnak a harangok, az 1532-es ostrom utolsó török katonájának távozására emlékezve.",
+    "gallery": [
+      "/images/jurisics_var.jpg",
+      "/images/attractions/jurisics_var_2.jpg",
+      "/images/attractions/jurisics_var_3.jpg"
+    ],
+    "accessibility": "A várudvar és a földszinti kiállítóterek akadálymentesen megközelíthetők.",
     "priority": 10,
     "rainSafe": true,
     "childFriendly": true,
@@ -81,6 +90,14 @@
       "lng": 16.5411174
     },
     "image": "/images/hosok_tornya.jpg",
+    "history_full": "Az eklektikus stílusú torony 1932-ben épült a török ostrom 400. évfordulójára, az 1880-ban lebontott középkori Alsó-kaputorony helyén. A torony 27 méter magas, ma a Városi Múzeum kiállításainak és egy egyedülálló panorámafolyosónak ad otthont.",
+    "tips": "A torony erkélyéről készítheted a legszebb fotót a Jurisics térről és a Városházáról.",
+    "fun_fact": "Az épületet Horthy Miklós kormányzó avatta fel, és nagyobb ünnepeken ma is megszólal innen a toronyzene.",
+    "gallery": [
+      "/images/hosok_tornya.jpg",
+      "/images/attractions/hosok_tornya_view.jpg"
+    ],
+    "accessibility": "A toronyba vezető szűk lépcsők miatt nem akadálymentesített.",
     "priority": 9,
     "rainSafe": true,
     "childFriendly": true,
@@ -168,7 +185,15 @@
       "lat": 47.3890864,
       "lng": 16.5411947
     },
-    "image": "/images/sgraffito_haz.jpg"
+    "image": "/images/sgraffito_haz.jpg",
+    "history_full": "A Jurisics tér 7. szám alatti reneszánsz polgárház 1560 körül nyerte el mai formáját. Nevét a homlokzatán látható különleges sgraffito-technikának köszönheti. Az épület Ottlik Géza 'Iskola a határon' című regényében is fontos szerepet kap, a homlokzati latin felirat ihlette a mű több fejezetét.",
+    "tips": "Állj meg egy pillanatra az épület előtt, és olvasd el a falon látható 1668-as latin nyelvű idézetet, mely az irgalmas Istenről szól.",
+    "fun_fact": "Az emeleti kutatóközpont könyvtára az egyik legszebb Kőszegen, ahol egykor sebész családok is laktak.",
+    "gallery": [
+      "/images/sgraffito_haz.jpg",
+      "/images/attractions/sgraffito_interior.jpg"
+    ],
+    "accessibility": "A homlokzat az utcáról jól látható, a belső terek korlátozottan látogathatók."
   },
   {
     "id": "attraction-9",
@@ -187,7 +212,15 @@
       "lat": 47.3893146,
       "lng": 16.5410987
     },
-    "image": "/images/attractions/patikamuz.jpg"
+    "image": "/images/attractions/patikamuz.jpg",
+    "history_full": "A Jurisics tér 6. szám alatti múzeum az ország egyik legkülönlegesebb gyógyszerészet-történeti gyűjteménye. Az 1777-ben alapított jezsuita gyógyszertár barokk berendezése eredeti helyén látható, emellett egy egyedülálló drogpadlás (gyógynövényszárító) is várja a látogatókat.",
+    "tips": "Ne hagyd ki a belső udvaron található barokk patikakert megtekintését sem, ahol 80 féle gyógynövényt ismerhetsz meg!",
+    "fun_fact": "Ebben az épületben 1665 és 1983 között, több mint 300 éven át folyamatosan gyógyítottak a patikusok.",
+    "gallery": [
+      "/images/attractions/patikamuz.jpg",
+      "/images/attractions/patika_belso.jpg"
+    ],
+    "accessibility": "A földszinti kiállítótér akadálymentesen látogatható."
   },
   {
     "id": "attraction-10",
@@ -223,7 +256,15 @@
       "lat": 47.3877617,
       "lng": 16.5407471
     },
-    "image": "/images/jezus_szive_templom.jpg"
+    "image": "/images/jezus_szive_templom.jpg",
+    "history_full": "Az 1892-1894 között épült neogótikus csarnoktemplom Ludwig Schöne bécsi építész tervei alapján készült. 57 méter magas tornyaival Kőszeg legmagasabb épülete, mely meghatározza a város látképét. Belső terét Otto Kott bécsi művész dekoratív, historizáló festése díszíti.",
+    "tips": "Érdemes megfigyelned a színes üvegablakokat, melyeket a város tehetős családjai adományoztak a templom építésekor.",
+    "fun_fact": "A templom tornya pontosan ugyanolyan magas, mint a város észak-déli kiterjedésének egy bizonyos aránya (a helyiek szerint ez a 'város őre').",
+    "gallery": [
+      "/images/jezus_szive_templom.jpg",
+      "/images/attractions/jezus_szive_interior.jpg"
+    ],
+    "accessibility": "A templom bejárata és belső tere teljesen akadálymentesített."
   },
   {
     "id": "attraction-12",
@@ -242,7 +283,15 @@
       "lat": 47.3894462,
       "lng": 16.5405413
     },
-    "image": "/images/attractions/Jakab2.jpg"
+    "image": "/images/attractions/Jakab2.jpg",
+    "history_full": "Kőszeg legrégebbi belvárosi temploma a 14. században épült gótikus stílusban. Itt temették el Jurisics Miklós két gyermekét is. Az 1937-es restaurálás során világhírű freskókat tártak fel, köztük a Köpönyeges Mária és Szent Kristóf monumentális ábrázolásait.",
+    "tips": "Keresd a falakon a Garai család címerével ellátott gótikus záróköveket, melyek a templom kegyúri múltjáról tanúskodnak.",
+    "fun_fact": "A templom építéséhez az 1200-as évek végén elpusztult régi városi kolostor köveit is felhasználták.",
+    "gallery": [
+      "/images/attractions/Jakab2.jpg",
+      "/images/attractions/jakab_fresko.jpg"
+    ],
+    "accessibility": "A gótikus küszöbök miatt korlátozottan akadálymentes."
   },
   {
     "id": "attraction-13",

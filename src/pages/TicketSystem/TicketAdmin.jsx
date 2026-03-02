@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { toast } from 'react-hot-toast';
-import { FaPlus, FaEdit, FaTrash, FaTicketAlt, FaUsers, FaDownload } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaTicketAlt, FaUsers, FaDownload, FaArchive } from 'react-icons/fa';
 
 export default function TicketAdmin() {
     const [events, setEvents] = useState([]);
@@ -12,6 +12,7 @@ export default function TicketAdmin() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showCreateForm, setShowCreateForm] = useState(false);
+    const [activeTab, setActiveTab] = useState('active'); // 'active' or 'archived'
 
     // Form state
     const [formData, setFormData] = useState({
@@ -22,7 +23,8 @@ export default function TicketAdmin() {
         location: '',
         capacity: 100,
         price: 5000,
-        service_fee_percent: 5
+        service_fee_percent: 5,
+        category: 'Koncert'
     });
 
     useEffect(() => {
@@ -94,12 +96,59 @@ export default function TicketAdmin() {
                 location: '',
                 capacity: 100,
                 price: 5000,
-                service_fee_percent: 5
+                service_fee_percent: 5,
+                category: 'Koncert'
             });
             fetchEvents();
         } catch (error) {
             console.error('Error creating event:', error);
             toast.error('Hiba történt az esemény létrehozásakor');
+        }
+    };
+
+    const archiveEvent = async (eventId) => {
+        if (!window.confirm('Biztosan archiválod ezt az eseményt?')) return;
+
+        try {
+            const { error } = await supabase
+                .from('ticket_events')
+                .update({ status: 'archived' })
+                .eq('id', eventId);
+
+            if (error) throw error;
+
+            toast.success('Esemény archiválva');
+            fetchEvents();
+            if (selectedEvent?.id === eventId) setSelectedEvent(null);
+        } catch (error) {
+            console.error('Error archiving event:', error);
+            toast.error('Hiba történt az archiválás során');
+        }
+    };
+
+    const deleteEvent = async (eventId) => {
+        const eventTickets = tickets.filter(t => t.event_id === eventId);
+        if (eventTickets.length > 0) {
+            toast.error('Nem törölhető esemény eladott jegyekkel! Használd az archiválást.');
+            return;
+        }
+
+        if (!window.confirm('Biztosan véglegesen törlöd ezt az eseményt?')) return;
+
+        try {
+            const { error } = await supabase
+                .from('ticket_events')
+                .delete()
+                .eq('id', eventId);
+
+            if (error) throw error;
+
+            toast.success('Esemény törölve');
+            fetchEvents();
+            if (selectedEvent?.id === eventId) setSelectedEvent(null);
+        } catch (error) {
+            console.error('Error deleting event:', error);
+            toast.error('Hiba történt a törlés során');
         }
     };
 
@@ -234,17 +283,39 @@ export default function TicketAdmin() {
                                     </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                        Helyszín
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={formData.location}
-                                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                        required
-                                    />
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            Helyszín
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={formData.location}
+                                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            Kategória
+                                        </label>
+                                        <select
+                                            value={formData.category}
+                                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                            required
+                                        >
+                                            <option value="Színház">Színház</option>
+                                            <option value="Koncert">Koncert</option>
+                                            <option value="Kiállítás">Kiállítás</option>
+                                            <option value="Bemutató">Bemutató</option>
+                                            <option value="Fesztivál">Fesztivál</option>
+                                            <option value="Sport">Sport</option>
+                                            <option value="Városnézés">Városnézés</option>
+                                            <option value="Egyéb">Egyéb</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div className="grid grid-cols-3 gap-4">
@@ -309,50 +380,110 @@ export default function TicketAdmin() {
                     </div>
                 )}
 
+                {/* Tab Switcher */}
+                <div className="flex p-1 bg-gray-200 dark:bg-gray-800 rounded-xl mb-8 max-w-xs mx-auto sm:mx-0">
+                    <button
+                        onClick={() => { setActiveTab('active'); setSelectedEvent(null); }}
+                        className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${activeTab === 'active'
+                            ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        Aktív
+                    </button>
+                    <button
+                        onClick={() => { setActiveTab('archived'); setSelectedEvent(null); }}
+                        className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${activeTab === 'archived'
+                            ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                            : 'text-gray-500 hover:text-gray-700'
+                            }`}
+                    >
+                        Archívum
+                    </button>
+                </div>
+
                 {/* Events Grid */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {events.map(event => {
-                        const stats = getTicketStats(event.id);
-                        return (
-                            <div
-                                key={event.id}
-                                onClick={() => setSelectedEvent(event)}
-                                className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg cursor-pointer transition-all ${selectedEvent?.id === event.id ? 'ring-2 ring-indigo-500' : 'hover:shadow-xl'
-                                    }`}
-                            >
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                                    {event.name}
-                                </h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                    {new Date(event.date).toLocaleDateString('hu-HU')} {event.time}
-                                </p>
+                    {events
+                        .filter(event => {
+                            const isExpired = new Date(event.date) < new Date().setHours(0, 0, 0, 0);
+                            if (activeTab === 'active') {
+                                return event.status === 'active' && !isExpired;
+                            } else {
+                                return event.status === 'archived' || isExpired;
+                            }
+                        })
+                        .map(event => {
+                            const stats = getTicketStats(event.id);
+                            const isExpired = new Date(event.date) < new Date().setHours(0, 0, 0, 0);
 
-                                <div className="space-y-2 text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600 dark:text-gray-400">Eladott jegyek:</span>
-                                        <span className="font-semibold text-gray-900 dark:text-white">{stats.paid}</span>
+                            return (
+                                <div
+                                    key={event.id}
+                                    onClick={() => setSelectedEvent(event)}
+                                    className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg cursor-pointer transition-all ${selectedEvent?.id === event.id ? 'ring-2 ring-indigo-500' : 'hover:shadow-xl'
+                                        } ${isExpired ? 'opacity-50 grayscale-[0.5] border-dashed border-2 border-gray-300 dark:border-gray-700' : ''}`}
+                                >
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                        {event.name}
+                                    </h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                        {new Date(event.date).toLocaleDateString('hu-HU')} {event.time}
+                                    </p>
+
+                                    <div className="space-y-2 text-sm">
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600 dark:text-gray-400">Eladott jegyek:</span>
+                                            <span className="font-semibold text-gray-900 dark:text-white">{stats.paid}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600 dark:text-gray-400">Vendégek:</span>
+                                            <span className="font-semibold text-gray-900 dark:text-white">
+                                                {stats.totalGuests} / {event.capacity}
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-600 dark:text-gray-400">Belépett:</span>
+                                            <span className="font-semibold text-green-600">{stats.used}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600 dark:text-gray-400">Vendégek:</span>
-                                        <span className="font-semibold text-gray-900 dark:text-white">
-                                            {stats.totalGuests} / {event.capacity}
-                                        </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600 dark:text-gray-400">Belépett:</span>
-                                        <span className="font-semibold text-green-600">{stats.used}</span>
+
+                                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center group">
+                                        <div className="flex gap-2">
+                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${event.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                                                }`}>
+                                                {event.status === 'active' ? 'Aktív' : event.status === 'archived' ? 'Archivált' : event.status}
+                                            </span>
+                                            {event.category && (
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-500/10 px-2 py-1 rounded-lg">
+                                                    {event.category}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {/* Action Buttons - only show on hover or if selected */}
+                                        <div className="flex items-center gap-2">
+                                            {event.status !== 'archived' && (
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); archiveEvent(event.id); }}
+                                                    className="p-2 text-gray-400 hover:text-amber-500 transition-colors"
+                                                    title="Archiválás"
+                                                >
+                                                    <FaArchive size={14} />
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); deleteEvent(event.id); }}
+                                                className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                                                title="Törlés"
+                                            >
+                                                <FaTrash size={14} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${event.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                                        }`}>
-                                        {event.status === 'active' ? 'Aktív' : event.status}
-                                    </span>
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
                 </div>
 
                 {/* Ticket List */}
