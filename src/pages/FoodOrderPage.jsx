@@ -58,14 +58,13 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
                 </div>
             </div>
             <div className="p-4 relative z-10 flex-1 flex flex-col">
-                {/* MARKETING BADGES */}
+                {/* MARKETING BADGES (Deactivated per user request) */}
                 <div className="flex flex-col gap-1 items-start mb-2">
-
-                    {restaurant.mystery_box?.length > 0 && (
+                    {/* {restaurant.mystery_box?.length > 0 && (
                         <span className="px-2 py-0.5 rounded-md bg-indigo-600 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-indigo-400">
                             🎁 Ételmentés
                         </span>
-                    )}
+                    )} */}
                 </div>
 
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">{restaurant.name}</h3>
@@ -512,50 +511,13 @@ export default function FoodOrderPage() {
                                 </div>
                             </motion.div>
 
-                            {/* MYSTERY BOX SECTION */}
-                            {selectedRestaurant.mystery_box?.length > 0 && (
+                            {/* MYSTERY BOX SECTION (Deactivated per user request) */}
+                            {/* {selectedRestaurant.mystery_box?.length > 0 && (
                                 <div className="mb-8 p-4 bg-gradient-to-r from-indigo-900/20 to-purple-900/20 border border-indigo-500/30 rounded-[2rem] relative overflow-hidden">
                                     <div className="absolute inset-0 bg-indigo-500/5 backdrop-blur-sm -z-10" />
-                                    <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-indigo-400 dark:text-indigo-300 pl-1">
-                                        <span className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm shadow-md">🎁</span>
-                                        Ételmentés (Mystery Box)
-                                    </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        {selectedRestaurant.mystery_box.map(box => (
-                                            <div key={box.id} className="bg-white/80 dark:bg-[#1a1c2e]/80 rounded-[1.5rem] p-3 border border-indigo-200 dark:border-indigo-900/50 flex items-center gap-3 relative overflow-hidden group">
-                                                <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0">
-                                                    ❓
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <h4 className="font-bold text-sm text-gray-900 dark:text-white truncate">{box.name}</h4>
-                                                    <div className="flex items-baseline gap-2">
-                                                        <span className="text-indigo-600 dark:text-indigo-400 font-bold text-sm">{box.discounted_price} Ft</span>
-                                                        <span className="text-gray-400 text-[10px] line-through">{box.original_price} Ft</span>
-                                                    </div>
-                                                    <div className="text-[10px] text-gray-500 mt-1 flex items-center gap-1">
-                                                        <IoTime className="text-indigo-400" /> Átvétel: {box.pickup_time}
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    onClick={() => handleAddItem({
-                                                        id: `mb-${box.id}`,
-                                                        name: box.name,
-                                                        price: box.discounted_price,
-                                                        quantity: 1,
-                                                        is_mystery_box: true,
-                                                        restaurant_id: selectedRestaurant.id,
-                                                        // placeholder image
-                                                        image_url: 'https://cdn-icons-png.flaticon.com/512/5726/5726678.png'
-                                                    })}
-                                                    className="h-8 px-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-full shadow-md transition-colors"
-                                                >
-                                                    Kosárba
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    ...
                                 </div>
-                            )}
+                            )} */}
                             {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
                                 <div className="space-y-8">
                                     {categories.map((category) => (

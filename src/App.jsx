@@ -499,9 +499,9 @@ function MainAppContent() {
             </>
           )}
 
-          {/* AI Core System (Now Production Ready) */}
-          <AISmartLayer />
-          <AIAssistant />
+          {/* AI Core System (Deactivated per user request) */}
+          {/* <AISmartLayer />
+          <AIAssistant /> */}
 
           {/* AI Debug Panel (STILL DEV ONLY) */}
           {devMode && <AIDebugPanel />}
