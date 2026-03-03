@@ -67,10 +67,8 @@ export const handler = async (event) => {
       throw new Error('QR token missing on ticket record');
     }
 
-    const qrCodeDataUrl = await QRCode.toDataURL(qrTokenValue, {
-      width: 300,
-      margin: 2
-    });
+    // Generate QR code URL (Reliable for Gmail)
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qrTokenValue}`;
 
     const ticketEvent = ticket.ticket_events;
     const eventDate = new Date(ticketEvent.date).toLocaleDateString('hu-HU', {
@@ -79,7 +77,8 @@ export const handler = async (event) => {
       day: 'numeric'
     });
 
-    // Apple Wallet link - pointing to V2 generator (Ticket System)
+    // URLs
+    const printUrl = `${getAppUrl()}/tickets/print/${ticketId}`;
     const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}`;
 
     // Get email config
@@ -111,8 +110,10 @@ export const handler = async (event) => {
     .detail-icon { margin-right: 10px; opacity: 0.7; }
     .qr-section { text-align: center; margin: 30px 0; padding: 20px 0; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
     .qr-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; margin-bottom: 15px; }
-    .qr-image { width: 220px; height: 220px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .wallet-btn { display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 98px; font-size: 15px; font-weight: 600; transition: transform 0.2s; }
+    .qr-image { width: 220px; height: 220px; background: white; padding: 10px; border-radius: 12px; }
+    .btn-group { text-align: center; margin-bottom: 30px; }
+    .wallet-btn { display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 98px; font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .print-btn { display: inline-block; background-color: #f5f5f7; color: #1d1d1f; padding: 12px 24px; text-decoration: none; border-radius: 98px; font-size: 14px; font-weight: 500; border: 1px solid #d2d2d7; }
     .wallet-btn:hover { transform: scale(1.02); }
     .footer { background: #f5f5f7; padding: 30px; text-align: center; font-size: 12px; color: #86868b; border-top: 1px solid #e5e5e5; }
     .warning { font-size: 13px; color: #ff3b30; margin-top: 20px; text-align: center; }
@@ -144,13 +145,17 @@ export const handler = async (event) => {
 
       <div class="qr-section">
         <div class="qr-label">Belépőkód</div>
-        <img src="${qrCodeDataUrl}" alt="QR Kód" class="qr-image" />
-        <p style="font-size: 12px; color: #86868b; margin-top: 10px;">Mutasd fel a bejárátnál</p>
+        <img src="${qrCodeUrl}" alt="QR Kód" class="qr-image" />
+        <p style="font-size: 12px; color: #86868b; margin-top: 10px;">${qrTokenValue}</p>
       </div>
 
-      <div style="text-align: center; margin-bottom: 30px;">
-        <a href="${walletPassUrl}" style="display: inline-block;">
+      <div class="btn-group">
+        <a href="${walletPassUrl}" style="display: inline-block; margin-bottom: 20px;">
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
+        </a>
+        <br />
+        <a href="${printUrl}" class="print-btn">
+          Jegy nyomtatása (PDF / Papír)
         </a>
       </div>
       

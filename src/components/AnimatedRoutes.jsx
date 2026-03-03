@@ -54,6 +54,7 @@ const TicketPurchase = lazyWithRetry(() => import('../pages/TicketSystem/TicketP
 const TicketSuccess = lazyWithRetry(() => import('../pages/TicketSystem/TicketSuccess'));
 const TicketScanner = lazyWithRetry(() => import('../pages/TicketSystem/TicketScanner'));
 const TicketAdmin = lazyWithRetry(() => import('../pages/TicketSystem/TicketAdmin'));
+const TicketPrint = lazyWithRetry(() => import('../pages/TicketSystem/TicketPrint'));
 
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
@@ -189,6 +190,7 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/tickets/success" element={<PageWrapper><TicketSuccess /></PageWrapper>} />
           <Route path="/tickets/scanner" element={<PageWrapper showFooter={false}><TicketScanner /></PageWrapper>} />
           <Route path="/tickets/admin" element={<PageWrapper><TicketAdmin /></PageWrapper>} />
+          <Route path="/tickets/print/:ticketId" element={<PageWrapper showFooter={false}><TicketPrint /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>
