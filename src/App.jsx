@@ -351,13 +351,12 @@ function MainAppContent() {
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                     <div
                       onClick={handleSecretTap}
-                      className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 drop-shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
-                      style={{ fontFamily: "'Anton', sans-serif" }}
+                      className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 group"
                     >
-                      <span className="text-3xl sm:text-5xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">
+                      <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
                         visit
                       </span>
-                      <span className="text-3xl sm:text-5xl font-black uppercase tracking-tighter bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent">
+                      <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent tracking-tighter uppercase text-readability-shadow">
                         Kőszeg
                       </span>
                     </div>
