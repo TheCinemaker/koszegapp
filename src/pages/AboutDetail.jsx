@@ -8,8 +8,10 @@ import {
   IoWater,
   IoDiamond,
   IoGlobeOutline,
-  IoConstructOutline
+  IoConstructOutline,
+  IoChevronForward
 } from 'react-icons/io5';
+
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 
 // --- COMPONENTS FOR APPLE-STYLE SCROLLING ---
@@ -335,7 +337,57 @@ export default function AboutDetail() {
           </div>
         </section>
 
+        {/* --- [SECTION 4.5] PARTNERS --- */}
+        <section className="py-40 px-6 relative overflow-hidden bg-zinc-950/50">
+          <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-20">
+            <div className="flex-1">
+              <FadeUp>
+                <div className="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-8">
+                  <span className="text-xs font-bold uppercase tracking-widest text-orange-400">Együttműködés</span>
+                </div>
+                <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-8">
+                  Legyél a mi<br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-600">partnerünk.</span>
+                </h2>
+                <p className="text-xl text-zinc-400 leading-relaxed max-w-lg mb-12">
+                  Hirdesd meg eseményed Kőszeg digitális központjában, és hagyd, hogy mi elvégezzük a jegyértékesítési munkát helyetted. Neked az egészhez csak egy mobiltelefonra van szükséged!
+                </p>
+                <button
+                  onClick={() => navigate('/partners')}
+                  className="px-12 py-6 rounded-full bg-white text-black font-bold text-xl hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center gap-3"
+                >
+                  Partneri Program <IoChevronForward />
+                </button>
+              </FadeUp>
+            </div>
+
+            <div className="flex-1 grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="h-40 bg-zinc-900 rounded-3xl border border-white/5 p-6 flex flex-col justify-end">
+                  <span className="text-2xl font-bold text-orange-500">0 Ft</span>
+                  <span className="text-xs text-zinc-500 uppercase tracking-widest">Setup díj</span>
+                </div>
+                <div className="h-60 bg-zinc-900 rounded-3xl border border-white/5 p-6 flex flex-col justify-end">
+                  <span className="text-2xl font-bold text-white">Any Device</span>
+                  <span className="text-xs text-zinc-500 uppercase tracking-widest">QR Szkenner</span>
+                </div>
+              </div>
+              <div className="space-y-4 pt-8">
+                <div className="h-60 bg-indigo-900/20 rounded-3xl border border-indigo-500/20 p-6 flex flex-col justify-end">
+                  <span className="text-2xl font-bold text-indigo-400">100%</span>
+                  <span className="text-xs text-zinc-500 uppercase tracking-widest">Digitális</span>
+                </div>
+                <div className="h-40 bg-zinc-900 rounded-3xl border border-white/5 p-6 flex flex-col justify-end">
+                  <span className="text-2xl font-bold text-white">Apple</span>
+                  <span className="text-xs text-zinc-500 uppercase tracking-widest">Wallet</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* --- [SECTION 5] CONTACT / CTA --- */}
+
         <section className="min-h-screen flex flex-col items-center justify-center relative bg-black border-t border-white/5">
           <div className="text-center z-10 px-6 max-w-5xl mx-auto">
             <FadeUp>

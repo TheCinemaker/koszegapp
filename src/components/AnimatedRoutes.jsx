@@ -48,6 +48,8 @@ const FoodAuthPage = lazyWithRetry(() => import('../pages/FoodAuthPage'));
 const KoszegPassRegister = lazyWithRetry(() => import('../pages/KoszegPassRegister'));
 const KoszegPassProfile = lazyWithRetry(() => import('../pages/KoszegPassProfile'));
 const ScannerPage = lazyWithRetry(() => import('../pages/ScannerPage'));
+const Partners = lazyWithRetry(() => import('../pages/Partners'));
+
 
 // Ticket System Components
 const TicketPurchase = lazyWithRetry(() => import('../pages/TicketSystem/TicketPurchase'));
@@ -132,6 +134,8 @@ export default function AnimatedRoutes({ appData }) {
           <Route path="/info/:id" element={<PageWrapper><AboutDetail /></PageWrapper>} />
           <Route path="/adatvedelem" element={<PageWrapper><Adatvedelem /></PageWrapper>} />
           <Route path="/about" element={<PageWrapper><AboutDetail /></PageWrapper>} />
+          <Route path="/partners" element={<PageWrapper><Partners /></PageWrapper>} />
+
 
           <Route path="/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
           <Route path="/my-gems" element={<PageWrapper><MyGems /></PageWrapper>} />

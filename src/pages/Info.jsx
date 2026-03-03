@@ -13,8 +13,10 @@ import {
   IoShieldCheckmarkOutline,
   IoLeafOutline,
   IoArrowBack,
-  IoChevronForward
+  IoChevronForward,
+  IoPeopleOutline
 } from 'react-icons/io5';
+
 import { FadeUp } from '../components/AppleMotion';
 
 // Ikon-leképezés (Io5 verziók)
@@ -77,8 +79,10 @@ export default function Info() {
     { key: 'emergency', title: t('categories.emergency'), color: 'from-rose-500 to-red-600', text: 'text-rose-600', icon: IoShieldCheckmarkOutline },
     { key: 'health', title: t('categories.health'), color: 'from-emerald-400 to-teal-500', text: 'text-teal-600', icon: IoMedkitOutline },
     { key: 'tourism', title: t('categories.tourism'), color: 'from-sky-400 to-blue-500', text: 'text-sky-600', icon: IoLeafOutline },
-    { key: 'app', title: t('categories.app'), color: 'from-violet-500 to-purple-600', text: 'text-violet-600', icon: IoInformationCircleOutline }
+    { key: 'app', title: t('categories.app'), color: 'from-violet-500 to-purple-600', text: 'text-violet-600', icon: IoInformationCircleOutline },
+    { key: 'organizers', title: 'Programszervezőknek', color: 'from-amber-400 to-orange-500', text: 'text-orange-600', icon: IoPeopleOutline }
   ];
+
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-screen">
@@ -131,6 +135,7 @@ export default function Info() {
                     const IconComponent = item.icon && iconMap[item.icon] ? iconMap[item.icon] : fallbackIcon;
 
                     const isFeature = item.id === 'info-99'; // "Rólunk" card
+                    const isPartner = item.id === 'info-100'; // "Partners" card
 
                     // --- FEATURE CARD (Rólunk) ---
                     if (isFeature) {
@@ -159,6 +164,41 @@ export default function Info() {
                                 </p>
                                 <span className="inline-flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-transform duration-300 group-hover:scale-105 shadow-lg shadow-white/10">
                                   {t('aboutCard.button')} <IoChevronForward />
+                                </span>
+                              </div>
+                            </div>
+                          </Link>
+                        </FadeUp>
+                      );
+                    }
+
+                    // --- PARTNER CARD ---
+                    if (isPartner) {
+                      return (
+                        <FadeUp key={item.id} delay={idx * 0.1 + 0.2} className="md:col-span-2">
+                          <Link
+                            to="/partners"
+                            className="
+                                    relative overflow-hidden group block
+                                    bg-gradient-to-br from-[#1e1c1c] to-[#2e1e1c] dark:from-black dark:to-[#1e1c1c]
+                                    rounded-[2rem] p-8 text-white shadow-2xl hover:shadow-orange-500/20
+                                    transition-all duration-700 hover:scale-[1.01]
+                                "
+                          >
+                            {/* Abstract Background */}
+                            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-orange-500/30 to-amber-500/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 group-hover:scale-110 transition-transform duration-1000"></div>
+
+                            <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                              <div className="w-20 h-20 rounded-[1.5rem] bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-transform duration-700">
+                                <IconComponent className="text-4xl text-white drop-shadow-lg" />
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-3xl font-bold mb-2 tracking-tight">{item.title}</h3>
+                                <p className="text-gray-300 text-sm leading-relaxed max-w-lg mb-6 desc-text font-medium opacity-90">
+                                  {item.content}
+                                </p>
+                                <span className="inline-flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-transform duration-300 group-hover:scale-105 shadow-lg shadow-white/10">
+                                  Megismerem <IoChevronForward />
                                 </span>
                               </div>
                             </div>
