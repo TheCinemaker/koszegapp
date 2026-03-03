@@ -104,7 +104,7 @@
     ],
     "image": "bollerverseny.jpg",
     "createdBy": "admin",
-    "highlight": true,
+    "highlight": false,
     "highlightLabel": "Böllérfesztivál"
   },
   {
@@ -404,7 +404,7 @@
     ],
     "image": "muveszeti_szemle.jpg",
     "createdBy": "admin",
-    "highlight": true,
+    "highlight": false,
     "highlightLabel": "Ünnepi Gála"
   },
   {
