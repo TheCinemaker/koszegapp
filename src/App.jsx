@@ -351,15 +351,10 @@ function MainAppContent() {
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                     <div
                       onClick={handleSecretTap}
-                      className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-transform"
-                      style={{ fontFamily: "'Anton', sans-serif" }}
+                      className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 group"
                     >
-                      <span className="text-xl sm:text-2xl font-normal text-slate-900 dark:text-white items-center tracking-wider uppercase text-readability-shadow">
-                        visit
-                      </span>
-                      <span className="text-xl sm:text-2xl font-normal bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent tracking-normal uppercase text-readability-shadow">
-                        Kőszeg
-                      </span>
+                      <span className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.4em] text-indigo-600 dark:text-indigo-400">VISIT</span>
+                      <span className="text-[10px] sm:text-[12px] font-light uppercase tracking-[0.4em] text-gray-500 dark:text-gray-400 ml-1">KŐSZEG</span>
                     </div>
                   </div>
 

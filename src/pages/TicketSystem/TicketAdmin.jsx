@@ -122,7 +122,7 @@ export default function TicketAdmin() {
             if (selectedEvent?.id === eventId) setSelectedEvent(null);
         } catch (error) {
             console.error('Error archiving event:', error);
-            toast.error('Hiba történt az archiválás során');
+            toast.error(`Hiba történt az archiválás során: ${error.message || ''}`);
         }
     };
 
