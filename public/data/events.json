@@ -256,7 +256,6 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209702",
     "name": "Pünkösdi Lili: Örökösök – A hűség fogságában",
     "date": "2026-03-06",
     "time": "19:00",
@@ -274,8 +273,9 @@
     ],
     "image": "orokosok.jpg",
     "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Ősbemutató"
+    "highlight": false,
+    "highlightLabel": "Ősbemutató",
+    "id": "new_1771696209702"
   },
   {
     "name": "Egy fantasztikus meditatív kikapcsolódás, minőségi énidő Neked!",
