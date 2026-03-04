@@ -85,9 +85,9 @@ export const handler = async (event) => {
     // Get email config
     const emailConfig = getEmailConfig();
 
-    // High-reliability thumbnails for badges
-    const appleBadgeUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Add_to_Apple_Wallet_badge.png/512px-Add_to_Apple_Wallet_badge.png';
-    const googleBadgeUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Save_to_Google_Wallet_badge.svg/512px-Save_to_Google_Wallet_badge.svg.png';
+    // Use reliable PNG thumbnails from Wikimedia for maximum email compatibility
+    const appleBadgeUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Add_to_Apple_Wallet_badge.svg/200px-Add_to_Apple_Wallet_badge.svg.png';
+    const googleBadgeUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Google_Wallet_badge_HU.svg/200px-Google_Wallet_badge_HU.svg.png';
 
     // Send email
     const { data, error } = await resend.emails.send({

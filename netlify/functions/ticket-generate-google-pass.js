@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { createClient } from '@supabase/supabase-js';
+import { googleCredentials } from './lib/googleCredentials.js';
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -39,13 +40,21 @@ export const handler = async (event) => {
         console.log('Ticket found:', ticket.id);
 
         const eventData = ticket.ticket_events;
-        const issuerId = process.env.GOOGLE_ISSUER_ID;
-        const classId = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || 'ticket';
 
-        console.log('Google Config:', { issuerId, classId });
+        // Use environment variables or fallback to hardcoded credentials
+        const issuerId = process.env.GOOGLE_ISSUER_ID || googleCredentials.issuerId;
+        const classId = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || googleCredentials.ticketClassId;
+        const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || googleCredentials.client_email;
+        const privateKeyRaw = process.env.GOOGLE_PRIVATE_KEY || googleCredentials.private_key;
 
-        if (!issuerId || !process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
-            console.error('Missing required Google Environment Variables');
+        console.log('Google Config Path:', {
+            usingEnv: !!process.env.GOOGLE_ISSUER_ID,
+            issuerId,
+            classId
+        });
+
+        if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
+            console.error('Missing required Google Credentials (env or fallback)');
             return { statusCode: 500, body: 'Server configuration error: Missing Google Credentials' };
         }
 
@@ -53,7 +62,7 @@ export const handler = async (event) => {
         console.log('Generated Object ID:', objectId);
 
         const claims = {
-            iss: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            iss: serviceAccountEmail,
             aud: 'google',
             typ: 'savetowallet',
             iat: Math.floor(Date.now() / 1000),
@@ -93,7 +102,7 @@ export const handler = async (event) => {
             }
         };
 
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+        const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
         const token = jwt.sign(claims, privateKey, {
             algorithm: 'RS256'
         });
