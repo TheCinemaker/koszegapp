@@ -14,6 +14,8 @@ export const handler = async (event) => {
     }
 
     try {
+        console.log('Ticket ID:', ticketId);
+
         // Fetch ticket with event details
         const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
@@ -30,13 +32,25 @@ export const handler = async (event) => {
             .single();
 
         if (ticketError || !ticket) {
+            console.error('Ticket fetch error:', ticketError);
             return { statusCode: 404, body: 'Ticket not found' };
         }
+
+        console.log('Ticket found:', ticket.id);
 
         const eventData = ticket.ticket_events;
         const issuerId = process.env.GOOGLE_ISSUER_ID;
         const classId = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || 'ticket';
+
+        console.log('Google Config:', { issuerId, classId });
+
+        if (!issuerId || !process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
+            console.error('Missing required Google Environment Variables');
+            return { statusCode: 500, body: 'Server configuration error: Missing Google Credentials' };
+        }
+
         const objectId = `${issuerId}.${ticket.id.replace(/-/g, '_')}`;
+        console.log('Generated Object ID:', objectId);
 
         const claims = {
             iss: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -79,7 +93,8 @@ export const handler = async (event) => {
             }
         };
 
-        const token = jwt.sign(claims, process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), {
+        const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+        const token = jwt.sign(claims, privateKey, {
             algorithm: 'RS256'
         });
 
