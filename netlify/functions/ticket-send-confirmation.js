@@ -85,6 +85,10 @@ export const handler = async (event) => {
     // Get email config
     const emailConfig = getEmailConfig();
 
+    // High-reliability thumbnails for badges
+    const appleBadgeUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Add_to_Apple_Wallet_badge.png/512px-Add_to_Apple_Wallet_badge.png';
+    const googleBadgeUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Save_to_Google_Wallet_badge.svg/512px-Save_to_Google_Wallet_badge.svg.png';
+
     // Send email
     const { data, error } = await resend.emails.send({
       from: emailConfig.from,
@@ -152,11 +156,11 @@ export const handler = async (event) => {
 
       <div class="btn-group">
         <a href="${walletPassUrl}" style="display: inline-block; margin-bottom: 20px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Add_to_Apple_Wallet_badge.png" alt="Add to Apple Wallet" style="height: 42px;" />
+          <img src="${appleBadgeUrl}" alt="Add to Apple Wallet" style="height: 42px;" />
         </a>
         <br />
         <a href="${googleWalletUrl}" style="display: inline-block; margin-bottom: 20px;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Save_to_Google_Wallet_badge.png" alt="Save to Google Wallet" style="height: 42px;" />
+          <img src="${googleBadgeUrl}" alt="Save to Google Wallet" style="height: 42px;" />
         </a>
         <br />
         <a href="${printUrl}" class="print-btn">

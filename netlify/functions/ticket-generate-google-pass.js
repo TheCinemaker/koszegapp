@@ -108,6 +108,9 @@ export const handler = async (event) => {
 
     } catch (err) {
         console.error('Google Wallet generation error:', err);
-        return { statusCode: 500, body: 'Internal Server Error' };
+        return {
+            statusCode: 500,
+            body: `Google Wallet Error: ${err.message}. ${err.stack}`
+        };
     }
 };
