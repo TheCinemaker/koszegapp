@@ -17,7 +17,6 @@ export const handler = async (event) => {
     try {
         console.log('Ticket ID:', ticketId);
 
-        // Fetch ticket with event details
         const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
             .select(`
@@ -41,28 +40,25 @@ export const handler = async (event) => {
 
         const eventData = ticket.ticket_events;
 
-        // Use environment variables or fallback to hardcoded credentials
         const issuerId = process.env.GOOGLE_ISSUER_ID || googleCredentials.issuerId;
         const classIdSource = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || googleCredentials.ticketClassId;
         const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || googleCredentials.client_email;
         const privateKeyRaw = process.env.GOOGLE_PRIVATE_KEY || googleCredentials.private_key;
 
-        // Expert Fix 1: Robust ClassID handling (avoid double issuerId prefix)
+        if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
+            console.error('Missing required Google Credentials');
+            return { statusCode: 500, body: 'Server configuration error: Missing Google Credentials' };
+        }
+
+        // FIX 1: Duplikált objectId eltávolítva – csak egyszer van deklarálva
         const cleanedClassId = classIdSource.includes('.') ? classIdSource.split('.').pop() : classIdSource;
         const fullClassId = `${issuerId}.${cleanedClassId}`;
-
-        // Expert Fix 2: Safer Object ID (max 64 chars, ticket_ prefix)
         const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
 
         console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId });
 
-        if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
-            console.error('Missing required Google Credentials (env or fallback)');
-            return { statusCode: 500, body: 'Server configuration error: Missing Google Credentials' };
-        }
-
-        const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
-        console.log('Generated IDs:', { objectId, fullClassId });
+        // FIX 2: Helyes ISO dátum magyar időzónával
+        const startDateTime = new Date(`${eventData.date}T${eventData.time || '10:00'}:00+01:00`).toISOString();
 
         const claims = {
             iss: serviceAccountEmail,
@@ -75,7 +71,6 @@ export const handler = async (event) => {
                 'https://koszegapp.hu',
                 'https://visitkoszeg.hu',
                 'https://www.visitkoszeg.hu',
-                'https://mail.google.com',
                 'http://localhost:8888',
                 'http://localhost:5173'
             ],
@@ -85,29 +80,40 @@ export const handler = async (event) => {
                         id: objectId,
                         classId: fullClassId,
                         state: 'ACTIVE',
+
+                        // FIX 3: Helyes barcode struktúra + altText
                         barcode: {
                             type: 'QR_CODE',
-                            value: ticket.qr_code_token || ticket.qr_token || ticket.id
+                            value: ticket.qr_code_token || ticket.qr_token || String(ticket.id),
+                            altText: ticket.qr_code_token || ticket.qr_token || String(ticket.id)
                         },
+
                         ticketHolderName: ticket.buyer_name || 'Vendég',
-                        reservationId: ticket.id,
+                        reservationId: String(ticket.id),
+
+                        // FIX 4: Helyes venue struktúra (localizedValue szükséges)
                         venue: {
-                            name: eventData.location || 'Kőszeg'
+                            name: {
+                                defaultValue: {
+                                    language: 'hu',
+                                    value: eventData.location || 'Kőszeg'
+                                }
+                            }
                         },
-                        dateTime: {
-                            // Robust ISO-8601 format (YYYY-MM-DDTHH:mm:ssZ) WITHOUT milliseconds
-                            start: new Date(`${eventData.date}T${eventData.time || '10:00'}`).toISOString().split('.')[0] + 'Z'
-                        },
+
+                        // FIX 5: dateTime → startDateTime (helyes mező név)
+                        startDateTime,
+
                         textModulesData: [
                             {
                                 id: 'event_name',
                                 header: 'ESEMÉNY',
-                                body: eventData.name
+                                body: eventData.name || ''
                             },
                             {
                                 id: 'guests',
                                 header: 'VENDÉGEK',
-                                body: `${ticket.guest_count} fő`
+                                body: `${ticket.guest_count || 1} fő`
                             }
                         ]
                     }
@@ -115,14 +121,13 @@ export const handler = async (event) => {
             }
         };
 
+        // FIX 6: Private key \\n → \n csere (Netlify env var miatt szükséges)
         const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
-        const token = jwt.sign(claims, privateKey, {
-            algorithm: 'RS256'
-        });
+        const token = jwt.sign(claims, privateKey, { algorithm: 'RS256' });
 
         return {
             statusCode: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 saveUrl: `https://pay.google.com/gp/v/save/${token}`
             })
@@ -132,7 +137,7 @@ export const handler = async (event) => {
         console.error('Google Wallet generation error:', err);
         return {
             statusCode: 500,
-            body: `Google Wallet Error: ${err.message}. ${err.stack}`
+            body: JSON.stringify({ error: err.message, stack: err.stack })
         };
     }
 };
