@@ -8,14 +8,26 @@ const supabase = createClient(
 );
 
 export const handler = async (event) => {
+    // Add CORS headers for browser compatibility
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Content-Type': 'application/json'
+    };
+
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 200, headers, body: '' };
+    }
+
     const ticketId = event.queryStringParameters?.ticketId;
 
     if (!ticketId) {
-        return { statusCode: 400, body: 'Ticket ID required' };
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Ticket ID required' }) };
     }
 
     try {
-        console.log('Ticket ID:', ticketId);
+        console.log('Generating Google Pass for ticket:', ticketId);
 
         const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
@@ -33,13 +45,12 @@ export const handler = async (event) => {
 
         if (ticketError || !ticket) {
             console.error('Ticket fetch error:', ticketError);
-            return { statusCode: 404, body: 'Ticket not found' };
+            return { statusCode: 404, headers, body: JSON.stringify({ error: 'Ticket not found' }) };
         }
 
-        console.log('Ticket found:', ticket.id);
+        const eventData = ticket.ticket_events || {};
 
-        const eventData = ticket.ticket_events;
-
+        // Use environment variables or fallback to hardcoded credentials
         const issuerId = process.env.GOOGLE_ISSUER_ID || googleCredentials.issuerId;
         const classIdSource = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || googleCredentials.ticketClassId;
         const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || googleCredentials.client_email;
@@ -47,29 +58,31 @@ export const handler = async (event) => {
 
         if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
             console.error('Missing required Google Credentials');
-            return { statusCode: 500, body: 'Server configuration error: Missing Google Credentials' };
+            return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server configuration error: Missing Google Credentials' }) };
         }
 
-        // FIX 1: Duplikált objectId eltávolítva – csak egyszer van deklarálva
+        // IDs handling
         const cleanedClassId = classIdSource.includes('.') ? classIdSource.split('.').pop() : classIdSource;
         const fullClassId = `${issuerId}.${cleanedClassId}`;
         const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
 
-        // FIX 2: Helyes ISO dátum kezelése (robosztus megoldás)
+        console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId });
+
+        // Robust Date/Time Formatting
+        let datePart = eventData.date || new Date().toISOString().split('T')[0];
         let timePart = (eventData.time || '10:00').trim();
-        // Ha csak óra:perc van, adjunk hozzá másodpercet
-        if (timePart.split(':').length === 2) {
-            timePart += ':00';
-        }
-        // Ha már van másodperc, de valamiért túl hosszú (pl. :00:00), vágjuk le
-        if (timePart.split(':').length > 3) {
-            timePart = timePart.split(':').slice(0, 3).join(':');
+
+        // Ensure HH:mm format
+        if (timePart.includes(':')) {
+            const parts = timePart.split(':');
+            timePart = `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
+        } else {
+            timePart = '10:00';
         }
 
-        const dateStr = `${eventData.date}T${timePart}+01:00`;
-        const startDateTime = new Date(dateStr).toISOString();
-
-        console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId, startDateTime });
+        // ISO-8601 without milliseconds + UTC offset for Kőszeg (CET/CEST)
+        // We use UTC (Z) for maximum compatibility with Google's parsers
+        const startDateTime = `${datePart}T${timePart}:00Z`;
 
         const claims = {
             iss: serviceAccountEmail,
@@ -82,6 +95,7 @@ export const handler = async (event) => {
                 'https://koszegapp.hu',
                 'https://visitkoszeg.hu',
                 'https://www.visitkoszeg.hu',
+                'https://mail.google.com',
                 'http://localhost:8888',
                 'http://localhost:5173'
             ],
@@ -91,18 +105,13 @@ export const handler = async (event) => {
                         id: objectId,
                         classId: fullClassId,
                         state: 'ACTIVE',
-
-                        // FIX 3: Helyes barcode struktúra + altText
                         barcode: {
                             type: 'QR_CODE',
                             value: ticket.qr_code_token || ticket.qr_token || String(ticket.id),
                             altText: ticket.qr_code_token || ticket.qr_token || String(ticket.id)
                         },
-
                         ticketHolderName: ticket.buyer_name || 'Vendég',
                         reservationId: String(ticket.id),
-
-                        // FIX 4: Helyes venue struktúra (localizedValue szükséges)
                         venue: {
                             name: {
                                 defaultValue: {
@@ -111,15 +120,15 @@ export const handler = async (event) => {
                                 }
                             }
                         },
-
-                        // FIX 5: dateTime → startDateTime (helyes mező név)
-                        startDateTime,
-
+                        // Using the standard dateTime structure for better compatibility
+                        dateTime: {
+                            start: startDateTime
+                        },
                         textModulesData: [
                             {
                                 id: 'event_name',
                                 header: 'ESEMÉNY',
-                                body: eventData.name || ''
+                                body: eventData.name || 'Rendezvény'
                             },
                             {
                                 id: 'guests',
@@ -132,13 +141,12 @@ export const handler = async (event) => {
             }
         };
 
-        // FIX 6: Private key \\n → \n csere (Netlify env var miatt szükséges)
         const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
         const token = jwt.sign(claims, privateKey, { algorithm: 'RS256' });
 
         return {
             statusCode: 200,
-            headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+            headers,
             body: JSON.stringify({
                 saveUrl: `https://pay.google.com/gp/v/save/${token}`
             })
@@ -148,6 +156,7 @@ export const handler = async (event) => {
         console.error('Google Wallet generation error:', err);
         return {
             statusCode: 500,
+            headers,
             body: JSON.stringify({ error: err.message, stack: err.stack })
         };
     }
