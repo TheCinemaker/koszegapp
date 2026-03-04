@@ -187,11 +187,11 @@ export const handler = async (event) => {
         const token = jwt.sign(claims, privateKey, { algorithm: 'RS256' });
 
         return {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify({
-                saveUrl: `https://pay.google.com/gp/v/save/${token}`
-            })
+            statusCode: 302,
+            headers: {
+                'Location': `https://pay.google.com/gp/v/save/${token}`,
+                'Cache-Control': 'no-cache, no-store, must-revalidate'
+            }
         };
 
     } catch (err) {
