@@ -73,6 +73,9 @@ export const handler = async (event) => {
                 'https://koszegapp.netlify.app',
                 'https://www.koszegapp.hu',
                 'https://koszegapp.hu',
+                'https://visitkoszeg.hu',
+                'https://www.visitkoszeg.hu',
+                'https://mail.google.com',
                 'http://localhost:8888',
                 'http://localhost:5173'
             ],
@@ -86,14 +89,14 @@ export const handler = async (event) => {
                             type: 'QR_CODE',
                             value: ticket.qr_code_token || ticket.qr_token || ticket.id
                         },
-                        ticketHolderName: ticket.buyer_name,
+                        ticketHolderName: ticket.buyer_name || 'Vendég',
                         reservationId: ticket.id,
                         venue: {
                             name: eventData.location || 'Kőszeg'
                         },
                         dateTime: {
-                            // Robust ISO-8601 format (YYYY-MM-DDTHH:mm:ssZ)
-                            start: new Date(`${eventData.date}T${eventData.time || '10:00'}`).toISOString()
+                            // Robust ISO-8601 format (YYYY-MM-DDTHH:mm:ssZ) WITHOUT milliseconds
+                            start: new Date(`${eventData.date}T${eventData.time || '10:00'}`).toISOString().split('.')[0] + 'Z'
                         },
                         textModulesData: [
                             {
