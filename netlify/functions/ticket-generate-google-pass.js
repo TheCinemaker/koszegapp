@@ -55,10 +55,21 @@ export const handler = async (event) => {
         const fullClassId = `${issuerId}.${cleanedClassId}`;
         const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
 
-        console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId });
+        // FIX 2: Helyes ISO dátum kezelése (robosztus megoldás)
+        let timePart = (eventData.time || '10:00').trim();
+        // Ha csak óra:perc van, adjunk hozzá másodpercet
+        if (timePart.split(':').length === 2) {
+            timePart += ':00';
+        }
+        // Ha már van másodperc, de valamiért túl hosszú (pl. :00:00), vágjuk le
+        if (timePart.split(':').length > 3) {
+            timePart = timePart.split(':').slice(0, 3).join(':');
+        }
 
-        // FIX 2: Helyes ISO dátum magyar időzónával
-        const startDateTime = new Date(`${eventData.date}T${eventData.time || '10:00'}:00+01:00`).toISOString();
+        const dateStr = `${eventData.date}T${timePart}+01:00`;
+        const startDateTime = new Date(dateStr).toISOString();
+
+        console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId, startDateTime });
 
         const claims = {
             iss: serviceAccountEmail,
