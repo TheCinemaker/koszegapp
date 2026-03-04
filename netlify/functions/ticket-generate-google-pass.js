@@ -139,10 +139,10 @@ export const handler = async (event) => {
                         classId: fullClassId,
                         state: 'ACTIVE',
 
-                        // Premium Hero Image
+                        // Minimalist Hero Image (Kőszeg Skyline)
                         heroImage: {
                             sourceUri: {
-                                uri: 'https://visitkoszeg.hu/wp-content/uploads/2021/04/jurisics-var-koszeg-1-scaled.jpg'
+                                uri: 'https://koszegapp.netlify.app/assets/images/wallet/koszeg_skyline.png'
                             }
                         },
 
