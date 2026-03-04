@@ -43,35 +43,44 @@ export const handler = async (event) => {
 
         // Use environment variables or fallback to hardcoded credentials
         const issuerId = process.env.GOOGLE_ISSUER_ID || googleCredentials.issuerId;
-        const classId = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || googleCredentials.ticketClassId;
+        const classIdSource = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || googleCredentials.ticketClassId;
         const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || googleCredentials.client_email;
         const privateKeyRaw = process.env.GOOGLE_PRIVATE_KEY || googleCredentials.private_key;
 
-        console.log('Google Config Path:', {
-            usingEnv: !!process.env.GOOGLE_ISSUER_ID,
-            issuerId,
-            classId
-        });
+        // Expert Fix 1: Robust ClassID handling (avoid double issuerId prefix)
+        const cleanedClassId = classIdSource.includes('.') ? classIdSource.split('.').pop() : classIdSource;
+        const fullClassId = `${issuerId}.${cleanedClassId}`;
+
+        // Expert Fix 2: Safer Object ID (max 64 chars, ticket_ prefix)
+        const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
+
+        console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId });
 
         if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
             console.error('Missing required Google Credentials (env or fallback)');
             return { statusCode: 500, body: 'Server configuration error: Missing Google Credentials' };
         }
 
-        const objectId = `${issuerId}.${ticket.id.replace(/-/g, '_')}`;
-        console.log('Generated Object ID:', objectId);
+        const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
+        console.log('Generated IDs:', { objectId, fullClassId });
 
         const claims = {
             iss: serviceAccountEmail,
             aud: 'google',
             typ: 'savetowallet',
             iat: Math.floor(Date.now() / 1000),
-            origins: ['https://koszegapp.netlify.app'],
+            origins: [
+                'https://koszegapp.netlify.app',
+                'https://www.koszegapp.hu',
+                'https://koszegapp.hu',
+                'http://localhost:8888',
+                'http://localhost:5173'
+            ],
             payload: {
                 eventTicketObjects: [
                     {
                         id: objectId,
-                        classId: `${issuerId}.${classId}`,
+                        classId: fullClassId,
                         state: 'ACTIVE',
                         barcode: {
                             type: 'QR_CODE',
@@ -80,11 +89,11 @@ export const handler = async (event) => {
                         ticketHolderName: ticket.buyer_name,
                         reservationId: ticket.id,
                         venue: {
-                            name: eventData.location
+                            name: eventData.location || 'Kőszeg'
                         },
                         dateTime: {
-                            // Ensure valid ISO-8601 format. If eventData.time already has seconds, don't add them.
-                            start: `${eventData.date}T${eventData.time.includes(':00') ? eventData.time : eventData.time + ':00'}`
+                            // Robust ISO-8601 format (YYYY-MM-DDTHH:mm:ssZ)
+                            start: new Date(`${eventData.date}T${eventData.time || '10:00'}`).toISOString()
                         },
                         textModulesData: [
                             {
