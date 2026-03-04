@@ -131,13 +131,15 @@ export default function AmbientBackground({ weather, upcoming = [], dark }) {
             if (!dark) bgStyle = 'linear-gradient(to bottom, #475569, #94a3b8)'; // Slate grey sky
         }
 
-        // Predictive Darkening (The "Storm is Coming" effect)
-        // If not already raining, but rain is imminent, blend to a darker version of the current palette
         if (predictiveStatus.imminentRain && !dark && weatherConfig.type === 'clear') {
-            const darkFactor = predictiveStatus.factor;
-            // Transition from original sky towards a moody "pre-storm" slate
-            // We use a custom overlay behavior in the CSS or here
-            bgStyle = `linear-gradient(to bottom, #334155, #64748b)`; // Dark slate
+            // Moody pre-storm sky that respects the current time of day
+            if (phase === 'day') {
+                bgStyle = 'linear-gradient(to bottom, #334155, #64748b)'; // Moody slate blue
+            } else if (phase === 'dusk') {
+                bgStyle = 'linear-gradient(to bottom, #0f172a, #4c0519, #881337)'; // Moody deep sunset red/indigo
+            } else if (phase === 'dawn') {
+                bgStyle = 'linear-gradient(to bottom, #1e1b4b, #451a03, #92400e)'; // Moody deep dawn orange/purple
+            }
         }
 
         const { x, y } = sunData;
