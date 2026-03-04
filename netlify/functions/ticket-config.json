@@ -22,7 +22,7 @@
             "passTypeIdentifier": "pass.hu.koszeg.koszegpass"
         },
         "google": {
-            "enabled": false,
+            "enabled": true,
             "issuerId": ""
         }
     },

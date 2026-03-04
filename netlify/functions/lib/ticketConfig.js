@@ -57,11 +57,24 @@ const getWalletConfig = () => {
     };
 };
 
+/**
+ * Get Google Wallet configuration
+ * @returns {object} Wallet settings
+ */
+const getGoogleWalletConfig = () => {
+    return {
+        enabled: ticketConfig.wallet.google.enabled,
+        issuerId: process.env.GOOGLE_ISSUER_ID || ticketConfig.wallet.google.issuerId,
+        classId: process.env.GOOGLE_TICKET_CLASS_ID || 'ticket_class'
+    };
+};
+
 export {
     ticketConfig,
     getAppUrl,
     isTestMode,
     getStripeConfig,
     getEmailConfig,
-    getWalletConfig
+    getWalletConfig,
+    getGoogleWalletConfig
 };

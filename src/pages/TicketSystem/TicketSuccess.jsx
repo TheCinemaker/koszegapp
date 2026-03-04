@@ -49,24 +49,41 @@ export default function TicketSuccess() {
                     </p>
 
                     {/* Info Boxes */}
-                    <div className="grid md:grid-cols-2 gap-4 mb-8">
-                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6">
-                            <FaEnvelope className="text-3xl text-blue-600 dark:text-blue-400 mx-auto mb-3" />
-                            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                                Ellenőrizd az emailedet
+                    <div className="grid md:grid-cols-3 gap-4 mb-8">
+                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+                            <FaEnvelope className="text-2xl text-blue-600 dark:text-blue-400 mx-auto mb-2" />
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm">
+                                Email
                             </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                A jegyed QR kóddal együtt megküldtük
+                            <p className="text-[10px] text-gray-600 dark:text-gray-400">
+                                A jegyet QR kóddal megküldtük
                             </p>
                         </div>
 
-                        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6">
-                            <FaApple className="text-3xl text-purple-600 dark:text-purple-400 mx-auto mb-3" />
-                            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4">
+                            <FaApple className="text-2xl text-purple-600 dark:text-purple-400 mx-auto mb-2" />
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm">
                                 Apple Wallet
                             </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Kattints az emailben a gombra a hozzáadáshoz
+                            <p className="text-[10px] text-gray-600 dark:text-gray-400">
+                                Kattints az emailben a gombra
+                            </p>
+                        </div>
+
+                        <div className="bg-zinc-50 dark:bg-zinc-800/40 rounded-xl p-4">
+                            <div className="w-8 h-8 mx-auto mb-2 flex items-center justify-center">
+                                <svg viewBox="0 0 24 24" className="w-6 h-6">
+                                    <path fill="#4285F4" d="M23.49 12.275c0-.85-.075-1.7-.225-2.51H12v4.76h6.445c-.275 1.485-1.12 2.74-2.4 3.6v3h3.89c2.275-2.095 3.585-5.18 3.585-8.85z" />
+                                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.075 7.94-2.9l-3.89-3c-1.07.725-2.445 1.15-4.05 1.15-3.125 0-5.77-2.11-6.72-4.96H1.36v3.115C3.435 21.525 7.425 24 12 24z" />
+                                    <path fill="#FBBC05" d="M5.28 14.29c-.245-.735-.38-1.52-.38-2.29s.135-1.555.385-2.29V6.595H1.36c-.85 1.695-1.34 3.625-1.34 5.67s.49 3.975 1.34 5.67l3.92-3.645z" />
+                                    <path fill="#EA4335" d="M12 4.75c1.765 0 3.35.605 4.6 1.795l3.415-3.415C17.95 1.19 15.235 0 12 0 7.425 0 3.435 2.475 1.36 6.595l3.92 3.645c.95-2.85 3.595-4.96 6.72-4.96z" />
+                                </svg>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm">
+                                Google Wallet
+                            </h3>
+                            <p className="text-[10px] text-gray-600 dark:text-gray-400">
+                                Androidon is elmentheted
                             </p>
                         </div>
                     </div>

@@ -80,6 +80,7 @@ export const handler = async (event) => {
     // URLs
     const printUrl = `${getAppUrl()}/tickets/print/${ticketId}`;
     const walletPassUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-pass-v2?ticketId=${ticketId}`;
+    const googleWalletUrl = `${getAppUrl()}/.netlify/functions/ticket-generate-google-pass?ticketId=${ticketId}`;
 
     // Get email config
     const emailConfig = getEmailConfig();
@@ -152,6 +153,10 @@ export const handler = async (event) => {
       <div class="btn-group">
         <a href="${walletPassUrl}" style="display: inline-block; margin-bottom: 20px;">
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Add_to_Apple_Wallet_badge.svg" alt="Add to Apple Wallet" style="height: 42px;" />
+        </a>
+        <br />
+        <a href="${googleWalletUrl}" style="display: inline-block; margin-bottom: 20px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Save_to_Google_Wallet_badge.svg" alt="Save to Google Wallet" style="height: 42px;" />
         </a>
         <br />
         <a href="${printUrl}" class="print-btn">
