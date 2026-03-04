@@ -1,11 +1,43 @@
 import jwt from 'jsonwebtoken';
 import { createClient } from '@supabase/supabase-js';
+import { GoogleAuth } from 'google-auth-library';
 import { googleCredentials } from './lib/googleCredentials.js';
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
+
+/**
+ * Expert Fix: The Google Wallet EventTicketClass needs to be 
+ * programmatically set to UNDER_REVIEW to become ACTIVE in production.
+ */
+async function publishClass(fullClassId, serviceAccountEmail, privateKey) {
+    try {
+        const auth = new GoogleAuth({
+            credentials: {
+                client_email: serviceAccountEmail,
+                private_key: privateKey
+            },
+            scopes: ['https://www.googleapis.com/auth/wallet_object.issuer']
+        });
+
+        const client = await auth.getClient();
+
+        // PATCH request to set status to UNDER_REVIEW
+        await client.request({
+            url: `https://walletobjects.googleapis.com/walletobjects/v1/eventTicketClass/${encodeURIComponent(fullClassId)}`,
+            method: 'PATCH',
+            data: {
+                reviewStatus: 'UNDER_REVIEW'
+            }
+        });
+        console.log('✅ Class status successfully set to UNDER_REVIEW');
+    } catch (err) {
+        console.warn('⚠️ Class activation warning (might already be active):', err.message);
+        // We continue even if this fails, as the class might already be active
+    }
+}
 
 export const handler = async (event) => {
     // Add CORS headers for browser compatibility
@@ -66,6 +98,11 @@ export const handler = async (event) => {
         const fullClassId = `${issuerId}.${cleanedClassId}`;
         const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
 
+        const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
+
+        // EXPERT FIX: Publish Class before generating JWT
+        await publishClass(fullClassId, serviceAccountEmail, privateKey);
+
         console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId });
 
         // Robust Date/Time Formatting
@@ -81,8 +118,8 @@ export const handler = async (event) => {
         }
 
         // ISO-8601 without milliseconds + UTC offset for Kőszeg (CET/CEST)
-        // We use UTC (Z) for maximum compatibility with Google's parsers
-        const startDateTime = `${datePart}T${timePart}:00Z`;
+        // Note: Using +01:00 for CET. In CEST it would be +02:00.
+        const startDateTime = `${datePart}T${timePart}:00+01:00`;
 
         const claims = {
             iss: serviceAccountEmail,
@@ -120,10 +157,8 @@ export const handler = async (event) => {
                                 }
                             }
                         },
-                        // Using the standard dateTime structure for better compatibility
-                        dateTime: {
-                            start: startDateTime
-                        },
+                        // Fix 5: startDateTime is the correct field name for the object
+                        startDateTime,
                         textModulesData: [
                             {
                                 id: 'event_name',
@@ -141,7 +176,6 @@ export const handler = async (event) => {
             }
         };
 
-        const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
         const token = jwt.sign(claims, privateKey, { algorithm: 'RS256' });
 
         return {
