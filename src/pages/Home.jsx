@@ -20,7 +20,9 @@ import { FadeUp } from '../components/AppleMotion';
 
 import { useTranslation } from 'react-i18next'; // Added import
 
-export default function Home() {
+import LiveHero from '../components/LiveHero';
+
+export default function Home({ appData, weather }) {
   const { t } = useTranslation('home'); // Load 'home' namespace
 
   const sections = [
@@ -45,6 +47,9 @@ export default function Home() {
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
+
+        {/* --- LIVE HERO SECTION --- */}
+        <LiveHero appData={appData} weather={weather} />
 
         {/* --- HEADER SECTION --- */}
         <div className="mb-8 relative z-50">

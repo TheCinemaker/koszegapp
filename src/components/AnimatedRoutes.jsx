@@ -86,7 +86,7 @@ const pageTransition = {
   duration: 0.35
 };
 
-export default function AnimatedRoutes({ appData }) {
+export default function AnimatedRoutes({ appData, weather }) {
   const location = useLocation();
 
   return (
@@ -100,7 +100,7 @@ export default function AnimatedRoutes({ appData }) {
         </div>
       }>
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+          <Route path="/" element={<PageWrapper><Home appData={appData} weather={weather} /></PageWrapper>} />
 
           <Route path="/attractions" element={<PageWrapper><Attractions attractions={appData.attractions} loading={appData.loading} /></PageWrapper>} />
           <Route path="/attractions/:id" element={<PageWrapper><AttractionDetail /></PageWrapper>} />

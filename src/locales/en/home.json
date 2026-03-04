@@ -46,5 +46,15 @@
         }
     },
     "comingSoon": "COMING SOON",
-    "comingSoonMessage": "This feature will be available soon!"
+    "comingSoonMessage": "This feature is coming soon!",
+    "liveHero": {
+        "greetingDay": "Have a nice day in Kőszeg!",
+        "greetingMorning": "Good morning in Kőszeg!",
+        "greetingEvening": "Good evening in Kőszeg!",
+        "greetingNight": "Good night in Kőszeg!",
+        "nextEvent": "Next event",
+        "nowAt": "Now at:",
+        "ctaEvents": "All Programs",
+        "ctaTickets": "Show My Ticket"
+    }
 }

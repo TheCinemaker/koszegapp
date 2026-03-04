@@ -50,5 +50,15 @@
         }
     },
     "comingSoon": "HAMAROSAN",
-    "comingSoonMessage": "Ez a funkció hamarosan elérhető!"
+    "comingSoonMessage": "Ez a funkció hamarosan elérhető!",
+    "liveHero": {
+        "greetingDay": "Szép napot Kőszegen!",
+        "greetingMorning": "Jó reggelt Kőszegen!",
+        "greetingEvening": "Szép estét Kőszegen!",
+        "greetingNight": "Jó éjszakát Kőszegen!",
+        "nextEvent": "Következő esemény",
+        "nowAt": "Most itt:",
+        "ctaEvents": "Minden program",
+        "ctaTickets": "Jegyem felmutatása"
+    }
 }

@@ -46,5 +46,15 @@
         }
     },
     "comingSoon": "DEMNÄCHST",
-    "comingSoonMessage": "Diese Funktion ist bald verfügbar!"
+    "comingSoonMessage": "Diese Funktion ist bald verfügbar!",
+    "liveHero": {
+        "greetingDay": "Einen schönen Tag in Güns!",
+        "greetingMorning": "Guten Morgen in Güns!",
+        "greetingEvening": "Schönen Abend in Güns!",
+        "greetingNight": "Gute Nacht in Güns!",
+        "nextEvent": "Nächste Veranstaltung",
+        "nowAt": "Jetzt bei:",
+        "ctaEvents": "Alle Programme",
+        "ctaTickets": "Mein Ticket zeigen"
+    }
 }

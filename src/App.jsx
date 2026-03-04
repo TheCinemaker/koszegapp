@@ -81,6 +81,7 @@ export default function App() {
 }
 
 import AmbientBackground from './components/AmbientBackground';
+import { fetchCurrentWeather, fetchUpcomingWeather } from './api/weather';
 
 // ... (imports remain)
 
@@ -117,6 +118,7 @@ function MainAppContent() {
   const favoritesRef = useRef(null);
 
   const [weather, setWeather] = useState({ icon: '', temp: '--' });
+  const [upcomingWeather, setUpcomingWeather] = useState([]);
   const [appData, setAppData] = useState({
     attractions: [],
     events: [],
@@ -208,18 +210,40 @@ function MainAppContent() {
 
         const normalizedEvents = eventsData.map(evt => {
           let s, e;
-          // A dátumfeldolgozás a megbízható parseISO-val
+          // Ensure we treat the date strings as local time by stripping 'Z' or appending localized info if needed,
+          // but parseISO on 'YYYY-MM-DD' or 'YYYY-MM-DD HH:mm' usually handles it as local if no offset.
+          // However, to be 100% safe with the provided data:
+          const parseLocal = (dateStr) => {
+            if (!dateStr) return null;
+            // If it's just 'YY-MM-DD', add 'T00:00:00' to avoid UTC shift in some browsers
+            let base = dateStr;
+            if (base.length === 10) base += 'T00:00:00';
+            // Replace ' ' with 'T' for ISO compatibility if needed
+            base = base.replace(' ', 'T');
+            return parseISO(base);
+          };
+
           if (evt.startDate) {
-            s = parseISO(evt.startDate);
-            e = evt.endDate ? parseISO(evt.endDate) : s;
+            s = parseLocal(evt.startDate);
+            e = evt.endDate ? parseLocal(evt.endDate) : s;
           } else if (evt.date?.includes('/')) {
             const p = evt.date.split('/');
-            s = parseISO(p[0]);
-            e = parseISO(p[1] || p[0]);
+            s = parseLocal(p[0]);
+            e = parseLocal(p[1] || p[0]);
           } else {
-            s = parseISO(evt.date);
-            e = evt.end_date ? parseISO(evt.end_date) : s;
+            s = parseLocal(evt.date);
+            e = evt.end_date ? parseLocal(evt.end_date) : s;
           }
+
+          // Merge time if available for precise countdown
+          if (evt.time && s) {
+            const timePart = evt.time.split('-')[0].trim();
+            if (timePart.includes(':')) {
+              const [h, m] = timePart.split(':');
+              s.setHours(parseInt(h, 10), parseInt(m, 10), 0, 0);
+            }
+          }
+
           return { ...evt, _s: s, _e: e };
         });
 
@@ -249,9 +273,12 @@ function MainAppContent() {
       .catch(console.error);
 
     // időjárás
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
-      .then(res => res.json())
-      .then(data => data && setWeather({ icon: data.weather[0].icon, temp: Math.round(data.main.temp) }))
+    fetchCurrentWeather()
+      .then(setWeather)
+      .catch(console.error);
+
+    fetchUpcomingWeather()
+      .then(setUpcomingWeather)
       .catch(console.error);
   }, [pruneFavorites]);
 
@@ -325,7 +352,7 @@ function MainAppContent() {
 
   return (
     <>
-      <AmbientBackground weather={weather} dark={dark} />
+      <AmbientBackground weather={weather} upcoming={upcomingWeather} dark={dark} />
       <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
           {!isInGameMode && !location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && (
@@ -459,7 +486,7 @@ function MainAppContent() {
 
           <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
             {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
-            <AnimatedRoutes appData={appData} />
+            <AnimatedRoutes appData={appData} weather={weather} />
           </main>
 
           {!isInGameMode && (

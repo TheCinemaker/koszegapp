@@ -47,3 +47,20 @@ export async function fetchForecastWeather() {
 
   return days;
 }
+
+export async function fetchUpcomingWeather() {
+  const url = `${BASE_URL}/forecast?q=Koszeg,HU&units=metric&appid=${API_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Hiba az előrejelzés lekérésekor');
+  }
+  const data = await res.json();
+
+  // Return the first 4 items (next 12 hours) to check for imminent changes
+  return data.list.slice(0, 4).map(item => ({
+    dt: item.dt,
+    icon: item.weather[0].icon,
+    temp: Math.round(item.main.temp),
+    pop: item.pop // Probability of precipitation
+  }));
+}
