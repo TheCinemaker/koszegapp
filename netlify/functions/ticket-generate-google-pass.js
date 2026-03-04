@@ -9,8 +9,8 @@ const supabase = createClient(
 );
 
 /**
- * Expert Fix: The Google Wallet EventTicketClass needs to be 
- * programmatically set to UNDER_REVIEW to become ACTIVE in production.
+ * Premium Update: PATCH the class with better branding
+ * and use premium assets in the object.
  */
 async function publishClass(fullClassId, serviceAccountEmail, privateKey) {
     try {
@@ -24,23 +24,29 @@ async function publishClass(fullClassId, serviceAccountEmail, privateKey) {
 
         const client = await auth.getClient();
 
-        // PATCH request to set status to UNDER_REVIEW
+        // PATCH request to set status to UNDER_REVIEW + Premium Branding
         await client.request({
             url: `https://walletobjects.googleapis.com/walletobjects/v1/eventTicketClass/${encodeURIComponent(fullClassId)}`,
             method: 'PATCH',
             data: {
-                reviewStatus: 'UNDER_REVIEW'
+                reviewStatus: 'UNDER_REVIEW',
+                // Premium branding: KőszegApp Blue
+                hexBackgroundColor: '#2788C9',
+                // Logo (Google requires a public URI)
+                logo: {
+                    sourceUri: {
+                        uri: 'https://visitkoszeg.hu/wp-content/uploads/2023/04/visit-koszeg-logo-header.png'
+                    }
+                }
             }
         });
-        console.log('✅ Class status successfully set to UNDER_REVIEW');
+        console.log('✅ Class status and branding updated');
     } catch (err) {
-        console.warn('⚠️ Class activation warning (might already be active):', err.message);
-        // We continue even if this fails, as the class might already be active
+        console.warn('⚠️ Class update warning:', err.message);
     }
 }
 
 export const handler = async (event) => {
-    // Add CORS headers for browser compatibility
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
@@ -59,7 +65,7 @@ export const handler = async (event) => {
     }
 
     try {
-        console.log('Generating Google Pass for ticket:', ticketId);
+        console.log('Generating Premium Google Pass for ticket:', ticketId);
 
         const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
@@ -82,7 +88,6 @@ export const handler = async (event) => {
 
         const eventData = ticket.ticket_events || {};
 
-        // Use environment variables or fallback to hardcoded credentials
         const issuerId = process.env.GOOGLE_ISSUER_ID || googleCredentials.issuerId;
         const classIdSource = process.env.GOOGLE_TICKET_CLASS_ID || process.env.GOOGLE_CLASS_ID || googleCredentials.ticketClassId;
         const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || googleCredentials.client_email;
@@ -90,36 +95,29 @@ export const handler = async (event) => {
 
         if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
             console.error('Missing required Google Credentials');
-            return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server configuration error: Missing Google Credentials' }) };
+            return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server configuration error' }) };
         }
 
-        // IDs handling
         const cleanedClassId = classIdSource.includes('.') ? classIdSource.split('.').pop() : classIdSource;
         const fullClassId = `${issuerId}.${cleanedClassId}`;
         const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
 
         const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
 
-        // EXPERT FIX: Publish Class before generating JWT
+        // Update Class Branding
         await publishClass(fullClassId, serviceAccountEmail, privateKey);
 
-        console.log('Google Resolved IDs:', { issuerId, fullClassId, objectId });
-
-        // Robust Date/Time Formatting
+        // Date/Time
         let datePart = eventData.date || new Date().toISOString().split('T')[0];
         let timePart = (eventData.time || '10:00').trim();
-
-        // Ensure HH:mm format
         if (timePart.includes(':')) {
             const parts = timePart.split(':');
             timePart = `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
         } else {
             timePart = '10:00';
         }
-
-        // ISO-8601 without milliseconds + UTC offset for Kőszeg (CET/CEST)
-        // Note: Using +01:00 for CET. In CEST it would be +02:00.
-        const startDateTime = `${datePart}T${timePart}:00+01:00`;
+        // Format: YYYY-MM-DDTHH:mm:00+01:00
+        const startDateTimeStr = `${datePart}T${timePart}:00+01:00`;
 
         const claims = {
             iss: serviceAccountEmail,
@@ -132,9 +130,7 @@ export const handler = async (event) => {
                 'https://koszegapp.hu',
                 'https://visitkoszeg.hu',
                 'https://www.visitkoszeg.hu',
-                'https://mail.google.com',
-                'http://localhost:8888',
-                'http://localhost:5173'
+                'https://mail.google.com'
             ],
             payload: {
                 eventTicketObjects: [
@@ -142,13 +138,23 @@ export const handler = async (event) => {
                         id: objectId,
                         classId: fullClassId,
                         state: 'ACTIVE',
+
+                        // Premium Hero Image
+                        heroImage: {
+                            sourceUri: {
+                                uri: 'https://visitkoszeg.hu/wp-content/uploads/2021/04/jurisics-var-koszeg-1-scaled.jpg'
+                            }
+                        },
+
                         barcode: {
                             type: 'QR_CODE',
                             value: ticket.qr_code_token || ticket.qr_token || String(ticket.id),
                             altText: ticket.qr_code_token || ticket.qr_token || String(ticket.id)
                         },
+
                         ticketHolderName: ticket.buyer_name || 'Vendég',
                         reservationId: String(ticket.id),
+
                         venue: {
                             name: {
                                 defaultValue: {
@@ -157,13 +163,20 @@ export const handler = async (event) => {
                                 }
                             }
                         },
-                        // Fix 5: startDateTime is the correct field name for the object
-                        startDateTime,
+
+                        // Standard Google Wallet fields for event data
+                        startDateTime: startDateTimeStr,
+
                         textModulesData: [
                             {
                                 id: 'event_name',
                                 header: 'ESEMÉNY',
-                                body: eventData.name || 'Rendezvény'
+                                body: eventData.name || 'Jurisics-vár Látogatás'
+                            },
+                            {
+                                id: 'date_time',
+                                header: 'IDŐPONT',
+                                body: `${eventData.date || ''} ${eventData.time || ''}`
                             },
                             {
                                 id: 'guests',
