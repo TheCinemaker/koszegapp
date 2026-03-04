@@ -83,7 +83,8 @@ export const handler = async (event) => {
                             name: eventData.location
                         },
                         dateTime: {
-                            start: `${eventData.date}T${eventData.time}:00`
+                            // Ensure valid ISO-8601 format. If eventData.time already has seconds, don't add them.
+                            start: `${eventData.date}T${eventData.time.includes(':00') ? eventData.time : eventData.time + ':00'}`
                         },
                         textModulesData: [
                             {
