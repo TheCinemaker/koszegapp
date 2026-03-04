@@ -10,9 +10,16 @@ const supabase = createClient(
 
 /**
  * Premium Update: PATCH the class with better branding
- * and use premium assets in the object.
  */
 async function publishClass(fullClassId, serviceAccountEmail, privateKey) {
+    // Optimization: In production, we skip this if not forced.
+    // In dev/staging OR if forced, we update branding.
+    const isProd = process.env.NODE_ENV === 'production' || process.env.CONTEXT === 'production';
+    if (isProd && !process.env.FORCE_WALLET_PUBLISH) {
+        console.log('Skipping class publish in production (already active)');
+        return;
+    }
+
     try {
         const auth = new GoogleAuth({
             credentials: {
@@ -24,25 +31,22 @@ async function publishClass(fullClassId, serviceAccountEmail, privateKey) {
 
         const client = await auth.getClient();
 
-        // PATCH request to set status to UNDER_REVIEW + Premium Branding
         await client.request({
             url: `https://walletobjects.googleapis.com/walletobjects/v1/eventTicketClass/${encodeURIComponent(fullClassId)}`,
             method: 'PATCH',
             data: {
                 reviewStatus: 'UNDER_REVIEW',
-                // Premium branding: KőszegApp Blue
-                hexBackgroundColor: '#2788C9',
-                // Logo (Google requires a public URI)
+                hexBackgroundColor: '#2788C9', // KőszegApp Blue
                 logo: {
                     sourceUri: {
-                        uri: 'https://visitkoszeg.hu/wp-content/uploads/2023/04/visit-koszeg-logo-header.png'
+                        uri: 'https://koszegapp.netlify.app/assets/images/wallet/koszeg_logo_minimal.png'
                     }
                 }
             }
         });
-        console.log('✅ Class status and branding updated');
+        console.log('✅ Google Wallet Class activated and branded successfully');
     } catch (err) {
-        console.warn('⚠️ Class update warning:', err.message);
+        console.warn('⚠️ Class activation warning:', err.message);
     }
 }
 
@@ -65,8 +69,6 @@ export const handler = async (event) => {
     }
 
     try {
-        console.log('Generating Premium Google Pass for ticket:', ticketId);
-
         const { data: ticket, error: ticketError } = await supabase
             .from('tickets')
             .select(`
@@ -93,18 +95,13 @@ export const handler = async (event) => {
         const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || googleCredentials.client_email;
         const privateKeyRaw = process.env.GOOGLE_PRIVATE_KEY || googleCredentials.private_key;
 
-        if (!issuerId || !serviceAccountEmail || !privateKeyRaw) {
-            console.error('Missing required Google Credentials');
-            return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server configuration error' }) };
-        }
-
         const cleanedClassId = classIdSource.includes('.') ? classIdSource.split('.').pop() : classIdSource;
         const fullClassId = `${issuerId}.${cleanedClassId}`;
         const objectId = `${issuerId}.ticket_${ticket.id.replace(/-/g, '_').slice(0, 30)}`;
 
         const privateKey = privateKeyRaw.replace(/\\n/g, '\n');
 
-        // Update Class Branding
+        // Optimzed Class Publish
         await publishClass(fullClassId, serviceAccountEmail, privateKey);
 
         // Date/Time
@@ -116,7 +113,6 @@ export const handler = async (event) => {
         } else {
             timePart = '10:00';
         }
-        // Format: YYYY-MM-DDTHH:mm:00+01:00
         const startDateTimeStr = `${datePart}T${timePart}:00+01:00`;
 
         const claims = {
@@ -164,14 +160,13 @@ export const handler = async (event) => {
                             }
                         },
 
-                        // Standard Google Wallet fields for event data
                         startDateTime: startDateTimeStr,
 
                         textModulesData: [
                             {
                                 id: 'event_name',
                                 header: 'ESEMÉNY',
-                                body: eventData.name || 'Jurisics-vár Látogatás'
+                                body: eventData.name || 'Program'
                             },
                             {
                                 id: 'date_time',
