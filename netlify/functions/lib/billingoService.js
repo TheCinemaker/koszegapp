@@ -102,7 +102,7 @@ export async function createInvoice(partnerId, amount, eventName) {
         type: 'invoice',
         fulfillment_date: today,
         due_date: today,
-        payment_method: 'online_bank_card',
+        payment_method: 'online_bankcard',
         language: 'hu',
         currency: 'HUF',
         partner_id: partnerId,
