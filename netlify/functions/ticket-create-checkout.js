@@ -35,10 +35,10 @@ export const handler = async (event) => {
     }
 
     try {
-        const { eventId, buyerName, buyerEmail, guestCount, ticketType } = JSON.parse(event.body);
+        const { eventId, buyerName, buyerEmail, zip, city, address, guestCount, ticketType } = JSON.parse(event.body);
 
         // Validate input
-        if (!eventId || !buyerName || !buyerEmail || !guestCount) {
+        if (!eventId || !buyerName || !buyerEmail || !zip || !city || !address || !guestCount) {
             return {
                 statusCode: 400,
                 headers,
@@ -110,6 +110,9 @@ export const handler = async (event) => {
                 event_id: eventId,
                 buyer_name: buyerName,
                 buyer_email: buyerEmail,
+                zip: zip,
+                city: city,
+                address: address,
                 guest_count: guestCount.toString(),
                 ticket_type: ticketType || 'general'
             }

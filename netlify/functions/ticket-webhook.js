@@ -6,6 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
 import { getAppUrl } from './lib/ticketConfig.js';
+import { createPartner, createInvoice } from './lib/billingoService.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -59,62 +60,134 @@ export const handler = async (event) => {
 
     const session = stripeEvent.data.object;
     // Safe destructuring with default empty object
-    const { event_id, buyer_name, buyer_email, guest_count, ticket_type } = session.metadata || {};
+    const {
+        event_id,
+        buyer_name,
+        buyer_email,
+        zip,
+        city,
+        address,
+        guest_count,
+        ticket_type
+    } = session.metadata || {};
 
     try {
-        let ticketId;
+        let orderId;
+        let ticketIds = [];
 
         // Idempotency check: Don't process the same session twice
-        const { data: existing } = await supabase
-            .from('tickets')
-            .select('id')
+        const { data: existingOrder } = await supabase
+            .from('ticket_orders')
+            .select('id, status')
             .eq('stripe_session_id', session.id)
-            .maybeSingle(); // Use maybeSingle() to avoid error if not found
+            .maybeSingle();
 
-        if (existing) {
-            console.log('Ticket already processed, resending email:', session.id);
-            ticketId = existing.id;
-            // Proceed to email sending logic below...
+        if (existingOrder && existingOrder.status !== 'pending') {
+            console.log('Order already processed:', session.id);
+            orderId = existingOrder.id;
         } else {
-            // Generate Ticket Data
-            const qrToken = crypto.randomBytes(16).toString('hex');
-
-            // Insert Ticket
-            const { data: ticket, error } = await supabase
-                .from('tickets')
-                .insert({
-                    event_id,
-                    stripe_session_id: session.id,
-                    buyer_name,
-                    buyer_email,
-                    buyer_email, // safety
-                    guest_count: Number(guest_count || 1),
-                    ticket_type: ticket_type || 'general',
-                    qr_token: qrToken,
-                    status: 'paid',
-                    amount_paid: session.amount_total, // Save raw amount from Stripe
-                })
-                .select()
-                .single();
-
-            if (error) {
-                console.error('Database Insert Error:', error);
-                throw error;
+            // 1. Create or Update Order
+            let order;
+            if (existingOrder) {
+                const { data: updatedOrder, error: updateError } = await supabase
+                    .from('ticket_orders')
+                    .update({ status: 'paid' })
+                    .eq('id', existingOrder.id)
+                    .select()
+                    .single();
+                if (updateError) throw updateError;
+                order = updatedOrder;
+            } else {
+                const { data: newOrder, error: insertError } = await supabase
+                    .from('ticket_orders')
+                    .insert({
+                        event_id,
+                        stripe_session_id: session.id,
+                        name: buyer_name,
+                        email: buyer_email,
+                        zip: zip,
+                        city: city,
+                        address: address,
+                        amount: session.amount_total,
+                        status: 'paid'
+                    })
+                    .select()
+                    .single();
+                if (insertError) throw insertError;
+                order = newOrder;
             }
-            ticketId = ticket.id;
-            console.log('✅ Ticket created successfully:', ticketId);
+            orderId = order.id;
+
+            // 2. Billingo Integration
+            try {
+                console.log('Creating Billingo Partner...');
+                const partnerId = await createPartner({
+                    name: buyer_name,
+                    email: buyer_email,
+                    zip: zip,
+                    city: city,
+                    address: address
+                });
+
+                console.log('Creating Billingo Invoice...');
+                // Get event name for invoice
+                const { data: evt } = await supabase.from('ticket_events').select('name').eq('id', event_id).single();
+                const invoice = await createInvoice(partnerId, session.amount_total / 100, evt?.name || 'Rendezvény jegy');
+
+                // Update Order with Billingo IDs
+                await supabase
+                    .from('ticket_orders')
+                    .update({
+                        billingo_partner_id: partnerId,
+                        billingo_invoice_id: invoice.id
+                    })
+                    .eq('id', orderId);
+
+                console.log('✅ Billingo Invoice created:', invoice.id);
+            } catch (billingoErr) {
+                console.error('❌ Billingo Error (Continuing anyway to ensure tickets):', billingoErr.message);
+                // We log but don't stop the flow so user still gets tickets
+            }
+
+            // 3. Generate Tickets
+            const count = Number(guest_count || 1);
+            for (let i = 0; i < count; i++) {
+                const qrToken = crypto.randomBytes(16).toString('hex');
+                const { data: ticket, error: ticketErr } = await supabase
+                    .from('tickets')
+                    .insert({
+                        order_id: orderId,
+                        event_id,
+                        stripe_session_id: session.id, // keep for backward compat
+                        buyer_name,
+                        buyer_email,
+                        guest_count: 1, // each ticket is for 1 person now if multiple in order
+                        ticket_type: ticket_type || 'general',
+                        qr_token: qrToken,
+                        status: 'paid',
+                        amount_paid: Math.round(session.amount_total / count)
+                    })
+                    .select()
+                    .single();
+
+                if (ticketErr) console.error('Ticket Insert Error:', ticketErr);
+                else ticketIds.push(ticket.id);
+            }
+
+            // Mark order as ticket_generated
+            await supabase.from('ticket_orders').update({ status: 'ticket_generated' }).eq('id', orderId);
+            console.log(`✅ ${ticketIds.length} tickets created for order:`, orderId);
         }
 
-        // Fire-and-forget email sending -> CHANGED to await to ensure execution in serverless
-        // Using explicit node-fetch to avoid runtime issues
+        // Trigger email for the order (which should now handle all tickets in it)
         const confirmUrl = `${getAppUrl()}/.netlify/functions/ticket-send-confirmation`;
-        console.log('Triggering email for ticket:', ticketId);
+        console.log('Triggering email for order:', orderId);
 
         try {
             const emailResponse = await fetch(confirmUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ticketId: ticketId }),
+                body: JSON.stringify({ orderId: orderId }),
             });
 
             if (!emailResponse.ok) {
@@ -131,7 +204,7 @@ export const handler = async (event) => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ ok: true, ticketId: ticketId, resent: !!existing }),
+            body: JSON.stringify({ ok: true, orderId: orderId }),
         };
 
     } catch (err) {
