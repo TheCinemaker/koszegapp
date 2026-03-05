@@ -83,6 +83,9 @@ export const handler = async (event) => {
         const serviceFee = ticketPrice * (parseFloat(ticketEvent.service_fee_percent) / 100);
         const totalAmount = Math.round((ticketPrice + serviceFee) * 100); // Standard cent-based for Stripe
 
+        // Get Stripe config
+        const stripeConfig = getStripeConfig();
+
         // Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
