@@ -139,7 +139,13 @@ export const handler = async (event) => {
                 console.log('Creating Billingo Invoice...');
                 // Get event name for invoice
                 const { data: evt } = await supabase.from('ticket_events').select('name').eq('id', event_id).single();
-                const invoice = await createInvoice(partnerId, session.amount_total / 100, evt?.name || 'Rendezvény jegy');
+
+                // Handle zero-decimal currencies (like HUF)
+                const isZeroDecimal = session.currency.toUpperCase() === 'HUF' ||
+                    ['JPY', 'KRW', 'VND'].includes(session.currency.toUpperCase());
+                const amountForInvoice = isZeroDecimal ? session.amount_total : session.amount_total / 100;
+
+                const invoice = await createInvoice(partnerId, amountForInvoice, evt?.name || 'Rendezvény jegy');
 
                 // Update Order with Billingo IDs
                 await supabase

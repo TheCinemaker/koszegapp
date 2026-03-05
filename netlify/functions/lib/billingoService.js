@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 const API_KEY = process.env.BILLINGO_API_KEY;
 const BLOCK_ID = process.env.BILLINGO_BLOCK_ID;
 const BASE_URL = 'https://api.billingo.hu/v3';
