@@ -192,6 +192,7 @@ export const handler = async (event) => {
         }
 
         // Trigger email for the order (which should now handle all tickets in it)
+        const { getAppUrl } = await import('./lib/ticketConfig.js');
         const confirmUrl = `${getAppUrl()}/.netlify/functions/ticket-send-confirmation`;
         console.log('Triggering email for order:', orderId);
 
@@ -205,8 +206,6 @@ export const handler = async (event) => {
             if (!emailResponse.ok) {
                 const errorText = await emailResponse.text();
                 console.error(`❌ Failed to trigger email function: ${emailResponse.status} ${errorText}`);
-                // We don't throw here to avoid failing the webhook response to Stripe
-                // effectively "soft fail" on email, but ticket is created.
             } else {
                 console.log('✅ Email trigger launched successfully');
             }

@@ -10,35 +10,39 @@ import toast from 'react-hot-toast';
 export default function TicketSuccess() {
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
+    const reservationId = searchParams.get('reservation_id');
     const [loading, setLoading] = useState(true);
     const [ticket, setTicket] = useState(null);
 
     useEffect(() => {
         async function fetchTicketData() {
-            if (!sessionId) {
+            if (!sessionId && !reservationId) {
                 setLoading(false);
                 return;
             }
 
             try {
-                const { data, error } = await supabase
-                    .from('tickets')
-                    .select('*, ticket_events(*)')
-                    .eq('stripe_session_id', sessionId)
-                    .single();
+                let query = supabase.from('tickets').select('*, ticket_events(*)');
+
+                if (sessionId) {
+                    query = query.eq('stripe_session_id', sessionId);
+                } else if (reservationId) {
+                    query = query.eq('id', reservationId);
+                }
+
+                const { data, error } = await query.single();
 
                 if (error) throw error;
                 setTicket(data);
             } catch (err) {
                 console.error('Error fetching ticket:', err);
-                // We still show the success page, just without direct links
             } finally {
                 setLoading(false);
             }
         }
 
         fetchTicketData();
-    }, [sessionId]);
+    }, [sessionId, reservationId]);
 
     const handleGoogleWallet = () => {
         if (!ticket) {
@@ -75,12 +79,14 @@ export default function TicketSuccess() {
 
                     {/* Title */}
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                        Sikeres vásárlás! 🎉
+                        {reservationId ? 'Sikeres foglalás! 🗓️' : 'Sikeres vásárlás! 🎉'}
                     </h1>
 
                     {/* Description */}
                     <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-                        A jegyed elkészült és hamarosan megkapod emailben is!
+                        {reservationId
+                            ? 'A helyedet lefoglaltuk! Mutasd be ezt az igazolást a helyszínen.'
+                            : 'A jegyed elkészült és hamarosan megkapod emailben is!'}
                     </p>
 
                     {/* Info Boxes */}
@@ -131,9 +137,21 @@ export default function TicketSuccess() {
                     </div>
 
                     {/* Important Notice */}
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 p-4 mb-8 text-left">
+                    <div className={`border-l-4 p-4 mb-8 text-left ${reservationId
+                            ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-500'
+                            : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500'
+                        }`}>
                         <p className="text-sm text-gray-700 dark:text-gray-300">
-                            <strong>⚠️ Fontos:</strong> A jegy csak egyszer használható fel. Kérjük, mutasd fel a QR kódot a belépéskor!
+                            {reservationId ? (
+                                <>
+                                    <strong>💳 Fizetés:</strong> Kérjük, fizesd ki a jegyedet a helyszínen ({ticket?.ticket_events?.location}).
+                                    A foglalásod rögzítésre került a rendszerünkben.
+                                </>
+                            ) : (
+                                <>
+                                    <strong>⚠️ Fontos:</strong> A jegy csak egyszer használható fel. Kérjük, mutasd fel a QR kódot a belépéskor!
+                                </>
+                            )}
                         </p>
                     </div>
 
@@ -156,7 +174,7 @@ export default function TicketSuccess() {
                             to="/tickets"
                             className="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold rounded-lg transition-all hover:scale-105 active:scale-95 shadow-md"
                         >
-                            Új jegy vásárlása
+                            {reservationId ? 'Új foglalás' : 'Új jegy vásárlása'}
                         </Link>
                     </div>
                 </div>

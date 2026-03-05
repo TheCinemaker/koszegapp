@@ -25,7 +25,8 @@ export default function TicketAdmin() {
         price: 5000,
         service_fee_percent: 5,
         category: 'Koncert',
-        is_evergreen: false
+        is_evergreen: false,
+        payment_type: 'paid' // 'paid' or 'on_site_reservation'
     });
 
     useEffect(() => {
@@ -99,12 +100,13 @@ export default function TicketAdmin() {
                 price: 5000,
                 service_fee_percent: 5,
                 category: 'Koncert',
-                is_evergreen: false
+                is_evergreen: false,
+                payment_type: 'paid'
             });
             fetchEvents();
         } catch (error) {
             console.error('Error creating event:', error);
-            toast.error('Hiba történt az esemény létrehozásakor');
+            toast.error('Hiba történt az esemény létrehozásakor. Ellenőrizd az adatbázis kapcsolatot!');
         }
     };
 
@@ -160,15 +162,15 @@ export default function TicketAdmin() {
             return;
         }
 
-        const paidTickets = tickets.filter(t => t.status === 'paid' || t.status === 'used');
+        const validTickets = tickets.filter(t => t.status === 'paid' || t.status === 'used' || t.status === 'reserved');
 
         const csv = [
-            ['Név', 'Email', 'Vendégek', 'Státusz', 'Vásárlás dátuma', 'Használva'],
-            ...paidTickets.map(t => [
+            ['Név', 'Email', 'Vendégek', 'Státusz', 'Vásárlás/Foglalás dátuma', 'Használva'],
+            ...validTickets.map(t => [
                 t.buyer_name,
                 t.buyer_email,
                 t.guest_count,
-                t.status === 'used' ? 'Belépett' : 'Érvényes',
+                t.status === 'used' ? 'Belépett' : t.status === 'reserved' ? 'Foglalt' : 'Érvényes',
                 new Date(t.created_at).toLocaleString('hu-HU'),
                 t.used_at ? new Date(t.used_at).toLocaleString('hu-HU') : '-'
             ])
@@ -185,13 +187,13 @@ export default function TicketAdmin() {
 
     const getTicketStats = (eventId) => {
         const eventTickets = tickets.filter(t => t.event_id === eventId);
-        const paid = eventTickets.filter(t => t.status === 'paid' || t.status === 'used').length;
+        const valid = eventTickets.filter(t => t.status === 'paid' || t.status === 'used' || t.status === 'reserved').length;
         const used = eventTickets.filter(t => t.status === 'used').length;
         const totalGuests = eventTickets
-            .filter(t => t.status === 'paid' || t.status === 'used')
+            .filter(t => t.status === 'paid' || t.status === 'used' || t.status === 'reserved')
             .reduce((sum, t) => sum + t.guest_count, 0);
 
-        return { paid, used, totalGuests };
+        return { valid, used, totalGuests };
     };
 
     if (loading) {
@@ -336,32 +338,42 @@ export default function TicketAdmin() {
                                         />
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            Ár (Ft)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            value={formData.price}
-                                            onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                            required
-                                        />
-                                    </div>
+                                    {formData.payment_type === 'paid' ? (
+                                        <>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                    Ár (Ft)
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    value={formData.price}
+                                                    onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
+                                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                                    required
+                                                />
+                                            </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            Jutalék (%)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            step="0.1"
-                                            value={formData.service_fee_percent}
-                                            onChange={(e) => setFormData({ ...formData, service_fee_percent: parseFloat(e.target.value) })}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                            required
-                                        />
-                                    </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                    Jutalék (%)
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    step="0.1"
+                                                    value={formData.service_fee_percent}
+                                                    onChange={(e) => setFormData({ ...formData, service_fee_percent: parseFloat(e.target.value) })}
+                                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                                    required
+                                                />
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className="col-span-2 flex items-center bg-gray-50 dark:bg-gray-900/50 rounded-lg px-4 border border-dashed border-gray-300 dark:border-gray-700">
+                                            <p className="text-xs text-gray-500 italic">
+                                                Helyszíni fizetés esetén az árat és jutalékot az app nem kezeli.
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
@@ -375,7 +387,6 @@ export default function TicketAdmin() {
                                                 setFormData({
                                                     ...formData,
                                                     is_evergreen: isEvergreen,
-                                                    // Ha örökérvényű, állítsunk be egy távoli dátumot, hogy ne archiválja a rendszer
                                                     date: isEvergreen ? '2029-12-31' : new Date().toISOString().split('T')[0],
                                                     time: isEvergreen ? '00:00' : '18:00'
                                                 });
@@ -385,6 +396,40 @@ export default function TicketAdmin() {
                                         <label htmlFor="is_evergreen" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             Örökérvényű (Múzeumi belépő)
                                         </label>
+                                    </div>
+
+                                    {/* Payment Type Selection */}
+                                    <div className="col-span-2 bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50 mt-2">
+                                        <label className="block text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-3">
+                                            💰 Fizetés és Értékesítés módja
+                                        </label>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() => setFormData({ ...formData, payment_type: 'paid' })}
+                                                className={`py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${formData.payment_type === 'paid'
+                                                    ? 'bg-indigo-600 text-white shadow-lg'
+                                                    : 'bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-100'
+                                                    }`}
+                                            >
+                                                Stripe (Online fizetés)
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setFormData({
+                                                    ...formData,
+                                                    payment_type: 'on_site_reservation',
+                                                    price: 0,
+                                                    service_fee_percent: 0
+                                                })}
+                                                className={`py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${formData.payment_type === 'on_site_reservation'
+                                                    ? 'bg-amber-500 text-white shadow-lg'
+                                                    : 'bg-white dark:bg-gray-800 text-gray-500 hover:bg-gray-100'
+                                                    }`}
+                                            >
+                                                Foglalás (Helyszíni fizetés)
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -449,8 +494,7 @@ export default function TicketAdmin() {
                                 <div
                                     key={event.id}
                                     onClick={() => setSelectedEvent(event)}
-                                    className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg cursor-pointer transition-all ${selectedEvent?.id === event.id ? 'ring-2 ring-indigo-500' : 'hover:shadow-xl'
-                                        } ${isExpired ? 'opacity-50 grayscale-[0.5] border-dashed border-2 border-gray-300 dark:border-gray-700' : ''}`}
+                                    className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg cursor-pointer transition-all ${selectedEvent?.id === event.id ? 'ring-2 ring-indigo-500' : 'hover:shadow-xl'} ${isExpired ? 'opacity-50 grayscale-[0.5] border-dashed border-2 border-gray-300 dark:border-gray-700' : ''}`}
                                 >
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                                         {event.name}
@@ -461,8 +505,8 @@ export default function TicketAdmin() {
 
                                     <div className="space-y-2 text-sm">
                                         <div className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">Eladott jegyek:</span>
-                                            <span className="font-semibold text-gray-900 dark:text-white">{stats.paid}</span>
+                                            <span className="text-gray-600 dark:text-gray-400">Foglalások/Jegyek:</span>
+                                            <span className="font-semibold text-gray-900 dark:text-white">{stats.valid}</span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="text-gray-600 dark:text-gray-400">Vendégek:</span>
@@ -478,24 +522,19 @@ export default function TicketAdmin() {
 
                                     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center group">
                                         <div className="flex gap-2">
-                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${event.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                                                }`}>
+                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${event.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                                                 {event.status === 'active' ? 'Aktív' : event.status === 'archived' ? 'Archivált' : event.status}
                                             </span>
-                                            {event.category && (
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-500/10 px-2 py-1 rounded-lg">
-                                                    {event.category}
-                                                </span>
-                                            )}
+                                            <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-lg ${event.payment_type === 'on_site_reservation' ? 'text-amber-600 bg-amber-500/10 border border-amber-500/20' : 'text-indigo-600 bg-indigo-500/10'}`}>
+                                                {event.payment_type === 'on_site_reservation' ? 'Foglalós' : 'Online'}
+                                            </span>
                                         </div>
 
-                                        {/* Action Buttons - only show on hover or if selected */}
                                         <div className="flex items-center gap-2">
                                             {event.status !== 'archived' && (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); archiveEvent(event.id); }}
                                                     className="p-2 text-gray-400 hover:text-amber-500 transition-colors"
-                                                    title="Archiválás"
                                                 >
                                                     <FaArchive size={14} />
                                                 </button>
@@ -503,7 +542,6 @@ export default function TicketAdmin() {
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); deleteEvent(event.id); }}
                                                 className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                                                title="Törlés"
                                             >
                                                 <FaTrash size={14} />
                                             </button>
@@ -519,7 +557,7 @@ export default function TicketAdmin() {
                     <div className="mt-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                                Jegyek - {selectedEvent.name}
+                                Jegyek / Foglalások - {selectedEvent.name}
                             </h2>
                             <button
                                 onClick={exportAttendees}
@@ -535,9 +573,9 @@ export default function TicketAdmin() {
                                     <tr className="border-b border-gray-200 dark:border-gray-700">
                                         <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300">Vásárló</th>
                                         <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300">Email</th>
-                                        <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300">Vendégek</th>
+                                        <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300">Fő</th>
                                         <th className="text-center py-3 px-4 text-gray-700 dark:text-gray-300">Státusz</th>
-                                        <th className="text-right py-3 px-4 text-gray-700 dark:text-gray-300">Vásárlás</th>
+                                        <th className="text-right py-3 px-4 text-gray-700 dark:text-gray-300">Dátum</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -549,12 +587,12 @@ export default function TicketAdmin() {
                                             <td className="py-3 px-4 text-center">
                                                 <span className={`px-2 py-1 rounded-full text-xs font-semibold ${ticket.status === 'paid' ? 'bg-blue-100 text-blue-800' :
                                                     ticket.status === 'used' ? 'bg-green-100 text-green-800' :
-                                                        ticket.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                                        ticket.status === 'reserved' ? 'bg-amber-100 text-amber-800' :
                                                             'bg-gray-100 text-gray-800'
                                                     }`}>
                                                     {ticket.status === 'paid' ? 'Érvényes' :
                                                         ticket.status === 'used' ? 'Belépett' :
-                                                            ticket.status === 'pending' ? 'Függőben' :
+                                                            ticket.status === 'reserved' ? 'Foglalt' :
                                                                 ticket.status}
                                                 </span>
                                             </td>

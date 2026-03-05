@@ -1,6 +1,3 @@
-// Ticket System - Email Confirmation Sender
-// Sends ticket confirmation email with QR code
-
 import { ticketConfig, getEmailConfig, getAppUrl } from './lib/ticketConfig.js';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
@@ -43,13 +40,13 @@ export const handler = async (event) => {
         .single();
 
       if (orderError || !orderData) {
-        throw new Error('Order not foundOr failed to fetch');
+        throw new Error('Order not found or failed to fetch');
       }
       order = orderData;
       tickets = orderData.tickets || [];
       ticketEvent = orderData.ticket_events;
     } else {
-      // Fetch single ticket (backward compatibility)
+      // Fetch single ticket (backward compatibility / reservation direct)
       const { data: ticket, error: ticketError } = await supabase
         .from('tickets')
         .select(`
@@ -157,7 +154,12 @@ export const handler = async (event) => {
     
     <div class="content">
       <div class="greeting">Kedves ${order.name}!</div>
-      <div class="lead">Köszönjük a vásárlást! Elkészült ${tickets.length > 1 ? 'jegyeid' : 'jegyed'} a következő eseményre:</div>
+      <div class="lead">
+        ${tickets[0]?.status === 'reserved'
+          ? `Sikeresen lefoglaltad a helyedet! Elkészült ${tickets.length > 1 ? 'foglalási igazolásod' : 'foglalási igazolásod'} a következő eseményre:`
+          : `Köszönjük a vásárlást! Elkészült ${tickets.length > 1 ? 'jegyeid' : 'jegyed'} a következő eseményre:`
+        }
+      </div>
 
       <div class="card">
         <h2 class="event-title">${ticketEvent.name}</h2>
@@ -182,7 +184,10 @@ export const handler = async (event) => {
       ` : ''}
       
       <div class="warning">
-        Ez a jegy egyszeri belépésre jogosít. Kérjük, ne oszd meg mással!
+        ${tickets[0]?.status === 'reserved'
+          ? `<strong>Fontos:</strong> Ez egy foglalási igazolás. A jegy árát a helyszínen kell kifizetned. Kérjük, mutasd fel a QR kódot a belépéskor!`
+          : `Ez a jegy egyszeri belépésre jogosít. Kérjük, ne oszd meg mással!`
+        }
       </div>
     </div>
 

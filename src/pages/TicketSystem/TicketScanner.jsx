@@ -191,6 +191,12 @@ export default function TicketScanner() {
                                     <span className="text-gray-400">Vendégek:</span>
                                     <span className="font-semibold">{lastResult.ticket.guestCount} fő</span>
                                 </div>
+
+                                {lastResult.ticket.paymentStatus === 'reserved' && (
+                                    <div className="mt-4 p-3 bg-amber-500/20 border border-amber-500 rounded-lg text-amber-500 font-bold text-center animate-pulse">
+                                        ⚠️ HELYSZÍNI FIZETÉS SZÜKSÉGES!
+                                    </div>
+                                )}
                                 {lastResult.ticket.validatedAt && (
                                     <div className="flex justify-between pt-2 mt-2 border-t border-white/10 text-yellow-300">
                                         <span className="">Validálva:</span>

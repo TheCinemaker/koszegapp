@@ -69,8 +69,13 @@ export default function TicketPurchase() {
         setPurchasing(true);
 
         try {
-            // Call checkout function
-            const response = await fetch('/.netlify/functions/ticket-create-checkout', {
+            const isReservation = selectedEvent.payment_type === 'on_site_reservation';
+            const endpoint = isReservation
+                ? '/.netlify/functions/ticket-create-reservation'
+                : '/.netlify/functions/ticket-create-checkout';
+
+            // Call appropriate function
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -88,14 +93,18 @@ export default function TicketPurchase() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Hiba történt a vásárlás során');
+                throw new Error(data.error || 'Hiba történt a folyamat során');
             }
 
-            // Redirect to Stripe Checkout
-            window.location.href = data.checkoutUrl;
+            // Redirect: Reservation goes to Success, Paid goes to Stripe
+            if (isReservation) {
+                navigate(data.redirectUrl);
+            } else {
+                window.location.href = data.checkoutUrl;
+            }
         } catch (error) {
-            console.error('Purchase error:', error);
-            toast.error(error.message || 'Hiba történt a vásárlás során');
+            console.error('Action error:', error);
+            toast.error(error.message || 'Hiba történt a folyamat során');
             setPurchasing(false);
         }
     };
@@ -324,7 +333,7 @@ export default function TicketPurchase() {
                                     <span>{(parseFloat(selectedEvent.price) * guestCount).toLocaleString()} Ft</span>
                                 </div>
 
-                                {parseFloat(selectedEvent.service_fee_percent) > 0 && (
+                                {selectedEvent.payment_type !== 'on_site_reservation' && parseFloat(selectedEvent.service_fee_percent) > 0 && (
                                     <div className="flex justify-between text-gray-700 dark:text-gray-300">
                                         <span>Kezelési díj ({selectedEvent.service_fee_percent}%)</span>
                                         <span>
@@ -334,25 +343,40 @@ export default function TicketPurchase() {
                                 )}
 
                                 <div className="flex justify-between text-xl font-bold text-gray-900 dark:text-white pt-3 border-t border-gray-300 dark:border-gray-700">
-                                    <span>Összesen</span>
+                                    <span>{selectedEvent.payment_type === 'on_site_reservation' ? 'Fizetendő a helyszínen' : 'Összesen'}</span>
                                     <span>{calculateTotal().toLocaleString()} Ft</span>
                                 </div>
+
+                                {selectedEvent.payment_type === 'on_site_reservation' && (
+                                    <p className="text-[10px] text-amber-600 font-bold uppercase tracking-wider text-center pt-2">
+                                        ⚠️ Fizetés a helyszínen, készpénzzel vagy kártyával!
+                                    </p>
+                                )}
                             </div>
 
                             {/* Submit Button */}
                             <button
                                 type="submit"
                                 disabled={purchasing}
-                                className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2"
+                                className={`w-full py-4 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 ${selectedEvent.payment_type === 'on_site_reservation'
+                                        ? 'bg-amber-500 hover:bg-amber-600 text-white'
+                                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                                    }`}
                             >
                                 {purchasing ? (
                                     <>
                                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                        Átirányítás...
+                                        Feldolgozás...
                                     </>
                                 ) : (
                                     <>
-                                        <FaCreditCard /> Fizetés Stripe-pal
+                                        {selectedEvent.payment_type === 'on_site_reservation' ? (
+                                            <>✓ Ingyenes Jegyfoglalás</>
+                                        ) : (
+                                            <>
+                                                <FaCreditCard /> Fizetés Stripe-pal
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </button>

@@ -117,7 +117,8 @@ export const handler = async (event) => {
                     buyerName: ticket.buyer_name,
                     eventName: ticket.ticket_events.name,
                     guestCount: ticket.guest_count,
-                    validatedAt: new Date().toISOString()
+                    validatedAt: new Date().toISOString(),
+                    paymentStatus: ticket.status // 'paid' or 'reserved'
                 }
             })
         };
