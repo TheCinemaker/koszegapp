@@ -140,10 +140,8 @@ export const handler = async (event) => {
                 // Get event name for invoice
                 const { data: evt } = await supabase.from('ticket_events').select('name').eq('id', event_id).single();
 
-                // Handle zero-decimal currencies (like HUF)
-                const isZeroDecimal = session.currency.toUpperCase() === 'HUF' ||
-                    ['JPY', 'KRW', 'VND'].includes(session.currency.toUpperCase());
-                const amountForInvoice = isZeroDecimal ? session.amount_total : session.amount_total / 100;
+                // Stripe amount is in cents, handle conversion for Billingo
+                const amountForInvoice = session.amount_total / 100;
 
                 const invoice = await createInvoice(partnerId, amountForInvoice, evt?.name || 'Rendezvény jegy');
 

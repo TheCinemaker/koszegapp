@@ -81,18 +81,7 @@ export const handler = async (event) => {
         // Calculate price
         const ticketPrice = parseFloat(ticketEvent.price) * guestCount;
         const serviceFee = ticketPrice * (parseFloat(ticketEvent.service_fee_percent) / 100);
-
-        // Get Stripe config
-        const stripeConfig = getStripeConfig();
-        const currency = stripeConfig.currency.toUpperCase();
-
-        // Zero-decimal currencies in Stripe
-        const zeroDecimalCurrencies = ['HUF', 'JPY', 'KRW', 'VND', 'BIF', 'CLP', 'DJF', 'GNF', 'KMF', 'MGA', 'PYG', 'RWF', 'UGX', 'VUV', 'XAF', 'XOF', 'XPF'];
-        const isZeroDecimal = zeroDecimalCurrencies.includes(currency);
-
-        const totalAmount = isZeroDecimal
-            ? Math.round(ticketPrice + serviceFee)
-            : Math.round((ticketPrice + serviceFee) * 100);
+        const totalAmount = Math.round((ticketPrice + serviceFee) * 100); // Standard cent-based for Stripe
 
         // Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
