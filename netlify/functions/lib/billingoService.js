@@ -22,7 +22,7 @@ export async function createPartner(data) {
         emails: [data.email],
         type: 'private',
         address: {
-            postal_code: data.zip,
+            post_code: data.zip,
             city: data.city,
             address: data.address,
             country_code: 'HU'
