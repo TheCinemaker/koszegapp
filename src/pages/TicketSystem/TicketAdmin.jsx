@@ -259,33 +259,35 @@ export default function TicketAdmin() {
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            Dátum
-                                        </label>
-                                        <input
-                                            type="date"
-                                            value={formData.date}
-                                            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                            required
-                                        />
-                                    </div>
+                                {!formData.is_evergreen && (
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                Dátum
+                                            </label>
+                                            <input
+                                                type="date"
+                                                value={formData.date}
+                                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                                required={!formData.is_evergreen}
+                                            />
+                                        </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            Időpont
-                                        </label>
-                                        <input
-                                            type="time"
-                                            value={formData.time}
-                                            onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                            required
-                                        />
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                Időpont
+                                            </label>
+                                            <input
+                                                type="time"
+                                                value={formData.time}
+                                                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                                required={!formData.is_evergreen}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div>
@@ -370,7 +372,16 @@ export default function TicketAdmin() {
                                             type="checkbox"
                                             id="is_evergreen"
                                             checked={formData.is_evergreen}
-                                            onChange={(e) => setFormData({ ...formData, is_evergreen: e.target.checked })}
+                                            onChange={(e) => {
+                                                const isEvergreen = e.target.checked;
+                                                setFormData({
+                                                    ...formData,
+                                                    is_evergreen: isEvergreen,
+                                                    // Ha örökérvényű, állítsunk be egy távoli dátumot, hogy ne archiválja a rendszer
+                                                    date: isEvergreen ? '2029-12-31' : new Date().toISOString().split('T')[0],
+                                                    time: isEvergreen ? '00:00' : '18:00'
+                                                });
+                                            }}
                                             className="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500"
                                         />
                                         <label htmlFor="is_evergreen" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
