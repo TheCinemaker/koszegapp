@@ -4,7 +4,7 @@
     "name": "Jurisics‑vár",
     "category": "Történelem & építészet",
     "description": "Kőszeg ikonikus jelképe, ahol a történelem megelevenedik a gótikus falak között.",
-    "details": "A 13. századi alapokon nyugvó Jurisics-vár a magyar történelem egyik legdicsőbb helyszíne. Itt állította meg Jurisics Miklós maroknyi seregével a hatalmas török haderőt 1532-ben. A vár ma interaktív múzeumnak ad otthont, ahol bepillantást nyerhetünk a lovagkor mindennapjaiba, az ostrom részleteibe, és felkapaszkodhatunk a toronyba a lélegzetelállító városi panorámáért. Nyaranta a várszínház ad különleges hangulatot az udvarnak.",
+    "details": "Fedezd fel a legendás vár falait, ahol 1532-ben Jurisics Miklós megállította a török sereget, és élvezd a pazar panorámát a toronyból.",
     "tags": [
       "vár",
       "történelem",
@@ -23,7 +23,7 @@
     },
     "image": "/images/attractions/attraction-1/hero.jpg",
     "imageDark": "/images/attractions/dark/var_dark.jpg",
-    "history_full": "A 13. századi alapokon nyugvó Jurisics-vár Kőszeg legismertebb műemléke. 1532 augusztusában Jurisics Miklós várkapitány mintegy ezerfőnyi védősereggel 25 napon át állt ellen Szulejmán szultán hatalmas seregének. A vár ma interaktív múzeum, az Aranyszobában őrzik a híres 'Szőlő Jövésnek Könyvét'.",
+    "history_full": "A várat a 13. században kezdték építeni, átvéve a nehezen védhető Felsővár szerepét. Leghíresebb ostroma 1532-ben zajlott, amikor Szulejmán szultán 80-120 ezres serege ellen Jurisics Miklós maroknyi védője (kb. 700 fő) 25 napon át tartotta az erődítményt. A vár 1695-től 1931-ig az Esterházy család birtoka volt. Ma interaktív múzeum, az Aranyszobában pedig a híres 'Szőlő Jövésnek Könyvét' őrzik.",
     "tips": "Ne hagyd ki a nyugati torony kilátóját és az interaktív fegyvertárat, ahol középkori páncélokat is felpróbálhatsz!",
     "fun_fact": "Kőszegen minden nap 11 órakor is szólnak a harangok, az 1532-es ostrom utolsó török katonájának távozására emlékezve.",
     "gallery": [
@@ -58,7 +58,8 @@
     "name": "Öregtorony (Zwinger)",
     "category": "Történelem & építészet",
     "description": "A kilencszögletű bástya a városfal legkorábbi, 13. századi maradványa.",
-    "details": "A 13. századi Zwinger bástya kilencszögletű alaprajzával és eredeti lőréseivel maradt fenn. A városfalrendszer legépebben megmaradt része, ma kiállító- és rendezvénytérként funkcionál.",
+    "details": "Tekintsd meg a város legépebben maradt védművét, a titokzatos kilencszögletű sarokbástyát, amely ma kulturális központként született újjá.",
+    "history_full": "A Zwinger bástya a városfal délnyugati sarkán álló, kilencszögletű alaprajzú védmű. Bár gyökerei a 13. századig nyúlnak vissza, mai formáját valószínűleg a 15. században nyerte el. Története során volt raktár, éléskamra és börtön is. 2015-ben a KRAFT program keretében újult meg, ma a Felsőbbfokú Tanulmányok Intézete (iASK) használja előadásokra és kiállításokra.",
     "tags": [
       "bástya",
       "középkor",
@@ -184,7 +185,7 @@
     "name": "Sgraffitós‑ház",
     "category": "Történelem & építészet",
     "description": "Díszes sgrafitto‑technikával díszített reneszánsz polgárház a belvárosban.",
-    "details": "A Jurisics téren álló, 16. századi polgárház homlokzatát a reneszánsz korában népszerű sgrafitto technikával (a vakolat több rétegének visszakaparásával) díszítették. Magyarország egyik legszebb sgraffitós épülete.",
+    "details": "Csodáld meg hazánk egyik legszebb reneszánsz polgárházát, melynek homlokzatát különleges karcolt technika és bibliai jelenetek díszítik.",
     "tags": [
       "sgrafitto",
       "homlokzat",
@@ -196,7 +197,7 @@
       "lng": 16.5411947
     },
     "image": "/images/sgraffito_haz.jpg",
-    "history_full": "A Jurisics tér 7. szám alatti reneszánsz polgárház 1560 körül nyerte el mai formáját. Nevét a homlokzatán látható különleges sgraffito-technikának köszönheti. Az épület Ottlik Géza 'Iskola a határon' című regényében is fontos szerepet kap, a homlokzati latin felirat ihlette a mű több fejezetét.",
+    "history_full": "A Jurisics tér 7. szám alatt álló ház az 1560-as években nyerte el mai, emeletes formáját. Nevét az itáliai eredetű sgraffito díszítésről kapta (visszakapart vakolat). Homlokzatán 1668-as latin Szentírás-idézet látható, mely Ottlik Géza 'Iskola a határon' című regényében is fontos szerepet kap. A restauráláskor benti 17. századi falfestményeket is feltártak (Lázár és a gazdag ember).",
     "tips": "Állj meg egy pillanatra az épület előtt, és olvasd el a falon látható 1668-as latin nyelvű idézetet, mely az irgalmas Istenről szól.",
     "fun_fact": "Az emeleti kutatóközpont könyvtára az egyik legszebb Kőszegen, ahol egykor sebész családok is laktak.",
     "gallery": [
@@ -209,8 +210,8 @@
     "id": "attraction-9",
     "name": "Arany Egyszarvú Patikamúzeum",
     "category": "Múzeum & kiállítás",
-    "description": "Az ország egyik legrégebbi, eredeti berendezésű gyógyszertára.",
-    "details": "A Jurisics téren található múzeum a 18. századi jezsuita patika lenyűgöző barokk berendezését és eszközeit mutatja be, visszarepítve a látogatót a gyógyszerészet múltjába.",
+    "details": "Lépj be a 18. századi gyógyászat világába az ország egyik legszebb barokk patikájában, ahol eredeti jezsuita bútorzat és különleges drogpadlás vár.",
+    "history_full": "A patika 1743-ban nyílt meg a jezsuita rendházban, majd 1777-ben került mai helyére. Legértékesebb kincse az 1737-1743 között készült, faragott jezsuita officinabútorzat. Egyedülálló látványossága a drogpadlás, ahol ma is gyógynövényeket szárítanak. Nevét az 'Arany Egyszarvú' jelképről kapta, mely a tisztaságot és a gyógyító erőt szimbolizálta.",
     "tags": [
       "múzeum",
       "patika",
@@ -223,7 +224,6 @@
       "lng": 16.5410987
     },
     "image": "/images/attractions/patikamuz.jpg",
-    "history_full": "A Jurisics tér 6. szám alatti múzeum az ország egyik legkülönlegesebb gyógyszerészet-történeti gyűjteménye. Az 1777-ben alapított jezsuita gyógyszertár barokk berendezése eredeti helyén látható, emellett egy egyedülálló drogpadlás (gyógynövényszárító) is várja a látogatókat.",
     "tips": "Ne hagyd ki a belső udvaron található barokk patikakert megtekintését sem, ahol 80 féle gyógynövényt ismerhetsz meg!",
     "fun_fact": "Ebben az épületben 1665 és 1983 között, több mint 300 éven át folyamatosan gyógyítottak a patikusok.",
     "gallery": [
@@ -236,8 +236,8 @@
     "id": "attraction-10",
     "name": "Postamúzeum",
     "category": "Múzeum & kiállítás",
-    "description": "A posta és hírközlés történetét bemutató szakmúzeum.",
-    "details": "A Hősök Tornya melletti épületben található kiállítás a helyi és regionális postatörténet emlékeit, eszközeit és egyenruháit mutatja be, különös tekintettel a híres futárszolgálatokra.",
+    "details": "Ismerd meg a hírközlés múltját egy egykori postamester házában, ahol régi futárszekerek és Kőszeg első telefonközpontja is látható.",
+    "history_full": "A múzeum a Rájnis utca 3. szám alatt, Gerhauser Sámuel egykori postamester házában működik. A kiállítás a 15. századi kocsipostától a 20. századi technológiáig mutatja be az utazás és szállítás történetét. Különlegessége az 1900-ban felállított első helyi telefonközpont, melynek akkor mindössze 6 előfizetője volt.",
     "tags": [
       "múzeum",
       "posta",
@@ -255,7 +255,7 @@
     "name": "Jézus Szíve-templom",
     "category": "Templomok & vallás",
     "description": "A Fő téren álló monumentális, neogótikus csarnoktemplom.",
-    "details": "Az 1894-ben felszentelt templom Ludwig Schöne bécsi építész tervei alapján épült. 57 méter magas tornyaival uralja a városképet. Belső tere tágas és világos, színes üvegablakai figyelemre méltóak.",
+    "details": "Lépj be Kőszeg legmagasabb épületébe, a monumentális neogótikus főtemplomba, mely Szombathely után a megye második legnagyobb székesegyháza.",
     "tags": [
       "templom",
       "neogótika",
@@ -267,7 +267,7 @@
       "lng": 16.5407471
     },
     "image": "/images/jezus_szive_templom.jpg",
-    "history_full": "Az 1892-1894 között épült neogótikus csarnoktemplom Ludwig Schöne bécsi építész tervei alapján készült. 57 méter magas tornyaival Kőszeg legmagasabb épülete, mely meghatározza a város látképét. Belső terét Otto Kott bécsi művész dekoratív, historizáló festése díszíti.",
+    "history_full": "A Jézus Szíve-templom 1892 és 1894 között épült Ludwig Schöne bécsi építész tervei alapján. A tornya 57 méter magas, belső terét pedig Otto Kott gazdag festése díszíti. Színes üvegablakai Árpád-házi szenteket és helyi mecénás családokat ábrázolnak. Vas vármegye második legnagyobb templomaként Kőszeg egyik legmeghatározóbb városképi eleme.",
     "tips": "Érdemes megfigyelned a színes üvegablakokat, melyeket a város tehetős családjai adományoztak a templom építésekor.",
     "fun_fact": "A templom tornya pontosan ugyanolyan magas, mint a város észak-déli kiterjedésének egy bizonyos aránya (a helyiek szerint ez a 'város őre').",
     "gallery": [
@@ -281,7 +281,7 @@
     "name": "Szent Jakab-templom",
     "category": "Templomok & vallás",
     "description": "Kőszeg legrégebbi, gótikus temploma értékes középkori freskókkal.",
-    "details": "A 15. század elején épült gótikus templomot a 18. században barokk stílusban átépítették. Falai között 15. századi freskótöredékek maradtak fenn, köztük a Köpenyes Mária és a Szent Kristóf ábrázolás.",
+    "details": "Látogass el a város legrégebbi templomába, ahol 15. századi freskók és Jurisics Miklós gyermekeinek végső nyughelye található.",
     "tags": [
       "templom",
       "gótika",
@@ -294,7 +294,7 @@
       "lng": 16.5405413
     },
     "image": "/images/attractions/Jakab2.jpg",
-    "history_full": "Kőszeg legrégebbi belvárosi temploma a 14. században épült gótikus stílusban. Itt temették el Jurisics Miklós két gyermekét is. Az 1937-es restaurálás során világhírű freskókat tártak fel, köztük a Köpönyeges Mária és Szent Kristóf monumentális ábrázolásait.",
+    "history_full": "A Szent Jakab-templom eredetileg a 14. században épült gótikus stílusban, majd a 18. században barokkosítottak a külsején. Az 1937-es falkutatás során találták meg világhírű freskóit (Palástos Mária, Szent Kristóf). Falai között temették el Jurisics Miklós kapitány két gyermekét. A reformáció idején évtizedekig a protestánsok használták, ekkor az oltárait szétszedték.",
     "tips": "Keresd a falakon a Garai család címerével ellátott gótikus záróköveket, melyek a templom kegyúri múltjáról tanúskodnak.",
     "fun_fact": "A templom építéséhez az 1200-as évek végén elpusztult régi városi kolostor köveit is felhasználták.",
     "gallery": [
@@ -307,8 +307,8 @@
     "id": "attraction-13",
     "name": "Szent Imre-templom",
     "category": "Templomok & vallás",
-    "description": "A Szent Jakab-templom szomszédságában álló, egykori magyar plébániatemplom.",
-    "details": "A 17. század elején épült, eredetileg protestáns templom. Később a katolikusoké lett, és barokk stílusban átépítették. A két templom egymás mellett szimbolizálja a város egykori német és magyar lakosságát.",
+    "details": "Fedezd fel a Szent Jakab-templom közvetlen szomszédjában álló 'magyar templomot', melynek reneszánsz falai között barokk pompát találsz.",
+    "history_full": "A templomot boradóból építtette a város a 17. század elején (1615-1640) a protestánsok számára. Később, 1673-ban került a katolikusokhoz. Stílusa különleges: késő reneszánsz formái gótikus arányokkal párosulnak. Főoltárképe Szent Imre herceget ábrázolja, a templom pedig évszázadokig a város magyar nyelvű plébániája volt.",
     "tags": [
       "templom",
       "barokk",
@@ -325,8 +325,8 @@
     "id": "attraction-14",
     "name": "Evangélikus templom",
     "category": "Templomok & vallás",
-    "description": "1783-as copf stílusú templom a Gyöngyös-patak partján.",
-    "details": "A türelmi rendelet után épült templom a korabeli előírásoknak megfelelően torony nélkül és az utcafronttól beljebb kapott helyet. Letisztult, elegáns copf-stílusú belső tér jellemzi.",
+    "details": "Látogass el ebbe a különleges, zárt kertben rejtőző 'magtártemplomba', mely a türelmi rendelet szigorú szabályai szerint épült.",
+    "history_full": "A templom 1783-ban épült késő barokk (copf) stílusban. Mivel az akkori törvények tiltották a toronyépítést és az utcafronti bejáratot a protestánsoknak, a templom kertben rejtőzik. Belső tere a 'magtártemplomokra' jellemző: fából készült karzatok növelik a befogadóképességet. Jellegzetes tornya csak jóval később, 1930-ban készült el.",
     "tags": [
       "templom",
       "copf",
@@ -361,8 +361,8 @@
     "id": "attraction-16",
     "name": "Zsinagóga",
     "category": "Templomok & vallás",
-    "description": "1859-ben épült romantikus stílusú imaház, 2022-ben felújítva.",
-    "details": "A Várkörön álló, gyönyörűen felújított zsinagóga romantikus stílusban épült. A felújítás után kulturális és rendezvényközpontként született újjá, kiállítóterekkel és kiváló akusztikájú koncertteremmel.",
+    "details": "Tekintsd meg a Schey Fülöp mecénás által alapított, gyönyörűen felújított romantikus zsinagógát, mely ma kulturális központként virágzik.",
+    "history_full": "A zsinagógát 1859-ben avatták fel, Schey Fülöp, az első osztrák nemességet kapott zsidó kereskedő adományából. Romantikus stílusa és belső kupolafestése egyedülálló. A holokauszt során a 109 fős hitközségből csak 16-an maradtak életben, a hitközség 1951-ben megszűnt. Az épületet 2022-re teljesen felújították, ma kulturális és kutatóközpontként működik.",
     "tags": [
       "zsinagóga",
       "romantikus",
@@ -379,8 +379,8 @@
     "id": "attraction-17",
     "name": "Szent Kereszt felmagasztalása kálváriatemplom",
     "category": "Templomok & vallás",
-    "description": "A Kálvária-hegy tetején álló barokk templom, stációkkal.",
-    "details": "A város fölé emelkedő dombon kanyargó keresztút vezet fel az 1729-ben épült barokk templomhoz. A stációk mentén tett séta végén a templomtól szép kilátás nyílik Kőszegre.",
+    "details": "Sétálj fel a stációk mentén a város fölé magasodó barokk templomhoz, melynek építéséhez a hívek kézben hordták fel a téglákat.",
+    "history_full": "A templom 1729-1734 között épült egy korábbi pestisjárvány után tett fogadalom emlékére. A legenda szerint a hívek mintegy 70 000 téglát hordtak fel kézben a hegytetőre. Építését a jezsuita rend irányította. Sajátos külseje (három torony) és a fentről nyíló pazar kilátás miatt Kőszeg egyik legkedveltebb szakrális kirándulóhelye.",
     "tags": [
       "kálvária",
       "templom",
@@ -454,7 +454,8 @@
     "name": "Fő tér",
     "category": "Városi terek & emlékhelyek",
     "description": "Kőszeg városias tere a Jézus Szíve-templommal és a szökőkúttal.",
-    "details": "A történelmi Jurisics térrel ellentétben ez a 19. század végén kialakult tér a város polgári központja. Itt áll a monumentális Jézus Szíve-templom, a Postapalota, és nyáron a teraszos kávézók kedvelt helyszíne.",
+    "details": "Élvezd a város polgári hangulatát a tágas Fő téren, ahol monumentális épületek, teraszos kávézók és a zenélő szökőkút vár.",
+    "history_full": "A Fő tér a 19. század végén nyerte el mai, városias képét, miután lebontották a korábbi vámsor épületeit. A tér központi eleme a neogótikus Jézus Szíve-templom és a gyönyörűen parkosított sétány. Ma a város társadalmi életének központja, ahol a történelmi múlt és a modern polgári élet találkozik.",
     "tags": [
       "tér",
       "szökőkút",
@@ -472,7 +473,8 @@
     "name": "Várkör",
     "category": "Városi terek & emlékhelyek",
     "description": "A városfalakat körülölelő hangulatos sétálóutca és park.",
-    "details": "A Várkör a középkori városfalak külső vonalát követi. Ma egy kellemes sétány padokkal, parkos részekkel, gesztenyefasorral, amely összeköti a belváros számos látnivalóját, mint a Zsinagógát vagy a Református templomot.",
+    "details": "Tégy egy pihentető sétát a középkori városfalak mentén futó hangulatos körúton, mely gesztenyefasoraival összeköti a belváros látnivalóit.",
+    "history_full": "A Várkör a kőszegi városfalakat övező egykori védelmi övezet és várárok helyén alakult ki. A 19. században vált elegáns sétálóutcává és parkká. Itt láthatók a városfal legépebb maradványai, valamint olyan fontos épületek, mint a Zsinagóga vagy a Református templom.",
     "tags": [
       "sétaút",
       "városfal",
@@ -489,8 +491,8 @@
     "id": "attraction-24",
     "name": "Cáki Pincesor",
     "category": "Természet & néprajz",
-    "description": "Időutazás a múltba: zsúpfedeles pincék és szelídgesztenyések romantikus találkozása.",
-    "details": "A Kőszeg melletti Cák határában sorakozó pincesor Magyarország egyik legkülönlegesebb népi műemléke. A 18-19. századi, kőből és fából épült, zsúppal fedett kisméretű pincék ma is eredeti formájukban őrzik a környék bortermelő múltját. A hatalmas, évszázados szelídgesztenyefák árnyékában tett séta olyan, mintha egy skanzenbe csöppennénk, ahol megállt az idő.",
+    "details": "Utazz vissza az időben a 18. századi zsúpfedeles pincék között, melyek ma is eredeti népi építészeti formájukban őrzik a környék borászati múltját.",
+    "history_full": "A nyolc pincéből álló együttes a 18-19. század fordulóján épült tölgy- és gesztenyefából, agyaggalapasztva és rozsszalmából készült zsúpfedéllel. Eredetileg nem csak borszállításra, hanem gesztenye és gyümölcsök tárolására is használták őket. Az 1970-es években mentették meg őket a pusztulástól, ma szabadtéri múzeumként látogathatók.",
     "tags": [
       "pince",
       "néprajz",
@@ -530,8 +532,8 @@
     "id": "attraction-26",
     "name": "Szent Vid-kápolna",
     "category": "Templomok & vallás",
-    "description": "A Velem feletti Szent Vid-hegyen álló, 18. századi búcsújáró kápolna.",
-    "details": "A 589 méter magas Szent Vid-hegyen, egy őskori vár helyén épült a barokk kápolna. Népszerű zarándok- és kirándulóhely, ahonnan csodálatos panoráma nyílik a környékre.",
+    "details": "Zarándokolj fel a Velem feletti ősi kultikus helyre, ahol bronzkori városromokon és egy 18. századi barokk kápolnán át vezet az út a csúcsra.",
+    "history_full": "Szent Vid hegye az Alpokalja egyik legfontosabb régészeti lelőhelye: már a bronzkorban jelentős városias település állt itt. A római korban őrtorony vigyázta a vízvezetéket. A mai kápolnát 1713-ban alapította egy Hilerian nevű remete. A templom Jurisics Miklós korában is fontos védelmi pont volt, mai barokk formáját a 19. század közepén nyerte el.",
     "tags": [
       "kápolna",
       "zarándoklat",
@@ -549,8 +551,8 @@
     "id": "attraction-27",
     "name": "Chernel-kert Arborétum",
     "category": "Természet & kirándulás",
-    "description": "Védett gyűjteményes kert Chernel István ornitológus egykori birtokán.",
-    "details": "A híres madártudós, Chernel István által alapított arborétum ma az Őrségi Nemzeti Park Igazgatóság kezelésében áll. A parkban több száz fa- és cserjefaj, madárvédelmi tanösvény és emlékkiállítás várja a látogatókat.",
+    "details": "Sétálj Chernel István ornitológus egykori birtokán, mely ma védett gyűjteményes kert és madárvédelmi központ ritka növényekkel.",
+    "history_full": "Chernel István 1896-ban alapította a kertet, hogy ideális fészkelőhelyet biztosítson a madaraknak. A parkban több mint 300 növényfaj él, köztük Chernel által ültetett mamutfenyők is. Ma az Őrségi Nemzeti Park része, tanösvényekkel és egy vadsérült madarak számára fenntartott mentőközponttal várja a látogatókat.",
     "tags": [
       "arborétum",
       "botanika",
@@ -568,7 +570,8 @@
     "name": "Bechtold István Természetvédelmi Látogatóközpont",
     "category": "Természet & kirándulás",
     "description": "Az Írottkő Natúrpark kapujaként működő interaktív központ.",
-    "details": "A Kálvária-hegy szomszédságában található modern látogatóközpont interaktív kiállításokon keresztül mutatja be a Kőszegi-hegység élővilágát, geológiai értékeit. A túrák ideális kiindulópontja.",
+    "details": "Ismerd meg interaktív módon a Kőszegi-hegység élővilágát ebben a díjnyertes látogatóközpontban, mely a túrák ideális kiindulópontja.",
+    "history_full": "A 2006-ban megnyílt, kör alaprajzú modern épület Bechtold István neves természetbúvár nevét viseli. Az Őrségi Nemzeti Park fenntartásában működik, és 2010-ben az 'Év Ökoturisztikai Létesítménye' elismerést is megkapta. Állandó kiállítása a kőszegi kutatók (Chernel, Bechtold, Horváth) munkásságát és a hegyvidék madárvilágát mutatja be.",
     "tags": [
       "látogatóközpont",
       "természetvédelem",
@@ -622,7 +625,8 @@
     "name": "Óház-kilátó",
     "category": "Kilátók & természet",
     "description": "Kilátó a Kőszegi-hegységben, az egykori felsővár helyén.",
-    "details": "A 609 méter magas Óház-tetőn álló kilátó helyén állt egykor Kőszeg első, Árpád-kori vára. A toronyból csodálatos körpanoráma nyílik Kőszeg városára, a Kőszegi-hegységre és az Alpokalja vidékére.",
+    "details": "Vágj neki az Óház-tetőnek, és csodáld meg a panorámát arról a helyről, ahol Kőszeg első, Árpád-kori felsővára állt.",
+    "history_full": "A 609 méter magas tetőn állt az 1200-as években az ország egyik legfontosabb határerődítménye. Miután az alsóvár felépült, a felsővár jelentősége csökkent, majd rommá vált. A mai kilátó egy középkori torony stílusában épült 1996-ban, alapjai között pedig láthatók az eredeti várfalak maradványai.",
     "tags": [
       "kilátó",
       "túra",
@@ -640,7 +644,8 @@
     "name": "Írottkő-kilátó",
     "category": "Kilátók & természet",
     "description": "A Dunántúl legmagasabb pontján, 883 méteren álló kilátó.",
-    "details": "A magyar-osztrák határon álló kilátó pontosan a határon fekszik, bejárata a magyar oldalon van. Az Országos Kéktúra nyugati végpontja. Tiszta időben a Fertő-tóig és a Balatonig is ellátni.",
+    "details": "Hódítsd meg a Dunántúl legmagasabb pontját, és állj egyszerre két ország földjén a pontosan a határon fekvő kilátó tetején.",
+    "history_full": "Az 1891-ben fa kilátóval kezdődő történet 1913-ban ért a csúcsra a mai kőtoronnyal. Az építmény közepén halad át a magyar-osztrák államhatár. A 883 méteres magasságból tiszta időben az Alpok hófödte csúcsai és a Balaton tükre is felcsillan. Ez az Országos Kéktúra nyugati végpontja.",
     "tags": [
       "kilátó",
       "Kéktúra",
@@ -657,8 +662,8 @@
     "id": "attraction-33",
     "name": "Szulejmán-kilátó",
     "category": "Kilátók & természet",
-    "description": "Kilátópont a Kálvária-hegyen, a történelmi legenda helyszínén.",
-    "details": "A Kálvária-hegyen álló, fából épült kilátó arról a dombról nyújt szép panorámát Kőszegre, ahonnan a legenda szerint Szulejmán szultán figyelte a vár 1532-es, sikertelen ostromát.",
+    "details": "Tekints le Kőszegre arról a dombról, ahonnan a legenda szerint Szulejmán szultán figyelte a vár 1532-es reménytelennek tűnő ostromát.",
+    "history_full": "A 2012-ben épült kilátó helyszíne történelmi jelentőségű: 1532-ben a török hadsereg itt állította fel sátrait. A domb neve ma is Szultán-tető. A fából készült építmény nemcsak a panoráma miatt kedvelt, hanem emléket állít Jurisics Miklós és a kőszegi védők hősies kitartásának is, mely megállította a törökök Bécs felé tartó hadjáratát.",
     "tags": [
       "kilátó",
       "legendás",

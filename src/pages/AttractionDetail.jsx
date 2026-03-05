@@ -254,9 +254,16 @@ export default function AttractionDetail() {
                           viewport={{ once: true }}
                           className="min-w-[70vw] md:min-w-[400px] aspect-[3/4] rounded-[2.5rem] overflow-hidden snap-center relative shadow-2xl border border-white/10"
                         >
-                          <ParallaxImage
+                          <div className="absolute inset-0 bg-black/10 dark:bg-white/5" />
+                          <img
                             src={img}
-                            className="w-full h-full object-cover"
+                            alt=""
+                            className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-30 scale-110"
+                          />
+                          <img
+                            src={img}
+                            alt={`${attr.name} galléria kép ${idx + 1}`}
+                            className="relative w-full h-full object-contain z-10"
                           />
                         </motion.div>
                       ))}
