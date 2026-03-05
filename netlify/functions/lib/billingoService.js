@@ -11,6 +11,41 @@ function validateConfig() {
 }
 
 /**
+ * Search for partner by email to avoid duplicates
+ */
+export async function findPartnerByEmail(email) {
+    validateConfig();
+    console.log(`Billingo: Searching for partner with email: ${email}...`);
+
+    // GET /partners?query=email
+    const response = await fetch(`${BASE_URL}/partners?query=${encodeURIComponent(email)}`, {
+        method: 'GET',
+        headers: {
+            'X-API-KEY': API_KEY,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        console.error('Billingo Search Partner Error:', response.statusText);
+        return null;
+    }
+
+    const result = await response.json();
+    const partners = result.data || [];
+
+    // Exact match check
+    const partner = partners.find(p => p.emails && p.emails.includes(email));
+
+    if (partner) {
+        console.log(`Billingo: Found existing partner ID ${partner.id}`);
+        return partner.id;
+    }
+
+    return null;
+}
+
+/**
  * Creates a Billingo partner from order data
  */
 export async function createPartner(data) {
@@ -45,8 +80,10 @@ export async function createPartner(data) {
         throw new Error(result.error?.message || 'Failed to create Billingo partner');
     }
 
-    console.log(`Billingo: Partner created! ID: ${result.data.id}`);
-    return result.data.id;
+    // Robust parsing as suggested by user
+    const partnerId = result.data?.id || result.id;
+    console.log(`Billingo: Partner created! ID: ${partnerId}`);
+    return partnerId;
 }
 
 /**
@@ -74,7 +111,8 @@ export async function createInvoice(partnerId, amount, eventName) {
                 unit: 'db',
                 unit_price: amount,
                 unit_price_type: 'gross',
-                vat: '27%'
+                vat: 'AAM', // "Alanyi Adómentes" - User is VAT exempt
+                entitlement: 'AAM'
             }
         ]
     };
@@ -95,10 +133,14 @@ export async function createInvoice(partnerId, amount, eventName) {
         throw new Error(result.error?.message || 'Failed to create Billingo invoice');
     }
 
-    console.log(`Billingo: Invoice created! ID: ${result.data.id}, No: ${result.data.invoice_number}`);
+    // Robust parsing as suggested by user
+    const invoiceId = result.data?.id || result.id;
+    const invoiceNumber = result.data?.invoice_number || result.invoice_number;
+
+    console.log(`Billingo: Invoice created! ID: ${invoiceId}, No: ${invoiceNumber}`);
     return {
-        id: result.data.id,
-        invoice_number: result.data.invoice_number
+        id: invoiceId,
+        number: invoiceNumber
     };
 }
 
@@ -121,5 +163,5 @@ export async function getInvoiceDownloadUrl(invoiceId) {
         return null;
     }
 
-    return result.data.public_url;
+    return result.data?.public_url || result.public_url;
 }

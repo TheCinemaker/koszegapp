@@ -6,7 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
 import { getAppUrl } from './lib/ticketConfig.js';
-import { createPartner, createInvoice } from './lib/billingoService.js';
+import { createPartner, createInvoice, findPartnerByEmail } from './lib/billingoService.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -120,14 +120,21 @@ export const handler = async (event) => {
 
             // 2. Billingo Integration
             try {
-                console.log('Creating Billingo Partner...');
-                const partnerId = await createPartner({
-                    name: buyer_name,
-                    email: buyer_email,
-                    zip: zip,
-                    city: city,
-                    address: address
-                });
+                console.log('Checking for existing Billingo Partner...');
+                let partnerId = await findPartnerByEmail(buyer_email);
+
+                if (!partnerId) {
+                    console.log('No existing partner found, creating new Billingo Partner...');
+                    partnerId = await createPartner({
+                        name: buyer_name,
+                        email: buyer_email,
+                        zip: zip,
+                        city: city,
+                        address: address
+                    });
+                } else {
+                    console.log('Using existing Billingo Partner:', partnerId);
+                }
 
                 console.log('Creating Billingo Invoice...');
                 // Get event name for invoice
