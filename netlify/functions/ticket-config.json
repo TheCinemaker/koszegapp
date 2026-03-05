@@ -1,5 +1,5 @@
 {
-    "env": "test",
+    "env": "production",
     "branding": {
         "appName": "KőszegAPP",
         "supportEmail": "info@koszegapp.hu",
@@ -17,7 +17,7 @@
     "wallet": {
         "apple": {
             "enabled": true,
-            "passNamePrefix": "TEST – ",
+            "passNamePrefix": "",
             "teamIdentifier": "97FG847W58",
             "passTypeIdentifier": "pass.hu.koszeg.koszegpass"
         },
