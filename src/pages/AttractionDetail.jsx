@@ -227,25 +227,42 @@ export default function AttractionDetail() {
               </FadeUp>
             )}
 
-            {/* 4. Gallery Grid (Premium Grid) */}
-            <FadeUp delay={0.3}>
-              <div className="bg-white dark:bg-[#1c1c1e] rounded-[3rem] p-10 shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                <h2 className="text-sm font-black text-indigo-500 uppercase tracking-widest mb-8 flex items-center gap-2">
-                  <IoImagesOutline className="text-lg" /> Galéria
-                </h2>
-                <div className="grid grid-cols-6 gap-4 h-[600px]">
-                  <div className="col-span-4 row-span-2 rounded-[2rem] overflow-hidden">
-                    <ParallaxImage src={attr.gallery?.[0] || attr.image} className="w-full h-full" />
-                  </div>
-                  <div className="col-span-2 rounded-[2rem] overflow-hidden">
-                    <ParallaxImage src={attr.gallery?.[1] || attr.image} className="w-full h-full" />
-                  </div>
-                  <div className="col-span-2 rounded-[2rem] overflow-hidden">
-                    <ParallaxImage src={attr.gallery?.[2] || attr.image} className="w-full h-full" />
+            {/* 4. Gallery Section (Premium Slider) */}
+            {attr.gallery && attr.gallery.length > 0 && (
+              <FadeUp delay={0.3}>
+                <div className="bg-white dark:bg-[#1c1c1e] rounded-[3rem] p-10 shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
+                  <h2 className="text-sm font-black text-indigo-500 uppercase tracking-widest mb-8 flex items-center gap-2">
+                    <IoImagesOutline className="text-lg" /> Galéria
+                  </h2>
+
+                  <div className="relative group">
+                    <div className="flex overflow-x-auto gap-4 no-scrollbar pb-4 snap-x snap-mandatory">
+                      {attr.gallery.map((img, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          className="min-w-[80vw] md:min-w-[600px] h-[400px] rounded-[2rem] overflow-hidden snap-center relative shadow-lg"
+                        >
+                          <ParallaxImage
+                            src={img}
+                            className="w-full h-full"
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Visual Indicators */}
+                    <div className="flex justify-center gap-2 mt-4">
+                      {attr.gallery.map((_, idx) => (
+                        <div key={idx} className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700" />
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </FadeUp>
+              </FadeUp>
+            )}
           </div>
 
           {/* Sidebar Column (Bento Cards) */}
