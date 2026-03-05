@@ -24,7 +24,9 @@ export default function TicketAdmin() {
         capacity: 100,
         price: 5000,
         service_fee_percent: 5,
-        category: 'Koncert'
+        category: 'Koncert',
+        is_evergreen: false,
+        entries_allowed: 1
     });
 
     useEffect(() => {
@@ -97,7 +99,9 @@ export default function TicketAdmin() {
                 capacity: 100,
                 price: 5000,
                 service_fee_percent: 5,
-                category: 'Koncert'
+                category: 'Koncert',
+                is_evergreen: false,
+                entries_allowed: 1
             });
             fetchEvents();
         } catch (error) {
@@ -360,6 +364,35 @@ export default function TicketAdmin() {
                                     </div>
                                 </div>
 
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="flex items-center gap-2 py-2">
+                                        <input
+                                            type="checkbox"
+                                            id="is_evergreen"
+                                            checked={formData.is_evergreen}
+                                            onChange={(e) => setFormData({ ...formData, is_evergreen: e.target.checked })}
+                                            className="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500"
+                                        />
+                                        <label htmlFor="is_evergreen" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                            Örökérvényű (Múzeumi belépő)
+                                        </label>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            Belépési keret (alkalom)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={formData.entries_allowed}
+                                            onChange={(e) => setFormData({ ...formData, entries_allowed: parseInt(e.target.value) || 1 })}
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="flex gap-4 pt-4">
                                     <button
                                         type="submit"
@@ -406,16 +439,16 @@ export default function TicketAdmin() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {events
                         .filter(event => {
-                            const isExpired = new Date(event.date) < new Date().setHours(0, 0, 0, 0);
+                            const isExpired = !event.is_evergreen && new Date(event.date) < new Date().setHours(0, 0, 0, 0);
                             if (activeTab === 'active') {
                                 return event.status === 'active' && !isExpired;
                             } else {
-                                return event.status === 'archived' || isExpired;
+                                return event.status === 'archived' || (isExpired && !event.is_evergreen);
                             }
                         })
                         .map(event => {
                             const stats = getTicketStats(event.id);
-                            const isExpired = new Date(event.date) < new Date().setHours(0, 0, 0, 0);
+                            const isExpired = !event.is_evergreen && new Date(event.date) < new Date().setHours(0, 0, 0, 0);
 
                             return (
                                 <div
@@ -428,7 +461,7 @@ export default function TicketAdmin() {
                                         {event.name}
                                     </h3>
                                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                        {new Date(event.date).toLocaleDateString('hu-HU')} {event.time}
+                                        {event.is_evergreen ? 'Szezonális / Bármikor' : `${new Date(event.date).toLocaleDateString('hu-HU')} ${event.time}`}
                                     </p>
 
                                     <div className="space-y-2 text-sm">

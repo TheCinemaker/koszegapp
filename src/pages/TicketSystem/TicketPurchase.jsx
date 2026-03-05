@@ -33,11 +33,13 @@ export default function TicketPurchase() {
                 .from('ticket_events')
                 .select('*')
                 .eq('status', 'active')
-                .gte('date', new Date().toISOString().split('T')[0])
                 .order('date', { ascending: true });
 
-            if (error) throw error;
-            setEvents(data || []);
+            // Post-filter: Keep if evergreen OR date >= today
+            const filtered = (data || []).filter(e =>
+                e.is_evergreen || new Date(e.date) >= new Date().setHours(0, 0, 0, 0)
+            );
+            setEvents(filtered);
         } catch (error) {
             console.error('Error fetching events:', error);
             toast.error('Nem sikerült betölteni az eseményeket');
@@ -138,7 +140,6 @@ export default function TicketPurchase() {
                     <div className="mb-12">
                         <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 mask-fade-right">
                             {['Mind', ...new Set(events
-                                .filter(e => new Date(e.date) >= new Date().setHours(0, 0, 0, 0))
                                 .map(e => e.category || 'Egyéb'))].map(cat => (
                                     <button
                                         key={cat}
@@ -185,7 +186,7 @@ export default function TicketPurchase() {
                                         <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                                             <div className="flex items-center gap-2">
                                                 <FaCalendarAlt className="text-indigo-500" />
-                                                <span>{new Date(event.date).toLocaleDateString('hu-HU')} {event.time}</span>
+                                                <span>{event.is_evergreen ? 'Egész évben / Bármikor' : `${new Date(event.date).toLocaleDateString('hu-HU')} ${event.time}`}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <FaMapMarkerAlt className="text-indigo-500" />
