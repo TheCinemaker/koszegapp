@@ -112,25 +112,34 @@ export default function AttractionDetail() {
       </motion.div>
 
       {/* --- HERO IMAGE SECTION (SCALE DOWN ON SCROLL) --- */}
-      <div className="relative h-[85vh] w-full overflow-hidden">
+      <div className="relative h-[85vh] w-full overflow-hidden bg-black">
         <motion.div
           style={{ scale: heroScale, opacity: heroOpacity }}
-          className="w-full h-full"
+          className="w-full h-full relative"
         >
           {attr.image ? (
-            <img
-              src={attr.image}
-              alt={attr.name}
-              className="w-full h-full object-cover"
-            />
+            <>
+              {/* Blurred background layer to prevent "empty" bars */}
+              <img
+                src={attr.image}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110"
+              />
+              {/* Main "No-Crop" Hero Image */}
+              <img
+                src={attr.image}
+                alt={attr.name}
+                className="relative w-full h-full object-contain z-10"
+              />
+            </>
           ) : (
             <GhostImage className="w-full h-full" />
           )}
         </motion.div>
 
         {/* Cinematic Gradient Overlays */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#f5f5f7] dark:from-[#000000] via-transparent to-transparent z-10" />
-        <div className="absolute inset-0 bg-black/20 z-0" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#f5f5f7] dark:from-[#000000] via-transparent to-transparent z-20" />
+        <div className="absolute inset-0 bg-black/10 z-0" />
 
         {/* Hero Title Container */}
         <div className="absolute bottom-24 left-8 right-8 z-20 max-w-7xl mx-auto">
@@ -236,18 +245,18 @@ export default function AttractionDetail() {
                   </h2>
 
                   <div className="relative group">
-                    <div className="flex overflow-x-auto gap-4 no-scrollbar pb-4 snap-x snap-mandatory">
+                    <div className="flex overflow-x-auto gap-6 no-scrollbar pb-6 snap-x snap-mandatory px-4">
                       {attr.gallery.map((img, idx) => (
                         <motion.div
                           key={idx}
                           initial={{ opacity: 0, scale: 0.9 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
-                          className="min-w-[80vw] md:min-w-[600px] h-[400px] rounded-[2rem] overflow-hidden snap-center relative shadow-lg"
+                          className="min-w-[70vw] md:min-w-[400px] aspect-[3/4] rounded-[2.5rem] overflow-hidden snap-center relative shadow-2xl border border-white/10"
                         >
                           <ParallaxImage
                             src={img}
-                            className="w-full h-full"
+                            className="w-full h-full object-cover"
                           />
                         </motion.div>
                       ))}

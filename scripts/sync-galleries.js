@@ -29,20 +29,38 @@ async function syncGalleries() {
             if (!folder) return attr;
 
             const folderPath = path.join(IMAGES_DIR, folder.name);
-            const files = fs.readdirSync(folderPath)
-                .filter(file => /\.(jpg|jpeg|png|webp|avif)$/i.test(file))
+            const allFiles = fs.readdirSync(folderPath)
+                .filter(file => /\.(jpg|jpeg|png|webp|avif)$/i.test(file));
+
+            const heroFile = allFiles.find(file => file.toLowerCase().startsWith('hero'));
+            const detailFiles = allFiles.filter(file => !file.toLowerCase().startsWith('hero'))
                 .map(file => `/images/attractions/${folder.name}/${file}`);
 
-            if (files.length > 0) {
-                // Keep the original image as first if not already in gallery
-                const newGallery = [...new Set([attr.image, ...files].filter(Boolean))];
+            let updatedAttr = { ...attr };
+            let hasChanges = false;
 
-                // Compare (simple stringify check)
-                if (JSON.stringify(attr.gallery) !== JSON.stringify(newGallery)) {
-                    changedCount++;
-                    return { ...attr, gallery: newGallery };
+            // Handle Hero Image
+            if (heroFile) {
+                const heroPath = `/images/attractions/${folder.name}/${heroFile}`;
+                if (attr.image !== heroPath) {
+                    updatedAttr.image = heroPath;
+                    hasChanges = true;
                 }
             }
+
+            // Handle Gallery (Portrait details)
+            if (detailFiles.length > 0) {
+                if (JSON.stringify(attr.gallery) !== JSON.stringify(detailFiles)) {
+                    updatedAttr.gallery = detailFiles;
+                    hasChanges = true;
+                }
+            }
+
+            if (hasChanges) {
+                changedCount++;
+                return updatedAttr;
+            }
+
             return attr;
         });
 
