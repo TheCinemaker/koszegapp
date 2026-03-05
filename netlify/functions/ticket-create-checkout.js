@@ -1,3 +1,4 @@
+// ⚠️ DO NOT MODIFY THIS FILE EVER AGAIN / EHHEZ SOHA TÖBBET NEM NYÚLUNK!
 // Ticket System - Stripe Checkout Session Creator
 // Creates a Stripe checkout session for ticket purchases
 

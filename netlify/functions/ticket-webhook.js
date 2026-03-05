@@ -1,3 +1,4 @@
+// ⚠️ DO NOT MODIFY THIS FILE EVER AGAIN / EHHEZ SOHA TÖBBET NEM NYÚLUNK!
 // Ticket System - Stripe Webhook Handler (Robust Version)
 // Handles raw body parsing, correct header casing, and explicit fetch
 

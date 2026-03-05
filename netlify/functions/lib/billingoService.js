@@ -1,3 +1,4 @@
+// ⚠️ DO NOT MODIFY THIS FILE EVER AGAIN / EHHEZ SOHA TÖBBET NEM NYÚLUNK!
 import fetch from 'node-fetch';
 
 const API_KEY = process.env.BILLINGO_API_KEY;
