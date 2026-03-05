@@ -72,18 +72,15 @@ export const handler = async (event) => {
             };
         }
 
-        // Check if already used all entries
-        const entriesAllowed = ticket.ticket_events.entries_allowed || 1;
-        const entriesUsed = ticket.entries_used || 0;
-
-        if (entriesUsed >= entriesAllowed) {
+        // Check if already used
+        if (ticket.status === 'used') {
             return {
                 statusCode: 200,
                 headers,
                 body: JSON.stringify({
                     valid: false,
                     status: 'already_used',
-                    message: 'Ez a jegy már minden alkalommal fel lett használva',
+                    message: 'Ez a jegy már fel lett használva',
                     usedAt: ticket.used_at,
                     ticket: {
                         buyerName: ticket.buyer_name,
@@ -94,28 +91,11 @@ export const handler = async (event) => {
             };
         }
 
-        // Check if paid
-        if (ticket.status !== 'paid' && ticket.status !== 'used') { // 'used' is valid if we still have entries
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify({
-                    valid: false,
-                    status: 'not_paid',
-                    message: 'Ez a jegy nics kifizetve vagy érvénytelenített'
-                })
-            };
-        }
-
-        // Mark as used (increment counter)
-        const newEntriesUsed = entriesUsed + 1;
-        const newStatus = newEntriesUsed >= entriesAllowed ? 'used' : 'paid';
-
+        // Mark as used
         const { error: updateError } = await supabase
             .from('tickets')
             .update({
-                status: newStatus,
-                entries_used: newEntriesUsed,
+                status: 'used',
                 used_at: new Date().toISOString()
             })
             .eq('id', ticket.id);
@@ -132,15 +112,12 @@ export const handler = async (event) => {
             body: JSON.stringify({
                 valid: true,
                 status: 'validated',
-                message: entriesAllowed > 1
-                    ? `Jegy érvényesítve (${newEntriesUsed}/${entriesAllowed}) - Beléphet!`
-                    : 'Jegy érvényesítve - Beléphet!',
+                message: 'Jegy érvényesítve - Beléphet!',
                 ticket: {
                     buyerName: ticket.buyer_name,
                     eventName: ticket.ticket_events.name,
                     guestCount: ticket.guest_count,
-                    validatedAt: new Date().toISOString(),
-                    entriesLeft: entriesAllowed - newEntriesUsed
+                    validatedAt: new Date().toISOString()
                 }
             })
         };

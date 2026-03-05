@@ -25,8 +25,7 @@ export default function TicketAdmin() {
         price: 5000,
         service_fee_percent: 5,
         category: 'Koncert',
-        is_evergreen: false,
-        entries_allowed: 1
+        is_evergreen: false
     });
 
     useEffect(() => {
@@ -100,8 +99,7 @@ export default function TicketAdmin() {
                 price: 5000,
                 service_fee_percent: 5,
                 category: 'Koncert',
-                is_evergreen: false,
-                entries_allowed: 1
+                is_evergreen: false
             });
             fetchEvents();
         } catch (error) {
@@ -387,20 +385,6 @@ export default function TicketAdmin() {
                                         <label htmlFor="is_evergreen" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             Örökérvényű (Múzeumi belépő)
                                         </label>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            Belépési keret (alkalom)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            min="1"
-                                            value={formData.entries_allowed}
-                                            onChange={(e) => setFormData({ ...formData, entries_allowed: parseInt(e.target.value) || 1 })}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                            required
-                                        />
                                     </div>
                                 </div>
 
