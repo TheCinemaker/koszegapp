@@ -231,7 +231,7 @@ export default function TicketScanner() {
                                 </div>
 
                                 {lastResult.ticket.paymentStatus === 'reserved' && (
-                                    <div className="mt-4 p-3 bg-amber-500/20 border border-amber-500 rounded-lg text-amber-500 font-bold text-center animate-pulse">
+                                    <div className="mt-4 p-3 bg-amber-500/20 border border-amber-500 rounded-lg text-amber-500 font-bold text-center">
                                         ⚠️ HELYSZÍNI FIZETÉS SZÜKSÉGES!
                                     </div>
                                 )}
