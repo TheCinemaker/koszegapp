@@ -37,6 +37,7 @@
       "/images/attractions/attraction-1/DSC07099.JPG",
       "/images/attractions/attraction-1/DSC07100.JPG",
       "/images/attractions/attraction-1/DSC07102.JPG",
+      "/images/attractions/attraction-1/DSC07112.JPG",
       "/images/attractions/attraction-1/DSC07123(1).jpg",
       "/images/attractions/attraction-1/DSC07135.JPG",
       "/images/attractions/attraction-1/DSC07147.JPG"
@@ -81,6 +82,9 @@
     "walkingDistanceFromCenter": 3,
     "bestSeason": [
       "all"
+    ],
+    "gallery": [
+      "/images/attractions/attraction-2/DSC07177.JPG"
     ]
   },
   {
@@ -105,8 +109,8 @@
     "tips": "A torony erkélyéről készítheted a legszebb fotót a Jurisics térről és a Városházáról.",
     "fun_fact": "Az épületet Horthy Miklós kormányzó avatta fel, és nagyobb ünnepeken ma is megszólal innen a toronyzene.",
     "gallery": [
-      "/images/hosok_tornya.jpg",
-      "/images/attractions/hosok_tornya_view.jpg"
+      "/images/attractions/attraction-3/DSC03696-2.jpg",
+      "/images/attractions/attraction-3/DSC06632.JPG"
     ],
     "accessibility": "A toronyba vezető szűk lépcsők miatt nem akadálymentesített.",
     "priority": 9,
@@ -141,7 +145,10 @@
     "rainSafe": true,
     "childFriendly": false,
     "duration": "short",
-    "romantic": 4
+    "romantic": 4,
+    "gallery": [
+      "/images/attractions/attraction-4/DSC07068.JPG"
+    ]
   },
   {
     "id": "attraction-5",
@@ -373,7 +380,10 @@
       "lat": 47.3910882,
       "lng": 16.5417318
     },
-    "image": "/images/attractions/zsinagoga.jpg"
+    "image": "/images/attractions/zsinagoga.jpg",
+    "gallery": [
+      "/images/attractions/attraction-16/DSC07213.JPG"
+    ]
   },
   {
     "id": "attraction-17",
@@ -485,7 +495,13 @@
       "lat": 47.3874,
       "lng": 16.5418
     },
-    "image": "/images/attractions/varkor.jpeg"
+    "image": "/images/attractions/varkor.jpeg",
+    "gallery": [
+      "/images/attractions/attraction-22/DSC06253-2.jpg",
+      "/images/attractions/attraction-22/DSC06261.JPG",
+      "/images/attractions/attraction-22/DSC06277.JPG",
+      "/images/attractions/attraction-22/DSC07166.JPG"
+    ]
   },
   {
     "id": "attraction-24",
@@ -600,7 +616,10 @@
       "lat": 47.3873834,
       "lng": 16.500261
     },
-    "image": "/images/attractions/hetforr.jpg"
+    "image": "/images/attractions/hetforr.jpg",
+    "gallery": [
+      "/images/attractions/attraction-29/DSC05785-2.jpg"
+    ]
   },
   {
     "id": "attraction-30",
