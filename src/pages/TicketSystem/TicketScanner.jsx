@@ -10,7 +10,41 @@ export default function TicketScanner() {
     const [scanning, setScanning] = useState(false);
     const [lastResult, setLastResult] = useState(null);
     const [validating, setValidating] = useState(false);
+    const [scanBuffer, setScanBuffer] = useState('');
+    const lastKeyTimeRef = useRef(0);
     const scannerRef = useRef(null);
+
+    // Hardware Scanner Listener (Keyboard Wedge Mode)
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            // Ignore if we are currently validating
+            if (validating) return;
+
+            const now = Date.now();
+            const diff = now - lastKeyTimeRef.current;
+            lastKeyTimeRef.current = now;
+
+            // If time between keys is too long, it's probably human typing, reset buffer
+            // (Scanners usually send characters within 5-20ms)
+            if (diff > 100 && e.key !== 'Enter') {
+                setScanBuffer(e.key.length === 1 ? e.key : '');
+                return;
+            }
+
+            if (e.key === 'Enter') {
+                if (scanBuffer.length > 5) {
+                    console.log('Hardware scan detected:', scanBuffer);
+                    validateTicket(scanBuffer);
+                    setScanBuffer('');
+                }
+            } else if (e.key.length === 1) {
+                setScanBuffer(prev => prev + e.key);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [scanBuffer, validating]);
 
     // Clean up scanner on unmount
     useEffect(() => {
@@ -125,7 +159,11 @@ export default function TicketScanner() {
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold mb-2">🎟️ Jegy Szkenner</h1>
-                    <p className="text-gray-400">Beléptetés QR kód alapján (Hátsó kamera)</p>
+                    <p className="text-gray-400 font-medium">Beléptetés QR kód alapján</p>
+                    <div className="mt-2 flex items-center justify-center gap-2">
+                        <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-green-500/80">Hardveres Szkenner Aktív</span>
+                    </div>
                 </div>
 
                 {/* Scanner Controls */}
@@ -242,9 +280,9 @@ export default function TicketScanner() {
                             <FaQrcode /> Használati útmutató
                         </h3>
                         <ul className="space-y-2 text-sm text-gray-400 list-disc list-inside">
-                            <li>Nyomd meg a <strong>Szkenner indítása</strong> gombot.</li>
-                            <li>A böngésző kérni fogja a kamera hozzáférést (Engedélyezd!).</li>
-                            <li>Irányítsd a hátlapi kamerát a vendég QR kódjára.</li>
+                            <li><strong>Kamerás szkenner:</strong> Nyomd meg a gombot és irányítsd a kamerát a kódra.</li>
+                            <li><strong>Hardveres szkenner (USB/Bluetooth):</strong> Egyszerűen csak scannelj! Az oldal bármikor fogadja a jelet (Keyboard Wedge mód).</li>
+                            <li>Irányítsd a szkenner fényét a vendég QR kódjára.</li>
                             <li>A rendszer azonnal visszajelzi az eredményt.</li>
                         </ul>
                     </div>
