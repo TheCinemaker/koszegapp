@@ -3,10 +3,11 @@
 
 import { createClient } from '@supabase/supabase-js';
 import fetch from 'node-fetch';
+import crypto from 'crypto';
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
-    process.env.VITE_SUPABASE_ANON_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 export const handler = async (event) => {
@@ -83,9 +84,10 @@ export const handler = async (event) => {
             };
         }
 
+        // Generate QR Token
+        const qrToken = crypto.randomBytes(16).toString('hex');
+
         // Create the ticket record directly with 'reserved' status
-        // Note: In a full implementation, we'd also create an 'order' record as Stripe does, 
-        // but for reservations, we can go direct or use the same table structure.
         const { data: newTicket, error: ticketError } = await supabase
             .from('tickets')
             .insert({
@@ -97,6 +99,7 @@ export const handler = async (event) => {
                 zip,
                 city,
                 address,
+                qr_token: qrToken,
                 ticket_type: 'general',
                 stripe_session_id: `res_${Date.now()}` // Use existing column for reservation tracking
             })
