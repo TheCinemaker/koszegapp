@@ -417,7 +417,37 @@ export default function EventDetail() {
                         <img
                           src="/images/apple_badges/addtoapplewallet.png"
                           alt="Add to Apple Wallet"
-                          className="h-8 w-auto min-w-0" // Removed dark:invert as the badge should stay original black usually, but user might prefer it. For now keeping original for compliance.
+                          className="h-8 w-auto min-w-0"
+                        />
+                      </button>
+
+                      {/* Google Wallet Integration */}
+                      <button
+                        onClick={async () => {
+                          if (!evt) return;
+                          const toastId = toast.loading("Google Wallet mentés...");
+                          try {
+                            const res = await fetch('/.netlify/functions/create-event-pass-google', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify(evt),
+                            });
+                            if (!res.ok) throw new Error('Generálási hiba');
+                            const { url } = await res.json();
+                            toast.success("Átirányítás...", { id: toastId });
+                            window.open(url, '_blank');
+                          } catch (e) {
+                            console.error(e);
+                            toast.error(`Hiba: ${e.message}`, { id: toastId });
+                          }
+                        }}
+                        className="h-14 flex items-center justify-center rounded-2xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-2"
+                        title="Add to Google Wallet"
+                      >
+                        <img
+                          src="/images/google_badges/hu_add_to_google_wallet_wallet-button.svg"
+                          alt="Add to Google Wallet"
+                          className="h-8 w-auto min-w-0"
                         />
                       </button>
 
