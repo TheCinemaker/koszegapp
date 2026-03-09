@@ -445,9 +445,9 @@ export default function EventDetail() {
                         title="Add to Google Wallet"
                       >
                         <img
-                          src="/images/google_badges/hu_add_to_google_wallet_wallet-button.svg"
+                          src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
                           alt="Add to Google Wallet"
-                          className="h-8 w-auto min-w-0"
+                          className="h-8 w-auto"
                         />
                       </button>
 

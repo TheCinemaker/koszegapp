@@ -184,27 +184,55 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         <div className="space-y-2.5">
           {/* Top Row: Wallet & Calendar */}
           {!isPast && (
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10"
+                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-1"
                 title={t('addToWallet')}
               >
                 <img
                   src="/images/apple_badges/addtoapplewallet.png"
                   alt="Add to Apple Wallet"
-                  className="h-7 w-auto dark:invert"
+                  className="h-6 w-auto"
+                />
+              </button>
+
+              <button
+                onClick={async (e) => {
+                  e.preventDefault();
+                  const toastId = toast.loading(t('generatingPass') || "Google Wallet...");
+                  try {
+                    const res = await fetch('/.netlify/functions/create-event-pass-google', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(evt),
+                    });
+                    if (!res.ok) throw new Error('Generálási hiba');
+                    const { url } = await res.json();
+                    toast.success("Átirányítás...", { id: toastId });
+                    window.open(url, '_blank');
+                  } catch (e) {
+                    console.error(e);
+                    toast.error(`Hiba: ${e.message}`, { id: toastId });
+                  }
+                }}
+                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-1"
+                title="Add to Google Wallet"
+              >
+                <img
+                  src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
+                  alt="Add to Google Wallet"
+                  className="h-6 w-auto"
                 />
               </button>
 
               <a
                 href={`data:text/calendar;charset=utf8,${encodeURIComponent(toICS(evt))}`}
                 download={`${evt.name.replace(/\s+/g, '_')}.ics`}
-                className="h-11 flex items-center justify-center gap-2 rounded-xl bg-transparent text-gray-900 dark:text-white font-bold text-[10px] uppercase tracking-wider hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
+                className="h-11 flex items-center justify-center rounded-xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
                 title={t('saveToCalendar')}
               >
-                <FaCalendarPlus className="text-indigo-500 text-sm" />
-                Naptár
+                <FaCalendarPlus className="text-indigo-500 text-lg" />
               </a>
             </div>
           )}
