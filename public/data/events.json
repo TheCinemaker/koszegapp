@@ -1,239 +1,5 @@
 [
   {
-    "id": "new_1772109600001",
-    "name": "Hagyományos Farsangi Túra",
-    "date": "2026-02-28",
-    "time": "08:20",
-    "location": "Kőszeg Vasútállomás",
-    "coords": {
-      "lat": 47.3842,
-      "lng": 16.5491
-    },
-    "description": "Idén is lesz Farsangi túra! Találkozó 8:20-kor a kőszegi vasútállomáson, indulás a 8:32-es vonattal. Útvonal: Kőszegfalva - Abért-tó - Temető - Szarvas-forrás - Auguszt Imre emlékkő - Őz-kút - Kőszeg. Táv: 10 km. Várható érkezés: 14:30. A túrát Németh Lászlóné vezeti, jelentkezni a +36 70 368 5084 telefonszámon lehet. A részvétel ingyenes!",
-    "tags": [
-      "túra",
-      "farsang",
-      "természet",
-      "program"
-    ],
-    "image": "farsangi_tura.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1772186400006",
-    "name": "Tavaszi patchwork családi kézműves délelőtt",
-    "date": "2026-02-28",
-    "time": "10:00 - 12:00",
-    "location": "Chernel Kálmán Városi Könyvtár, rendezvényterem",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Tavaszi patchwork családi kézműves délelőttre is várunk mindenkit 2026. február 28-án szombat délelőtt 10-12 óra között a rendezvényterembe.",
-    "tags": [
-      "kézműves",
-      "családi",
-      "program",
-      "patchwork"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Baradács Anett élményfestés",
-    "date": "2026-02-28",
-    "time": "10:00",
-    "location": "Hotel Írottkő",
-    "coords": {
-      "lat": 47.38831119965513,
-      "lng": 16.54260969412012
-    },
-    "description": "Baradács Anett kőszegi\nfestőművész élményfestést tart\na Hotel*** Írottkő termében.\n\nA festés költsége 5.000 Ft / fő\n\nA részvétel regisztrációhoz kötött a\n06-30/850-5926 telefon számon vagy\nanettbaradacs@gmail.com\n email címen.\n\nBaradács-art",
-    "tags": [
-      "festés",
-      "családi"
-    ],
-    "image": "f028df73-cd92-4c39-ae86-4148befcdbe8.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770633935890"
-  },
-  {
-    "id": "new_1771696209695",
-    "name": "Grencsó Trió",
-    "date": "2026-02-28",
-    "time": "19:00",
-    "location": "Zwinger Öregtorony",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Grencsó Trió koncert. Grencsó István: szaxofon, Kovács S. Zoltán: nagybőgő, Sárvári Kovács Zsolt: dob. Belépő: 4000 Ft. Jegyfoglalás: 20-413-3530.",
-    "tags": [
-      "koncert",
-      "jazz",
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1772109600002",
-    "name": "Pincés-kemencés böllérverseny Lukácsházán!",
-    "date": "2026-02-28",
-    "time": "07:00 - 17:30",
-    "location": "Lukácsháza, Csömötei-hegy",
-    "coords": {
-      "lat": 47.3197,
-      "lng": 16.6025
-    },
-    "description": "11 helyszín, 11 kóstolás! Látványölés, pörzsölés, barangolás a Csömötei hegyen pincéről pincére. Falusi disznótoros ízek, böllérfesztivál hangulat. Jegyek: elővételben 6.000 Ft, helyszínen 8.000 Ft. 14 éves kor alatt ingyenes. Jegyvétel: Tolnay Vendéglő, Közösségi ház, Csejtei bolt, Gencsapáti Xoda, Tourinform Szombathely.",
-    "tags": [
-      "fesztivál",
-      "gasztro",
-      "családi",
-      "program",
-      "Lukácsháza"
-    ],
-    "image": "bollerverseny.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "Böllérfesztivál"
-  },
-  {
-    "id": "new_1771696209696",
-    "name": "MEDVE-VIRÁG, VAGY GYÖNGY-HAGYMA?",
-    "date": "2026-02-28",
-    "time": "10:00 - 12:00",
-    "location": "Jurisics vár, KÖSZHÁZ",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Mérgező növények és növényi mérgezések a lakókörnyezetünkben. Gyógynövények az emberi egészség szolgálatában. Előadó: Dr. Csaba Miklós gyógyszerész. Gyógynövény teázás! A belépés díjtalan.",
-    "tags": [
-      "előadás",
-      "egészség",
-      "gyógynövény",
-      "program"
-    ],
-    "image": "medve_virag.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209697",
-    "name": "Művészeti Szemle - alsó tagozat",
-    "date": "2026-03-02",
-    "time": "14:00",
-    "location": "Jurisics-vár lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Művészeti Szemle Kőszeg 2026 - alsó tagozat. Kategóriák: vers-próza, ének, hangszeres zene, tánc.",
-    "tags": [
-      "művészet",
-      "verseny",
-      "program"
-    ],
-    "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209698",
-    "name": "Művészeti Szemle",
-    "date": "2026-03-02",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209699",
-    "name": "Művészeti Szemle - felső tagozat",
-    "date": "2026-03-03",
-    "time": "14:00",
-    "location": "Jurisics-vár lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Művészeti Szemle Kőszeg 2026 - felső tagozat. Kategóriák: vers-próza, ének, hangszeres zene, tánc.",
-    "tags": [
-      "művészet",
-      "verseny",
-      "program"
-    ],
-    "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209700",
-    "name": "'Polcok mentén...' 2. - Fókuszban a NŐK",
-    "date": "2026-03-03",
-    "time": "15:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 3-án kedden 15 órától \"Polcok mentén...\" - középpontban a NŐK! Folytatódik a szubjektív könyvajánló-sorozat a felnőttrészlegen, melynek házigazdája Czagány Tünde, a könyvtár munkatársa.",
-    "tags": [
-      "könyvtár",
-      "program",
-      "nők"
-    ],
-    "image": "polcok_menten.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1772109600000",
-    "name": "Madárvédelem és odúbarkácsolás",
-    "date": "2026-03-04",
-    "time": "17:00",
-    "location": "Bozsok, Tűzoltó szertár",
-    "coords": {
-      "lat": 47.3333,
-      "lng": 16.4833
-    },
-    "description": "Natúrparki zöldülő természetbúvár programok: Madárvédelem és odúbarkácsolás. Illés Péter biológiatanár interaktív természetbúvár előadása odúbarkácsolással egybekötve a bozsoki Tűzoltó szertárnál. A belépés ingyenes!",
-    "tags": [
-      "természet",
-      "program",
-      "családi",
-      "Bozsok"
-    ],
-    "image": "madarvedelem.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
     "id": "new_1771696209701",
     "name": "Kelbert Krisztina: Acélanyák",
     "date": "2026-03-05",
@@ -1628,5 +1394,24 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
+  },
+  {
+    "name": "Húsvéti locsoló Party",
+    "date": "2026-04-05",
+    "time": "21:00",
+    "location": "Hattyú büfé",
+    "coords": {
+      "lat": 47.3974684026996,
+      "lng": 16.53767323228126
+    },
+    "description": "🔥 HÚSVÉTI LOCSOLÓ Buli a Hattyúban 🔥\n📅 2026.04.05. | Vasárnap | 21:00\n📍 Kőszeg – Csónakázó-tó | Hattyú Büfé\nA télnek vége, ideje felébreszteni a bulihangulatot! 😎\nÁprilis 5-én vasárnap egy Húsvét hétfőbe nyúló locsoló bulival várunk benneteket a Hattyú Büfében, ahol egy igazi zenei időutazás indul! 🚀\nEgész éjjel pörögnek a 90-es és 2000-es évek legnagyobb dance slágerei, amikre garantáltan nem tudsz majd egy helyben állni! 💃🕺\n🎧 A lemezjátszók mögött: RADULY\nA hangulat garantált! 🔊🔥\n🍹 Ami vár rátok:\n✨ baráti italárak\n🍻 széles italválaszték\n💡 extra fénytechnika\n🔊 minőségi hangzás\n🏠 fedett vendégtér (rossz idő esetén fűtéssel)\n🎟 INGYENES BELÉPÉS",
+    "tags": [
+      "disco"
+    ],
+    "image": "retrolocsolo.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1773044495723"
   }
 ]
