@@ -126,7 +126,7 @@ export default function KeyScene({ gem, isNewKey, onNext, onClose, mode, foundCo
                 </div>
 
                 {/* JÖVŐBELI ÚTMUTATÁS (REJTVÉNY A KÖVETKEZŐ HELYSZÍNHEZ) */}
-                {isNewKey && gem.next_location_riddle ? (
+                {isNewKey && gem.id !== 'jurisics-var' && (
                     <div className="w-full space-y-4 pt-4">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -134,27 +134,20 @@ export default function KeyScene({ gem, isNewKey, onNext, onClose, mode, foundCo
                             transition={{ delay: 0.5 }}
                             className="bg-gradient-to-br from-amber-900/30 to-black/60 border border-amber-500/20 rounded-xl p-6 relative overflow-hidden"
                         >
-                            {/* Díszítő háttér elem */}
-                            <div className="absolute top-0 right-0 p-4 opacity-5">
-                                <svg width="100" height="100" viewBox="0 0 100 100" fill="currentColor">
-                                    <path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39Z" />
-                                </svg>
-                            </div>
-
                             <div className="relative z-10 text-center space-y-3">
                                 <p className="text-[10px] uppercase tracking-[0.3em] text-amber-500/80 font-bold">
-                                    A Következő Lépés
+                                    Küldetés a Jövőből
                                 </p>
-
                                 <div className="h-px w-16 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mx-auto" />
-
                                 <p className={`text-amber-100/90 leading-relaxed ${mode === 'adult' ? 'font-serif italic text-lg' : 'font-sans text-base'}`}>
-                                    "{gem.next_location_riddle[mode]}"
+                                    "{getAssignedRiddle(gem.id) ? (
+                                        require('../data/riddles').RIDDLES.find(r => r.id === getAssignedRiddle(gem.id))?.text[mode]
+                                    ) : gem.next_location_riddle?.[mode] || "Figyeld tovább a város titkait."}"
                                 </p>
                             </div>
                         </motion.div>
                     </div>
-                ) : null}
+                )}
 
                 {/* SIMA TOVÁBB GOMB (Mindig látható új kulcsnál, kvíz nincs) */}
                 {/* SIMA TOVÁBB GOMB (Mindig látható) */}

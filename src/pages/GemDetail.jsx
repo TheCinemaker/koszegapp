@@ -76,6 +76,16 @@ export default function StationResolver() {
               />
             );
 
+          case 'castle':
+            return (
+              <CastleCheckScreen
+                status={flow.checkCastleStatus()}
+                keysFound={flow.foundCount}
+                requiredKeys={flow.totalCount}
+                onBack={flow.onClose}
+              />
+            );
+
           case 'info':
             return (
               <InfoScene
@@ -84,10 +94,26 @@ export default function StationResolver() {
               />
             );
 
+          case 'finale':
+            return (
+              <div className="min-h-screen bg-black flex items-center justify-center p-6 text-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="space-y-6"
+                >
+                  <h2 className="text-4xl font-serif text-amber-500">A KAPU NYÍLIK</h2>
+                  <p className="text-white/60 tracking-widest uppercase">IDŐHUROK STABILIZÁLVA</p>
+                </motion.div>
+              </div>
+            );
+
+          case 'complete':
+            return (
+              <GameCompleteScreen onExplore={() => navigate('/game/treasure-chest')} />
+            );
+
           default:
-            // Intro és Mode már fent kezelve van, ide nem szabadna eljutniuk elvileg
-            // de a useGemFlow lehet még visszadobja.
-            // Ha 'resolve'-on van, akkor a hook váltani fog.
             return <div className="min-h-screen bg-black" />;
         }
       })()}

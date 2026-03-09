@@ -40,8 +40,21 @@ export function useGemFlow(gemId, mode = 'adult') {
     // Handlers
     const onLoadingDone = () => {
         if (!gameState.gameStarted) {
-            // Ez elvileg nem futhat le a Gatekeeper miatt, de biztos ami biztos
+            // ...
         } else {
+            // --- CASTLE GATEKEEPER ---
+            if (gemId === 'jurisics-var') {
+                const status = checkCastleStatus();
+                if (status === 'early') {
+                    setScreen('castle');
+                    return;
+                }
+                if (status === 'ready') {
+                    onFinaleSequence();
+                    return;
+                }
+            }
+
             visitStation(gemId);
             setScreen('key'); // 'resolve' helyett 'key'
         }

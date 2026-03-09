@@ -97,6 +97,11 @@ export function useGame() {
     }
   }, [gameState.dbSessionId]);
 
+  // Total Main Keys (Actual count from hidden_gems.json that are not 'extra')
+  const REQUIRED_KEYS = 16;
+
+  const isCastleReady = gameState.foundGems.length >= REQUIRED_KEYS;
+
   const addFoundGem = useCallback((gemId) => {
     setGameState(prev => {
       // 2B: Already found check
@@ -104,7 +109,15 @@ export function useGame() {
 
       // 2A: New Key Found -> Assign Random Riddle (State 3)
       const usedRiddleIds = Object.values(prev.assignedRiddles);
-      const newRiddle = getRandomRiddle(usedRiddleIds);
+
+      // Exclude Riddle 11 (VÁR) if not all keys are found
+      const currentKeys = prev.foundGems.length;
+      const excludeIds = [...usedRiddleIds];
+      if (currentKeys + 1 < REQUIRED_KEYS) {
+        excludeIds.push('riddle_11');
+      }
+
+      const newRiddle = getRandomRiddle(excludeIds);
 
       const newAssignedRiddles = { ...prev.assignedRiddles };
       if (newRiddle) {
@@ -119,7 +132,7 @@ export function useGame() {
         assignedRiddles: newAssignedRiddles
       };
     });
-  }, []);
+  }, [REQUIRED_KEYS]);
 
   const visitStation = useCallback((stationId) => {
     setGameState(prev => {
