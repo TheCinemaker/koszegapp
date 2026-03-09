@@ -409,6 +409,7 @@ export default function EventDetail() {
                   <div className="space-y-4">
                     {/* Primary Actions: Wallet, Calendar, Share */}
                     <div className="grid grid-cols-3 gap-3">
+                      {/* Apple Wallet Badge */}
                       <button
                         onClick={handleGeneratePass}
                         className="h-14 flex items-center justify-center rounded-2xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-2"
@@ -417,7 +418,7 @@ export default function EventDetail() {
                         <img
                           src="/images/apple_badges/addtoapplewallet.png"
                           alt="Add to Apple Wallet"
-                          className="h-8 w-auto min-w-0"
+                          className="w-[120px] h-auto object-contain"
                         />
                       </button>
 
@@ -447,7 +448,7 @@ export default function EventDetail() {
                         <img
                           src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
                           alt="Add to Google Wallet"
-                          className="h-8 w-auto"
+                          className="w-[120px] h-auto object-contain"
                         />
                       </button>
 

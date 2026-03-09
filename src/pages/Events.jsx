@@ -193,7 +193,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
                 <img
                   src="/images/apple_badges/addtoapplewallet.png"
                   alt="Add to Apple Wallet"
-                  className="h-6 w-auto"
+                  className="w-[90px] h-auto object-contain"
                 />
               </button>
 
@@ -222,7 +222,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
                 <img
                   src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
                   alt="Add to Google Wallet"
-                  className="h-6 w-auto"
+                  className="w-[90px] h-auto object-contain"
                 />
               </button>
 
