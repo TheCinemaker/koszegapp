@@ -363,7 +363,7 @@
     "highlightLabel": ""
   },
   {
-    "name": "Kőszeg -Classic Love",
+    "name": "[TELTHÁZ] Kőszeg -Classic Love",
     "date": "2026-04-23",
     "time": "19:00",
     "location": "Zsinagóga",
@@ -377,8 +377,8 @@
     ],
     "image": "classiclove.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
+    "highlight": true,
+    "highlightLabel": "TELTHÁZ",
     "id": "event-2026-1770109379623"
   },
   {
