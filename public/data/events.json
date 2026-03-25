@@ -1,109 +1,5 @@
 [
   {
-    "name": "Baradács Anett élményfestés",
-    "date": "2026-03-21",
-    "time": "10:00",
-    "location": "Hotel Írottkő",
-    "coords": {
-      "lat": 47.388353812977776,
-      "lng": 16.542688718008712
-    },
-    "description": "Baradács Anett kőszegi\nfestőművész élményfestést tart\na Hotel*** Írottkő termében.\n\nA festés költsége 5.000 Ft / fő\n\nA részvétel regisztrációhoz kötött a\n06-30/850-5926 telefon számon vagy\nanettbaradacs@gmail.com\n email címen.\n\nBaradács-art",
-    "tags": [
-      "festés",
-      "családi"
-    ],
-    "image": "36713c1a-830b-4c78-8443-a0ecd5a6a8b6.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770634052308"
-  },
-  {
-    "id": "new_1771696209710",
-    "name": "Hajnalcsillag Néptáncegyüttes tavaszváró",
-    "date": "2026-03-21",
-    "time": "10:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 21-én, szombaton 10 órától szeretettel várjuk az óvodásokat és kisiskolásokat családjukkal a Hajnalcsillag Néptáncegyüttes tavaszváró játékos, mondókás foglalkozására. A foglalkozást Horváth Júlia vezeti.",
-    "tags": [
-      "néptánc",
-      "zene",
-      "gyerekprogram",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209711",
-    "name": "Söptei Imre: Kőszeg szőlőgazdasága a 18. században",
-    "date": "2026-03-24",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Március 24. 17 óra Söptei Imre főlevéltáros: Kőszeg szőlőgazdasága a 18. században. A 17-18. században a város Kőszeg legnagyobb szőlőbirtokosa volt, ez biztosította a bevételek jelentős részét. A levéltári forrásokból kiderül, miként végezték akkoriban a szőlőművelés alapvető munkálatait. A rendezvény a Magyar Levéltárosok Egyesülete által meghirdetett \"Nyitott Levéltárak\" 2025/2026. évi országos programsorozat keretében valósul meg.",
-    "tags": [
-      "előadás",
-      "történelem",
-      "levéltár",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209712",
-    "name": "Munkaszolgálatos Megemlékezés",
-    "date": "2026-03-24",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209713",
-    "name": "Egy apró kérés",
-    "date": "2026-03-25",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
     "id": "new_1771696209714",
     "name": "Véradás",
     "date": "2026-03-27",
@@ -363,7 +259,7 @@
     "highlightLabel": ""
   },
   {
-    "name": "[TELTHÁZ] Kőszeg -Classic Love",
+    "name": "Kőszeg -Classic Love",
     "date": "2026-04-23",
     "time": "19:00",
     "location": "Zsinagóga",
@@ -377,8 +273,8 @@
     ],
     "image": "classiclove.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": true,
-    "highlightLabel": "TELTHÁZ",
+    "highlight": false,
+    "highlightLabel": "",
     "id": "event-2026-1770109379623"
   },
   {
@@ -1093,14 +989,14 @@
   },
   {
     "name": "Húsvéti locsoló Party",
-    "date": "2026-04-05",
+    "date": "2026-04-04",
     "time": "21:00",
     "location": "Hattyú büfé",
     "coords": {
       "lat": 47.3974684026996,
       "lng": 16.53767323228126
     },
-    "description": "🔥 HÚSVÉTI LOCSOLÓ Buli a Hattyúban 🔥\n📅 2026.04.05. | Vasárnap | 21:00\n📍 Kőszeg – Csónakázó-tó | Hattyú Büfé\nA télnek vége, ideje felébreszteni a bulihangulatot! 😎\nÁprilis 5-én vasárnap egy Húsvét hétfőbe nyúló locsoló bulival várunk benneteket a Hattyú Büfében, ahol egy igazi zenei időutazás indul! 🚀\nEgész éjjel pörögnek a 90-es és 2000-es évek legnagyobb dance slágerei, amikre garantáltan nem tudsz majd egy helyben állni! 💃🕺\n🎧 A lemezjátszók mögött: RADULY\nA hangulat garantált! 🔊🔥\n🍹 Ami vár rátok:\n✨ baráti italárak\n🍻 széles italválaszték\n💡 extra fénytechnika\n🔊 minőségi hangzás\n🏠 fedett vendégtér (rossz idő esetén fűtéssel)\n🎟 INGYENES BELÉPÉS",
+    "description": "🔥 HÚSVÉTI LOCSOLÓ Buli a Hattyúban 🔥\n📅 2026.04.04. | Szombat | 21:00\n📍 Kőszeg – Csónakázó-tó | Hattyú Büfé\nA télnek vége, ideje felébreszteni a bulihangulatot! 😎\nÁprilis 5-én vasárnap egy Húsvét hétfőbe nyúló locsoló bulival várunk benneteket a Hattyú Büfében, ahol egy igazi zenei időutazás indul! 🚀\nEgész éjjel pörögnek a 90-es és 2000-es évek legnagyobb dance slágerei, amikre garantáltan nem tudsz majd egy helyben állni! 💃🕺\n🎧 A lemezjátszók mögött: RADULY\nA hangulat garantált! 🔊🔥\n🍹 Ami vár rátok:\n✨ baráti italárak\n🍻 széles italválaszték\n💡 extra fénytechnika\n🔊 minőségi hangzás\n🏠 fedett vendégtér (rossz idő esetén fűtéssel)\n🎟 INGYENES BELÉPÉS",
     "tags": [
       "disco"
     ],
