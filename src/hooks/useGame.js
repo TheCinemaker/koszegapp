@@ -178,9 +178,6 @@ export function useGame() {
   const isGemFound = useCallback((id) => gameState.foundGems.includes(id), [gameState.foundGems]);
   const getAssignedRiddle = useCallback((gemId) => gameState.assignedRiddles[gemId], [gameState.assignedRiddles]);
 
-  // Total Main Keys (Updated to actual count: 16)
-  const REQUIRED_KEYS = 16;
-
   const checkCastleStatus = useCallback(() => {
     if (gameState.gateClosed) return 'closed'; // State 7
     if (gameState.foundGems.length >= REQUIRED_KEYS) return 'ready'; // State 5B
