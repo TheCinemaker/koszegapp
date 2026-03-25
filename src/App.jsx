@@ -45,6 +45,7 @@ import GemDetail from './pages/GemDetail';
 import GameIntro from './pages/GameIntro';
 import IntroExperience from './pages/IntroExperience';
 import ProgramModal from './components/ProgramModal';
+import FeatureShowcase from './pages/FeatureShowcase';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import WeatherModal from './components/WeatherModal';
