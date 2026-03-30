@@ -271,63 +271,79 @@ function OrderList({ restaurantId }) {
 
     const printReceipt = (order) => {
         try {
-            // ... print logic (same as before but maybe simpler log) ...
-            // Keeping original print logic for functionality
             const doc = new jsPDF({
                 orientation: 'portrait',
                 unit: 'mm',
                 format: [80, 200]
             });
 
+            // Helper for jsPDF Latin-1 encoding limits (ő -> ö, ű -> ü)
+            const normalizeText = (text) => {
+                if (!text) return '';
+                return text.toString()
+                    .replace(/ő/g, 'ö').replace(/Ő/g, 'Ö')
+                    .replace(/ű/g, 'ü').replace(/Ű/g, 'Ü');
+            };
+
+            const shortId = order.id ? order.id.slice(0, 8).toUpperCase() : 'ISMERETLEN';
+
             doc.setFontSize(14);
-            doc.text('KőszegApp Rendelés', 40, 10, { align: 'center' });
+            doc.text(normalizeText('KöszegApp Rendelés'), 40, 10, { align: 'center' });
 
             doc.setFontSize(10);
-            doc.text(`#${order.id}`, 40, 16, { align: 'center' });
+            doc.text(`#${shortId}`, 40, 16, { align: 'center' });
             doc.text(new Date(order.created_at).toLocaleString('hu-HU'), 40, 22, { align: 'center' });
 
             doc.line(5, 25, 75, 25);
 
             // Customer Info
             doc.setFontSize(10);
-            doc.text('Vevő:', 5, 32);
+            doc.text(normalizeText('Vevő:'), 5, 32);
             doc.setFont('helvetica', 'bold');
-            doc.text(order.customer_name, 5, 37);
+            doc.text(normalizeText(order.customer_name), 5, 37);
             doc.setFont('helvetica', 'normal');
-            doc.text(order.customer_phone, 5, 42);
-            doc.text(doc.splitTextToSize(order.customer_address, 70), 5, 47);
+            doc.text(normalizeText(order.customer_phone), 5, 42);
+            
+            const splitAddress = doc.splitTextToSize(normalizeText(order.customer_address), 70);
+            doc.text(splitAddress, 5, 47);
+            
+            let yPos = 47 + (splitAddress.length * 5);
 
             if (order.customer_note) {
+                yPos += 2;
                 doc.setFontSize(8);
-                doc.text(`Megj: ${order.customer_note}`, 5, 60);
+                const splitNote = doc.splitTextToSize(`Megj: ${normalizeText(order.customer_note)}`, 70);
+                doc.text(splitNote, 5, yPos);
+                yPos += (splitNote.length * 4);
             }
 
-            let yPos = order.customer_note ? 65 : 55;
+            yPos += 2;
             doc.line(5, yPos, 75, yPos);
-            yPos += 5;
+            yPos += 6;
 
             // Items
             doc.setFontSize(10);
             order.items.forEach(item => {
                 doc.text(`${item.quantity}x`, 5, yPos);
-                doc.text(doc.splitTextToSize(item.name, 50), 12, yPos);
+                
+                const splitName = doc.splitTextToSize(normalizeText(item.name), 40);
+                doc.text(splitName, 15, yPos);
+                
                 doc.text(`${item.price} Ft`, 75, yPos, { align: 'right' });
-                yPos += 6;
-                // Add extra space for long names
-                if (item.name.length > 25) yPos += 4;
+                
+                yPos += (splitName.length * 5) + 2;
             });
 
-            yPos += 5;
             doc.line(5, yPos, 75, yPos);
             yPos += 7;
 
             // Total
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('VÉGÖSSZEG:', 5, yPos);
+            doc.text(normalizeText('VÉGÖSSZEG:'), 5, yPos);
             doc.text(`${order.total_price} Ft`, 75, yPos, { align: 'right' });
 
-            doc.save(`rendeles_${order.id}.pdf`);
+            doc.save(`rendeles_${shortId}.pdf`);
             toast.success('Nyomtatás indítva... 🖨️');
 
         } catch (e) {
@@ -1135,24 +1151,24 @@ function ProfileEditor({ restaurantId }) {
                             {form.settings.show_constant_menu && (
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] font-bold uppercase">Ár:</span>
-                                    <input 
-                                        type="number" 
-                                        placeholder="Pl. 2500" 
-                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`} 
-                                        value={form.settings.constant_menu_price || ''} 
-                                        onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_price: e.target.value } })} 
+                                    <input
+                                        type="number"
+                                        placeholder="Pl. 2500"
+                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`}
+                                        value={form.settings.constant_menu_price || ''}
+                                        onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_price: e.target.value } })}
                                     />
                                     <span className="text-[10px] font-bold">Ft</span>
                                 </div>
                             )}
                         </div>
                         {form.settings.show_constant_menu && (
-                            <textarea 
-                                rows={2} 
-                                className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none resize-none font-mono focus:bg-yellow-50`} 
-                                placeholder="A menü: Húsleves + Rántott sajt, B menü: Bakonyi sertésborda..." 
-                                value={form.settings.constant_menu_text || ''} 
-                                onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_text: e.target.value } })} 
+                            <textarea
+                                rows={2}
+                                className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none resize-none font-mono focus:bg-yellow-50`}
+                                placeholder="A menü: Húsleves + Rántott sajt, B menü: Bakonyi sertésborda..."
+                                value={form.settings.constant_menu_text || ''}
+                                onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_text: e.target.value } })}
                             />
                         )}
                     </div>
@@ -1167,12 +1183,12 @@ function ProfileEditor({ restaurantId }) {
                             {form.settings.show_daily_menu && (
                                 <div className="flex items-center gap-2">
                                     <span className="text-[10px] font-bold uppercase">Ár:</span>
-                                    <input 
-                                        type="number" 
-                                        placeholder="Pl. 2500" 
-                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`} 
-                                        value={form.settings.daily_menu_price || ''} 
-                                        onChange={e => setForm({ ...form, settings: { ...form.settings, daily_menu_price: e.target.value } })} 
+                                    <input
+                                        type="number"
+                                        placeholder="Pl. 2500"
+                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`}
+                                        value={form.settings.daily_menu_price || ''}
+                                        onChange={e => setForm({ ...form, settings: { ...form.settings, daily_menu_price: e.target.value } })}
                                     />
                                     <span className="text-[10px] font-bold">Ft</span>
                                 </div>
@@ -1183,12 +1199,12 @@ function ProfileEditor({ restaurantId }) {
                                 {[{ id: 1, label: 'Hétfő' }, { id: 2, label: 'Kedd' }, { id: 3, label: 'Szerda' }, { id: 4, label: 'Csütörtök' }, { id: 5, label: 'Péntek' }, { id: 6, label: 'Szombat' }, { id: 0, label: 'Vasárnap' }].map(day => {
                                     const wm = (() => {
                                         if (!form.daily_menu) return {};
-                                        try { 
-                                            const o = JSON.parse(form.daily_menu); 
+                                        try {
+                                            const o = JSON.parse(form.daily_menu);
                                             // Handling edge case where old data was not a JSON object but a plain string
-                                            return (typeof o === 'object' && o !== null) ? o : { 1: form.daily_menu }; 
-                                        } catch { 
-                                            return { 1: form.daily_menu }; 
+                                            return (typeof o === 'object' && o !== null) ? o : { 1: form.daily_menu };
+                                        } catch {
+                                            return { 1: form.daily_menu };
                                         }
                                     })();
                                     return (
