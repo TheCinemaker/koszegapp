@@ -29,7 +29,9 @@ CREATE TABLE IF NOT EXISTS public.invoices (
 ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
--- Mivel a Superadmin jelszóval van védve fixen a kliens oldalon, 
--- és ezt az oldalt / táblát csak ő használja, egyszerűsített Policy-t adunk neki:
+-- Politikák törlése és újralétrehozása (hogy ne dobjon hibát ha már létezik)
+DROP POLICY IF EXISTS "Allow All on Invoices" ON public.invoices;
 CREATE POLICY "Allow All on Invoices" ON public.invoices FOR ALL USING (true);
-CREATE POLICY "SuperAdmin View Orders" ON public.orders FOR SELECT USING (true); -- Lehetővé teszi az adatok látását anonim módban is
+
+DROP POLICY IF EXISTS "SuperAdmin View Orders" ON public.orders;
+CREATE POLICY "SuperAdmin View Orders" ON public.orders FOR SELECT USING (true);
