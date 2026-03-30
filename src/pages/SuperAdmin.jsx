@@ -12,6 +12,10 @@ export default function SuperAdmin() {
     const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(false);
     
+    // Előfizetés szerkesztő
+    const [editingSub, setEditingSub] = useState(null);
+    const [subForm, setSubForm] = useState({ type: 'Sima', fee: 0 });
+    
     // Hónapválasztó logika
     const currentDate = new Date();
     const currentMonthString = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
@@ -208,6 +212,27 @@ export default function SuperAdmin() {
     };
 
 
+    // Előfizetés frissítése
+    const saveSubscription = async (e) => {
+        e.preventDefault();
+        try {
+            const { error } = await supabase.from('restaurants')
+                .update({ 
+                    subscription_type: subForm.type, 
+                    subscription_fee: parseInt(subForm.fee) || 0 
+                })
+                .eq('id', editingSub.id);
+            
+            if (error) throw error;
+            toast.success('Előfizetési díj frissítve!');
+            setEditingSub(null);
+            fetchData();
+        } catch (error) {
+            toast.error('Hiba a mentéskor!');
+            console.error(error);
+        }
+    };
+
     if (!isAuthenticated) {
         return (
             <div className="min-h-screen bg-[#111] flex items-center justify-center p-4">
@@ -401,9 +426,19 @@ export default function SuperAdmin() {
                                                 <td className="py-4 px-3 font-black text-sm text-right text-amber-600 dark:text-amber-500">
                                                     {commission.toLocaleString()} Ft
                                                 </td>
-                                                <td className="py-4 px-3 font-bold text-xs text-right text-blue-600 dark:text-blue-400">
+                                                <td className="py-4 px-3 font-bold text-xs text-right text-blue-600 dark:text-blue-400 group relative">
                                                     <div>{row.subscription_fee.toLocaleString()} Ft</div>
                                                     <div className="text-[9px] uppercase opacity-70 mt-1">{row.subscription_type}</div>
+                                                    <button 
+                                                        onClick={() => {
+                                                            setEditingSub(row);
+                                                            setSubForm({ type: row.subscription_type, fee: row.subscription_fee });
+                                                        }}
+                                                        className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] text-blue-600 rounded-lg backdrop-blur-sm shadow-inner cursor-pointer"
+                                                        title="Előfizetés módosítása"
+                                                    >
+                                                        Szerkesztés
+                                                    </button>
                                                 </td>
                                                 <td className="py-4 px-3 font-black text-lg text-right text-green-600 dark:text-green-500 bg-green-50/30 dark:bg-green-900/10 border-l border-black/5 dark:border-white/5 tracking-tight">
                                                     {totalDue.toLocaleString()} Ft
@@ -457,6 +492,44 @@ export default function SuperAdmin() {
                         </div>
                     )}
                 </div>
+
+                {/* Subscription Modal */}
+                {editingSub && (
+                    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+                        <form onSubmit={saveSubscription} className="bg-white dark:bg-[#1a1c2e] p-6 rounded-3xl shadow-2xl max-w-sm w-full border border-black/10 dark:border-white/10">
+                            <h3 className="font-bold text-lg mb-4 text-slate-900 dark:text-white">{editingSub.name} <br/><span className="text-amber-500 text-sm">Előfizetés Kezelése</span></h3>
+                            
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">Csomag típusa</label>
+                                    <select 
+                                        value={subForm.type} 
+                                        onChange={e => setSubForm({...subForm, type: e.target.value})}
+                                        className="w-full mt-1 bg-slate-50 dark:bg-[#111] border border-black/10 dark:border-white/10 rounded-xl px-4 py-2 font-bold text-slate-800 dark:text-white outline-none focus:border-amber-500"
+                                    >
+                                        <option value="Sima (Alap)">Sima (Alap Applikáció)</option>
+                                        <option value="Tabletes (Premium)">Tabletes (Éttermi Gép)</option>
+                                        <option value="Ingyenes (Teszt)">Ingyenes (Teszt)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">Havi Fix Díj (HUF)</label>
+                                    <input 
+                                        type="number" 
+                                        value={subForm.fee}
+                                        onChange={e => setSubForm({...subForm, fee: e.target.value})}
+                                        className="w-full mt-1 bg-slate-50 dark:bg-[#111] border border-black/10 dark:border-white/10 rounded-xl px-4 py-2 font-bold text-slate-800 dark:text-white outline-none focus:border-amber-500 text-right"
+                                    />
+                                </div>
+
+                                <div className="flex gap-2 pt-4">
+                                    <button type="button" onClick={() => setEditingSub(null)} className="flex-1 py-3 bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-400 font-bold rounded-xl active:scale-95 transition-transform">Mégse</button>
+                                    <button type="submit" className="flex-1 py-3 bg-amber-500 text-white font-bold rounded-xl active:scale-95 transition-transform shadow-lg shadow-amber-500/20">Mentés</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                )}
 
             </div>
         </div>
