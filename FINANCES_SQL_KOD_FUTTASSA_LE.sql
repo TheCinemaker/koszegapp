@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS public.invoices (
 
 -- 3. RLS (Biztonsági) szabályok beállítása
 ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
 -- Mivel a Superadmin jelszóval van védve fixen a kliens oldalon, 
 -- és ezt az oldalt / táblát csak ő használja, egyszerűsített Policy-t adunk neki:
 CREATE POLICY "Allow All on Invoices" ON public.invoices FOR ALL USING (true);
+CREATE POLICY "SuperAdmin View Orders" ON public.orders FOR SELECT USING (true); -- Lehetővé teszi az adatok látását anonim módban is
