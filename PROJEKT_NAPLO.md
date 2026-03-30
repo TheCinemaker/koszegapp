@@ -53,7 +53,15 @@ A legfontosabb cél a zökkenőmentes foglalási élmény biztosítása, külön
 - [x] **Menük Kosárba Rakása és Adatbázis Fix:** Az admin által beárazott Napi/Állandó menük a Vendégoldalon egy kattintással kosárba rakhatóak. A kosár adatbázisba szinkronizálásakor a custom azonosítókat a rendszer futásidőben kiveszi (UUID parse PostgreSQL error fix), így az összes rendelés stabilan lefut.
 - [x] **Rendelés Követés (Státuszok) és Fizetés Finomítása:** A felhasználói oldalon kizárólag a Készpénzes fizetés maradt aktív (többi teszt gomb elrejtve). A státusz feliratok átírásra kerültek ('Rendelés leadva', 'Futár úton 🛵', 'Kiszállítva ✅'). A Kiszállítva státusz mostantól pontosan 3 percig látható marad a usernek, majd automatikusan eltűnik (a korábbi azonnali villanás/eltűnés bugja orvosolva dupla háttérszál eltávolításával).
 - [x] **SuperAdmin Pénzügyi Kapu:** Létrehozva egy dedikált oldal (/superadmin) keménykódolt belépéssel, ami élőben számolja össze az összes étterem kiszállított rendelését, és generálja belőle az 5%-os platform jutalék elszámolását (aggregálva).
-- Többi tevékenység szüneteltetve a felhasználó kérésére, amíg a foglalás nincs kész. (Visszatérés ide folyamatban)
+- [x] **Havi Elszámolási Logika:** Bevezetve a havi bontású szűrő, ami alapján havonta követhető a forgalom. Beépítve a "Számla kiállítása" és a "Megérkezett" (befizetés igazolása) funkciók a Supabase backenddel összekötve.
+- [x] **Vizuális Analitika (Grafikon):** Egyedi 6-hónapos trend grafikon került a SuperAdmin felületre a platform növekedésének követéséhez.
+- [x] **Előfizetési Modell:** Megalkotva a Sima (5k) és Tabletes (15k) csomagok szerkeszthető rendszere.
+- [x] **Biztonság és RLS:** A Supabase adatbázis felkészítve az anonim SuperAdmin hozzáférésre (szigorúan korlátozott olvasási jogokkal az orders/invoices táblákra).
+- [x] **Blokknyomtatás Fix:** A számla PDF generátor immár kezeli a speciális magyar karaktereket (ő/ű -> ö/ü) és lerövidített, olvasható azonosítókat használ.
+
+---
+**Aktuális Státusz (2026. 03. 30.):**
+A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles tesztje. A foglalási modul fixálása a következő lépés a tesztelési fázis után.
 
 ---
 
