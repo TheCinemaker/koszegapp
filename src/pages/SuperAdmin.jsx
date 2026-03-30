@@ -11,6 +11,8 @@ export default function SuperAdmin() {
     const [data, setData] = useState([]);
     const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [totalRevenue, setTotalRevenue] = useState(0);
+    const [totalCommission, setTotalCommission] = useState(0);
     
     // Előfizetés szerkesztő
     const [editingSub, setEditingSub] = useState(null);
