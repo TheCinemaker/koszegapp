@@ -91,7 +91,8 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
     const constantPrice = restaurant?.display_settings?.constant_menu_price ? parseInt(restaurant.display_settings.constant_menu_price) : null;
     const showConstant = restaurant?.display_settings?.show_constant_menu;
 
-    const [expanded, setExpanded] = useState(false);
+    const [mainExpanded, setMainExpanded] = useState(false);
+    const [weekExpanded, setWeekExpanded] = useState(false);
 
     if (!dailyMenuStr && !constantMenuStr) return null;
 
@@ -118,116 +119,147 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
     const todayContent = weeklyMenu ? (weeklyMenu[todayDay] || '-') : '-';
 
     return (
-        <div className="space-y-4">
-            {/* CONSTANT MENU */}
-            {showConstant && constantMenuStr && (
-                <div className="mt-5 bg-amber-50/80 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-2xl relative overflow-hidden shadow-sm">
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500 rounded-l-2xl" />
-                    <div className="p-4 pb-3">
-                        <div className="flex justify-between items-start mb-2 gap-2">
-                            <h3 className="text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-500 flex items-center gap-1.5">
-                                <IoStar className="text-base" />
-                                Állandó Napi Menü (A/B)
-                            </h3>
-                        </div>
-                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-1 border border-amber-100/50 dark:border-amber-900/20 shadow-sm">
-                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
-                                {constantMenuStr}
-                            </p>
-                            {constantPrice && (
-                                <button 
-                                    onClick={() => onAddToCart({
-                                        id: `constant-menu-${restaurant.id}`,
-                                        name: `Állandó Napi Menü`,
-                                        price: constantPrice,
-                                        image_url: null,
-                                        restaurant_id: restaurant.id,
-                                        description: constantMenuStr
-                                    })}
-                                    className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
-                                >
-                                    <span>{constantPrice} Ft</span>
-                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
-                                </button>
+        <div className="mt-4 mb-2">
+            <button 
+                onClick={() => setMainExpanded(!mainExpanded)}
+                className="w-full relative overflow-hidden group rounded-2xl border border-gray-200 dark:border-white/10 p-4 bg-white dark:bg-[#1a1c2e] active:scale-[0.98] transition-all flex items-center justify-between shadow-sm hover:border-amber-500/50"
+            >
+               <div className="flex items-center gap-3">
+                   <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+                       <IoRestaurant className="text-amber-600 dark:text-amber-400 text-sm" />
+                   </div>
+                   <div className="text-left leading-tight">
+                       <span className="block font-black text-[13px] text-gray-900 dark:text-white group-hover:text-amber-500 transition-colors">Napi és Állandó Menük</span>
+                       <span className="block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{mainExpanded ? 'Bezárás' : 'Kattints a megtekintéshez'}</span>
+                   </div>
+               </div>
+               <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-gray-50 dark:bg-white/5 text-gray-400 dark:text-gray-500 transition-transform duration-300 ${mainExpanded ? 'rotate-[-90deg]' : 'rotate-90'}`}>
+                   <IoArrowForward className="text-sm" />
+               </div>
+            </button>
+
+            <AnimatePresence>
+                {mainExpanded && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="space-y-4 pt-2 pb-2">
+                            {/* CONSTANT MENU */}
+                            {showConstant && constantMenuStr && (
+                                <div className="mt-3 bg-amber-50/80 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-2xl relative overflow-hidden shadow-sm">
+                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500 rounded-l-2xl" />
+                                    <div className="p-4 pb-3">
+                                        <div className="flex justify-between items-start mb-2 gap-2">
+                                            <h3 className="text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-500 flex items-center gap-1.5">
+                                                <IoStar className="text-base" />
+                                                Állandó Napi Menü (A/B)
+                                            </h3>
+                                        </div>
+                                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-1 border border-amber-100/50 dark:border-amber-900/20 shadow-sm">
+                                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+                                                {constantMenuStr}
+                                            </p>
+                                            {constantPrice && (
+                                                <button 
+                                                    onClick={() => onAddToCart({
+                                                        id: `constant-menu-${restaurant.id}`,
+                                                        name: `Állandó Napi Menü`,
+                                                        price: constantPrice,
+                                                        image_url: null,
+                                                        restaurant_id: restaurant.id,
+                                                        description: constantMenuStr
+                                                    })}
+                                                    className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
+                                                >
+                                                    <span>{constantPrice} Ft</span>
+                                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
                             )}
-                        </div>
-                    </div>
-                </div>
-            )}
 
-            {/* DAILY / WEEKLY MENU */}
-            {(dailyMenuStr && (showDaily || isOldFormat)) && (
-                <div className="mt-5 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl relative overflow-hidden shadow-sm">
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl" />
-                    
-                    <div className="p-4 pb-3">
-                        <div className="flex justify-between items-start mb-2 gap-2">
-                            <h3 className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
-                                <IoRestaurant className="text-base" />
-                                {isOldFormat ? 'Heti / Napi Menü' : `Mai Menü: ${todayLabelMap[todayDay]}`}
-                            </h3>
-                        </div>
-                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-3 border border-blue-100/50 dark:border-blue-900/20 shadow-sm">
-                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
-                                {isOldFormat ? dailyMenuStr : todayContent}
-                            </p>
-                            {dailyPrice && (isOldFormat || todayContent !== '-') && (
-                                <button 
-                                    onClick={() => onAddToCart({
-                                        id: `daily-menu-${restaurant.id}`,
-                                        name: isOldFormat ? `Napi Menü` : `Napi Menü (${todayLabelMap[todayDay]})`,
-                                        price: dailyPrice,
-                                        image_url: null,
-                                        restaurant_id: restaurant.id,
-                                        description: isOldFormat ? dailyMenuStr : todayContent
-                                    })}
-                                    className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
-                                >
-                                    <span>{dailyPrice} Ft</span>
-                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
-                                </button>
-                            )}
-                        </div>
+                            {/* DAILY / WEEKLY MENU */}
+                            {(dailyMenuStr && (showDaily || isOldFormat)) && (
+                                <div className="mt-3 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl relative overflow-hidden shadow-sm">
+                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl" />
+                                    
+                                    <div className="p-4 pb-3">
+                                        <div className="flex justify-between items-start mb-2 gap-2">
+                                            <h3 className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                                                <IoRestaurant className="text-base" />
+                                                {isOldFormat ? 'Heti / Napi Menü' : `Mai Menü: ${todayLabelMap[todayDay]}`}
+                                            </h3>
+                                        </div>
+                                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-3 border border-blue-100/50 dark:border-blue-900/20 shadow-sm">
+                                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+                                                {isOldFormat ? dailyMenuStr : todayContent}
+                                            </p>
+                                            {dailyPrice && (isOldFormat || todayContent !== '-') && (
+                                                <button 
+                                                    onClick={() => onAddToCart({
+                                                        id: `daily-menu-${restaurant.id}`,
+                                                        name: isOldFormat ? `Napi Menü` : `Napi Menü (${todayLabelMap[todayDay]})`,
+                                                        price: dailyPrice,
+                                                        image_url: null,
+                                                        restaurant_id: restaurant.id,
+                                                        description: isOldFormat ? dailyMenuStr : todayContent
+                                                    })}
+                                                    className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
+                                                >
+                                                    <span>{dailyPrice} Ft</span>
+                                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
+                                                </button>
+                                            )}
+                                        </div>
 
-                        {!isOldFormat && (
-                            <button 
-                                onClick={() => setExpanded(!expanded)}
-                                className="w-full flex items-center justify-between px-3 py-2 bg-white/60 dark:bg-black/20 rounded-xl text-xs font-bold text-blue-900 dark:text-blue-300 backdrop-blur-sm border border-blue-100/50 dark:border-blue-800/20 active:scale-[0.98] transition-all"
-                            >
-                                <span>Egész heti menü / Ajánlatok</span>
-                                <span className="text-[10px] bg-blue-200 dark:bg-blue-800 px-2 py-0.5 rounded-md text-blue-800 dark:text-blue-200">{expanded ? 'Elrejtés' : 'Mutat'} ▼</span>
-                            </button>
-                        )}
-                    </div>
-
-                    {!isOldFormat && (
-                        <AnimatePresence>
-                            {expanded && (
-                                <motion.div 
-                                    initial={{ height: 0, opacity: 0 }} 
-                                    animate={{ height: 'auto', opacity: 1 }} 
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden bg-white/30 dark:bg-black/10 mx-2 mb-2 rounded-xl backdrop-blur-md"
-                                >
-                                    <div className="p-3 space-y-3">
-                                        {orderedDays.map(day => (
-                                            day !== todayDay && weeklyMenu[day] && (
-                                                <div key={day} className="border-l-2 border-blue-300 dark:border-blue-700 pl-2">
-                                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-0.5">{todayLabelMap[day]}</span>
-                                                    <p className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{weeklyMenu[day]}</p>
-                                                </div>
-                                            )
-                                        ))}
-                                        {orderedDays.filter(day => day !== todayDay && weeklyMenu[day]).length === 0 && (
-                                            <p className="text-[11px] text-gray-500 italic text-center py-2">Nincs megadva további ajánlat a hétre.</p>
+                                        {!isOldFormat && (
+                                            <button 
+                                                onClick={() => setWeekExpanded(!weekExpanded)}
+                                                className="w-full flex items-center justify-between px-3 py-2 bg-white/60 dark:bg-black/20 rounded-xl text-xs font-bold text-blue-900 dark:text-blue-300 backdrop-blur-sm border border-blue-100/50 dark:border-blue-800/20 active:scale-[0.98] transition-all"
+                                            >
+                                                <span>Egész heti menü / Ajánlatok</span>
+                                                <span className="text-[10px] bg-blue-200 dark:bg-blue-800 px-2 py-0.5 rounded-md text-blue-800 dark:text-blue-200">{weekExpanded ? 'Elrejtés' : 'Mutat'} ▼</span>
+                                            </button>
                                         )}
                                     </div>
-                                </motion.div>
+
+                                    {!isOldFormat && (
+                                        <AnimatePresence>
+                                            {weekExpanded && (
+                                                <motion.div 
+                                                    initial={{ height: 0, opacity: 0 }} 
+                                                    animate={{ height: 'auto', opacity: 1 }} 
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    className="overflow-hidden bg-white/30 dark:bg-black/10 mx-2 mb-2 rounded-xl backdrop-blur-md"
+                                                >
+                                                    <div className="p-3 space-y-3">
+                                                        {orderedDays.map(day => (
+                                                            day !== todayDay && weeklyMenu[day] && (
+                                                                <div key={day} className="border-l-2 border-blue-300 dark:border-blue-700 pl-2">
+                                                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-0.5">{todayLabelMap[day]}</span>
+                                                                    <p className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{weeklyMenu[day]}</p>
+                                                                </div>
+                                                            )
+                                                        ))}
+                                                        {orderedDays.filter(day => day !== todayDay && weeklyMenu[day]).length === 0 && (
+                                                            <p className="text-[11px] text-gray-500 italic text-center py-2">Nincs megadva további ajánlat a hétre.</p>
+                                                        )}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    )}
+                                </div>
                             )}
-                        </AnimatePresence>
-                    )}
-                </div>
-            )}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
