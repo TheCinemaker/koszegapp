@@ -1,502 +1,14 @@
 [
   {
-    "id": "new_1771696209701",
-    "name": "Kelbert Krisztina: Acélanyák",
-    "date": "2026-03-05",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 5. 17 óra Kelbert Krisztina: Acélanyák. Vas vármegyei nők a haza szolgálatában a második világháború idején - Tavaszi szabadegyetemi előadássorozat 1. alkalma. Előadónk azt vizsgálja, hogy Magyarországon a Horthy-korszakban működő konzervatív nőegyesület, a Magyar Asszonyok Nemzeti Szövetsége (MANSZ) miként állította a nők munkáját a haza védelmének szolgálatába. Megvizsgáljuk, hogy mely feladatokat rendeltek a nők hátországbeli háborús munkavégzéséhez: önkéntes honvédelmi munkaszolgálat, ápolónői munka, hadijótékonyság, légvédelmi szolgálat.",
-    "tags": [
-      "előadás",
-      "történelem",
-      "program",
-      "könyvtár"
-    ],
-    "image": "acelanyak.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Pünkösdi Lili: Örökösök – A hűség fogságában",
-    "date": "2026-03-06",
-    "time": "19:00",
-    "location": "Jurisics vár, Lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "A Kőszegi Várszínház ősbemutatója. Szereplők: Őze Áron, Bánfalvi Eszter, Varga Izabella, Epres Attila, Tóth András. Rendező: Csiby Gergely. A történet 1426 őszén játszódik Kőszegen. Belépő: 4.000 Ft. Jegyrendelés: 94/360-113.",
-    "tags": [
-      "színház",
-      "bemutató",
-      "történelem",
-      "program"
-    ],
-    "image": "orokosok.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "Ősbemutató",
-    "id": "new_1771696209702"
-  },
-  {
-    "name": "Egy fantasztikus meditatív kikapcsolódás, minőségi énidő Neked!",
-    "date": "2026-03-07",
-    "time": "09:00",
-    "location": "Hotel Írottkő",
-    "coords": {
-      "lat": 47.38830447185752,
-      "lng": 16.542596554653514
-    },
-    "description": "Egy fantasztikus meditatív kikapcsolódás, minőségi énidő Neked!\n\nNői nap\n2026.03.07. (9.00–13.00-ig)\n\n❖ Reggeli jóga, vezetett relaxáció\nBencsics-Marx Líviával.\n\n❖ Élményfestés Baradács Anettel\n30x40-es vászonra, zenei aláfestéssel,\nillatterápiával.\n\n❖ Mindezek után a házi\nfinomságokról gondoskodunk.\n\n❖ A megfelelő feltöltődés érdekében a\nlétszám korlátozott, előzetes\nregisztráció szükséges.\n\nHa feltöltődnél velünk, a részvételi díj:\n\n14.990 Ft.\n\nÉrdeklődni: +3630/850-5926\nBaradács Anett Facebook oldalon",
-    "tags": [
-      "élmény",
-      "családi",
-      "női"
-    ],
-    "image": "bd628b17-c10a-45dd-ab4b-61224c1e7286.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770634240873"
-  },
-  {
-    "name": "Mesés kézműves foglalkozás Szabó Andreával",
-    "date": "2026-03-07",
-    "time": "08:30",
-    "location": "Chernel Kálmán Városi Könyvtár - Gyermekkönyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 7-én szombaton 9.30 - 12.00 óra között a gyermekkönyvtárban Szabó Andrea vezetésével mesés kézműves foglalkozást hirdetünk.",
-    "tags": [
-      "kézműves",
-      "gyerekprogram",
-      "könyvtár",
-      "program"
-    ],
-    "image": "kezmuves.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "new_1772186400004"
-  },
-  {
-    "id": "new_1771696209703",
-    "name": "Művészeti Szemle - Középiskola",
-    "date": "2026-03-10",
-    "time": "14:00",
-    "location": "Jurisics-vár lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Művészeti Szemle Kőszeg 2026 - középiskola. Kategóriák: vers-próza, ének, hangszeres zene, tánc. Ingyenes!",
-    "tags": [
-      "művészet",
-      "verseny",
-      "program"
-    ],
-    "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209704",
-    "name": "Művészeti Szemle - Tánc",
-    "date": "2026-03-11",
-    "time": "14:00",
-    "location": "Jurisics-vár lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Művészeti Szemle Kőszeg 2026 - tánc kategória. Ingyenes!",
-    "tags": [
-      "művészet",
-      "verseny",
-      "program",
-      "tánc"
-    ],
-    "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Interaktív élményórák: Huszártörténelem és 1848/49",
-    "date": "2026-03-11",
-    "endDate": "2026-03-12",
-    "time": "Iskolai csoportoknak",
-    "location": "Kőszegi Városi Múzeum",
-    "description": "2026. március 11-12-én óvodai és iskolai osztályok számára interaktív élményórákat szervez a Kőszegi Városi Múzeum, Könyvtár és Levéltár múzeumi osztálya. A foglalkozáson hagyományőrző huszárok segítségével ismerhetik meg a diákok a huszárok fegyvereit és a viseletét, majd egy játékos kvízjátékkal ellenőrizhetik ismereteiket. Ár: 500 Ft/fő.",
-    "tags": [
-      "múzeum",
-      "történelem",
-      "iskola",
-      "program"
-    ],
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1772180729218"
-  },
-  {
-    "id": "new_1771696209705",
-    "name": "Nemzeti Ünnep és Művészeti Szemle Gála",
-    "date": "2026-03-13",
-    "time": "17:00",
-    "location": "Jurisics-vár lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Megemlékezés a Nemzeti Ünnep alkalmából és a Városi Művészeti Szemle díjátadó gálaműsora. Ingyenes!",
-    "tags": [
-      "művészet",
-      "gála",
-      "nemzeti ünnep"
-    ],
-    "image": "muveszeti_szemle.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "Ünnepi Gála"
-  },
-  {
-    "id": "new_1771696209706",
-    "name": "Erwin Birnmeyer 100 - Lépcsők",
-    "date": "2026-03-14",
-    "time": "17:00",
-    "location": "Jurisics-vár lovagterem",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "Kiállításmegnyitó. A Kőszegi Művészeti Egyesület és a Jurisics-vár Művelődési Központ és Várszínház Erwin Birnmeyer 100. születésnapja alkalmából nyitja a néhai művész gyűjteményes kiállítását. Ingyenes!",
-    "tags": [
-      "kiállítás",
-      "művészet",
-      "program"
-    ],
-    "image": "lepcsok.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1772109600003",
-    "name": "Gabriel Fauré: REQUIEM",
-    "date": "2026-03-14",
-    "time": "19:00",
-    "location": "Jézus Szíve Plébániatemplom",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5415
-    },
-    "description": "A Concordia - Barátság Énekegyesület és a soproni Fidelissima Vegyeskar bemutatja: Gabriel Fauré: REQUIEM (Orgonás változat). Szólót énekel: Vágány Luca Sára (szoprán) és Pfeferlik Tamás (bariton). Vezényel: Szilágyi Miklós. Orgonán közreműködik: Kocsis Anna. Az esti szentmise után. Ingyenes!",
-    "tags": [
-      "koncert",
-      "kórus",
-      "program"
-    ],
-    "image": "requiem.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Kézműves foglalkozás",
-    "date": "2026-03-15",
-    "time": "10:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389412,
-      "lng": 16.538245
-    },
-    "description": "A Nemzeti Ünnep alkalmából a Jurisics vár családos látogatói kézműves foglalkozáson vehetnek részt. Ingyenes!",
-    "tags": [
-      "családi",
-      "kézműves",
-      "program"
-    ],
-    "image": "kokarda.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "new_1771696209707"
-  },
-  {
-    "name": "Nagy Beáta: „Női lélek – női egészség”",
-    "date": "2026-03-17",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 17-én kedden 17 órakor kezdődik dr. Nagy Beáta klinikai szakpszichológus, szociológus, egyetemi adjunktus: \"Női lélek - női egészség\" tart pszichológiai előadást a rendezvényteremben szempontokat adva a lelki és testi jóllét megőrzéséhez.",
-    "tags": [
-      "előadás",
-      "pszichológia",
-      "egészség",
-      "program",
-      "könyvtár"
-    ],
-    "image": "beata.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "new_1771696209708"
-  },
-  {
-    "id": "new_1771696209709",
-    "name": "Nőírók, költőnők, „Nyugat-feleségek\" - kiállításmegnyitó",
-    "date": "2026-03-19",
-    "time": "16:30",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 19. 16.30 Lőcsei Péter: Nőírók, költőnők, „Nyugat-feleségek\" kiállításmegnyitóra várunk mindenkit szeretettel! A kiállításon láthatók lesznek az ismert és a részben elfeledett alkotók valóságos és átvitt értelmű arcképei: többek között Kaffka Margité, Török Sophie-é, Kosztolányiné Harmos Ilonáé, Tormay Cecile-é, Nemes Nagy Ágnesé, Galgóczi Erzsébeté és Agota Kristofé.",
-    "tags": [
-      "kiállítás",
-      "irodalom",
-      "nők",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Lőcsei Péter: Tüzes cipő(k)ben - előadás",
-    "date": "2026-03-19",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár, rendezvényterem",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 19. 17 óra Lőcsei Péter: Tüzes cipő(k)ben - Tavaszi szabadegyetemi előadássorozat 2. alkalma. Arról, hogy milyen a női alkotók szerepe az irodalomban. Aki megpróbálkozik a határok tágításával, az értelmetlen korlátok ledöntésével, gyakran találkozik értetlenséggel, elutasítással. Azok a költőnők, írónők, akik utat törtek, méltó figyelmet igényeltek, rendre tüzes cipőkben érezhették magukat.",
-    "tags": [
-      "előadás",
-      "irodalom",
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "new_1772186400008"
-  },
-  {
-    "name": "Baradács Anett élményfestés",
-    "date": "2026-03-21",
-    "time": "10:00",
-    "location": "Hotel Írottkő",
-    "coords": {
-      "lat": 47.388353812977776,
-      "lng": 16.542688718008712
-    },
-    "description": "Baradács Anett kőszegi\nfestőművész élményfestést tart\na Hotel*** Írottkő termében.\n\nA festés költsége 5.000 Ft / fő\n\nA részvétel regisztrációhoz kötött a\n06-30/850-5926 telefon számon vagy\nanettbaradacs@gmail.com\n email címen.\n\nBaradács-art",
-    "tags": [
-      "festés",
-      "családi"
-    ],
-    "image": "36713c1a-830b-4c78-8443-a0ecd5a6a8b6.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770634052308"
-  },
-  {
-    "id": "new_1771696209710",
-    "name": "Hajnalcsillag Néptáncegyüttes tavaszváró",
-    "date": "2026-03-21",
-    "time": "10:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "2026. március 21-én, szombaton 10 órától szeretettel várjuk az óvodásokat és kisiskolásokat családjukkal a Hajnalcsillag Néptáncegyüttes tavaszváró játékos, mondókás foglalkozására. A foglalkozást Horváth Júlia vezeti.",
-    "tags": [
-      "néptánc",
-      "zene",
-      "gyerekprogram",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209711",
-    "name": "Söptei Imre: Kőszeg szőlőgazdasága a 18. században",
-    "date": "2026-03-24",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Március 24. 17 óra Söptei Imre főlevéltáros: Kőszeg szőlőgazdasága a 18. században. A 17-18. században a város Kőszeg legnagyobb szőlőbirtokosa volt, ez biztosította a bevételek jelentős részét. A levéltári forrásokból kiderül, miként végezték akkoriban a szőlőművelés alapvető munkálatait. A rendezvény a Magyar Levéltárosok Egyesülete által meghirdetett \"Nyitott Levéltárak\" 2025/2026. évi országos programsorozat keretében valósul meg.",
-    "tags": [
-      "előadás",
-      "történelem",
-      "levéltár",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209712",
-    "name": "Munkaszolgálatos Megemlékezés",
-    "date": "2026-03-24",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209713",
-    "name": "Egy apró kérés",
-    "date": "2026-03-25",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209714",
-    "name": "Véradás",
-    "date": "2026-03-27",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Megjöttek a madarak! ",
-    "date": "2026-03-28",
-    "time": "06:00",
-    "location": "Abért-tó",
-    "coords": {
-      "lat": 47.361468984861524,
-      "lng": 16.566764593144782
-    },
-    "description": "Madármegfigyelés és madárgyűrűzés az Őrségi Nemzeti Park Igazgatóság és a Magyar Madártani és Természetvédelmi Egyesület Vas Megyei Helyi Csoportja közös szervezésében.\nJavában zajlik ekkor a madárvonulás, amely remek alkalom a madarak színes világának tanulmányozására. A szakemberek teleszkópjaik, valamint az énekesmadarak megfogására alkalmas függönyhálók segítségével testközelbe hozzák az éppen a tó környékén tartózkodó madarakat",
-    "tags": [
-      "madarak",
-      "tavasz"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1770108954728"
-  },
-  {
-    "name": "Húsvéti mesés kézműves foglalkozás",
-    "date": "2026-03-28",
-    "time": "09:30 - 12:00",
-    "location": "Chernel Kálmán Városi Könyvtár, gyermekkönyvtár",
-    "description": "2026. március 28-án szombaton 9.30 - 12.00 óra között a gyermekkönyvtárban Szabó Andrea vezetésével húsvéti mesés kézműves foglalkozást hirdetünk.",
-    "tags": [
-      "kézműves",
-      "gyerekprogram",
-      "húsvét"
-    ],
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1772180729220"
-  },
-  {
-    "id": "new_1771696209715",
-    "name": "Szent Jobb és a Szent Korona másolatának érkezése",
-    "date": "2026-03-29",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209716",
     "name": "Budai Lotti: A történelemírás áldozatai",
     "date": "2026-04-09",
     "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
+      "lat": 47.389579,
+      "lng": 16.542464
     },
-    "description": "Budai Lotti: A történelemírás áldozatai avagy megrágalmazott nők a történelemben – Tavaszi szabadegyetemi előadás. A belépés ingyenes!",
+    "description": "2026. április 9. 17 óra Budai Lotti: A történelemírás áldozatai avagy megrágalmazott nők a történelemben - Tavaszi szabadegyetemi előadássorozat 3. alkalma\nBudai Lotti író, újságíró, nőtörténeti publicista és podcaster : Micsoda szajha, cafka, céda…\nAz ilyen és ehhez hasonló jelzőkkel rendre bélyegeznek meg nőket. Boleyn Anna, a Nagy Szajha; Kleopátra, a Szajhakirálynő; Marie Antoinette, az Osztrák Szajha; I. Erzsébet, az Angol Szajha. Hogy csak néhány ismert asszonyt említsünk: uralkodókat, művészeket, mecénásokat, szellemi vezetőket találhatunk a soraikban… Ezekben a nőkben két dolog közös. Egyrészt nem engedték, hogy mások uralkodjanak testük és életük fölött, másrészt pedig nemet mondtak a nemüknek szánt sorsra. Nem hagyták, hogy a férfitársadalom azokra a szerepekre korlátozza őket, melyek a nők számára hagyományosan nyitva álltak: az anya és a feleség szerepére. Ők a maguk idejében és módján fenyegetést jelentettek a patriarchális társadalom működésére, ezért koruk vagy épp a történetírás, „leszajházta” őket. Annak, hogy egyes nőket évezredek óta gyaláznak a szexualitásukon keresztül – és nemcsak férfiak, de gyakran nők is –, mélyen gyökerező, pszichológiai és kultúrtörténeti okai vannak, melyeket eme előadásban Budai Lotti igyekszik bemutatni. Egy azonban leszögezhető: ez a fajta becsmérlés sosem a szexualitásról vagy épp az adott társadalom által preferált erkölcsök megszegéséről szól, sokkal inkább a hatalomról. Arról a hatalomról, amely a saját teste és élete felett kontrollt gyakorló nőt megszégyeníteni, a többi nőt pedig elrettenteni próbálja. A szerző ezen női sorsok bemutatásával is azt kívánja bizonyítani, hogy eme törekvések a múltban sosem vezettek sikerre, és azok kudarcra lesznek ítélve a jövőben is.",
     "tags": [
       "előadás",
       "történelem",
@@ -504,22 +16,22 @@
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "lotti.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209716"
   },
   {
-    "id": "new_1771696209717",
     "name": "„Összeér” Szép Renáta és Varga Bence",
     "date": "2026-04-10",
     "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
+      "lat": 47.389579,
+      "lng": 16.542464
     },
-    "description": "„Összeér” Szép Renáta és Varga Bence – zenés irodalmi est. A belépés ingyenes!",
+    "description": "2026. április 10-én pénteken 17.00 órától ‘ÖSSZEÉR’ – Szép Renáta és Varga Bence zenés irodalmi estje kerül megrendezésre a rendezvényteremben a Költészet napja előestéjén.\nMilyen élményt nyújt, amikor egy dalban verssorok köszönnek vissza? Amikor egy gondolat egyszerre tud megszólalni zenében és költészetben? Az ‘Összeér’ című esten Varga Bence (Zaporozsec zenekar frontembere) dalai és Szép Renáta előadásában Kosztolányi, Radnóti, Weöres Sándor, József Attila és Shakespeare sorai fonódnak össze. Dal és vers párbeszédbe lép, új fényt adva a régi szavaknak és új mélységet a jól ismert dallamoknak. Zene és irodalom itt valóban összeér – frissen, meglepően, inspirálóan.\nA rendezvény a Nemzeti Kulturális Alap pályázati támogatásából, olvasásnépszerűsítő programsorozatban valósul meg.",
     "tags": [
       "irodalom",
       "zene",
@@ -527,10 +39,11 @@
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "osszeer.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209717"
   },
   {
     "id": "new_1771696209718",
@@ -591,23 +104,23 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209720",
     "name": "V. Kőszegi Gyermek és Ifjúsági Néptáncfesztivál",
     "date": "2026-04-17",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "15:45",
+    "location": "Jurisics vár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389582,
+      "lng": 16.538988
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Szombat délután és koraeste bemutatók a Fő téren",
     "tags": [
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "neptanc.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209720"
   },
   {
     "id": "new_1768893910346",
@@ -686,16 +199,15 @@
     "id": "event-2026-1770109379623"
   },
   {
-    "id": "new_1771696209722",
     "name": "Bilkei Irén: Régi idők asszonyai",
     "date": "2026-04-23",
     "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
+      "lat": 47.389579,
+      "lng": 16.542464
     },
-    "description": "Bilkei Irén: Régi idők asszonyai. Nők a középkorban – Tavaszi szabadegyetemi előadás. A belépés ingyenes!",
+    "description": "Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvénytermébe, ahol a Tavaszi Szabadegyetemi Előadás- sorozat 4. alkalmán Bilkei Irén Régi idők asszonyai. Nők a középkorban című előadása hangzik el, melynek célja, hogy levéltári, régészeti ásatásokból származó tárgyi, valamint a képzőművészeti források alapján ismeretterjesztő módon, de tudományos igénnyel áttekintést adjon a késő középkorban és a kora újkorban (15-16. század) élt nevezetes és névtelen hétköznapi nők életének mindennapjairól, bemutatva a családban és a társadalomban betöltött szerepük néhány vonását. Szó lesz a korabeli nők jogairól, házasságokról, gyermekekről, táplálkozásról, öltözködésről, kertészkedésről, szórakozásról, valamint speciális helyzetű és írni-olvasni tudó nőkről is gazdag képanyaggal illusztrálva.\n“ A középkorban elég szigorú törvények szabályozták a nők életét, amit előrebocsátom, sikerült kijátszaniuk, ugyan úgy, mint ma. Azok a nők, akik megjelennek előttünk a forrásokban ezek általában a társadalom felsőbb rétegeihez tartoznak, érthető módón őróluk van sokkal több ábrázolás, ők hordtak ékszereket, díszes ruhákat, őket festették meg. Ezekből állt össze, hogy mivel is foglalkozott a középkori nő.\nA különböző női karaktereket is bemutatom (boszorkányok, gyógyító javasasszonyok, prostituáltak, apácák), akik az akkori szokásokhoz képest eltértek a társadalmi normáktól és elsősorban nem feleségként, anyaként, hanem más szerepekben tűntek fel. A korszakban az írástudó nő is ritkaságnak számított, ugyanakkor ez a tudás lehetőséget adott a nemesasszonyok számára, hogy férjük távollétében részt vegyenek a gazdaság irányításában, és hogy közvetlenül (bizalmasan) levelezhessenek házastársukkal, rokonaikkal.”",
     "tags": [
       "előadás",
       "történelem",
@@ -703,10 +215,11 @@
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "regiidok.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209722"
   },
   {
     "id": "new_1771696209723",
@@ -1397,21 +910,207 @@
   },
   {
     "name": "Húsvéti locsoló Party",
-    "date": "2026-04-05",
+    "date": "2026-04-04",
     "time": "21:00",
     "location": "Hattyú büfé",
     "coords": {
       "lat": 47.3974684026996,
       "lng": 16.53767323228126
     },
-    "description": "🔥 HÚSVÉTI LOCSOLÓ Buli a Hattyúban 🔥\n📅 2026.04.05. | Vasárnap | 21:00\n📍 Kőszeg – Csónakázó-tó | Hattyú Büfé\nA télnek vége, ideje felébreszteni a bulihangulatot! 😎\nÁprilis 5-én vasárnap egy Húsvét hétfőbe nyúló locsoló bulival várunk benneteket a Hattyú Büfében, ahol egy igazi zenei időutazás indul! 🚀\nEgész éjjel pörögnek a 90-es és 2000-es évek legnagyobb dance slágerei, amikre garantáltan nem tudsz majd egy helyben állni! 💃🕺\n🎧 A lemezjátszók mögött: RADULY\nA hangulat garantált! 🔊🔥\n🍹 Ami vár rátok:\n✨ baráti italárak\n🍻 széles italválaszték\n💡 extra fénytechnika\n🔊 minőségi hangzás\n🏠 fedett vendégtér (rossz idő esetén fűtéssel)\n🎟 INGYENES BELÉPÉS",
+    "description": "🔥 HÚSVÉTI LOCSOLÓ Buli a Hattyúban 🔥\n📅 2026.04.04. | Szombat | 21:00\n📍 Kőszeg – Csónakázó-tó | Hattyú Büfé\nA télnek vége, ideje felébreszteni a bulihangulatot! 😎\nÁprilis 5-én vasárnap egy Húsvét hétfőbe nyúló locsoló bulival várunk benneteket a Hattyú Büfében, ahol egy igazi zenei időutazás indul! 🚀\nEgész éjjel pörögnek a 90-es és 2000-es évek legnagyobb dance slágerei, amikre garantáltan nem tudsz majd egy helyben állni! 💃🕺\n🎧 A lemezjátszók mögött: RADULY\nA hangulat garantált! 🔊🔥\n🍹 Ami vár rátok:\n✨ baráti italárak\n🍻 széles italválaszték\n💡 extra fénytechnika\n🔊 minőségi hangzás\n🏠 fedett vendégtér (rossz idő esetén fűtéssel)\n🎟 INGYENES BELÉPÉS",
     "tags": [
       "disco"
     ],
-    "image": "retrolocsolo.jpg",
+    "image": "retrolocsolo_2.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1773044495723"
+  },
+  {
+    "name": "🌸 Helló Kőszeg! – Tavaszköszöntő nagykoncert 🌸",
+    "date": "2026-04-05",
+    "time": "18:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "🌸 Helló Kőszeg! – Tavaszköszöntő nagykoncert 🌸\nVégre itt a tavasz – és ezt méltó módon ünnepeljük meg Kőszeg szívében! 🌿✨\n📍 Helyszín: Kőszeg, Fő tér\n📅 Időpont: 2026. április 5.\nEgy este, ahol a jó hangulat, a zene és a közösség találkozik 🎶\nPROGRAM:\n🎧 18:00–20:00 – Dj Shepherd\n🔥 20:00–21:30 – Parno Graszt élő koncert\n🎧 21:30–22:30 – Dj Dominique\nA Parno Graszt garantáltan felrobbantja a hangulatot – igazi tavaszi életérzés, tánc és felszabadultság vár rád! 💃🕺\n👉 Hozd a barátaidat, családodat, és indítsuk együtt a szezont egy felejthetetlen bulival!\n🎟️ A rendezvény INGYENES!",
+    "tags": [
+      "koncert"
+    ],
+    "image": "657229497_122096664668914642_1608817731727240970_n.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774436913146"
+  },
+  {
+    "name": "Író-, és költőóriások árnyékában",
+    "date": "2026-04-01",
+    "time": "19:30",
+    "location": "KÖSZHÁZ (Jurisics vár)",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Németh Nyiba Sándor Ne szégyelld, hogy van lelked alcímű verses zenés előadása",
+    "tags": [
+      "zene"
+    ],
+    "image": "nyiba.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774852936993"
+  },
+  {
+    "name": "Kézműves foglalkozás gyerekeknek",
+    "date": "2026-04-06",
+    "time": "10:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Húsvéthétfőn a Várlátogatás keretében kalandos tojáskeresésre invitáljuk a gyerekeket! Az öt különböző színű tojást összegyűjtök jutalomban részesülhettek. A játék részvételének feltétele az érvényes várbelépő, helyieknek pedig a várkártya. Szeretettel várunk Titeket ezen színes programunkra!",
+    "tags": [],
+    "image": "kezmuves-1774853104240.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774853107247"
+  },
+  {
+    "name": "Polcok mentén..... 3",
+    "date": "2026-04-07",
+    "time": "15:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "2026. április 7-én kedden 15 órától \"Polcok mentén… 3.\" Folytatódik a szubjektív, interaktív könyvajánló-sorozat a felnőttrészlegen, melynek házigazdája Czagány Tünde, a könyvtár munkatársa. A költészet napjához kapcsolódóan érdekességeket hallhatnak költőkről és szerelmeikről könyvek tükrében.",
+    "tags": [
+      "könyv"
+    ],
+    "image": "polcok3.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774853204751"
+  },
+  {
+    "name": "Madarászok a világ körül",
+    "date": "2026-04-09",
+    "time": "17:00",
+    "location": "Bechtold István Természetvédelmi Látogatóközpont",
+    "coords": {
+      "lat": 47.385870886957704,
+      "lng": 16.53054194773834
+    },
+    "description": "Madarászok a világ körül - Pakisztán: Vágfalvi Simon előadása a természetvédelmi látogatóközpontban",
+    "tags": [
+      "előadás"
+    ],
+    "image": "koeszeg_logo_nobg.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774853806495"
+  },
+  {
+    "name": "Szőlő és Klíma Konferencia",
+    "date": "2026-04-11",
+    "time": "09:30",
+    "location": "Zwinger öreg torony",
+    "coords": {
+      "lat": 47.38818827881239,
+      "lng": 16.539554438258897
+    },
+    "description": "Ez a különleges esemény azok számára ígér kihagyhatatlan élményt, akik szeretnék bővíteni tudásukat a szőlőtermesztés és -kutatás legújabb trendjeiről. Az esemény során neves szakértők a borvidékek legfontosabb képviselői osztják meg tapasztalataikat és kutatási eredményeiket, lehetőséget teremtve arra, hogy első kézből származó információkat szerezzünk a szőlőültetvények jelenlegi állapotáról és hatósági helyzetéről.",
+    "tags": [
+      "konferencia"
+    ],
+    "image": "szolokonf.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774854467479"
+  },
+  {
+    "name": "Vas Vármegyei Zeneiskolák és Művészeti Iskolák Találkozója",
+    "date": "2026-04-21",
+    "time": "10:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Magyar Művészetoktatás Napja\nVas vármegyei Zeneiskolák és Művészeti Iskolák Találkozója\nKőszeg, 2026. április 21.\n\nProgram:\n10:00 Kiállítás megnyitó a Festetics - palota kiállítótermében (Kőszeg Chernel u. 10.)\n\n11:00 Ünnepi hangverseny a Jurisics vár Lovagtermében\n\nRésztvevő iskolák:\nÁcs Mihály Alapfokú Művészeti Iskola, Acsád\nBudaker Gusztáv Zeneiskola – Alapfokú Művészeti Iskola, Kőszeg\nBudaker Gusztáv Zeneiskola AMI tagintézménye, Csepreg\nCelldömölki Ádám Jenő Alapfokú Művészeti Iskola\nCelldömölki Ádám Jenő Alapfokú Művészeti Iskola Jánosházi Tagiskolája\nDr. Pesovár Ernő Alapfokú Művészeti Iskola, Szombathely\nHatos Ferenc Általános Iskola és Alapfokú Művészeti Iskola, Vép\nKoncz János Alapfokú Művészeti Iskola, Sárvár, Répcelak\nKörmendi Alapfokú Zene- és Táncművészeti Iskola\nReményik Sándor Evangélikus Óvoda, Általános Iskola és Alapfokú\nMűvészeti Iskola, Szombathely\nSzombathelyi Bartók Béla zeneiskola – Alapfokú Művészeti Iskola\nSzombathelyi Művészeti Szakgimnázium és Technikum\nTakács Jenő Alapfokú Művészeti Iskola, Szentgotthárd\nVáci Mihály Általános Iskola és Alapfokú Művészeti Iskola – Szombathely\nVasvári Zenei Alapfokú Művészeti Iskola\n\nA nyilvános rendezvényről készült fénykép- és videofelvételek megjelenhetnek a résztvevő iskolák honlapján, facebook oldalán és a sajtóban.\nSzeretettel várunk minden érdeklődőt!",
+    "tags": [
+      "művészet"
+    ],
+    "image": "muveszetnapja.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774854801326"
+  },
+  {
+    "name": "Szőlő Jövésnek Könyve Ünnepség",
+    "date": "2026-04-24",
+    "time": "08:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Szőlő Jövésnek Könyve ünnepség\nkora reggel a gazdák lemetszik a szőlőhajtásokat a nevezetes dűlőkben\n\n08.00 óra - temető\nKoszorúzás Szövényi István, Bechtold István, Chernel István díszpolgárok és Szövényi Ernő sírjánál\n08.30 Chernel utcai Várfal - Szőlőhajtások megtekintése a partnervárosi dűlőkben\n09.45 óra – Borok Háza (Várkör 54.)\nZenés menet a város utcáin a Borok Házától a Jurisics térre\nRészvevők: Kőszeg Város Fúvószenekara, Kőszegi Ostromnapok Egyesület, Tóth Flóra borkirálynő, Kőszegi Borbarát Hölgyek Egyesülete, Szőlőtermelők és Borértékesítők Szövetkezete, Kőszegi Borászok Egyesülete, Hajnalcsillag Néptáncegyüttes\n\n10.00 óra – Jurisics tér\nA szőlőhajtások bemutatása a polgármesternek\nA szőlőhajtások megáldása a Városháza\nBorhölgy avatása, Hölgyek Bora díj átadása\n\n10.30 óra – Jurisics vár\nSzőlőhajtások bejegyzése a Szőlő Jövésnek Könyvébe és a Vas Vármegyei Borverseny eredményhirdetése\n\n16.00 Tavaszköszöntő és táncház a Hajnalcsillag Néptáncegyüttessel\n\n17.00 Óriások a fűszálak között - a Nyugat-Dunántúl jellegzetes rovarfajai felnagyítva - makettkiállítás megnyitója a Bechtold István Természetvédelmi Látogatóközpontban.",
+    "tags": [
+      "kultúra"
+    ],
+    "image": "szolojoves.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774855041665"
+  },
+  {
+    "name": "Óriások a fűszálak közöt",
+    "date": "2026-04-24",
+    "time": "17:00",
+    "location": "Bechtold István Természetvédelmi Látogatóközpont",
+    "coords": {
+      "lat": 47.385862162324315,
+      "lng": 16.530605161576602
+    },
+    "description": "Óriások a fűszálak között - a Nyugat-Dunántúl jellegzetes rovarfajai felnagyítva - makettkiállítás megnyitója a természetvédelmi látogatóközpontban.",
+    "tags": [
+      "természet"
+    ],
+    "image": "koeszeg_logo_nobg-1774855294059.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774855297106"
+  },
+  {
+    "name": "Little G Weevil koncert",
+    "date": "2026-04-25",
+    "time": "19:00",
+    "location": "Zwinger öregtorony",
+    "coords": {
+      "lat": 47.38820834711413,
+      "lng": 16.539591056145227
+    },
+    "description": "Little G. Weevil - Előzenekar: Zsoldos Báró Zoltán\nJegyár: 4200 Ft - ez a koncert tavaly betegség miatt elmaradt",
+    "tags": [],
+    "image": "littleg.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1774855422559"
   }
 ]

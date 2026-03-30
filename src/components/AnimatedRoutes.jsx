@@ -52,9 +52,7 @@ const KoszegPassProfile = lazyWithRetry(() => import('../pages/KoszegPassProfile
 const ScannerPage = lazyWithRetry(() => import('../pages/ScannerPage'));
 const Partners = lazyWithRetry(() => import('../pages/Partners'));
 const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
-
-
-
+const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
 
 
 // Ticket System Components
@@ -142,6 +140,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/about" element={<PageWrapper><AboutDetail /></PageWrapper>} />
           <Route path="/partners" element={<PageWrapper><Partners /></PageWrapper>} />
           <Route path="/terms-provider" element={<PageWrapper><TermsProvider /></PageWrapper>} />
+          <Route path="/showcase" element={<PageWrapper showFooter={false}><FeatureShowcase /></PageWrapper>} />
 
 
           <Route path="/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />

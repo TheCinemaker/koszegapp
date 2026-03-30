@@ -142,7 +142,7 @@ export default function Info() {
                       return (
                         <FadeUp key={item.id} delay={idx * 0.1 + 0.2} className="md:col-span-2">
                           <Link
-                            to="/about"
+                            to="/showcase"
                             className="
                                     relative overflow-hidden group block
                                     bg-gradient-to-br from-[#1c1c1e] to-[#2c2c1e] dark:from-black dark:to-[#1c1c1e]
