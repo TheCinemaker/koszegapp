@@ -51,6 +51,7 @@ const KoszegPassRegister = lazyWithRetry(() => import('../pages/KoszegPassRegist
 const KoszegPassProfile = lazyWithRetry(() => import('../pages/KoszegPassProfile'));
 const ScannerPage = lazyWithRetry(() => import('../pages/ScannerPage'));
 const Partners = lazyWithRetry(() => import('../pages/Partners'));
+const SuperAdmin = lazyWithRetry(() => import('../pages/SuperAdmin'));
 const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
 const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
 
@@ -132,6 +133,8 @@ export default function AnimatedRoutes({ appData, weather }) {
               <Admin />
             </PageWrapper>
           } />
+
+          <Route path="/superadmin" element={<PageWrapper showFooter={false}><SuperAdmin /></PageWrapper>} />
 
           <Route path="/weather" element={<PageWrapper><WeatherDetail /></PageWrapper>} />
           <Route path="/info" element={<PageWrapper><Info /></PageWrapper>} />

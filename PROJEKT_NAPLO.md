@@ -52,6 +52,7 @@ A legfontosabb cél a zökkenőmentes foglalási élmény biztosítása, külön
 - [x] **Heti és Állandó Menü Rendszer Integráció:** Áttérés a szimpla napi menüről az átfogó Heti Menü és az új, minden nap rendelhető **"Állandó Napi Menü (A/B)"** logikára. A `FoodAdmin` felületen az éttermek heti bontásban és állandó fix mezőként is vihetik fel az ajánlatokat. Mind a Heti, mind az Állandó menühöz **ár szabható**.
 - [x] **Menük Kosárba Rakása és Adatbázis Fix:** Az admin által beárazott Napi/Állandó menük a Vendégoldalon egy kattintással kosárba rakhatóak. A kosár adatbázisba szinkronizálásakor a custom azonosítókat a rendszer futásidőben kiveszi (UUID parse PostgreSQL error fix), így az összes rendelés stabilan lefut.
 - [x] **Rendelés Követés (Státuszok) és Fizetés Finomítása:** A felhasználói oldalon kizárólag a Készpénzes fizetés maradt aktív (többi teszt gomb elrejtve). A státusz feliratok átírásra kerültek ('Rendelés leadva', 'Futár úton 🛵', 'Kiszállítva ✅'). A Kiszállítva státusz mostantól pontosan 3 percig látható marad a usernek, majd automatikusan eltűnik (a korábbi azonnali villanás/eltűnés bugja orvosolva dupla háttérszál eltávolításával).
+- [x] **SuperAdmin Pénzügyi Kapu:** Létrehozva egy dedikált oldal (/superadmin) keménykódolt belépéssel, ami élőben számolja össze az összes étterem kiszállított rendelését, és generálja belőle az 5%-os platform jutalék elszámolását (aggregálva).
 - Többi tevékenység szüneteltetve a felhasználó kérésére, amíg a foglalás nincs kész. (Visszatérés ide folyamatban)
 
 ---
