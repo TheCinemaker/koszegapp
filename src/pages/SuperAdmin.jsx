@@ -9,6 +9,7 @@ export default function SuperAdmin() {
     const [password, setPassword] = useState('');
     
     const [data, setData] = useState([]);
+    const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(false);
     
     // Hónapválasztó logika
@@ -84,7 +85,7 @@ export default function SuperAdmin() {
                 };
             });
 
-            // 5. Rendelések aggregálása
+            // 5. Rendelések aggregálása (Aktuális Hónap)
             orders.forEach(o => {
                 if (restMap[o.restaurant_id]) {
                     restMap[o.restaurant_id].totalRevenue += o.total_price;
@@ -95,6 +96,43 @@ export default function SuperAdmin() {
             // Minden étterem listázása (forgalom nélküliek is)
             const statsList = Object.values(restMap).sort((a,b) => b.totalRevenue - a.totalRevenue);
             setData(statsList);
+
+            // 6. Trend Grafikon adatok (Elmúlt 6 hónap összegzése)
+            // Kiszámoljuk a 6 hónappal ezelőtti dátumot
+            const sixMonthsAgo = new Date();
+            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+            sixMonthsAgo.setDate(1);
+            sixMonthsAgo.setHours(0,0,0,0);
+
+            const { data: allHistory, error: historyError } = await supabase
+                .from('orders')
+                .select('total_price, created_at')
+                .eq('status', 'delivered')
+                .gte('created_at', sixMonthsAgo.toISOString());
+            
+            if (!historyError && allHistory) {
+                // Generáljuk le a 6 hónap vázát sorrendben
+                const monthsData = [];
+                for(let i=5; i>=0; i--) {
+                    const d = new Date();
+                    d.setMonth(d.getMonth() - i);
+                    const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+                    const monthLabel = d.toLocaleString('hu-HU', { month: 'short' });
+                    monthsData.push({ key: monthKey, label: monthLabel, revenue: 0 });
+                }
+
+                // Adatok betöltése
+                allHistory.forEach(order => {
+                    const d = new Date(order.created_at);
+                    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+                    const targetMonth = monthsData.find(m => m.key === key);
+                    if (targetMonth) {
+                        targetMonth.revenue += order.total_price;
+                    }
+                });
+
+                setChartData(monthsData);
+            }
 
         } catch (error) {
             console.error(error);
@@ -239,6 +277,79 @@ export default function SuperAdmin() {
                         >
                             <IoLogOut className="text-lg" />
                         </button>
+                    </div>
+                </div>
+
+                {/* Stat Cards & Chart */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left Column: Stat Cards */}
+                    <div className="lg:col-span-1 space-y-4">
+                        {/* Platform Revenue */}
+                        <div className="bg-white dark:bg-[#1a1c2e] rounded-[2rem] p-6 border border-black/5 dark:border-white/5 shadow-sm relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-[2rem]" />
+                            <div className="relative z-10 pl-2">
+                                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-2">
+                                    <IoRestaurant className="text-blue-500 text-sm" /> Ételrendelés Forgalom ({selectedMonth})
+                                </div>
+                                <div className="text-3xl font-black text-slate-800 dark:text-white tracking-tight">
+                                    {totalRevenue.toLocaleString()} <span className="text-xl text-slate-400">Ft</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Own Commission */}
+                        <div className="bg-gradient-to-br from-amber-400 to-amber-600 rounded-[2rem] p-6 shadow-xl shadow-amber-500/20 relative overflow-hidden">
+                            <div className="absolute -right-4 -bottom-4 text-white/10 text-8xl rotate-12 pointer-events-none"><IoWallet /></div>
+                            <div className="relative z-10 w-full flex flex-col justify-center h-full">
+                                <div className="flex items-center gap-2 text-white/90 font-bold uppercase tracking-widest text-[10px] mb-2 drop-shadow-sm">
+                                    <IoWallet className="text-sm" /> Teljes Kiszámlázandó Jutalék (5%)
+                                </div>
+                                <div className="text-4xl font-black text-white drop-shadow-md tracking-tight">
+                                    {totalCommission.toLocaleString()} <span className="text-2xl text-white/70">Ft</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Chart */}
+                    <div className="lg:col-span-2 bg-white dark:bg-[#1a1c2e] rounded-[2rem] p-6 border border-black/5 dark:border-white/5 shadow-sm flex flex-col justify-between">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="font-bold text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                                <IoTrendingUp /> Növekedési Trend (6 Hónap)
+                            </h2>
+                        </div>
+                        
+                        <div className="h-40 flex items-end justify-between gap-2 overflow-hidden px-2 relative">
+                            {/* Horizontal grid lines */}
+                            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                                <div className="border-t border-black/5 dark:border-white/5 w-full"></div>
+                                <div className="border-t border-black/5 dark:border-white/5 w-full"></div>
+                                <div className="border-t border-black/5 dark:border-white/5 w-full"></div>
+                            </div>
+                            
+                            {chartData.map((data, idx) => {
+                                const maxRev = Math.max(...chartData.map(d => d.revenue), 1);
+                                const heightPercent = (data.revenue / maxRev) * 100;
+                                const isCurrent = data.key === selectedMonth;
+                                
+                                return (
+                                    <div key={idx} className="flex-1 flex flex-col items-center justify-end h-full relative group cursor-crosshair z-10">
+                                        {/* Tooltip on hover */}
+                                        <div className="absolute -top-8 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl pointer-events-none">
+                                            {data.revenue.toLocaleString()} Ft
+                                        </div>
+                                        {/* The Bar */}
+                                        <div 
+                                            style={{ height: `${Math.max(heightPercent, 2)}%` }} 
+                                            className={`w-full max-w-[40px] rounded-t-lg transition-all duration-500 ${isCurrent ? 'bg-amber-500 shadow-lg shadow-amber-500/20' : 'bg-blue-500/80 hover:bg-blue-400'}`}
+                                        />
+                                        <span className={`text-[10px] font-bold mt-2 uppercase tracking-widest ${isCurrent ? 'text-amber-500' : 'text-slate-400'}`}>
+                                            {data.label}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
 
