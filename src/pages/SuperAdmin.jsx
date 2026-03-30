@@ -92,12 +92,24 @@ export default function SuperAdmin() {
             });
 
             // 5. Rendelések aggregálása (Aktuális Hónap)
+            let globalRev = 0;
+            let globalComm = 0;
             orders.forEach(o => {
                 if (restMap[o.restaurant_id]) {
                     restMap[o.restaurant_id].totalRevenue += o.total_price;
                     restMap[o.restaurant_id].orderCount += 1;
+                    globalRev += o.total_price;
                 }
             });
+
+            // Globális jutalék + előfizetés kiszámítása
+            Object.values(restMap).forEach(rest => {
+                const comm = Math.floor(rest.totalRevenue * 0.05);
+                globalComm += comm + rest.subscription_fee;
+            });
+
+            setTotalRevenue(globalRev);
+            setTotalCommission(globalComm);
 
             // Minden étterem listázása (forgalom nélküliek is)
             const statsList = Object.values(restMap).sort((a,b) => b.totalRevenue - a.totalRevenue);
