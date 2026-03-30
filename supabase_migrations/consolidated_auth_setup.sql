@@ -72,13 +72,10 @@ begin
     
   -- Provider / Partner
   elsif new.raw_user_meta_data->>'role' = 'provider' then
-     insert into public.profiles (id, role, full_name, username)
-    values (
-      new.id, 
-      'provider',
-      new.raw_user_meta_data->>'full_name',
-      new.raw_user_meta_data->>'nickname'
-    ) on conflict (id) do nothing;
+     -- DO NOT insert into profiles for providers. 
+     -- They ONLY live in the providers table, which is handled via UPSERT in the frontend.
+     -- This ensures 100% isolation as requested.
+     NULL;
     
   -- Fallback (Generic Client)
   else

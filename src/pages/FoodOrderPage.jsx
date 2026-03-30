@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront } from 'react-icons/io5';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront, IoStar } from 'react-icons/io5';
 import { useCart } from '../hooks/useCart';
 import { getMenu, placeOrder } from '../api/foodService';
 import toast from 'react-hot-toast';
@@ -13,14 +13,15 @@ import { FadeUp, ParallaxImage } from '../components/AppleMotion';
 // --- HELPER FUNCTIONS ---
 const getOrderStatusText = (status) => {
     const map = {
-        'new': 'Új kérés',
+        'new': 'Rendelés leadva',
         'pending': 'Függőben',
         'accepted': 'Elfogadva',
         'preparing': 'Készül',
-        'ready': 'Kész',
-        'delivered': 'Kézbesítve',
-        'rejected': 'Elutasítva',
-        'cancelled': 'Törölve'
+        'ready': 'Futár úton 🛵 / Kész',
+        'delivering': 'Futár úton 🛵',
+        'delivered': 'Kiszállítva / Átvéve ✅',
+        'rejected': 'Elutasítva ❌',
+        'cancelled': 'Törölve ❌'
     };
     return map[status] || status;
 };
@@ -79,6 +80,157 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
         </motion.div>
     </FadeUp>
 );
+
+// --- WEEKLY MENU DISPLAY ---
+function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
+    const dailyMenuStr = restaurant?.daily_menu;
+    const dailyPrice = restaurant?.display_settings?.daily_menu_price ? parseInt(restaurant.display_settings.daily_menu_price) : null;
+    const showDaily = restaurant?.display_settings?.show_daily_menu;
+
+    const constantMenuStr = restaurant?.display_settings?.constant_menu_text;
+    const constantPrice = restaurant?.display_settings?.constant_menu_price ? parseInt(restaurant.display_settings.constant_menu_price) : null;
+    const showConstant = restaurant?.display_settings?.show_constant_menu;
+
+    const [expanded, setExpanded] = useState(false);
+
+    if (!dailyMenuStr && !constantMenuStr) return null;
+
+    let weeklyMenu = null;
+    let isOldFormat = false;
+    
+    if (dailyMenuStr) {
+        try {
+            const obj = JSON.parse(dailyMenuStr);
+            if (typeof obj === 'object' && obj !== null) {
+                weeklyMenu = obj;
+            } else {
+                isOldFormat = true;
+            }
+        } catch {
+            isOldFormat = true;
+        }
+    }
+
+    const todayDay = new Date().getDay(); // 0 is Sunday, 1 is Monday
+    const todayLabelMap = { 1: 'Hétfő', 2: 'Kedd', 3: 'Szerda', 4: 'Csütörtök', 5: 'Péntek', 6: 'Szombat', 0: 'Vasárnap' };
+    const orderedDays = [1, 2, 3, 4, 5, 6, 0];
+    
+    const todayContent = weeklyMenu ? (weeklyMenu[todayDay] || '-') : '-';
+
+    return (
+        <div className="space-y-4">
+            {/* CONSTANT MENU */}
+            {showConstant && constantMenuStr && (
+                <div className="mt-5 bg-amber-50/80 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-2xl relative overflow-hidden shadow-sm">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500 rounded-l-2xl" />
+                    <div className="p-4 pb-3">
+                        <div className="flex justify-between items-start mb-2 gap-2">
+                            <h3 className="text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-500 flex items-center gap-1.5">
+                                <IoStar className="text-base" />
+                                Állandó Napi Menü (A/B)
+                            </h3>
+                        </div>
+                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-1 border border-amber-100/50 dark:border-amber-900/20 shadow-sm">
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+                                {constantMenuStr}
+                            </p>
+                            {constantPrice && (
+                                <button 
+                                    onClick={() => onAddToCart({
+                                        id: `constant-menu-${restaurant.id}`,
+                                        name: `Állandó Napi Menü`,
+                                        price: constantPrice,
+                                        image_url: null,
+                                        restaurant_id: restaurant.id,
+                                        description: constantMenuStr
+                                    })}
+                                    className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
+                                >
+                                    <span>{constantPrice} Ft</span>
+                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* DAILY / WEEKLY MENU */}
+            {(dailyMenuStr && (showDaily || isOldFormat)) && (
+                <div className="mt-5 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl relative overflow-hidden shadow-sm">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl" />
+                    
+                    <div className="p-4 pb-3">
+                        <div className="flex justify-between items-start mb-2 gap-2">
+                            <h3 className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                                <IoRestaurant className="text-base" />
+                                {isOldFormat ? 'Heti / Napi Menü' : `Mai Menü: ${todayLabelMap[todayDay]}`}
+                            </h3>
+                        </div>
+                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-3 border border-blue-100/50 dark:border-blue-900/20 shadow-sm">
+                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+                                {isOldFormat ? dailyMenuStr : todayContent}
+                            </p>
+                            {dailyPrice && (isOldFormat || todayContent !== '-') && (
+                                <button 
+                                    onClick={() => onAddToCart({
+                                        id: `daily-menu-${restaurant.id}`,
+                                        name: isOldFormat ? `Napi Menü` : `Napi Menü (${todayLabelMap[todayDay]})`,
+                                        price: dailyPrice,
+                                        image_url: null,
+                                        restaurant_id: restaurant.id,
+                                        description: isOldFormat ? dailyMenuStr : todayContent
+                                    })}
+                                    className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
+                                >
+                                    <span>{dailyPrice} Ft</span>
+                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
+                                </button>
+                            )}
+                        </div>
+
+                        {!isOldFormat && (
+                            <button 
+                                onClick={() => setExpanded(!expanded)}
+                                className="w-full flex items-center justify-between px-3 py-2 bg-white/60 dark:bg-black/20 rounded-xl text-xs font-bold text-blue-900 dark:text-blue-300 backdrop-blur-sm border border-blue-100/50 dark:border-blue-800/20 active:scale-[0.98] transition-all"
+                            >
+                                <span>Egész heti menü / Ajánlatok</span>
+                                <span className="text-[10px] bg-blue-200 dark:bg-blue-800 px-2 py-0.5 rounded-md text-blue-800 dark:text-blue-200">{expanded ? 'Elrejtés' : 'Mutat'} ▼</span>
+                            </button>
+                        )}
+                    </div>
+
+                    {!isOldFormat && (
+                        <AnimatePresence>
+                            {expanded && (
+                                <motion.div 
+                                    initial={{ height: 0, opacity: 0 }} 
+                                    animate={{ height: 'auto', opacity: 1 }} 
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="overflow-hidden bg-white/30 dark:bg-black/10 mx-2 mb-2 rounded-xl backdrop-blur-md"
+                                >
+                                    <div className="p-3 space-y-3">
+                                        {orderedDays.map(day => (
+                                            day !== todayDay && weeklyMenu[day] && (
+                                                <div key={day} className="border-l-2 border-blue-300 dark:border-blue-700 pl-2">
+                                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-0.5">{todayLabelMap[day]}</span>
+                                                    <p className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{weeklyMenu[day]}</p>
+                                                </div>
+                                            )
+                                        ))}
+                                        {orderedDays.filter(day => day !== todayDay && weeklyMenu[day]).length === 0 && (
+                                            <p className="text-[11px] text-gray-500 italic text-center py-2">Nincs megadva további ajánlat a hétre.</p>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
 
 // --- SIMPLE POINTS DISPLAY (Lightweight) ---
 function SimplePointsDisplay({ user }) {
@@ -206,10 +358,12 @@ export default function FoodOrderPage() {
         console.log('👤 Setting up active orders monitor for user:', user.id);
 
         const fetchActiveOrders = async () => {
+            const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
             const { data } = await supabase
                 .from('orders')
                 .select('status')
                 .eq('user_id', user.id)
+                .gte('created_at', twelveHoursAgo)
                 .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering'])
                 .order('created_at', { ascending: false })
                 .limit(1)
@@ -230,7 +384,11 @@ export default function FoodOrderPage() {
                 filter: `user_id=eq.${user.id}`
             }, (payload) => {
                 console.log('🔔 User order event received:', payload.eventType, payload);
-                fetchActiveOrders();
+                if (payload.new && payload.new.status) {
+                    setActiveOrderStatus(payload.new.status);
+                } else {
+                    fetchActiveOrders();
+                }
             })
             .subscribe((status) => {
                 console.log('📡 Active orders subscription status:', status);
@@ -241,6 +399,16 @@ export default function FoodOrderPage() {
             supabase.removeChannel(chan);
         };
     }, [user]);
+
+    // 2. Clear completed status after 3 minutes
+    useEffect(() => {
+        if (['delivered', 'rejected', 'cancelled'].includes(activeOrderStatus)) {
+            const timer = setTimeout(() => {
+                setActiveOrderStatus(null);
+            }, 3 * 60 * 1000); // 3 minutes
+            return () => clearTimeout(timer);
+        }
+    }, [activeOrderStatus]);
 
     useEffect(() => {
         const fetchRestaurants = async () => {
@@ -314,20 +482,7 @@ export default function FoodOrderPage() {
         setView('restaurants');
     };
 
-    // Watch active orders
-    useEffect(() => {
-        if (!user) return;
-        const checkStatus = async () => {
-            const { data } = await supabase.from('orders').select('status').eq('user_id', user.id).in('status', ['pending', 'accepted', 'preparing', 'delivering']).limit(1);
-            if (data && data.length > 0) setActiveOrderStatus(data[0].status);
-            else setActiveOrderStatus(null);
-        };
-        checkStatus();
-        const chan = supabase.channel('active-order-watch').on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, (payload) => {
-            if (payload.new.user_id === user.id) checkStatus();
-        }).subscribe();
-        return () => supabase.removeChannel(chan);
-    }, [user]);
+    // A korábbi duplikált 'Watch active orders' blokk innen törölve lett.
 
     if (authLoading) {
         return (
@@ -507,6 +662,10 @@ export default function FoodOrderPage() {
                                             {selectedRestaurant.promotions && <div className="px-2 py-1 rounded-lg bg-red-100 dark:bg-red-900/30 text-[10px] font-bold flex items-center gap-1 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50"><IoGift /> {selectedRestaurant.promotions}</div>}
                                         </div>
                                         <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed max-w-xl">{selectedRestaurant.description}</p>
+                                        
+                                        {/* Napi Menü Kiemelés */}
+                                        {/* Napi Menü Kiemelés */}
+                                        <WeeklyMenuDisplay restaurant={selectedRestaurant} onAddToCart={(item) => addItem(item)} />
                                     </div>
                                 </div>
                             </motion.div>
@@ -855,31 +1014,18 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                                 {/* PAYMENT METHOD SELECTION */}
                                 <div className="space-y-2">
                                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Fizetési mód</h3>
-                                    <div className="grid grid-cols-3 gap-2">
+                                    <div className="grid grid-cols-1 gap-2">
                                         <button
                                             type="button"
                                             onClick={() => setForm({ ...form, paymentMethod: 'cash' })}
                                             className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'cash' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
                                         >
-                                            <IoWallet className="text-lg" />
-                                            <span className="text-[10px] font-bold">Készpénz</span>
+                                            <div className="flex items-center gap-2">
+                                                <IoWallet className="text-xl" />
+                                                <span className="text-sm font-bold">Készpénzes fizetés futárnál / átvételkor</span>
+                                            </div>
                                         </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => setForm({ ...form, paymentMethod: 'card_terminal' })}
-                                            className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'card_terminal' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
-                                        >
-                                            <div className="text-lg">💳</div>
-                                            <span className="text-[10px] font-bold">Kártya</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => setForm({ ...form, paymentMethod: 'szep_card' })}
-                                            className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${form.paymentMethod === 'szep_card' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-gray-50 dark:bg-white/5 text-gray-500 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'}`}
-                                        >
-                                            <div className="text-lg">🎫</div>
-                                            <span className="text-[10px] font-bold">SZÉP Kártya</span>
-                                        </button>
+                                        <p className="text-[10px] text-center text-gray-400 font-medium">Kártyás és online fizetés jelenleg fejlesztés alatt áll.</p>
                                     </div>
                                 </div>
                                 <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2">

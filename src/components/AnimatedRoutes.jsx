@@ -3,6 +3,8 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { lazyWithRetry } from '../utils/lazyWithRetry';
+import ProvidersPage from '../pages/ProvidersPage';
+
 
 // Importing Pages
 const Home = lazyWithRetry(() => import('../pages/Home'));
@@ -49,6 +51,10 @@ const KoszegPassRegister = lazyWithRetry(() => import('../pages/KoszegPassRegist
 const KoszegPassProfile = lazyWithRetry(() => import('../pages/KoszegPassProfile'));
 const ScannerPage = lazyWithRetry(() => import('../pages/ScannerPage'));
 const Partners = lazyWithRetry(() => import('../pages/Partners'));
+const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
+
+
+
 
 
 // Ticket System Components
@@ -135,6 +141,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/adatvedelem" element={<PageWrapper><Adatvedelem /></PageWrapper>} />
           <Route path="/about" element={<PageWrapper><AboutDetail /></PageWrapper>} />
           <Route path="/partners" element={<PageWrapper><Partners /></PageWrapper>} />
+          <Route path="/terms-provider" element={<PageWrapper><TermsProvider /></PageWrapper>} />
 
 
           <Route path="/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />
@@ -174,6 +181,8 @@ export default function AnimatedRoutes({ appData, weather }) {
           }
           />
           <Route path="/koszegieknek" element={<PageWrapper><LocalDashboard /></PageWrapper>} />
+          <Route path="/idopontfoglalas" element={<PageWrapper><ProvidersPage /></PageWrapper>} />
+
           <Route path="/auth" element={<PageWrapper><AuthPage /></PageWrapper>} />
           <Route path="/provider-setup" element={<PageWrapper><ProviderSetup /></PageWrapper>} />
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />

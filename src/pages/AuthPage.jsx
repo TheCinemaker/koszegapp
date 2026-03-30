@@ -59,21 +59,28 @@ export default function AuthPage() {
 
             if (authData?.user) {
                 const userId = authData.user.id;
+                // Generate a more robust slug
+                const baseSlug = businessName.toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove accents
+                    .trim()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9-]/g, '');
+
+                const uniqueSlug = `${baseSlug}-${Math.random().toString(36).substring(2, 7)}`;
 
                 // 2. Create Appointment Provider Entry
-                // Note: Profile creation is handled by the DB Trigger now (consolidated_auth_setup.sql)
                 const { error: provError } = await supabase
                     .from('providers')
                     .insert({
                         user_id: userId,
                         business_name: businessName,
                         category: finalCategory,
-                        slug: businessName.toLowerCase().replace(/ /g, '-')
+                        slug: uniqueSlug
                     });
 
-                if (provError && !provError.message.includes('duplicate')) {
+                if (provError) {
                     console.error("Provider insert error:", provError);
-                    toast.error(t('errors.saveError'));
+                    toast.error(t('errors.saveError') || 'Hiba a szolgáltató mentésekor: ' + provError.message);
                 } else {
                     toast.success(t('errors.successRegister'));
                     navigate('/business', { replace: true });

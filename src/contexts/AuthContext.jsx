@@ -93,15 +93,35 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      if (profileData || adminRole) {
-        // Update user state. If adminRole exists, it OVERRIDES the profile role for permission checks.
-        setUser(prev => ({
-          ...prev,
-          ...profileData,
-          // If present in whitelist, use that role. Otherwise fallback to profile role.
-          role: adminRole || profileData?.role || 'client'
-        }));
+      // 3. Fetch Provider Status (if applicable)
+      const { data: providerData } = await supabase
+        .from('providers')
+        .select('status')
+        .eq('user_id', authUser.id)
+        .maybeSingle();
+
+      // 4. Derive Role from Email Prefix (Isolated Flow)
+      let prefixRole = null;
+      if (authUser.email) {
+        if (authUser.email.startsWith('provider.')) prefixRole = 'provider';
+        if (authUser.email.startsWith('restaurant.')) prefixRole = 'restaurant';
+        if (authUser.email.startsWith('client.')) prefixRole = 'client';
       }
+
+      // Final Role Resolution Priority:
+      // 1. Admin Whitelist (Global Overrides)
+      // 2. Database Profile Role (Legacy/Manual)
+      // 3. Email Prefix (Isolated flow - current standard)
+      // 4. Metadata Role (Fallback)
+      // 5. Default: client
+      const resolvedRole = adminRole || profileData?.role || prefixRole || authUser.user_metadata?.role || 'client';
+
+      setUser(prev => ({
+        ...prev,
+        ...profileData,
+        providerStatus: providerData?.status || null,
+        role: resolvedRole
+      }));
     } catch (error) {
       console.error("Profile fetch unexpected error:", error);
     }
@@ -114,8 +134,8 @@ export const AuthProvider = ({ children }) => {
   */
   const login = async (identifier, password, type = 'client') => {
     // Generate internal email based on type
-    const isProvider = type === 'provider' || type === 'restaurant';
-    const prefix = isProvider ? 'provider' : 'client';
+    // type: 'client' | 'provider' | 'restaurant'
+    const prefix = type; // Use the type directly as prefix for 100% isolation
 
     // Normalize identifier more aggressively
     const safeId = normalizeIdentifier(identifier);
@@ -142,8 +162,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (identifier, password, fullName, role) => {
-    const isProvider = role === 'provider' || role === 'restaurant';
-    const prefix = isProvider ? 'provider' : 'client';
+    // role: 'client' | 'provider' | 'restaurant'
+    const prefix = role;
 
     const safeId = normalizeIdentifier(identifier);
     const generatedEmail = `${prefix}.${safeId}@koszeg.app`;

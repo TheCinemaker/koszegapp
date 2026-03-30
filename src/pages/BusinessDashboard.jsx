@@ -58,7 +58,7 @@ export default function BusinessDashboard() {
         try {
             const { data, error } = await supabase
                 .from('bookings')
-                .select('*, services(name, duration_min), profiles(full_name, phone, nickname)')
+                .select('*')
                 .eq('provider_id', providerId)
                 .neq('status', 'cancelled')
                 .order('start_time', { ascending: true });
@@ -346,26 +346,17 @@ export default function BusinessDashboard() {
         };
     }, [providerProfile]);
 
-    const handleNotificationClose = async (notification) => {
+    const handleNotificationClose = (notification) => {
+        // Simple queue shift. No extra DB operations needed here as the "status: 'cancelled'"
+        // update has already been applied by the user or client.
         setNotificationQueue(prev => prev.slice(1));
-
-        // If it was a cancellation notification, perform the HARD DELETE from DB now
-        // This ensures "No Trace" but only after the provider has been notified.
-        if (notification.type === 'cancelled') {
-            try {
-                await supabase.from('bookings').delete().eq('id', notification.id);
-                console.log("Performed deferred hard delete for:", notification.id);
-            } catch (err) {
-                console.error("Error performing deferred hard delete:", err);
-            }
-        }
     };
 
     const fetchNewBookingDetails = async (bookingId, type = 'booking') => {
         try {
             const { data, error } = await supabase
                 .from('bookings')
-                .select('*, services(name, duration_min), profiles(full_name, phone, nickname)')
+                .select('*')
                 .eq('id', bookingId)
                 .single();
 
@@ -441,9 +432,11 @@ export default function BusinessDashboard() {
 
     const openMessageModal = (booking) => {
         if (!booking.client_id) return;
+        const clientNameMatch = booking.notes?.match(/\[Foglaló:\s*(.*?)\]/);
+        const extractedName = clientNameMatch ? clientNameMatch[1] : null;
         setMessageRecipient({
             id: booking.client_id,
-            name: booking.profiles?.nickname || booking.profiles?.full_name || 'Vendég',
+            name: booking.profiles?.nickname || booking.profiles?.full_name || extractedName || 'Vendég',
             bookingId: booking.id
         });
         setShowMessageModal(true);
@@ -458,13 +451,14 @@ export default function BusinessDashboard() {
     const confirmDelete = async () => {
         if (!deletingBookingId) return;
         try {
-            const { error } = await supabase.from('bookings').delete().eq('id', deletingBookingId);
+            const { data, error } = await supabase.from('bookings').update({ status: 'cancelled' }).eq('id', deletingBookingId).select();
             if (error) throw error;
+            if (!data || data.length === 0) throw new Error("A törlés nem sikerült, valószínűleg nincs rá jogosultságod (RLS)!");
             toast.success('Foglalás törölve!');
             fetchBookings(providerProfile.id);
         } catch (error) {
             console.error(error);
-            toast.error('Hiba a törléskor.');
+            toast.error('Hiba a törléskor: ' + error.message);
         } finally {
             setDeletingBookingId(null);
         }
@@ -601,15 +595,26 @@ export default function BusinessDashboard() {
                             </div>
 
                             <div className="flex-1">
-                                <h3 className={`font-bold text-lg mb-1 ${booking.type === 'blocked' ? 'text-zinc-500 italic' : 'text-zinc-800 dark:text-zinc-200'}`}>
-                                    {booking.type === 'blocked' ? 'SZÜNET / BLOKKOLVA' : (booking.manual_client_name || booking.profiles?.nickname || booking.profiles?.full_name || 'Ismeretlen Vendég')}
-                                </h3>
-                                <p className="text-zinc-500 text-sm flex items-center gap-2">
-                                    <span className="px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-medium">
-                                        {booking.type === 'blocked' ? 'Blokkolva' : (booking.services?.name || 'Kézi rögzítés')}
-                                    </span>
-                                    {booking.notes && <span>📝 {booking.notes}</span>}
-                                </p>
+                                {(() => {
+                                    const clientNameMatch = booking.notes?.match(/\[Foglaló:\s*(.*?)\]/);
+                                    const extractedName = clientNameMatch ? clientNameMatch[1] : null;
+                                    const cleanNotes = booking.notes ? booking.notes.replace(/\[Foglaló:\s*.*?\]\s*/, '') : '';
+                                    const displayName = booking.type === 'blocked' ? 'SZÜNET / BLOKKOLVA' : (booking.manual_client_name || extractedName || 'Ismeretlen Vendég');
+
+                                    return (
+                                        <>
+                                            <h3 className={`font-bold text-lg mb-1 ${booking.type === 'blocked' ? 'text-zinc-500 italic' : 'text-zinc-800 dark:text-zinc-200'}`}>
+                                                {displayName}
+                                            </h3>
+                                            <p className="text-zinc-500 text-sm flex items-center gap-2">
+                                                <span className="px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-medium">
+                                                    {booking.type === 'blocked' ? 'Blokkolva' : (booking.services?.name || 'Kézi rögzítés')}
+                                                </span>
+                                                {cleanNotes && <span>📝 {cleanNotes}</span>}
+                                            </p>
+                                        </>
+                                    );
+                                })()}
                             </div>
 
                             <div className={`w-1.5 h-full absolute left-0 top-0 bottom-0 ${booking.type === 'blocked' ? 'bg-zinc-400 pattern-diagonal-stripes' :
@@ -794,6 +799,11 @@ export default function BusinessDashboard() {
                         booking={notificationQueue[0]}
                         type={notificationQueue[0].type || 'booking'} // Pass type
                         onClose={() => handleNotificationClose(notificationQueue[0])}
+                        onReply={() => {
+                            const notification = notificationQueue[0];
+                            handleNotificationClose(notification);
+                            openMessageModal(notification);
+                        }}
                     />
                 )}
             </AnimatePresence>
@@ -806,6 +816,7 @@ export default function BusinessDashboard() {
                         recipientId={messageRecipient.id}
                         recipientName={messageRecipient.name}
                         senderId={user.id}
+                        senderName={providerProfile.business_name}
                         bookingId={messageRecipient.bookingId}
                     />
                 )}

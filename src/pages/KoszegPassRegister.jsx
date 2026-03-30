@@ -48,8 +48,8 @@ export default function KoszegPassRegister() {
 
             } else {
                 // --- REGISTER LOGIC ---
-                // 1. Create Auth User (Role: koszegpass)
-                const authData = await register(form.username, form.password, form.fullName, 'koszegpass');
+                // 1. Create Auth User (Role: client)
+                const authData = await register(form.username, form.password, form.fullName, 'client');
 
                 if (authData?.user) {
                     const userId = authData.user.id;

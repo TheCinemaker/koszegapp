@@ -5,7 +5,7 @@ import { IoClose, IoSend } from 'react-icons/io5';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
 
-export default function MessageModal({ isOpen, onClose, recipientId, recipientName, senderId, bookingId }) {
+export default function MessageModal({ isOpen, onClose, recipientId, recipientName, senderId, senderName, bookingId }) {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -16,24 +16,26 @@ export default function MessageModal({ isOpen, onClose, recipientId, recipientNa
         setLoading(true);
 
         try {
-            const { error } = await supabase
+            const { data, error } = await supabase
                 .from('messages')
                 .insert({
                     sender_id: senderId,
                     recipient_id: recipientId,
-                    content: message.trim(),
+                    content: `[#SZOLG:${senderName || 'Ismeretlen Szolgáltató'}] ${message.trim()}`,
                     is_read: false,
                     booking_id: bookingId
-                });
+                })
+                .select();
 
             if (error) throw error;
+            if (!data || data.length === 0) throw new Error("A mentés nem sikerült (RLS blokkolás lehet az oka)!");
 
             toast.success('Üzenet elküldve! 📨');
             setMessage('');
             onClose();
         } catch (error) {
             console.error("Error sending message:", error);
-            toast.error("Hiba az üzenet küldésekor.");
+            toast.error("Hiba az üzenet küldésekor: " + error.message);
         } finally {
             setLoading(false);
         }

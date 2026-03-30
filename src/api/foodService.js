@@ -48,7 +48,7 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
 
     // Prepare items for the RPC function
     const itemsJson = cartItems.map(item => ({
-        id: item.id,
+        id: (String(item.id).includes('menu-')) ? null : item.id,
         name: item.name,
         price: item.price,
         quantity: item.quantity

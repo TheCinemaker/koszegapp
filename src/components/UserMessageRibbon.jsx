@@ -4,6 +4,8 @@ import { IoMail, IoClose, IoCheckmarkDone } from 'react-icons/io5';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
+import { format, parseISO } from 'date-fns';
+import { hu } from 'date-fns/locale';
 
 export default function UserMessageRibbon() {
     const { user } = useAuth();
@@ -14,20 +16,10 @@ export default function UserMessageRibbon() {
     const fetchMessages = async () => {
         if (!user) return;
         try {
+            // Egyszerűsített lekérdezés, hogy elkerüljük az FK (foreign key) hiánya miatti HTTP 400-as hibákat (PGRST200)
             const { data, error } = await supabase
                 .from('messages')
-                .select(`
-                    *,
-                    sender:sender_id (
-                        id,
-                        full_name,
-                        nickname,
-                        providers (business_name)
-                    ),
-                    booking:bookings (
-                        start_time
-                    )
-                `)
+                .select('*')
                 .eq('recipient_id', user.id)
                 .eq('is_read', false)
                 .order('created_at', { ascending: false });
@@ -89,12 +81,19 @@ export default function UserMessageRibbon() {
     const formatBookingTime = (booking) => {
         if (!booking || !booking.start_time) return null;
         try {
-            // Import format/parseISO is missing in this file context based on lines rendered!
-            // Wait, I saw imports: import { format, isToday, ... } from 'date-fns';
-            // No, file content shows: import { useState, useEffect } from 'react'; ... import { IoMail... } 
-            // It DOES NOT have date-fns imported. I need to add imports first!
-            return new Date(booking.start_time).toLocaleString('hu-HU', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        } catch (e) { return null }
+            return format(parseISO(booking.start_time), "MMM d., HH:mm", { locale: hu });
+        } catch (e) { return null; }
+    };
+
+    const parseMessage = (rawContent) => {
+        let name = 'Ismeretlen feladó (Szolgáltató)';
+        let text = rawContent || '';
+        const match = text.match(/^\[#SZOLG:(.*?)\]\s*(.*)/s);
+        if (match) {
+            name = match[1] === 'undefined' ? name : match[1];
+            text = match[2];
+        }
+        return { name, text };
     };
 
     if (messages.length === 0) return null;
@@ -122,16 +121,11 @@ export default function UserMessageRibbon() {
                         </div>
                         <div className="flex-1 text-left min-w-0">
                             <h4 className="font-bold text-sm truncate">
-                                {messages[0].sender?.providers?.[0]?.business_name || messages[0].sender?.nickname || messages[0].sender?.full_name || 'Üzeneted érkezett'}
+                                {parseMessage(messages[0].content).name}
                             </h4>
                             <p className="text-xs text-blue-100 truncate">
-                                {messages[0].content}
+                                {parseMessage(messages[0].content).text}
                             </p>
-                            {messages[0].booking && (
-                                <p className="text-[10px] text-yellow-300 font-bold mt-0.5">
-                                    Érintett időpont: {formatBookingTime(messages[0].booking)}
-                                </p>
-                            )}
                         </div>
                         <div className="w-6 h-6 rounded-full bg-red-500 text-[10px] font-bold flex items-center justify-center shrink-0">
                             {messages.length}
@@ -167,7 +161,7 @@ export default function UserMessageRibbon() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <h3 className="text-xl font-bold text-zinc-900 dark:text-white leading-tight">
-                                            {selectedMessage.sender?.providers?.[0]?.business_name || selectedMessage.sender?.nickname || selectedMessage.sender?.full_name || 'Ismeretlen feladó'}
+                                            {parseMessage(selectedMessage.content).name}
                                         </h3>
                                         <p className="text-sm text-zinc-500 font-medium">Új üzenet</p>
                                     </div>
@@ -179,17 +173,8 @@ export default function UserMessageRibbon() {
                                     </button>
                                 </div>
 
-                                {selectedMessage.booking && (
-                                    <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-100 dark:border-yellow-900/30">
-                                        <p className="text-xs text-yellow-600 dark:text-yellow-500 uppercase font-bold">Kapcsolódó Foglalás</p>
-                                        <p className="font-bold text-zinc-800 dark:text-yellow-100">
-                                            {formatBookingTime(selectedMessage.booking)}
-                                        </p>
-                                    </div>
-                                )}
-
                                 <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl p-4 text-zinc-800 dark:text-zinc-200 text-lg leading-relaxed font-medium">
-                                    "{selectedMessage.content}"
+                                    "{parseMessage(selectedMessage.content).text}"
                                 </div>
                             </div>
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoStorefront, IoTime, IoCall, IoMap, IoCheckmark, IoTabletPortraitOutline, IoPhonePortraitOutline } from 'react-icons/io5';
+import { IoStorefront, IoTime, IoCall, IoMap, IoCheckmark, IoTabletPortraitOutline, IoPhonePortraitOutline, IoPerson, IoKey, IoArrowBack, IoLockClosed } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 
 const CATEGORIES = [
@@ -15,11 +15,16 @@ const CATEGORIES = [
 ];
 
 export default function ProviderSetup() {
-    const { user, login } = useAuth(); // Re-fetch user to update session data if needed
+    const { user, login, register, logout } = useAuth();
     const navigate = useNavigate();
-    const [step, setStep] = useState('landing'); // 'landing', 'form', 'success'
-    const [selectedPackage, setSelectedPackage] = useState(null); // 'software', 'tablet'
+    const [step, setStep] = useState('landing'); // 'landing', 'auth', 'form', 'success'
+    const [authMode, setAuthMode] = useState('register'); // Default to register as most are new users
+    const [selectedPackage, setSelectedPackage] = useState('software'); // 'software', 'tablet'
     const [loading, setLoading] = useState(false);
+
+    // Auth Form State
+    const [authUsername, setAuthUsername] = useState('');
+    const [authPassword, setAuthPassword] = useState('');
 
     // Form Stats
     const [businessName, setBusinessName] = useState('');
@@ -31,13 +36,27 @@ export default function ProviderSetup() {
     const [slotDuration, setSlotDuration] = useState(30);
     const [openStart, setOpenStart] = useState('09:00');
     const [openEnd, setOpenEnd] = useState('17:00');
+    const [customCategory, setCustomCategory] = useState('');
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     // Initial fetch to pre-fill if data exists
     useEffect(() => {
         if (user) {
-            checkExisting();
+            // Robust role check: metadata OR role OR email prefix
+            const isProvider = (user.role === 'provider') ||
+                (user.user_metadata?.role === 'provider') ||
+                (user.email?.startsWith('provider.'));
+
+            if (isProvider) {
+                checkExisting();
+                // If we were on auth, but now we are a provider, move to form
+                if (step === 'auth') setStep('form');
+            } else if (step === 'form') {
+                // ONLY bounce back if strictly NOT a provider (and not just "loading")
+                setStep('auth');
+            }
         }
-    }, [user]);
+    }, [user, step]);
 
     const checkExisting = async () => {
         const { data } = await supabase.from('providers').select('*').eq('user_id', user.id).maybeSingle();
@@ -68,20 +87,60 @@ export default function ProviderSetup() {
 
     const handleSelectPackage = (pkg) => {
         setSelectedPackage(pkg);
-        setStep('form');
+        setAuthMode('register'); // Ensure we start on register flow
+        const userRole = user?.role || user?.user_metadata?.role;
+        if (userRole === 'provider' || user?.email?.startsWith('provider.')) {
+            setStep('form');
+        } else {
+            setStep('auth');
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleAuthAction = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            if (authMode === 'login') {
+                await login(authUsername, authPassword, 'provider');
+                toast.success('Sikeres üzleti belépés!');
+            } else {
+                await register(authUsername, authPassword, businessName || authUsername, 'provider');
+                toast.success('Üzleti fiók létrehozva!');
+            }
+            setStep('form');
+        } catch (error) {
+            console.error("Auth error:", error);
+            toast.error('Hiba: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
+        if (!termsAccepted) {
+            toast.error('Kérjük, fogadd el a szolgáltatói szerződési feltételeket!');
+            setLoading(false);
+            return;
+        }
+
         try {
+            if (!user?.id) {
+                toast.error('Bejelentkezés szükséges a mentéshez!');
+                navigate('/auth');
+                return;
+            }
+
             // Upsert provider details
+            const finalCategory = category === 'egyeb' ? customCategory : category;
+
             const updates = {
                 user_id: user.id,
                 business_name: businessName,
-                category,
+                category: finalCategory,
                 location_address: address,
                 description: description || `A(z) ${businessName} hivatalos oldala.`,
                 phone: phone,
@@ -112,7 +171,6 @@ export default function ProviderSetup() {
                 });
             } catch (notifyError) {
                 console.error("Failed to notify admin:", notifyError);
-                // Don't block flow if notification fails
             }
 
             setStep('success');
@@ -216,9 +274,9 @@ export default function ProviderSetup() {
 
                         <button
                             onClick={() => handleSelectPackage('software')}
-                            className="w-full py-4 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white font-bold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                            className="w-full py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
                         >
-                            Kiválasztom
+                            Ezt választom
                         </button>
                     </motion.div>
 
@@ -266,143 +324,269 @@ export default function ProviderSetup() {
     // --- RENDER: REGISTRATION FORM ---
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col items-center justify-center p-6">
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl shadow-xl p-8 border border-zinc-200 dark:border-zinc-800"
-            >
-                <button onClick={() => setStep('landing')} className="mb-6 text-sm text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200">
-                    ← Vissza a csomagokhoz
-                </button>
 
-                <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-2xl mx-auto flex items-center justify-center mb-4 text-3xl shadow-lg shadow-purple-500/30">
-                        {selectedPackage === 'tablet' ? '📱' : '✨'}
-                    </div>
-                    <h1 className="text-3xl font-black text-zinc-900 dark:text-white mb-2">Szalon Regisztráció</h1>
-                    <p className="text-zinc-500">
-                        {selectedPackage === 'tablet' ? 'Szuper döntés a Tablet csomag! ' : 'Kezdjük el a beállítást. '}
-                        Töltsd ki az adataidat, és munkatársunk hamarosan keres.
-                    </p>
-                </div>
+            {/* --- BUSINESS AUTH STEP --- */}
+            {step === 'auth' && (
+                <div className="max-w-md mx-auto w-full">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-white dark:bg-zinc-900 p-8 rounded-[2.5rem] shadow-2xl border border-zinc-100 dark:border-zinc-800"
+                    >
+                        <div className="text-center mb-8">
+                            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                                <IoLockClosed className="text-purple-600" />
+                            </div>
+                            <h2 className="text-2xl font-black text-zinc-900 dark:text-white">
+                                {authMode === 'login' ? 'Üzleti Belépés' : 'Új Üzleti Fiók'}
+                            </h2>
+                            <p className="text-zinc-500 text-sm mt-2">
+                                A vállalkozói felülethez külön üzleti fiók szükséges.
+                            </p>
+                        </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                        {user &&
+                            (user.role || user.user_metadata?.role) !== 'provider' &&
+                            !user.email?.startsWith('provider.') && (
+                                <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/30 rounded-2xl text-xs text-amber-700 dark:text-amber-400">
+                                    Jelenleg magánszemélyként vagy belépve ({user.email}). <br />
+                                    A folytatáshoz kérjük lépj ki, vagy regisztrálj egy külön üzleti fiókot.
+                                    <button onClick={() => logout()} className="block mt-2 font-bold underline text-left">Kijelentkezés</button>
+                                </div>
+                            )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Cégnév / Szalon neve</label>
+                        <form onSubmit={handleAuthAction} className="space-y-4">
+                            {authMode === 'register' && (
+                                <div className="relative">
+                                    <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                    <input
+                                        type="text"
+                                        placeholder="Cégnév / Vállalkozás neve"
+                                        value={businessName}
+                                        onChange={e => setBusinessName(e.target.value)}
+                                        className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white"
+                                        required
+                                    />
+                                </div>
+                            )}
                             <div className="relative">
-                                <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
                                 <input
                                     type="text"
-                                    value={businessName}
-                                    onChange={e => setBusinessName(e.target.value)}
-                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
+                                    placeholder="Üzleti felhasználónév"
+                                    value={authUsername}
+                                    onChange={e => setAuthUsername(e.target.value)}
+                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white"
                                     required
                                 />
                             </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Kategória</label>
-                            <select
-                                value={category}
-                                onChange={e => setCategory(e.target.value)}
-                                className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium appearance-none"
-                                required
+                            <div className="relative">
+                                <IoKey className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                <input
+                                    type="password"
+                                    placeholder="Jelszó"
+                                    value={authPassword}
+                                    onChange={e => setAuthPassword(e.target.value)}
+                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full h-12 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-all shadow-lg shadow-purple-500/20"
                             >
-                                <option value="">Válassz...</option>
-                                {CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.icon} {c.label}</option>)}
-                            </select>
+                                {loading ? 'Folyamatban...' : (authMode === 'login' ? 'Belépés' : 'Üzleti fiók létrehozása')}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
+                                className="w-full text-sm text-purple-600 dark:text-purple-400 hover:underline pt-2"
+                            >
+                                {authMode === 'login' ? 'Nincs még üzleti fiókom, regisztrálok' : 'Már van üzleti fiókom, belépek'}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setStep('landing')}
+                                className="w-full text-sm text-zinc-400 hover:text-zinc-600 pt-4"
+                            >
+                                Vissza a csomagokhoz
+                            </button>
+                        </form>
+                    </motion.div>
+                </div>
+            )}
+
+            {/* --- REGISTRATION FORM --- */}
+            {step === 'form' && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl shadow-xl p-8 border border-zinc-200 dark:border-zinc-800 mx-auto"
+                >
+                    <div className="flex items-center justify-between mb-8">
+                        <button onClick={() => setStep('landing')} className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200">
+                            <IoArrowBack className="text-xl" />
+                        </button>
+                        <div className="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                            <span>2. Lépés: Adatok megadása</span>
                         </div>
+                        <div className="w-10" />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Cím</label>
-                            <div className="relative">
-                                <IoMap className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                <input
-                                    type="text"
-                                    value={address}
-                                    onChange={e => setAddress(e.target.value)}
-                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
-                                    required
-                                />
+                    <form onSubmit={handleSubmit} className="space-y-6">
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Cégnév/vállalkozó neve</label>
+                                <div className="relative">
+                                    <IoStorefront className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                    <input
+                                        type="text"
+                                        value={businessName}
+                                        onChange={e => setBusinessName(e.target.value)}
+                                        className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
+                                        required
+                                    />
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Telefon (Kapcsolattartáshoz)</label>
-                            <div className="relative">
-                                <IoCall className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
-                                <input
-                                    type="tel"
-                                    placeholder="+36 30 ..."
-                                    value={phone}
-                                    onChange={e => setPhone(e.target.value)}
-                                    className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
-                                    required
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* TIME SETTINGS */}
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-800 space-y-4">
-                        <h3 className="font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-                            <IoTime className="text-purple-500" /> Időpontok és Nyitvatartás
-                        </h3>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="space-y-1">
-                                <label className="text-xs font-bold text-zinc-500 uppercase">Időpont hossza (perc)</label>
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Kategória</label>
                                 <select
-                                    value={slotDuration}
-                                    onChange={e => setSlotDuration(e.target.value)}
-                                    className="w-full h-10 px-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 outline-none"
+                                    value={category}
+                                    onChange={e => setCategory(e.target.value)}
+                                    className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium appearance-none"
+                                    required
                                 >
-                                    <option value="15">15 perc</option>
-                                    <option value="30">30 perc (Normál)</option>
-                                    <option value="45">45 perc</option>
-                                    <option value="60">60 perc (1 óra)</option>
-                                    <option value="90">90 perc</option>
-                                    <option value="120">120 perc</option>
+                                    <option value="">Válassz...</option>
+                                    {CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.icon} {c.label}</option>)}
                                 </select>
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-xs font-bold text-zinc-500 uppercase">Nyitás</label>
-                                <input
-                                    type="time"
-                                    value={openStart}
-                                    onChange={e => setOpenStart(e.target.value)}
-                                    className="w-full h-10 px-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 outline-none"
-                                />
+                            <AnimatePresence>
+                                {category === 'egyeb' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="space-y-2 overflow-hidden"
+                                    >
+                                        <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Milyen területen dolgozol? *</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Pl: Tetováló, Könyvelő, stb..."
+                                            value={customCategory}
+                                            onChange={e => setCustomCategory(e.target.value)}
+                                            className="w-full h-12 px-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
+                                            required
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Cím</label>
+                                <div className="relative">
+                                    <IoMap className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                    <input
+                                        type="text"
+                                        value={address}
+                                        onChange={e => setAddress(e.target.value)}
+                                        className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
+                                        required
+                                    />
+                                </div>
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-xs font-bold text-zinc-500 uppercase">Zárás</label>
-                                <input
-                                    type="time"
-                                    value={openEnd}
-                                    onChange={e => setOpenEnd(e.target.value)}
-                                    className="w-full h-10 px-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 outline-none"
-                                />
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Telefon (Kapcsolattartáshoz)</label>
+                                <div className="relative">
+                                    <IoCall className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+                                    <input
+                                        type="tel"
+                                        placeholder="+36 30 ..."
+                                        value={phone}
+                                        onChange={e => setPhone(e.target.value)}
+                                        className="w-full h-12 pl-12 pr-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 focus:outline-none dark:text-white font-medium"
+                                        required
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full h-14 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-purple-500/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2"
-                    >
-                        {loading ? 'Mentés...' : 'Regisztráció Küldése 🚀'}
-                    </button>
+                        {/* TIME SETTINGS */}
+                        <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-800 space-y-4">
+                            <h3 className="font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                <IoTime className="text-purple-500" /> Időpontok és Nyitvatartás
+                            </h3>
 
-                </form>
-            </motion.div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-xs font-bold text-zinc-500 uppercase">Időpont hossza (perc)</label>
+                                    <select
+                                        value={slotDuration}
+                                        onChange={e => setSlotDuration(e.target.value)}
+                                        className="w-full h-10 px-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 outline-none"
+                                    >
+                                        <option value="15">15 perc</option>
+                                        <option value="30">30 perc (Normál)</option>
+                                        <option value="45">45 perc</option>
+                                        <option value="60">60 perc (1 óra)</option>
+                                        <option value="90">90 perc</option>
+                                        <option value="120">120 perc</option>
+                                    </select>
+                                </div>
+
+                                <div className="space-y-1">
+                                    <label className="text-xs font-bold text-zinc-500 uppercase">Nyitás</label>
+                                    <input
+                                        type="time"
+                                        value={openStart}
+                                        onChange={e => setOpenStart(e.target.value)}
+                                        className="w-full h-10 px-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 outline-none"
+                                    />
+                                </div>
+
+                                <div className="space-y-1">
+                                    <label className="text-xs font-bold text-zinc-500 uppercase">Zárás</label>
+                                    <input
+                                        type="time"
+                                        value={openEnd}
+                                        onChange={e => setOpenEnd(e.target.value)}
+                                        className="w-full h-10 px-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 focus:border-purple-500 outline-none"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* TERMS AND CONDITIONS */}
+                        <div className="flex items-start gap-3 p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-800">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                checked={termsAccepted}
+                                onChange={e => setTermsAccepted(e.target.checked)}
+                                className="mt-1 w-5 h-5 rounded border-zinc-300 text-purple-600 focus:ring-purple-500"
+                                required
+                            />
+                            <label htmlFor="terms" className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+                                Elfogadom a <span className="text-purple-600 dark:text-purple-400 font-bold underline cursor-pointer" onClick={() => window.open('/terms-provider', '_blank')}>Helyi Szolgáltatói Szerződés</span> feltételeit és tudomásul veszem, hogy a regisztráció fizetési kötelezettséggel járhat a választott csomag alapján.
+                            </label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full h-14 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-purple-500/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                        >
+                            {loading ? 'Mentés...' : 'Regisztráció Küldése 🚀'}
+                        </button>
+                    </form>
+                </motion.div>
+            )}
         </div>
     );
 }

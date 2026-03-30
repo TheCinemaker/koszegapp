@@ -56,7 +56,7 @@ import ResidentCheckModal from './components/ResidentCheckModal';
 
 import AnimatedRoutes from './components/AnimatedRoutes';
 import SettingsMenu from './components/SettingsMenu';
-
+import UserMessageRibbon from './components/UserMessageRibbon';
 
 
 import { lazyWithRetry } from './utils/lazyWithRetry';
@@ -494,9 +494,9 @@ function MainAppContent() {
               <Toaster position="bottom-center" />
               {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
               {showResidentModal && <ResidentCheckModal onClose={() => setShowResidentModal(false)} />}
+              <UserMessageRibbon />
 
               {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
-
 
               {!location.pathname.startsWith('/food') && !location.pathname.startsWith('/scanner') && <FloatingNavbar />}
               {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}

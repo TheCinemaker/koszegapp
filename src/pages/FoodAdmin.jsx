@@ -1125,13 +1125,84 @@ function ProfileEditor({ restaurantId }) {
                 <legend className="px-1 font-bold text-sm text-black">Hírek & Akciók</legend>
                 <div className="space-y-4 p-2">
 
-                    {/* Daily Menu */}
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                            <input type="checkbox" checked={form.settings.show_daily_menu} onChange={() => toggleSetting('show_daily_menu')} className="accent-black" />
-                            <label className="text-xs font-bold text-black">Napi Menü (Szöveges)</label>
+                    {/* Constant Menu */}
+                    <div className="space-y-2 pb-3 mb-3 border-b border-gray-300">
+                        <div className="flex flex-wrap items-center justify-between gap-2 pr-2">
+                            <div className="flex items-center gap-2">
+                                <input type="checkbox" checked={form.settings.show_constant_menu} onChange={() => toggleSetting('show_constant_menu')} className="accent-black" />
+                                <label className="text-xs font-bold text-black border-b border-black pb-0.5">Állandó Menü (A/B menü)</label>
+                            </div>
+                            {form.settings.show_constant_menu && (
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[10px] font-bold uppercase">Ár:</span>
+                                    <input 
+                                        type="number" 
+                                        placeholder="Pl. 2500" 
+                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`} 
+                                        value={form.settings.constant_menu_price || ''} 
+                                        onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_price: e.target.value } })} 
+                                    />
+                                    <span className="text-[10px] font-bold">Ft</span>
+                                </div>
+                            )}
                         </div>
-                        <textarea rows={3} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none font-mono`} placeholder="Hétfő: Leves..." value={form.daily_menu} onChange={e => setForm({ ...form, daily_menu: e.target.value })} />
+                        {form.settings.show_constant_menu && (
+                            <textarea 
+                                rows={2} 
+                                className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none resize-none font-mono focus:bg-yellow-50`} 
+                                placeholder="A menü: Húsleves + Rántott sajt, B menü: Bakonyi sertésborda..." 
+                                value={form.settings.constant_menu_text || ''} 
+                                onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_text: e.target.value } })} 
+                            />
+                        )}
+                    </div>
+
+                    {/* Weekly Menu */}
+                    <div className="space-y-2">
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pr-2">
+                            <div className="flex items-center gap-2">
+                                <input type="checkbox" checked={form.settings.show_daily_menu} onChange={() => toggleSetting('show_daily_menu')} className="accent-black" />
+                                <label className="text-xs font-bold text-black border-b border-black pb-0.5">Egész heti menü / Ajánlatok</label>
+                            </div>
+                            {form.settings.show_daily_menu && (
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[10px] font-bold uppercase">Ár:</span>
+                                    <input 
+                                        type="number" 
+                                        placeholder="Pl. 2500" 
+                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`} 
+                                        value={form.settings.daily_menu_price || ''} 
+                                        onChange={e => setForm({ ...form, settings: { ...form.settings, daily_menu_price: e.target.value } })} 
+                                    />
+                                    <span className="text-[10px] font-bold">Ft</span>
+                                </div>
+                            )}
+                        </div>
+                        {form.settings.show_daily_menu && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-2 border-l-2 border-gray-400 pb-2">
+                                {[{ id: 1, label: 'Hétfő' }, { id: 2, label: 'Kedd' }, { id: 3, label: 'Szerda' }, { id: 4, label: 'Csütörtök' }, { id: 5, label: 'Péntek' }, { id: 6, label: 'Szombat' }, { id: 0, label: 'Vasárnap' }].map(day => {
+                                    const wm = (() => {
+                                        if (!form.daily_menu) return {};
+                                        try { 
+                                            const o = JSON.parse(form.daily_menu); 
+                                            // Handling edge case where old data was not a JSON object but a plain string
+                                            return (typeof o === 'object' && o !== null) ? o : { 1: form.daily_menu }; 
+                                        } catch { 
+                                            return { 1: form.daily_menu }; 
+                                        }
+                                    })();
+                                    return (
+                                        <div key={day.id} className="space-y-1">
+                                            <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">{day.label}</span>
+                                            <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none resize-none font-mono focus:bg-yellow-50`} placeholder="pl: Húsleves, Rántott sajt..." value={wm[day.id] || ''} onChange={e => {
+                                                const nw = { ...wm, [day.id]: e.target.value };
+                                                setForm({ ...form, daily_menu: JSON.stringify(nw) });
+                                            }} />
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
 
                     {/* News */}

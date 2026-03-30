@@ -25,7 +25,7 @@ export default function FoodAuthPage() {
             // Using 'provider' type in auth context (login ID -> email conversion)
             // Ideally we might want a distinct type if avoiding collision is critical, 
             // but 'provider' is likely fine if usernames are unique enough or namespaced.
-            const { user } = await login(loginId, password, 'provider');
+            const { user } = await login(loginId, password, 'restaurant');
 
             if (user) {
                 // Check if this user is actually a restaurant owner
@@ -98,7 +98,7 @@ export default function FoodAuthPage() {
                     navigate('/food-admin', { replace: true });
                 } else {
                     // Should be logged in by register, but if not:
-                    await login(loginId, password, 'provider');
+                    await login(loginId, password, 'restaurant');
                     navigate('/food-admin', { replace: true });
                 }
             }

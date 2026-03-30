@@ -6,7 +6,7 @@ import { format, parseISO } from 'date-fns';
 import { hu } from 'date-fns/locale';
 
 
-export default function NewBookingNotification({ booking, type = 'booking', onClose }) { // type: 'booking' | 'cancelled'
+export default function NewBookingNotification({ booking, type = 'booking', onClose, onReply }) { // type: 'booking' | 'cancelled'
 
     useEffect(() => {
         // No effects
@@ -15,7 +15,11 @@ export default function NewBookingNotification({ booking, type = 'booking', onCl
     if (!booking) return null;
 
     const start = parseISO(booking.start_time);
-    const clientName = booking.manual_client_name || booking.profiles?.full_name || booking.profiles?.nickname || 'Ismeretlen Vendég';
+    const clientNameMatch = booking.notes?.match(/\[Foglaló:\s*(.*?)\]/);
+    const extractedName = clientNameMatch ? clientNameMatch[1] : null;
+    const cleanNotes = booking.notes ? booking.notes.replace(/\[Foglaló:\s*.*?\]\s*/, '') : '';
+
+    const clientName = booking.manual_client_name || extractedName || booking.profiles?.full_name || booking.profiles?.nickname || 'Ismeretlen Vendég';
     const isCancelled = type === 'cancelled';
 
     return createPortal(
@@ -103,21 +107,31 @@ export default function NewBookingNotification({ booking, type = 'booking', onCl
                         </div>
                     </div>
 
-                    {booking.notes && (
+                    {cleanNotes && (
                         <div className="p-4 bg-yellow-50 dark:bg-yellow-900/10 rounded-2xl border border-yellow-100 dark:border-yellow-900/20">
                             <p className="text-xs font-bold uppercase text-yellow-600 dark:text-yellow-500 mb-1">Megjegyzés</p>
-                            <p className="text-zinc-700 dark:text-zinc-300 italic">"{booking.notes}"</p>
+                            <p className="text-zinc-700 dark:text-zinc-300 italic">"{cleanNotes}"</p>
                         </div>
                     )}
 
-                    <button
-                        onClick={onClose}
-                        className={`w-full py-4 text-white font-black text-lg rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all
-                            ${isCancelled ? 'bg-red-600 hover:bg-red-700' : 'bg-zinc-900 dark:bg-white dark:text-black'}
-                        `}
-                    >
-                        {isCancelled ? 'Tudomásul vettem' : 'Rendben, láttam! 👍'}
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                        {booking.client_id && !isCancelled && (
+                            <button
+                                onClick={onReply}
+                                className="flex-1 py-4 text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 dark:text-indigo-400 font-black text-lg rounded-2xl shadow-sm hover:scale-105 active:scale-95 transition-all border border-indigo-100 dark:border-indigo-900"
+                            >
+                                Válasz írása ✉️
+                            </button>
+                        )}
+                        <button
+                            onClick={onClose}
+                            className={`flex-1 py-4 text-white font-black text-lg rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all
+                                ${isCancelled ? 'bg-red-600 hover:bg-red-700 w-full' : 'bg-zinc-900 dark:bg-white dark:text-black'}
+                            `}
+                        >
+                            {isCancelled ? 'Tudomásul vettem' : 'Rendben! 👍'}
+                        </button>
+                    </div>
 
                     <p className="text-center text-xs text-zinc-400">
                         {isCancelled ? 'A foglalás törlődött a naptáradból.' : 'A foglalás automatikusan bekerült a naptáradba.'}

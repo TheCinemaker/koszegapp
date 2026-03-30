@@ -394,21 +394,12 @@ export default function LocalDashboard() {
                     {/* Booking Card - COMING SOON */}
                     <FeatureCard
                         title="Időpontfoglaló"
-                        subtitle="HAMAROSAN..."
+                        subtitle="Közeli szakemberek és foglalás"
                         icon={<span>📅</span>}
-                        colorFrom="from-gray-500"
-                        colorTo="to-zinc-600"
+                        colorFrom="from-purple-500"
+                        colorTo="to-indigo-600"
                         delay={0.15}
-                        onClick={() => {
-                            toast('🚧 A foglalási rendszer fejlesztés alatt!', {
-                                icon: '📅',
-                                style: {
-                                    borderRadius: '20px',
-                                    background: '#333',
-                                    color: '#fff',
-                                },
-                            });
-                        }}
+                        onClick={() => navigate('/idopontfoglalas')}
                     />
 
                     <FeatureCard
