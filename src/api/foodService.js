@@ -44,15 +44,53 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
         throw new Error('Érvénytelen rendelési adatok');
     }
 
-    const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    // SECURITY: Fetch latest flash sale status from DB to prevent stale rules exploitation
+    const { data: restData } = await supabase
+        .from('restaurants')
+        .select('flash_sale')
+        .eq('id', restaurantId)
+        .single();
+    
+    const fs = restData?.flash_sale || {};
+    const isFlashActive = fs.active && (!fs.end_time || new Date(fs.end_time) > new Date());
+    const freshRules = isFlashActive ? (fs.items || {}) : {};
+
+    const totalPrice = cartItems.reduce((sum, item) => {
+        const price = item.price || 0;
+        const qty = item.quantity || 0;
+        const rule = freshRules[item.id]; // Use FRESH rule
+
+        if (rule && rule.type === 'percent') {
+            const discount = (rule.value || 0) / 100;
+            return sum + Math.round(price * (1 - discount) * qty);
+        }
+
+        if (rule && rule.type === 'bogo') {
+            const paidQty = qty - Math.floor(qty / 2);
+            return sum + (price * paidQty);
+        }
+
+        return sum + (price * qty);
+    }, 0);
 
     // Prepare items for the RPC function
-    const itemsJson = cartItems.map(item => ({
-        id: (String(item.id).includes('menu-')) ? null : item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity
-    }));
+    const itemsJson = cartItems.map(item => {
+        const rule = freshRules[item.id]; // Use FRESH rule
+        let effectivePrice = item.price;
+        let displayName = item.name;
+
+        if (rule && rule.type === 'percent') {
+            effectivePrice = Math.round(item.price * (1 - (rule.value || 0) / 100));
+            displayName = `${item.name} (-${rule.value}%)`;
+        }
+
+        return {
+            id: (String(item.id).match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i)) ? item.id : null,
+            name: displayName,
+            price: effectivePrice,
+            quantity: item.quantity
+        };
+    });
 
     // Call the database function
     const { data, error } = await supabase.rpc('place_order_full', {

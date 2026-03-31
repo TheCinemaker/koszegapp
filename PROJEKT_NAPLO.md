@@ -52,7 +52,32 @@ A legfontosabb cél a zökkenőmentes foglalási élmény biztosítása, külön
 - [x] **Heti és Állandó Menü Rendszer Integráció:** Áttérés a szimpla napi menüről az átfogó Heti Menü és az új, minden nap rendelhető **"Állandó Napi Menü (A/B)"** logikára. A `FoodAdmin` felületen az éttermek heti bontásban és állandó fix mezőként is vihetik fel az ajánlatokat. Mind a Heti, mind az Állandó menühöz **ár szabható**.
 - [x] **Menük Kosárba Rakása és Adatbázis Fix:** Az admin által beárazott Napi/Állandó menük a Vendégoldalon egy kattintással kosárba rakhatóak. A kosár adatbázisba szinkronizálásakor a custom azonosítókat a rendszer futásidőben kiveszi (UUID parse PostgreSQL error fix), így az összes rendelés stabilan lefut.
 - [x] **Rendelés Követés (Státuszok) és Fizetés Finomítása:** A felhasználói oldalon kizárólag a Készpénzes fizetés maradt aktív (többi teszt gomb elrejtve). A státusz feliratok átírásra kerültek ('Rendelés leadva', 'Futár úton 🛵', 'Kiszállítva ✅'). A Kiszállítva státusz mostantól pontosan 3 percig látható marad a usernek, majd automatikusan eltűnik (a korábbi azonnali villanás/eltűnés bugja orvosolva dupla háttérszál eltávolításával).
-- [x] **SuperAdmin Pénzügyi Kapu:** Létrehozva egy dedikált oldal (/superadmin) keménykódolt belépéssel, ami élőben számolja össze az összes étterem kiszállított rendelését, és generálja belőle az 5%-os platform jutalék elszámolását (aggregálva).
+- [x] SuperAdmin pénzügyi modul (bevétel, jutalék, grafikon)
+- [x] KőszegEats branding és bizonylat nyomtatás
+- [x] **"ELFOGYOTT" funkció és FoodAdmin UI optimalizálás (V2)**
+    - Heti menü szerkesztő (7 napos bontás) áthelyezése az Étlap fülre.
+    - Villogó effektek teljes eltávolítása (user kérésre).
+    - Vendégoldali "ELFOGYOTT" szalag (ribbon) az ételeken.
+    - Valós idejű készletkezelés és azonnali frissülés.
+
+## 📅 2026. március 31. - Operatív Finomhangolás
+### 2026.03.31 - Napi Menü (A/B/C) Rendszer és Realtime Sync
+- **Strukturált Napi Menü:** Bevezetésre került a Leves + A/B/C variációs rendszer. Mostantól több opciót is megadhat az étterem.
+- **Kettős Árazás:** Támogatás a "Levessel" és "Leves nélkül" árakhoz.
+- **Marketing Funkciók Élesítése:** A Mystery Box (Ételmentés) és Flash Sale (Villámakció) szakaszok visszakerültek a vendégoldalra.
+- **Flash Sale Bővítés:** Mostantól a főoldali étteremlistában is láthatóak a Villámakciók (⚡ színezett kapszula), nem csak az étterem saját lapján.
+- **Full Realtime Sync Fix:** Javítva az a hiba, ahol az étterem belső nézetében nem frissültek azonnal a marketing elemek. Egy `useRef` alapú megoldással most már minden változtatás (Mystery Box, Flash Sale be/kikapcsolás) azonnal megjelenik a már bent lévő vendégeknél is.
+- **Bugfix (Persztencia):** Az "Összes elfogyott" és "Állandó menü elérhető" gombok javítva. Mostantól a `display_settings` mezőbe mentődnek, így stabilan és realtime frissítik a vendégoldalt.
+- **Flash Sale Banner:** Új, látványos animált ⚡ ikon (villogás nélkül) az éttermek fejlécében, ha aktív az akció.
+- **Realtime "Elfogyott" Toggles:** Az adminban állított "Elfogyott" állapot azonnal megjelenik a vendégoldalon (piros szalaggal és letiltott kosár gombbal).
+- **Admin UI Finomítás:** A "VAN" és "ELÉRHETŐ" állapotjelző gombok zöld színt kaptak a jobb olvashatóság érdekében.
+- **Automatikus Elrejtés:** Ha egy adott napra nincs beírva menü tartalom, a szakasz automatikusan elrejtődik a vendégek elől.
+- **Teszt Adat Generátor:** Beépítettünk egy "Teszt Adatok Betöltése" gombot a FoodAdmin felületre a gyors kipróbáláshoz.
+- **No-Pulse Policy:** Minden villogó és pulzáló (`animate-pulse`) animációt véglegesen eltávolítottam. A felület stabil és zavarmentes.
+1. **Étlap UI**: A teljes 7 napos menüszerkesztő átkerült az Étlap fülre a "Sürgős Módosítások" szekcióba.
+2. **Villogásmentesítés**: Minden pulzáló/villogó effektust eltávolítottam a kezelői és a vendég oldalról is.
+3. **Elfogyott szalag**: Az elfogyott ételek mostantól egy elegánsabb, piros átlós szalagot kapnak a vendégoldalon.
+4. **Hírek és Akciók**: Rövidített mezők a gyors napi üzenetekhez közvetlenül az étlap felett.
 - [x] **Havi Elszámolási Logika:** Bevezetve a havi bontású szűrő, ami alapján havonta követhető a forgalom. Beépítve a "Számla kiállítása" és a "Megérkezett" (befizetés igazolása) funkciók a Supabase backenddel összekötve.
 - [x] **Vizuális Analitika (Grafikon):** Egyedi 6-hónapos trend grafikon került a SuperAdmin felületre a platform növekedésének követéséhez.
 - [x] **Előfizetési Modell:** Megalkotva a Sima (5k) és Tabletes (15k) csomagok szerkeszthető rendszere.
@@ -76,3 +101,17 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 1. `BookingModal.jsx` átnézése: a belépés gomb redirect URL-jének ellenőrzése.
 2. Tesztelés: Bejelentkezetlen felhasználóként megpróbálni foglalni, belépni, és ellenőrizni, hogy visszaugrik-e a modalhoz.
 3. Foglalási visszaigazoló és státusz frissítések ellenőrzése.
+
+---
+**Legutóbbi Fejlesztés (2026. 03. 31.): Okos Flash Sale**
+- **Termékenkénti Akciók:** Az adminban minden étel mellé került egy "🔥 Flash" gomb, ahol egyedi szabályok állíthatók be.
+- **Támogatott Típusok:**
+    - `% kedvezmény`: Pl. -20% csak az adott pizzára.
+    - `1+1 (BOGO)`: Minden második darab 0 Ft a kosárban.
+    - `Ajándék termék`: Automatikus ajándék tétel (pl. üdítő) hozzáadása a kosárhoz 0 Ft-ért.
+- **Százalékos Kerekítés**: A százalékos kedvezményeknél keletkező tizedesjegyeket a rendszer egész forintra kerekíti (Math.round), elkerülve a tört összegeket. A BOGO akciók az eredeti egységárakkal kerülnek rögzítésre.
+- **Fizetési Hiba Fix (UUID)**: Az ajándék termékek és napi menük egyedi azonosítói nem feleltek meg az adatbázis UUID formázásának, ami megakasztotta a rendelést. Bevezettünk egy Regex alapü validálást a `foodService.js`-ben, ami ezt orvosolja.
+- **Visszaélés elleni védelem**: A `foodService.js` a rendelés leadásakor újra lekéri a szerverről az aktuális akciós szabályokat. Így ha egy user a kosarában hagy egy akciós termékeket, de az akció időközben lejár, a rendszer automatikusan az eredeti árakkal rögzíti a rendelést, megakadályozva a kijátszást.
+- **Frontend Figyelmeztetés**: Ha a kosárban lejárt akciós tétel van, a rendszer a fizetés előtt egy narancssárga figyelmeztető üzenetben jelzi a változást a vendégnek, és automatikusan frissíti a végösszeget.
+- **Vizuális Visszajelzés:** Az akciós ételek egyedi badge-et kaptak az étlapon, az ajándékokat pedig külön tételként jelzi a rendszer.
+

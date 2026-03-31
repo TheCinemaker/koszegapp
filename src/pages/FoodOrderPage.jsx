@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront, IoStar } from 'react-icons/io5';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront, IoStar, IoWarning } from 'react-icons/io5';
 import { useCart } from '../hooks/useCart';
 import { getMenu, placeOrder } from '../api/foodService';
 import toast from 'react-hot-toast';
@@ -61,11 +61,16 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
             <div className="p-4 relative z-10 flex-1 flex flex-col">
                 {/* MARKETING BADGES (Deactivated per user request) */}
                 <div className="flex flex-col gap-1 items-start mb-2">
-                    {/* {restaurant.mystery_box?.length > 0 && (
+                    {restaurant.mystery_box?.length > 0 && (
                         <span className="px-2 py-0.5 rounded-md bg-indigo-600 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-indigo-400">
                             🎁 Ételmentés
                         </span>
-                    )} */}
+                    )}
+                    {restaurant.flash_sale?.active && (
+                        <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-red-600 to-orange-500 text-white text-[9px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-1 border border-red-400">
+                            ⚡ Villámakció: {restaurant.flash_sale.discount}
+                        </span>
+                    )}
                 </div>
 
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">{restaurant.name}</h3>
@@ -87,7 +92,7 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
     const dailyPrice = restaurant?.display_settings?.daily_menu_price ? parseInt(restaurant.display_settings.daily_menu_price) : null;
     const showDaily = restaurant?.display_settings?.show_daily_menu;
 
-    const constantMenuStr = restaurant?.display_settings?.constant_menu_text;
+    const constantMenuStr = restaurant?.promotions;
     const constantPrice = restaurant?.display_settings?.constant_menu_price ? parseInt(restaurant.display_settings.constant_menu_price) : null;
     const showConstant = restaurant?.display_settings?.show_constant_menu;
 
@@ -116,7 +121,8 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
     const todayLabelMap = { 1: 'Hétfő', 2: 'Kedd', 3: 'Szerda', 4: 'Csütörtök', 5: 'Péntek', 6: 'Szombat', 0: 'Vasárnap' };
     const orderedDays = [1, 2, 3, 4, 5, 6, 0];
     
-    const todayContent = weeklyMenu ? (weeklyMenu[todayDay] || '-') : '-';
+    const todayData = weeklyMenu ? (weeklyMenu[todayDay] || null) : null;
+    const todayContent = typeof todayData === 'string' ? todayData : (todayData ? [todayData.A, todayData.B, todayData.C].filter(Boolean).join('\n') : '-');
 
     return (
         <div className="mt-4 mb-2">
@@ -149,20 +155,21 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
                         <div className="space-y-4 pt-2 pb-2">
                             {/* CONSTANT MENU */}
                             {showConstant && constantMenuStr && (
-                                <div className="mt-3 bg-amber-50/80 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-2xl relative overflow-hidden shadow-sm">
-                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500 rounded-l-2xl" />
+                                <div className={`mt-3 border rounded-2xl relative overflow-hidden shadow-sm ${restaurant.is_constant_menu_available !== false ? 'bg-amber-50/80 dark:bg-amber-900/10 border-amber-200 dark:border-amber-900/30' : 'bg-red-50 dark:bg-red-900/5 border-red-200 dark:border-red-900/20 opacity-80'}`}>
+                                    <div className={`absolute top-0 left-0 w-1.5 h-full rounded-l-2xl ${restaurant.is_constant_menu_available !== false ? 'bg-amber-500' : 'bg-gray-400'}`} />
                                     <div className="p-4 pb-3">
                                         <div className="flex justify-between items-start mb-2 gap-2">
-                                            <h3 className="text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-500 flex items-center gap-1.5">
+                                            <h3 className={`text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5 ${restaurant.display_settings?.is_constant_menu_available !== false ? 'text-amber-600 dark:text-amber-500' : 'text-gray-500'}`}>
                                                 <IoStar className="text-base" />
                                                 Állandó Napi Menü (A/B)
+                                                {restaurant.display_settings?.is_constant_menu_available === false && <span className="ml-2 bg-red-600 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">ELFOGYOTT</span>}
                                             </h3>
                                         </div>
                                         <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-1 border border-amber-100/50 dark:border-amber-900/20 shadow-sm">
-                                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+                                            <p className={`text-sm font-medium whitespace-pre-wrap leading-relaxed ${restaurant.display_settings?.is_constant_menu_available !== false ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'}`}>
                                                 {constantMenuStr}
                                             </p>
-                                            {constantPrice && (
+                                            {constantPrice && restaurant.display_settings?.is_constant_menu_available !== false && (
                                                 <button 
                                                     onClick={() => onAddToCart({
                                                         id: `constant-menu-${restaurant.id}`,
@@ -184,48 +191,98 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
                             )}
 
                             {/* DAILY / WEEKLY MENU */}
-                            {(dailyMenuStr && (showDaily || isOldFormat)) && (
-                                <div className="mt-3 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl relative overflow-hidden shadow-sm">
-                                    <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl" />
+                            {(showDaily && dailyMenuStr && (todayData?.A || todayData?.B || todayData?.C)) && (
+                                <div className={`mt-3 border rounded-2xl relative overflow-hidden shadow-sm ${restaurant.display_settings?.is_daily_menu_available !== false ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30' : 'bg-red-50 dark:bg-red-900/5 border-red-200 dark:border-red-900/20 opacity-80'}`}>
+                                    <div className={`absolute top-0 left-0 w-1.5 h-full rounded-l-2xl ${restaurant.display_settings?.is_daily_menu_available !== false ? 'bg-blue-500' : 'bg-gray-400'}`} />
                                     
                                     <div className="p-4 pb-3">
                                         <div className="flex justify-between items-start mb-2 gap-2">
-                                            <h3 className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                                            <h3 className={`text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5 ${restaurant.display_settings?.is_daily_menu_available !== false ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500'}`}>
                                                 <IoRestaurant className="text-base" />
-                                                {isOldFormat ? 'Heti / Napi Menü' : `Mai Menü: ${todayLabelMap[todayDay]}`}
+                                                {`Mai Menü: ${todayLabelMap[todayDay]}`}
+                                                {restaurant.display_settings?.is_daily_menu_available === false && <span className="ml-2 bg-red-600 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">ELFOGYOTT</span>}
                                             </h3>
                                         </div>
-                                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-3 border border-blue-100/50 dark:border-blue-900/20 shadow-sm">
-                                            <p className="text-sm font-medium text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
-                                                {isOldFormat ? dailyMenuStr : todayContent}
-                                            </p>
-                                            {dailyPrice && (isOldFormat || todayContent !== '-') && (
-                                                <button 
-                                                    onClick={() => onAddToCart({
-                                                        id: `daily-menu-${restaurant.id}`,
-                                                        name: isOldFormat ? `Napi Menü` : `Napi Menü (${todayLabelMap[todayDay]})`,
-                                                        price: dailyPrice,
-                                                        image_url: null,
-                                                        restaurant_id: restaurant.id,
-                                                        description: isOldFormat ? dailyMenuStr : todayContent
-                                                    })}
-                                                    className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
-                                                >
-                                                    <span>{dailyPrice} Ft</span>
-                                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
-                                                </button>
-                                            )}
+
+                                        {/* Soup Display */}
+                                        {todayData?.soup && (
+                                            <div className="mb-3 p-2 bg-white/40 dark:bg-black/20 rounded-xl border border-blue-100/30">
+                                                <p className="text-[10px] font-bold text-blue-500 uppercase flex items-center gap-1">🥣 Ma a levesünk:</p>
+                                                <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{todayData.soup}</p>
+                                            </div>
+                                        )}
+
+                                        {/* A/B/C Options */}
+                                        <div className="space-y-3 mb-4">
+                                            {['A', 'B', 'C'].map(m => {
+                                                const menuText = todayData?.[m];
+                                                if (!menuText) return null;
+                                                const isSoldOut = todayData?.[`soldOut${m}`] || restaurant.display_settings?.is_daily_menu_available === false;
+                                                const noSoupPrice = restaurant?.display_settings?.daily_menu_no_soup_price ? parseInt(restaurant.display_settings.daily_menu_no_soup_price) : null;
+
+                                                return (
+                                                    <div key={m} className={`relative p-3 rounded-2xl border transition-all ${!isSoldOut ? 'bg-white/80 dark:bg-black/30 border-blue-100/50 dark:border-blue-900/30 shadow-sm' : 'bg-red-50/50 dark:bg-red-900/10 border-red-100 dark:border-red-900/20 opacity-70 grayscale'}`}>
+                                                        {isSoldOut && (
+                                                            <div className="absolute top-0 right-0 z-10">
+                                                                <div className="bg-red-600 text-white text-[7px] font-black py-0.5 px-6 translate-x-[18px] translate-y-[8px] rotate-45 shadow-sm uppercase tracking-tighter">ELFOGYOTT</div>
+                                                            </div>
+                                                        )}
+                                                        
+                                                        <div className="flex justify-between items-start gap-3">
+                                                            <div className="flex-1">
+                                                                <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">{m} Menü</span>
+                                                                <p className={`text-sm font-medium leading-relaxed ${isSoldOut ? 'line-through text-gray-400' : 'text-gray-800 dark:text-gray-200'}`}>{menuText}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {!isSoldOut && (
+                                                            <div className="mt-3 pt-3 border-t border-blue-50 dark:border-blue-900/20 flex flex-wrap gap-2">
+                                                                {dailyPrice && (
+                                                                    <button 
+                                                                        onClick={() => onAddToCart({
+                                                                            id: `daily-menu-${restaurant.id}-${todayDay}-${m}-full`,
+                                                                            name: `${m} Menü (+ Leves: ${todayData.soup})`,
+                                                                            price: dailyPrice,
+                                                                            image_url: null,
+                                                                            restaurant_id: restaurant.id,
+                                                                            description: menuText
+                                                                        })}
+                                                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center justify-between shadow-md"
+                                                                    >
+                                                                        <span>Levessel</span>
+                                                                        <span>{dailyPrice} Ft</span>
+                                                                    </button>
+                                                                )}
+                                                                {noSoupPrice && (
+                                                                    <button 
+                                                                        onClick={() => onAddToCart({
+                                                                            id: `daily-menu-${restaurant.id}-${todayDay}-${m}-nosoup`,
+                                                                            name: `${m} Menü (Leves nélkül)`,
+                                                                            price: noSoupPrice,
+                                                                            image_url: null,
+                                                                            restaurant_id: restaurant.id,
+                                                                            description: menuText
+                                                                        })}
+                                                                        className="flex-1 bg-white dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 border border-blue-100 dark:border-blue-900/50 text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center justify-between shadow-sm"
+                                                                    >
+                                                                        <span>Leves nélkül</span>
+                                                                        <span>{noSoupPrice} Ft</span>
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
 
-                                        {!isOldFormat && (
-                                            <button 
-                                                onClick={() => setWeekExpanded(!weekExpanded)}
-                                                className="w-full flex items-center justify-between px-3 py-2 bg-white/60 dark:bg-black/20 rounded-xl text-xs font-bold text-blue-900 dark:text-blue-300 backdrop-blur-sm border border-blue-100/50 dark:border-blue-800/20 active:scale-[0.98] transition-all"
-                                            >
-                                                <span>Egész heti menü / Ajánlatok</span>
-                                                <span className="text-[10px] bg-blue-200 dark:bg-blue-800 px-2 py-0.5 rounded-md text-blue-800 dark:text-blue-200">{weekExpanded ? 'Elrejtés' : 'Mutat'} ▼</span>
-                                            </button>
-                                        )}
+                                        <button 
+                                            onClick={() => setWeekExpanded(!weekExpanded)}
+                                            className="w-full flex items-center justify-between px-3 py-2 bg-white/60 dark:bg-black/20 rounded-xl text-xs font-bold text-blue-900 dark:text-blue-300 backdrop-blur-sm border border-blue-100/50 dark:border-blue-800/20 active:scale-[0.98] transition-all"
+                                        >
+                                            <span>Egész heti menü / Ajánlatok</span>
+                                            <span className="text-[10px] bg-blue-200 dark:bg-blue-800 px-2 py-0.5 rounded-md text-blue-800 dark:text-blue-200">{weekExpanded ? 'Elrejtés' : 'Mutat'} ▼</span>
+                                        </button>
                                     </div>
 
                                     {!isOldFormat && (
@@ -238,14 +295,26 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
                                                     className="overflow-hidden bg-white/30 dark:bg-black/10 mx-2 mb-2 rounded-xl backdrop-blur-md"
                                                 >
                                                     <div className="p-3 space-y-3">
-                                                        {orderedDays.map(day => (
-                                                            day !== todayDay && weeklyMenu[day] && (
+                                                        {orderedDays.map(day => {
+                                                            const dayVal = weeklyMenu[day];
+                                                            if (!dayVal || day === todayDay) return null;
+                                                            
+                                                            const isComplex = typeof dayVal === 'object' && dayVal !== null;
+                                                            const soup = isComplex ? dayVal.soup : '';
+                                                            const menus = isComplex ? [
+                                                                dayVal.A && `A: ${dayVal.A}`,
+                                                                dayVal.B && `B: ${dayVal.B}`,
+                                                                dayVal.C && `C: ${dayVal.C}`
+                                                            ].filter(Boolean).join('\n') : dayVal;
+
+                                                            return (
                                                                 <div key={day} className="border-l-2 border-blue-300 dark:border-blue-700 pl-2">
                                                                     <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-0.5">{todayLabelMap[day]}</span>
-                                                                    <p className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{weeklyMenu[day]}</p>
+                                                                    {soup && <p className="text-[10px] font-bold text-gray-500 italic">Leves: {soup}</p>}
+                                                                    <p className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{menus}</p>
                                                                 </div>
-                                                            )
-                                                        ))}
+                                                            );
+                                                        })}
                                                         {orderedDays.filter(day => day !== todayDay && weeklyMenu[day]).length === 0 && (
                                                             <p className="text-[11px] text-gray-500 italic text-center py-2">Nincs megadva további ajánlat a hétre.</p>
                                                         )}
@@ -380,14 +449,13 @@ export default function FoodOrderPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const { items, addItem, removeItem, updateQuantity, clearCart, total, count } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const selectedRestaurantRef = useRef(null);
     const { user, loading: authLoading } = useAuth();
     const [activeOrderStatus, setActiveOrderStatus] = useState(null);
 
     // 1. Monitor active order status for logged-in user
     useEffect(() => {
         if (!user) return;
-
-        console.log('👤 Setting up active orders monitor for user:', user.id);
 
         const fetchActiveOrders = async () => {
             const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
@@ -401,7 +469,6 @@ export default function FoodOrderPage() {
                 .limit(1)
                 .maybeSingle();
 
-            console.log('📊 Active order status fetched:', data?.status || 'none');
             setActiveOrderStatus(data ? data.status : null);
         };
 
@@ -415,19 +482,15 @@ export default function FoodOrderPage() {
                 table: 'orders',
                 filter: `user_id=eq.${user.id}`
             }, (payload) => {
-                console.log('🔔 User order event received:', payload.eventType, payload);
                 if (payload.new && payload.new.status) {
                     setActiveOrderStatus(payload.new.status);
                 } else {
                     fetchActiveOrders();
                 }
             })
-            .subscribe((status) => {
-                console.log('📡 Active orders subscription status:', status);
-            });
+            .subscribe();
 
         return () => {
-            console.log('👤 Cleaning up active orders monitor');
             supabase.removeChannel(chan);
         };
     }, [user]);
@@ -472,17 +535,28 @@ export default function FoodOrderPage() {
 
         fetchRestaurants();
 
+        // Update ref for realtime closure
+        selectedRestaurantRef.current = selectedRestaurant;
+
         // Realtime subscription for restaurants
         const channel = supabase.channel('restaurants-updates')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'restaurants' }, () => {
-                fetchRestaurants();
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'restaurants' }, (payload) => {
+                if (payload.eventType === 'UPDATE') {
+                    setRestaurants(prev => prev.map(r => r.id === payload.new.id ? payload.new : r));
+                    
+                    if (payload.new && selectedRestaurantRef.current && payload.new.id === selectedRestaurantRef.current.id) {
+                        setSelectedRestaurant(payload.new);
+                    }
+                } else {
+                    fetchRestaurants();
+                }
             })
             .subscribe();
 
         return () => {
             supabase.removeChannel(channel);
         };
-    }, []);
+    }, [selectedRestaurant]); // Added selectedRestaurant to deps to ensure ref/closure is fresh or let use selectedRestaurant directly now
 
     // 2. Load menu when restaurant selected
     useEffect(() => {
@@ -502,6 +576,25 @@ export default function FoodOrderPage() {
                 }
             };
             fetchMenu();
+
+            // REALTIME: Listen for menu_items changes (availability toggles)
+            const menuChan = supabase.channel(`menu-updates-${selectedRestaurant.id}`)
+                .on('postgres_changes', { 
+                    event: 'UPDATE', 
+                    schema: 'public', 
+                    table: 'menu_items',
+                    filter: `restaurant_id=eq.${selectedRestaurant.id}`
+                }, (payload) => {
+                    setCategories(currentCats => currentCats.map(cat => ({
+                        ...cat,
+                        items: cat.items.map(item => item.id === payload.new.id ? { ...item, ...payload.new } : item)
+                    })));
+                })
+                .subscribe();
+            
+            return () => {
+                supabase.removeChannel(menuChan);
+            };
         } else {
             setView('restaurants');
             setCategories([]);
@@ -554,8 +647,20 @@ export default function FoodOrderPage() {
             return;
         }
 
-        addItem(item);
-        if (isAddingMystery) {
+        const flashRule = selectedRestaurant?.flash_sale?.active ? selectedRestaurant.flash_sale.items?.[item.id] : null;
+
+        addItem({ ...item, flashRule });
+
+        if (flashRule?.type === 'gift' && flashRule.giftName) {
+            addItem({
+                id: `gift-${item.id}-${Date.now()}`,
+                name: `AJÁNDÉK: ${flashRule.giftName}`,
+                price: 0,
+                restaurant_id: item.restaurant_id,
+                is_gift: true
+            });
+            toast.success(`🎁 Ajándék hozzáadva: ${flashRule.giftName}!`, { duration: 4000 });
+        } else if (isAddingMystery) {
             toast.success("🎁 Mystery Box a kosárban! (Csak személyes átvétel)", { duration: 4000 });
         } else {
             toast.success("Hozzáadva a kosárhoz! 🛒");
@@ -682,7 +787,23 @@ export default function FoodOrderPage() {
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/60 dark:bg-[#1a1c2e]/60 backdrop-blur-[30px] rounded-[2rem] p-5 border border-white/60 dark:border-white/10 shadow-xl mb-6 relative overflow-hidden">
 
                                 <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
-                                <div className={`flex flex-col md:flex-row gap-5 relative z-10 ${selectedRestaurant.flash_sale?.active ? 'pt-6' : ''}`}>
+                                
+                                {selectedRestaurant.flash_sale?.active && (
+                                    <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-r from-red-600 to-orange-500 text-white px-4 py-1.5 flex items-center justify-between shadow-lg">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-lg">⚡</span>
+                                            <span className="text-[11px] font-black uppercase tracking-wider">Flash Sale: {selectedRestaurant.flash_sale.discount}</span>
+                                            <span className="text-[11px] font-medium opacity-90 border-l border-white/30 pl-2 ml-1">{selectedRestaurant.flash_sale.message}</span>
+                                        </div>
+                                        {selectedRestaurant.flash_sale.end_time && (
+                                            <div className="text-[10px] font-bold bg-white/20 px-2 py-0.5 rounded-full border border-white/30">
+                                                Lejár: {new Date(selectedRestaurant.flash_sale.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
+                                <div className={`flex flex-col md:flex-row gap-5 relative z-10 ${selectedRestaurant.flash_sale?.active ? 'pt-8' : ''}`}>
                                     <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0">
                                         {selectedRestaurant.image_url ? <ParallaxImage src={selectedRestaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-zinc-800" />}
                                     </div>
@@ -697,24 +818,71 @@ export default function FoodOrderPage() {
                                         
                                         {/* Napi Menü Kiemelés */}
                                         {/* Napi Menü Kiemelés */}
-                                        <WeeklyMenuDisplay restaurant={selectedRestaurant} onAddToCart={(item) => addItem(item)} />
+                                        <WeeklyMenuDisplay restaurant={selectedRestaurant} onAddToCart={(item) => handleAddItem(item)} />
                                     </div>
                                 </div>
                             </motion.div>
 
-                            {/* MYSTERY BOX SECTION (Deactivated per user request) */}
-                            {/* {selectedRestaurant.mystery_box?.length > 0 && (
+                            {/* MYSTERY BOX SECTION */}
+                            {selectedRestaurant.mystery_box?.length > 0 && (
                                 <div className="mb-8 p-4 bg-gradient-to-r from-indigo-900/20 to-purple-900/20 border border-indigo-500/30 rounded-[2rem] relative overflow-hidden">
                                     <div className="absolute inset-0 bg-indigo-500/5 backdrop-blur-sm -z-10" />
-                                    ...
+                                    <div className="flex justify-between items-center mb-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-10 h-10 rounded-2xl bg-indigo-500 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/20">🎁</div>
+                                            <div>
+                                                <h3 className="font-black text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-tight">Mystery Box (Ételmentés)</h3>
+                                                <p className="text-[10px] text-indigo-700/70 dark:text-indigo-300/50 font-bold uppercase">Korlátozott számban!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        {selectedRestaurant.mystery_box.map(box => (
+                                            <div key={box.id} className="bg-white/40 dark:bg-black/20 backdrop-blur-md p-3 rounded-2xl border border-white/40 dark:border-white/5 shadow-sm flex justify-between items-center">
+                                                <div className="flex-1 min-w-0 pr-2">
+                                                    <h4 className="font-bold text-sm text-indigo-900 dark:text-white truncate">{box.name}</h4>
+                                                    <p className="text-[10px] text-indigo-700/60 dark:text-indigo-300/40 line-clamp-1">{box.description}</p>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <span className="text-xs font-black text-indigo-600 dark:text-indigo-400">{box.discounted_price} Ft</span>
+                                                        <span className="text-[10px] text-gray-400 line-through">{box.original_price} Ft</span>
+                                                        <span className="text-[9px] bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 px-1.5 py-0.5 rounded-md font-bold">{box.items_left} db maradt</span>
+                                                    </div>
+                                                </div>
+                                                <button 
+                                                    onClick={() => handleAddItem({
+                                                        id: box.id,
+                                                        name: box.name,
+                                                        price: parseInt(box.discounted_price),
+                                                        image_url: null,
+                                                        restaurant_id: selectedRestaurant.id,
+                                                        is_mystery_box: true,
+                                                        description: box.description
+                                                    })}
+                                                    disabled={box.items_left <= 0}
+                                                    className="w-10 h-10 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 active:scale-95 transition-all disabled:opacity-50"
+                                                >
+                                                    <IoAdd className="text-xl" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            )} */}
+                            )}
                             {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
                                 <div className="space-y-8">
                                     {categories.map((category) => (
                                         <div key={category.id} id={`cat-${category.id}`}>
                                             <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{category.items.map(item => <MenuItemCard key={item.id} item={item} onAdd={() => handleAddItem({ ...item, restaurant_id: selectedRestaurant.id })} />)}</div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                {category.items.map(item => (
+                                                    <MenuItemCard 
+                                                        key={item.id} 
+                                                        item={item} 
+                                                        flashRule={selectedRestaurant.flash_sale?.active ? selectedRestaurant.flash_sale.items?.[item.id] : null}
+                                                        onAdd={() => handleAddItem({ ...item, restaurant_id: selectedRestaurant.id })} 
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
                                     ))}
                                     {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
@@ -762,7 +930,7 @@ export default function FoodOrderPage() {
             </div>
 
             <AnimatePresence>
-                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} />}
+                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} flashSaleConfig={selectedRestaurant?.flash_sale} />}
             </AnimatePresence>
         </div>
     );
@@ -902,21 +1070,55 @@ function NavButton({ label, icon: Icon, active, onClick }) {
         </button>
     )
 }
-function MenuItemCard({ item, onAdd }) {
+function MenuItemCard({ item, onAdd, flashRule }) {
+    const isAvailable = item.is_available !== false;
+
     return (
         <FadeUp delay={0.05}>
-            <div className="group relative bg-white/50 dark:bg-[#1a1c2e]/50 rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg hover:shadow-black/5 transition-all duration-300 border border-white/60 dark:border-white/5 flex items-center gap-3 p-2.5 backdrop-blur-md">
+            <div className={`group relative bg-white/50 dark:bg-[#1a1c2e]/50 rounded-[1.5rem] overflow-hidden shadow-sm transition-all duration-300 border border-white/60 dark:border-white/5 flex items-center gap-3 p-2.5 backdrop-blur-md ${!isAvailable ? 'grayscale opacity-70 cursor-not-allowed' : 'hover:shadow-lg hover:shadow-black/5 hover:scale-[1.01]'}`}>
+                
+                {/* SOLD OUT RIBBON (SZALAG) */}
+                {!isAvailable && (
+                    <div className="absolute top-0 right-0 z-20 pointer-events-none">
+                        <div className="bg-red-600 text-white text-[8px] font-black py-1 px-8 translate-x-[25px] translate-y-[10px] rotate-45 shadow-md uppercase tracking-tighter">
+                            ELFOGYOTT
+                        </div>
+                    </div>
+                )}
+
                 <div className="w-16 h-16 shrink-0 bg-gray-100 dark:bg-white/5 rounded-xl overflow-hidden relative">
-                    {item.image_url ? <img src={item.image_url} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /> : <div className="flex items-center justify-center h-full text-lg opacity-20">🍽️</div>}
+                    {item.image_url ? <img src={item.image_url} alt={item.name} className={`w-full h-full object-cover transition-transform duration-500 ${isAvailable ? 'group-hover:scale-110' : ''}`} /> : <div className="flex items-center justify-center h-full text-lg opacity-20">🍽️</div>}
+                    
+                    {flashRule && isAvailable && (
+                        <div className="absolute top-0 left-0 z-10">
+                            <div className={`px-1.5 py-0.5 text-[7px] font-black text-white uppercase rounded-br-lg shadow-sm ${flashRule.type === 'percent' ? 'bg-orange-500' : flashRule.type === 'bogo' ? 'bg-indigo-600' : 'bg-green-600'}`}>
+                                {flashRule.type === 'percent' ? `-${flashRule.value}%` : flashRule.type === 'bogo' ? '1+1' : 'AJÁNDÉK'}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {!isAvailable && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            {/* Simple overlay if needed, keeping it clean */}
+                        </div>
+                    )}
                 </div>
                 <div className="flex-1 min-w-0 flex flex-col justify-center h-full py-0.5">
                     <div className="flex justify-between items-start gap-2">
-                        <h4 className="font-bold text-sm leading-tight text-gray-900 dark:text-white line-clamp-1">{item.name}</h4>
-                        <span className="font-bold text-amber-600 dark:text-amber-500 text-xs whitespace-nowrap">{item.price} Ft</span>
+                        <h4 className={`font-bold text-sm leading-tight line-clamp-1 ${isAvailable ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>{item.name}</h4>
+                        <span className={`font-bold text-xs whitespace-nowrap ${isAvailable ? 'text-amber-600 dark:text-amber-500' : 'text-gray-400'}`}>{item.price} Ft</span>
                     </div>
                     <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">{item.description}</p>
                 </div>
-                <button onClick={onAdd} className="w-8 h-8 shrink-0 bg-white dark:bg-white/10 text-amber-500 rounded-full flex items-center justify-center shadow-sm hover:bg-amber-500 hover:text-white hover:scale-110 active:scale-95 transition-all border border-gray-100 dark:border-white/10"><IoAdd className="text-lg font-bold" /></button>
+                {isAvailable ? (
+                    <button onClick={onAdd} className="w-8 h-8 shrink-0 bg-white dark:bg-white/10 text-amber-500 rounded-full flex items-center justify-center shadow-sm hover:bg-amber-500 hover:text-white hover:scale-110 active:scale-95 transition-all border border-gray-100 dark:border-white/10">
+                        <IoAdd className="text-lg font-bold" />
+                    </button>
+                ) : (
+                    <div className="w-8 h-8 shrink-0 bg-gray-200 dark:bg-white/5 text-gray-400 rounded-full flex items-center justify-center border border-dashed border-gray-300">
+                        <IoClose className="text-base" />
+                    </div>
+                )}
             </div>
         </FadeUp>
     )
@@ -952,10 +1154,39 @@ function MyOrdersList({ user }) {
         </div>
     );
 }
-function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user }) {
+function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user, flashSaleConfig }) {
     const [step, setStep] = useState('cart');
     const [form, setForm] = useState({ name: '', phone: '', address: '', note: '', paymentMethod: 'cash' });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Calculate expired flash items
+    const expiredItems = items.filter(item => {
+        if (!item.flashRule) return false;
+        const currentRule = flashSaleConfig?.active ? flashSaleConfig.items?.[item.id] : null;
+        // If it HAD a rule in the cart but doesn't HAVE it now in the restaurant config
+        return !currentRule;
+    });
+
+    // Recalculate total based on FRESH config to detect price changes
+    const displayTotal = useMemo(() => {
+        return items.reduce((sum, item) => {
+            const price = item.price || 0;
+            const qty = item.quantity || 0;
+            const rule = flashSaleConfig?.active ? flashSaleConfig.items?.[item.id] : null;
+
+            if (rule && rule.type === 'percent') {
+                const discount = (rule.value || 0) / 100;
+                return sum + Math.round(price * (1 - discount) * qty);
+            }
+
+            if (rule && rule.type === 'bogo') {
+                const paidQty = qty - Math.floor(qty / 2);
+                return sum + (price * paidQty);
+            }
+
+            return sum + (price * qty);
+        }, 0);
+    }, [items, flashSaleConfig]);
 
     useEffect(() => {
         if (step === 'checkout' && user) {
@@ -1022,12 +1253,39 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                                         🚶 Személyes átvétel kiválasztva
                                     </div>
                                 )}
-                                {items.map(item => (<div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5"><div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">{item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}</div><div className="flex-1 min-w-0"><h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4><p className="text-[10px] text-amber-600 font-bold">{item.price} Ft</p></div><div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm"><button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button><span className="text-xs font-bold w-3 text-center">{item.quantity}</span><button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button></div></div>))}
-                                <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center font-black text-lg">
+                                {items.map(item => {
+                                    const isBogo = item.flashRule?.type === 'bogo';
+                                    const isPercent = item.flashRule?.type === 'percent';
+                                    const effectivePrice = isPercent ? Math.round(item.price * (1 - (item.flashRule.value || 0) / 100)) : item.price;
+
+                                    return (
+                                        <div key={item.id} className="flex gap-3 items-center bg-white/50 dark:bg-white/5 p-2 rounded-xl border border-black/5 dark:border-white/5">
+                                            <div className="w-12 h-12 bg-gray-100 dark:bg-white/5 rounded-lg overflow-hidden shrink-0">
+                                                {item.image_url && <img src={item.image_url} className="w-full h-full object-cover" alt="" />}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="font-bold truncate text-sm text-gray-900 dark:text-white">{item.name}</h4>
+                                                <div className="flex items-center gap-1.5 leading-none">
+                                                    <p className="text-[10px] text-amber-600 font-bold">
+                                                        {isPercent && <span className="line-through opacity-50 mr-1">{item.price}</span>}
+                                                        {effectivePrice} Ft
+                                                    </p>
+                                                    {isBogo && <span className="text-[8px] bg-indigo-600 text-white px-1 py-0.5 rounded font-black leading-none">1+1 AKCIÓ</span>}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2 bg-white dark:bg-black/40 rounded-full px-2 py-1 shadow-sm">
+                                                <button onClick={() => onUpdateQty(item.id, -1)} className="w-5 h-5 flex items-center justify-center hover:text-red-500"><IoRemove size={12} /></button>
+                                                <span className="text-xs font-bold w-3 text-center">{item.quantity}</span>
+                                                <button onClick={() => onUpdateQty(item.id, 1)} className="w-5 h-5 flex items-center justify-center hover:text-green-500"><IoAdd size={12} /></button>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center font-black text-lg text-gray-900 dark:text-white">
                                     <span>Összesen:</span>
-                                    <span>{total} Ft</span>
+                                    <span>{displayTotal} Ft</span>
                                 </div>
-                                <button onClick={() => setStep('checkout')} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 mt-4 active:scale-95 transition-transform">Tovább a fizetéshez</button>
+                                <button onClick={() => setStep('checkout')} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 mt-4 active:scale-95 transition-transform text-sm tracking-wide">Tovább a fizetéshez</button>
                             </div> :
                             <form id="checkout-form" onSubmit={handleSubmit} className="space-y-4">
                                 <div className="space-y-2">
@@ -1060,9 +1318,24 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                                         <p className="text-[10px] text-center text-gray-400 font-medium">Kártyás és online fizetés jelenleg fejlesztés alatt áll.</p>
                                     </div>
                                 </div>
-                                <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2">
-                                    {isSubmitting ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div> : <span>Rendelés leadása</span>}
-                                </button>
+                                    {expiredItems.length > 0 && (
+                                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-xl">
+                                            <div className="flex gap-2 text-left">
+                                                <IoWarning className="text-amber-500 shrink-0 text-lg" />
+                                                <div>
+                                                    <p className="text-[11px] font-bold text-amber-800 dark:text-amber-400 leading-tight">
+                                                        Figyelem! Néhány akció időközben lejárt.
+                                                    </p>
+                                                    <p className="text-[9px] text-amber-700/80 dark:text-amber-400/70 mt-0.5">
+                                                        A kosarad frissült az eredeti árakkal. Kérjük, ellenőrizd a végösszeget a rendelés leadása előtt!
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                    <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2">
+                                        {isSubmitting ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div> : <span>Rendelés leadása</span>}
+                                    </button>
                                 <button type="button" onClick={() => setStep('cart')} className="w-full py-2 text-zinc-500 text-xs font-bold hover:text-amber-500 transition-colors">Vissza a kosárhoz</button>
                             </form>
                     }

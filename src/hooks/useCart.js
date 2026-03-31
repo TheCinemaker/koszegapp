@@ -9,7 +9,7 @@ export function useCart() {
             if (existing) {
                 return prev.map(i =>
                     i.id === menuItem.id
-                        ? { ...i, quantity: i.quantity + 1 }
+                        ? { ...i, ...menuItem, quantity: i.quantity + 1 }
                         : i
                 );
             }
@@ -37,9 +37,25 @@ export function useCart() {
         setItems([]);
     }, []);
 
-    const total = useMemo(() => (
-        items.reduce((sum, i) => sum + i.price * i.quantity, 0)
-    ), [items]);
+    const total = useMemo(() => {
+        return items.reduce((sum, item) => {
+            const price = item.price || 0;
+            const qty = item.quantity || 0;
+            const rule = item.flashRule;
+
+            if (rule && rule.type === 'percent') {
+                const discount = (rule.value || 0) / 100;
+                return sum + Math.round(price * (1 - discount) * qty);
+            }
+
+            if (rule && rule.type === 'bogo') {
+                const paidQty = qty - Math.floor(qty / 2);
+                return sum + (price * paidQty);
+            }
+
+            return sum + (price * qty);
+        }, 0);
+    }, [items]);
 
     const count = useMemo(() => (
         items.reduce((sum, i) => sum + i.quantity, 0)

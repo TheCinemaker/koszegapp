@@ -161,8 +161,20 @@ function FoodAdminDashboard({ restaurantId, onLogout }) {
                 <main className={`flex-1 overflow-y-auto ${WIN98.borderOutset} bg-[#c0c0c0] p-4 relative`}>
                     {/* Inner content usually has an inset border in some apps, but standard is just gray bg or white if document */}
                     <div className="max-w-full mx-auto">
-                        {activeTab === 'orders' && <OrderList restaurantId={restaurantId} />}
-                        {activeTab === 'menu' && <MenuEditor restaurantId={restaurantId} />}
+                        {activeTab === 'orders' && <OrderList restaurantId={restaurantId} restaurantName={restaurantData?.name} />}
+                        {activeTab === 'menu' && (
+                            <MenuEditor 
+                                restaurantId={restaurantId} 
+                                restData={restaurantData} 
+                                updateRestField={async (field, value) => {
+                                    const { error } = await supabase.from('restaurants').update({ [field]: value }).eq('id', restaurantId);
+                                    if (error) toast.error("Hiba a mentéskor");
+                                    else {
+                                        setRestaurantData(prev => ({ ...prev, [field]: value }));
+                                    }
+                                }} 
+                            />
+                        )}
                         {activeTab === 'marketing' && <MarketingPanel restaurantId={restaurantId} />}
                         {activeTab === 'search' && <SearchPanel restaurantId={restaurantId} />}
                         {activeTab === 'stats' && <SalesSummary restaurantId={restaurantId} />}
@@ -200,7 +212,7 @@ const TabButton = ({ id, label, active, set }) => (
 
 
 // --- 1. ORDERS TAB (WITH PDF) ---
-function OrderList({ restaurantId }) {
+function OrderList({ restaurantId, restaurantName }) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -288,13 +300,16 @@ function OrderList({ restaurantId }) {
             const shortId = order.id ? order.id.slice(0, 8).toUpperCase() : 'ISMERETLEN';
 
             doc.setFontSize(14);
-            doc.text(normalizeText('KöszegApp Rendelés'), 40, 10, { align: 'center' });
+            doc.text(normalizeText('KöszegEats Rendelésed'), 40, 10, { align: 'center' });
 
             doc.setFontSize(10);
-            doc.text(`#${shortId}`, 40, 16, { align: 'center' });
-            doc.text(new Date(order.created_at).toLocaleString('hu-HU'), 40, 22, { align: 'center' });
+            if (restaurantName) {
+                doc.text(normalizeText(restaurantName), 40, 15, { align: 'center' });
+            }
+            doc.text(`#${shortId}`, 40, 20, { align: 'center' });
+            doc.text(new Date(order.created_at).toLocaleString('hu-HU'), 40, 26, { align: 'center' });
 
-            doc.line(5, 25, 75, 25);
+            doc.line(5, 29, 75, 29);
 
             // Customer Info
             doc.setFontSize(10);
@@ -303,10 +318,10 @@ function OrderList({ restaurantId }) {
             doc.text(normalizeText(order.customer_name), 5, 37);
             doc.setFont('helvetica', 'normal');
             doc.text(normalizeText(order.customer_phone), 5, 42);
-            
+
             const splitAddress = doc.splitTextToSize(normalizeText(order.customer_address), 70);
             doc.text(splitAddress, 5, 47);
-            
+
             let yPos = 47 + (splitAddress.length * 5);
 
             if (order.customer_note) {
@@ -325,12 +340,12 @@ function OrderList({ restaurantId }) {
             doc.setFontSize(10);
             order.items.forEach(item => {
                 doc.text(`${item.quantity}x`, 5, yPos);
-                
+
                 const splitName = doc.splitTextToSize(normalizeText(item.name), 40);
                 doc.text(splitName, 15, yPos);
-                
+
                 doc.text(`${item.price} Ft`, 75, yPos, { align: 'right' });
-                
+
                 yPos += (splitName.length * 5) + 2;
             });
 
@@ -342,6 +357,11 @@ function OrderList({ restaurantId }) {
             doc.setFont('helvetica', 'bold');
             doc.text(normalizeText('VÉGÖSSZEG:'), 5, yPos);
             doc.text(`${order.total_price} Ft`, 75, yPos, { align: 'right' });
+
+            yPos += 10;
+            doc.setFontSize(8);
+            doc.setFont('helvetica', 'italic');
+            doc.text(normalizeText('Számlát nem helyettesitö bizonylat'), 40, yPos, { align: 'center' });
 
             doc.save(`rendeles_${shortId}.pdf`);
             toast.success('Nyomtatás indítva... 🖨️');
@@ -449,13 +469,15 @@ function OrderList({ restaurantId }) {
 
 
 // --- 2. MENU TAB ---
-function MenuEditor({ restaurantId }) {
+function MenuEditor({ restaurantId, restData, updateRestField }) {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showCatModal, setShowCatModal] = useState(false);
     const [showItemModal, setShowItemModal] = useState(false);
     const [editingCategory, setEditingCategory] = useState(null);
     const [editingItem, setEditingItem] = useState(null);
+    const [showFlashModal, setShowFlashModal] = useState(false);
+    const [flashItem, setFlashItem] = useState(null);
     const [activeCategoryId, setActiveCategoryId] = useState(null);
     const [formData, setFormData] = useState({});
     const [uploading, setUploading] = useState(false);
@@ -495,7 +517,15 @@ function MenuEditor({ restaurantId }) {
             items: cat.items.map(item => item.id === itemId ? { ...item, is_available: newStatus } : item)
         })));
         await supabase.from('menu_items').update({ is_available: newStatus }).eq('id', itemId);
+        toast.success(newStatus ? 'Étel elérhető' : 'Étel ELFOGYOTT', { icon: newStatus ? '✅' : '🚫' });
     };
+
+    const updateRestSetting = async (key, value) => {
+        const newSettings = { ...restData.display_settings, [key]: value };
+        updateRestField('display_settings', newSettings);
+    };
+
+    const days = [{ id: 1, label: 'Hétfő' }, { id: 2, label: 'Kedd' }, { id: 3, label: 'Szerda' }, { id: 4, label: 'Csütörtök' }, { id: 5, label: 'Péntek' }, { id: 6, label: 'Szombat' }, { id: 0, label: 'Vasárnap' }];
 
     const saveCategory = async (e) => {
         e.preventDefault();
@@ -602,6 +632,176 @@ function MenuEditor({ restaurantId }) {
         <div className="max-w-4xl mx-auto pb-32">
             <QuickDelivery restaurantId={restaurantId} />
 
+            {/* QUICK NEWS & MENU ACCESS (Moved from Profile) */}
+            {restData && (
+                <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4 bg-[#d0d0d0]`}>
+                    <legend className="px-1 font-bold text-xs text-black bg-[#c0c0c0] border border-gray-400">⚡ Sürgős Módosítások (Hírek & Napi Ajánlat)</legend>
+                    <div className="space-y-4 p-1">
+                        
+                        {/* Daily Menu Visibility & Pricing */}
+                        <div className={`p-2 ${WIN98.borderInset} bg-gray-100 flex flex-wrap items-center gap-4`}>
+                            <div className="flex items-center gap-2">
+                                <input 
+                                    type="checkbox" 
+                                    id="show_daily" 
+                                    checked={restData.display_settings?.show_daily_menu} 
+                                    onChange={e => updateRestSetting('show_daily_menu', e.target.checked)}
+                                    className="w-4 h-4"
+                                />
+                                <label htmlFor="show_daily" className="text-xs font-bold text-black uppercase cursor-pointer">Napi Menü Engedélyezése</label>
+                            </div>
+                            
+                            {restData.display_settings?.show_daily_menu && (
+                                <>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[10px] text-gray-600">Teljes ár (Leves + Főétel):</span>
+                                        <input 
+                                            type="number" 
+                                            placeholder="pl. 2200"
+                                            className={`w-20 ${WIN98.borderInset} px-1 text-xs`} 
+                                            value={restData.display_settings?.daily_menu_price || ''} 
+                                            onChange={e => updateRestSetting('daily_menu_price', e.target.value)}
+                                        />
+                                        <span className="text-[10px]">Ft</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[10px] text-gray-600">Leves nélkül:</span>
+                                        <input 
+                                            type="number" 
+                                            placeholder="pl. 1800"
+                                            className={`w-20 ${WIN98.borderInset} px-1 text-xs`} 
+                                            value={restData.display_settings?.daily_menu_no_soup_price || ''} 
+                                            onChange={e => updateRestSetting('daily_menu_no_soup_price', e.target.value)}
+                                        />
+                                        <span className="text-[10px]">Ft</span>
+                                    </div>
+                                    <button 
+                                        onClick={() => {
+                                            const demo = {
+                                                "2": { "soup": "Jókai bableves", "A": "Rántott szelet petrezselymes burgonyával", "B": "Bakonyi sertésborda nokedlivel", "C": "Spenót főzelék tükörtojással", "soldOutB": true },
+                                                "3": { "soup": "Újházi tyúkhúsleves", "A": "Vadas marhasült zsemlegombóccal", "B": "Brassói aprópecsenye sült krumplival", "C": "Mákos guba vanília öntettel" },
+                                                "4": { "soup": "Görög gyümölcsleves", "A": "Cigánypecsenye kakastaréjjal", "B": "Töltött paprika paradicsommártásban", "C": "Grillezett camembert áfonyával" }
+                                            };
+                                            updateRestField('daily_menu', JSON.stringify(demo));
+                                            if (!restData.display_settings?.daily_menu_price) {
+                                                updateRestSetting('daily_menu_price', '2200');
+                                                updateRestSetting('daily_menu_no_soup_price', '1800');
+                                            }
+                                        }}
+                                        className={`${WIN98.btn} px-2 py-0.5 text-[9px] bg-amber-100 hover:bg-amber-200 ml-auto`}
+                                    >
+                                        🧪 TESZT ADATOK BETÖLTÉSE
+                                    </button>
+                                </>
+                            )}
+                        </div>
+
+                        {/* Daily Menu Section */}
+                        {restData.display_settings?.show_daily_menu && (
+                            <div className={`p-2 ${WIN98.borderInset} ${restData.is_daily_menu_available ? 'bg-blue-50' : 'bg-red-50'}`}>
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-[10px] font-bold uppercase flex items-center gap-1"><IoRestaurant /> Napi Menü Szerkesztő (A/B/C)</span>
+                                    <div className="flex gap-2">
+                                        <button 
+                                            onClick={() => updateRestSetting('is_daily_menu_available', !restData.display_settings?.is_daily_menu_available)}
+                                            className={`${WIN98.btn} px-3 py-1 text-[10px] font-bold ${restData.display_settings?.is_daily_menu_available !== false ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}
+                                        >
+                                            {restData.display_settings?.is_daily_menu_available !== false ? 'Minden elérhető' : 'Összes elfogyott'}
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                                    {days.map(day => {
+                                        const wm = (() => {
+                                            if (!restData.daily_menu) return {};
+                                            try {
+                                                const o = JSON.parse(restData.daily_menu);
+                                                return (typeof o === 'object' && o !== null) ? o : {};
+                                            } catch { return {}; }
+                                        })();
+                                        const dayData = wm[day.id] || { soup: '', A: '', B: '', C: '', soldOutA: false, soldOutB: false, soldOutC: false };
+                                        
+                                        const updateDay = (field, val) => {
+                                            const nw = { ...wm, [day.id]: { ...dayData, [field]: val } };
+                                            updateRestField('daily_menu', JSON.stringify(nw));
+                                        };
+
+                                        return (
+                                            <div key={day.id} className="p-2 border border-gray-300 bg-white shadow-sm">
+                                                <div className="flex items-center gap-2 mb-2 border-b border-gray-100 pb-1">
+                                                    <span className="text-xs font-black text-blue-800 uppercase italic w-16">{day.label}</span>
+                                                    <input 
+                                                        placeholder="Leves neve..." 
+                                                        className={`flex-1 ${WIN98.borderInset} px-2 py-0.5 text-xs bg-gray-50 focus:bg-yellow-50`} 
+                                                        value={dayData.soup || ''} 
+                                                        onChange={e => updateDay('soup', e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                                    {['A', 'B', 'C'].map(m => (
+                                                        <div key={m} className={`p-1 rounded border ${dayData[`soldOut${m}`] ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-200'}`}>
+                                                            <div className="flex items-center justify-between mb-1">
+                                                                <span className="text-[10px] font-bold">{m} menü</span>
+                                                                <button 
+                                                                    onClick={() => updateDay(`soldOut${m}`, !dayData[`soldOut${m}`])}
+                                                                    className={`px-1 rounded text-[9px] font-bold border ${dayData[`soldOut${m}`] ? 'bg-red-600 text-white' : 'bg-green-600 text-white'}`}
+                                                                >
+                                                                    {dayData[`soldOut${m}`] ? 'ELFOGYOTT' : 'VAN'}
+                                                                </button>
+                                                            </div>
+                                                            <textarea 
+                                                                rows={2} 
+                                                                className={`w-full ${WIN98.borderInset} px-1 py-0.5 text-[10px] bg-white outline-none resize-none`} 
+                                                                value={dayData[m] || ''} 
+                                                                onChange={e => updateDay(m, e.target.value)}
+                                                                placeholder={`${m} menü főétel...`}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <div className={`p-2 ${WIN98.borderInset} ${restData.is_constant_menu_available ? 'bg-amber-50' : 'bg-red-50'}`}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[10px] font-bold uppercase">Állandó (A/B) Menü</span>
+                                        <button 
+                                        onClick={() => updateRestSetting('is_constant_menu_available', !restData.display_settings?.is_constant_menu_available)}
+                                        className={`${WIN98.btn} px-2 py-0.5 text-[10px] font-bold ${restData.display_settings?.is_constant_menu_available !== false ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}
+                                    >
+                                        {restData.display_settings?.is_constant_menu_available !== false ? 'ELÉRHETŐ' : '⚠️ ELFOGYOTT'}
+                                    </button>
+                                </div>
+                                <textarea 
+                                    className="w-full text-xs p-1 outline-none border border-gray-400" 
+                                    rows={1} 
+                                    value={restData.promotions || ''} 
+                                    onChange={e => updateRestField('promotions', e.target.value)}
+                                    placeholder="Akció vagy üzenet a vendégeknek..."
+                                />
+                            </div>
+
+                            <div className={`p-2 ${WIN98.borderInset} bg-white`}>
+                                <span className="text-[10px] font-bold uppercase mb-1 block">Hírek / Közlemény</span>
+                                <textarea 
+                                    className="w-full text-xs p-1 outline-none border border-gray-400" 
+                                    rows={1} 
+                                    value={restData.news || ''} 
+                                    onChange={e => updateRestField('news', e.target.value)}
+                                    placeholder="Friss hír vagy változás..."
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            )}
+
             <div className={`flex items-center justify-between mb-2 p-1 ${WIN98.borderInset} bg-white`}>
                 <span className="font-bold px-2">Helyi meghajtó (C:) \ Étlap</span>
                 <button onClick={() => openCatModal()} className={`${WIN98.btn} text-xs`}>
@@ -628,9 +828,24 @@ function MenuEditor({ restaurantId }) {
                                         <p className="text-[10px] text-black truncate">{item.price} Ft</p>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <button onClick={() => openItemModal(cat.id, item)} className={`${WIN98.btn} py-0 px-1 text-[10px]`}>✏️</button>
-                                        <button onClick={() => toggleItemAvailability(item.id, item.is_available)} className={`${WIN98.btn} py-0 px-1 text-[10px] ${item.is_available ? 'text-green-800' : 'text-red-800'}`}>
-                                            {item.is_available ? 'ON' : 'OFF'}
+                                        <div className="flex gap-1">
+                                            <button 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setFlashItem(item);
+                                                    setShowFlashModal(true);
+                                                }}
+                                                className={`${WIN98.btn} py-0.5 px-1 text-[9px] flex items-center gap-1 ${restData.flash_sale?.items?.[item.id] ? 'bg-orange-200 border-orange-400 font-bold' : ''}`}
+                                            >
+                                                🔥 {restData.flash_sale?.items?.[item.id] ? 'AKCIÓS' : 'FLASH'}
+                                            </button>
+                                            <button onClick={() => openItemModal(cat.id, item)} className={`${WIN98.btn} py-0 px-1 text-[10px]`}>✏️</button>
+                                        </div>
+                                        <button 
+                                            onClick={() => toggleItemAvailability(item.id, item.is_available)} 
+                                            className={`${WIN98.btn} py-0.5 px-1 text-[9px] font-bold leading-tight ${item.is_available ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}
+                                        >
+                                            {item.is_available ? 'ELÉRHETŐ' : 'ELFOGYOTT'}
                                         </button>
                                     </div>
                                 </div>
@@ -691,6 +906,121 @@ function MenuEditor({ restaurantId }) {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* FLASH RULE MODAL */}
+            {showFlashModal && flashItem && (
+                <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/50">
+                    <div className={`${WIN98.windowBg} ${WIN98.borderOutset} w-full max-w-sm p-1 shadow-2xl`}>
+                        <div className={WIN98.titleBar}>
+                            <span>🔥 Flash Akció: {flashItem.name}</span>
+                            <button onClick={() => setShowFlashModal(false)} className={`${WIN98.btn} px-2 py-0`}>x</button>
+                        </div>
+                        <div className={`p-4 ${WIN98.borderInset} bg-white space-y-4`}>
+                            {!restData?.flash_sale?.active && (
+                                <div className="p-2 bg-red-50 border border-red-200 text-red-600 text-[10px] font-bold">
+                                    ⚠️ FIGYELEM: A Flash Sale globálisan NINCS AKTIVÁLVA a Marketing fülön! 
+                                    Az itt beállított szabályok csak akkor jelennek meg a vendégeknek, ha ott is bekapcsolod.
+                                </div>
+                            )}
+                            <p className="text-xs text-gray-500 italic">Válassz akció típust ehhez a termékhez:</p>
+                            
+                            <div className="space-y-3">
+                                {/* Type: PERCENT */}
+                                <div className={`p-2 border ${restData.flash_sale?.items?.[flashItem.id]?.type === 'percent' ? 'border-orange-500 bg-orange-50' : 'border-gray-200'} rounded-lg`}>
+                                    <label className="flex items-center gap-2 cursor-pointer mb-1">
+                                        <input 
+                                            type="radio" 
+                                            name="flashType" 
+                                            checked={restData.flash_sale?.items?.[flashItem.id]?.type === 'percent'} 
+                                            onChange={() => {
+                                                const items = { ...restData.flash_sale?.items, [flashItem.id]: { type: 'percent', value: 20 } };
+                                                updateRestField('flash_sale', { ...restData.flash_sale, items });
+                                            }}
+                                        />
+                                        <span className="text-xs font-bold">Százalékos kedvezmény (%)</span>
+                                    </label>
+                                    {restData.flash_sale?.items?.[flashItem.id]?.type === 'percent' && (
+                                        <div className="flex items-center gap-2 ml-5">
+                                            <input 
+                                                type="number" 
+                                                className={`w-16 ${WIN98.borderInset} px-2 py-0.5 text-xs`}
+                                                value={restData.flash_sale?.items?.[flashItem.id]?.value || 0}
+                                                onChange={(e) => {
+                                                    const items = { ...restData.flash_sale?.items, [flashItem.id]: { ...restData.flash_sale.items[flashItem.id], value: parseInt(e.target.value) } };
+                                                    updateRestField('flash_sale', { ...restData.flash_sale, items });
+                                                }}
+                                            />
+                                            <span className="text-xs font-bold">% levonás</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Type: BOGO */}
+                                <div className={`p-2 border ${restData.flash_sale?.items?.[flashItem.id]?.type === 'bogo' ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200'} rounded-lg`}>
+                                    <label className="flex items-center gap-2 cursor-pointer">
+                                        <input 
+                                            type="radio" 
+                                            name="flashType" 
+                                            checked={restData.flash_sale?.items?.[flashItem.id]?.type === 'bogo'} 
+                                            onChange={() => {
+                                                const items = { ...restData.flash_sale?.items, [flashItem.id]: { type: 'bogo' } };
+                                                updateRestField('flash_sale', { ...restData.flash_sale, items });
+                                            }}
+                                        />
+                                        <span className="text-xs font-bold">1+1 Akció (Egyet fizet, kettőt kap)</span>
+                                    </label>
+                                </div>
+
+                                {/* Type: GIFT (Choice/Select) */}
+                                <div className={`p-2 border ${restData.flash_sale?.items?.[flashItem.id]?.type === 'gift' ? 'border-green-500 bg-green-50' : 'border-gray-200'} rounded-lg`}>
+                                    <label className="flex items-center gap-2 cursor-pointer mb-1">
+                                        <input 
+                                            type="radio" 
+                                            name="flashType" 
+                                            checked={restData.flash_sale?.items?.[flashItem.id]?.type === 'gift'} 
+                                            onChange={() => {
+                                                const items = { ...restData.flash_sale?.items, [flashItem.id]: { type: 'gift', giftName: 'Ajándék üdítő' } };
+                                                updateRestField('flash_sale', { ...restData.flash_sale, items });
+                                            }}
+                                        />
+                                        <span className="text-xs font-bold">Ajándék termék hozzá</span>
+                                    </label>
+                                    {restData.flash_sale?.items?.[flashItem.id]?.type === 'gift' && (
+                                        <div className="ml-5">
+                                            <input 
+                                                className={`w-full ${WIN98.borderInset} px-2 py-0.5 text-xs`}
+                                                placeholder="Ajándék megnevezése (pl. 0.33l Cola)"
+                                                value={restData.flash_sale?.items?.[flashItem.id]?.giftName || ''}
+                                                onChange={(e) => {
+                                                    const items = { ...restData.flash_sale?.items, [flashItem.id]: { ...restData.flash_sale.items[flashItem.id], giftName: e.target.value } };
+                                                    updateRestField('flash_sale', { ...restData.flash_sale, items });
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="pt-4 border-t flex flex-col gap-2">
+                                <button 
+                                    onClick={() => {
+                                        const items = { ...restData.flash_sale?.items };
+                                        delete items[flashItem.id];
+                                        updateRestField('flash_sale', { ...restData.flash_sale, items });
+                                        setShowFlashModal(false);
+                                    }}
+                                    className={`${WIN98.btn} text-red-600 font-bold`}
+                                >
+                                    Akció Törlése Ebből a Termékből
+                                </button>
+                                <button onClick={() => setShowFlashModal(false)} className={`${WIN98.btn} font-bold py-2 bg-gray-100`}>
+                                    Kész / Mentés
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
@@ -1136,113 +1466,8 @@ function ProfileEditor({ restaurantId }) {
                 </div>
             </fieldset>
 
-            {/* News & Promos */}
-            <fieldset className={`border-2 border-white border-l-gray-500 border-t-gray-500 p-2 mb-4`}>
-                <legend className="px-1 font-bold text-sm text-black">Hírek & Akciók</legend>
-                <div className="space-y-4 p-2">
-
-                    {/* Constant Menu */}
-                    <div className="space-y-2 pb-3 mb-3 border-b border-gray-300">
-                        <div className="flex flex-wrap items-center justify-between gap-2 pr-2">
-                            <div className="flex items-center gap-2">
-                                <input type="checkbox" checked={form.settings.show_constant_menu} onChange={() => toggleSetting('show_constant_menu')} className="accent-black" />
-                                <label className="text-xs font-bold text-black border-b border-black pb-0.5">Állandó Menü (A/B menü)</label>
-                            </div>
-                            {form.settings.show_constant_menu && (
-                                <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold uppercase">Ár:</span>
-                                    <input
-                                        type="number"
-                                        placeholder="Pl. 2500"
-                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`}
-                                        value={form.settings.constant_menu_price || ''}
-                                        onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_price: e.target.value } })}
-                                    />
-                                    <span className="text-[10px] font-bold">Ft</span>
-                                </div>
-                            )}
-                        </div>
-                        {form.settings.show_constant_menu && (
-                            <textarea
-                                rows={2}
-                                className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none resize-none font-mono focus:bg-yellow-50`}
-                                placeholder="A menü: Húsleves + Rántott sajt, B menü: Bakonyi sertésborda..."
-                                value={form.settings.constant_menu_text || ''}
-                                onChange={e => setForm({ ...form, settings: { ...form.settings, constant_menu_text: e.target.value } })}
-                            />
-                        )}
-                    </div>
-
-                    {/* Weekly Menu */}
-                    <div className="space-y-2">
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pr-2">
-                            <div className="flex items-center gap-2">
-                                <input type="checkbox" checked={form.settings.show_daily_menu} onChange={() => toggleSetting('show_daily_menu')} className="accent-black" />
-                                <label className="text-xs font-bold text-black border-b border-black pb-0.5">Egész heti menü / Ajánlatok</label>
-                            </div>
-                            {form.settings.show_daily_menu && (
-                                <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold uppercase">Ár:</span>
-                                    <input
-                                        type="number"
-                                        placeholder="Pl. 2500"
-                                        className={`w-20 ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none font-bold`}
-                                        value={form.settings.daily_menu_price || ''}
-                                        onChange={e => setForm({ ...form, settings: { ...form.settings, daily_menu_price: e.target.value } })}
-                                    />
-                                    <span className="text-[10px] font-bold">Ft</span>
-                                </div>
-                            )}
-                        </div>
-                        {form.settings.show_daily_menu && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-2 border-l-2 border-gray-400 pb-2">
-                                {[{ id: 1, label: 'Hétfő' }, { id: 2, label: 'Kedd' }, { id: 3, label: 'Szerda' }, { id: 4, label: 'Csütörtök' }, { id: 5, label: 'Péntek' }, { id: 6, label: 'Szombat' }, { id: 0, label: 'Vasárnap' }].map(day => {
-                                    const wm = (() => {
-                                        if (!form.daily_menu) return {};
-                                        try {
-                                            const o = JSON.parse(form.daily_menu);
-                                            // Handling edge case where old data was not a JSON object but a plain string
-                                            return (typeof o === 'object' && o !== null) ? o : { 1: form.daily_menu };
-                                        } catch {
-                                            return { 1: form.daily_menu };
-                                        }
-                                    })();
-                                    return (
-                                        <div key={day.id} className="space-y-1">
-                                            <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">{day.label}</span>
-                                            <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-xs bg-white outline-none resize-none font-mono focus:bg-yellow-50`} placeholder="pl: Húsleves, Rántott sajt..." value={wm[day.id] || ''} onChange={e => {
-                                                const nw = { ...wm, [day.id]: e.target.value };
-                                                setForm({ ...form, daily_menu: JSON.stringify(nw) });
-                                            }} />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* News */}
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                            <input type="checkbox" checked={form.settings.show_news} onChange={() => toggleSetting('show_news')} className="accent-black" />
-                            <label className="text-xs font-bold text-black">Hírek</label>
-                        </div>
-                        <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={form.news} onChange={e => setForm({ ...form, news: e.target.value })} />
-                    </div>
-
-                    {/* Promos */}
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                            <input type="checkbox" checked={form.settings.show_promotions} onChange={() => toggleSetting('show_promotions')} className="accent-black" />
-                            <label className="text-xs font-bold text-black">Akciók</label>
-                        </div>
-                        <textarea rows={2} className={`w-full ${WIN98.borderInset} px-2 py-1 text-sm bg-white outline-none resize-none`} value={form.promotions} onChange={e => setForm({ ...form, promotions: e.target.value })} />
-                    </div>
-                </div>
-            </fieldset>
-
             <button type="submit" className={`${WIN98.btn} w-full py-2 font-bold flex items-center justify-center gap-2`}>
-                💾 Beállítások Mentése
+                💾 Alapadatok Mentése
             </button>
         </form>
     );
