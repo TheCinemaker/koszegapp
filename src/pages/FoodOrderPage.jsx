@@ -462,11 +462,7 @@ export default function FoodOrderPage() {
         localStorage.setItem('dismissed_orders', JSON.stringify([...dismissedOrderIds]));
     }, [dismissedOrderIds]);
 
-    // 1. Monitor active orders for logged-in user
-    useEffect(() => {
-        if (!user) return;
-
-    // 1. Monitor active orders for logged-in user
+    // --- FETCHING LOGIC ---
     const fetchActiveOrders = async () => {
         if (!user) return;
         const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
@@ -491,44 +487,11 @@ export default function FoodOrderPage() {
         }
     };
 
-    useEffect(() => {
-        fetchActiveOrders();
-
-        const chan = supabase
-            .channel('active-orders-monitor')
-            .on('postgres_changes', {
-                event: '*',
-                schema: 'public',
-                table: 'orders',
-                filter: `user_id=eq.${user.id}`
-            }, (payload) => {
-                fetchActiveOrders();
-            })
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(chan);
-        };
-    }, [user, dismissedOrderIds]);
-
-    // 2. Auto-refresh internal timer for "staying" orders every minute
-    useEffect(() => {
-        if (activeOrders.length === 0) return;
-        const interval = setInterval(() => {
-            // Trigger a re-filter by re-fetching or manually filtering if needed, 
-            // but the fetchActiveOrders in the other effect depends on dismissedOrderIds
-            // so we can just let it be or force a refresh here if we want strictly 10 mins
-        }, 60000);
-        return () => clearInterval(interval);
-    }, [activeOrders]);
-
-    useEffect(() => {
     const fetchRestaurants = async () => {
         try {
-            const { data, error } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
-            if (data) setRestaurants(data);
-
+            const { data } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
             if (data) {
+                setRestaurants(data);
                 const allCats = new Set();
                 const shopMap = {};
                 data.forEach(r => {
@@ -548,36 +511,8 @@ export default function FoodOrderPage() {
         }
     };
 
-    useEffect(() => {
-        fetchRestaurants();
-
-        // Update ref for realtime closure
-        selectedRestaurantRef.current = selectedRestaurant;
-
-        // Realtime subscription for restaurants
-        const channel = supabase.channel('restaurants-updates')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'restaurants' }, (payload) => {
-                if (payload.eventType === 'UPDATE') {
-                    setRestaurants(prev => prev.map(r => r.id === payload.new.id ? payload.new : r));
-                    if (payload.new && selectedRestaurantRef.current && payload.new.id === selectedRestaurantRef.current.id) {
-                        setSelectedRestaurant(payload.new);
-                    }
-                } else {
-                    fetchRestaurants();
-                }
-            })
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [selectedRestaurant]);
-
-    // 2. Load menu when restaurant selected
-    useEffect(() => {
-        if (selectedRestaurant) {
-            setLoading(true);
     const fetchMenu = async (restaurantId) => {
+        if (!restaurantId) return;
         try {
             const menuData = await getMenu(restaurantId);
             setCategories(menuData);
@@ -591,12 +526,63 @@ export default function FoodOrderPage() {
         }
     };
 
+    // --- EFFECTS ---
+
+    // 1. Monitor active orders
+    useEffect(() => {
+        if (!user) return;
+        fetchActiveOrders();
+
+        const chan = supabase.channel('active-orders-monitor')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'orders',
+                filter: `user_id=eq.${user.id}`
+            }, () => {
+                fetchActiveOrders();
+            })
+            .subscribe();
+
+        return () => { supabase.removeChannel(chan); };
+    }, [user, dismissedOrderIds]);
+
+    // 2. Refresh orders timer
+    useEffect(() => {
+        if (activeOrders.length === 0) return;
+        const interval = setInterval(() => {
+            fetchActiveOrders();
+        }, 60000);
+        return () => clearInterval(interval);
+    }, [activeOrders]);
+
+    // 3. Monitor restaurant updates
+    useEffect(() => {
+        fetchRestaurants();
+        selectedRestaurantRef.current = selectedRestaurant;
+
+        const channel = supabase.channel('restaurants-updates')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'restaurants' }, (payload) => {
+                if (payload.eventType === 'UPDATE') {
+                    setRestaurants(prev => prev.map(r => r.id === payload.new.id ? payload.new : r));
+                    if (payload.new && selectedRestaurantRef.current && payload.new.id === selectedRestaurantRef.current.id) {
+                        setSelectedRestaurant(payload.new);
+                    }
+                } else {
+                    fetchRestaurants();
+                }
+            })
+            .subscribe();
+
+        return () => { supabase.removeChannel(channel); };
+    }, [selectedRestaurant]);
+
+    // 4. Load menu when restaurant selected
     useEffect(() => {
         if (selectedRestaurant) {
             setLoading(true);
             fetchMenu(selectedRestaurant.id);
 
-            // REALTIME: Listen for menu_items changes (availability toggles)
             const menuChan = supabase.channel(`menu-updates-${selectedRestaurant.id}`)
                 .on('postgres_changes', { 
                     event: 'UPDATE', 
@@ -611,35 +597,30 @@ export default function FoodOrderPage() {
                 })
                 .subscribe();
             
-            return () => {
-                supabase.removeChannel(menuChan);
-            };
+            return () => { supabase.removeChannel(menuChan); };
         } else {
             setView('restaurants');
             setCategories([]);
         }
     }, [selectedRestaurant]);
 
-    // SYNC ON RESUME: Detect when user returns to app (iPhone swipe back)
+    // 5. Visibility Sync (Resume from background)
     useEffect(() => {
-        const handleVisibilityChange = () => {
+        const handleSync = () => {
             if (document.visibilityState === 'visible') {
-                console.log("App foregrounded, syncing state...");
                 fetchRestaurants();
                 fetchActiveOrders();
-                if (selectedRestaurantRef.current) {
-                    fetchMenu(selectedRestaurantRef.current.id);
-                }
+                if (selectedRestaurantRef.current) fetchMenu(selectedRestaurantRef.current.id);
             }
         };
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('focus', handleVisibilityChange);
+        document.addEventListener('visibilitychange', handleSync);
+        window.addEventListener('focus', handleSync);
         return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-            window.removeEventListener('focus', handleVisibilityChange);
+            document.removeEventListener('visibilitychange', handleSync);
+            window.removeEventListener('focus', handleSync);
         };
-    }, [user, dismissedOrderIds]); // Re-bind if user changes to ensure fetchActiveOrders has fresh closure
+    }, []);
+
 
     // Handle back button
     const handleBack = () => {
