@@ -466,32 +466,32 @@ export default function FoodOrderPage() {
     useEffect(() => {
         if (!user) return;
 
-        const fetchActiveOrders = async () => {
-            const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
-            const { data } = await supabase
-                .from('orders')
-                .select('*, restaurants(name)')
-                .eq('user_id', user.id)
-                .gte('created_at', twelveHoursAgo)
-                .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering', 'delivered', 'rejected', 'cancelled'])
-                .order('created_at', { ascending: false });
+    // 1. Monitor active orders for logged-in user
+    const fetchActiveOrders = async () => {
+        if (!user) return;
+        const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
+        const { data } = await supabase
+            .from('orders')
+            .select('*, restaurants(name)')
+            .eq('user_id', user.id)
+            .gte('created_at', twelveHoursAgo)
+            .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering', 'delivered', 'rejected', 'cancelled'])
+            .order('created_at', { ascending: false });
 
-            if (data) {
-                // Filter out traditionally "closed" orders that are old, 
-                // but keep new "delivered/rejected/cancelled" ones for 1 minute unless dismissed
-                const now = new Date();
-                const filtered = data.filter(o => {
-                    if (dismissedOrderIds.has(o.id)) return false;
-                    if (['new', 'accepted', 'preparing', 'ready', 'delivering'].includes(o.status)) return true;
-                    
-                    const orderDate = new Date(o.updated_at || o.created_at);
-                    const diffMinutes = (now - orderDate) / (1000 * 60);
-                    return diffMinutes < 1; // Keep closed orders for 1 min (user requested)
-                });
-                setActiveOrders(filtered);
-            }
-        };
+        if (data) {
+            const now = new Date();
+            const filtered = data.filter(o => {
+                if (dismissedOrderIds.has(o.id)) return false;
+                if (['new', 'accepted', 'preparing', 'ready', 'delivering'].includes(o.status)) return true;
+                const orderDate = new Date(o.updated_at || o.created_at);
+                const diffMinutes = (now - orderDate) / (1000 * 60);
+                return diffMinutes < 1; 
+            });
+            setActiveOrders(filtered);
+        }
+    };
 
+    useEffect(() => {
         fetchActiveOrders();
 
         const chan = supabase
@@ -523,33 +523,32 @@ export default function FoodOrderPage() {
     }, [activeOrders]);
 
     useEffect(() => {
-        const fetchRestaurants = async () => {
-            try {
-                const { data, error } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
-                if (data) setRestaurants(data);
+    const fetchRestaurants = async () => {
+        try {
+            const { data, error } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
+            if (data) setRestaurants(data);
 
-                // Extract categories for filter
-                if (data) {
-                    const allCats = new Set();
-                    const shopMap = {};
-                    data.forEach(r => {
-                        if (r.tags) {
-                            r.tags.forEach(t => {
-                                allCats.add(t);
-                                if (!shopMap[t]) shopMap[t] = new Set();
-                                shopMap[t].add(r.id);
-                            });
-                        }
-                    });
-                    setRealCategories(Array.from(allCats).sort());
-                    setCategoryMap(shopMap);
-                }
-            } catch (error) {
-                console.error("Error fetching restaurants:", error);
-                toast.error("Nem sikerült betölteni az éttermeket.");
+            if (data) {
+                const allCats = new Set();
+                const shopMap = {};
+                data.forEach(r => {
+                    if (r.tags) {
+                        r.tags.forEach(t => {
+                            allCats.add(t);
+                            if (!shopMap[t]) shopMap[t] = new Set();
+                            shopMap[t].add(r.id);
+                        });
+                    }
+                });
+                setRealCategories(Array.from(allCats).sort());
+                setCategoryMap(shopMap);
             }
-        };
+        } catch (error) {
+            console.error("Error fetching restaurants:", error);
+        }
+    };
 
+    useEffect(() => {
         fetchRestaurants();
 
         // Update ref for realtime closure
@@ -560,7 +559,6 @@ export default function FoodOrderPage() {
             .on('postgres_changes', { event: '*', schema: 'public', table: 'restaurants' }, (payload) => {
                 if (payload.eventType === 'UPDATE') {
                     setRestaurants(prev => prev.map(r => r.id === payload.new.id ? payload.new : r));
-                    
                     if (payload.new && selectedRestaurantRef.current && payload.new.id === selectedRestaurantRef.current.id) {
                         setSelectedRestaurant(payload.new);
                     }
@@ -573,26 +571,30 @@ export default function FoodOrderPage() {
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [selectedRestaurant]); // Added selectedRestaurant to deps to ensure ref/closure is fresh or let use selectedRestaurant directly now
+    }, [selectedRestaurant]);
 
     // 2. Load menu when restaurant selected
     useEffect(() => {
         if (selectedRestaurant) {
             setLoading(true);
-            const fetchMenu = async () => {
-                try {
-                    const menuData = await getMenu(selectedRestaurant.id);
-                    setCategories(menuData);
-                    setView('menu');
-                    window.scrollTo(0, 0);
-                } catch (error) {
-                    console.error(error);
-                    toast.error("Hiba a menü betöltésekor.");
-                } finally {
-                    setLoading(false);
-                }
-            };
-            fetchMenu();
+    const fetchMenu = async (restaurantId) => {
+        try {
+            const menuData = await getMenu(restaurantId);
+            setCategories(menuData);
+            setView('menu');
+            window.scrollTo(0, 0);
+        } catch (error) {
+            console.error(error);
+            toast.error("Hiba a menü betöltésekor.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedRestaurant) {
+            setLoading(true);
+            fetchMenu(selectedRestaurant.id);
 
             // REALTIME: Listen for menu_items changes (availability toggles)
             const menuChan = supabase.channel(`menu-updates-${selectedRestaurant.id}`)
@@ -617,6 +619,27 @@ export default function FoodOrderPage() {
             setCategories([]);
         }
     }, [selectedRestaurant]);
+
+    // SYNC ON RESUME: Detect when user returns to app (iPhone swipe back)
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                console.log("App foregrounded, syncing state...");
+                fetchRestaurants();
+                fetchActiveOrders();
+                if (selectedRestaurantRef.current) {
+                    fetchMenu(selectedRestaurantRef.current.id);
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('focus', handleVisibilityChange);
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('focus', handleVisibilityChange);
+        };
+    }, [user, dismissedOrderIds]); // Re-bind if user changes to ensure fetchActiveOrders has fresh closure
 
     // Handle back button
     const handleBack = () => {
