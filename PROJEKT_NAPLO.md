@@ -127,7 +127,8 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Tracker Perzisztencia & Időzítés**: A lezárt rendelések láthatósága 1 percre csökkentve (a korábbi 10 helyett). Az elrejtés mostantól `localStorage` alapon működik, így oldalfrissítés után sem térnek vissza a bezárt tracker kártyák.
 - **Valós idejű Készletkezelés**: Kijavítva az a hiba, ahol az elfogyott termékek eltűntek az oldalról. Mostantól minden termék látható marad "Elfogyott" jelzéssel, és a készletváltozások (elérhetőség) azonnal, frissítés nélkül megjelennek a felhasználónál a Supabase Realtime segítségével.
 - **Sync on Resume & Syntax Fix**: Implementálva az iPhone-os kényszerített frissítés (visibilitychange), valamint javítva a buildet akadályozó szintaktikai hiba a `FoodOrderPage.jsx` fájlban. A kód most már stabil és építhető.
-- **Időzített Napi Menü**: Bevezetve az időalapú láthatóság a napi menühöz. Az éttermek az adminon beállíthatják a megjelenési sávot (pl. 11:00-14:00), és a rendszer automatikusan elrejti a kategóriát az idő lejárta után.
+- **Időzített Menü (Napi & Állandó)**: Bevezetve az időalapú láthatóság. Mostantól mind a napi, mind az állandó menü csak a megadott sávban (pl. 11:00-14:00) látható és rendelhető. Az Állandó Menü mostantól szigorúan a Napi Menü meglététől és engedélyezésétől függ, az UI pedig egységesített listaként jelenik meg.
+- **Hírek / Közlemények**: Az éttermi nézetben megjelent egy vizuális banner, amely az admin által megadott aktuális híreket/közleményeket jeleníti meg.
 - **Vizuális Visszajelzés:** Az akciós ételek egyedi badge-et kaptak az étlapon, az ajándékokat pedig külön tételként jelzi a rendszer.
 - **Git Push**: A teljes modul (időzítések, készletkezelés, iPhone fixek, dokumentáció) stabil állapotban feltöltve a GitHub-ra. Élesítésre kész. 🚀🏆✨
 

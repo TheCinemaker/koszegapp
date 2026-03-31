@@ -75,10 +75,9 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
 
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">{restaurant.name}</h3>
                 <div className="flex flex-wrap gap-1.5 mb-2 min-h-[20px]">
-                    {restaurant.promotions && <span className="text-[9px] font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-red-100 dark:border-red-900/30"><IoGift className="text-[10px]" /> <span className="truncate max-w-[120px]">{restaurant.promotions}</span></span>}
                     {restaurant.daily_menu && <span className="text-[9px] font-bold uppercase tracking-wider bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-blue-100 dark:border-blue-900/30"><IoRestaurant className="text-[10px]" /> Napi Menü</span>}
                     {restaurant.news && <span className="text-[9px] font-bold uppercase tracking-wider bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded-md flex items-center gap-1 border border-amber-100 dark:border-amber-900/30"><IoNotifications className="text-[10px]" /> <span className="truncate max-w-[100px]">{restaurant.news}</span></span>}
-                    {(!restaurant.promotions && !restaurant.daily_menu && !restaurant.news && restaurant.tags) && restaurant.tags.slice(0, 2).map(tag => <span key={tag} className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 px-1.5 py-0.5 rounded-md">{tag}</span>)}
+                    {(!restaurant.daily_menu && !restaurant.news && restaurant.tags) && restaurant.tags.slice(0, 2).map(tag => <span key={tag} className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 px-1.5 py-0.5 rounded-md">{tag}</span>)}
                 </div>
                 <p className="text-[11px] font-medium text-gray-500 dark:text-gray-400 line-clamp-2 flex-1 leading-relaxed">{restaurant.description}</p>
             </div>
@@ -117,12 +116,6 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
 
     if (!dailyMenuStr && !constantMenuStr) return null;
     
-    // If only daily menu is supposed to show, but it's out of time, hide the whole card
-    const hasVisibleDaily = showDaily && dailyMenuStr && isDailyWithinTime;
-    const hasVisibleConstant = showConstant && constantMenuStr;
-    
-    if (!hasVisibleDaily && !hasVisibleConstant) return null;
-
     let weeklyMenu = null;
     let isOldFormat = false;
     
@@ -145,6 +138,13 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
     
     const todayData = weeklyMenu ? (weeklyMenu[todayDay] || null) : null;
     const todayContent = typeof todayData === 'string' ? todayData : (todayData ? [todayData.A, todayData.B, todayData.C].filter(Boolean).join('\n') : '-');
+
+    // Logic Adjustment: Constant menu ONLY shows if Daily Menu is active for the day AND we are in time
+    const hasTodayDailyData = !!(todayData?.A || todayData?.B || todayData?.C);
+    const hasVisibleDaily = showDaily && dailyMenuStr && isDailyWithinTime && hasTodayDailyData;
+    const hasVisibleConstant = showConstant && showDaily && constantMenuStr && isDailyWithinTime && hasTodayDailyData;
+    
+    if (!hasVisibleDaily && !hasVisibleConstant) return null;
 
     return (
         <div className="mt-4 mb-2">
@@ -175,45 +175,9 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
                         className="overflow-hidden"
                     >
                         <div className="space-y-4 pt-2 pb-2">
-                            {/* CONSTANT MENU */}
-                            {showConstant && constantMenuStr && (
-                                <div className={`mt-3 border rounded-2xl relative overflow-hidden shadow-sm ${restaurant.is_constant_menu_available !== false ? 'bg-amber-50/80 dark:bg-amber-900/10 border-amber-200 dark:border-amber-900/30' : 'bg-red-50 dark:bg-red-900/5 border-red-200 dark:border-red-900/20 opacity-80'}`}>
-                                    <div className={`absolute top-0 left-0 w-1.5 h-full rounded-l-2xl ${restaurant.is_constant_menu_available !== false ? 'bg-amber-500' : 'bg-gray-400'}`} />
-                                    <div className="p-4 pb-3">
-                                        <div className="flex justify-between items-start mb-2 gap-2">
-                                            <h3 className={`text-[11px] font-black uppercase tracking-widest flex items-center gap-1.5 ${restaurant.display_settings?.is_constant_menu_available !== false ? 'text-amber-600 dark:text-amber-500' : 'text-gray-500'}`}>
-                                                <IoStar className="text-base" />
-                                                Állandó Napi Menü (A/B)
-                                                {restaurant.display_settings?.is_constant_menu_available === false && <span className="ml-2 bg-red-600 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">ELFOGYOTT</span>}
-                                            </h3>
-                                        </div>
-                                        <div className="flex justify-between items-center bg-white/50 dark:bg-black/20 p-3 rounded-xl mb-1 border border-amber-100/50 dark:border-amber-900/20 shadow-sm">
-                                            <p className={`text-sm font-medium whitespace-pre-wrap leading-relaxed ${restaurant.display_settings?.is_constant_menu_available !== false ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'}`}>
-                                                {constantMenuStr}
-                                            </p>
-                                            {constantPrice && restaurant.display_settings?.is_constant_menu_available !== false && (
-                                                <button 
-                                                    onClick={() => onAddToCart({
-                                                        id: `constant-menu-${restaurant.id}`,
-                                                        name: `Állandó Napi Menü`,
-                                                        price: constantPrice,
-                                                        image_url: null,
-                                                        restaurant_id: restaurant.id,
-                                                        description: constantMenuStr
-                                                    })}
-                                                    className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white shadow-md text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center gap-1 ml-3"
-                                                >
-                                                    <span>{constantPrice} Ft</span>
-                                                    <IoAdd className="text-sm border border-white/30 rounded-full p-0.5" />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
 
-                            {/* DAILY / WEEKLY MENU */}
-                            {hasVisibleDaily && (
+                            {/* UNIFIED DAILY / WEEKLY / CONSTANT MENU */}
+                            {(hasVisibleDaily || hasVisibleConstant) && (
                                 <div className={`mt-3 border rounded-2xl relative overflow-hidden shadow-sm ${restaurant.display_settings?.is_daily_menu_available !== false ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30' : 'bg-red-50 dark:bg-red-900/5 border-red-200 dark:border-red-900/20 opacity-80'}`}>
                                     <div className={`absolute top-0 left-0 w-1.5 h-full rounded-l-2xl ${restaurant.display_settings?.is_daily_menu_available !== false ? 'bg-blue-500' : 'bg-gray-400'}`} />
                                     
@@ -296,6 +260,38 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
                                                     </div>
                                                 );
                                             })}
+
+                                            {/* Integrated Constant Menu */}
+                                            {hasVisibleConstant && (
+                                                <div className={`relative p-3 rounded-2xl border transition-all ${restaurant.display_settings?.is_constant_menu_available !== false ? 'bg-amber-50/50 dark:bg-amber-900/10 border-amber-100/50 dark:border-amber-900/30 shadow-sm' : 'bg-red-50/50 dark:bg-red-900/10 border-red-100 dark:border-red-900/20 opacity-70 grayscale'}`}>
+                                                   <div className="flex justify-between items-start gap-3">
+                                                       <div className="flex-1">
+                                                           <span className="text-[10px] font-black text-amber-600 dark:text-amber-500 uppercase tracking-widest flex items-center gap-1">
+                                                               <IoStar /> Állandó Ajánlat
+                                                           </span>
+                                                           <p className={`text-sm font-medium leading-relaxed ${restaurant.display_settings?.is_constant_menu_available === false ? 'line-through text-gray-400' : 'text-gray-800 dark:text-gray-200'}`}>{constantMenuStr}</p>
+                                                       </div>
+                                                   </div>
+                                                   {restaurant.display_settings?.is_constant_menu_available !== false && constantPrice && (
+                                                       <div className="mt-3 pt-3 border-t border-amber-100 dark:border-amber-900/20">
+                                                           <button 
+                                                               onClick={() => onAddToCart({
+                                                                   id: `constant-menu-${restaurant.id}`,
+                                                                   name: `Állandó Menü`,
+                                                                   price: constantPrice,
+                                                                   image_url: null,
+                                                                   restaurant_id: restaurant.id,
+                                                                   description: constantMenuStr
+                                                               })}
+                                                               className="w-full bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-bold px-3 py-2 rounded-xl active:scale-95 transition-all flex items-center justify-between shadow-md"
+                                                           >
+                                                               <span>Rendelés</span>
+                                                               <span>{constantPrice} Ft</span>
+                                                           </button>
+                                                       </div>
+                                                   )}
+                                                </div>
+                                            )}
                                         </div>
 
                                         <button 
@@ -872,6 +868,21 @@ export default function FoodOrderPage() {
                                             {selectedRestaurant.promotions && <div className="px-2 py-1 rounded-lg bg-red-100 dark:bg-red-900/30 text-[10px] font-bold flex items-center gap-1 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50"><IoGift /> {selectedRestaurant.promotions}</div>}
                                         </div>
                                         <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed max-w-xl">{selectedRestaurant.description}</p>
+                                        
+                                        {/* Hírek / Közlemények */}
+                                        {selectedRestaurant.news && (
+                                            <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-2xl flex items-start gap-2 shadow-sm animate-in fade-in slide-in-from-left-2 transition-all">
+                                                <div className="w-6 h-6 rounded-lg bg-amber-500 flex items-center justify-center shrink-0 mt-0.5">
+                                                    <IoNotifications className="text-white text-xs" />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <span className="block text-[8px] font-black text-amber-600 uppercase tracking-widest mb-0.5">Közlemény</span>
+                                                    <p className="text-[11px] font-bold text-amber-900 dark:text-amber-100 leading-tight">
+                                                        {selectedRestaurant.news}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
                                         
                                         {/* Napi Menü Kiemelés */}
                                         {/* Napi Menü Kiemelés */}
