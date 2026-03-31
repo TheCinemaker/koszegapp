@@ -27,8 +27,7 @@ export async function getMenu(restaurantId) {
     const { data: items, error: itemError } = await supabase
         .from('menu_items')
         .select('*')
-        .eq('restaurant_id', restaurantId)
-        .eq('is_available', true);
+        .eq('restaurant_id', restaurantId);
 
     if (itemError) throw itemError;
 
