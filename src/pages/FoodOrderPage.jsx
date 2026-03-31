@@ -1013,7 +1013,7 @@ export default function FoodOrderPage() {
             </div>
 
             <AnimatePresence>
-                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} flashSaleConfig={selectedRestaurant?.flash_sale} />}
+                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} flashSaleConfig={selectedRestaurant?.flash_sale} displaySettings={selectedRestaurant?.display_settings} />}
             </AnimatePresence>
         </div>
     );
@@ -1327,7 +1327,7 @@ function MyOrdersList({ user }) {
         </div>
     );
 }
-function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user, flashSaleConfig }) {
+function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user, flashSaleConfig, displaySettings }) {
     const [step, setStep] = useState('cart');
     const [form, setForm] = useState({ name: '', phone: '', address: '', note: '', paymentMethod: 'cash' });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -1336,9 +1336,26 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
     const expiredItems = items.filter(item => {
         if (!item.flashRule) return false;
         const currentRule = flashSaleConfig?.active ? flashSaleConfig.items?.[item.id] : null;
-        // If it HAD a rule in the cart but doesn't HAVE it now in the restaurant config
         return !currentRule;
     });
+
+    // VALIDATE MENU TIME
+    const isMenuTimeValid = useMemo(() => {
+        if (!displaySettings?.show_daily_menu) return false;
+        const now = new Date();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+        const [sh, sm] = (displaySettings.daily_menu_start || '11:00').split(':').map(Number);
+        const [eh, em] = (displaySettings.daily_menu_end || '14:00').split(':').map(Number);
+        return currentMinutes >= (sh * 60 + sm) && currentMinutes <= (eh * 60 + em);
+    }, [displaySettings]);
+
+    const invalidMenuItems = items.filter(item => {
+        const isMenu = item.id.startsWith('daily-menu-') || item.id.startsWith('constant-menu-');
+        if (!isMenu) return false;
+        return !isMenuTimeValid;
+    });
+
+    const canSubmit = expiredItems.length === 0 && invalidMenuItems.length === 0;
 
     // Recalculate total based on FRESH config to detect price changes
     const displayTotal = useMemo(() => {
@@ -1382,6 +1399,10 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
         e.preventDefault();
         console.log("USER:", user);
         console.log("USER ID:", user?.id, typeof user?.id);
+        if (!canSubmit) {
+            toast.error("Lejárt tételek vannak a kosaradban!");
+            return;
+        }
         setIsSubmitting(true);
         try {
             const ordersByRestaurant = items.reduce((acc, item) => {
@@ -1494,21 +1515,30 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                                     </div>
                                 </div>
                                     {expiredItems.length > 0 && (
-                                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-xl">
+                                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-xl">
                                             <div className="flex gap-2 text-left">
                                                 <IoWarning className="text-amber-500 shrink-0 text-lg" />
                                                 <div>
-                                                    <p className="text-[11px] font-bold text-amber-800 dark:text-amber-400 leading-tight">
-                                                        Figyelem! Néhány akció időközben lejárt.
-                                                    </p>
-                                                    <p className="text-[9px] text-amber-700/80 dark:text-amber-400/70 mt-0.5">
-                                                        A kosarad frissült az eredeti árakkal. Kérjük, ellenőrizd a végösszeget a rendelés leadása előtt!
-                                                    </p>
+                                                    <p className="text-[11px] font-bold text-amber-800 dark:text-amber-400 leading-tight">Figyelem! Néhány akció időközben lejárt.</p>
+                                                    <p className="text-[9px] text-amber-700/80 dark:text-amber-400/70 mt-0.5">A kosarad frissült az eredeti árakkal. Kérjük, ellenőrizd a végösszeget!</p>
                                                 </div>
                                             </div>
                                         </motion.div>
                                     )}
-                                    <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-amber-500 text-white rounded-2xl font-bold shadow-lg shadow-amber-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2">
+
+                                    {invalidMenuItems.length > 0 && (
+                                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="p-3 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-xl">
+                                            <div className="flex gap-2 text-left">
+                                                <IoTime className="text-red-500 shrink-0 text-lg" />
+                                                <div>
+                                                    <p className="text-[11px] font-bold text-red-800 dark:text-red-400 leading-tight">Lejárt a menüidő! ⏳</p>
+                                                    <p className="text-[9px] text-red-700/80 dark:text-red-400/70 mt-0.5">A kosaradban lévő napi menük már nem rendelhetőek. Kérjük, távolítsd el őket a folytatáshoz!</p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+
+                                    <button type="submit" disabled={isSubmitting || !canSubmit} className={`w-full py-4 rounded-2xl font-bold shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2 text-sm ${!canSubmit ? 'bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed shadow-none' : 'bg-amber-500 text-white shadow-amber-500/30'}`}>
                                         {isSubmitting ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div> : <span>Rendelés leadása</span>}
                                     </button>
                                 <button type="button" onClick={() => setStep('cart')} className="w-full py-2 text-zinc-500 text-xs font-bold hover:text-amber-500 transition-colors">Vissza a kosárhoz</button>

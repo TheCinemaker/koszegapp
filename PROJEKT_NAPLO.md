@@ -129,6 +129,7 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Sync on Resume & Syntax Fix**: Implementálva az iPhone-os kényszerített frissítés (visibilitychange), valamint javítva a buildet akadályozó szintaktikai hiba a `FoodOrderPage.jsx` fájlban. A kód most már stabil és építhető.
 - **Időzített Menü (Napi & Állandó)**: Bevezetve az időalapú láthatóság. Mostantól mind a napi, mind az állandó menü csak a megadott sávban (pl. 11:00-14:00) látható és rendelhető. Az Állandó Menü mostantól szigorúan a Napi Menü meglététől és engedélyezésétől függ, az UI pedig egységesített listaként jelenik meg.
 - **Hírek / Közlemények**: Az éttermi nézetben megjelent egy vizuális banner, amely az admin által megadott aktuális híreket/közleményeket jeleníti meg.
+- **Kosár Validáció (Lejárt Menü Blokkolás)**: Implementálva egy kritikus biztonsági ellenőrzés a `CartDrawer`-ben. Ha a vendég menüidőben tesz be ételt a kosárba, de csak később akar fizetni (amikor a menü már nem elérhető), a rendszer blokkolja a rendelést és figyelmeztetést ad.
 - **Vizuális Visszajelzés:** Az akciós ételek egyedi badge-et kaptak az étlapon, az ajándékokat pedig külön tételként jelzi a rendszer.
 - **Git Push**: A teljes modul (időzítések, készletkezelés, iPhone fixek, dokumentáció) stabil állapotban feltöltve a GitHub-ra. Élesítésre kész. 🚀🏆✨
 
