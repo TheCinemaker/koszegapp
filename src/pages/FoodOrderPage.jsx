@@ -452,7 +452,15 @@ export default function FoodOrderPage() {
     const selectedRestaurantRef = useRef(null);
     const { user, loading: authLoading } = useAuth();
     const [activeOrders, setActiveOrders] = useState([]);
-    const [dismissedOrderIds, setDismissedOrderIds] = useState(new Set());
+    const [dismissedOrderIds, setDismissedOrderIds] = useState(() => {
+        const saved = localStorage.getItem('dismissed_orders');
+        return saved ? new Set(JSON.parse(saved)) : new Set();
+    });
+
+    // Save dismissed orders to persists across refreshes
+    useEffect(() => {
+        localStorage.setItem('dismissed_orders', JSON.stringify([...dismissedOrderIds]));
+    }, [dismissedOrderIds]);
 
     // 1. Monitor active orders for logged-in user
     useEffect(() => {
@@ -470,7 +478,7 @@ export default function FoodOrderPage() {
 
             if (data) {
                 // Filter out traditionally "closed" orders that are old, 
-                // but keep new "delivered/rejected/cancelled" ones for 10 minutes unless dismissed
+                // but keep new "delivered/rejected/cancelled" ones for 1 minute unless dismissed
                 const now = new Date();
                 const filtered = data.filter(o => {
                     if (dismissedOrderIds.has(o.id)) return false;
@@ -478,7 +486,7 @@ export default function FoodOrderPage() {
                     
                     const orderDate = new Date(o.updated_at || o.created_at);
                     const diffMinutes = (now - orderDate) / (1000 * 60);
-                    return diffMinutes < 10; // Keep closed orders for 10 mins
+                    return diffMinutes < 1; // Keep closed orders for 1 min (user requested)
                 });
                 setActiveOrders(filtered);
             }
@@ -1172,7 +1180,7 @@ function ActiveOrderTracker({ order, onDismiss }) {
     const steps = [
         { id: 'new', label: 'Leadva', icon: IoReceipt },
         { id: 'preparing', label: 'Készül', icon: IoRestaurant },
-        { id: 'ready', label: isCollection ? 'Átvethető' : 'Futárnál', icon: isCollection ? IoStorefront : IoBicycle },
+        { id: 'ready', label: isCollection ? 'Jöhetsz érte!' : 'Futárnál', icon: isCollection ? IoStorefront : IoBicycle },
         { id: 'delivered', label: 'Kész', icon: IoStar }
     ];
 

@@ -124,6 +124,7 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Folyamatjelző Perzisztencia**: A lezárt (kiszállított/törölt) rendelések 10 percig láthatóak maradnak egy statikus zöld jelzéssel, segítve a visszajelzést.
 - **Manuális Bezárás**: Minden tracker kapott egy 'X' gombot, amivel a vendég bármikor eltüntetheti a lezárt folyamatokat.
 - **Seamless Login Redirect**: Kijavítva az a hiba, ahol a KőszegPass-os belépés után a user a profillapon maradt. Mostantól a rendszer visszairányít a KőszegEats (vagy az eredeti) oldalra a sikeres bejelentkezés után.
+- **Tracker Perzisztencia & Időzítés**: A lezárt rendelések láthatósága 1 percre csökkentve (a korábbi 10 helyett). Az elrejtés mostantól `localStorage` alapon működik, így oldalfrissítés után sem térnek vissza a bezárt tracker kártyák.
 - **Vizuális Visszajelzés:** Az akciós ételek egyedi badge-et kaptak az étlapon, az ajándékokat pedig külön tételként jelzi a rendszer.
 - **Git Push**: A teljes modul (kód, dokumentáció, fixek) stabil állapotban feltöltve a GitHub-ra. Élesítésre kész.
 
