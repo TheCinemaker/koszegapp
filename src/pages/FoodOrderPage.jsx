@@ -1178,76 +1178,74 @@ function ActiveOrderTracker({ order, onDismiss }) {
 
     // Determine current logical step index for the simplified UI
     let activeStep = 0;
-    if (currentIndex >= 0 && currentIndex < 2) activeStep = 0; // new, accepted
-    if (order.status === 'preparing') activeStep = 1;
+    if (order.status === 'new') activeStep = 0;
+    if (order.status === 'accepted' || order.status === 'preparing') activeStep = 1;
     if (order.status === 'ready' || order.status === 'delivering') activeStep = 2;
     if (order.status === 'delivered') activeStep = 3;
 
     return (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-[2rem] border border-white dark:border-white/10 shadow-xl mb-4 overflow-hidden relative group">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-[1.5rem] border border-white dark:border-white/10 shadow-lg mb-3 overflow-hidden relative group">
             {/* Background Accent */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-3xl -mr-16 -mt-16 rounded-full" />
+            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 blur-3xl -mr-12 -mt-12 rounded-full" />
             
-            <div className="flex justify-between items-center mb-4 relative z-10">
-                <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${isClosed ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
-                    <span className="text-[10px] font-black uppercase text-amber-600 tracking-widest">
-                        {isClosed ? 'Rendelés Befejezve' : 'Élő Rendeléskövetés'}
-                    </span>
+            <div className="flex justify-between items-start mb-3 relative z-10">
+                <div className="flex flex-col gap-0.5">
+                    <div className="flex items-center gap-1.5">
+                        <div className={`w-1.5 h-1.5 rounded-full ${isClosed ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
+                        <span className="text-[9px] font-black uppercase text-amber-600 tracking-wider">
+                            {isClosed ? 'Rendelés Befejezve' : 'Élő Követés'}
+                        </span>
+                    </div>
+                    <div className="text-[11px] font-bold text-gray-900 dark:text-white line-clamp-1">
+                        {order.restaurants?.name} <span className="text-gray-400 font-medium ml-1">#{order.id.slice(0, 6)}</span>
+                    </div>
                 </div>
-                <div className="flex items-center gap-3">
-                    <div className="text-[10px] font-bold text-gray-400">#{order.id.slice(0, 8)}</div>
-                    {onDismiss && (
-                        <button 
-                            onClick={(e) => { e.stopPropagation(); onDismiss(); }} 
-                            className="bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 p-1 rounded-full transition-colors"
-                        >
-                            <IoClose size={12} />
-                        </button>
-                    )}
-                </div>
+                {onDismiss && (
+                    <button 
+                        onClick={(e) => { e.stopPropagation(); onDismiss(); }} 
+                        className="bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 p-1 rounded-full transition-colors"
+                    >
+                        <IoClose size={14} />
+                    </button>
+                )}
             </div>
 
-            <div className="relative pt-2 pb-6 px-2">
+            <div className="relative pt-1 pb-2 px-1">
                 {/* Progress Line */}
-                <div className="absolute top-[26px] left-8 right-8 h-0.5 bg-gray-100 dark:bg-white/5" />
+                <div className="absolute top-[22px] left-6 right-6 h-0.5 bg-gray-100 dark:bg-white/5" />
                 <motion.div 
                     initial={{ width: 0 }} 
                     animate={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
-                    className="absolute top-[26px] left-8 h-0.5 bg-gradient-to-r from-amber-400 to-amber-600 shadow-[0_0_8px_rgba(245,158,11,0.4)]"
+                    className="absolute top-[22px] left-6 h-0.5 bg-gradient-to-r from-amber-400 to-amber-600"
                 />
 
-                <div className="flex justify-between relative z-10">
+                <div className="flex justify-between relative z-10 px-1">
                     {steps.map((step, idx) => {
                         const Icon = step.icon;
                         const isPast = idx < activeStep;
                         const isActive = idx === activeStep;
                         
                         return (
-                            <div key={idx} className="flex flex-col items-center gap-2 w-14">
+                            <div key={idx} className="flex flex-col items-center gap-1.5 w-12">
                                 <motion.div 
-                                    animate={isActive ? { scale: [1, 1.15, 1], rotate: [0, 5, -5, 0] } : {}}
+                                    animate={isActive ? { scale: [1, 1.1, 1] } : {}}
                                     transition={isActive ? { repeat: Infinity, duration: 3 } : {}}
                                     className={`
-                                        w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500
-                                        ${isPast ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 
-                                          isActive ? 'bg-white dark:bg-zinc-800 border-2 border-amber-500 text-amber-500 shadow-xl' : 
+                                        w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500
+                                        ${isPast ? 'bg-amber-500 text-white shadow-md' : 
+                                          isActive ? 'bg-white dark:bg-zinc-800 border-2 border-amber-500 text-amber-500 shadow-lg' : 
                                           'bg-gray-50 dark:bg-white/5 text-gray-300 dark:text-gray-600'}
                                     `}
                                 >
-                                    <Icon size={16} />
+                                    <Icon size={14} />
                                 </motion.div>
-                                <span className={`text-[8px] font-black uppercase tracking-tighter ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>
+                                <span className={`text-[7px] font-black uppercase tracking-tighter text-center leading-none ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>
                                     {step.label}
                                 </span>
                             </div>
                         );
                     })}
                 </div>
-            </div>
-
-            <div className="mt-2 text-center text-[11px] font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-white/5 py-2.5 rounded-xl border border-black/5 dark:border-white/5 capitalize">
-                {order.restaurants?.name}: {getOrderStatusText(order.status)}
             </div>
         </motion.div>
     );

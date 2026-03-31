@@ -159,7 +159,8 @@ export default function KoszegPassProfile() {
 
         // Critical: Check for user.id to avoid race conditions
         if (!user?.id) {
-            navigate('/pass/register', { replace: true });
+            const currentPath = window.location.pathname;
+            navigate(`/pass/register?redirectTo=${currentPath}`, { replace: true });
             return;
         }
 

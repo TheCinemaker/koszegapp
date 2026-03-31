@@ -64,13 +64,18 @@ A legfontosabb cél a zökkenőmentes foglalási élmény biztosítása, külön
 ### 2026.03.31 - Napi Menü (A/B/C) Rendszer és Realtime Sync
 - **Strukturált Napi Menü:** Bevezetésre került a Leves + A/B/C variációs rendszer. Mostantól több opciót is megadhat az étterem.
 - **Kettős Árazás:** Támogatás a "Levessel" és "Leves nélkül" árakhoz.
+- [x] Phase 3: Verification & Polish
+    - [x] Run verification tests for "Eats" (Flash Sale, Mystery Box, Sold Out)
+    - [x] Create walkthrough documentation for Flash Sale
+    - [x] **Implement Personal Pickup (Collection) Option**
+    - [x] **Implement Live Order Tracker UI (Status-based)** for "Booking" (Calendar, Login)
 - **Marketing Funkciók Élesítése:** A Mystery Box (Ételmentés) és Flash Sale (Villámakció) szakaszok visszakerültek a vendégoldalra.
 - **Flash Sale Bővítés:** Mostantól a főoldali étteremlistában is láthatóak a Villámakciók (⚡ színezett kapszula), nem csak az étterem saját lapján.
 - **Full Realtime Sync Fix:** Javítva az a hiba, ahol az étterem belső nézetében nem frissültek azonnal a marketing elemek. Egy `useRef` alapú megoldással most már minden változtatás (Mystery Box, Flash Sale be/kikapcsolás) azonnal megjelenik a már bent lévő vendégeknél is.
 - **Bugfix (Persztencia):** Az "Összes elfogyott" és "Állandó menü elérhető" gombok javítva. Mostantól a `display_settings` mezőbe mentődnek, így stabilan és realtime frissítik a vendégoldalt.
 - **Flash Sale Banner:** Új, látványos animált ⚡ ikon (villogás nélkül) az éttermek fejlécében, ha aktív az akció.
 - **Realtime "Elfogyott" Toggles:** Az adminban állított "Elfogyott" állapot azonnal megjelenik a vendégoldalon (piros szalaggal és letiltott kosár gombbal).
-- **Admin UI Finomítás:** A "VAN" és "ELÉRHETŐ" állapotjelző gombok zöld színt kaptak a jobb olvashatóság érdekében.
+- **Admin UI Finomítás:** A "VAN" és "ELÉRHETŐ" állapotjelző gombok zöld színt kaptak a jobb olvashatőség érdekében.
 - **Automatikus Elrejtés:** Ha egy adott napra nincs beírva menü tartalom, a szakasz automatikusan elrejtődik a vendégek elől.
 - **Teszt Adat Generátor:** Beépítettünk egy "Teszt Adatok Betöltése" gombot a FoodAdmin felületre a gyors kipróbáláshoz.
 - **No-Pulse Policy:** Minden villogó és pulzáló (`animate-pulse`) animációt véglegesen eltávolítottam. A felület stabil és zavarmentes.
@@ -113,5 +118,16 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Fizetési Hiba Fix (UUID)**: Az ajándék termékek és napi menük egyedi azonosítói nem feleltek meg az adatbázis UUID formázásának, ami megakasztotta a rendelést. Bevezettünk egy Regex alapü validálást a `foodService.js`-ben, ami ezt orvosolja.
 - **Visszaélés elleni védelem**: A `foodService.js` a rendelés leadásakor újra lekéri a szerverről az aktuális akciós szabályokat. Így ha egy user a kosarában hagy egy akciós termékeket, de az akció időközben lejár, a rendszer automatikusan az eredeti árakkal rögzíti a rendelést, megakadályozva a kijátszást.
 - **Frontend Figyelmeztetés**: Ha a kosárban lejárt akciós tétel van, a rendszer a fizetés előtt egy narancssárga figyelmeztető üzenetben jelzi a változást a vendégnek, és automatikusan frissíti a végösszeget.
+- **Személyes Átvétel Opció**: A korábbi "Elvitel" funkciót átneveztük és pontosítottuk. A vendég mostantól egyértelműen választhatja a helyszíni átvételt a futár helyett.
+- **Élő Rendeléskövető (Multi-Tracker)**: Az új, animált folyamatjelző mostantól többidejű rendeléseket is tud kezelni. Ha a vendég több helyről rendel, mindegyikhez külön tracker jelenik meg.
+- **Folyamatjelző Finomhangolás**: Kompaktabb, "Apple-style" megjelenés. Az étterem neve bekerült a fejlécbe, az állapot-logika pedig javítva lett (az "Elfogadva" státusz is már a "Készül" fázist aktiválja).
+- **Folyamatjelző Perzisztencia**: A lezárt (kiszállított/törölt) rendelések 10 percig láthatóak maradnak egy statikus zöld jelzéssel, segítve a visszajelzést.
+- **Manuális Bezárás**: Minden tracker kapott egy 'X' gombot, amivel a vendég bármikor eltüntetheti a lezárt folyamatokat.
+- **Seamless Login Redirect**: Kijavítva az a hiba, ahol a KőszegPass-os belépés után a user a profillapon maradt. Mostantól a rendszer visszairányít a KőszegEats (vagy az eredeti) oldalra a sikeres bejelentkezés után.
 - **Vizuális Visszajelzés:** Az akciós ételek egyedi badge-et kaptak az étlapon, az ajándékokat pedig külön tételként jelzi a rendszer.
+- **Git Push**: A teljes modul (kód, dokumentáció, fixek) stabil állapotban feltöltve a GitHub-ra. Élesítésre kész.
+
+### Következő Tervezett Lépések:
+- **Admin Dashboard**: Globális bevételi nézet és tranzakciós statisztikák finomhangolása.
+- **Booking Login**: A foglalási folyamat "Seamless Login" rendszerének tökéletesítése.
 

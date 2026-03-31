@@ -55,6 +55,7 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
     const isFlashActive = fs.active && (!fs.end_time || new Date(fs.end_time) > new Date());
     const freshRules = isFlashActive ? (fs.items || {}) : {};
 
+    const isCollection = customer.address === 'Személyes átvétel';
     const totalPrice = cartItems.reduce((sum, item) => {
         const price = item.price || 0;
         const qty = item.quantity || 0;
