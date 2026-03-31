@@ -99,7 +99,29 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
     const [mainExpanded, setMainExpanded] = useState(false);
     const [weekExpanded, setWeekExpanded] = useState(false);
 
+    // Calculate if we're within the allowed time range for daily menu
+    const isDailyWithinTime = useMemo(() => {
+        if (!restaurant?.display_settings?.show_daily_menu) return false;
+        
+        const now = new Date();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+        
+        const [sh, sm] = (restaurant.display_settings.daily_menu_start || '11:00').split(':').map(Number);
+        const [eh, em] = (restaurant.display_settings.daily_menu_end || '14:00').split(':').map(Number);
+        
+        const startMinutes = sh * 60 + sm;
+        const endMinutes = eh * 60 + em;
+        
+        return currentMinutes >= startMinutes && currentMinutes <= endMinutes;
+    }, [restaurant.display_settings]);
+
     if (!dailyMenuStr && !constantMenuStr) return null;
+    
+    // If only daily menu is supposed to show, but it's out of time, hide the whole card
+    const hasVisibleDaily = showDaily && dailyMenuStr && isDailyWithinTime;
+    const hasVisibleConstant = showConstant && constantMenuStr;
+    
+    if (!hasVisibleDaily && !hasVisibleConstant) return null;
 
     let weeklyMenu = null;
     let isOldFormat = false;
@@ -191,7 +213,7 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
                             )}
 
                             {/* DAILY / WEEKLY MENU */}
-                            {(showDaily && dailyMenuStr && (todayData?.A || todayData?.B || todayData?.C)) && (
+                            {hasVisibleDaily && (
                                 <div className={`mt-3 border rounded-2xl relative overflow-hidden shadow-sm ${restaurant.display_settings?.is_daily_menu_available !== false ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30' : 'bg-red-50 dark:bg-red-900/5 border-red-200 dark:border-red-900/20 opacity-80'}`}>
                                     <div className={`absolute top-0 left-0 w-1.5 h-full rounded-l-2xl ${restaurant.display_settings?.is_daily_menu_available !== false ? 'bg-blue-500' : 'bg-gray-400'}`} />
                                     

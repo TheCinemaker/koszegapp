@@ -650,6 +650,43 @@ function MenuEditor({ restaurantId, restData, updateRestField }) {
                                 />
                                 <label htmlFor="show_daily" className="text-xs font-bold text-black uppercase cursor-pointer">Napi Menü Engedélyezése</label>
                             </div>
+
+                            {restData.display_settings?.show_daily_menu && (
+                                <div className="flex items-center gap-3 border-l border-gray-300 pl-3">
+                                    <div className="flex items-center gap-1">
+                                        <span className="text-[10px] text-zinc-600 font-bold uppercase">Látható:</span>
+                                        <input 
+                                            type="time" 
+                                            className={`w-20 ${WIN98.borderInset} px-1 text-[10px] bg-white`}
+                                            value={restData.display_settings?.daily_menu_start || '11:00'} 
+                                            onChange={e => updateRestSetting('daily_menu_start', e.target.value)}
+                                        />
+                                        <span className="text-[10px]">-</span>
+                                        <input 
+                                            type="time" 
+                                            className={`w-20 ${WIN98.borderInset} px-1 text-[10px] bg-white`}
+                                            value={restData.display_settings?.daily_menu_end || '14:00'} 
+                                            onChange={e => updateRestSetting('daily_menu_end', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="flex items-center gap-1.5 ml-2">
+                                        <IoTime className="text-amber-600 animate-pulse" />
+                                        <span className="text-[9px] text-zinc-500 italic leading-none">
+                                            {(() => {
+                                                const now = new Date();
+                                                const current = now.getHours() * 60 + now.getMinutes();
+                                                const [sh, sm] = (restData.display_settings?.daily_menu_start || '11:00').split(':').map(Number);
+                                                const [eh, em] = (restData.display_settings?.daily_menu_end || '14:00').split(':').map(Number);
+                                                const start = sh * 60 + sm;
+                                                const end = eh * 60 + em;
+                                                return (current >= start && current <= end) 
+                                                    ? '✅ Jelenleg látható a vendégeknek' 
+                                                    : '💤 Jelenleg rejtve van (időn kívül)';
+                                            })()}
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
                             
                             {restData.display_settings?.show_daily_menu && (
                                 <>
