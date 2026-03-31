@@ -126,7 +126,7 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Seamless Login Redirect**: Kijavítva az a hiba, ahol a KőszegPass-os belépés után a user a profillapon maradt. Mostantól a rendszer visszairányít a KőszegEats (vagy az eredeti) oldalra a sikeres bejelentkezés után.
 - **Tracker Perzisztencia & Időzítés**: A lezárt rendelések láthatósága 1 percre csökkentve (a korábbi 10 helyett). Az elrejtés mostantól `localStorage` alapon működik, így oldalfrissítés után sem térnek vissza a bezárt tracker kártyák.
 - **Valós idejű Készletkezelés**: Kijavítva az a hiba, ahol az elfogyott termékek eltűntek az oldalról. Mostantól minden termék látható marad "Elfogyott" jelzéssel, és a készletváltozások (elérhetőség) azonnal, frissítés nélkül megjelennek a felhasználónál a Supabase Realtime segítségével.
-- **Sync on Resume (iPhone Fix)**: Bevezetve a `visibilitychange` alapú szinkronizáció. Ha a felhasználó háttérbe teszi az appot (pöccintés felfelé), majd visszatér, a rendszer automatikusan újratölti a készletet és a rendelések állapotát, így nincs többé "befagyott" adat.
+- **Sync on Resume & Syntax Fix**: Implementálva az iPhone-os kényszerített frissítés (visibilitychange), valamint javítva a buildet akadályozó szintaktikai hiba a `FoodOrderPage.jsx` fájlban. A kód most már stabil és építhető.
 - **Vizuális Visszajelzés:** Az akciós ételek egyedi badge-et kaptak az étlapon, az ajándékokat pedig külön tételként jelzi a rendszer.
 - **Git Push**: A teljes modul (kód, dokumentáció, fixek) stabil állapotban feltöltve a GitHub-ra. Élesítésre kész.
 
