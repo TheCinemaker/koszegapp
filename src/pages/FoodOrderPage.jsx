@@ -451,9 +451,10 @@ export default function FoodOrderPage() {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const selectedRestaurantRef = useRef(null);
     const { user, loading: authLoading } = useAuth();
-    const [activeOrderStatus, setActiveOrderStatus] = useState(null);
+    const [activeOrders, setActiveOrders] = useState([]);
+    const [dismissedOrderIds, setDismissedOrderIds] = useState(new Set());
 
-    // 1. Monitor active order status for logged-in user
+    // 1. Monitor active orders for logged-in user
     useEffect(() => {
         if (!user) return;
 
@@ -461,15 +462,26 @@ export default function FoodOrderPage() {
             const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
             const { data } = await supabase
                 .from('orders')
-                .select('status')
+                .select('*, restaurants(name)')
                 .eq('user_id', user.id)
                 .gte('created_at', twelveHoursAgo)
-                .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering'])
-                .order('created_at', { ascending: false })
-                .limit(1)
-                .maybeSingle();
+                .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering', 'delivered', 'rejected', 'cancelled'])
+                .order('created_at', { ascending: false });
 
-            setActiveOrderStatus(data ? data.status : null);
+            if (data) {
+                // Filter out traditionally "closed" orders that are old, 
+                // but keep new "delivered/rejected/cancelled" ones for 10 minutes unless dismissed
+                const now = new Date();
+                const filtered = data.filter(o => {
+                    if (dismissedOrderIds.has(o.id)) return false;
+                    if (['new', 'accepted', 'preparing', 'ready', 'delivering'].includes(o.status)) return true;
+                    
+                    const orderDate = new Date(o.updated_at || o.created_at);
+                    const diffMinutes = (now - orderDate) / (1000 * 60);
+                    return diffMinutes < 10; // Keep closed orders for 10 mins
+                });
+                setActiveOrders(filtered);
+            }
         };
 
         fetchActiveOrders();
@@ -482,28 +494,25 @@ export default function FoodOrderPage() {
                 table: 'orders',
                 filter: `user_id=eq.${user.id}`
             }, (payload) => {
-                if (payload.new && payload.new.status) {
-                    setActiveOrderStatus(payload.new.status);
-                } else {
-                    fetchActiveOrders();
-                }
+                fetchActiveOrders();
             })
             .subscribe();
 
         return () => {
             supabase.removeChannel(chan);
         };
-    }, [user]);
+    }, [user, dismissedOrderIds]);
 
-    // 2. Clear completed status after 3 minutes
+    // 2. Auto-refresh internal timer for "staying" orders every minute
     useEffect(() => {
-        if (['delivered', 'rejected', 'cancelled'].includes(activeOrderStatus)) {
-            const timer = setTimeout(() => {
-                setActiveOrderStatus(null);
-            }, 3 * 60 * 1000); // 3 minutes
-            return () => clearTimeout(timer);
-        }
-    }, [activeOrderStatus]);
+        if (activeOrders.length === 0) return;
+        const interval = setInterval(() => {
+            // Trigger a re-filter by re-fetching or manually filtering if needed, 
+            // but the fetchActiveOrders in the other effect depends on dismissedOrderIds
+            // so we can just let it be or force a refresh here if we want strictly 10 mins
+        }, 60000);
+        return () => clearInterval(interval);
+    }, [activeOrders]);
 
     useEffect(() => {
         const fetchRestaurants = async () => {
@@ -714,7 +723,7 @@ export default function FoodOrderPage() {
                         <IoBasket className="text-base text-zinc-800 dark:text-white" />
 
                         {/* Status Capsule */}
-                        {activeOrderStatus && (
+                        {activeOrders.length > 0 && (
                             <div className="absolute -top-1 -right-1 flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
@@ -734,9 +743,9 @@ export default function FoodOrderPage() {
                 <div className="max-w-5xl mx-auto mt-2 flex justify-between items-center pointer-events-auto px-2">
                     {/* LEFT: Status Capsule (if active) */}
                     <div>
-                        {activeOrderStatus && (
+                        {activeOrders.length > 0 && (
                             <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-sm whitespace-nowrap animate-in slide-in-from-top-2 fade-in">
-                                {getOrderStatusText(activeOrderStatus)}
+                                {activeOrders.length} aktív rendelés
                             </div>
                         )}
                     </div>
@@ -750,6 +759,20 @@ export default function FoodOrderPage() {
 
             {/* MAIN (Added top padding for fixed header) */}
             <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-24">
+                {/* ACTIVE ORDER TRACKERS */}
+                {activeOrders.length > 0 && (activeTab === 'home' || activeTab === 'orders') && (
+                    <div className="space-y-4 mb-6">
+                        {activeOrders.map(order => (
+                            <FadeUp key={order.id}>
+                                <ActiveOrderTracker 
+                                    order={order} 
+                                    onDismiss={() => setDismissedOrderIds(prev => new Set([...prev, order.id]))} 
+                                />
+                            </FadeUp>
+                        ))}
+                    </div>
+                )}
+
                 <div className={activeTab === 'home' ? 'block' : 'hidden'}>
                     {view === 'restaurants' && (
                         <>
@@ -893,8 +916,23 @@ export default function FoodOrderPage() {
                 </div>
 
                 {activeTab === 'orders' && (
-                    <div className="pb-32 pt-2">
-                        {user ? <MyOrdersList user={user} /> : (
+                    <div className="pb-32 pt-2 px-4 max-w-screen-xl mx-auto">
+                        {user ? (
+                            <>
+                                {activeOrders.length > 0 && (
+                                    <div className="space-y-4 mb-6">
+                                        {activeOrders.map(order => (
+                                            <ActiveOrderTracker 
+                                                key={order.id} 
+                                                order={order} 
+                                                onDismiss={() => setDismissedOrderIds(prev => new Set([...prev, order.id]))} 
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                                <MyOrdersList user={user} />
+                            </>
+                        ) : (
                             <div className="text-center py-20 text-zinc-500">
                                 <Link to="/pass/register?redirectTo=/food" className="text-amber-500 font-bold hover:underline">
                                     Jelentkezz be
@@ -1036,7 +1074,7 @@ function DeliveryCollectionSlider({ value, onChange, disabled }) {
                     </motion.div>
                 ) : (
                     <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-1">
-                        <IoStorefront className="text-xs" /> <span>Elvitel</span>
+                        <IoStorefront className="text-xs" /> <span>Személyes átvétel</span>
                     </motion.div>
                 )}
             </motion.div>
@@ -1123,6 +1161,98 @@ function MenuItemCard({ item, onAdd, flashRule }) {
         </FadeUp>
     )
 }
+function ActiveOrderTracker({ order, onDismiss }) {
+    if (!order) return null;
+
+    const statuses = ['new', 'accepted', 'preparing', 'ready', 'delivering', 'delivered'];
+    const currentIndex = statuses.indexOf(order.status);
+    const isCollection = order.address === 'Személyes átvétel';
+    const isClosed = ['delivered', 'rejected', 'cancelled'].includes(order.status);
+
+    const steps = [
+        { id: 'new', label: 'Leadva', icon: IoReceipt },
+        { id: 'preparing', label: 'Készül', icon: IoRestaurant },
+        { id: 'ready', label: isCollection ? 'Átvethető' : 'Futárnál', icon: isCollection ? IoStorefront : IoBicycle },
+        { id: 'delivered', label: 'Kész', icon: IoStar }
+    ];
+
+    // Determine current logical step index for the simplified UI
+    let activeStep = 0;
+    if (currentIndex >= 0 && currentIndex < 2) activeStep = 0; // new, accepted
+    if (order.status === 'preparing') activeStep = 1;
+    if (order.status === 'ready' || order.status === 'delivering') activeStep = 2;
+    if (order.status === 'delivered') activeStep = 3;
+
+    return (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-4 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-[2rem] border border-white dark:border-white/10 shadow-xl mb-4 overflow-hidden relative group">
+            {/* Background Accent */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-3xl -mr-16 -mt-16 rounded-full" />
+            
+            <div className="flex justify-between items-center mb-4 relative z-10">
+                <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${isClosed ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
+                    <span className="text-[10px] font-black uppercase text-amber-600 tracking-widest">
+                        {isClosed ? 'Rendelés Befejezve' : 'Élő Rendeléskövetés'}
+                    </span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="text-[10px] font-bold text-gray-400">#{order.id.slice(0, 8)}</div>
+                    {onDismiss && (
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); onDismiss(); }} 
+                            className="bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 p-1 rounded-full transition-colors"
+                        >
+                            <IoClose size={12} />
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            <div className="relative pt-2 pb-6 px-2">
+                {/* Progress Line */}
+                <div className="absolute top-[26px] left-8 right-8 h-0.5 bg-gray-100 dark:bg-white/5" />
+                <motion.div 
+                    initial={{ width: 0 }} 
+                    animate={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
+                    className="absolute top-[26px] left-8 h-0.5 bg-gradient-to-r from-amber-400 to-amber-600 shadow-[0_0_8px_rgba(245,158,11,0.4)]"
+                />
+
+                <div className="flex justify-between relative z-10">
+                    {steps.map((step, idx) => {
+                        const Icon = step.icon;
+                        const isPast = idx < activeStep;
+                        const isActive = idx === activeStep;
+                        
+                        return (
+                            <div key={idx} className="flex flex-col items-center gap-2 w-14">
+                                <motion.div 
+                                    animate={isActive ? { scale: [1, 1.15, 1], rotate: [0, 5, -5, 0] } : {}}
+                                    transition={isActive ? { repeat: Infinity, duration: 3 } : {}}
+                                    className={`
+                                        w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500
+                                        ${isPast ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 
+                                          isActive ? 'bg-white dark:bg-zinc-800 border-2 border-amber-500 text-amber-500 shadow-xl' : 
+                                          'bg-gray-50 dark:bg-white/5 text-gray-300 dark:text-gray-600'}
+                                    `}
+                                >
+                                    <Icon size={16} />
+                                </motion.div>
+                                <span className={`text-[8px] font-black uppercase tracking-tighter ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>
+                                    {step.label}
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            <div className="mt-2 text-center text-[11px] font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-white/5 py-2.5 rounded-xl border border-black/5 dark:border-white/5 capitalize">
+                {order.restaurants?.name}: {getOrderStatusText(order.status)}
+            </div>
+        </motion.div>
+    );
+}
+
 function MyOrdersList({ user }) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -1187,6 +1317,8 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
             return sum + (price * qty);
         }, 0);
     }, [items, flashSaleConfig]);
+
+    const isCollection = orderType === 'collection';
 
     useEffect(() => {
         if (step === 'checkout' && user) {
