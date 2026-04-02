@@ -31,13 +31,13 @@ export default function FoodAuthPage() {
                 // Check if this user is actually a restaurant owner
                 if (user.user_metadata?.role === 'restaurant') {
                     toast.success('Üdv a konyhán! 👨‍🍳');
-                    navigate('/food-admin', { replace: true });
+                    navigate('/eats-admin', { replace: true });
                 } else {
                     // Prevent hairdressers from logging in here if we want strictness, 
                     // or just let them in and show "No Restaurant" screen.
                     // Strict:
                     // toast.error('Ez a fiók nem étteremhez tartozik!');
-                    navigate('/food-admin', { replace: true });
+                    navigate('/eats-admin', { replace: true });
                 }
             }
         } catch (error) {
@@ -95,11 +95,11 @@ export default function FoodAuthPage() {
                 toast.success('Sikeres regisztráció! 🍔');
                 // Auto-login or redirect
                 if (authData.session) {
-                    navigate('/food-admin', { replace: true });
+                    navigate('/eats-admin', { replace: true });
                 } else {
                     // Should be logged in by register, but if not:
                     await login(loginId, password, 'restaurant');
-                    navigate('/food-admin', { replace: true });
+                    navigate('/eats-admin', { replace: true });
                 }
             }
         } catch (error) {

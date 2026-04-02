@@ -12,28 +12,58 @@ export async function getRestaurants() {
     return data ?? [];
 }
 
-// 1. Menü lekérése
+// 1. Menü lekérése (Resilient version with fallback)
 export async function getMenu(restaurantId) {
     if (!restaurantId) return [];
 
-    const { data: categories, error: catError } = await supabase
+    let catQuery = supabase
         .from('menu_categories')
         .select('*')
-        .eq('restaurant_id', restaurantId)
-        .order('sort_order');
+        .eq('restaurant_id', restaurantId);
 
-    if (catError) throw catError;
+    const { data: categories, error: catError } = await catQuery.order('sort_order');
 
-    const { data: items, error: itemError } = await supabase
+    if (catError) {
+        if (catError.code === '42703') { // Fallback if sort_order missing
+            const { data: fallbackCats, error: fbError } = await catQuery;
+            if (fbError) throw fbError;
+            return await fetchItemsForCategories(fallbackCats, restaurantId);
+        }
+        throw catError;
+    }
+
+    return await fetchItemsForCategories(categories, restaurantId);
+}
+
+// Helper to fetch items and handle errors
+async function fetchItemsForCategories(categories, restaurantId) {
+    let itemQuery = supabase
         .from('menu_items')
         .select('*')
         .eq('restaurant_id', restaurantId);
 
-    if (itemError) throw itemError;
+    const { data: items, error: itemError } = await itemQuery.order('sort_order', { ascending: true });
 
-    return categories.map(cat => ({
+    if (itemError) {
+        if (itemError.code === '42703') { // Column doesn't exist
+            const { data: fallbackItems, error: fallbackError } = await itemQuery;
+            if (fallbackError) throw fallbackError;
+            return assembleMenu(categories, fallbackItems);
+        }
+        throw itemError;
+    }
+
+    return assembleMenu(categories, items);
+}
+
+// Helper to assemble and sort in-memory as a safety measure
+function assembleMenu(categories, items) {
+    const sortedCats = [...(categories || [])].sort((a, b) => (a.sort_order ?? a.order_index ?? 0) - (b.sort_order ?? b.order_index ?? 0));
+    const sortedItems = [...(items || [])].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+
+    return sortedCats.map(cat => ({
         ...cat,
-        items: items.filter(i => i.category_id === cat.id),
+        items: sortedItems.filter(i => i.category_id === cat.id),
     }));
 }
 
@@ -43,7 +73,7 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
         throw new Error('Érvénytelen rendelési adatok');
     }
 
-    // SECURITY: Fetch latest flash sale status from DB to prevent stale rules exploitation
+    // SECURITY: Fetch latest flash sale status from DB
     const { data: restData } = await supabase
         .from('restaurants')
         .select('flash_sale')
@@ -58,7 +88,7 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
     const totalPrice = cartItems.reduce((sum, item) => {
         const price = item.price || 0;
         const qty = item.quantity || 0;
-        const rule = freshRules[item.id]; // Use FRESH rule
+        const rule = freshRules[item.id];
 
         if (rule && rule.type === 'percent') {
             const discount = (rule.value || 0) / 100;
@@ -73,9 +103,8 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
         return sum + (price * qty);
     }, 0);
 
-    // Prepare items for the RPC function
     const itemsJson = cartItems.map(item => {
-        const rule = freshRules[item.id]; // Use FRESH rule
+        const rule = freshRules[item.id];
         let effectivePrice = item.price;
         let displayName = item.name;
 
@@ -92,7 +121,6 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
         };
     });
 
-    // Call the database function
     const { data, error } = await supabase.rpc('place_order_full', {
         p_restaurant_id: restaurantId,
         p_customer_name: customer.name,

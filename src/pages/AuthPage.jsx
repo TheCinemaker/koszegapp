@@ -112,7 +112,7 @@ export default function AuthPage() {
                 // Check if user is actually a provider
                 if (user.user_metadata?.role === 'restaurant') {
                     toast.success(t('errors.restaurantRedirect'));
-                    navigate('/food-admin');
+                    navigate('/eats-admin');
                 } else {
                     toast.success(t('errors.successLogin'));
                     navigate('/business', { replace: true });

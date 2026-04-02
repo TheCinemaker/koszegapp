@@ -47,6 +47,7 @@ const TeaserPage = lazyWithRetry(() => import('../pages/TeaserPage'));
 const FoodOrderPage = lazyWithRetry(() => import('../pages/FoodOrderPage'));
 const FoodAdmin = lazyWithRetry(() => import('../pages/FoodAdmin'));
 const FoodAuthPage = lazyWithRetry(() => import('../pages/FoodAuthPage'));
+const OrderPrintView = lazyWithRetry(() => import('../pages/OrderPrintView'));
 const KoszegPassRegister = lazyWithRetry(() => import('../pages/KoszegPassRegister'));
 const KoszegPassProfile = lazyWithRetry(() => import('../pages/KoszegPassProfile'));
 const ScannerPage = lazyWithRetry(() => import('../pages/ScannerPage'));
@@ -190,9 +191,15 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
           <Route path="/secret-setup" element={<PageWrapper><SecretRegister /></PageWrapper>} />
           <Route path="/city-pass" element={<PageWrapper><CityPass /></PageWrapper>} />
-          <Route path="/food" element={<PageWrapper showFooter={false}><FoodOrderPage /></PageWrapper>} />
-          <Route path="/food-admin" element={<PageWrapper><FoodAdmin /></PageWrapper>} />
-          <Route path="/food-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
+          <Route path="/eats" element={<PageWrapper showFooter={false}><FoodOrderPage /></PageWrapper>} />
+          <Route path="/eats-admin" element={<PageWrapper><FoodAdmin /></PageWrapper>} />
+          <Route path="/eats-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
+          <Route path="/eats/print/:orderId" element={<OrderPrintView />} />
+
+          {/* Legacy Redirects */}
+          <Route path="/food" element={<Navigate to="/eats" replace />} />
+          <Route path="/food-admin" element={<Navigate to="/eats-admin" replace />} />
+          <Route path="/food-auth" element={<Navigate to="/eats-auth" replace />} />
 
           {/* KőszegPass Routes (Isolated Flow) */}
           <Route path="/pass" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />

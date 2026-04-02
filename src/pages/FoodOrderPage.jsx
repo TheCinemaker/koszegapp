@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront, IoStar, IoWarning } from 'react-icons/io5';
+import { IoBasket, IoRestaurant, IoClose, IoAdd, IoRemove, IoArrowBack, IoTime, IoLocation, IoReceipt, IoHome, IoGift, IoPerson, IoWallet, IoArrowForward, IoSearchOutline, IoNotifications, IoBicycle, IoStorefront, IoStar, IoWarning, IoArrowUp } from 'react-icons/io5';
 import { useCart } from '../hooks/useCart';
 import { getMenu, placeOrder } from '../api/foodService';
 import toast from 'react-hot-toast';
@@ -26,16 +26,28 @@ const getOrderStatusText = (status) => {
     return map[status] || status;
 };
 
+const isRestaurantOpen = (restaurant) => {
+    return restaurant?.is_open === true;
+};
 
 // --- RESTAURANT CARD (Same as good version) ---
-const RestaurantCard = ({ restaurant, onClick, index }) => (
+const RestaurantCard = ({ restaurant, onClick, index }) => {
+    const isOpen = isRestaurantOpen(restaurant);
+    
+    return (
     <FadeUp delay={index * 0.05}>
         <motion.div
             layoutId={`restaurant-${restaurant.id}`}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onClick}
-            className="
+            whileHover={isOpen ? { scale: 1.01 } : {}}
+            whileTap={isOpen ? { scale: 0.98 } : {}}
+            onClick={() => {
+                if (isOpen) {
+                    onClick();
+                } else {
+                    toast.error("Jelenleg zárva tart.");
+                }
+            }}
+            className={`
                 cursor-pointer 
                 relative overflow-hidden
                 bg-white/60 dark:bg-[#1a1c2e]/60 
@@ -45,11 +57,20 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
                 shadow-[0_4px_20px_0_rgba(31,38,135,0.05)]
                 group
                 flex flex-col
-            "
+                ${!isOpen ? 'opacity-60 grayscale' : ''}
+            `}
         >
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-orange-400 to-amber-600 opacity-10 blur-[40px] rounded-full group-hover:opacity-20 transition-opacity duration-500" />
+            <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-orange-400 to-amber-600 opacity-10 blur-[40px] rounded-full ${isOpen ? 'group-hover:opacity-20 transition-opacity duration-500' : ''}`} />
             <div className="h-40 relative overflow-hidden rounded-t-[2rem] m-1.5 mb-0">
                 {restaurant.image_url ? <ParallaxImage src={restaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-900" />}
+                
+                {/* ZÁRVA Overlay */}
+                {!isOpen && (
+                    <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10">
+                        <span className="font-black text-2xl tracking-[0.2em] text-white rotate-[-10deg] shadow-black drop-shadow-xl border-4 border-white/60 px-4 py-2 rounded-xl backdrop-blur-md">ZÁRVA</span>
+                    </div>
+                )}
+
                 <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5 z-10">
                     {restaurant.has_delivery === false ? (
                         <div className="bg-black/70 text-white backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-sm flex items-center gap-1 border border-white/10"><IoLocation className="text-amber-500" /><span>CSAK ELVITEL</span></div>
@@ -83,7 +104,8 @@ const RestaurantCard = ({ restaurant, onClick, index }) => (
             </div>
         </motion.div>
     </FadeUp>
-);
+    );
+};
 
 // --- WEEKLY MENU DISPLAY ---
 function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
@@ -373,7 +395,7 @@ function SimplePointsDisplay({ user }) {
 
     if (!user) return (
         <div className="text-center py-20 text-zinc-500">
-            <Link to="/pass/register?redirectTo=/food" className="text-amber-500 font-bold hover:underline">
+            <Link to="/pass/register?redirectTo=/eats" className="text-amber-500 font-bold hover:underline">
                 Jelentkezz be
             </Link> a pontjaidhoz.
         </div>
@@ -507,7 +529,7 @@ export default function FoodOrderPage() {
 
     const fetchRestaurants = async () => {
         try {
-            const { data } = await supabase.from('restaurants').select('*').eq('is_open', true).order('name');
+            const { data } = await supabase.from('restaurants').select('*').order('name');
             if (data) {
                 setRestaurants(data);
                 const allCats = new Set();
@@ -603,19 +625,64 @@ export default function FoodOrderPage() {
 
             const menuChan = supabase.channel(`menu-updates-${selectedRestaurant.id}`)
                 .on('postgres_changes', { 
-                    event: 'UPDATE', 
+                    event: '*', 
                     schema: 'public', 
                     table: 'menu_items',
                     filter: `restaurant_id=eq.${selectedRestaurant.id}`
                 }, (payload) => {
-                    setCategories(currentCats => currentCats.map(cat => ({
-                        ...cat,
-                        items: cat.items.map(item => item.id === payload.new.id ? { ...item, ...payload.new } : item)
-                    })));
+                    console.log("[Realtime] Menu Item Change:", payload);
+                    setCategories(currentCats => {
+                        const newCats = currentCats.map(cat => {
+                            // Filter out the item from its current location
+                            const itemsWithoutThis = cat.items.filter(item => item.id !== (payload.new?.id || payload.old?.id));
+                            
+                            if (payload.eventType === 'DELETE') {
+                                return { ...cat, items: itemsWithoutThis };
+                            }
+                            
+                            // If it belongs to this category, add/update it and re-sort
+                            if (cat.id === payload.new.category_id) {
+                                const updatedItems = [...itemsWithoutThis, payload.new];
+                                return { 
+                                    ...cat, 
+                                    items: updatedItems.sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0)) 
+                                };
+                            }
+                            
+                            return { ...cat, items: itemsWithoutThis };
+                        });
+                        return newCats;
+                    });
+                })
+                .subscribe();
+
+            const catsChan = supabase.channel(`menu-cats-updates-${selectedRestaurant.id}`)
+                .on('postgres_changes', {
+                    event: '*',
+                    schema: 'public',
+                    table: 'menu_categories',
+                    filter: `restaurant_id=eq.${selectedRestaurant.id}`
+                }, (payload) => {
+                    console.log("[Realtime] Category Change:", payload);
+                    if (payload.eventType === 'DELETE') {
+                        setCategories(currentCats => currentCats.filter(cat => cat.id !== payload.old.id));
+                    } else if (payload.eventType === 'INSERT') {
+                        setCategories(currentCats => [...currentCats, { ...payload.new, items: [] }].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
+                    } else if (payload.eventType === 'UPDATE') {
+                        setCategories(currentCats => {
+                            const newCats = currentCats.map(cat => 
+                                cat.id === payload.new.id ? { ...cat, ...payload.new } : cat
+                            );
+                            return newCats.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                        });
+                    }
                 })
                 .subscribe();
             
-            return () => { supabase.removeChannel(menuChan); };
+            return () => { 
+                supabase.removeChannel(menuChan); 
+                supabase.removeChannel(catsChan);
+            };
         } else {
             setView('restaurants');
             setCategories([]);
@@ -671,6 +738,11 @@ export default function FoodOrderPage() {
 
     // Custom Add Item handler to enforce rules
     const handleAddItem = (item) => {
+        if (!isRestaurantOpen(selectedRestaurant)) {
+            toast.error("Az étterem jelenleg zárva tart!", { icon: '🚫' });
+            return;
+        }
+
         const isAddingMystery = item.is_mystery_box;
         const hasNormalItems = items.some(i => !i.is_mystery_box);
 
@@ -857,8 +929,13 @@ export default function FoodOrderPage() {
                                 )}
 
                                 <div className={`flex flex-col md:flex-row gap-5 relative z-10 ${selectedRestaurant.flash_sale?.active ? 'pt-8' : ''}`}>
-                                    <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0">
+                                    <div className="w-full md:w-32 md:h-32 h-48 rounded-2xl overflow-hidden shadow-lg shrink-0 relative">
                                         {selectedRestaurant.image_url ? <ParallaxImage src={selectedRestaurant.image_url} className="w-full h-full" /> : <div className="w-full h-full bg-zinc-800" />}
+                                        {!isRestaurantOpen(selectedRestaurant) && (
+                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm z-10">
+                                                <span className="font-black text-xl tracking-[0.2em] text-white rotate-[-10deg] shadow-black drop-shadow-xl border-4 border-white/60 px-3 py-1.5 rounded-xl backdrop-blur-md">ZÁRVA</span>
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="flex-1">
                                         <h2 className="text-2xl font-black mb-2 text-gray-900 dark:text-white">{selectedRestaurant.name}</h2>
@@ -937,24 +1014,48 @@ export default function FoodOrderPage() {
                                 </div>
                             )}
                             {loading ? <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-500"></div></div> : (
-                                <div className="space-y-8">
-                                    {categories.map((category) => (
-                                        <div key={category.id} id={`cat-${category.id}`}>
-                                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {category.items.map(item => (
-                                                    <MenuItemCard 
-                                                        key={item.id} 
-                                                        item={item} 
-                                                        flashRule={selectedRestaurant.flash_sale?.active ? selectedRestaurant.flash_sale.items?.[item.id] : null}
-                                                        onAdd={() => handleAddItem({ ...item, restaurant_id: selectedRestaurant.id })} 
-                                                    />
+                                <>
+                                    {/* STICKY QUICK NAVIGATION BAR */}
+                                    {categories.length > 1 && (
+                                        <div className="sticky top-[80px] z-30 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 bg-[#f5f5f7]/80 dark:bg-[#000000]/80 backdrop-blur-md mb-6 border-b border-gray-200/50 dark:border-white/5 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)]">
+                                            <div className="flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+                                                {categories.map(cat => (
+                                                    <button 
+                                                        key={`nav-${cat.id}`}
+                                                        onClick={() => {
+                                                            const element = document.getElementById(`cat-${cat.id}`);
+                                                            if (element) {
+                                                                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                            }
+                                                        }}
+                                                        className="whitespace-nowrap px-4 py-1.5 rounded-full bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-bold shadow-sm border border-black/5 dark:border-white/5 hover:border-amber-500 hover:text-amber-500 transition-all active:scale-95"
+                                                    >
+                                                        {cat.name}
+                                                    </button>
                                                 ))}
                                             </div>
                                         </div>
-                                    ))}
-                                    {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
-                                </div>
+                                    )}
+
+                                    <div className="space-y-10">
+                                        {categories.map((category) => (
+                                            <div key={category.id} id={`cat-${category.id}`} className="scroll-mt-36">
+                                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white pl-1"><span className="w-1 h-6 bg-amber-500 rounded-full"></span>{category.name}</h3>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    {category.items.map(item => (
+                                                        <MenuItemCard 
+                                                            key={item.id} 
+                                                            item={item} 
+                                                            flashRule={selectedRestaurant.flash_sale?.active ? selectedRestaurant.flash_sale.items?.[item.id] : null}
+                                                            onAdd={() => handleAddItem({ ...item, restaurant_id: selectedRestaurant.id })} 
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {categories.length === 0 && <p className="text-center opacity-50 py-10 text-sm">Jelenleg nincs betöltött menü.</p>}
+                                    </div>
+                                </>
                             )}
                         </div>
                     )}
@@ -979,7 +1080,7 @@ export default function FoodOrderPage() {
                             </>
                         ) : (
                             <div className="text-center py-20 text-zinc-500">
-                                <Link to="/pass/register?redirectTo=/food" className="text-amber-500 font-bold hover:underline">
+                                <Link to="/pass/register?redirectTo=/eats" className="text-amber-500 font-bold hover:underline">
                                     Jelentkezz be
                                 </Link> a rendeléseidhez.
                             </div>
@@ -1013,9 +1114,52 @@ export default function FoodOrderPage() {
             </div>
 
             <AnimatePresence>
-                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} flashSaleConfig={selectedRestaurant?.flash_sale} displaySettings={selectedRestaurant?.display_settings} />}
+                {isCartOpen && <CartDrawer items={items} total={total} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQuantity} onRemove={removeItem} onClear={clearCart} restaurantId={selectedRestaurant?.id} orderType={filterType} user={user} flashSaleConfig={selectedRestaurant?.flash_sale} displaySettings={selectedRestaurant?.display_settings} isRestaurantOpenFlag={selectedRestaurant?.is_open} />}
             </AnimatePresence>
+
+            {/* SCROLL TO TOP BUTTON */}
+            <ScrollToTopButton />
         </div>
+    );
+}
+
+function ScrollToTopButton() {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const toggleVisibility = () => {
+            if (window.scrollY > 300) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener("scroll", toggleVisibility);
+        return () => window.removeEventListener("scroll", toggleVisibility);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    };
+
+    return (
+        <AnimatePresence>
+            {isVisible && (
+                <motion.button
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    onClick={scrollToTop}
+                    className="fixed bottom-20 right-4 z-40 p-3 rounded-full bg-amber-500 text-white shadow-lg shadow-amber-500/30 hover:bg-amber-600 hover:scale-110 active:scale-95 transition-all outline-none border border-amber-400"
+                >
+                    <IoArrowUp className="text-xl" />
+                </motion.button>
+            )}
+        </AnimatePresence>
     );
 }
 
@@ -1327,7 +1471,7 @@ function MyOrdersList({ user }) {
         </div>
     );
 }
-function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user, flashSaleConfig, displaySettings }) {
+function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, restaurantId, orderType, user, flashSaleConfig, displaySettings, isRestaurantOpenFlag }) {
     const [step, setStep] = useState('cart');
     const [form, setForm] = useState({ name: '', phone: '', address: '', note: '', paymentMethod: 'cash' });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -1355,7 +1499,10 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
         return !isMenuTimeValid;
     });
 
-    const canSubmit = expiredItems.length === 0 && invalidMenuItems.length === 0;
+    // Validáló funkció nyitvatartáshoz.
+    const isRestOpen = isRestaurantOpenFlag === true;
+
+    const canSubmit = expiredItems.length === 0 && invalidMenuItems.length === 0 && isRestOpen;
 
     // Recalculate total based on FRESH config to detect price changes
     const displayTotal = useMemo(() => {
@@ -1383,7 +1530,7 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
     useEffect(() => {
         if (step === 'checkout' && user) {
             const fetchUserData = async () => {
-                const { data } = await supabase.from('koszegpass_users').select('full_name, phone, address').eq('id', user.id).single();
+                const { data } = await supabase.from('koszegpass_users').select('full_name, phone, address').eq('id', user.id).maybeSingle();
                 if (data) setForm(prev => ({
                     ...prev,
                     name: data.full_name || prev.name,
@@ -1400,7 +1547,11 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
         console.log("USER:", user);
         console.log("USER ID:", user?.id, typeof user?.id);
         if (!canSubmit) {
-            toast.error("Lejárt tételek vannak a kosaradban!");
+            if (!isRestOpen) {
+                toast.error("Az étterem jelenleg zárva tart!");
+            } else {
+                toast.error("Lejárt tételek vannak a kosaradban!");
+            }
             return;
         }
         setIsSubmitting(true);
@@ -1429,7 +1580,7 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
             onClose();
         } catch (error) {
             console.error(error);
-            toast.error('Hiba történt.');
+            toast.error('Hiba történt: ' + (error.message || 'Ismeretlen hiba'));
         } finally {
             setIsSubmitting(false);
         }
@@ -1546,6 +1697,29 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
                     }
                 </div>
             </motion.div>
+            {/* Back to Top Button */}
+            <BackToTop />
         </div>
     );
 }
+
+const BackToTop = () => {
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const toggleVisible = () => setVisible(window.pageYOffset > 500);
+        window.addEventListener('scroll', toggleVisible, { passive: true });
+        return () => window.removeEventListener('scroll', toggleVisible);
+    }, []);
+
+    if (!visible) return null;
+
+    return (
+        <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-24 right-5 z-50 p-3 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-white/10 rounded-xl shadow-2xl active:scale-90 transition-all hover:bg-gray-50 dark:hover:bg-zinc-700 group ring-4 ring-black/5"
+        >
+            <IoArrowUp size={24} className="text-amber-500 group-hover:-translate-y-1 transition-transform" />
+        </button>
+    );
+};
