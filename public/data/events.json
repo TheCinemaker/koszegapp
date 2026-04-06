@@ -85,23 +85,23 @@
     "id": "event-2026-1770634145053"
   },
   {
-    "id": "new_1771696209719",
-    "name": "Kőszegi Vonósok koncertje",
+    "name": "Határtalan harmóniák - Kőszegi Vonósok koncertje",
     "date": "2026-04-11",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "19:00",
+    "location": "Jurisics vár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389582,
+      "lng": 16.538988
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "Szeretettel hívunk minden zenekedvelőt a Kőszegi Vonósok tavaszi hangversenyére! Az est folyamán vendégünkként köszönthetjük a somorjai Harmonia Classica kamarazenekart – egy magyar együttest, amely ugyan egy másik országban működik, mégis ugyanazt a kulturális és zenei örökséget ápolja. Ez az együttműködés is bizonyítja: a zene nem ismer határokat.\n• Szólista: Domsitz Erika (zongora)\n• Koncertmester: Scheer Bernadett\n• Művészeti vezető: Scheer Uwe\n• A Harmonia Classica kamarazenekar művészeti vezetője: Hegyi Brigita\nIdőpont: 2026. április 11. (szombat) 19:00\nHelyszín: Kőszeg, Jurisics-vár Lovagterem\nVárunk mindenkit szeretettel! ",
     "tags": [
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "harmonia.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209719"
   },
   {
     "name": "V. Kőszegi Gyermek és Ifjúsági Néptáncfesztivál",
@@ -112,11 +112,11 @@
       "lat": 47.389582,
       "lng": 16.538988
     },
-    "description": "Szombat délután és koraeste bemutatók a Fő téren",
+    "description": "Program:\n04.17. (Péntek)\n15.45 - 19.00 I. Kőszegi Gyermek és Ifjúsági Szólótáncverseny (Jurisics Vár Lovagterem)\n19.45 - 20.15 Eredményhirdetés - (Jurisics Vár Lovagterem)\n20.30 - 22.30 Táncház a Főtéren\n\n04.18. (Szombat)\n11.00 - 12.00 I. Népzenei és Népdaléneklési Verseny (Jurisics Vár Közösségi Ház)\n14.00 Eredményhirdetés (Jurisics Vár Közösségi Ház)\n14.00 - 16.45 Oktatás (Jurisics Vár Lovagterem)\n14.00 - 15.00 A Magyarpalatkai Banda műsora a Kőszegi Cimborák Táncegyüttes és barátai közreműködésével\n15.15 - 16.00 Ifjúsági Zenekarok és énekesek műsora a Fő Téren\n19.00 - 20.30 Gálaműsor a Tükrös Zenekar koncertjével, közreműködnek: a Magyar Táncművészeti Egyetem Hallgatói, Juhász Zenekar, Kőszegi Cimborák Táncegyüttes és a Magyarpalatkai Banda (Jurisics Vár Lovagterem)\n20.30 - 02.00 TÁNCHÁZ\n04.19 (Vasárnap)\n9.30 - 12.30 Együttesek Színpadi bemutatói (Jurisics Vár Lovagterem)\n13.30-16.00 Értékelés",
     "tags": [
       "program"
     ],
-    "image": "neptanc.jpg",
+    "image": "neptanc-1775499370504.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -947,25 +947,6 @@
     "id": "event-2026-1774436913146"
   },
   {
-    "name": "Író-, és költőóriások árnyékában",
-    "date": "2026-04-01",
-    "time": "19:30",
-    "location": "KÖSZHÁZ (Jurisics vár)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Németh Nyiba Sándor Ne szégyelld, hogy van lelked alcímű verses zenés előadása",
-    "tags": [
-      "zene"
-    ],
-    "image": "nyiba.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774852936993"
-  },
-  {
     "name": "Kézműves foglalkozás gyerekeknek",
     "date": "2026-04-06",
     "time": "10:00",
@@ -1112,5 +1093,24 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1774855422559"
+  },
+  {
+    "name": "3 NAPOS LÁNGOS ÉS TÓCSI FESZTIVÁL A NÉPTÁNC RITMUSÁRA ",
+    "date": "2026-04-17",
+    "time": "17:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "🎉 LÁNGOS ÉS TÓCSI FESZTIVÁL A NÉPTÁNC RITMUSÁRA KŐSZEGEN! 🎉\nSzeretettel meghívunk mindenkit egy különleges hangulatú rendezvényre, ahol a hagyomány, az ízek és a zene találkozik! 🌿\n📅 Időpont: április 17–19.�📍 Helyszín: Kőszeg, Fő tér\nMi vár rátok?\n🥞 Frissen sült palacsinta és ropogós lángos�🎶 Élő népzenei programok és látványos néptánc fellépések�🏹 Íjászat és hagyományőrző bemutatók�🎈 Gyerekjátékok és családi programok�🎤 Színpadi műsorok egész nap\nEz a fesztivál tökéletes választás mindazoknak, akik szeretik a magyar hagyományokat, a finom ételeket és a jó hangulatot!\nGyere el családdal, barátokkal, és éld át velünk a közös élményeket!\n👉 Ne maradj le – jelöld be az eseményt és oszd meg ismerőseiddel!\nRészeltes program az esemény oldalán!\nBELÉPÉS DÍJTALAN!",
+    "tags": [
+      "fesztivál"
+    ],
+    "image": "langos.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1775499305143"
   }
 ]
