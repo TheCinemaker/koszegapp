@@ -1112,5 +1112,24 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1775499305143"
+  },
+  {
+    "name": "Retro majális az Alasz pincében",
+    "date": "2026-05-01",
+    "time": "11:00",
+    "location": "Panoráma kóstoló - Alasz pince",
+    "coords": {
+      "lat": 47.36949878863319,
+      "lng": 16.515268864998557
+    },
+    "description": "Retro majálisra várjuk kedves vendégeinkat. Sör-virsli, babgulyás és fergeteges hangulat a Koprive zenekarral. Május 2-án Kőszeg város fúvószenekarával múlatjuk az időt! ",
+    "tags": [
+      "május1"
+    ],
+    "image": "alasz-1775554029470.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1775554037485"
   }
 ]
