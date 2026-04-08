@@ -46,23 +46,23 @@
     "id": "new_1771696209717"
   },
   {
-    "id": "new_1771696209718",
     "name": "Vas vármegyei és Nemzetközi BORVERSENY",
     "date": "2026-04-10",
-    "time": "17:00",
-    "location": "Kőszeg",
+    "time": "10:00",
+    "location": "Jurisics vár",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389582,
+      "lng": 16.538988
     },
     "description": "Előzetes információ, bővebben később",
     "tags": [
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "bornapok.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209718"
   },
   {
     "name": "Baradács Anett élményfestés",
@@ -1002,25 +1002,6 @@
     "id": "event-2026-1774853806495"
   },
   {
-    "name": "Szőlő és Klíma Konferencia",
-    "date": "2026-04-11",
-    "time": "09:30",
-    "location": "Zwinger öreg torony",
-    "coords": {
-      "lat": 47.38818827881239,
-      "lng": 16.539554438258897
-    },
-    "description": "Ez a különleges esemény azok számára ígér kihagyhatatlan élményt, akik szeretnék bővíteni tudásukat a szőlőtermesztés és -kutatás legújabb trendjeiről. Az esemény során neves szakértők a borvidékek legfontosabb képviselői osztják meg tapasztalataikat és kutatási eredményeiket, lehetőséget teremtve arra, hogy első kézből származó információkat szerezzünk a szőlőültetvények jelenlegi állapotáról és hatósági helyzetéről.",
-    "tags": [
-      "konferencia"
-    ],
-    "image": "szolokonf.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774854467479"
-  },
-  {
     "name": "Vas Vármegyei Zeneiskolák és Művészeti Iskolák Találkozója",
     "date": "2026-04-21",
     "time": "10:00",
@@ -1131,5 +1112,24 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1775554037485"
+  },
+  {
+    "name": "16. Szőlő és Klíma Konferencia",
+    "date": "2026-04-11",
+    "time": "10:30",
+    "location": "Zwinger Öregtorony",
+    "coords": {
+      "lat": 47.388130396302586,
+      "lng": 16.53961435797462
+    },
+    "description": " Az immár 16. alkalommal megrendezésre kerülő Szőlő és Klíma Konferencia 2026. április 11-én Kőszeg városában, a Magyar Meteorológiai Társaság szombathelyi csoportjának és Kőszeg Városa szervezésében.\n\n10.30-10.45 Söptei Imre: A kőszegi bor a 18. század elején\n10.45-11.00 Vincze János Farkas: Szüret, bortermés és időjárás Kazinczy Ferenc birtokán a levelezése tükrében (1806-1831)\n\n11.00-11.15 Molnár Ákos: Koordinált válaszok a Flavescence dorée járványra\n11.15-11.30 Both Gyula: A szőlő aranyszínű sárgaság fitoplazma 11.30-11.45 Mezőfi László, Miglécz Tamás, Nagy Karina Piroska, Tóth Ferenc: A szőlő-sorközök növényborítottságának hatása az amerikai szőlőkabóca természetes ellenségeire\n11.45-12.00 Kneip Antal, Balling Péter, Varga Laura, Kiss István, Kovács Tibor, Kállai Zoltán, Molnár Péter: Az aranyszínű sárgaság fitoplazma elleni védekezés a tokaji borvidéken",
+    "tags": [
+      "konferencia"
+    ],
+    "image": "konferencia.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1775643179035"
   }
 ]
