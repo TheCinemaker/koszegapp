@@ -193,52 +193,51 @@ const NearbyDiscoveryCard = ({ appData }) => {
                         className="relative group"
                     >
                         {/* THE CARD CONTENT */}
-                        <div className="relative overflow-hidden rounded-[2.2rem] bg-white dark:bg-zinc-900 border-2 border-indigo-500/10 dark:border-indigo-500/20 shadow-2xl transition-all duration-500 group-hover:border-indigo-500/40">
+                        <div className="relative overflow-hidden rounded-[1.8rem] sm:rounded-[2.2rem] bg-white dark:bg-zinc-900 border border-indigo-500/10 dark:border-indigo-500/20 shadow-xl transition-all duration-500 group-hover:border-indigo-500/40">
                             
-                            {/* Mode Toggle Button (Floating Top-Right) */}
+                            {/* Mode Toggle Button (Floating Bottom-Right) */}
                             <button 
                                 onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     setMode(mode === 'contextual' ? 'walking' : 'contextual');
                                 }}
-                                className="absolute top-4 right-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+                                className="absolute bottom-3 right-3 z-20 flex items-center gap-1 px-3 py-1 rounded-full bg-white dark:bg-white/20 text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-white border border-indigo-500/20 shadow-md hover:bg-indigo-600 hover:text-white transition-all active:scale-95"
                             >
                                 {mode === 'contextual' ? (
-                                    <><Footprints className="w-3 h-3" /> Csak sétálok</>
+                                    <><Footprints className="w-2.5 h-2.5" /> Csak sétálok</>
                                 ) : (
-                                    <><RotateCcw className="w-3 h-3" /> Gasztro tippek</>
+                                    <><RotateCcw className="w-2.5 h-2.5" /> Gasztro</>
                                 )}
                             </button>
 
-                            <Link to={closestItem.to} className="block p-7">
+                            <Link to={closestItem.to} className="block p-3 sm:p-5 pb-8 sm:pb-5">
                                 {/* Background Decor */}
-                                <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl opacity-50 group-hover:bg-indigo-500/10 transition-colors" />
+                                <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl opacity-50 transition-colors" />
 
-                                <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                                    <div className={`p-4 rounded-3xl shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 ${mode === 'walking' ? 'bg-emerald-600 text-white shadow-emerald-600/20' : 'bg-indigo-600 text-white shadow-indigo-600/20'}`}>
-                                        <Icon className="w-8 h-8" />
+                                <div className="relative z-10 flex items-center gap-4 sm:gap-6">
+                                    <div className={`aspect-square w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-2xl sm:rounded-3xl shadow-lg transition-transform duration-500 group-hover:scale-110 ${mode === 'walking' ? 'bg-emerald-600 text-white shadow-emerald-600/20' : 'bg-indigo-600 text-white shadow-indigo-600/20'}`}>
+                                        <Icon className="w-6 h-6 sm:w-8 h-8" />
                                     </div>
                                     
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-1.5">
-                                            <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 leading-tight">
+                                    <div className="flex-1 min-w-0 mt-1">
+                                        <div className="flex items-center gap-1.5 mb-0.5">
+                                            <p className="text-[11px] sm:text-sm font-bold text-indigo-600 dark:text-indigo-400 leading-tight">
                                                 {closestItem.greeting}
                                             </p>
-                                            <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${mode === 'walking' ? 'bg-emerald-500' : 'bg-rose-500'}`} />
                                         </div>
-                                        <h3 className="text-2xl font-black text-slate-800 dark:text-white leading-tight mb-2">
+                                        <h3 className="text-lg sm:text-2xl font-black text-slate-800 dark:text-white leading-tight mb-1 truncate">
                                             {closestItem.name}
                                         </h3>
-                                        <div className="flex items-center gap-2 text-slate-500 dark:text-zinc-400">
-                                            <MapPin className="w-3.5 h-3.5" />
-                                            <span className="text-xs font-bold uppercase tracking-wide">
+                                        <div className="flex items-center gap-1.5 text-slate-500 dark:text-zinc-400 line-clamp-1">
+                                            <MapPin className="w-3 h-3 sm:w-3.5 h-3.5" />
+                                            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide">
                                                 {closestItem.humanDist}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="self-end sm:self-center bg-slate-100 dark:bg-white/5 p-4 rounded-2xl text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                    <div className="hidden md:flex bg-slate-100 dark:bg-white/5 p-4 rounded-2xl text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                                         <ArrowRight className="w-6 h-6" />
                                     </div>
                                 </div>
