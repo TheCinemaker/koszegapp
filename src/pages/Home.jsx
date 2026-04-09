@@ -21,6 +21,7 @@ import { FadeUp } from '../components/AppleMotion';
 import { useTranslation } from 'react-i18next'; // Added import
 
 import LiveHero from '../components/LiveHero';
+import NearbyDiscoveryCard from '../components/NearbyDiscoveryCard';
 
 export default function Home({ appData, weather }) {
   const { t } = useTranslation('home'); // Load 'home' namespace
@@ -60,6 +61,11 @@ export default function Home({ appData, weather }) {
             </div>
           </FadeUp>
         </div>
+
+        {/* NEARBY DISCOVERY (REAL-TIME HUMANISED) */}
+        <FadeUp delay={0.3}>
+          <NearbyDiscoveryCard appData={appData} />
+        </FadeUp>
 
 
         {/* --- ULTRA-COMPACT BENTO GRID --- */}
