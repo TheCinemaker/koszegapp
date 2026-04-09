@@ -55,6 +55,7 @@ const Partners = lazyWithRetry(() => import('../pages/Partners'));
 const SuperAdmin = lazyWithRetry(() => import('../pages/SuperAdmin'));
 const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
 const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
+const NearbyDiscoveryDemo = lazyWithRetry(() => import('../pages/NearbyDiscoveryDemo'));
 
 
 // Ticket System Components
@@ -213,6 +214,9 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/tickets/scanner" element={<PageWrapper showFooter={false}><TicketScanner /></PageWrapper>} />
           <Route path="/tickets/admin" element={<PageWrapper><TicketAdmin /></PageWrapper>} />
           <Route path="/tickets/print/:ticketId" element={<PageWrapper showFooter={false}><TicketPrint /></PageWrapper>} />
+
+          {/* Redesign Preview (Temporary) */}
+          <Route path="/nearby-demo" element={<PageWrapper><NearbyDiscoveryDemo appData={appData} weather={weather} /></PageWrapper>} />
         </Routes>
       </Suspense>
     </AnimatePresence>
