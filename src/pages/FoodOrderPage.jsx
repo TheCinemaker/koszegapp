@@ -475,10 +475,10 @@ function SimplePointsDisplay({ user }) {
     );
 }
 
-export default function FoodOrderPage() {
+export default function FoodOrderPage({ appData }) {
     const [activeTab, setActiveTab] = useState('home');
     const [view, setView] = useState('restaurants');
-    const [restaurants, setRestaurants] = useState([]);
+    const [restaurants, setRestaurants] = useState(appData?.restaurants || []);
     const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [categories, setCategories] = useState([]);
     const [realCategories, setRealCategories] = useState([]);
@@ -598,7 +598,9 @@ export default function FoodOrderPage() {
 
     // 3. Monitor restaurant updates
     useEffect(() => {
-        fetchRestaurants();
+        if (restaurants.length === 0) {
+            fetchRestaurants();
+        }
         selectedRestaurantRef.current = selectedRestaurant;
 
         const channel = supabase.channel('restaurants-updates')
@@ -717,8 +719,12 @@ export default function FoodOrderPage() {
 
     if (authLoading) {
         return (
-            <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] flex justify-center items-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+            <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#080808] flex flex-col justify-center items-center gap-4 transition-colors duration-500">
+                <div className="relative">
+                    <div className="absolute inset-0 bg-amber-500/20 blur-2xl rounded-full animate-pulse" />
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 relative z-10" />
+                </div>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 animate-pulse">Azonosítás...</p>
             </div>
         );
     }
@@ -896,14 +902,21 @@ export default function FoodOrderPage() {
                                 </div>
                             )}
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-24">
-                                {restaurants.filter(r => {
-                                    const termMatch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
-                                    const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
-                                    if (!selectedCategory) return termMatch && deliveryMatch;
-                                    const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
-                                    return termMatch && deliveryMatch && categoryMatch;
-                                }).map((rest, idx) => <RestaurantCard key={rest.id} restaurant={rest} index={idx} onClick={() => setSelectedRestaurant(rest)} />)
-                                }
+                                {restaurants.length === 0 ? (
+                                    <>
+                                        <RestaurantSkeleton />
+                                        <RestaurantSkeleton />
+                                        <RestaurantSkeleton />
+                                    </>
+                                ) : (
+                                    restaurants.filter(r => {
+                                        const termMatch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
+                                        const deliveryMatch = filterType === 'delivery' ? (r.has_delivery !== false) : true;
+                                        if (!selectedCategory) return termMatch && deliveryMatch;
+                                        const categoryMatch = categoryMap[selectedCategory] && categoryMap[selectedCategory].has(r.id);
+                                        return termMatch && deliveryMatch && categoryMatch;
+                                    }).map((rest, idx) => <RestaurantCard key={rest.id} restaurant={rest} index={idx} onClick={() => setSelectedRestaurant(rest)} />)
+                                )}
                             </div>
                         </>
                     )}
@@ -1160,6 +1173,20 @@ function ScrollToTopButton() {
                 </motion.button>
             )}
         </AnimatePresence>
+    );
+}
+
+// --- SKELETON LOADERS ---
+function RestaurantSkeleton() {
+    return (
+        <div className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-md rounded-[2rem] border border-white/60 dark:border-white/10 overflow-hidden shadow-sm animate-pulse">
+            <div className="h-40 bg-gray-200 dark:bg-zinc-800 m-1.5 rounded-t-[2rem]" />
+            <div className="p-4 space-y-3">
+                <div className="h-6 bg-gray-200 dark:bg-zinc-800 rounded-lg w-3/4" />
+                <div className="h-3 bg-gray-100 dark:bg-zinc-900 rounded-lg w-1/2" />
+                <div className="h-10 bg-gray-100 dark:bg-zinc-900 rounded-2xl w-full" />
+            </div>
+        </div>
     );
 }
 

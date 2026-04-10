@@ -113,11 +113,15 @@ export async function placeOrder({ restaurantId, customer, cartItems }) {
             displayName = `${item.name} (-${rule.value}%)`;
         }
 
+        const isUuid = (String(item.id).match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i));
+
         return {
-            id: (String(item.id).match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i)) ? item.id : null,
+            id: isUuid ? item.id : null,
             name: displayName,
             price: effectivePrice,
-            quantity: item.quantity
+            quantity: item.quantity,
+            is_mystery_box: !!item.is_mystery_box,
+            mystery_box_id: item.is_mystery_box ? item.id : null
         };
     });
 

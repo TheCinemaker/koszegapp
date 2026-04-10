@@ -56,6 +56,7 @@ const SuperAdmin = lazyWithRetry(() => import('../pages/SuperAdmin'));
 const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
 const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
 const NearbyDiscoveryDemo = lazyWithRetry(() => import('../pages/NearbyDiscoveryDemo'));
+const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
 
 
 // Ticket System Components
@@ -192,7 +193,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/business" element={<PageWrapper><BusinessDashboard /></PageWrapper>} />
           <Route path="/secret-setup" element={<PageWrapper><SecretRegister /></PageWrapper>} />
           <Route path="/city-pass" element={<PageWrapper><CityPass /></PageWrapper>} />
-          <Route path="/eats" element={<PageWrapper showFooter={false}><FoodOrderPage /></PageWrapper>} />
+          <Route path="/eats" element={<PageWrapper showFooter={false}><FoodOrderPage appData={appData} /></PageWrapper>} />
           <Route path="/eats-admin" element={<PageWrapper><FoodAdmin /></PageWrapper>} />
           <Route path="/eats-auth" element={<PageWrapper showFooter={false}><FoodAuthPage /></PageWrapper>} />
           <Route path="/eats/print/:orderId" element={<OrderPrintView />} />
@@ -217,6 +218,9 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           {/* Redesign Preview (Temporary) */}
           <Route path="/nearby-demo" element={<PageWrapper><NearbyDiscoveryDemo appData={appData} weather={weather} /></PageWrapper>} />
+
+          {/* New Eats Landing */}
+          <Route path="/eats-landing" element={<EatsLanding />} />
         </Routes>
       </Suspense>
     </AnimatePresence>

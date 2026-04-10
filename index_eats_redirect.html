@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KőszegEats - Online Ételrendelés</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow: hidden; }
+        .bg-custom {
+            background-image: url('eats-hero.png');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px border rgba(255, 255, 255, 0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade { animation: fadeIn 1.2s ease-out forwards; }
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1s; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen relative px-6">
+
+    <!-- Background Layer -->
+    <div class="absolute inset-0 z-0 bg-custom transition-transform duration-[10s] hover:scale-110"></div>
+    <div class="absolute inset-0 z-1 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
+    <!-- Content (Apple Style) -->
+    <div class="relative z-10 text-center max-w-2xl opacity-0 animate-fade">
+        
+        <div class="mb-8 inline-flex items-center gap-2 glass px-4 py-2 rounded-full border border-white/10 opacity-0 animate-fade delay-1">
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Élő rendelési felület</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-6">
+            Elindult Kőszeg első <br>
+            <span class="text-orange-500">food rendelése.</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-zinc-400 font-medium mb-12 opacity-0 animate-fade delay-1">
+            A város összes étlapja és borlapja végre egy helyen. <br class="hidden md:block">
+            Mindig friss, mindig kőszegi.
+        </p>
+
+        <div class="opacity-0 animate-fade delay-2">
+            <a href="https://visitkoszeg.hu/eats" class="group relative inline-flex items-center justify-center gap-3 bg-white text-black px-10 py-5 rounded-full text-lg font-black tracking-[0.2em] hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+                BELÉPÉS
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+            
+            <p class="mt-8 text-[10px] uppercase font-bold tracking-[0.3em] text-zinc-500">
+                visitKőszeg &bull; 2026
+            </p>
+        </div>
+    </div>
+
+    <!-- Ambient Noise -->
+    <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.05]" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg'); mix-blend-mode: overlay;"></div>
+
+</body>
+</html>

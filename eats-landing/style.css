@@ -1,0 +1,342 @@
+:root {
+  --primary: #f97316;
+  --primary-glow: rgba(249, 115, 22, 0.4);
+  --success: #10b981;
+  --bg: #050505;
+  --text: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Background Layers --- */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url('eats-hero.png') center/cover no-repeat;
+  filter: brightness(0.4) saturate(1.2);
+  transform: scale(1.02);
+  z-index: 1;
+  animation: bg-grow 20s ease-in-out infinite alternate;
+}
+
+@keyframes bg-grow {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom, 
+    rgba(0,0,0,0.3) 0%, 
+    rgba(0,0,0,0.6) 50%, 
+    var(--bg) 100%
+  );
+  z-index: 2;
+}
+
+.glow {
+  position: fixed;
+  width: 80vw;
+  height: 80vh;
+  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(100px);
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* --- Layout --- */
+
+.container {
+  position: relative;
+  z-index: 10;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  padding: 4vh 24px;
+}
+
+/* --- Badge --- */
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--success);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: var(--glass);
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.dot-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--success);
+}
+
+.dot-ring::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* --- Typography --- */
+
+h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  max-width: 800px;
+}
+
+.highlight {
+  color: var(--primary);
+  display: inline-block;
+  background: linear-gradient(120deg, var(--primary), #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 0px;
+}
+
+/* --- Features Section --- */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 10px 0;
+}
+
+.feature-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 16px 12px;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.feature-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.feature-card p {
+  font-size: 13px;
+  margin-bottom: 0;
+  color: var(--text-muted);
+}
+
+/* --- Payment Note --- */
+
+.payment-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(249, 115, 22, 0.1);
+  padding: 6px 14px;
+  border-radius: 12px;
+  letter-spacing: 0.05em;
+}
+
+.payment-note svg {
+  opacity: 0.8;
+}
+
+/* --- Button --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: white;
+  color: black;
+  font-weight: 800;
+  font-size: 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 15px 45px rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 25px 60px rgba(255,255,255,0.25);
+  background: #fdfdfd;
+}
+
+.arrow {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover .arrow {
+  transform: translateX(8px);
+}
+
+/* --- Footer --- */
+
+.footer {
+  position: relative;
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 300;
+  width: 100%;
+  justify-content: center;
+}
+
+.footer-brand {
+  letter-spacing: 0.4em;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-right: -0.4em; /* Compensate for tracking on the last char */
+}
+
+.dot-separator {
+  opacity: 0.3;
+}
+
+/* --- Animations --- */
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Mobile Optimizations --- */
+
+  .features {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .feature-card {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    gap: 16px;
+  }
+  
+  .feature-icon {
+    margin-bottom: 0;
+  }
+  
+  .feature-card h3 {
+    margin-bottom: 2px;
+  }
+
+  h1 {
+    font-size: 52px;
+    letter-spacing: -0.02em;
+  }
+  
+  .footer {
+    bottom: 20px;
+    position: relative;
+    margin-top: 40px;
+  }
+
+  body {
+    overflow-y: auto;
+  }
+
+  .container {
+    height: auto;
+    min-height: 100vh;
+  }
+}
