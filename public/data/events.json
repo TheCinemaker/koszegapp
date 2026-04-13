@@ -909,80 +909,6 @@
     "highlightLabel": ""
   },
   {
-    "name": "Húsvéti locsoló Party",
-    "date": "2026-04-04",
-    "time": "21:00",
-    "location": "Hattyú büfé",
-    "coords": {
-      "lat": 47.3974684026996,
-      "lng": 16.53767323228126
-    },
-    "description": "🔥 HÚSVÉTI LOCSOLÓ Buli a Hattyúban 🔥\n📅 2026.04.04. | Szombat | 21:00\n📍 Kőszeg – Csónakázó-tó | Hattyú Büfé\nA télnek vége, ideje felébreszteni a bulihangulatot! 😎\nÁprilis 5-én vasárnap egy Húsvét hétfőbe nyúló locsoló bulival várunk benneteket a Hattyú Büfében, ahol egy igazi zenei időutazás indul! 🚀\nEgész éjjel pörögnek a 90-es és 2000-es évek legnagyobb dance slágerei, amikre garantáltan nem tudsz majd egy helyben állni! 💃🕺\n🎧 A lemezjátszók mögött: RADULY\nA hangulat garantált! 🔊🔥\n🍹 Ami vár rátok:\n✨ baráti italárak\n🍻 széles italválaszték\n💡 extra fénytechnika\n🔊 minőségi hangzás\n🏠 fedett vendégtér (rossz idő esetén fűtéssel)\n🎟 INGYENES BELÉPÉS",
-    "tags": [
-      "disco"
-    ],
-    "image": "retrolocsolo_2.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1773044495723"
-  },
-  {
-    "name": "🌸 Helló Kőszeg! – Tavaszköszöntő nagykoncert 🌸",
-    "date": "2026-04-05",
-    "time": "18:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.389025,
-      "lng": 16.541018
-    },
-    "description": "🌸 Helló Kőszeg! – Tavaszköszöntő nagykoncert 🌸\nVégre itt a tavasz – és ezt méltó módon ünnepeljük meg Kőszeg szívében! 🌿✨\n📍 Helyszín: Kőszeg, Fő tér\n📅 Időpont: 2026. április 5.\nEgy este, ahol a jó hangulat, a zene és a közösség találkozik 🎶\nPROGRAM:\n🎧 18:00–20:00 – Dj Shepherd\n🔥 20:00–21:30 – Parno Graszt élő koncert\n🎧 21:30–22:30 – Dj Dominique\nA Parno Graszt garantáltan felrobbantja a hangulatot – igazi tavaszi életérzés, tánc és felszabadultság vár rád! 💃🕺\n👉 Hozd a barátaidat, családodat, és indítsuk együtt a szezont egy felejthetetlen bulival!\n🎟️ A rendezvény INGYENES!",
-    "tags": [
-      "koncert"
-    ],
-    "image": "657229497_122096664668914642_1608817731727240970_n.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774436913146"
-  },
-  {
-    "name": "Kézműves foglalkozás gyerekeknek",
-    "date": "2026-04-06",
-    "time": "10:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Húsvéthétfőn a Várlátogatás keretében kalandos tojáskeresésre invitáljuk a gyerekeket! Az öt különböző színű tojást összegyűjtök jutalomban részesülhettek. A játék részvételének feltétele az érvényes várbelépő, helyieknek pedig a várkártya. Szeretettel várunk Titeket ezen színes programunkra!",
-    "tags": [],
-    "image": "kezmuves-1774853104240.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774853107247"
-  },
-  {
-    "name": "Polcok mentén..... 3",
-    "date": "2026-04-07",
-    "time": "15:00",
-    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389579,
-      "lng": 16.542464
-    },
-    "description": "2026. április 7-én kedden 15 órától \"Polcok mentén… 3.\" Folytatódik a szubjektív, interaktív könyvajánló-sorozat a felnőttrészlegen, melynek házigazdája Czagány Tünde, a könyvtár munkatársa. A költészet napjához kapcsolódóan érdekességeket hallhatnak költőkről és szerelmeikről könyvek tükrében.",
-    "tags": [
-      "könyv"
-    ],
-    "image": "polcok3.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774853204751"
-  },
-  {
     "name": "Madarászok a világ körül",
     "date": "2026-04-09",
     "time": "17:00",
@@ -1131,5 +1057,24 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1775643179035"
+  },
+  {
+    "name": "Fúvószenekar jubileumi hétvége",
+    "date": "2026-04-25",
+    "time": "08:30",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "160 év\nKŐSZEG VÁROS KONCERTFÚVÓSZENEKARA\n1866–2026\n\nKőszeg Város Koncertfúvószenekara fennállásának 160. évfordulója alkalmából szeretettel meghív minden érdeklődőt a\n2026. április 25–26-án tartandó jubileumi rendezvényeire.\n\nPROGRAM:\n\n2026. április 25., szombat\n\n8.30 óra – Temető\nMegemlékezés elhunyt zenésztársainkról\n\n10.00 óra – Jurisics vár Lovagterem\nÜnnepi közgyűlés\n\n17.30 óra – Jurisics vár Lovagterem\nJubileumi hangverseny\n\n2026. április 26., vasárnap\n\n18.00 óra – Jurisics vár Lovagterem\nJubileumi hangverseny 2.\n\nVezényel: Szilágyi Miklós karnagy\n\nA belépőjegy ára: 4000,- Ft\n\nJegyrendelés a zenekar tagjainál, a\nkvfjegyek@gmail.com\n e-mail címen,\nvagy a +36 30 290 0197-es telefonszámon.",
+    "tags": [
+      "koncert"
+    ],
+    "image": "fuvosok.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776070871323"
   }
 ]
