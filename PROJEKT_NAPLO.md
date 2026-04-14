@@ -137,3 +137,15 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Admin Dashboard**: Globális bevételi nézet és tranzakciós statisztikák finomhangolása.
 - **Booking Login**: A foglalási folyamat "Seamless Login" rendszerének tökéletesítése.
 
+---
+## 📅 2026. április 14. - Arculatváltás és Stabilitási Fixek
+### 🎯 Brand Átállás: visitkoszeg.hu
+- **Teljes Átnevezés:** A "KőszegAPP" márkanév minden felületről (főoldal, admin, dokumentáció, PDF generátorok) lecserélve a modern **visitkoszeg** (vagy visitKőszeg) elnevezésre.
+- **Kivétel:** Az email cím (`koszegapp@gmail.com`) érintetlen maradt a szervermigrációig.
+
+### 🚀 Betöltési Stabilitás és Hibajavítás
+- **"Üres képernyő" hiba elhárítása:** Implementálva egy globális **ErrorBoundary**, ami megakadályozza, hogy egy Javascript hiba miatt elsötétüljön az oldal. Helyette egy „Oldal újratöltése” gomb jelenik meg.
+- **Resilient Loading:** Az `App.jsx`-ben bevezetésre került a `Promise.allSettled` és egy **5 másodperces biztonsági időzítő**. Ha a Supabase vagy egy JSON fájl lassú, az app akkor is elindul, nem várakozik örökké.
+- **FoodOrderPage fallback:** Az ételrendelés oldalon beépített időzítők jelzik, ha lassú az azonosítás vagy az étteremlista betöltése, és felajánlják a frissítést.
+- **Git Push:** Minden stabilitási és arculati módosítás sikeresen feltöltve a `main` ágra.
+
