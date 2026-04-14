@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 import App from './App';
 import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
+import ErrorBoundary from './components/ErrorBoundary';
 
 import './index.css';
 import './i18n';
@@ -28,7 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <DarkModeProvider>
         {/* A FavoritesProvider öleli körbe az App-ot */}
         <FavoritesProvider>
-          <App />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
         </FavoritesProvider>
       </DarkModeProvider>
     </BrowserRouter>

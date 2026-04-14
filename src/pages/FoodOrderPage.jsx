@@ -497,6 +497,28 @@ export default function FoodOrderPage({ appData }) {
         return saved ? new Set(JSON.parse(saved)) : new Set();
     });
 
+    // Safety fallback for stuck Auth
+    const [showAuthFallback, setShowAuthFallback] = useState(false);
+    useEffect(() => {
+        if (authLoading) {
+            const timer = setTimeout(() => setShowAuthFallback(true), 4000);
+            return () => clearTimeout(timer);
+        } else {
+            setShowAuthFallback(false);
+        }
+    }, [authLoading]);
+
+    // Safety fallback for stuck Restaurants
+    const [showRestaurantFallback, setShowRestaurantFallback] = useState(false);
+    useEffect(() => {
+        if (view === 'restaurants' && restaurants.length === 0) {
+            const timer = setTimeout(() => setShowRestaurantFallback(true), 5000);
+            return () => clearTimeout(timer);
+        } else {
+            setShowRestaurantFallback(false);
+        }
+    }, [view, restaurants.length]);
+
     // Save dismissed orders to persists across refreshes
     useEffect(() => {
         localStorage.setItem('dismissed_orders', JSON.stringify([...dismissedOrderIds]));
@@ -725,6 +747,22 @@ export default function FoodOrderPage({ appData }) {
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 relative z-10" />
                 </div>
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 animate-pulse">Azonosítás...</p>
+                
+                {showAuthFallback && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-8 text-center px-6"
+                    >
+                        <p className="text-xs text-zinc-500 mb-4">A megszokottnál lassabb a csatlakozás...</p>
+                        <button 
+                            onClick={() => window.location.reload()}
+                            className="px-6 py-2.5 bg-zinc-900 dark:bg-zinc-800 text-white text-xs font-bold rounded-full shadow-lg active:scale-95 transition-all"
+                        >
+                            Oldal frissítése
+                        </button>
+                    </motion.div>
+                )}
             </div>
         );
     }
@@ -907,6 +945,22 @@ export default function FoodOrderPage({ appData }) {
                                         <RestaurantSkeleton />
                                         <RestaurantSkeleton />
                                         <RestaurantSkeleton />
+                                        
+                                        {showRestaurantFallback && (
+                                            <motion.div 
+                                                initial={{ opacity: 0 }} 
+                                                animate={{ opacity: 1 }}
+                                                className="col-span-full pt-8 text-center"
+                                            >
+                                                <p className="text-sm text-zinc-500 mb-4 font-medium">Lassabban érkeznek az adatok...</p>
+                                                <button 
+                                                    onClick={() => window.location.reload()}
+                                                    className="px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-full shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+                                                >
+                                                    🔄 Lista frissítése
+                                                </button>
+                                            </motion.div>
+                                        )}
                                     </>
                                 ) : (
                                     restaurants.filter(r => {

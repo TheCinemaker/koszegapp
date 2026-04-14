@@ -199,88 +199,118 @@ function MainAppContent() {
 
   // Adatbetöltés + globális kedvenc-prune (egyszer)
   useEffect(() => {
-    Promise.all([
-      fetchAttractions(),
-      fetchEvents(),
-      fetchLeisure(),
-      fetchRestaurants(),
-      fetchHotels(),
-      fetchParking()
-    ])
-      .then(([attractions, eventsData, leisure, restaurants, hotels, parking]) => {
+    let isMounted = true;
 
-        const normalizedEvents = eventsData.map(evt => {
-          let s, e;
-          // Ensure we treat the date strings as local time by stripping 'Z' or appending localized info if needed,
-          // but parseISO on 'YYYY-MM-DD' or 'YYYY-MM-DD HH:mm' usually handles it as local if no offset.
-          // However, to be 100% safe with the provided data:
-          const parseLocal = (dateStr) => {
-            if (!dateStr) return null;
-            // If it's just 'YY-MM-DD', add 'T00:00:00' to avoid UTC shift in some browsers
-            let base = dateStr;
-            if (base.length === 10) base += 'T00:00:00';
-            // Replace ' ' with 'T' for ISO compatibility if needed
-            base = base.replace(' ', 'T');
-            return parseISO(base);
-          };
+    // --- BIZTONSÁGI IDŐZÍTŐ (Safety Timeout) ---
+    // Ha 5 másodperc után még mindig töltenénk (pl. lógó hálózat), 
+    // erőszakkal továbbengedjük a felhasználót.
+    const safetyTimer = setTimeout(() => {
+      if (isMounted && appData.loading) {
+        console.warn('[AppInit] Safety timeout reached! Forcing loading: false to prevent blank screen.');
+        setAppData(prev => ({ ...prev, loading: false }));
+      }
+    }, 5000);
 
-          if (evt.startDate) {
-            s = parseLocal(evt.startDate);
-            e = evt.endDate ? parseLocal(evt.endDate) : s;
-          } else if (evt.date?.includes('/')) {
-            const p = evt.date.split('/');
-            s = parseLocal(p[0]);
-            e = parseLocal(p[1] || p[0]);
-          } else {
-            s = parseLocal(evt.date);
-            e = evt.end_date ? parseLocal(evt.end_date) : s;
+    const fetchData = async () => {
+      console.log('[AppInit] Starting data fetch sequence...');
+      
+      const endpoints = [
+        { name: 'attractions', fetch: fetchAttractions },
+        { name: 'events', fetch: fetchEvents },
+        { name: 'leisure', fetch: fetchLeisure },
+        { name: 'restaurants', fetch: fetchRestaurants },
+        { name: 'hotels', fetch: fetchHotels },
+        { name: 'parking', fetch: fetchParking }
+      ];
+
+      const results = await Promise.allSettled(endpoints.map(e => e.fetch()));
+      
+      if (!isMounted) return;
+      clearTimeout(safetyTimer);
+
+      const data = {};
+      results.forEach((res, i) => {
+        const key = endpoints[i].name;
+        if (res.status === 'fulfilled') {
+          data[key] = res.value;
+        } else {
+          console.error(`[AppInit] Failed to load ${key}:`, res.reason);
+          data[key] = []; // Fallback to empty array
+        }
+      });
+
+      // Normalize events
+      const eventsData = data.events || [];
+      const normalizedEvents = eventsData.map(evt => {
+        if (!evt) return null;
+        let s, e;
+        const parseLocal = (dateStr) => {
+          if (!dateStr) return null;
+          let base = dateStr;
+          if (base.length === 10) base += 'T00:00:00';
+          base = base.replace(' ', 'T');
+          try { return parseISO(base); } catch { return null; }
+        };
+
+        if (evt.startDate) {
+          s = parseLocal(evt.startDate);
+          e = evt.endDate ? parseLocal(evt.endDate) : s;
+        } else if (evt.date?.includes('/')) {
+          const p = evt.date.split('/');
+          s = parseLocal(p[0]);
+          e = parseLocal(p[1] || p[0]);
+        } else {
+          s = parseLocal(evt.date);
+          e = evt.end_date ? parseLocal(evt.end_date) : s;
+        }
+
+        if (evt.time && s) {
+          const timePart = evt.time.split('-')[0].trim();
+          if (timePart.includes(':')) {
+            const [h, m] = timePart.split(':');
+            s.setHours(parseInt(h, 10), parseInt(m, 10), 0, 0);
           }
+        }
+        return { ...evt, _s: s, _e: e };
+      }).filter(Boolean);
 
-          // Merge time if available for precise countdown
-          if (evt.time && s) {
-            const timePart = evt.time.split('-')[0].trim();
-            if (timePart.includes(':')) {
-              const [h, m] = timePart.split(':');
-              s.setHours(parseInt(h, 10), parseInt(m, 10), 0, 0);
-            }
-          }
+      setAppData({
+        attractions: data.attractions || [],
+        events: normalizedEvents,
+        leisure: data.leisure || [],
+        restaurants: data.restaurants || [],
+        hotels: data.hotels || [],
+        parking: data.parking || [],
+        loading: false
+      });
 
-          return { ...evt, _s: s, _e: e };
-        });
+      // Prune favorites
+      const validIds = new Set([
+        ...(data.attractions || []).map(a => String(a.id)),
+        ...normalizedEvents.map(e => String(e.id)),
+        ...(data.leisure || []).map(l => String(l.id)),
+        ...(data.restaurants || []).map(r => String(r.id)),
+        ...(data.hotels || []).map(h => String(h.id)),
+        ...(data.parking || []).map(p => String(p.id))
+      ]);
+      pruneFavorites(validIds, () => true);
+      
+      console.log('[AppInit] Initialization complete.');
+    };
 
-        setAppData({
-          attractions,
-          events: normalizedEvents,
-          leisure,
-          restaurants,
-          hotels,
-          parking,
-          loading: false
-        });
+    fetchData().catch(err => {
+      console.error('[AppInit] Fatal initialization error:', err);
+      if (isMounted) setAppData(prev => ({ ...prev, loading: false }));
+    });
 
-        // --- KEDVENCEK TAKARÍTÁSA (változatlan) ---
-        const validIds = new Set([
-          ...attractions.map(a => String(a.id)),
-          ...normalizedEvents.map(e => String(e.id)),
-          ...leisure.map(l => String(l.id)),
-          ...restaurants.map(r => String(r.id)),
-          ...hotels.map(h => String(h.id)),
-          ...parking.map(p => String(p.id))
-        ]);
+    // Weather fetches (independent)
+    fetchCurrentWeather().then(setWeather).catch(console.error);
+    fetchUpcomingWeather().then(setUpcomingWeather).catch(console.error);
 
-        const isUpcomingById = () => true;
-        pruneFavorites(validIds, isUpcomingById);
-      })
-      .catch(console.error);
-
-    // időjárás
-    fetchCurrentWeather()
-      .then(setWeather)
-      .catch(console.error);
-
-    fetchUpcomingWeather()
-      .then(setUpcomingWeather)
-      .catch(console.error);
+    return () => {
+      isMounted = false;
+      clearTimeout(safetyTimer);
+    };
   }, [pruneFavorites]);
 
   // kedvencek panel kinti kattintásra záródjon
