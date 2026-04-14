@@ -321,7 +321,7 @@ function Login() {
       <div className="w-full max-w-md p-8 relative z-10 backdrop-blur-xl bg-white/70 dark:bg-gray-800/70 border border-white/20 dark:border-gray-700/50 rounded-3xl shadow-2xl">
         <div className="flex flex-col items-center mb-8">
           <img src="/images/koeszeg_logo_nobg.png" alt="Logo" className="w-16 h-16 mb-4 drop-shadow-md" />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">KőszegAPP Admin</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">visitkoszeg Admin</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Kizárólag engedélyezett felhasználóknak</p>
         </div>
 

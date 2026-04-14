@@ -245,7 +245,7 @@ export default function AnimatedWeeklyMenuDrawer() {
           </div>
 
           <div className="text-xs text-center text-blue-800 dark:text-purple-300 py-2 border-t bg-blue-200 dark:bg-zinc-800 border-blue-300 dark:border-zinc-700">
-            © KőszegAPP – {new Date().getFullYear()}
+            © visitkoszeg – {new Date().getFullYear()}
           </div>
         </div>
       </div>

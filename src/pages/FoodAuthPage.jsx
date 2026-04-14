@@ -134,7 +134,7 @@ export default function FoodAuthPage() {
                         {isLogin ? 'Étterem Belépés' : 'Új Étterem Regisztráció'}
                     </h1>
                     <p className="text-center text-zinc-500 text-sm mt-1">
-                        {isLogin ? 'Kezeld a rendeléseket és a menüt' : 'Csatlakozz a KőszegApp-hoz'}
+                        {isLogin ? 'Kezeld a rendeléseket és a menüt' : 'Csatlakozz a visitkoszeg-hez'}
                     </p>
                 </div>
 

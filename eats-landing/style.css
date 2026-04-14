@@ -1,11 +1,11 @@
 :root {
-  --primary: #f97316;
-  --primary-glow: rgba(249, 115, 22, 0.4);
+  --primary: #f59e0b; /* Amber 500 */
+  --primary-glow: rgba(245, 158, 11, 0.4);
   --success: #10b981;
-  --bg: #050505;
+  --bg: #000000;
   --text: #ffffff;
-  --text-muted: rgba(255, 255, 255, 0.6);
-  --glass: rgba(255, 255, 255, 0.05);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --glass: rgba(26, 28, 46, 0.4); /* Matching dark:bg-[#1a1c2e]/40 */
   --glass-border: rgba(255, 255, 255, 0.1);
   --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -31,41 +31,36 @@ body {
   position: fixed;
   inset: 0;
   background: url('eats-hero.png') center/cover no-repeat;
-  filter: brightness(0.4) saturate(1.2);
+  filter: brightness(0.3) saturate(1.4);
   transform: scale(1.02);
   z-index: 1;
-  animation: bg-grow 20s ease-in-out infinite alternate;
+  animation: bg-slow-zoom 40s ease-in-out infinite alternate;
 }
 
-@keyframes bg-grow {
+@keyframes bg-slow-zoom {
   from { transform: scale(1); }
-  to { transform: scale(1.1); }
+  to { transform: scale(1.15); }
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(
-    to bottom, 
-    rgba(0,0,0,0.3) 0%, 
-    rgba(0,0,0,0.6) 50%, 
-    var(--bg) 100%
-  );
+  background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.1), transparent 40%),
+              linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 40%, #000 100%);
   z-index: 2;
 }
 
 .glow {
   position: fixed;
-  width: 80vw;
-  height: 80vh;
-  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  filter: blur(100px);
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 50%, var(--primary-glow) 0%, transparent 60%);
+  top: 0;
+  left: 0;
+  filter: blur(120px);
   z-index: 3;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 /* --- Layout --- */
@@ -78,7 +73,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 32px;
   text-align: center;
   padding: 4vh 24px;
 }
@@ -89,17 +84,18 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--success);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  color: var(--primary);
+  backdrop-filter: blur(25px) saturate(1.8);
+  -webkit-backdrop-filter: blur(25px) saturate(1.8);
   background: var(--glass);
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  text-transform: uppercase;
 }
 
 .dot-ring {
@@ -110,11 +106,11 @@ body {
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
-  background: var(--success);
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
   border-radius: 50%;
-  box-shadow: 0 0 12px var(--success);
+  box-shadow: 0 0 12px var(--primary);
 }
 
 .dot-ring::after {
@@ -123,29 +119,33 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: var(--success);
+  background: var(--primary);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(3); opacity: 0; }
+  100% { transform: scale(3.5); opacity: 0; }
 }
 
 /* --- Typography --- */
 
 h1 {
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(38px, 9vw, 80px);
   line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  max-width: 800px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  max-width: 900px;
+  background: linear-gradient(to bottom, #fff 50%, rgba(255,255,255,0.7));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
 }
 
 .highlight {
   color: var(--primary);
   display: inline-block;
-  background: linear-gradient(120deg, var(--primary), #fbbf24);
+  background: linear-gradient(120deg, #f59e0b, #fbbf24);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -153,10 +153,11 @@ h1 {
 p {
   font-size: clamp(16px, 2vw, 20px);
   color: var(--text-muted);
-  max-width: 600px;
+  max-width: 650px;
   line-height: 1.6;
   font-weight: 400;
-  margin-bottom: 0px;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
 }
 
 /* --- Features Section --- */
@@ -164,44 +165,48 @@ p {
 .features {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
   width: 100%;
   max-width: 900px;
-  margin: 10px 0;
 }
 
 .feature-card {
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  padding: 16px 12px;
-  border-radius: 20px;
-  transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(25px) saturate(1.8);
+  -webkit-backdrop-filter: blur(25px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 20px;
+  border-radius: 24px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .feature-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 .feature-icon {
-  font-size: 24px;
-  margin-bottom: 12px;
+  font-size: 28px;
+  margin-bottom: 16px;
   display: block;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
 }
 
 .feature-card h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
   color: white;
+  letter-spacing: 0.02em;
 }
 
 .feature-card p {
   font-size: 13px;
-  margin-bottom: 0;
+  line-height: 1.4;
   color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* --- Payment Note --- */
@@ -209,18 +214,16 @@ p {
 .payment-note {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--primary);
-  background: rgba(249, 115, 22, 0.1);
-  padding: 6px 14px;
-  border-radius: 12px;
-  letter-spacing: 0.05em;
-}
-
-.payment-note svg {
-  opacity: 0.8;
+  background: rgba(245, 158, 11, 0.08);
+  padding: 8px 18px;
+  border-radius: 14px;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(245, 158, 11, 0.1);
+  text-transform: uppercase;
 }
 
 /* --- Button --- */
@@ -228,23 +231,23 @@ p {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 40px;
-  background: white;
-  color: black;
-  font-weight: 800;
+  gap: 14px;
+  padding: 18px 48px;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 700;
   font-size: 18px;
   border-radius: 999px;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 15px 45px rgba(255,255,255,0.1);
   cursor: pointer;
 }
 
 .btn:hover {
-  transform: scale(1.05) translateY(-5px);
-  box-shadow: 0 25px 60px rgba(255,255,255,0.25);
-  background: #fdfdfd;
+  transform: scale(1.04) translateY(-4px);
+  box-shadow: 0 25px 70px rgba(255,255,255,0.3);
+  background: #ffffff;
 }
 
 .arrow {

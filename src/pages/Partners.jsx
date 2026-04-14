@@ -20,7 +20,7 @@ export default function Partners() {
         {
             icon: IoFlashOutline,
             title: 'Azonnali Megjelenés',
-            desc: 'Eseményed percek alatt kikerül a KőszegApp programajánlójába, ahol a leginkább érdekelt közönség látja.',
+            desc: 'Eseményed percek alatt kikerül a visitkoszeg programajánlójába, ahol a leginkább érdekelt közönség látja.',
             color: 'bg-amber-500'
         },
         {
@@ -101,7 +101,7 @@ export default function Partners() {
                     <div className="relative z-10">
                         <h2 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Korszerű technika, <br />zéró nehézség.</h2>
                         <p className="text-lg text-zinc-400 mb-12 max-w-xl mx-auto">
-                            A KőszegApp jegyrendszere nem csak jegyet ad: élményt nyújt. Apple Wallet és Google Wallet támogatás, QR-kódos PDF-ek és villámgyors mobil szkenner – mindezt extra beruházás nélkül.
+                            A visitkoszeg jegyrendszere nem csak jegyet ad: élményt nyújt. Apple Wallet és Google Wallet támogatás, QR-kódos PDF-ek és villámgyors mobil szkenner – mindezt extra beruházás nélkül.
                         </p>
 
                         <div className="flex flex-wrap justify-center gap-4">

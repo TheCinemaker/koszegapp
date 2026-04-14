@@ -26,7 +26,7 @@ export default function Adatvedelem() {
               <div>
                 <h3 className="font-bold text-amber-800 dark:text-amber-400 mb-2">Röviden és tömören</h3>
                 <p className="text-sm text-amber-800/80 dark:text-amber-400/80 leading-relaxed">
-                  A KőszegApp használata során bizonyos adatokat (pl. vásárlások, pontok, jegyek) tárolnunk kell a működéshez.
+                  A visitkoszeg használata során bizonyos adatokat (pl. vásárlások, pontok, jegyek) tárolnunk kell a működéshez.
                   <strong> Ezen adatokat SOHA nem adjuk el harmadik félnek marketing célokra.</strong>
                   Kizárólag törvényi kötelezettség esetén (pl. rendőrségi vagy bírósági megkeresés) adjuk ki azokat az arra jogosult hatóságoknak.
                 </p>

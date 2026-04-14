@@ -182,7 +182,7 @@ export default function AboutDetail() {
                 </h2>
                 <div className="space-y-8 text-xl text-gray-400 leading-relaxed font-medium">
                   <p>
-                    A KőszegApp nem egyszerűen felsorolja a látnivalókat. <b className="text-white">Érzi a város lüktetését.</b> Valós idejű adatokkal, interaktív térképekkel és személyre szabott ajánlókkal segít felfedezni az ékszerdoboz minden rejtett kincsét.
+                    A visitkoszeg nem egyszerűen felsorolja a látnivalókat. <b className="text-white">Érzi a város lüktetését.</b> Valós idejű adatokkal, interaktív térképekkel és személyre szabott ajánlókkal segít felfedezni az ékszerdoboz minden rejtett kincsét.
                   </p>
                   <p>
                     Legyen szó egy hirtelen jött zivatar előli menekülésről, a legközelebbi szabad parkoló megtalálásáról vagy az esti koncert programjáról – minden válasz ott lapul a zsebedben.

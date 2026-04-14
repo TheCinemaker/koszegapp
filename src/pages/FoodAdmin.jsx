@@ -1853,7 +1853,7 @@ function SearchPanel({ restaurantId }) {
             });
 
             doc.setFontSize(14);
-            doc.text('KőszegApp Rendelés', 40, 10, { align: 'center' });
+            doc.text('visitkoszeg Rendelés', 40, 10, { align: 'center' });
             doc.setFontSize(10);
             doc.text(`#${order.id}`, 40, 16, { align: 'center' });
             doc.text(new Date(order.created_at).toLocaleString('hu-HU'), 40, 22, { align: 'center' });

@@ -149,7 +149,7 @@ export default function TicketPrint() {
 
                 {/* Print Disclaimer (Hidden on screen) */}
                 <p className="hidden print:block text-[9px] text-zinc-400 text-center mt-6 italic">
-                    Kincses Kőszeg Város Önkormányzata - KőszegAPP Ticket System. A jegy nyomtatás után is megőrzi érvényességét.
+                    Kincses Kőszeg Város Önkormányzata - visitkoszeg Ticket System. A jegy nyomtatás után is megőrzi érvényességét.
                 </p>
             </div>
         </div>

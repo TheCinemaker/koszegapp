@@ -35,7 +35,7 @@ export default function TermsProvider() {
                         <section>
                             <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">1. A Szolgáltatás Tárgya</h2>
                             <p>
-                                A KőszegAPP felületet biztosít helyi szolgáltatók részére, hogy szolgáltatásaikat közzétegyék, és az ügyfelek részére online időpontfoglalást tegyenek lehetővé.
+                                A visitkoszeg felületet biztosít helyi szolgáltatók részére, hogy szolgáltatásaikat közzétegyék, és az ügyfelek részére online időpontfoglalást tegyenek lehetővé.
                             </p>
                         </section>
 
@@ -51,14 +51,14 @@ export default function TermsProvider() {
                             <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">3. Díjazás és Aktiválás</h2>
                             <p>
                                 A szolgáltatás igénybevétele díjköteles. A pontos díjakról és a fizetési feltételekről a regisztrációt követő 24 órán belül munkatársunk tájékoztatja Önt.
-                                A fiók aktiválása a szerződés aláírása és az első havi/éves díj beérkezése után történik meg.
-                            </p>
-                        </section>
-
-                        <section>
-                            <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">4. Adatkezelés</h2>
-                            <p>
-                                A Szolgáltató tudomásul veszi, hogy az átadott adatokat (cégnév, telefonszám, cím) a KőszegAPP az üzemeltetés és az ügyfelek tájékoztatása céljából kezeli és közzéteszi.
+                                A visitkoszeg felületet biztosít helyi szolgáltatók részére, hogy szolgáltatásaikat közzétegyék, és az ügyfelek részére online időpontfoglalást tegyenek lehetővé.
+                                </p>
+                                <p className="mb-4">
+                                Az Adatkezelő a regisztráció során az alábbi adatokat kéri be: név, email cím, telefonszám. Az adatkezelés célja a szolgáltatás biztosítása.
+                                </p>
+                                <h3 className="text-xl font-bold mb-3">4. Adatvédelem és GDPR</h3>
+                                <p className="mb-4">
+                                A Szolgáltató tudomásul veszi, hogy az átadott adatokat (cégnév, telefonszám, cím) a visitkoszeg az üzemeltetés és az ügyfelek tájékoztatása céljából kezeli és közzéteszi.
                             </p>
                         </section>
 

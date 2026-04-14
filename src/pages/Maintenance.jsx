@@ -11,25 +11,24 @@ export default function Maintenance() {
 
             <div className="relative z-10 max-w-lg bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/40 dark:border-gray-700/50">
                 <div className="flex justify-center mb-6">
-                    <img src="/images/koeszeg_logo_nobg.png" className="w-24 h-24 drop-shadow-lg" alt="KőszegAPP Logo" />
+                    <img src="/images/koeszeg_logo_nobg.png" className="w-24 h-24 drop-shadow-lg" alt="visitkoszeg Logo" />
                 </div>
 
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4 tracking-tight">
-                    Fejlesztés alatt
-                </h1>
-
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                    A KőszegAPP jelenleg karbantartás alatt áll. <br />
-                    Hamarosan visszatérünk egy megújult élménnyel!
-                </p>
-
-                <div className="flex justify-center gap-4 text-gray-400 dark:text-gray-500">
-                    <FaTools className="text-2xl" />
-                    <FaHardHat className="text-2xl" />
+                <div className="text-center space-y-4">
+                    <h1 className="text-4xl font-black tracking-tighter text-gray-900 drop-shadow-sm">
+                        visit<span className="text-indigo-600">koszeg</span>
+                    </h1>
+                    <p className="text-gray-600 font-medium max-w-xs mx-auto text-lg leading-relaxed">
+                        A visitkoszeg jelenleg karbantartás alatt áll. <br />
+                        Hamarosan visszatérünk!
+                    </p>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <p className="text-xs text-gray-500 uppercase tracking-widest">KőszegAPP Team</p>
+                <div className="flex flex-col items-center gap-6 w-full max-w-xs">
+                    <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-indigo-600 w-2/3 rounded-full"></div>
+                    </div>
+                    <p className="text-xs text-gray-500 uppercase tracking-widest">visitkoszeg Team</p>
                 </div>
             </div>
         </div>

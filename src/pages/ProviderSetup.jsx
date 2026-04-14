@@ -269,7 +269,7 @@ export default function ProviderSetup() {
                         <ul className="space-y-4 mb-8 text-zinc-600 dark:text-zinc-300">
                             <li className="flex items-center gap-3"><IoCheckmark className="text-green-500 text-lg" /> Korlátlan foglalás</li>
                             <li className="flex items-center gap-3"><IoCheckmark className="text-green-500 text-lg" /> 0-24 online naptár</li>
-                            <li className="flex items-center gap-3"><IoCheckmark className="text-green-500 text-lg" /> Saját profil a KőszegAPP-ban</li>
+                            <li className="flex items-center gap-3"><IoCheckmark className="text-green-500 text-lg" /> Saját profil a visitkoszeg-ben</li>
                         </ul>
 
                         <button

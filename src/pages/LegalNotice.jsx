@@ -22,7 +22,7 @@ export default function LegalNotice() {
                         Szerzői jogi védelem
                     </p>
                     <p className="leading-relaxed text-white/90 text-sm">
-                        A KőszegAPP alkalmazás, annak teljes tartalma, működési koncepciója, forráskódja, grafikai megjelenése, adatstruktúrája és egyedi megoldásai szerzői jogi védelem alatt álló szellemi alkotások, amelyek kizárólag a jogosult tulajdonát képezik.
+                        A visitkoszeg alkalmazás, annak teljes tartalma, működési koncepciója, forráskódja, grafikai megjelenése, adatstruktúrája és egyedi megoldásai szerzői jogi védelem alatt álló szellemi alkotások, amelyek kizárólag a jogosult tulajdonát képezik.
                     </p>
                     <p className="leading-relaxed text-white/90 text-sm">
                         Az alkalmazás bármilyen formában történő másolása, felhasználása, átdolgozása, terjesztése, visszafejtése, illetve az alkalmazás működésével vagy koncepciójával lényegében megegyező vagy ahhoz hasonló rendszer létrehozása a jogosult előzetes írásos engedélye nélkül tilos.

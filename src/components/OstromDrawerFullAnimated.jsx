@@ -200,7 +200,7 @@ export default function OstromDrawerFullAnimated() {
               : 'bg-green-200 border-green-400'
             }`}
           >
-            © KőszegAPP – 2025
+            © visitkoszeg – 2025
           </div>
         </div>
 

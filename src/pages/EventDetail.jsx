@@ -466,7 +466,7 @@ export default function EventDetail() {
                           if (navigator.share) {
                             navigator.share({
                               title: evt.name,
-                              text: `Nézd meg ezt az eseményt a KőszegApp-ban: ${evt.name}`,
+                              text: `Nézd meg ezt az eseményt a visitkoszeg-ben: ${evt.name}`,
                               url: window.location.href,
                             }).catch(console.error);
                           } else {
