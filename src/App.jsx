@@ -213,6 +213,15 @@ function MainAppContent() {
     }, 5000);
 
     const fetchData = async () => {
+      // --- IZOLÁLT ÚTVONAL BYPASS ---
+      // A Digitális Pincér (/menu, /menu-admin) teljesen független, 
+      // felesleges neki a több száz városi adatot letölteni.
+      if (window.location.pathname.startsWith('/menu')) {
+        console.log('[AppInit] Isolated QR route detected, skipping heavy global fetch for speed.');
+        setAppData(prev => ({ ...prev, loading: false }));
+        return;
+      }
+
       console.log('[AppInit] Starting data fetch sequence...');
       
       const endpoints = [

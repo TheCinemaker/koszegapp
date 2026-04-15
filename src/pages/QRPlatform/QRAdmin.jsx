@@ -4,7 +4,7 @@ import {
     IoRestaurant, IoAdd, IoClose, IoCheckmarkCircle, IoTimeOutline,
     IoCardOutline, IoTrashOutline, IoPencil, IoAlertCircle,
     IoLogOutOutline, IoChevronDown, IoChevronUp,
-    IoEyeOutline, IoEyeOffOutline, IoStorefrontOutline
+    IoEyeOutline, IoEyeOffOutline, IoStorefrontOutline, IoRefresh
 } from 'react-icons/io5';
 import { supabase } from '../../lib/supabaseClient';
 import {
@@ -428,14 +428,21 @@ function QRLinksView({ qrRestaurant }) {
 function TablesView({ qrRestaurantId }) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [connStatus, setConnStatus] = useState('connecting'); // connecting, joined, closed, error
 
-    const load = useCallback(async () => {
+    const load = useCallback(async (isManual = false) => {
+        if (isManual) setRefreshing(true);
         try {
             const data = await getActiveOrders(qrRestaurantId);
             setOrders(data);
+            if (isManual) toast.success('Adatok frissítve!');
         } catch { toast.error('Hiba a rendelések betöltésekor.'); }
-        finally { setLoading(false); }
+        finally { 
+            setLoading(false); 
+            setRefreshing(false);
+        }
     }, [qrRestaurantId]);
 
     useEffect(() => { load(); }, [load]);
@@ -467,7 +474,13 @@ function TablesView({ qrRestaurantId }) {
                         toast(`💳 Fizetést kérnek! ${newOrder.table_id}`, { duration: 8000 });
                 }
             })
-            .subscribe();
+            .subscribe((status) => {
+                setConnStatus(status);
+                if (status === 'SUBSCRIBED') console.log('Realtime subscribed!');
+                if (status === 'CLOSED') setConnStatus('closed');
+                if (status === 'CHANNEL_ERROR') setConnStatus('error');
+            });
+            
         return () => supabase.removeChannel(channel);
     }, [qrRestaurantId]);
 
@@ -487,7 +500,34 @@ function TablesView({ qrRestaurantId }) {
     }, {})).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
 
     return (
-        <div>
+        <div className="space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <h2 className="text-xl font-black">Aktív asztalok</h2>
+                    <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full border ${C.border} bg-black/20`}>
+                        <div className={`w-2 h-2 rounded-full animate-pulse ${
+                            connStatus === 'SUBSCRIBED' ? 'bg-green-500' : 
+                            connStatus === 'connecting' ? 'bg-amber-500' : 'bg-red-500'
+                        }`} />
+                        <span className="text-[10px] font-black uppercase tracking-widest opacity-60">
+                            {connStatus === 'SUBSCRIBED' ? 'Élő' : 
+                             connStatus === 'connecting' ? 'Kapcsolódás...' : 'Megszakadt'}
+                        </span>
+                    </div>
+                </div>
+                
+                <button 
+                    onClick={() => load(true)}
+                    disabled={refreshing}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl border ${C.border} ${C.card} 
+                        text-xs font-black transition-all active:scale-95 disabled:opacity-50
+                        ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
+                >
+                    <IoRefresh className={refreshing ? 'animate-spin' : ''} />
+                    Kényszerített frissítés
+                </button>
+            </div>
+
             {displayOrders.length === 0 ? (
                 <div className={`text-center py-24 ${C.muted}`}>
                     <IoRestaurant className="text-5xl mx-auto mb-4 opacity-20" />
@@ -531,13 +571,22 @@ function TablesView({ qrRestaurantId }) {
 }
 
 function TableCard({ order, selected, onSelect, onServeItem, onCloseTable, onAck }) {
+    const [working, setWorking] = useState(false);
     const unserved = order.items?.filter(i => !i.served) || [];
     const isPayReq = order.status === 'payment_requested';
     const waiterCalled = order.waiter_called;
 
+    const wrapAction = async (fn, ...args) => {
+        if (working) return;
+        setWorking(true);
+        try { await fn(...args); }
+        finally { setWorking(false); }
+    };
+
     return (
         <motion.div layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
             className={`${C.surface} border rounded-2xl overflow-hidden cursor-pointer transition-all
+                ${working ? 'opacity-70 pointer-events-none' : ''}
                 ${isPayReq ? 'border-blue-500/70 shadow-blue-500/10 shadow-lg'
                     : waiterCalled ? 'border-amber-500/70 shadow-amber-500/10 shadow-lg'
                         : selected ? 'border-zinc-500' : C.border}
@@ -573,7 +622,7 @@ function TableCard({ order, selected, onSelect, onServeItem, onCloseTable, onAck
                                         <span className={`text-sm ${item.served ? C.muted : C.text}`}>{item.qty}× {item.name}</span>
                                     </div>
                                     {!item.served && (
-                                        <button onClick={e => { e.stopPropagation(); onServeItem(order, item.id); }}
+                                        <button onClick={e => { e.stopPropagation(); wrapAction(onServeItem, order, item.id); }}
                                             className="text-[10px] font-black bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-lg">
                                             Kiment ✓
                                         </button>
@@ -583,15 +632,15 @@ function TableCard({ order, selected, onSelect, onServeItem, onCloseTable, onAck
                             <div className={`pt-3 mt-2 border-t flex flex-wrap gap-2
                                 ${isPayReq ? 'border-blue-500/50' : waiterCalled ? 'border-amber-500/50' : C.border}`}>
                                 {waiterCalled && (
-                                    <button onClick={e => { e.stopPropagation(); onAck(order); }}
+                                    <button onClick={e => { e.stopPropagation(); wrapAction(onAck, order); }}
                                         className="w-full flex items-center justify-center gap-2 text-xs font-black bg-amber-500 text-black px-3 py-2.5 rounded-xl">
-                                        <IoCheckmarkCircle className="text-base" /> Segítségnyújtás OK (Jelzés törlése)
+                                        <IoCheckmarkCircle className="text-base" /> {working ? 'Feldolgozás...' : 'Segítségnyújtás OK (Jelzés törlése)'}
                                     </button>
                                 )}
-                                <button onClick={e => { e.stopPropagation(); onCloseTable(order.id); }}
+                                <button onClick={e => { e.stopPropagation(); wrapAction(onCloseTable, order.id); }}
                                     className={`w-full flex items-center justify-center gap-2 text-xs font-black border px-3 py-2.5 rounded-xl
-                                        ${isPayReq ? 'bg-blue-600 text-white border-transparent' : `${C.card} text-red-400 border-red-500/30 w-auto`}`}>
-                                    {isPayReq ? '💳 Fizetés elfogadva – Asztal lezárása' : 'Asztal lezárása (Vendég távozott)'}
+                                        ${isPayReq ? 'bg-blue-600 text-white border-transparent' : `${C.card} text-red-400 border-red-500/30 w-auto text-center justify-center mx-auto`}`}>
+                                    {working ? '...' : isPayReq ? '💳 Fizetés elfogadva – Asztal lezárása' : 'Asztal lezárása'}
                                 </button>
                             </div>
                         </div>
