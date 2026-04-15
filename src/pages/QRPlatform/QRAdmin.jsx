@@ -12,7 +12,8 @@ import {
     getActiveOrders, getQRMenuAdmin,
     markItemServed, closeTable, acknowledgeWaiterCall,
     saveQRCategory, deleteQRCategory,
-    saveQRItem, deleteQRItem, toggleQRItemAvailability
+    saveQRItem, deleteQRItem, toggleQRItemAvailability,
+    uploadQRItemImage
 } from '../../api/qrService';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -735,12 +736,34 @@ function MenuEditor({ qrRestaurantId }) {
     const handleSaveItem = async (formData) => {
         setSaving(true);
         try {
-            await saveQRItem(qrRestaurantId, { ...formData, price: parseInt(formData.price) || 0, category_id: activeCatId, ...(editingItem ? { id: editingItem.id } : { sort_order: 0 }) }, !editingItem);
+            let finalImageUrl = formData.image_url;
+            
+            // Ha van kiválasztott fájl, töltsük fel
+            if (formData.file) {
+                toast.loading('Kép optimalizálása és feltöltése...', { id: 'upload' });
+                finalImageUrl = await uploadQRItemImage(formData.file, qrRestaurantId);
+                toast.success('Kép feltöltve!', { id: 'upload' });
+            }
+
+            const cleanData = { ...formData };
+            delete cleanData.file; // Ne küldjük el a DB-be
+            
+            await saveQRItem(qrRestaurantId, { 
+                ...cleanData, 
+                image_url: finalImageUrl,
+                price: parseInt(formData.price) || 0, 
+                category_id: activeCatId, 
+                ...(editingItem ? { id: editingItem.id } : { sort_order: 0 }) 
+            }, !editingItem);
+
             toast.success(editingItem ? 'Étel frissítve' : 'Étel hozzáadva');
             setShowItemModal(false);
             loadMenu();
-        } catch (e) { toast.error('Hiba: ' + e.message); }
-        finally { setSaving(false); }
+        } catch (e) { 
+            toast.error('Hiba: ' + e.message, { id: 'upload' }); 
+        } finally { 
+            setSaving(false); 
+        }
     };
 
     if (loading) return <FullScreenLoader label="Étlap betöltése..." />;
@@ -843,7 +866,8 @@ function MenuEditor({ qrRestaurantId }) {
                             { key: 'name', label: 'Étel neve *', placeholder: 'pl. Soproni Korsó 0.5l', required: true, value: editingItem?.name || '' },
                             { key: 'description', label: 'Leírás', placeholder: 'Opcionális', value: editingItem?.description || '' },
                             { key: 'price', label: 'Ár (Ft) *', type: 'number', placeholder: '850', required: true, value: editingItem?.price || '' },
-                            { key: 'image_url', label: 'Kép URL', placeholder: 'https://...', value: editingItem?.image_url || '' },
+                            { key: 'file', label: 'Fénykép feltöltése', type: 'file', value: null },
+                            { key: 'image_url', label: 'Kép URL (vagy hagyd üresen feltöltéskor)', placeholder: 'https://...', value: editingItem?.image_url || '' },
                         ]} />
                 )}
             </AnimatePresence>
@@ -852,7 +876,7 @@ function MenuEditor({ qrRestaurantId }) {
 }
 
 function FormModal({ title, onClose, onSubmit, saving, fields }) {
-    const [formData, setFormData] = useState(Object.fromEntries(fields.map(f => [f.key, String(f.value ?? '')])));
+    const [formData, setFormData] = useState(Object.fromEntries(fields.map(f => [f.key, f.value ?? ''])));
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -868,11 +892,24 @@ function FormModal({ title, onClose, onSubmit, saving, fields }) {
                     {fields.map(field => (
                         <div key={field.key}>
                             <label className="block text-xs font-bold text-zinc-400 mb-1">{field.label}</label>
-                            <input type={field.type || 'text'} required={field.required} placeholder={field.placeholder}
-                                value={formData[field.key]}
-                                onChange={e => setFormData(prev => ({ ...prev, [field.key]: e.target.value }))}
-                                className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm
-                                    text-white placeholder-zinc-600 outline-none focus:border-amber-500/50 transition-colors" />
+                            {field.type === 'file' ? (
+                                <div className="space-y-2">
+                                    <input type="file" accept="image/*"
+                                        onChange={e => setFormData(prev => ({ ...prev, [field.key]: e.target.files[0] }))}
+                                        className="w-full text-zinc-500 text-xs file:mr-4 file:py-2 file:px-4
+                                            file:rounded-xl file:border-0 file:text-[10px] file:font-black
+                                            file:bg-zinc-800 file:text-zinc-400 hover:file:bg-zinc-700 transition-all cursor-pointer" />
+                                    {formData[field.key] && (
+                                        <p className="text-[10px] text-amber-500 font-bold">Kiválasztva: {formData[field.key].name}</p>
+                                    )}
+                                </div>
+                            ) : (
+                                <input type={field.type || 'text'} required={field.required} placeholder={field.placeholder}
+                                    value={formData[field.key]}
+                                    onChange={e => setFormData(prev => ({ ...prev, [field.key]: e.target.value }))}
+                                    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm
+                                        text-white placeholder-zinc-600 outline-none focus:border-amber-500/50 transition-colors" />
+                            )}
                         </div>
                     ))}
                     <div className="flex gap-2 pt-2">

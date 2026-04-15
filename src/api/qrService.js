@@ -333,3 +333,90 @@ export async function toggleQRItemAvailability(itemId, currentStatus) {
     if (error) throw error;
     return data;
 }
+
+// ── STORAGE ──────────────────────────────────────────────
+
+/**
+ * Kliens-oldali képkompresszió Canvas segítségével.
+ * Max szélesség/magasság: 1200px, minőség: 0.85 (JPEG).
+ */
+async function compressImage(file, maxDimension = 1200) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onerror = reject;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > maxDimension) {
+                        height *= maxDimension / width;
+                        width = maxDimension;
+                    }
+                } else {
+                    if (height > maxDimension) {
+                        width *= maxDimension / height;
+                        height = maxDimension;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    if (!blob) {
+                        reject(new Error('Kép tömörítési hiba.'));
+                        return;
+                    }
+                    resolve(new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", { 
+                        type: 'image/jpeg', 
+                        lastModified: Date.now() 
+                    }));
+                }, 'image/jpeg', 0.85);
+            };
+        };
+        reader.onerror = reject;
+    });
+}
+
+/**
+ * Kép feltöltése a qr-platform bucket-be.
+ * Automatikusan tömöríti a képet feltöltés előtt.
+ */
+export async function uploadQRItemImage(file, restaurantId) {
+    if (!file || !restaurantId) return null;
+
+    try {
+        // 1. Tömörítés feltöltés előtt
+        const compressedFile = await compressImage(file);
+
+        // 2. Egyedi útvonal generálása (restaurant_id / uuid)
+        const fileExt = 'jpg';
+        const fileName = `${crypto.randomUUID()}.${fileExt}`;
+        const filePath = `${restaurantId}/${fileName}`;
+
+        // 3. Feltöltés - a supabase klienssel (authenticated)
+        const { error: uploadError } = await supabase.storage
+            .from('qr-platform')
+            .upload(filePath, compressedFile);
+
+        if (uploadError) throw uploadError;
+
+        // 4. Publikus URL lekérése
+        const { data } = supabase.storage
+            .from('qr-platform')
+            .getPublicUrl(filePath);
+
+        return data.publicUrl;
+    } catch (err) {
+        console.error('[StorageError]', err);
+        throw err;
+    }
+}
