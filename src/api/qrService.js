@@ -179,12 +179,14 @@ export async function addItemsToOrder(orderId, newItems, existingItems) {
     const merged = [...existingItems];
 
     newItems.forEach(newItem => {
-        const existing = merged.find(i => i.id === newItem.id);
-        if (existing) {
-            existing.qty += newItem.qty;
-        } else {
-            merged.push({ ...newItem, ordered_at: new Date().toISOString(), served: false });
-        }
+        // We no longer merge by product ID. Each order submission creates distinct lines
+        // so the waiter can track rounds (e.g., 3 beers served, 2 new beers ordered).
+        merged.push({ 
+            ...newItem, 
+            uid: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+            ordered_at: new Date().toISOString(), 
+            served: false 
+        });
     });
 
     const total = merged.reduce((sum, i) => sum + (i.price * i.qty), 0);
@@ -237,9 +239,9 @@ export async function getActiveOrders(qrRestaurantId) {
     return data || [];
 }
 
-export async function markItemServed(orderId, itemId, existingItems) {
+export async function markItemServed(orderId, itemUid, existingItems) {
     const updated = existingItems.map(item =>
-        item.id === itemId ? { ...item, served: true } : item
+        item.uid === itemUid ? { ...item, served: true } : item
     );
     const { data, error } = await supabase
         .from('qr_orders')

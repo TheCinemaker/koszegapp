@@ -390,7 +390,7 @@ export default function QRMenu() {
                             className={`fixed bottom-0 left-0 right-0 z-50 ${C.surface} border-t ${C.border} 
                                 rounded-t-3xl p-6 max-h-[80vh] overflow-y-auto`}>
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-lg font-black">Kosár</h2>
+                                <h2 className="text-lg font-black">Rendelés áttekintése</h2>
                                 <button onClick={() => setShowCart(false)} className={`${C.muted} hover:text-white`}>
                                     <IoClose className="text-xl" />
                                 </button>
@@ -499,7 +499,7 @@ export default function QRMenu() {
                         className="w-full flex items-center justify-between px-5 py-4 rounded-2xl 
                             bg-amber-500 text-black font-black shadow-2xl shadow-amber-500/30">
                         <span className="bg-black/20 rounded-xl px-2 py-0.5 text-sm">{cartCount} tétel</span>
-                        <span>Kosár megtekintése</span>
+                        <span>Rendelés áttekintése</span>
                         <span className="text-sm">{cartTotal.toLocaleString('hu-HU')} Ft</span>
                     </button>
                 </motion.div>

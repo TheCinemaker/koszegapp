@@ -46,6 +46,73 @@ export default function QRAdmin() {
     const [verifying, setVerifying] = useState(true);
     const [activeTab, setActiveTab] = useState('tables');
 
+    // ── LIFTED ORDER STATE ────────────────────────────────
+    const [orders, setOrders] = useState([]);
+    const [loadingOrders, setLoadingOrders] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+    const [countdown, setCountdown] = useState(60);
+    const [connStatus, setConnStatus] = useState('connecting');
+    const [isBusy, setIsBusy] = useState(false);
+
+    const loadOrders = useCallback(async (isManual = false) => {
+        if (!qrRestaurant?.id) return;
+        if (isManual) setRefreshing(true);
+        try {
+            const data = await getActiveOrders(qrRestaurant.id);
+            setOrders(data);
+            if (isManual) toast.success('Adatok frissítve!');
+            setCountdown(60);
+        } catch { toast.error('Hiba a rendelések betöltésekor.'); }
+        finally { 
+            setLoadingOrders(false); 
+            setRefreshing(false);
+        }
+    }, [qrRestaurant?.id]);
+
+    useEffect(() => {
+        loadOrders();
+    }, [loadOrders]);
+
+    // Auto-refresh timer
+    useEffect(() => {
+        if (loadingOrders || refreshing || isBusy || activeTab !== 'tables') return;
+        const timer = setInterval(() => {
+            setCountdown(prev => {
+                if (prev <= 1) { loadOrders(); return 60; }
+                return prev - 1;
+            });
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [loadingOrders, refreshing, isBusy, loadOrders, activeTab]);
+
+    // Realtime subscription
+    useEffect(() => {
+        if (!qrRestaurant?.id) return;
+        const channel = supabase
+            .channel(`qradmin-${qrRestaurant.id}`)
+            .on('postgres_changes', {
+                event: '*', schema: 'public', table: 'qr_orders',
+                filter: `qr_restaurant_id=eq.${qrRestaurant.id}`
+            }, (payload) => {
+                const newOrder = payload.new;
+                const closed = ['paid', 'cancelled'];
+                if (payload.eventType === 'INSERT' && !closed.includes(newOrder.status)) {
+                    setOrders(prev => [newOrder, ...prev]);
+                    toast('🪑 Új asztal aktiválva!', { icon: '🔔' });
+                } else if (payload.eventType === 'UPDATE') {
+                    if (closed.includes(newOrder.status)) {
+                        setOrders(prev => prev.filter(o => o.id !== newOrder.id));
+                    } else {
+                        setOrders(prev => prev.map(o => o.id === newOrder.id ? newOrder : o));
+                    }
+                }
+            })
+            .subscribe((status) => {
+                setConnStatus(status);
+            });
+        return () => supabase.removeChannel(channel);
+    }, [qrRestaurant?.id]);
+
     // ── Auth: Direct Supabase, NO global useAuth() ────────
     useEffect(() => {
         const init = async () => {
@@ -120,21 +187,46 @@ export default function QRAdmin() {
                         <IoLogOutOutline /> Kilépés
                     </button>
                 </div>
-                <div className="max-w-6xl mx-auto flex gap-1 mt-3">
-                    {TABS.map(tab => (
-                        <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all
-                                ${activeTab === tab.id
-                                    ? 'bg-amber-500 text-black'
-                                    : `${C.card} ${C.subtext} border ${C.border} hover:text-white`}`}>
-                            {tab.label}
+                <div className="max-w-6xl mx-auto flex items-center justify-between mt-3">
+                    <div className="flex gap-1">
+                        {TABS.map(tab => (
+                            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all
+                                    ${activeTab === tab.id
+                                        ? 'bg-amber-500 text-black'
+                                        : `${C.card} ${C.subtext} border ${C.border} hover:text-white`}`}>
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {activeTab === 'tables' && (
+                        <button 
+                            onClick={() => loadOrders(true)}
+                            disabled={refreshing}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${C.border} ${C.card} 
+                                text-[10px] font-black transition-all active:scale-95 disabled:opacity-50
+                                ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
+                        >
+                            <IoRefresh className={refreshing ? 'animate-spin' : ''} />
+                            <span className="hidden sm:inline">Kényszerített frissítés</span>
+                            <span className={`min-w-[1.5rem] ${countdown < 10 ? 'text-amber-500' : 'text-zinc-500'}`}>{countdown}s</span>
                         </button>
-                    ))}
+                    )}
                 </div>
             </header>
 
-            <main className="max-w-6xl mx-auto p-4">
-                {activeTab === 'tables' && <TablesView qrRestaurantId={qrRestaurant.id} />}
+            <main className="max-w-6xl mx-auto p-4 transition-all">
+                {activeTab === 'tables' && (
+                    <TablesView 
+                        qrRestaurantId={qrRestaurant.id} 
+                        orders={orders} 
+                        loading={loadingOrders}
+                        connStatus={connStatus}
+                        setOrders={setOrders}
+                        setIsBusy={setIsBusy}
+                    />
+                )}
                 {activeTab === 'menu' && <MenuEditor qrRestaurantId={qrRestaurant.id} />}
                 {activeTab === 'links' && <QRLinksView qrRestaurant={qrRestaurant} />}
             </main>
@@ -425,84 +517,8 @@ function QRLinksView({ qrRestaurant }) {
 }
 
 // ══════════════════════════════════════════════
-function TablesView({ qrRestaurantId }) {
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
+function TablesView({ qrRestaurantId, orders, loading, connStatus, setOrders, setIsBusy }) {
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [connStatus, setConnStatus] = useState('connecting'); // connecting, joined, closed, error
-    const [countdown, setCountdown] = useState(60);
-    const [isBusy, setIsBusy] = useState(false);
-
-    const load = useCallback(async (isManual = false) => {
-        if (isManual) setRefreshing(true);
-        try {
-            const data = await getActiveOrders(qrRestaurantId);
-            setOrders(data);
-            if (isManual) toast.success('Adatok frissítve!');
-            setCountdown(60); // Reset timer on every load
-        } catch { toast.error('Hiba a rendelések betöltésekor.'); }
-        finally { 
-            setLoading(false); 
-            setRefreshing(false);
-        }
-    }, [qrRestaurantId]);
-
-    useEffect(() => { load(); }, [load]);
-
-    // ── AUTO REFRESH TIMER ──
-    useEffect(() => {
-        if (loading || refreshing || isBusy) return;
-
-        const timer = setInterval(() => {
-            setCountdown(prev => {
-                if (prev <= 1) {
-                    load();
-                    return 60;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, [loading, refreshing, isBusy, load]);
-
-    useEffect(() => {
-        if (!qrRestaurantId) return;
-        const channel = supabase
-            .channel(`qradmin-${qrRestaurantId}`)
-            .on('postgres_changes', {
-                event: '*', schema: 'public', table: 'qr_orders',
-                filter: `qr_restaurant_id=eq.${qrRestaurantId}`
-            }, (payload) => {
-                const newOrder = payload.new;
-                const closed = ['paid', 'cancelled'];
-                if (payload.eventType === 'INSERT' && !closed.includes(newOrder.status)) {
-                    setOrders(prev => [newOrder, ...prev]);
-                    toast('🪑 Új asztal aktiválva!', { icon: '🔔' });
-                } else if (payload.eventType === 'UPDATE') {
-                    if (closed.includes(newOrder.status)) {
-                        setOrders(prev => prev.filter(o => o.id !== newOrder.id));
-                        setSelectedOrder(prev => prev?.id === newOrder.id ? null : prev);
-                    } else {
-                        setOrders(prev => prev.map(o => o.id === newOrder.id ? newOrder : o));
-                        setSelectedOrder(prev => prev?.id === newOrder.id ? newOrder : prev);
-                    }
-                    if (newOrder.waiter_called && !payload.old?.waiter_called)
-                        toast(`🙋 Pincért hívnak! ${newOrder.table_id}`, { duration: 8000 });
-                    if (newOrder.status === 'payment_requested' && payload.old?.status !== 'payment_requested')
-                        toast(`💳 Fizetést kérnek! ${newOrder.table_id}`, { duration: 8000 });
-                }
-            })
-            .subscribe((status) => {
-                setConnStatus(status);
-                if (status === 'SUBSCRIBED') console.log('Realtime subscribed!');
-                if (status === 'CLOSED') setConnStatus('closed');
-                if (status === 'CHANNEL_ERROR') setConnStatus('error');
-            });
-            
-        return () => supabase.removeChannel(channel);
-    }, [qrRestaurantId]);
 
     if (loading) return <FullScreenLoader label="Rendelések betöltése..." />;
 
@@ -523,40 +539,16 @@ function TablesView({ qrRestaurantId }) {
         <div className="space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <h2 className="text-xl font-black">Aktív asztalok</h2>
+                    <h2 className="text-xl font-black italic">Aktív asztalok</h2>
                     <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full border ${C.border} bg-black/20`}>
                         <div className={`w-2 h-2 rounded-full animate-pulse ${
                             connStatus === 'SUBSCRIBED' ? 'bg-green-500' : 
                             connStatus === 'connecting' ? 'bg-amber-500' : 'bg-red-500'
                         }`} />
                         <span className="text-[10px] font-black uppercase tracking-widest opacity-60">
-                            {connStatus === 'SUBSCRIBED' ? 'Élő' : 
-                             connStatus === 'connecting' ? 'Kapcsolódás...' : 'Megszakadt'}
+                            {connStatus === 'SUBSCRIBED' ? 'Élő rendszer' : 'Megszakadt'}
                         </span>
                     </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                    <button 
-                        onClick={() => load(true)}
-                        disabled={refreshing}
-                        className={`group relative flex items-center gap-2 px-4 py-2 rounded-xl border ${C.border} ${C.card} 
-                            text-xs font-black transition-all active:scale-95 disabled:opacity-50
-                            ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
-                    >
-                        <IoRefresh className={refreshing ? 'animate-spin' : ''} />
-                        <span>Kényszerített frissítés</span>
-                        
-                        {/* Countdown ring/overlay */}
-                        {!refreshing && (
-                            <div className="ml-2 pl-2 border-l border-zinc-700 flex items-center gap-1.5 min-w-[3rem]">
-                                <IoTimeOutline className="text-zinc-500" />
-                                <span className={countdown < 10 ? 'text-amber-500' : 'text-zinc-500'}>
-                                    {countdown}s
-                                </span>
-                            </div>
-                        )}
-                    </button>
                 </div>
             </div>
 
@@ -660,13 +652,20 @@ function TableCard({ order, selected, onSelect, onServeItem, onCloseTable, onAck
                     <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
                         <div className={`border-t ${C.border} px-4 py-3 space-y-2`}>
                             {order.items?.map((item, i) => (
-                                <div key={i} className="flex items-center justify-between">
+                                <div key={item.uid || i} className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         {item.served ? <IoCheckmarkCircle className="text-green-500 shrink-0" /> : <IoTimeOutline className="text-orange-400 shrink-0" />}
-                                        <span className={`text-sm ${item.served ? C.muted : C.text}`}>{item.qty}× {item.name}</span>
+                                        <div className="flex flex-col">
+                                            <span className={`text-sm ${item.served ? C.muted : C.text} font-bold`}>{item.qty}× {item.name}</span>
+                                            {item.ordered_at && !item.served && (
+                                                <span className="text-[9px] text-zinc-500 uppercase font-black">
+                                                    Rendelve: {new Date(item.ordered_at).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
                                     {!item.served && (
-                                        <button onClick={e => { e.stopPropagation(); wrapAction(onServeItem, order, item.id); }}
+                                        <button onClick={e => { e.stopPropagation(); wrapAction(onServeItem, order, item.uid); }}
                                             className="text-[10px] font-black bg-green-700 hover:bg-green-600 text-white px-2 py-1 rounded-lg">
                                             Kiment ✓
                                         </button>
