@@ -58,6 +58,10 @@ const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
 const NearbyDiscoveryDemo = lazyWithRetry(() => import('../pages/NearbyDiscoveryDemo'));
 const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
 
+// QR Platform (Standalone – Digitális Pincér)
+const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
+const QRAdmin = lazyWithRetry(() => import('../pages/QRPlatform/QRAdmin'));
+
 
 // Ticket System Components
 const TicketPurchase = lazyWithRetry(() => import('../pages/TicketSystem/TicketPurchase'));
@@ -221,6 +225,14 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           {/* New Eats Landing */}
           <Route path="/eats-landing" element={<EatsLanding />} />
+
+          {/* ═══════════════════════════════════════════════ */}
+          {/* QR Platform – Digitális Pincér                 */}
+          {/* Teljesen izolált, saját UI, saját adatbázis  */}
+          {/* ═══════════════════════════════════════════════ */}
+          <Route path="/menu/:restaurantId/:tableId" element={<QRMenu />} />
+          <Route path="/menu-admin" element={<QRAdmin />} />
+
         </Routes>
       </Suspense>
     </AnimatePresence>

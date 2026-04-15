@@ -3,7 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function Footer() {
     const location = useLocation();
-    const isInGameMode = location.pathname.startsWith('/game/') || location.pathname.startsWith('/gem/');
+    const isInGameMode = location.pathname.startsWith('/game/') || 
+        location.pathname.startsWith('/gem/') || 
+        location.pathname.startsWith('/menu'); // QR Platform – teljesen izolált
+
 
     if (isInGameMode) return null;
 

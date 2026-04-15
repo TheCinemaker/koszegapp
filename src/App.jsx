@@ -136,11 +136,12 @@ function MainAppContent() {
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const [showResidentModal, setShowResidentModal] = useState(false);
   const isHome = location.pathname === '/';
-  // Treat food-auth as "game mode" to hide the global header/UI
+  // Treat food-auth + QR Platform as "game mode" to hide the global header/UI
   const isInGameMode = location.pathname.startsWith('/game/') ||
     location.pathname.startsWith('/gem/') ||
     location.pathname === '/teaser' ||
-    location.pathname === '/eats-auth';
+    location.pathname === '/eats-auth' ||
+    location.pathname.startsWith('/menu');  // QR Platform – teljesen izolált
 
   // --- MAINTENANCE MODE LOGIC ---
   const [maintenanceMode, setMaintenanceMode] = useState(false); // Devben nyitva, élesben karbantartás
