@@ -431,6 +431,8 @@ function TablesView({ qrRestaurantId }) {
     const [refreshing, setRefreshing] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [connStatus, setConnStatus] = useState('connecting'); // connecting, joined, closed, error
+    const [countdown, setCountdown] = useState(60);
+    const [isBusy, setIsBusy] = useState(false);
 
     const load = useCallback(async (isManual = false) => {
         if (isManual) setRefreshing(true);
@@ -438,6 +440,7 @@ function TablesView({ qrRestaurantId }) {
             const data = await getActiveOrders(qrRestaurantId);
             setOrders(data);
             if (isManual) toast.success('Adatok frissítve!');
+            setCountdown(60); // Reset timer on every load
         } catch { toast.error('Hiba a rendelések betöltésekor.'); }
         finally { 
             setLoading(false); 
@@ -446,6 +449,23 @@ function TablesView({ qrRestaurantId }) {
     }, [qrRestaurantId]);
 
     useEffect(() => { load(); }, [load]);
+
+    // ── AUTO REFRESH TIMER ──
+    useEffect(() => {
+        if (loading || refreshing || isBusy) return;
+
+        const timer = setInterval(() => {
+            setCountdown(prev => {
+                if (prev <= 1) {
+                    load();
+                    return 60;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [loading, refreshing, isBusy, load]);
 
     useEffect(() => {
         if (!qrRestaurantId) return;
@@ -516,16 +536,28 @@ function TablesView({ qrRestaurantId }) {
                     </div>
                 </div>
                 
-                <button 
-                    onClick={() => load(true)}
-                    disabled={refreshing}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl border ${C.border} ${C.card} 
-                        text-xs font-black transition-all active:scale-95 disabled:opacity-50
-                        ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
-                >
-                    <IoRefresh className={refreshing ? 'animate-spin' : ''} />
-                    Kényszerített frissítés
-                </button>
+                <div className="flex items-center gap-3">
+                    <button 
+                        onClick={() => load(true)}
+                        disabled={refreshing}
+                        className={`group relative flex items-center gap-2 px-4 py-2 rounded-xl border ${C.border} ${C.card} 
+                            text-xs font-black transition-all active:scale-95 disabled:opacity-50
+                            ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
+                    >
+                        <IoRefresh className={refreshing ? 'animate-spin' : ''} />
+                        <span>Kényszerített frissítés</span>
+                        
+                        {/* Countdown ring/overlay */}
+                        {!refreshing && (
+                            <div className="ml-2 pl-2 border-l border-zinc-700 flex items-center gap-1.5 min-w-[3rem]">
+                                <IoTimeOutline className="text-zinc-500" />
+                                <span className={countdown < 10 ? 'text-amber-500' : 'text-zinc-500'}>
+                                    {countdown}s
+                                </span>
+                            </div>
+                        )}
+                    </button>
+                </div>
             </div>
 
             {displayOrders.length === 0 ? (
@@ -539,28 +571,40 @@ function TablesView({ qrRestaurantId }) {
                     {displayOrders.map(order => (
                         <TableCard key={order.id} order={order}
                             selected={selectedOrder?.id === order.id}
-                            onSelect={() => setSelectedOrder(s => s?.id === order.id ? null : order)}
+                            onSelect={() => {
+                                setSelectedOrder(s => s?.id === order.id ? null : order);
+                                setCountdown(60); // Reset timer on interaction
+                            }}
                             onServeItem={async (o, itemId) => { 
+                                setIsBusy(true);
                                 try { 
                                     const dupes = orders.filter(d => d.table_id === o.table_id);
                                     await Promise.all(dupes.map(dup => markItemServed(dup.id, itemId, dup.items)));
+                                    setCountdown(60);
                                 } catch { toast.error('Hiba történt a felszolgáláskor.'); } 
+                                finally { setIsBusy(false); }
                             }}
                             onCloseTable={async (id) => { 
                                 if (confirm('Biztosan lezárod az asztalt?')) {
+                                    setIsBusy(true);
                                     try { 
                                         const target = displayOrders.find(o => o.id === id);
                                         const allIds = orders.filter(o => o.table_id === target.table_id).map(o => o.id);
                                         await Promise.all(allIds.map(dupId => closeTable(dupId)));
                                         toast.success('✅ Asztal lezárva'); 
+                                        setCountdown(60);
                                     } catch { toast.error('Hiba történt az asztal lezárásakor.'); } 
+                                    finally { setIsBusy(false); }
                                 } 
                             }}
                             onAck={async (o) => { 
+                                setIsBusy(true);
                                 try { 
                                     const dupes = orders.filter(d => d.table_id === o.table_id);
                                     await Promise.all(dupes.map(dup => acknowledgeWaiterCall(dup.id)));
+                                    setCountdown(60);
                                 } catch { toast.error('Hiba történt a jelzés nyugtázásakor.'); } 
+                                finally { setIsBusy(false); }
                             }}
                         />
                     ))}
