@@ -225,6 +225,7 @@ export default function QRAdmin() {
                         connStatus={connStatus}
                         setOrders={setOrders}
                         setIsBusy={setIsBusy}
+                        setCountdown={setCountdown}
                     />
                 )}
                 {activeTab === 'menu' && <MenuEditor qrRestaurantId={qrRestaurant.id} />}
@@ -517,7 +518,7 @@ function QRLinksView({ qrRestaurant }) {
 }
 
 // ══════════════════════════════════════════════
-function TablesView({ qrRestaurantId, orders, loading, connStatus, setOrders, setIsBusy }) {
+function TablesView({ qrRestaurantId, orders, loading, connStatus, setOrders, setIsBusy, setCountdown }) {
     const [selectedOrder, setSelectedOrder] = useState(null);
 
     if (loading) return <FullScreenLoader label="Rendelések betöltése..." />;

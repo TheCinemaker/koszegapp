@@ -8,12 +8,17 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.warn('Supabase URL or Anon Key missing! Check .env file.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+        storageKey: 'visitkoszeg-admin-auth'
+    }
+});
 
 export const supabaseGuest = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
         persistSession: false,
         autoRefreshToken: false,
-        detectSessionInUrl: false
+        detectSessionInUrl: false,
+        storageKey: 'visitkoszeg-guest-auth'
     }
 });
