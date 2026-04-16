@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     IoRestaurant, IoAdd, IoClose, IoCheckmarkCircle, IoTimeOutline,
@@ -51,7 +51,6 @@ export default function QRAdmin() {
     const [orders, setOrders] = useState([]);
     const [loadingOrders, setLoadingOrders] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
-    const [countdown, setCountdown] = useState(60);
     const [connStatus, setConnStatus] = useState('connecting');
     const [isBusy, setIsBusy] = useState(false);
 
@@ -62,7 +61,6 @@ export default function QRAdmin() {
             const data = await getActiveOrders(qrRestaurant.id);
             setOrders(data);
             if (isManual) toast.success('Adatok frissítve!');
-            setCountdown(60);
         } catch { toast.error('Hiba a rendelések betöltésekor.'); }
         finally { 
             setLoadingOrders(false); 
@@ -74,17 +72,8 @@ export default function QRAdmin() {
         loadOrders();
     }, [loadOrders]);
 
-    // Auto-refresh timer
-    useEffect(() => {
-        if (loadingOrders || refreshing || isBusy || activeTab !== 'tables') return;
-        const timer = setInterval(() => {
-            setCountdown(prev => {
-                if (prev <= 1) { loadOrders(); return 60; }
-                return prev - 1;
-            });
-        }, 1000);
-        return () => clearInterval(timer);
-    }, [loadingOrders, refreshing, isBusy, loadOrders, activeTab]);
+    // Auto-refresh is now handled by the isolated HeaderTimer component 
+    // to prevent the entire dashboard from re-rendering every second.
 
     // Realtime subscription
     useEffect(() => {
@@ -142,15 +131,20 @@ export default function QRAdmin() {
         return () => subscription.unsubscribe();
     }, []);
 
-    const handleLogout = async () => {
+    const handleLogout = useCallback(async () => {
         await supabase.auth.signOut();
         toast.success('Kijelentkezve');
-    };
+    }, []);
 
-    const handleRegistered = (restaurant) => {
+    const handleRegistered = useCallback((restaurant) => {
         setQrRestaurant(restaurant);
         document.title = `${restaurant.name} – Digitális Pincér`;
-    };
+    }, []);
+
+    const resetCountdown = useCallback(() => {
+        // We trigger an event or use a ref if needed, but for now 
+        // shifting most countdown logic inside the sub-component.
+    }, []);
 
     // ── Render states ─────────────────────────────────────
     if (verifying) return <FullScreenLoader label="Hitelesítés..." />;
@@ -177,14 +171,14 @@ export default function QRAdmin() {
 
             <header className={`${C.surface} border-b ${C.border} px-4 py-3 sticky top-0 z-30`}>
                 <div className="max-w-6xl mx-auto flex items-center justify-between">
-                    <div>
+                    <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
                         <p className={`text-[10px] font-black uppercase tracking-widest ${C.accentText}`}>
                             visitKőszeg · Digitális Pincér
                         </p>
                         <h1 className="font-black text-base">{qrRestaurant.name}</h1>
-                    </div>
+                    </motion.div>
                     <button onClick={handleLogout}
-                        className={`flex items-center gap-1.5 ${C.muted} hover:text-white text-xs font-bold`}>
+                        className={`flex items-center gap-1.5 ${C.muted} hover:text-white text-xs font-bold transition-colors`}>
                         <IoLogOutOutline /> Kilépés
                     </button>
                 </div>
@@ -202,17 +196,11 @@ export default function QRAdmin() {
                     </div>
 
                     {activeTab === 'tables' && (
-                        <button 
-                            onClick={() => loadOrders(true)}
-                            disabled={refreshing}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${C.border} ${C.card} 
-                                text-[10px] font-black transition-all active:scale-95 disabled:opacity-50
-                                ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
-                        >
-                            <IoRefresh className={refreshing ? 'animate-spin' : ''} />
-                            <span className="hidden sm:inline">Kényszerített frissítés</span>
-                            <span className={`min-w-[1.5rem] ${countdown < 10 ? 'text-amber-500' : 'text-zinc-500'}`}>{countdown}s</span>
-                        </button>
+                        <HeaderTimer 
+                            onRefresh={() => loadOrders(true)} 
+                            refreshing={refreshing} 
+                            isBusy={isBusy}
+                        />
                     )}
                 </div>
             </header>
@@ -224,9 +212,7 @@ export default function QRAdmin() {
                         orders={orders} 
                         loading={loadingOrders}
                         connStatus={connStatus}
-                        setOrders={setOrders}
                         setIsBusy={setIsBusy}
-                        setCountdown={setCountdown}
                     />
                 )}
                 {activeTab === 'menu' && <MenuEditor qrRestaurantId={qrRestaurant.id} />}
@@ -235,6 +221,46 @@ export default function QRAdmin() {
         </div>
     );
 }
+
+// ─────────────────────────────────────────────────────────────
+// COMPONENT: HeaderTimer (Isolated countdown to avoid re-renders)
+// ─────────────────────────────────────────────────────────────
+const HeaderTimer = memo(({ onRefresh, refreshing, isBusy }) => {
+    const [timeLeft, setTimeLeft] = useState(60);
+
+    useEffect(() => {
+        if (refreshing || isBusy) return;
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev <= 1) {
+                    onRefresh();
+                    return 60;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [refreshing, isBusy, onRefresh]);
+
+    // Reset when manually refreshed
+    useEffect(() => {
+        if (refreshing) setTimeLeft(60);
+    }, [refreshing]);
+
+    return (
+        <button 
+            onClick={onRefresh}
+            disabled={refreshing}
+            className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${C.border} ${C.card} 
+                text-[10px] font-black transition-all active:scale-95 disabled:opacity-50
+                ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
+        >
+            <IoRefresh className={refreshing ? 'animate-spin' : ''} />
+            <span className="hidden sm:inline">Kényszerített frissítés</span>
+            <span className={`min-w-[1.5rem] ${timeLeft < 10 ? 'text-amber-500' : 'text-zinc-500'}`}>{timeLeft}s</span>
+        </button>
+    );
+});
 
 // ══════════════════════════════════════════════
 // SAJÁT LOGIN KÉPERNYŐ
@@ -519,23 +545,59 @@ function QRLinksView({ qrRestaurant }) {
 }
 
 // ══════════════════════════════════════════════
-function TablesView({ qrRestaurantId, orders, loading, connStatus, setOrders, setIsBusy, setCountdown }) {
+const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBusy }) => {
     const [selectedOrder, setSelectedOrder] = useState(null);
 
-    if (loading) return <FullScreenLoader label="Rendelések betöltése..." />;
+    const displayOrders = useMemo(() => {
+        return Object.values(orders.reduce((acc, o) => {
+            const current = acc[o.table_id];
+            if (!current) {
+                acc[o.table_id] = o;
+            } else {
+                const oLen = o.items?.length || 0;
+                const cLen = current.items?.length || 0;
+                if (oLen > cLen) acc[o.table_id] = o;
+                else if (oLen === cLen && new Date(o.created_at) > new Date(current.created_at)) acc[o.table_id] = o;
+            }
+            return acc;
+        }, {})).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    }, [orders]);
 
-    const displayOrders = Object.values(orders.reduce((acc, o) => {
-        const current = acc[o.table_id];
-        if (!current) {
-            acc[o.table_id] = o;
-        } else {
-            const oLen = o.items?.length || 0;
-            const cLen = current.items?.length || 0;
-            if (oLen > cLen) acc[o.table_id] = o;
-            else if (oLen === cLen && new Date(o.created_at) > new Date(current.created_at)) acc[o.table_id] = o;
-        }
-        return acc;
-    }, {})).sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    const handleSelect = useCallback((order) => {
+        setSelectedOrder(s => s?.id === order.id ? null : order);
+    }, []);
+
+    const handleServe = useCallback(async (o, itemId) => { 
+        setIsBusy(true);
+        try { 
+            const dupes = orders.filter(d => d.table_id === o.table_id);
+            await Promise.all(dupes.map(dup => markItemServed(dup.id, itemId, dup.items)));
+        } catch { toast.error('Hiba történt a felszolgáláskor.'); } 
+        finally { setIsBusy(false); }
+    }, [orders, setIsBusy]);
+
+    const handleClose = useCallback(async (id) => { 
+        if (!window.confirm('Biztosan lezárod az asztalt?')) return;
+        setIsBusy(true);
+        try { 
+            const target = displayOrders.find(o => o.id === id);
+            const allIds = orders.filter(o => o.table_id === target.table_id).map(o => o.id);
+            await Promise.all(allIds.map(dupId => closeTable(dupId)));
+            toast.success('✅ Asztal lezárva'); 
+        } catch { toast.error('Hiba történt az asztal lezárásakor.'); } 
+        finally { setIsBusy(false); }
+    }, [orders, displayOrders, setIsBusy]);
+
+    const handleAck = useCallback(async (o) => { 
+        setIsBusy(true);
+        try { 
+            const dupes = orders.filter(d => d.table_id === o.table_id);
+            await Promise.all(dupes.map(dup => acknowledgeWaiterCall(dup.id)));
+        } catch { toast.error('Hiba történt a jelzés nyugtázásakor.'); } 
+        finally { setIsBusy(false); }
+    }, [orders, setIsBusy]);
+
+    if (loading) return <FullScreenLoader label="Rendelések betöltése..." />;
 
     return (
         <div className="space-y-6">
@@ -565,41 +627,10 @@ function TablesView({ qrRestaurantId, orders, loading, connStatus, setOrders, se
                     {displayOrders.map(order => (
                         <TableCard key={order.id} order={order}
                             selected={selectedOrder?.id === order.id}
-                            onSelect={() => {
-                                setSelectedOrder(s => s?.id === order.id ? null : order);
-                                setCountdown(60); // Reset timer on interaction
-                            }}
-                            onServeItem={async (o, itemId) => { 
-                                setIsBusy(true);
-                                try { 
-                                    const dupes = orders.filter(d => d.table_id === o.table_id);
-                                    await Promise.all(dupes.map(dup => markItemServed(dup.id, itemId, dup.items)));
-                                    setCountdown(60);
-                                } catch { toast.error('Hiba történt a felszolgáláskor.'); } 
-                                finally { setIsBusy(false); }
-                            }}
-                            onCloseTable={async (id) => { 
-                                if (confirm('Biztosan lezárod az asztalt?')) {
-                                    setIsBusy(true);
-                                    try { 
-                                        const target = displayOrders.find(o => o.id === id);
-                                        const allIds = orders.filter(o => o.table_id === target.table_id).map(o => o.id);
-                                        await Promise.all(allIds.map(dupId => closeTable(dupId)));
-                                        toast.success('✅ Asztal lezárva'); 
-                                        setCountdown(60);
-                                    } catch { toast.error('Hiba történt az asztal lezárásakor.'); } 
-                                    finally { setIsBusy(false); }
-                                } 
-                            }}
-                            onAck={async (o) => { 
-                                setIsBusy(true);
-                                try { 
-                                    const dupes = orders.filter(d => d.table_id === o.table_id);
-                                    await Promise.all(dupes.map(dup => acknowledgeWaiterCall(dup.id)));
-                                    setCountdown(60);
-                                } catch { toast.error('Hiba történt a jelzés nyugtázásakor.'); } 
-                                finally { setIsBusy(false); }
-                            }}
+                            onSelect={() => handleSelect(order)}
+                            onServeItem={handleServe}
+                            onCloseTable={handleClose}
+                            onAck={handleAck}
                         />
                     ))}
                 </div>
@@ -608,7 +639,8 @@ function TablesView({ qrRestaurantId, orders, loading, connStatus, setOrders, se
     );
 }
 
-function TableCard({ order, selected, onSelect, onServeItem, onCloseTable, onAck }) {
+// ══════════════════════════════════════════════
+const TableCard = memo(({ order, selected, onSelect, onServeItem, onCloseTable, onAck }) => {
     const [working, setWorking] = useState(false);
     const unserved = order.items?.filter(i => !i.served) || [];
     const isPayReq = order.status === 'payment_requested';
