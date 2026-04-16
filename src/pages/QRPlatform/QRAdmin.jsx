@@ -103,6 +103,21 @@ export default function QRAdmin() {
         return () => supabase.removeChannel(channel);
     }, [qrRestaurant?.id]);
 
+    // ── Focus Recovery ────────────────────────────────────
+    // When the tab is backgrounded, timers and connections might freeze.
+    // This effect ensures that when the user returns, the UI is "un-stuck".
+    useEffect(() => {
+        const handleFocus = () => {
+            setRefreshing(false);
+            setIsBusy(false);
+            if (qrRestaurant?.id) {
+                loadOrders(true);
+            }
+        };
+        window.addEventListener('focus', handleFocus);
+        return () => window.removeEventListener('focus', handleFocus);
+    }, [qrRestaurant?.id, loadOrders]);
+
     // ── Auth: Direct Supabase, NO global useAuth() ────────
     useEffect(() => {
         const init = async () => {
@@ -253,9 +268,9 @@ const HeaderTimer = memo(({ onRefresh, refreshing, isBusy }) => {
             disabled={refreshing}
             className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${C.border} ${C.card} 
                 text-[10px] font-black transition-all active:scale-95 disabled:opacity-50
-                ${refreshing ? 'animate-pulse' : 'hover:border-zinc-500'}`}
+                ${refreshing ? '' : 'hover:border-zinc-500'}`}
         >
-            <IoRefresh className={refreshing ? 'animate-spin' : ''} />
+            <IoRefresh className={refreshing ? '' : ''} />
             <span className="hidden sm:inline">Kényszerített frissítés</span>
             <span className={`min-w-[1.5rem] ${timeLeft < 10 ? 'text-amber-500' : 'text-zinc-500'}`}>{timeLeft}s</span>
         </button>
@@ -605,7 +620,7 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
                 <div className="flex items-center gap-3">
                     <h2 className="text-xl font-black italic">Aktív asztalok</h2>
                     <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full border ${C.border} bg-black/20`}>
-                        <div className={`w-2 h-2 rounded-full animate-pulse ${
+                        <div className={`w-2 h-2 rounded-full ${
                             connStatus === 'SUBSCRIBED' ? 'bg-green-500' : 
                             connStatus === 'connecting' ? 'bg-amber-500' : 'bg-red-500'
                         }`} />
