@@ -58,7 +58,7 @@ export default function QRMenu() {
     // ── Load ──────────────────────────────────────────────
     useEffect(() => {
         // Minimum intro time
-        const timer = setTimeout(() => setIntroFinished(true), 1800);
+        const timer = setTimeout(() => setIntroFinished(true), 3500);
 
         if (!restaurantId || !tableId) {
             setError('Érvénytelen QR kód. Kérj segítséget a személyzettől.');
@@ -397,6 +397,20 @@ export default function QRMenu() {
                         </AnimatePresence>
                     </div>
                 )}
+
+                {/* ── FOOTER LINK ── */}
+                <div className="mt-16 mb-28 px-4 text-center">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-2">Fedezd fel a várost</p>
+                    <h3 className="text-xl font-black mb-3">Többet hoznál ki a pihenésből?</h3>
+                    <p className={`text-sm ${C.muted} mb-6 max-w-sm mx-auto`}>
+                        Látnivalók, programok, érdekességek és exkluzív kedvezmények egy helyen – a digitális idegenvezetőd a zsebedben!
+                    </p>
+                    <a href="https://visitkoszeg.hu" target="_blank" rel="noopener noreferrer"
+                        className="inline-block bg-amber-500 text-black px-8 py-3.5 rounded-xl font-black text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+                    >
+                        Irány a visitKőszeg →
+                    </a>
+                </div>
             </div>
 
             {/* ── CART PANEL ── */}
@@ -593,7 +607,7 @@ function BrutalLoader() {
                                 opacity: 1,
                                 transition: { delay: 0.5, duration: 1.5 } 
                             }}
-                            className="text-white text-xl font-black tracking-tighter mt-4"
+                            className="text-white text-3xl font-black tracking-tighter mt-6"
                         >
                             Digitális Pincér
                         </motion.h2>
