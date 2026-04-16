@@ -4,10 +4,10 @@ Ebben a fájlban követjük a projekt haladását, az elvégzett módosításoka
 
 ---
 
-## 📅 Utolsó frissítés: 2026. március 12.
+## 📅 Utolsó frissítés: 2026. április 16.
 
-### 🎯 Jelenlegi fókusz: IDŐPONTFOGLALÁS MODUL
-A legfontosabb cél a zökkenőmentes foglalási élmény biztosítása, különös tekintettel a KőszegPass integrációra.
+### 🎯 Jelenlegi fókusz: DIGITÁLIS PINCÉR (QR PLATFORM) ÉLESÍTÉSE
+A legfontosabb cél a QR alapú asztali rendelési rendszer finomhangolása és az admin felület villámgyors működése.
 
 ---
 
@@ -138,6 +138,31 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Booking Login**: A foglalási folyamat "Seamless Login" rendszerének tökéletesítése.
 
 ---
+
+---
+
+## 📅 2026. április 15-16. - Digitális Pincér és Teljesítmény Fixek
+
+### 🪑 Digitális Pincér (QR Platform)
+- [x] **Teljes Modul Implementáció:** Standalone asztali rendelési felület (`/menu/:res/:table`) és Pincér Admin (`/menu-admin`).
+- [x] **Képfeltöltési Rendszer:** 
+    - Kliens oldali tömörítés implementálva (max 1200px, JPEG 0.85).
+    - Izolált Supabase Storage (`qr-platform` bucket) konfigurálva.
+    - Étterem-specifikus mappa-struktúra és RLS biztonság.
+- [x] **Többkörös Rendelés:** Bevezetve az egyedi UID alapú tételkezelés, így a pincér látja, ha az asztal ugyanabból a sörből kér egy újabb kört (nem keveredik össze a már felszolgálttal).
+
+### ⚡ Teljesítmény Optimalizálás (Performance V3)
+- [x] **AppInit Bypass:** A QR oldalak betöltésekor kihagyjuk a nehéz globális adatletöltéseket, így az étlap szinte azonnal megjelenik mobilon is.
+- [x] **Admin Dashboard Re-render Fix:** 
+    - Izoláltuk a visszaszámláló időzítőt, így nem rajzolódik újra az egész oldal másodpercenként.
+    - Az asztallista adatfeldolgozását `useMemo`-ba zártuk.
+    - A gombokat és kártyákat `memo` és `useCallback` segítségével optimalizáltuk a PC-s Chrome "tetű lassú" működésének megszüntetésére.
+
+### 🗺️ Rendszer-térkép (Navigation)
+- [x] **APP_STRUCTURE.md:** Létrehoztunk egy központi térképet, ami tartalmazza az összes publikus és adminisztrátori URL-t, funkcióval és hozzáféréssel együtt.
+
+---
+
 ## 📅 2026. április 14. - Arculatváltás és Stabilitási Fixek
 ### 🎯 Brand Átállás: visitkoszeg.hu
 - **Teljes Átnevezés:** A "KőszegAPP" márkanév minden felületről (főoldal, admin, dokumentáció, PDF generátorok) lecserélve a modern **visitkoszeg** (vagy visitKőszeg) elnevezésre.
@@ -148,4 +173,5 @@ A pénzügyi és elszámolási motor 100%-os, elindulhat a Pizzéria éles teszt
 - **Resilient Loading:** Az `App.jsx`-ben bevezetésre került a `Promise.allSettled` és egy **5 másodperces biztonsági időzítő**. Ha a Supabase vagy egy JSON fájl lassú, az app akkor is elindul, nem várakozik örökké.
 - **FoodOrderPage fallback:** Az ételrendelés oldalon beépített időzítők jelzik, ha lassú az azonosítás vagy az étteremlista betöltése, és felajánlják a frissítést.
 - **Git Push:** Minden stabilitási és arculati módosítás sikeresen feltöltve a `main` ágra.
+
 
