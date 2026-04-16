@@ -637,7 +637,7 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
             )}
         </div>
     );
-}
+});
 
 // ══════════════════════════════════════════════
 const TableCard = memo(({ order, selected, onSelect, onServeItem, onCloseTable, onAck }) => {
@@ -726,7 +726,7 @@ const TableCard = memo(({ order, selected, onSelect, onServeItem, onCloseTable, 
             </AnimatePresence>
         </motion.div>
     );
-}
+});
 
 // ══════════════════════════════════════════════
 // TAB 2: ÉTLAP SZERKESZTŐ

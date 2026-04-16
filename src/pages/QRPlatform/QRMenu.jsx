@@ -524,10 +524,11 @@ export default function QRMenu() {
                     </button>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </motion.div>
+    )}
+</AnimatePresence>
     );
 }
-
 // ── Sub-components ────────────────────────────
 
 function CartControl({ item, cart, onAdd, onRemove }) {
@@ -604,7 +605,7 @@ function BrutalLoader() {
                             transition={{ delay: 0.8, duration: 1.2, ease: "circOut" }}
                             className="h-[1px] bg-amber-500/30 mx-auto mt-6"
                         />
-                    </div>
+                    </motion.div>
                 </div>
             </AnimatePresence>
         </div>
