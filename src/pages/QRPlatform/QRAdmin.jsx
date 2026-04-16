@@ -53,6 +53,7 @@ export default function QRAdmin() {
     const [refreshing, setRefreshing] = useState(false);
     const [connStatus, setConnStatus] = useState('connecting');
     const [isBusy, setIsBusy] = useState(false);
+    const [syncNonce, setSyncNonce] = useState(0); // Forces local component reset
 
     const loadOrders = useCallback(async (isManual = false) => {
         if (!qrRestaurant?.id) return;
@@ -107,15 +108,24 @@ export default function QRAdmin() {
     // When the tab is backgrounded, timers and connections might freeze.
     // This effect ensures that when the user returns, the UI is "un-stuck".
     useEffect(() => {
-        const handleFocus = () => {
-            setRefreshing(false);
-            setIsBusy(false);
-            if (qrRestaurant?.id) {
-                loadOrders(true);
+        const handleWakeUp = () => {
+            if (document.visibilityState === 'visible' || document.hasFocus()) {
+                setRefreshing(false);
+                setIsBusy(false);
+                setSyncNonce(n => n + 1); // Trigger local resets
+                if (qrRestaurant?.id) {
+                    loadOrders(true);
+                    toast.loading('Kapcsolat frissítése...', { duration: 1000, id: 'sync-toast' });
+                }
             }
         };
-        window.addEventListener('focus', handleFocus);
-        return () => window.removeEventListener('focus', handleFocus);
+
+        window.addEventListener('focus', handleWakeUp);
+        window.addEventListener('visibilitychange', handleWakeUp);
+        return () => {
+            window.removeEventListener('focus', handleWakeUp);
+            window.removeEventListener('visibilitychange', handleWakeUp);
+        };
     }, [qrRestaurant?.id, loadOrders]);
 
     // ── Auth: Direct Supabase, NO global useAuth() ────────
@@ -560,7 +570,7 @@ function QRLinksView({ qrRestaurant }) {
 }
 
 // ══════════════════════════════════════════════
-const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBusy }) => {
+const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBusy, syncNonce }) => {
     const [selectedOrder, setSelectedOrder] = useState(null);
 
     const displayOrders = useMemo(() => {
@@ -582,12 +592,31 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
         setSelectedOrder(s => s?.id === order.id ? null : order);
     }, []);
 
+    const handleAck = useCallback(async (o) => { 
+        setIsBusy(true);
+        try { 
+            const dupes = orders.filter(d => d.table_id === o.table_id);
+            await Promise.race([
+                Promise.all(dupes.map(dup => acknowledgeWaiterCall(dup.id))),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 15000))
+            ]);
+        } catch (e) { 
+            toast.error(e.message === 'Timeout' ? 'Időtúllépés! Próbáld újra.' : 'Hiba történt a jelzés nyugtázásakor.'); 
+        } 
+        finally { setIsBusy(false); }
+    }, [orders, setIsBusy]);
+
     const handleServe = useCallback(async (o, itemId) => { 
         setIsBusy(true);
         try { 
             const dupes = orders.filter(d => d.table_id === o.table_id);
-            await Promise.all(dupes.map(dup => markItemServed(dup.id, itemId, dup.items)));
-        } catch { toast.error('Hiba történt a felszolgáláskor.'); } 
+            await Promise.race([
+                Promise.all(dupes.map(dup => markItemServed(dup.id, itemId, dup.items))),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 15000))
+            ]);
+        } catch (e) { 
+            toast.error(e.message === 'Timeout' ? 'A szerver nem válaszol. Próbáld újra!' : 'Hiba történt a felszolgáláskor.'); 
+        } 
         finally { setIsBusy(false); }
     }, [orders, setIsBusy]);
 
@@ -597,20 +626,16 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
         try { 
             const target = displayOrders.find(o => o.id === id);
             const allIds = orders.filter(o => o.table_id === target.table_id).map(o => o.id);
-            await Promise.all(allIds.map(dupId => closeTable(dupId)));
+            await Promise.race([
+                Promise.all(allIds.map(dupId => closeTable(dupId))),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 15000))
+            ]);
             toast.success('✅ Asztal lezárva'); 
-        } catch { toast.error('Hiba történt az asztal lezárásakor.'); } 
+        } catch (e) { 
+            toast.error(e.message === 'Timeout' ? 'Időtúllépés a lezárásnál!' : 'Hiba történt az asztal lezárásakor.'); 
+        } 
         finally { setIsBusy(false); }
     }, [orders, displayOrders, setIsBusy]);
-
-    const handleAck = useCallback(async (o) => { 
-        setIsBusy(true);
-        try { 
-            const dupes = orders.filter(d => d.table_id === o.table_id);
-            await Promise.all(dupes.map(dup => acknowledgeWaiterCall(dup.id)));
-        } catch { toast.error('Hiba történt a jelzés nyugtázásakor.'); } 
-        finally { setIsBusy(false); }
-    }, [orders, setIsBusy]);
 
     if (loading) return <FullScreenLoader label="Rendelések betöltése..." />;
 
@@ -646,6 +671,7 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
                             onServeItem={handleServe}
                             onCloseTable={handleClose}
                             onAck={handleAck}
+                            syncNonce={syncNonce}
                         />
                     ))}
                 </div>
@@ -655,8 +681,14 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
 });
 
 // ══════════════════════════════════════════════
-const TableCard = memo(({ order, selected, onSelect, onServeItem, onCloseTable, onAck }) => {
+const TableCard = memo(({ order, selected, onSelect, onServeItem, onCloseTable, onAck, syncNonce }) => {
     const [working, setWorking] = useState(false);
+
+    // Force-reset local loading state when a global sync happens
+    useEffect(() => {
+        setWorking(false);
+    }, [syncNonce]);
+
     const unserved = order.items?.filter(i => !i.served) || [];
     const isPayReq = order.status === 'payment_requested';
     const waiterCalled = order.waiter_called;
