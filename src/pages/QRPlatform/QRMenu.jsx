@@ -141,7 +141,7 @@ export default function QRMenu() {
             const oldItem = oldItems.find(o => o.uid === newItem.uid);
             // Ha korábban nem volt kiment, de most igen
             if (newItem.served && (!oldItem || !oldItem.served)) {
-                toast.success(`Megérkezett: ${newItem.name}! 🍽️`, {
+                toast.success(`Kollégánk viszi: ${newItem.name} 🍽️`, {
                     duration: 4000,
                     position: 'top-center',
                     style: {
@@ -429,18 +429,19 @@ export default function QRMenu() {
                 )}
 
                 {/* ── FOOTER LINK ── */}
-                <div className="mt-16 mb-28 px-4 text-center">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-2">Fedezd fel a várost</p>
-                    <h3 className="text-xl font-black mb-3">Többet hoznál ki a pihenésből?</h3>
-                    <p className={`text-sm ${C.muted} mb-6 max-w-sm mx-auto`}>
-                        Látnivalók, programok, érdekességek és exkluzív kedvezmények egy helyen – a digitális idegenvezetőd a zsebedben!
+                <div className="mt-24 mb-32 px-6 text-center opacity-60">
+                    <p className="text-[9px] font-black uppercase tracking-widest text-amber-500 mb-2">Fedezd fel a várost</p>
+                    <h3 className="text-base font-black mb-2 text-zinc-300">Többet hoznál ki a pihenésből?</h3>
+                    <p className={`text-[11px] ${C.muted} mb-4 max-w-[240px] mx-auto leading-relaxed`}>
+                        Látnivalók, programok és exkluzív kedvezmények – a digitális idegenvezetőd a zsebedben!
                     </p>
                     <a href="https://visitkoszeg.hu" target="_blank" rel="noopener noreferrer"
-                        className="inline-block bg-amber-500 text-black px-8 py-3.5 rounded-xl font-black text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+                        className="inline-block bg-zinc-800 text-zinc-300 border border-zinc-700 px-6 py-2.5 rounded-xl font-bold text-[11px] hover:bg-zinc-700 transition-all"
                     >
-                        Irány a visitKőszeg →
+                        visitKőszeg.hu →
                     </a>
                 </div>
+
             </div>
 
             {/* ── CART PANEL ── */}
