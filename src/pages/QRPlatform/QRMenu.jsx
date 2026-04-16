@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -129,6 +129,36 @@ export default function QRMenu() {
 
         return () => supabaseGuest.removeChannel(channel);
     }, [session?.id]);
+    // ── Notify when item is served ────────────────────────
+    const lastItemsRef = useRef(session?.items || []);
+    useEffect(() => {
+        if (!session?.items) return;
+        
+        const oldItems = lastItemsRef.current;
+        const newItems = session.items;
+
+        newItems.forEach(newItem => {
+            const oldItem = oldItems.find(o => o.uid === newItem.uid);
+            // Ha korábban nem volt kiment, de most igen
+            if (newItem.served && (!oldItem || !oldItem.served)) {
+                toast.success(`Megérkezett: ${newItem.name}! 🍽️`, {
+                    duration: 4000,
+                    position: 'top-center',
+                    style: {
+                        background: '#1a1a1a',
+                        color: '#fff',
+                        border: '1px solid #f59e0b40',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        borderRadius: '16px',
+                        padding: '12px 20px'
+                    }
+                });
+            }
+        });
+
+        lastItemsRef.current = newItems;
+    }, [session?.items]);
 
     // ── Cart helpers ──────────────────────────────────────
     const addToCart = useCallback((item) => {
