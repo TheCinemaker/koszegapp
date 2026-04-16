@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     IoRestaurant, IoAdd, IoClose, IoCheckmarkCircle, IoTimeOutline,
@@ -54,6 +55,8 @@ export default function QRAdmin() {
     const [connStatus, setConnStatus] = useState('connecting');
     const [isBusy, setIsBusy] = useState(false);
     const [syncNonce, setSyncNonce] = useState(0); // Forces local component reset
+    const lastActionTime = useRef(0);
+    const location = useLocation();
 
     const loadOrders = useCallback(async (isManual = false) => {
         if (!qrRestaurant?.id) return;
@@ -104,15 +107,16 @@ export default function QRAdmin() {
         return () => supabase.removeChannel(channel);
     }, [qrRestaurant?.id]);
 
-    // ── Focus Recovery ────────────────────────────────────
-    // When the tab is backgrounded, timers and connections might freeze.
-    // This effect ensures that when the user returns, the UI is "un-stuck".
+    // ── Focus & Lifecycle Recovery (Nuclear v3) ───────────
     useEffect(() => {
-        const handleWakeUp = () => {
-            if (document.visibilityState === 'visible' || document.hasFocus()) {
+        const handleWakeUp = (e) => {
+            // Log for debugging (remove in prod if needed)
+            console.log(`[QRAdmin] WakeUp triggered by: ${e?.type || 'init'}`);
+            
+            if (document.visibilityState === 'visible' || document.hasFocus() || e?.type === 'pageshow') {
                 setRefreshing(false);
                 setIsBusy(false);
-                setSyncNonce(n => n + 1); // Trigger local resets
+                setSyncNonce(n => n + 1); // Trigger local resets in TableCards
                 if (qrRestaurant?.id) {
                     loadOrders(true);
                 }
@@ -121,24 +125,76 @@ export default function QRAdmin() {
 
         window.addEventListener('focus', handleWakeUp);
         window.addEventListener('visibilitychange', handleWakeUp);
+        window.addEventListener('pageshow', handleWakeUp);
         return () => {
             window.removeEventListener('focus', handleWakeUp);
             window.removeEventListener('visibilitychange', handleWakeUp);
+            window.removeEventListener('pageshow', handleWakeUp);
         };
     }, [qrRestaurant?.id, loadOrders]);
 
-    // ── Auth: Direct Supabase, NO global useAuth() ────────
+    // Reset busy states when navigating between tabs/routes internally
     useEffect(() => {
-        const init = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                setAuthUser(session.user);
-                // Look up from qr_restaurants ONLY – NOT from restaurants!
-                const rest = await getMyQRRestaurant(session.user.id);
-                setQrRestaurant(rest);
-                if (rest) document.title = `${rest.name} – Digitális Pincér`;
+        setIsBusy(false);
+        setSyncNonce(n => n + 1);
+    }, [location.pathname, activeTab]);
+
+    // ── The Watchdog: Force-clear stuck states every 5s ───
+    useEffect(() => {
+        const watchdog = setInterval(() => {
+            const now = Date.now();
+            // If isBusy or refreshing has been stuck for more than 15s
+            if ((isBusy || refreshing) && lastActionTime.current > 0 && (now - lastActionTime.current > 15000)) {
+                console.warn('[QRAdmin Watchdog] Stuck state detected! Force-clearing...');
+                setIsBusy(false);
+                setRefreshing(false);
+                setSyncNonce(n => n + 1);
+                lastActionTime.current = 0;
             }
-            setVerifying(false);
+        }, 5000);
+        return () => clearInterval(watchdog);
+    }, [isBusy, refreshing]);
+
+    // Update lastActionTime whenever refreshing or isBusy starts
+    useEffect(() => {
+        if (refreshing || isBusy) {
+            lastActionTime.current = Date.now();
+        } else {
+            lastActionTime.current = 0;
+        }
+    }, [refreshing, isBusy]);
+
+    // ── Auth: Direct Supabase + Safety Timeout ───────────
+    useEffect(() => {
+        let isMounted = true;
+        
+        const init = async () => {
+            // Start a 7s safety timer for the entire init process
+            const safetyTimer = setTimeout(() => {
+                if (isMounted && verifying) {
+                    console.warn('[QRAdmin Auth] Safety timeout reached. Forcing UI.');
+                    setVerifying(false);
+                }
+            }, 7000);
+
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user && isMounted) {
+                    setAuthUser(session.user);
+                    const rest = await getMyQRRestaurant(session.user.id);
+                    if (isMounted) {
+                        setQrRestaurant(rest);
+                        if (rest) document.title = `${rest.name} – Digitális Pincér`;
+                    }
+                }
+            } catch (err) {
+                console.error('[QRAdmin Auth] Init error:', err);
+            } finally {
+                if (isMounted) {
+                    clearTimeout(safetyTimer);
+                    setVerifying(false);
+                }
+            }
         };
         init();
 
