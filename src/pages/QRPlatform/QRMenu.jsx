@@ -45,6 +45,7 @@ export default function QRMenu() {
     const [menu, setMenu] = useState([]);
     const [session, setSession] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [introFinished, setIntroFinished] = useState(false);
     const [error, setError] = useState(null);
 
     const [activeCategory, setActiveCategory] = useState(null);
@@ -56,6 +57,9 @@ export default function QRMenu() {
 
     // ── Load ──────────────────────────────────────────────
     useEffect(() => {
+        // Minimum intro time
+        const timer = setTimeout(() => setIntroFinished(true), 1800);
+
         if (!restaurantId || !tableId) {
             setError('Érvénytelen QR kód. Kérj segítséget a személyzettől.');
             setLoading(false);
@@ -184,34 +188,50 @@ export default function QRMenu() {
         } catch { toast.error('Hiba történt.'); }
     };
 
-    // ── Renders ───────────────────────────────────────────
-    if (loading) return <LoadingScreen />;
-    if (error) return <ErrorScreen message={error} />;
-
     const activeItems = menu.find(c => c.id === activeCategory)?.items || [];
     const sessionItems = session?.items || [];
     const sessionTotal = sessionItems.reduce((s, i) => s + i.price * i.qty, 0);
     const isPayReq = session?.status === 'payment_requested';
     const isPaid = session?.status === 'paid';
 
-    if (isPaid) {
-        return (
-            <div className={`min-h-screen ${C.bg} ${C.text} font-sans flex flex-col items-center justify-center p-6 text-center`}>
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mb-6">
-                    <IoCheckmarkCircle className="text-6xl text-green-500" />
-                </motion.div>
-                <h1 className="text-2xl font-black mb-2">Asztal lezárva</h1>
-                <p className={`${C.muted} mb-8 max-w-xs mx-auto`}>Rendelésed kifizetve! Köszönjük a látogatást, reméljük, jól érezted magad!</p>
-                <p className={`text-[10px] font-black uppercase tracking-[0.2em] ${C.accentText}`}>visitKőszeg</p>
-            </div>
-        );
-    }
-
     return (
-        <div className={`min-h-screen ${C.bg} ${C.text} font-sans`}>
-            <Toaster position="top-center" toastOptions={{
-                style: { background: '#1c1c1c', color: '#fff', border: '1px solid #2a2a2a' }
-            }} />
+        <AnimatePresence mode="wait">
+            {error ? (
+                <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    <ErrorScreen message={error} />
+                </motion.div>
+            ) : (loading || !introFinished) ? (
+                <motion.div 
+                    key="loader" 
+                    initial={{ opacity: 1 }} 
+                    exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }} 
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    className="fixed inset-0 z-[100]"
+                >
+                    <BrutalLoader />
+                </motion.div>
+            ) : isPaid ? (
+                <motion.div key="paid" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    className={`min-h-screen ${C.bg} ${C.text} font-sans flex flex-col items-center justify-center p-6 text-center`}>
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mb-6">
+                        <IoCheckmarkCircle className="text-6xl text-green-500" />
+                    </motion.div>
+                    <h1 className="text-2xl font-black mb-2">Asztal lezárva</h1>
+                    <p className={`${C.muted} mb-8 max-w-xs mx-auto`}>Rendelésed kifizetve! Köszönjük a látogatást, reméljük, jól érezted magad!</p>
+                    <p className={`text-[10px] font-black uppercase tracking-[0.2em] ${C.accentText}`}>visitKőszeg</p>
+                </motion.div>
+            ) : (
+                <motion.div 
+                    key="menu" 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    transition={{ duration: 0.8 }}
+                    className={`min-h-screen ${C.bg} ${C.text} font-sans`}
+                >
+                    <Toaster position="top-center" toastOptions={{
+                        style: { background: '#1c1c1c', color: '#fff', border: '1px solid #2a2a2a' }
+                    }} />
+
 
             {/* ── HEADER ── */}
             <header className={`sticky top-0 z-30 ${C.surface} border-b ${C.border} px-4 py-3`}>
@@ -504,7 +524,7 @@ export default function QRMenu() {
                     </button>
                 </motion.div>
             )}
-        </div>
+        </AnimatePresence>
     );
 }
 
@@ -531,6 +551,62 @@ function CartControl({ item, cart, onAdd, onRemove }) {
                 className="w-7 h-7 rounded-full bg-amber-500 text-black flex items-center justify-center">
                 <IoAdd className="text-sm" />
             </button>
+        </div>
+    );
+}
+
+// ── Brutal Loader ─────────────────────────────
+function BrutalLoader() {
+    return (
+        <div className="fixed inset-0 bg-[#0a0a0a] z-[100] flex flex-col items-center justify-center overflow-hidden">
+            <AnimatePresence>
+                <div className="relative flex flex-col items-center">
+                    {/* Background Glow (Minimal, and NOT pulsing) */}
+                    <div className="absolute inset-0 bg-amber-500/5 blur-[100px] rounded-full scale-150" />
+                    
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ 
+                            opacity: 1, 
+                            y: 0,
+                            transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
+                        }}
+                        className="relative"
+                    >
+                        <motion.p 
+                            initial={{ letterSpacing: "0.1em" }}
+                            animate={{ 
+                                letterSpacing: "0.6em",
+                                transition: { duration: 2.5, ease: "easeOut" }
+                            }}
+                            className="text-[10px] font-black uppercase text-amber-500/80 mb-4 ml-[0.6em]"
+                        >
+                            visitKőszeg
+                        </motion.p>
+                        
+                        <div className="h-px w-24 bg-gradient-to-r from-transparent via-zinc-700 to-transparent mx-auto" />
+                        
+                        <motion.h2
+                            initial={{ opacity: 0 }}
+                            animate={{ 
+                                opacity: 1,
+                                transition: { delay: 0.5, duration: 1.5 } 
+                            }}
+                            className="text-white text-xl font-black tracking-tighter mt-4"
+                        >
+                            Digitális Pincér
+                        </motion.h2>
+
+                        {/* Minimal geometric detail */}
+                        <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: 40 }}
+                            transition={{ delay: 0.8, duration: 1.2, ease: "circOut" }}
+                            className="h-[1px] bg-amber-500/30 mx-auto mt-6"
+                        />
+                    </div>
+                </div>
+            </AnimatePresence>
         </div>
     );
 }
