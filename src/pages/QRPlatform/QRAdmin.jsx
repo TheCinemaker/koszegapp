@@ -115,7 +115,6 @@ export default function QRAdmin() {
                 setSyncNonce(n => n + 1); // Trigger local resets
                 if (qrRestaurant?.id) {
                     loadOrders(true);
-                    toast.loading('Kapcsolat frissítése...', { duration: 1000, id: 'sync-toast' });
                 }
             }
         };

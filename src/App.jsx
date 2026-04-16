@@ -218,6 +218,7 @@ function MainAppContent() {
       // felesleges neki a több száz városi adatot letölteni.
       if (window.location.pathname.startsWith('/menu')) {
         console.log('[AppInit] Isolated QR route detected, skipping heavy global fetch for speed.');
+        clearTimeout(safetyTimer);
         setAppData(prev => ({ ...prev, loading: false }));
         return;
       }
