@@ -56,10 +56,11 @@ export default function QRAdmin() {
     const [isBusy, setIsBusy] = useState(false);
     const [syncNonce, setSyncNonce] = useState(0); // Forces local component reset
     const lastActionTime = useRef(0);
+    const lastWakeTime = useRef(0);
     const location = useLocation();
 
     const loadOrders = useCallback(async (isManual = false) => {
-        if (!qrRestaurant?.id) return;
+        if (!qrRestaurant?.id || refreshing) return;
         if (isManual) setRefreshing(true);
         try {
             const data = await getActiveOrders(qrRestaurant.id);
@@ -109,16 +110,28 @@ export default function QRAdmin() {
 
     // ── Focus & Lifecycle Recovery (Nuclear v3) ───────────
     useEffect(() => {
-        const handleWakeUp = (e) => {
-            // Log for debugging (remove in prod if needed)
+        const handleWakeUp = async (e) => {
+            const now = Date.now();
+            // Debounce: prevent double-triggering within 2 seconds
+            if (now - lastWakeTime.current < 2000) return;
+            lastWakeTime.current = now;
+
             console.log(`[QRAdmin] WakeUp triggered by: ${e?.type || 'init'}`);
             
             if (document.visibilityState === 'visible' || document.hasFocus() || e?.type === 'pageshow') {
-                setRefreshing(false);
+                // Nuclear reset: ensure we are NOT busy before refreshing
                 setIsBusy(false);
-                setSyncNonce(n => n + 1); // Trigger local resets in TableCards
+                setRefreshing(false);
+                setSyncNonce(n => n + 1);
+
                 if (qrRestaurant?.id) {
-                    loadOrders(true);
+                    try {
+                        // EXPLICIT REVIVAL: Force refresh the session to ensure network is healthy
+                        await supabase.auth.getSession();
+                        await loadOrders(true);
+                    } catch (err) {
+                        console.error('[QRAdmin] Re-sync failed:', err);
+                    }
                 }
             }
         };
