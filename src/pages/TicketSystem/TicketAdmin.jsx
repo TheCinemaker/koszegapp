@@ -414,21 +414,21 @@ export default function TicketAdmin() {
                                         />
                                     </div>
 
-                                    {formData.payment_type === 'paid' ? (
-                                        <>
-                                            <div>
-                                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                                    Ár (Ft)
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    value={formData.price}
-                                                    onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
-                                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                                                    required
-                                                />
-                                            </div>
+                                    <>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                Ár (Ft)
+                                            </label>
+                                            <input
+                                                type="number"
+                                                value={formData.price}
+                                                onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) || 0 })}
+                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                                required
+                                            />
+                                        </div>
 
+                                        {formData.payment_type === 'paid' ? (
                                             <div>
                                                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                                     Jutalék (%)
@@ -437,19 +437,19 @@ export default function TicketAdmin() {
                                                     type="number"
                                                     step="0.1"
                                                     value={formData.service_fee_percent}
-                                                    onChange={(e) => setFormData({ ...formData, service_fee_percent: parseFloat(e.target.value) })}
+                                                    onChange={(e) => setFormData({ ...formData, service_fee_percent: parseFloat(e.target.value) || 0 })}
                                                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                                                     required
                                                 />
                                             </div>
-                                        </>
-                                    ) : (
-                                        <div className="col-span-2 flex items-center bg-gray-50 dark:bg-gray-900/50 rounded-lg px-4 border border-dashed border-gray-300 dark:border-gray-700">
-                                            <p className="text-xs text-gray-500 italic">
-                                                Helyszíni fizetés esetén az árat és jutalékot az app nem kezeli.
-                                            </p>
-                                        </div>
-                                    )}
+                                        ) : (
+                                            <div className="flex items-center bg-gray-50 dark:bg-gray-900/50 rounded-lg px-4 border border-dashed border-gray-300 dark:border-gray-700">
+                                                <p className="text-xs text-gray-500 italic">
+                                                    Helyszíni fizetés, nincs online jutalék.
+                                                </p>
+                                            </div>
+                                        )}
+                                    </>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
@@ -495,7 +495,6 @@ export default function TicketAdmin() {
                                                 onClick={() => setFormData({
                                                     ...formData,
                                                     payment_type: 'on_site_reservation',
-                                                    price: 0,
                                                     service_fee_percent: 0
                                                 })}
                                                 className={`py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${formData.payment_type === 'on_site_reservation'

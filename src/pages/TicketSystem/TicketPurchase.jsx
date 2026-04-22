@@ -395,7 +395,7 @@ export default function TicketPurchase() {
                                 ) : (
                                     <>
                                         {selectedEvent.payment_type === 'on_site_reservation' ? (
-                                            <>✓ Ingyenes Jegyfoglalás</>
+                                            <>✓ Jegy lefoglalása</>
                                         ) : (
                                             <>
                                                 <FaCreditCard /> Fizetés Stripe-pal
