@@ -15,6 +15,7 @@ export default function TicketAdmin() {
     const [activeTab, setActiveTab] = useState('active'); // 'active' or 'archived'
     const [imageFile, setImageFile] = useState(null);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [editingEventId, setEditingEventId] = useState(null);
 
     // Form state
     const [formData, setFormData] = useState({
@@ -104,20 +105,34 @@ export default function TicketAdmin() {
                 finalImageUrl = publicUrl;
             }
 
-            const { error } = await supabase
-                .from('ticket_events')
-                .insert({
-                    ...formData,
-                    image_url: finalImageUrl,
-                    organizer_id: user?.id,
-                    status: 'active'
-                });
+            if (editingEventId) {
+                const { error } = await supabase
+                    .from('ticket_events')
+                    .update({
+                        ...formData,
+                        image_url: finalImageUrl
+                    })
+                    .eq('id', editingEventId);
 
-            if (error) throw error;
+                if (error) throw error;
+                toast.success('Esemény frissítve!');
+            } else {
+                const { error } = await supabase
+                    .from('ticket_events')
+                    .insert({
+                        ...formData,
+                        image_url: finalImageUrl,
+                        organizer_id: user?.id,
+                        status: 'active'
+                    });
 
-            toast.success('Esemény létrehozva!');
+                if (error) throw error;
+                toast.success('Esemény létrehozva!');
+            }
+
             setShowCreateForm(false);
             setImageFile(null);
+            setEditingEventId(null);
             setFormData({
                 name: '',
                 description: '',
@@ -249,7 +264,24 @@ export default function TicketAdmin() {
                         </p>
                     </div>
                     <button
-                        onClick={() => setShowCreateForm(true)}
+                        onClick={() => {
+                            setEditingEventId(null);
+                            setFormData({
+                                name: '',
+                                description: '',
+                                date: '',
+                                time: '',
+                                location: '',
+                                capacity: 100,
+                                price: 5000,
+                                service_fee_percent: 5,
+                                category: 'Koncert',
+                                is_evergreen: false,
+                                payment_type: 'paid',
+                                image_url: ''
+                            });
+                            setShowCreateForm(true);
+                        }}
                         className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-colors"
                     >
                         <FaPlus /> Új esemény
@@ -261,7 +293,7 @@ export default function TicketAdmin() {
                     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
                         <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                                Új esemény létrehozása
+                                {editingEventId ? 'Esemény szerkesztése' : 'Új esemény létrehozása'}
                             </h2>
 
                             <form onSubmit={handleCreateEvent} className="space-y-4">
@@ -483,7 +515,7 @@ export default function TicketAdmin() {
                                         disabled={uploadingImage}
                                         className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
                                     >
-                                        {uploadingImage ? 'Feltöltés...' : 'Létrehozás'}
+                                        {uploadingImage ? 'Feltöltés...' : (editingEventId ? 'Mentés' : 'Létrehozás')}
                                     </button>
                                     <button
                                         type="button"
@@ -576,6 +608,32 @@ export default function TicketAdmin() {
                                         </div>
 
                                         <div className="flex items-center gap-2">
+                                            {event.status !== 'archived' && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setEditingEventId(event.id);
+                                                        setFormData({
+                                                            name: event.name || '',
+                                                            description: event.description || '',
+                                                            date: event.date || '',
+                                                            time: event.time || '',
+                                                            location: event.location || '',
+                                                            capacity: event.capacity || 100,
+                                                            price: event.price || 0,
+                                                            service_fee_percent: event.service_fee_percent || 0,
+                                                            category: event.category || 'Koncert',
+                                                            is_evergreen: event.is_evergreen || false,
+                                                            payment_type: event.payment_type || 'paid',
+                                                            image_url: event.image_url || ''
+                                                        });
+                                                        setShowCreateForm(true);
+                                                    }}
+                                                    className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
+                                                >
+                                                    <FaEdit size={14} />
+                                                </button>
+                                            )}
                                             {event.status !== 'archived' && (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); archiveEvent(event.id); }}
