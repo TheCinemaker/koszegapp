@@ -13,6 +13,8 @@ export default function TicketAdmin() {
     const [loading, setLoading] = useState(true);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [activeTab, setActiveTab] = useState('active'); // 'active' or 'archived'
+    const [imageFile, setImageFile] = useState(null);
+    const [uploadingImage, setUploadingImage] = useState(false);
 
     // Form state
     const [formData, setFormData] = useState({
@@ -26,7 +28,8 @@ export default function TicketAdmin() {
         service_fee_percent: 5,
         category: 'Koncert',
         is_evergreen: false,
-        payment_type: 'paid' // 'paid' or 'on_site_reservation'
+        payment_type: 'paid', // 'paid' or 'on_site_reservation'
+        image_url: ''
     });
 
     useEffect(() => {
@@ -76,12 +79,36 @@ export default function TicketAdmin() {
         e.preventDefault();
 
         try {
+            setUploadingImage(true);
             const { data: { user } } = await supabase.auth.getUser();
+
+            let finalImageUrl = formData.image_url;
+
+            if (imageFile) {
+                const fileExt = imageFile.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+                const filePath = `${fileName}`;
+
+                const { error: uploadError } = await supabase.storage
+                    .from('ticket-images')
+                    .upload(filePath, imageFile);
+
+                if (uploadError) {
+                    throw new Error(`Képfeltöltési hiba: ${uploadError.message}`);
+                }
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('ticket-images')
+                    .getPublicUrl(filePath);
+
+                finalImageUrl = publicUrl;
+            }
 
             const { error } = await supabase
                 .from('ticket_events')
                 .insert({
                     ...formData,
+                    image_url: finalImageUrl,
                     organizer_id: user?.id,
                     status: 'active'
                 });
@@ -90,6 +117,7 @@ export default function TicketAdmin() {
 
             toast.success('Esemény létrehozva!');
             setShowCreateForm(false);
+            setImageFile(null);
             setFormData({
                 name: '',
                 description: '',
@@ -101,12 +129,15 @@ export default function TicketAdmin() {
                 service_fee_percent: 5,
                 category: 'Koncert',
                 is_evergreen: false,
-                payment_type: 'paid'
+                payment_type: 'paid',
+                image_url: ''
             });
             fetchEvents();
         } catch (error) {
             console.error('Error creating event:', error);
-            toast.error('Hiba történt az esemény létrehozásakor. Ellenőrizd az adatbázis kapcsolatot!');
+            toast.error(error.message || 'Hiba történt az esemény létrehozásakor. Ellenőrizd az adatbázis kapcsolatot!');
+        } finally {
+            setUploadingImage(false);
         }
     };
 
@@ -234,6 +265,19 @@ export default function TicketAdmin() {
                             </h2>
 
                             <form onSubmit={handleCreateEvent} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                        Esemény borítóképe (Plakát, Logó)
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => setImageFile(e.target.files[0])}
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                    />
+                                    {imageFile && <p className="text-xs text-green-600 mt-1">✓ Kiválasztva: {imageFile.name}</p>}
+                                </div>
+
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                                         Esemény neve
@@ -436,9 +480,10 @@ export default function TicketAdmin() {
                                 <div className="flex gap-4 pt-4">
                                     <button
                                         type="submit"
-                                        className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors"
+                                        disabled={uploadingImage}
+                                        className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
                                     >
-                                        Létrehozás
+                                        {uploadingImage ? 'Feltöltés...' : 'Létrehozás'}
                                     </button>
                                     <button
                                         type="button"

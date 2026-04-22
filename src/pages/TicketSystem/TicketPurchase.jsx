@@ -56,7 +56,18 @@ export default function TicketPurchase() {
             return;
         }
 
-        if (!buyerName.trim() || !buyerEmail.trim() || !zip.trim() || !city.trim() || !address.trim()) {
+        const isReservation = selectedEvent?.payment_type === 'on_site_reservation';
+        let finalZip = zip.trim();
+        let finalCity = city.trim();
+        let finalAddress = address.trim();
+
+        if (isReservation) {
+            finalZip = '-';
+            finalCity = '-';
+            finalAddress = '-';
+        }
+
+        if (!buyerName.trim() || !buyerEmail.trim() || !finalZip || !finalCity || !finalAddress) {
             toast.error('Töltsd ki az összes kötelező mezőt!');
             return;
         }
@@ -82,9 +93,9 @@ export default function TicketPurchase() {
                     eventId: selectedEvent.id,
                     buyerName: buyerName.trim(),
                     buyerEmail: buyerEmail.trim(),
-                    zip: zip.trim(),
-                    city: city.trim(),
-                    address: address.trim(),
+                    zip: finalZip,
+                    city: finalCity,
+                    address: finalAddress,
                     guestCount,
                     ticketType: 'general'
                 })
@@ -188,6 +199,11 @@ export default function TicketPurchase() {
                                         onClick={() => setSelectedEvent(event)}
                                         className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-indigo-500"
                                     >
+                                        {event.image_url && (
+                                            <div className="w-full h-48 mb-4 overflow-hidden rounded-lg">
+                                                <img src={event.image_url} alt={event.name} className="w-full h-full object-cover" />
+                                            </div>
+                                        )}
                                         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                                             {event.name}
                                         </h3>
@@ -233,6 +249,12 @@ export default function TicketPurchase() {
                             ← Vissza az eseményekhez
                         </button>
 
+                        {selectedEvent.image_url && (
+                            <div className="w-full h-56 md:h-72 mb-6 overflow-hidden rounded-xl">
+                                <img src={selectedEvent.image_url} alt={selectedEvent.name} className="w-full h-full object-cover" />
+                            </div>
+                        )}
+
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                             {selectedEvent.name}
                         </h2>
@@ -268,48 +290,50 @@ export default function TicketPurchase() {
                                 />
                             </div>
 
-                            {/* Billing Address Section */}
-                            <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
-                                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Számlázási adatok</h3>
+                            {/* Billing Address Section - Only Show For Paid Tickets */}
+                            {selectedEvent.payment_type !== 'on_site_reservation' && (
+                                <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Számlázási adatok</h3>
 
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    {/* Zip */}
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Irányítószám</label>
-                                        <input
-                                            type="text"
-                                            value={zip}
-                                            onChange={(e) => setZip(e.target.value)}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="9730"
-                                            required
-                                        />
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {/* Zip */}
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Irányítószám</label>
+                                            <input
+                                                type="text"
+                                                value={zip}
+                                                onChange={(e) => setZip(e.target.value)}
+                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                                                placeholder="9730"
+                                                required
+                                            />
+                                        </div>
+                                        {/* City */}
+                                        <div className="md:col-span-2">
+                                            <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Város</label>
+                                            <input
+                                                type="text"
+                                                value={city}
+                                                onChange={(e) => setCity(e.target.value)}
+                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                                                placeholder="Kőszeg"
+                                                required
+                                            />
+                                        </div>
                                     </div>
-                                    {/* City */}
-                                    <div className="md:col-span-2">
-                                        <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Város</label>
+                                    <div className="mt-4">
+                                        <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Utca, házszám</label>
                                         <input
                                             type="text"
-                                            value={city}
-                                            onChange={(e) => setCity(e.target.value)}
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
                                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="Kőszeg"
+                                            placeholder="Fő tér 1."
                                             required
                                         />
                                     </div>
                                 </div>
-                                <div className="mt-4">
-                                    <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1">Utca, házszám</label>
-                                    <input
-                                        type="text"
-                                        value={address}
-                                        onChange={(e) => setAddress(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                        placeholder="Fő tér 1."
-                                        required
-                                    />
-                                </div>
-                            </div>
+                            )}
 
                             {/* Guest Count */}
                             <div>
