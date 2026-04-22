@@ -200,7 +200,7 @@ export default function TicketPurchase() {
                                         className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border-2 border-transparent hover:border-indigo-500"
                                     >
                                         {event.image_url && (
-                                            <div className="w-full h-48 mb-4 overflow-hidden rounded-lg">
+                                            <div className="w-full aspect-[1/1.414] bg-gray-100 dark:bg-gray-900 mb-4 overflow-hidden rounded-lg">
                                                 <img src={event.image_url} alt={event.name} className="w-full h-full object-cover" />
                                             </div>
                                         )}
@@ -250,8 +250,8 @@ export default function TicketPurchase() {
                         </button>
 
                         {selectedEvent.image_url && (
-                            <div className="w-full h-56 md:h-72 mb-6 overflow-hidden rounded-xl">
-                                <img src={selectedEvent.image_url} alt={selectedEvent.name} className="w-full h-full object-cover" />
+                            <div className="w-full max-w-sm mx-auto aspect-[1/1.414] bg-gray-100 dark:bg-gray-900 mb-8 overflow-hidden rounded-xl shadow-md border border-gray-100 dark:border-gray-700">
+                                <img src={selectedEvent.image_url} alt={selectedEvent.name} className="w-full h-full object-contain" />
                             </div>
                         )}
 
