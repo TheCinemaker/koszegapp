@@ -97,11 +97,11 @@ export const handler = async (event) => {
           <p style="font-size: 12px; color: #86868b; margin-top: 10px;">${t.qr_token}</p>
           
           <div class="btn-group" style="margin-top: 15px;">
-            <a href="${walletPassUrl}" style="display: inline-block; margin-right: 10px; margin-bottom: 10px;">
-              <img src="${appleBadgeUrl}" alt="Apple Wallet" style="height: 32px;" />
+            <a href="${walletPassUrl}" style="display: inline-block; margin-right: 10px; margin-bottom: 10px; color: #fff; background-color: #000; text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 20px;">
+               Apple Wallet
             </a>
-            <a href="${googleWalletUrl}" style="display: inline-block; margin-bottom: 10px;">
-              <img src="${googleBadgeUrl}" alt="Google Wallet" style="height: 32px;" />
+            <a href="${googleWalletUrl}" style="display: inline-block; margin-bottom: 10px; color: #fff; background-color: #000; text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 20px;">
+              Google Wallet
             </a>
             <br />
             <a href="${printUrl}" style="display: inline-block; color: #0066cc; text-decoration: none; font-size: 14px; font-weight: 500; margin-top: 10px; border: 1px solid #0066cc; padding: 6px 12px; border-radius: 8px;">
@@ -171,6 +171,9 @@ export const handler = async (event) => {
         </div>
         <div class="detail-row">
           <span class="detail-icon">👥</span> ${tickets.length} fő részére
+        </div>
+        <div class="detail-row" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e5e5e5;">
+          <span class="detail-icon">🏷️</span> <strong>Jegyár: ${parseFloat(ticketEvent.price).toLocaleString('hu-HU')} Ft / fő</strong>
         </div>
       </div>
 
