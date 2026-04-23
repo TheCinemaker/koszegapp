@@ -729,25 +729,6 @@
     "highlightLabel": ""
   },
   {
-    "name": "Vas Vármegyei Zeneiskolák és Művészeti Iskolák Találkozója",
-    "date": "2026-04-21",
-    "time": "10:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Magyar Művészetoktatás Napja\nVas vármegyei Zeneiskolák és Művészeti Iskolák Találkozója\nKőszeg, 2026. április 21.\n\nProgram:\n10:00 Kiállítás megnyitó a Festetics - palota kiállítótermében (Kőszeg Chernel u. 10.)\n\n11:00 Ünnepi hangverseny a Jurisics vár Lovagtermében\n\nRésztvevő iskolák:\nÁcs Mihály Alapfokú Művészeti Iskola, Acsád\nBudaker Gusztáv Zeneiskola – Alapfokú Művészeti Iskola, Kőszeg\nBudaker Gusztáv Zeneiskola AMI tagintézménye, Csepreg\nCelldömölki Ádám Jenő Alapfokú Művészeti Iskola\nCelldömölki Ádám Jenő Alapfokú Művészeti Iskola Jánosházi Tagiskolája\nDr. Pesovár Ernő Alapfokú Művészeti Iskola, Szombathely\nHatos Ferenc Általános Iskola és Alapfokú Művészeti Iskola, Vép\nKoncz János Alapfokú Művészeti Iskola, Sárvár, Répcelak\nKörmendi Alapfokú Zene- és Táncművészeti Iskola\nReményik Sándor Evangélikus Óvoda, Általános Iskola és Alapfokú\nMűvészeti Iskola, Szombathely\nSzombathelyi Bartók Béla zeneiskola – Alapfokú Művészeti Iskola\nSzombathelyi Művészeti Szakgimnázium és Technikum\nTakács Jenő Alapfokú Művészeti Iskola, Szentgotthárd\nVáci Mihály Általános Iskola és Alapfokú Művészeti Iskola – Szombathely\nVasvári Zenei Alapfokú Művészeti Iskola\n\nA nyilvános rendezvényről készült fénykép- és videofelvételek megjelenhetnek a résztvevő iskolák honlapján, facebook oldalán és a sajtóban.\nSzeretettel várunk minden érdeklődőt!",
-    "tags": [
-      "művészet"
-    ],
-    "image": "muveszetnapja.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774854801326"
-  },
-  {
     "name": "Szőlő Jövésnek Könyve Ünnepség",
     "date": "2026-04-24",
     "time": "08:00",
@@ -913,5 +894,101 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1776934018653"
+  },
+  {
+    "name": "Kőszeg polgári családjai: Aratók - beszélgetés Arató Andrással",
+    "date": "2026-05-11",
+    "time": "17:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "A Kőszegi Polgári Kaszinó tavaly tavasszal új sorozatot indított Kőszeg polgári családjai címmel, melynek célja, hogy megismerjük Kőszeg nagy multú családjainak történetét.\nMásodik alkalommal Arató András villamosmérnök (az ismert internetes mém, \"hide the pain Harold\" megtestesítője) mesél felmenőiről: többek között Arató Istvánról, az egykori Kőszegi Evangélikus Leánygimnázium igazgatójáról, valamint Markovits József városi ügyészről.\nIdőpont: 2026. 05. 11. (hétfő), 17 óra.\nHelyszín: Jurisics-vár - Köszház\nA rendezvényen való részvétel ingyenes, minden érdeklődőt szeretettel várunk!",
+    "tags": [
+      "beszélgetés"
+    ],
+    "image": "aratok.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776934268288"
+  },
+  {
+    "name": "VIII. Nagy Táncválasztó Kőszeg 2026 - Családi Táncnap",
+    "date": "2026-05-01",
+    "time": "09:00",
+    "location": "Béri Balog Ádám Általános Iskola",
+    "coords": {
+      "lat": 47.381757,
+      "lng": 16.546072
+    },
+    "description": "Két teremben, párhuzamosan indulnak foglalkozások:\n🧒 Gyerek terem\n– óvodások és kisiskolások számára\n– játékos, élményalapú táncórák\n🧑 Felnőtt terem\n– kezdőknek és újrakezdőknek\n– többféle táncstílus kipróbálása\n✨ A cél: a család együtt mozogjon, együtt élményeket szerezzen!\n🌟 DÉLUTÁN – TÁNC A FŐTÉREN\n📍 Fő tér\n🕑 14:00\n🎭 Látványos táncbemutatók\n🤝 Közös program az Örömtánc rendezvénnyel",
+    "tags": [
+      "tánc",
+      "majális"
+    ],
+    "image": "tancnap.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776934502414"
+  },
+  {
+    "name": "Felméri Péter az almásban",
+    "date": "2026-05-16",
+    "time": "18:00",
+    "location": "Almafa rendezvényház, Kőszegfalva ",
+    "coords": {
+      "lat": 47.372536,
+      "lng": 16.580685
+    },
+    "description": "Van az a pont egy kapcsolatban,\namikor már nem azt kérdezed, hogy „mit vegyek fel?”,\nhanem hogy „ki viszi le a szemetet?” 😄\nNa, erről (is) lesz szó.\nA @dumaszinhaz és az Almafa Rendezvényház közös estjén\n🍽️ vacsorázol @daniels_kitchen_life\n🎤 @felmeripeter pedig nem csak mesél… hanem kérdez is.\nHázasság előtt vs. után,\ncsalád, hétköznapok, apró idegbajok –\naz a fajta őszinteség, amin először nevetsz, aztán rájössz, hogy… ez te vagy. @\nNem kell tökéletes kapcsolat.\nElég, ha van sztorid.\nGyere el. Vagy hozd el azt, akivel lesz. 😉\nJegyek: jegy.almafa@gmail.com",
+    "tags": [
+      "beszélgetés"
+    ],
+    "image": "felmeri.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776934843544"
+  },
+  {
+    "name": "Kisvonattal a kőszegi-hegységbe",
+    "date": "2026-04-25",
+    "time": "09:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "2026. április 25. (szombat ) 9:00-14:00 óráig\n2026. április 26. (vasárnap ) 9:00-14:00 óráig\n🕘 Indulás | 🏁 Érkezés | 📍 Kőszeg, Főtér\nTöltse a tavasz egyik legszebb napját egy különleges élményutazással a Kőszegi-hegység szívébe! 🌳🌷 A Kőszegi Kisvonat kalandos útvonalon visz keresztül dombokon, völgyeken, erdők mélyén és történelmi helyszíneken – miközben felfrissül a természet ölelésében, és ízelítőt kap a helyi kultúrából és gasztronómiából is! ✨🍇\nÚtvonalunk:\n🔹 Szabó-hegy – egy csodás panorámás út, ahol a város lassan eltűnik a háttérben, és átadja helyét a zöldellő hegyvidéknek ⛰️\n🔹 Borha forrás – egy rövid séta után megpihenünk a csendes forrásnál, ahol csak a víz csobogása hallatszik, és a természet minden érzékszervünket elvarázsolja 💧🌿\n🔹 Velem – Novák üdülőfalu – itt kisvonatunk rövid megállót tart, ahol lehetőség nyílik étel-ital fogyasztásra és egy frissítő fagylaltra is. A kellemes pihenő után feltöltődve folytatjuk az utunkat 🍽️🍦🥤\n🔹 Szent Vid kápolna – Kőszeg egyik legkülönlegesebb látványossága, ahonnan lélegzetelállító kilátás nyílik a városra és a környező tájra. A történelem szinte tapintható e szakrális helyen ⛪🌄\n🔹 Cáki pincesor – a túra méltó zárásaként megérkezünk a festői pincesorra, ahol a múlt és a jelen találkozik. A zsuppfedeles pincék kinyílnak, a borospoharak koccannak – és ha kedve tartja, hazavihet egy palackkal a kőszegi borászok remekeiből is 🍷🏡\nKísérőnk végigkalauzol bennünket a történeteken, legendákon és érdekességeken át – így a kirándulás nemcsak látványos, de tanulságos is lesz! 📖😊\n🎫 Részvételi díj:\nFelnőtteknek: 3950 Ft/fő\nGyermekeknek: 3750 Ft/fő\n(A díj tartalmazza a Cáki pincesor belépőjét is!)\n🕔 A program időtartama: kb. 5 óra\nTökéletes hétvégi kikapcsolódás családoknak, pároknak, baráti társaságoknak, sőt idősebbeknek is! 👨‍👩‍👧‍👦👵👴\n📞 Előzetes jelentkezés szükséges!\n☎️ +36 30 628 8884",
+    "tags": [
+      "túrázás"
+    ],
+    "image": "kisvonat.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776935086165"
+  },
+  {
+    "name": "Kisvonattal a kőszegi-hagységbe",
+    "date": "2026-04-26",
+    "time": "09:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "2026. április 26. (vasárnap ) 9:00-14:00 óráig\n🕘 Indulás | 🏁 Érkezés | 📍 Kőszeg, Főtér\nTöltse a tavasz egyik legszebb napját egy különleges élményutazással a Kőszegi-hegység szívébe! 🌳🌷 A Kőszegi Kisvonat kalandos útvonalon visz keresztül dombokon, völgyeken, erdők mélyén és történelmi helyszíneken – miközben felfrissül a természet ölelésében, és ízelítőt kap a helyi kultúrából és gasztronómiából is! ✨🍇\nÚtvonalunk:\n🔹 Szabó-hegy – egy csodás panorámás út, ahol a város lassan eltűnik a háttérben, és átadja helyét a zöldellő hegyvidéknek ⛰️\n🔹 Borha forrás – egy rövid séta után megpihenünk a csendes forrásnál, ahol csak a víz csobogása hallatszik, és a természet minden érzékszervünket elvarázsolja 💧🌿\n🔹 Velem – Novák üdülőfalu – itt kisvonatunk rövid megállót tart, ahol lehetőség nyílik étel-ital fogyasztásra és egy frissítő fagylaltra is. A kellemes pihenő után feltöltődve folytatjuk az utunkat 🍽️🍦🥤\n🔹 Szent Vid kápolna – Kőszeg egyik legkülönlegesebb látványossága, ahonnan lélegzetelállító kilátás nyílik a városra és a környező tájra. A történelem szinte tapintható e szakrális helyen ⛪🌄\n🔹 Cáki pincesor – a túra méltó zárásaként megérkezünk a festői pincesorra, ahol a múlt és a jelen találkozik. A zsuppfedeles pincék kinyílnak, a borospoharak koccannak – és ha kedve tartja, hazavihet egy palackkal a kőszegi borászok remekeiből is 🍷🏡\nKísérőnk végigkalauzol bennünket a történeteken, legendákon és érdekességeken át – így a kirándulás nemcsak látványos, de tanulságos is lesz! 📖😊\n🎫 Részvételi díj:\nFelnőtteknek: 3950 Ft/fő\nGyermekeknek: 3750 Ft/fő\n(A díj tartalmazza a Cáki pincesor belépőjét is!)\n🕔 A program időtartama: kb. 5 óra\nTökéletes hétvégi kikapcsolódás családoknak, pároknak, baráti társaságoknak, sőt idősebbeknek is! 👨‍👩‍👧‍👦👵👴\n📞 Előzetes jelentkezés szükséges!\n☎️ +36 30 628 8884",
+    "tags": [
+      "túra"
+    ],
+    "image": "kisvonat-1776935130615.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776935210422"
   }
 ]
