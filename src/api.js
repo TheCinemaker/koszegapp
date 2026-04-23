@@ -91,7 +91,7 @@ export async function fetchParkingMachines() {
       throw new Error('A parkolóautomaták betöltése sikertelen.');
     }
     const data = await response.json();
-    console.log('[api.js] Sikeresen betöltött automata adatok:', data); // <<< ÚJ SOR
+    // console.log('[api.js] Sikeresen betöltött automata adatok:', data); // <<< ÚJ SOR
     return data;
   } catch (error) {
     console.error(error);

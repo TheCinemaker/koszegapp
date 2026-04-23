@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
             .maybeSingle();
           if (whitelistData) {
             adminRole = whitelistData.role;
-            console.log(`[AuthDebug] Resolved role '${adminRole}' from email for '${parsedUsername}'`);
+            // console.log(`[AuthDebug] Resolved role '${adminRole}' from email for '${parsedUsername}'`);
           }
         }
       }
@@ -141,12 +141,12 @@ export const AuthProvider = ({ children }) => {
     const safeId = normalizeIdentifier(identifier);
     const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
 
-    console.log(`[AuthDebug] Login Attempt:`);
-    console.log(`  Type: ${type}`);
-    console.log(`  Raw ID: "${identifier}"`);
-    console.log(`  Safe ID: "${safeId}"`);
-    console.log(`  Gen Email: "${generatedEmail}"`);
-    console.log(`  Password Len: ${password?.length}`);
+    // console.log(`[AuthDebug] Login Attempt:`);
+    // console.log(`  Type: ${type}`);
+    // console.log(`  Raw ID: "${identifier}"`);
+    // console.log(`  Safe ID: "${safeId}"`);
+    // console.log(`  Gen Email: "${generatedEmail}"`);
+    // console.log(`  Password Len: ${password?.length}`);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: generatedEmail,
@@ -157,7 +157,7 @@ export const AuthProvider = ({ children }) => {
       console.error("[AuthDebug] Login Error:", error);
       throw error;
     }
-    console.log("[AuthDebug] Login Success:", data.user?.id);
+    // console.log("[AuthDebug] Login Success:", data.user?.id);
     return data;
   };
 
@@ -168,11 +168,11 @@ export const AuthProvider = ({ children }) => {
     const safeId = normalizeIdentifier(identifier);
     const generatedEmail = `${prefix}.${safeId}@koszeg.app`;
 
-    console.log(`[AuthDebug] Register Attempt:`);
-    console.log(`  Role: ${role}`);
-    console.log(`  Raw ID: "${identifier}"`);
-    console.log(`  Safe ID: "${safeId}"`);
-    console.log(`  Gen Email: "${generatedEmail}"`);
+    // console.log(`[AuthDebug] Register Attempt:`);
+    // console.log(`  Role: ${role}`);
+    // console.log(`  Raw ID: "${identifier}"`);
+    // console.log(`  Safe ID: "${safeId}"`);
+    // console.log(`  Gen Email: "${generatedEmail}"`);
 
     // Workaround: Database trigger might reject 'restaurant' role if ENUM is restrictive.
     // We send 'provider' as the metadata role to satisfy the trigger.

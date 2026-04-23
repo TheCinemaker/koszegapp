@@ -234,8 +234,8 @@ function OrderList({ restaurantId, restaurantName }) {
                 .limit(50);
 
             if (!error && data) {
-                console.log('📦 Orders loaded:', data);
-                console.log('📦 First order items:', data[0]?.items);
+                // console.log('📦 Orders loaded:', data);
+                // console.log('📦 First order items:', data[0]?.items);
                 setOrders(data);
             }
             setLoading(false);
@@ -243,7 +243,7 @@ function OrderList({ restaurantId, restaurantName }) {
 
         fetchOrders();
 
-        console.log('🔌 Setting up realtime subscription for restaurant:', restaurantId);
+        // console.log('🔌 Setting up realtime subscription for restaurant:', restaurantId);
 
         const channel = supabase
             .channel(`orders-${restaurantId}`)
@@ -251,7 +251,7 @@ function OrderList({ restaurantId, restaurantName }) {
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'orders', filter: `restaurant_id=eq.${restaurantId}` },
                 (payload) => {
-                    console.log('🔔 Realtime event received:', payload.eventType, payload);
+                    // console.log('🔔 Realtime event received:', payload.eventType, payload);
                     if (payload.eventType === 'INSERT') {
                         playNotification();
                         toast.success('🔔 Új rendelés érkezett!');
@@ -265,11 +265,11 @@ function OrderList({ restaurantId, restaurantName }) {
                 }
             )
             .subscribe((status) => {
-                console.log('📡 Realtime subscription status:', status);
+                // console.log('📡 Realtime subscription status:', status);
             });
 
         return () => {
-            console.log('🔌 Cleaning up realtime subscription');
+            // console.log('🔌 Cleaning up realtime subscription');
             supabase.removeChannel(channel);
         };
     }, [restaurantId]);

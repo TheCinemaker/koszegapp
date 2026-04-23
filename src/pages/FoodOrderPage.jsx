@@ -1625,8 +1625,8 @@ function CartDrawer({ items, total, onClose, onUpdateQty, onRemove, onClear, res
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("USER:", user);
-        console.log("USER ID:", user?.id, typeof user?.id);
+        // console.log("USER:", user);
+        // console.log("USER ID:", user?.id, typeof user?.id);
         if (!canSubmit) {
             if (!isRestOpen) {
                 toast.error("Az étterem jelenleg zárva tart!");

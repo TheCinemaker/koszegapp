@@ -207,7 +207,7 @@ function MainAppContent() {
     // erőszakkal továbbengedjük a felhasználót.
     const safetyTimer = setTimeout(() => {
       if (isMounted && appData.loading) {
-        console.warn('[AppInit] Safety timeout reached! Forcing loading: false to prevent blank screen.');
+        // console.warn('[AppInit] Safety timeout reached! Forcing loading: false to prevent blank screen.');
         setAppData(prev => ({ ...prev, loading: false }));
       }
     }, 5000);
@@ -217,13 +217,13 @@ function MainAppContent() {
       // A Digitális Pincér (/menu, /menu-admin) teljesen független, 
       // felesleges neki a több száz városi adatot letölteni.
       if (window.location.pathname.startsWith('/menu')) {
-        console.log('[AppInit] Isolated QR route detected, skipping heavy global fetch for speed.');
+        // console.log('[AppInit] Isolated QR route detected, skipping heavy global fetch for speed.');
         clearTimeout(safetyTimer);
         setAppData(prev => ({ ...prev, loading: false }));
         return;
       }
 
-      console.log('[AppInit] Starting data fetch sequence...');
+      // console.log('[AppInit] Starting data fetch sequence...');
       
       const endpoints = [
         { name: 'attractions', fetch: fetchAttractions },
@@ -306,7 +306,7 @@ function MainAppContent() {
       ]);
       pruneFavorites(validIds, () => true);
       
-      console.log('[AppInit] Initialization complete.');
+      // console.log('[AppInit] Initialization complete.');
     };
 
     fetchData().catch(err => {
