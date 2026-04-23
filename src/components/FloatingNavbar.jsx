@@ -2,14 +2,15 @@ import { triggerHaptic } from '../utils/haptics'; // Import utility
 import { useTranslation } from 'react-i18next'; // Hook
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { IoHomeOutline, IoCalendarOutline, IoRestaurantOutline, IoBedOutline, IoBicycleOutline, IoCarOutline, IoMapOutline, IoCloudyNightOutline, IoInformationCircleOutline, IoLocationOutline, IoPersonCircleOutline, IoKeyOutline, IoHome, IoCalendar, IoRestaurant, IoBed, IoBicycle, IoCar, IoMap, IoCloudyNight, IoInformationCircle, IoLocation, IoPersonCircle, IoKey, IoSearch, IoSearchOutline } from 'react-icons/io5';
+import { IoHomeOutline, IoCalendarOutline, IoRestaurantOutline, IoBedOutline, IoBicycleOutline, IoCarOutline, IoMapOutline, IoCloudyNightOutline, IoInformationCircleOutline, IoLocationOutline, IoPersonCircleOutline, IoKeyOutline, IoHome, IoCalendar, IoRestaurant, IoBed, IoBicycle, IoCar, IoMap, IoCloudyNight, IoInformationCircle, IoLocation, IoPersonCircle, IoKey, IoSearch, IoSearchOutline, IoTicketOutline, IoTicket } from 'react-icons/io5';
 
 export default function FloatingNavbar() {
   const { t } = useTranslation(); // Hook
   const navItems = [
     { to: "/", icon: IoHomeOutline, activeIcon: IoHome, label: t('nav.home') },
-    { to: "/attractions", icon: IoLocationOutline, activeIcon: IoLocation, label: t('nav.attractions') },
+    { to: "/tickets", icon: IoTicketOutline, activeIcon: IoTicket, label: t('nav.tickets') || 'Jegyek' },
     { to: "/events", icon: IoCalendarOutline, activeIcon: IoCalendar, label: t('nav.events') },
+    { to: "/attractions", icon: IoLocationOutline, activeIcon: IoLocation, label: t('nav.attractions') },
     { to: "/gastronomy", icon: IoRestaurantOutline, activeIcon: IoRestaurant, label: t('nav.gastronomy') },
     { to: "/hotels", icon: IoBedOutline, activeIcon: IoBed, label: t('nav.hotels') },
     { to: "/booking", icon: IoSearchOutline, activeIcon: IoSearch, label: t('nav.booking') },
