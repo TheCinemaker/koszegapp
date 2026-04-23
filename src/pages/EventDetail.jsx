@@ -508,13 +508,13 @@ export default function EventDetail() {
                     {/* NEW: Ticket Purchase Button (Soft-Link) */}
                     {ticketEvent && (
                       <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
                         onClick={() => navigate('/tickets', { state: { directEventId: ticketEvent.id } })}
-                        className="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-2xl shadow-indigo-500/40 border border-white/20 animate-pulse-slow"
+                        className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black text-sm flex items-center justify-center gap-3 shadow-xl shadow-indigo-500/20"
                       >
-                        <IoTicketOutline className="text-2xl" />
-                        JEGYVÁSÁRLÁS ({ticketEvent.price} Ft-tól)
+                        <IoTicketOutline className="text-xl" />
+                        JEGYVÁSÁRLÁS ({ticketEvent.price} Ft)
                       </motion.button>
                     )}
 
