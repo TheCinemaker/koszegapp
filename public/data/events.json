@@ -894,5 +894,24 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1776933513268"
+  },
+  {
+    "name": "Kézműves foglalkozás gyerekeknek - Majális",
+    "date": "2026-05-01",
+    "time": "10:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "Május 1-jén 10.00-12.00 óráig várjuk a gyerekeket Kőszeg Fő terén kézműves foglalkozásainkon. A Csók István Művészkör, a Hajnalcsillag Néptáncegyüttes és a kőszegi Mézeskalács Szakkör tagjai tartják a foglalkozásokat.\nAmit készítünk:\n- mézeskalács díszítés\n- kötélverés\n- színezés, montázs készítés\n- mini májusfa készítés\n- papírsárkány készítés\nEzen a napon (május 1.) INGYENES UGRÁLÓVÁR 10.00-16.00 óra között a VIRÁGPIAC területén!",
+    "tags": [
+      "majális"
+    ],
+    "image": "majalis.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776934018653"
   }
 ]
