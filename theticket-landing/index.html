@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheTicket - A legjobb élmények egy helyen</title>
+  <meta name="description" content="Modern online jegyértékesítő platform. Koncertek, fesztiválok és színházi programok egy helyen.">
+  <meta property="og:title" content="TheTicket - Jegyvásárlás és Foglalás">
+  <meta property="og:description" content="A legjobb események egyetlen kattintásra. Belépés a hivatalos jegyrendszerbe.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TheTicket">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+  <div class="glow"></div>
+  <div class="glow-secondary"></div>
+
+  <main class="container">
+    <svg width="0" height="0" style="position:absolute;">
+      <defs>
+        <linearGradient id="gradientMain" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#818cf8" />
+          <stop offset="100%" stop-color="#a78bfa" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="badge animate-in" style="--delay: 0.1s">
+      <span class="dot-ring"><span class="dot"></span></span>
+      HIVATALOS JEGYRENDSZER
+    </div>
+
+    <h1 class="animate-in" style="--delay: 0.2s">
+      A LEGJOBB ÉLMÉNYEK,<br>
+      <span class="highlight">EGY HELYEN.</span>
+    </h1>
+
+    <p class="animate-in" style="--delay: 0.3s">
+      Válogass a legújabb eseményekből, koncertekből és színházi előadásokból. Foglald le vagy vásárold meg a jegyedet online, biztonságosan Apple és Google Wallet támogatással!
+    </p>
+
+    <div class="features animate-in" style="--delay: 0.4s">
+      <div class="feature-card">
+        <span class="feature-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#gradientMain)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2"></path><path d="M13 17v2"></path><path d="M13 11v2"></path></svg>
+        </span>
+        <div>
+          <h3>Minden műfaj</h3>
+          <p>A legújabb programok és koncertek mindig azonnal elérhetőek.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#gradientMain)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
+        </span>
+        <div>
+          <h3>Digitalizált</h3>
+          <p>Digitális jegyek, amelyeket rögtön hozzáadhatsz a telefonodhoz.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#gradientMain)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </span>
+        <div>
+          <h3>Biztonságos</h3>
+          <p>Problémamentes online kártyás fizetés a Stripe segítségével.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in hero-actions" style="--delay: 0.6s">
+      <a href="https://visitkoszeg.hu/tickets" class="btn">
+        JEGYEK ÉS ESEMÉNYEK
+        <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+      
+      <div class="trusted-by">
+        <span style="opacity: 0.5;">Technológiai biztonság:</span>
+        <div class="trusted-logos">
+          <span class="t-badge">Apple Wallet</span>
+          <span class="t-badge">Google Pay</span>
+          <span class="t-badge">Stripe</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer animate-in" style="--delay: 0.7s">
+      <div class="footer-top">
+        <span class="footer-brand">THETICKET</span>
+        <span class="dot-separator">•</span>
+        <span class="year">2026</span>
+        <span class="dot-separator">•</span>
+        <span style="opacity: 0.6; font-size: 13px;">Powered by VisitKőszeg®</span>
+      </div>
+      <div style="margin-top: 6px;">
+        <span class="footer-link" onclick="openModal()">Felhasználási Feltételek és Jogi Infók (ÁSZF)</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="legalModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Tájékoztatók</h2>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      
+      <div class="modal-tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-how')">Hogyan működik?</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-aszf')">ÁSZF</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-gdpr')">Adatvédelem</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- How it works -->
+        <div id="tab-how" class="tab-content active">
+          <h3>Hogyan működik a TheTicket?</h3>
+          <p>A TheTicket egy biztonságos, modern jegyértékesítő platform. A vásárlás menete:</p>
+          <ol>
+            <li><strong>Kiválasztás:</strong> Válaszd ki a kívánt eseményt és a jegyek számát.</li>
+            <li><strong>Fizetés:</strong> Vásárolhatsz online azonnal bankkártyával (a Stripe biztonságos rendszerén keresztül), vagy foglalós eseményeknél a helyszínen fizethetsz.</li>
+            <li><strong>Kézbesítés:</strong> Sikeres tranzakció után azonnal megkapod e-mailben a hitelesített QR kóddal ellátott elektronikus jegyedet.</li>
+            <li><strong>Digitalizáció:</strong> A megvásárolt jegyen lévő QR kódot csak mutasd be az esemény bejáratánál, szkennelésre. Foglalós jegynél fizesd ki a jegy árát a helyszínen</li>
+	    
+          </ol>
+        </div>
+
+        <!-- ÁSZF -->
+        <div id="tab-aszf" class="tab-content">
+          <h3>Általános Szerződési Feltételek (ÁSZF)</h3>
+          <p><em>Érvényes: visszavonásig</em></p>
+          <h4>1. Szolgáltató Adatai</h4>
+          <p>Név: <strong>Avar Szilveszter</strong><br>
+          Székhely: 9730 Kőszeg, Kossuth Lajos u. 13.<br>
+          Adószám: 91848521-1-38<br>
+          E-mail: koszegapp@gmail.com</p>
+          
+          <h4>2. A Szolgáltatás Tárgya</h4>
+          <p>A Szolgáltató biztosítja a TheTicket platformon keresztül a belépőjegyek online értékesítését és foglalását különböző rendezvényekre. A megvásárolt jegy a megadott dátumon és időpontban érvényes, és egyszeri belépésre jogosít! <strong>Fontos:</strong> A TheTicket kizárólag jegyértékesítő közvetítőként van jelen, az események szervezésében és lebonyolításában nem vesz részt. A rendezvények minőségéért, esetleges elmaradásáért a felelősség kizárólag az adott esemény eredeti szervezőjét terheli. Az elmaradt eseményekkel kapcsolatos reklamációs és jogi lépéseket a Vásárlónak minden esetben a hivatalos Szervező felé kell érvényesítenie.</p>
+
+          <h4>3. Elállási Jog Korlátozása (Fontos!)</h4>
+          <p>A 45/2014. (II. 26.) Korm. rendelet 29. § (1) bekezdés l) pontja alapján, mivel a belépőjegyek egy <strong>adott időpontra szóló szabadidős szolgáltatásra</strong> vonatkoznak, a Fogyasztót a vásárlást követően <strong>nem illeti meg az indokolás nélküli 14 napos elállási jog!</strong> A jegyeket nem cseréljük vissza és az árát nem térítjük vissza. Amennyiben az esemény a szervező hibájából elmarad, a jegyek visszaváltásáról és a reklamáció kezeléséről az adott esemény szervezője gondoskodik.</p>
+
+          <h4>4. Fizetési Feltételek</h4>
+          <p>Az online bankkártyás fizetéseket a Stripe biztosítja. A Szolgáltató semmilyen bankkártyaadatot nem lát és nem tárol.</p>
+        </div>
+
+        <!-- GDPR -->
+        <div id="tab-gdpr" class="tab-content">
+          <h3>Adatkezelési Tájékoztató (GDPR)</h3>
+          <p>A Szolgáltató <strong>(Avar Szilveszter / TheTicket platform)</strong> elkötelezett a felhasználók személyes adatainak maximális védelme iránt. Csak és kizárólag a szolgáltatás (jegyértékesítés) biztosításához feltétlenül szükséges adatokat kezeljük.</p>
+
+          <h4>1. Kezelt adatok köre</h4>
+          <p>Vásárlás vagy foglalás során a következő adatokat kérjük be: Név, E-mail cím, illetve jogszabályi kötelezettségből a számlázási adatok (Irányítószám, Város, Utca). Helyszíni foglalkozásánál is ezek az adatok szükségesek a nyilvántartáshoz. A bankkártya adatokkal kizárólag a fizetésfeldolgozó partnerünk (Stripe) dolgozik zárt láncban, azok a mi szervereinkre soha nem jutnak el és tárolásra sem kerülnek.</p>
+
+          <h4>2. Az adatkezelés célja és jogalapja</h4>
+          <p>Célja az e-jegy legenerálása, emailben való kiküldése, hozzáférés biztosítása, és a kötelező számla kiállítása. Rendkívüli esetben a kapcsolatfelvétel a rendezvény helyszínváltozása/elmaradása esetén. Jogalap: a szerződés teljesítése (GDPR 6. cikk (1) bek. b) pont).</p>
+
+          <h4>3. Adatfeldolgozók</h4>
+          <p>A platform megbízható adatfeldolgozó partnereket használ:<br>
+          - Stripe (Fizetések feldolgozása, USA / Írország)<br>
+          - Billingo (Automatikus számlázás, Magyarország)<br>
+          - Netlify / Supabase (Szerver infrastruktúra, felhőtárhely)</p>
+          
+          <p>Személyes adatokat harmadik, illetéktelen félnek soha nem adunk át vagy értékesítünk marketing célokra!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('legalModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('legalModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    function switchTab(event, tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    document.getElementById('legalModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 // Isolated ticket purchase interface with Stripe integration
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import { toast } from 'react-hot-toast';
 import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaTicketAlt, FaCreditCard } from 'react-icons/fa';
@@ -14,6 +14,7 @@ export default function TicketPurchase() {
     const [loading, setLoading] = useState(true);
     const [purchasing, setPurchasing] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('Mind');
+    const location = useLocation();
 
     // Form state
     const [buyerName, setBuyerName] = useState('');
@@ -26,6 +27,17 @@ export default function TicketPurchase() {
     useEffect(() => {
         fetchEvents();
     }, []);
+
+    useEffect(() => {
+        if (location.state?.directEventId && events.length > 0) {
+            const ev = events.find(e => e.id === location.state.directEventId);
+            if (ev) {
+                setSelectedEvent(ev);
+                // Scroll to top to ensure the user sees the selected event/form
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    }, [location.state, events]);
 
     const fetchEvents = async () => {
         try {

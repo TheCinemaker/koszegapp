@@ -16,6 +16,7 @@ export default function TicketAdmin() {
     const [imageFile, setImageFile] = useState(null);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [editingEventId, setEditingEventId] = useState(null);
+    const [cityEvents, setCityEvents] = useState([]);
 
     // Form state
     const [formData, setFormData] = useState({
@@ -35,6 +36,7 @@ export default function TicketAdmin() {
 
     useEffect(() => {
         fetchEvents();
+        fetchCityEvents();
     }, []);
 
     useEffect(() => {
@@ -42,6 +44,18 @@ export default function TicketAdmin() {
             fetchTickets(selectedEvent.id);
         }
     }, [selectedEvent]);
+
+    const fetchCityEvents = async () => {
+        try {
+            const res = await fetch('/data/events.json');
+            if (res.ok) {
+                const data = await res.json();
+                setCityEvents(data);
+            }
+        } catch (error) {
+            console.error('Error fetching city events:', error);
+        }
+    };
 
     const fetchEvents = async () => {
         try {
@@ -295,6 +309,42 @@ export default function TicketAdmin() {
                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                                 {editingEventId ? 'Esemény szerkesztése' : 'Új esemény létrehozása'}
                             </h2>
+
+                            {!editingEventId && cityEvents.length > 0 && (
+                                <div className="mb-6 p-5 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-xl">
+                                    <label className="block text-sm font-bold text-purple-700 dark:text-purple-400 mb-2">
+                                        ⚡ Városi Naptár Esemény Betöltése (Opcionális)
+                                    </label>
+                                    <select 
+                                        className="w-full p-2.5 border border-purple-300 dark:border-purple-700 rounded-lg focus:ring-purple-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors"
+                                        onChange={(e) => {
+                                            const ev = cityEvents.find(c => c.id === e.target.value);
+                                            if(ev) {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    name: ev.name || '',
+                                                    date: ev.date || '',
+                                                    time: ev.time || '',
+                                                    location: ev.location || '',
+                                                    description: ev.description || '',
+                                                    category: (ev.tags && ev.tags[0]) ? (['Színház', 'Koncert', 'Kiállítás', 'Bemutató', 'Fesztivál', 'Sport', 'Városnézés'].includes(ev.tags[0]) ? ev.tags[0] : 'Egyéb') : 'Koncert'
+                                                }));
+                                                toast.success('Adatok sikeresen betöltve a Városi Naptárból!');
+                                                // Reset the select back to default after populating
+                                                e.target.value = "";
+                                            }
+                                        }}
+                                    >
+                                        <option value="">-- Válassz egyet az automatikus kitöltéshez --</option>
+                                        {cityEvents.map(ce => (
+                                            <option key={ce.id} value={ce.id}>{ce.date} - {ce.name}</option>
+                                        ))}
+                                    </select>
+                                    <p className="text-xs text-purple-600 dark:text-purple-300 mt-2">
+                                        Ha választasz a listából, a gép automatikusan kitölti az űrlapot az applikációból, így a soft-link azonnali lesz a visitkoszeg.hu főoldallal! Dátum és Név egyezése szükséges a felismeréshez.
+                                    </p>
+                                </div>
+                            )}
 
                             <form onSubmit={handleCreateEvent} className="space-y-4">
                                 <div>

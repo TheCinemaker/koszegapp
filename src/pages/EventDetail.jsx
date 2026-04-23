@@ -20,6 +20,7 @@ import {
 import { FaApple } from "react-icons/fa";
 import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../lib/supabaseClient';
 
 import GhostImage from '../components/GhostImage';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
@@ -166,6 +167,7 @@ export default function EventDetail() {
   const [loading, setLoading] = useState(true);
   const [showImageModal, setShowImageModal] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [ticketEvent, setTicketEvent] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -194,6 +196,28 @@ export default function EventDetail() {
       }
     }
   }, [evt, location]);
+
+  useEffect(() => {
+    if (evt) {
+      const checkTickets = async () => {
+        try {
+          const { data, error } = await supabase
+            .from('ticket_events')
+            .select('*')
+            .eq('name', evt.name)
+            .eq('status', 'active')
+            .maybeSingle();
+
+          if (data) {
+            setTicketEvent(data);
+          }
+        } catch (err) {
+          console.error("Ticket check failed:", err);
+        }
+      };
+      checkTickets();
+    }
+  }, [evt]);
 
   const handleDismissBubble = (e) => {
     e.stopPropagation();
@@ -480,6 +504,19 @@ export default function EventDetail() {
                         <IoShareSocialOutline className="text-purple-500 text-2xl" />
                       </button>
                     </div>
+
+                    {/* NEW: Ticket Purchase Button (Soft-Link) */}
+                    {ticketEvent && (
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => navigate('/tickets', { state: { directEventId: ticketEvent.id } })}
+                        className="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-2xl shadow-indigo-500/40 border border-white/20 animate-pulse-slow"
+                      >
+                        <IoTicketOutline className="text-2xl" />
+                        JEGYVÁSÁRLÁS ({ticketEvent.price} Ft-tól)
+                      </motion.button>
+                    )}
 
                     {/* Booking Button - Large CTA if far away */}
                     {location && (getDistanceKm(location.lat, location.lng, 47.389, 16.540) > 100) && (
