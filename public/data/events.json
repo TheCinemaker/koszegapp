@@ -877,5 +877,22 @@
     "highlight": true,
     "highlightLabel": "Tóth Pincészet zenés esték",
     "id": "event-2026-1776849358446"
+  },
+  {
+    "name": "Májusfa állítás",
+    "date": "2026-04-30",
+    "time": "15:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "🌸 Májusfa állítás Kőszegen\n\nÜnnepeljük együtt a tavaszt Kőszeg főterén!\nAz elmúlt évek hagyományát folytatva idén is felállításra kerül a városi májusfa.\n\nArra hívjuk a kőszegi intézményeket, szervezeteket, egyesületeket, üzleteket és magánszemélyeket, hogy csatlakozzanak a kezdeményezéshez, és kössenek egy-egy szalagot a közös májusfára.\n\n🎀 Hozd el a saját szalagodat, és légy részese a közösségi élménynek!\n\n📍 Helyszín\n\nKőszeg, Fő tér\n\n📅 Időpont\náprilis 30. (szerda)\n🕒 15:00 – 17:00\n🤝 Csatlakozás szervezeteknek\n\nA kezdeményezéshez csatlakozni kívánó helyi szervezetek, intézmények és vállalkozások jelentkezését is várjuk.\n\n📧 Jelentkezés: gelencser@koszeg.hu\n\nSzeretettel várunk mindenkit egy színes, közösségi hangulatú tavaszi eseményre! 🌿",
+    "tags": [],
+    "image": "chatgpt-image-2026.-apr.-23.-10_37_57.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776933513268"
   }
 ]
