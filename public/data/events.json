@@ -42,26 +42,6 @@
     "id": "new_1771696209722"
   },
   {
-    "id": "new_1771696209723",
-    "name": "Szőlő Jövésnek Könyve Ünnepség",
-    "date": "2026-04-24",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209724",
     "name": "„Dióhéj” – tavaszi koncert a Kőszegi Vonósokkal",
     "date": "2026-04-25",
     "time": "10:00",
@@ -70,55 +50,37 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "„Dióhéj” – tavaszi koncert a Kőszegi Vonósokkal. A belépés ingyenes!",
+    "description": "SZÍNES HANGCSOKOR - TAVASZI DIÓHÉJ-KONCERT\n\nSzeretettel várunk minden kedves érdeklődőt nagy sikerű koncertsorozatunk újabb eseményére, mely “dióhéjban”, azaz kicsiben, röviden, a gyermekek számára is élvezhetően és befogadhatóan mutatja be a komolyzene szépségeit.\n\nA minikoncert célja, hogy a legkisebb korosztály is belekóstolhasson a klasszikus vonószene világába, megismerkedhessen a vonós hangszerekkel és a vonószenekari hangzással. ???? Mindezt élvezetes, interaktív formában, a gyerekek által is ismert dallamokkal átszőve, énekkel, mozgással és játékkal körítve",
     "tags": [
       "koncert",
       "zene",
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "diohej.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209724"
   },
   {
-    "id": "new_1771696209725",
-    "name": "Májusfa állítás a Hajnalcsillag Néptáncegyüttessel",
-    "date": "2026-04-30",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209726",
     "name": "IX. Sör-Majális",
     "date": "2026-05-01",
     "time": "17:00",
-    "location": "Kőszeg",
+    "location": "Fő tér",
     "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
+      "lat": 47.389025,
+      "lng": 16.541018
     },
-    "description": "Előzetes információ, bővebben később",
+    "description": "IX. Kézműves-Sör-Majális\n\n2026. április 30. – május 2. – Fő tér\n\n2026. április 30. csütörtök\n15.00-17.00 szalagkötés a Májusfára\n18.00 Májusfaállítás a Hajnalcsillag Néptáncegyüttessel\n18.30 KVARC\n\n2026. május 1. péntek\nKőszeg Város Fúvószenekara zenés ébresztője a város utcáin\nFő tér\n10.00 kézműves foglalkozások gyerekeknek\n14.00 A Tánc világnapja – Örömtánc Kőszegen a Silverbirds Bellydance Egyesület és a BE-JÓ Táncegyüttesért Egyesület szervezésében\n18.00 That’s Right Baby\n\n2026. május 2. szombat\n14.00 Sunday Brunch\n15.30 Bujtás Ervin\n17.00 Duo Don Pedro’z Quartet\n18.30 Andalgó\n\nKézműves kirakodóvásár!\n\nInformáció: Jurisics-vár Művelődési Központ és Várszínház, jurisics@koszeg.hu, 94/360113",
     "tags": [
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "sormajalis.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209726"
   },
   {
     "id": "new_1771696209727",
@@ -748,25 +710,6 @@
     "id": "event-2026-1774855041665"
   },
   {
-    "name": "Óriások a fűszálak közöt",
-    "date": "2026-04-24",
-    "time": "17:00",
-    "location": "Bechtold István Természetvédelmi Látogatóközpont",
-    "coords": {
-      "lat": 47.385862162324315,
-      "lng": 16.530605161576602
-    },
-    "description": "Óriások a fűszálak között - a Nyugat-Dunántúl jellegzetes rovarfajai felnagyítva - makettkiállítás megnyitója a természetvédelmi látogatóközpontban.",
-    "tags": [
-      "természet"
-    ],
-    "image": "koeszeg_logo_nobg-1774855294059.png",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1774855297106"
-  },
-  {
     "name": "Little G Weevil koncert",
     "date": "2026-04-25",
     "time": "19:00",
@@ -990,5 +933,98 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1776935210422"
+  },
+  {
+    "name": "Óriások a fűszálak között - kiállítás",
+    "date": "2026-04-24",
+    "time": "17:00",
+    "location": "Bechtold István Természetvédelmi Látogatóközpont",
+    "coords": {
+      "lat": 47.385901510496836,
+      "lng": 16.53049881779517
+    },
+    "description": "Óriások a fűszálak között - A Nyugat-Dunántúl jellegzetes rovarfajai felnagyítva\nA Patkós Stúdió makettkiállítása\nA kiállítást megnyitja prof. dr. Vigh Károly, a Savaria Múzeum tudományos igazgatóhelyettese.\nA kiállítás május 31-ig tekinthető meg. ",
+    "tags": [
+      "kiállítás"
+    ],
+    "image": "oriasok.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776935450323"
+  },
+  {
+    "name": "\"Gyere ki, te gyöngyvirág… « - Magyar népzenei feldolgozások",
+    "date": "2026-04-28",
+    "time": "18:00",
+    "location": "Zsinagóga",
+    "coords": {
+      "lat": 47.391408,
+      "lng": 16.541513
+    },
+    "description": "Gyere ki, te gyöngyvirág… «\nKONCERT—KŐSZEG\nAgócs Julianna & Balog Benjámin\nMagyar népzenei feldolgozások — az Altalena két fiatal művészétől.\nA koncert ingyenes. Adományaikkal a helyszínen az Altalena művészeit támogathatják.",
+    "tags": [
+      "koncert"
+    ],
+    "image": "gyereki.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776936013964"
+  },
+  {
+    "name": "Mesés viseletbemutató foglalkozás",
+    "date": "2026-04-28",
+    "time": "08:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Sok szeretettel várnak ó v o d á s és k i s i s k o l á s csoportokat, osztályokat a tavalyi évhez hasonlóan játékos, táncos MESÉS VISELETBEMUTATÓ FOGLALKOZÁSRA a MAGYAR NÉPVISELET NAPJA alkalmából a Hajnalcsillag Néptáncegyüttessel intézményünkkel, a Kőszegi Városi Múzeum, Könyvtár és Levéltárral való együttműködésben gyermekrészlegünkre 2025. április 28-án kedden, 8 órától 15 óráig órás csoportbeosztásokkal.\nFIGYELEM!\nSzabad időpontok: 12.00 óra, 13.00 óra, 14.00 óra.\n2015-ben egy új kezdeményezés indult a sok világnap között: Legyen a népviseletnek is egy napja! 2026. április 24-én XI. alkalommal ünneplik együtt világszerte a Népviselet Napját! Intézményünkbe erről az ünnepről április 28-án emlékezünk meg, a VASI NÉPVISELET kerül majd középpontba, a tájegység dalaival, táncaival, szokásaival, játékaival.\nVárjuk a gyermekeket, jelentkezni a programszervezes@kvmkl.hu e-mail címen Czagány Tündénél lehet. Fontos! Kérjük adják meg, hogy hány órakor szeretnének érkezni! Köszönjük!",
+    "tags": [],
+    "image": "mesesruha.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776936093310"
+  },
+  {
+    "name": "FINISSZÁZS - Kiállítás",
+    "date": "2026-05-13",
+    "time": "18:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Erwin Birnmeyer Lépcsők című kiállításának finisszázsára kerül sor a vár lovagtermében, ahol Harro Prch vezeti körbe az érdeklődőket a kiállításon.",
+    "tags": [
+      "Kiállítás"
+    ],
+    "image": "lepcsok-1776936335641.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776936358928"
+  },
+  {
+    "name": "Janosch: Kistigris és Kismackó",
+    "date": "2026-05-19",
+    "time": "10:00",
+    "location": "Jurisics vár – Lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "A világhírű német szerző, Janosch könyvsorozata Kistigrisről és Kismackóról nem véletlenül ért már meg számtalan feldolgozást a világ bábszínpadain. A kalandos, szívderítő, mókás és időnként meghökkentő történetek központjában az egyik legfontosabb érték, a barátság áll. Kistigris és Kismackó elválaszthatatlanok, mindent együtt csinálnak. Együtt laknak, együtt kelnek útra, együtt kerülnek pácba és együtt is másznak ki belőle. Bármi történjék is, ők mindig ott vannak egymásnak. Egy szép napon azonban egy harmadik személy borítja fel ezt a kétszemélyes világrendet. Vajon sikerül együtt ezt is átvészelnie Kistigrisnek és Kismackónak?\nVidám és izgalmas választ kapunk erre a nagyon is komoly kérdésre.\ndramaturg: Veres András\ntervező: Grosschmid Erik\nzeneszerző: Rozs Tamás\nzenei munkatárs: Kiss Dávid\nrendező: Csató Kata\nszereplők: Kőmíves Csongor, Nizsai Dániel mv.",
+    "tags": [
+      "szinház"
+    ],
+    "image": "kistigris.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1776936453010"
   }
 ]
