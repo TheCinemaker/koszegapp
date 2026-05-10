@@ -720,5 +720,45 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1778438654733"
+  },
+  {
+    "name": "Robert Gutowski Architects kiállítás",
+    "date": "2026-05-20",
+    "time": "16:00",
+    "location": "Zwinger Öregtorony",
+    "coords": {
+      "lat": 47.3880975548173,
+      "lng": 16.5395568855635
+    },
+    "description": "A kőszegi Felsőbbfokú Tanulmányok Intézete (FTI-iASK) szeretettel meghívja Önt a A kőszegi Felsőbbfokú Tanulmányok Intézete (FTI-iASK) szeretettel meghívja Önt a Robert Gutowski Architects kiállításának megnyitójára május 20-án, szerdán délután négy órára.\n\n\nA kiállítást megnyitja: Fejérdy Tamás DLA építészmérnök, műemlékvédelmi szakmérnök\n\nKöszöntőt mond: Básthy Béla, Kőszeg Város polgármestere\n\nHelyszín: Zwinger-Öregtorony (9730 Kőszeg, Chernel utca 16.)\n\nIdőpont: 2026. május 20. (szerda) 16.00 óra\n\nA megnyitót követően, öt órakor az építésziroda munkatársai tárlatvezetést tartanak a helyszínen.",
+    "tags": [
+      "kiállítás"
+    ],
+    "image": "zwing.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778439636797"
+  },
+  {
+    "name": "XVIII. Kőszeghegyaljai Nyitott Pince Napok",
+    "date": "2026-05-23",
+    "time": "13:00",
+    "location": "Pogányok-dűlő",
+    "coords": {
+      "lat": 47.36966435517689,
+      "lng": 16.524877200282393
+    },
+    "description": "Fedezze fel a kőszegi borkultúrát egyedülálló módon!\nMájus 23-án és 24-én várja Önt a Kőszeghegyaljai Nyitott Pince Napok, ahol a bor szerelmesei különleges élményben részesülhetnek. Kóstolja meg a legjobb helyi borokat, élvezze a kellemes zenei programot és merüljön el a szőlőhegy varázslatos hangulatában.\n\nAz esemény helyszíne a csodálatos Kőszegdoroszlóhoz tartozó Pogányok szőlőhegy, illetve a történelmi Cák település. Ezek a helyszínek tökéletesen ötvözik a természeti szépségeket és a kulturális élményeket. A kb. 2 km-es túra során a borospincék sorra nyitják meg kapuikat, hogy Ön is belekóstolhasson a helyi ízekbe.\n\nProgramok és lehetőségek:\n\nFolyamatos bor- és gasztronómiai ízek kóstolása\nHangulatos séták a természet közelségében\nPiknikes környezet és kiváló panoráma\nÉtkezési lehetőségek (BÜFÉ) különböző helyszíneken\nZenei programok, hogy még hangulatosabb legyen az élmény\nNyitva lévő borászatok:\n\nAlasz Pince\nJagodics Pince\nKampits Családi Pince\nMándli Borház\nStefanich Pince\nSzőlőtermelők és Borértékesítők Szövetkezete\nTóth Pincészet\nA program környezettudatosság jegyében minden pincénél 1000 Ft-os pohárdíjat számítanak fel. De ha saját poharat hoz, ez a költség elkerülhető.\n\nMegközelítés és hasznos információk:\nA szőlőhegy mindössze 2 km-re fekszik Kőszegről, és több útvonalon is könnyedén megközelíthető, legyen szó gyalogos, kerékpáros vagy autós utazásról. A tömegközlekedést választók a Cák, Pogányhegy bejárati úti megállónál szállhatnak le.\n\nEsemény időpontja: 2026. május 23 – 24., 13 órától\nBelépés: Ingyenes, regisztráció nem szükséges.\n\n",
+    "tags": [
+      "nyitott pince",
+      "bor",
+      "kikapcsolódás"
+    ],
+    "image": "nyitottpince.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778440076872"
   }
 ]
