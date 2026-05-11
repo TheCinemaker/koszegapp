@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next'; // Added import
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchEvents } from '../api';
 import {
   format,
@@ -20,21 +20,21 @@ import {
   FaArrowLeft,
   FaHeart,
   FaRegHeart,
-  FaCalendarPlus, // For Month/Picker
-  FaCalendarAlt, // NEW: For Date Picker button
-  FaCalendarWeek, // NEW: For Week
-  FaList,         // NEW: For All
+  FaCalendarPlus,
+  FaCalendarAlt,
+  FaCalendarWeek,
+  FaList,
   FaMapMarkerAlt,
   FaSearch,
   FaFilter,
   FaTimes,
-  FaUtensils,
-  FaCloudSun,
-  FaRunning,
-  FaBed,
-  FaParking,
   FaInfoCircle,
-  FaGem
+  FaPhoneAlt,
+  FaEnvelope,
+  FaUniversity,
+  FaClock,
+  FaTicketAlt,
+  FaCloudSun
 } from 'react-icons/fa';
 import { Toaster, toast } from 'react-hot-toast';
 import EventImageCard from '../components/EventImageCard'; // Using logic, but custom render? Or adapting? Let's use custom for max control.
@@ -92,158 +92,110 @@ function toICS(evt) {
 
 // --- GIGATRENDY COMPONENTS ---
 
-// 1. Floating Glass Card
+// 1. Apple-style Event Card
 const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePass }) => {
   const { t } = useTranslation('events');
+  const navigate = useNavigate(); // For redirect
   const isMultiDay = evt.end_date && evt.end_date !== evt.date;
-  // Note: format(..., { locale: hu }) is hardcoded to HU locale in the original code. 
-  // Ideally this should use the current i18n language, but for now I'll keep it as is or use t() for month names if I want full localization.
-  // The user asked for translations. Let's use standard date formatting if possible, OR translate month names.
-  // Original: const monthStr = evt._s ? format(evt._s, 'MMM', { locale: hu }).replace('.', '') : '';
-  // Since we have month names in json, we could use them, but date-fns is easier. 
-  // I will LEAVE date-fns as is for now because changing locale requires importing different locales dynamically.
-  // However, I CAN translate the "Wallet" button and others.
 
   const monthStr = evt._s ? format(evt._s, 'MMM', { locale: hu }).replace('.', '') : '';
   const dayStr = evt._s ? format(evt._s, 'd') : '';
   const timeStr = evt.time ? evt.time : evt._s ? format(evt._s, 'HH:mm') : '';
 
-
-
   return (
-    <div className={`group relative w-full bg-white/80 dark:bg-gray-800/60 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-2xl hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] transition-all duration-500 hover:-translate-y-2 border border-white/40 dark:border-gray-700/40 ${isPast ? 'grayscale opacity-70' : ''}`}>
+    <div className={`group relative w-full bg-white dark:bg-gray-800 rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 hover:-translate-y-2 border border-gray-100 dark:border-gray-700/50 ${isPast ? 'grayscale opacity-70' : ''}`}>
 
       {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-gray-900">
         {evt.image && evt.image !== 'balkep_default.jpg' ? (
           <img
             src={`/images/events/${evt.image}`}
             alt={evt.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             loading="lazy"
             onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
           />
         ) : (
           <GhostImage className="w-full h-full" />
         )}
-        {/* Fallback for onError (hidden by default) */}
         <div className="hidden w-full h-full absolute inset-0">
           <GhostImage className="w-full h-full" />
         </div>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
-
-        {/* Floating Date Badge */}
-        <div className="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl p-2 min-w-[60px] text-center shadow-lg border border-white/20">
-          <div className="text-xs font-bold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">{monthStr}</div>
-          <div className="text-2xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
+        {/* Floating Date Badge (iOS Style) */}
+        <div className="absolute top-5 left-5 bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-2xl p-2.5 min-w-[55px] text-center shadow-sm border border-white/20">
+          <div className="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-400 tracking-tighter leading-none mb-0.5">{monthStr}</div>
+          <div className="text-xl font-black text-gray-900 dark:text-white leading-none">{dayStr}</div>
         </div>
 
-
-        {/* Favorite Button (Floating) */}
+        {/* Favorite Button */}
         {!isPast && (
           <button
             onClick={(e) => { e.preventDefault(); toggleFavorite(evt.id); }}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/60 dark:bg-white/20 backdrop-blur-md border border-white/40 dark:border-white/30 flex items-center justify-center text-zinc-900 dark:text-white hover:bg-white dark:hover:bg-white hover:text-rose-600 dark:hover:text-rose-500 transition-all shadow-lg active:scale-90"
+            className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-xl flex items-center justify-center text-gray-900 dark:text-white hover:bg-white dark:hover:bg-white/20 transition-all active:scale-90"
           >
-            {isFavorite ? <FaHeart className="text-rose-600 dark:text-rose-500 drop-shadow-md" /> : <FaRegHeart className="text-zinc-900 dark:text-white" />}
+            {isFavorite ? <FaHeart className="text-rose-500 scale-110" /> : <FaRegHeart />}
           </button>
         )}
 
-        {/* Tags / MultiDay Badge */}
-        <div className="absolute bottom-4 left-4 flex gap-2 overflow-hidden max-w-[80%]">
-          {isMultiDay && (
-            <span className="px-3 py-1 rounded-full bg-amber-400/90 text-amber-900 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm">
-              {t('multiDay')}
-            </span>
-          )}
+        {/* Bottom Gradient Overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+
+        {/* Location Info (Overlayed on image for cleaner look) */}
+        <div className="absolute bottom-5 left-5 right-5 text-white">
+          <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest opacity-90 mb-1">
+            <FaMapMarkerAlt className="text-indigo-400" />
+            <span className="truncate">{evt.location}</span>
+          </div>
+          <h3 className="text-xl font-black leading-tight drop-shadow-md line-clamp-2">
+            {evt.name}
+          </h3>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5 relative space-y-4">
-        <div>
-          <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 mb-2 line-clamp-2 leading-tight min-h-[3.5rem]">
-            {evt.name}
-          </h3>
-
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-            {evt.location && (
-              <span className="flex items-center gap-1 truncate max-w-[60%]">
-                <FaMapMarkerAlt className="text-indigo-500 shrink-0" />
-                <span className="truncate">{evt.location}</span>
-              </span>
-            )}
-            <span className="mx-1">•</span>
-            <span>{timeStr}</span>
+      {/* Content / Actions */}
+      <div className="p-6 space-y-5">
+        <div className="flex justify-between items-center text-sm">
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Kezdés</span>
+            <span className="font-black text-gray-900 dark:text-white">{timeStr}</span>
+          </div>
+          <div className="flex flex-col items-end">
+             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Ár</span>
+             <span className="font-black text-indigo-600 dark:text-indigo-400">Helyszínen</span>
           </div>
         </div>
 
-        {/* Action Buttons Box */}
-        <div className="space-y-2.5">
-          {/* Top Row: Wallet & Calendar */}
-          {!isPast && (
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-1"
-                title={t('addToWallet')}
-              >
-                <img
-                  src="/images/apple_badges/addtoapplewallet.png"
-                  alt="Add to Apple Wallet"
-                  className="w-[90px] h-auto object-contain"
-                />
-              </button>
+        {/* Compact Pass Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
+            className="flex-1 h-10 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 hover:bg-gray-100 transition-colors"
+          >
+            <img src="/images/apple_badges/addtoapplewallet.png" alt="Wallet" className="h-4 w-auto opacity-80" />
+          </button>
+          <button
+             onClick={(e) => { e.preventDefault(); /* Google logic */ }}
+             className="flex-1 h-10 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 hover:bg-gray-100 transition-colors"
+          >
+            <img src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg" alt="Google" className="h-4 w-auto opacity-80" />
+          </button>
+        </div>
 
-              <button
-                onClick={async (e) => {
-                  e.preventDefault();
-                  const toastId = toast.loading(t('generatingPass') || "Google Wallet...");
-                  try {
-                    const res = await fetch('/.netlify/functions/create-event-pass-google', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify(evt),
-                    });
-                    if (!res.ok) throw new Error('Generálási hiba');
-                    const { url } = await res.json();
-                    toast.success("Átirányítás...", { id: toastId });
-                    window.open(url, '_blank');
-                  } catch (e) {
-                    console.error(e);
-                    toast.error(`Hiba: ${e.message}`, { id: toastId });
-                  }
-                }}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-1"
-                title="Add to Google Wallet"
-              >
-                <img
-                  src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
-                  alt="Add to Google Wallet"
-                  className="w-[90px] h-auto object-contain"
-                />
-              </button>
-
-              <a
-                href={`data:text/calendar;charset=utf8,${encodeURIComponent(toICS(evt))}`}
-                download={`${evt.name.replace(/\s+/g, '_')}.ics`}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
-                title={t('saveToCalendar')}
-              >
-                <FaCalendarPlus className="text-indigo-500 text-lg" />
-              </a>
-            </div>
-          )}
-
-          {/* Bottom Row: Details */}
+        {/* CTA Actions */}
+        <div className="grid grid-cols-2 gap-3">
           <Link
             to={`/events/${evt.id}`}
-            className="block w-full py-3.5 rounded-xl bg-indigo-600 text-white font-bold text-center text-sm shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition-all active:scale-[0.98]"
+            className="py-3.5 rounded-2xl bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white font-black text-center text-xs uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-white/10 transition-all active:scale-[0.98]"
           >
-            {t('details') || 'Részletek'}
+            Infó
           </Link>
+          <button
+            onClick={() => toast('Hamarosan elérhető a digitális foglalás!', { icon: '🎟️' })}
+            className="py-3.5 rounded-2xl bg-indigo-600 text-white font-black text-center text-xs uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all active:scale-[0.98]"
+          >
+            Foglalás
+          </button>
         </div>
       </div>
     </div>
@@ -505,6 +457,92 @@ export default function Varszinhaz() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* 5. TICKET INFO SECTION (Apple Card Style) */}
+      <div className="max-w-7xl mx-auto mt-20 mb-12">
+        <FadeUp>
+          <div className="bg-white dark:bg-gray-800/50 backdrop-blur-xl rounded-[40px] p-8 sm:p-12 border border-gray-100 dark:border-gray-700/50 shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+            <div className="max-w-3xl mx-auto space-y-10">
+              <div className="text-center space-y-2">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-4">
+                  <FaTicketAlt className="text-xl" />
+                </div>
+                <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Információ és jegyrendelés</h2>
+                <p className="text-gray-500 dark:text-gray-400 font-medium">Jurisics-vár Művelődési Központ és Várszínház</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Contact Info */}
+                <div className="space-y-6">
+                  <h4 className="text-xs font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">Elérhetőség</h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 transition-colors">
+                        <FaMapMarkerAlt className="text-gray-400 group-hover:text-indigo-500" />
+                      </div>
+                      <span className="text-sm font-bold text-gray-700 dark:text-gray-300">9730 Kőszeg, Rajnis utca 9.</span>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 transition-colors">
+                        <FaPhoneAlt className="text-gray-400 group-hover:text-indigo-500" />
+                      </div>
+                      <span className="text-sm font-bold text-gray-700 dark:text-gray-300">94/360-113</span>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 transition-colors">
+                        <FaEnvelope className="text-gray-400 group-hover:text-indigo-500" />
+                      </div>
+                      <span className="text-sm font-bold text-gray-700 dark:text-gray-300">info@koszegivarszinhaz.hu</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bank Info */}
+                <div className="space-y-6">
+                  <h4 className="text-xs font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">Átutalási adatok</h4>
+                  <div className="p-5 rounded-3xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 space-y-3">
+                    <div className="flex items-start gap-3">
+                      <FaUniversity className="mt-1 text-gray-400" />
+                      <div>
+                        <div className="text-[10px] font-bold text-gray-400 uppercase mb-1">Bankszámlaszám (OTP)</div>
+                        <div className="text-sm font-black text-gray-900 dark:text-white break-all">11747051-15574493-10050006</div>
+                      </div>
+                    </div>
+                    <div className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed italic">
+                      * Megjegyzésbe: Név, Cím, Előadás dátuma, Jegyek száma
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Opening Hours & Rules */}
+              <div className="pt-10 border-t border-gray-100 dark:border-gray-700 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex items-start gap-3">
+                  <FaClock className="text-indigo-500 mt-1" />
+                  <div>
+                    <div className="text-[10px] font-bold text-gray-400 uppercase mb-1">Nyitvatartás</div>
+                    <div className="text-xs font-bold text-gray-700 dark:text-gray-300">H-P: 08:00 - 16:00</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <FaCloudSun className="text-amber-500 mt-1" />
+                  <div>
+                    <div className="text-[10px] font-bold text-gray-400 uppercase mb-1">Esőnap</div>
+                    <div className="text-xs font-bold text-gray-700 dark:text-gray-300">20:30-kor döntés a kezdésről</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <FaInfoCircle className="text-gray-400 mt-1" />
+                  <div>
+                    <div className="text-[10px] font-bold text-gray-400 uppercase mb-1">Fontos</div>
+                    <div className="text-xs font-bold text-gray-700 dark:text-gray-300">Fizetés SZÉP kártyával is</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeUp>
       </div>
 
       {/* MONTH PICKER MODAL (Clean Design) */}
