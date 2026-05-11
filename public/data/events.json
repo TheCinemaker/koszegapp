@@ -857,5 +857,22 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1778494098393"
+  },
+  {
+    "name": "Pünkösdi Lili: Örökösök",
+    "date": "2026-06-05",
+    "time": "19:00",
+    "location": "Jurisics vár – Lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "„A Kőszegi Várszínház tavaly A bosszú fogadójával indította el a magyar színházi életben egyedülálló vállalását: Kőszeghez kapcsolódó, új magyar történelmi kamaradarabok bemutatását, amelyek a mi ötleteinkre épülnek. Bár történelmi alakok a szereplők, ezek a művek nem történelmi tablók: emberi sorsokról, sűrített emberi helyzetekről szólnak. Az Örökösökkel visszalépünk a 15. századba, a Garai család történetéhez. Az előadás nem dokumentumdráma, de történész segítőnk, E. Kovács Péter szakmai jelenléte biztos támpontot ad”, mondta Pócza Zoltán, a várszínház igazgatója.\n„Egy hatszáz évvel ezelőtti világot akkor tudunk igazán megmutatni, ha nem vitrinbe tesszük, hanem hagyjuk megszólalni benne az embert. Ezt teszi Pünkösdi Lili darabja. A szerző azt írta meg érzékenyen, hogy a viselkedésminták, a félelmek, az érdekek szinte mindig ugyanazok. A környezet, a kor változik – az ember kevésbé. Miközben az Örökösök a régmúltban játszódik – nyilván él a színházi fikció szabadságával –, a néző egészen biztosan ráismer a jelen helyzeteire is. Vagyis ez nem egy történelem lecke: különböző sorsok, hitek, szándékok keresztezik egymást. Nem a történelmi távolságot érezzük, hanem az emberi közelséget. Minden szereplő ugyanazokkal a belső dilemmákkal küzd: meddig tart a hűség és mikor válik önfeladássá”, fogalmazott Csiby Gergely, az Örökösök rendezője.\n\nSzereplők:\nGarai Miklós, nádor: Őze Áron\nCillei Borbála, királyné: Bánfalvi Eszter\nCillei Anna, a nádor felesége: Varga Izabella\nIzsák, zsidó borkereskedő: Epres Attila\nJohannes, ferences szerzetes: Tóth András\n\nKonzultáns: Prof. Dr. Kovács Péter\nDramaturg: Karácsony Ágnes\nDíszlet, jelmez: Trifusz Péter\nFény, hang: Bakos Zoltán\nRendezőasszisztens: Efstratiadu Zoé\nRendező: Csiby Gergely\n\nTámogatók: Nemzeti Kulturális Támogatáskezelő, MOL- Új Európa Alapítvány, Kőszeg Város Önkormányzata. A Sárkányrend lovagja című EMT-SZ-P-25-0006 pályázat támogatásával.",
+    "tags": [],
+    "image": "lili.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778494220410"
   }
 ]
