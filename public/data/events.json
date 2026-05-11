@@ -874,5 +874,761 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1778494220410"
+  },
+  {
+    "id": "varszinhaz-20260116-0",
+    "name": "Florian Zeller: A fiú",
+    "date": "2026-01-16",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4521_pic3_4521.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260306-1",
+    "name": "Pünkösdi Lili: Örökösök",
+    "date": "2026-03-06",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterme",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4704_pic3_4704.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260325-2",
+    "name": "Egy apró kérés",
+    "date": "2026-03-25",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterme",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4687_pic3_4687.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260414-3",
+    "name": "RépaRetekMogyoró - Tavaszi móka",
+    "date": "2026-04-14",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4750_pic3_4750.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260528-6",
+    "name": "Fabrice Roger-Lacan: A SZOMSZÉD AJTÓ",
+    "date": "2026-05-28",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4755_pic3_4755.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260602-7",
+    "name": "Egyszer fenn…. – Egészen elröppent időutazás a szárnyak nyomában",
+    "date": "2026-06-02",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4753_pic3_4753.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260611-10",
+    "name": "Florian Zeller: A fiú",
+    "date": "2026-06-11",
+    "time": "19:00",
+    "location": "Jurisics vár lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4731_pic3_4731.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260613-11",
+    "name": "Segítség megnősültem!",
+    "date": "2026-06-13",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4733_pic3_4733.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260618-12",
+    "name": "MACSKAFOGÓ – musical",
+    "date": "2026-06-18",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4772_pic3_4772.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260620-13",
+    "name": "„Művészet\" - vígjáték",
+    "date": "2026-06-20",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4776_pic3_4776.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260624-14",
+    "name": "Vidám kísértet",
+    "date": "2026-06-24",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4739_pic3_4739.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260627-15",
+    "name": "Eric Chappell: SPANYOLHÁTHA (Hőguta)",
+    "date": "2026-06-27",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4734_pic3_4734.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260701-16",
+    "name": "ANCONAI SZERELMESEK - zenés komédia",
+    "date": "2026-07-01",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4746_pic3_4746.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260703-17",
+    "name": "Különkiadás",
+    "date": "2026-07-03",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4771_pic3_4771.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260705-18",
+    "name": "Komolyzenei hangverseny",
+    "date": "2026-07-05",
+    "time": "19:00",
+    "location": "Evangélikus Templom",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "varszinhaz_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260707-19",
+    "name": "Komolyzenei hangverseny",
+    "date": "2026-07-07",
+    "time": "19:00",
+    "location": "Evangélikus Templom",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "varszinhaz_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260709-20",
+    "name": "Jutalomjáték",
+    "date": "2026-07-09",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4756_pic3_4756.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260710-21",
+    "name": "Jutalomjáték",
+    "date": "2026-07-10",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4757_pic3_4757.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260711-22",
+    "name": "Jutalomjáték",
+    "date": "2026-07-11",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4758_pic3_4758.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260713-23",
+    "name": "152 lépés Auschwitz felé",
+    "date": "2026-07-13",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4759_pic3_4759.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260713-24",
+    "name": "A bőgős fia és az ördögök (meg a malac) - Harlekin Bábszínház",
+    "date": "2026-07-13",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4778_pic3_4778.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260714-25",
+    "name": "A tenger szeme",
+    "date": "2026-07-14",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4793_pic3_4793.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260715-26",
+    "name": "A bábjátékos",
+    "date": "2026-07-15",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4781_pic3_4781.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260715-27",
+    "name": "Tiszavirág",
+    "date": "2026-07-15",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4794_pic3_4794.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260716-28",
+    "name": "Egy apró kérés",
+    "date": "2026-07-16",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4740_pic3_4740.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260717-29",
+    "name": "Az igazmondó juhász",
+    "date": "2026-07-17",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4741_pic3_4741.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260718-30",
+    "name": "Operett-musical est",
+    "date": "2026-07-18",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4735_pic3_4735.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260718-31",
+    "name": "Reggel és este",
+    "date": "2026-07-18",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4782_pic3_4782.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260719-32",
+    "name": "A zöldszakállú király",
+    "date": "2026-07-19",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4742_pic3_4742.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260720-33",
+    "name": "Kerülőút - 6SZÍN",
+    "date": "2026-07-20",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4775_pic3_4775.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260720-34",
+    "name": "Robin Hood",
+    "date": "2026-07-20",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4780_pic3_4780.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260723-35",
+    "name": "Ex - vígjáték",
+    "date": "2026-07-23",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4777_pic3_4777.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260725-36",
+    "name": "Házastársas",
+    "date": "2026-07-25",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4736_pic3_4736.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260727-37",
+    "name": "Jöhetsz Drágám!",
+    "date": "2026-07-27",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4738_pic3_4738.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260730-38",
+    "name": "Apácák",
+    "date": "2026-07-30",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4761_pic3_4761.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260803-39",
+    "name": "A SZOMSZÉD AJTÓ",
+    "date": "2026-08-03",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Várszínház előadás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4760_pic3_4760.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   }
 ]

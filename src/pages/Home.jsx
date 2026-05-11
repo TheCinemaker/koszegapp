@@ -14,7 +14,8 @@ import {
   IoDiamondOutline,
   IoChevronForward,
   IoQrCode,
-  IoTicketOutline
+  IoTicketOutline,
+  IoStarOutline
 } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import { FadeUp } from '../components/AppleMotion';
@@ -30,6 +31,7 @@ export default function Home({ appData, weather }) {
   const sections = [
     { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-1 row-span-1', delay: 0.05 },
     { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1', delay: 0.1 },
+    { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, gradient: 'from-amber-500 to-orange-600', span: 'col-span-1 row-span-1', delay: 0.12 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-1 row-span-1', delay: 0.15 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 row-span-1', delay: 0.2 },
     { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 row-span-1', delay: 0.25 },
@@ -73,11 +75,14 @@ export default function Home({ appData, weather }) {
           {sections.map((sec) => (
             <FadeUp key={sec.label} delay={sec.delay + 0.2} duration={1.6} className={sec.span}>
               <Link
-                to={sec.comingSoon ? '#' : sec.to}
+                to={sec.external || sec.comingSoon ? '#' : sec.to}
                 onClick={(e) => {
                   if (sec.comingSoon) {
                     e.preventDefault();
                     toast(t('comingSoonMessage'), { icon: '🚧' });
+                  } else if (sec.external) {
+                    e.preventDefault();
+                    window.open(sec.to, '_blank', 'noopener,noreferrer');
                   }
                 }}
                 className={`

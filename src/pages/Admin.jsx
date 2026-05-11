@@ -579,7 +579,7 @@ function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
 
 function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate }) {
   const { user, token, hasPermission } = useAuth();
-  const empty = { name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
+  const empty = { name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "", isVarszinhaz: false };
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
 
   const [v, setV] = useState({ ...empty, ...initial });
@@ -722,6 +722,17 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
                 </FormField>
               </div>
             )}
+          </div>
+
+          {/* --- VÁRSZÍNHÁZ BEÁLLÍTÁS --- */}
+          <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-200 dark:border-amber-500/30">
+            <FormField label="Kőszegi Várszínház">
+              <Checkbox
+                label="Ez egy Várszínház produkció"
+                checked={v.isVarszinhaz || false}
+                onChange={(e) => setV({ ...v, isVarszinhaz: e.target.checked })}
+              />
+            </FormField>
           </div>
 
           <FormRow>

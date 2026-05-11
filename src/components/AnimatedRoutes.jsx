@@ -11,6 +11,7 @@ const Home = lazyWithRetry(() => import('../pages/Home'));
 const Attractions = lazyWithRetry(() => import('../pages/Attractions'));
 const AttractionDetail = lazyWithRetry(() => import('../pages/AttractionDetail'));
 const Events = lazyWithRetry(() => import('../pages/Events'));
+const Varszinhaz = lazyWithRetry(() => import('../pages/Varszinhaz'));
 const EventDetail = lazyWithRetry(() => import('../pages/EventDetail'));
 const Gastronomy = lazyWithRetry(() => import('../pages/Gastronomy'));
 const RestaurantDetail = lazyWithRetry(() => import('../pages/RestaurantDetail'));
@@ -118,6 +119,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/attractions/:id" element={<PageWrapper><AttractionDetail /></PageWrapper>} />
 
           <Route path="/events" element={<PageWrapper><Events events={appData.events} loading={appData.loading} /></PageWrapper>} />
+          <Route path="/varszinhaz" element={<PageWrapper><Varszinhaz /></PageWrapper>} />
           <Route path="/events/:id" element={<PageWrapper><EventDetail /></PageWrapper>} />
 
           <Route path="/gastronomy" element={<PageWrapper><Gastronomy restaurants={appData.restaurants} loading={appData.loading} /></PageWrapper>} />
