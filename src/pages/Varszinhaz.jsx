@@ -165,7 +165,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
             <span className="font-black text-gray-900 dark:text-white">{timeStr}</span>
           </div>
           <div className="flex flex-col items-end">
-             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Ár</span>
+             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Jegyár</span>
              <span className="font-black text-indigo-600 dark:text-indigo-400">{displayPrice}{displayPrice !== 'Helyszínen' ? ' Ft' : ''}</span>
           </div>
         </div>
