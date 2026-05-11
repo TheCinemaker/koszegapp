@@ -102,6 +102,10 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
   const dayStr = evt._s ? format(evt._s, 'd') : '';
   const timeStr = evt.time ? evt.time : evt._s ? format(evt._s, 'HH:mm') : '';
 
+  // Extract price from description if possible
+  const priceMatch = evt.description?.match(/Jegyár:\s*([\d\.,-]+)/i);
+  const displayPrice = priceMatch ? priceMatch[1] : 'Helyszínen';
+
   return (
     <div className={`group relative w-full bg-white dark:bg-gray-800 rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 hover:-translate-y-2 border border-gray-100 dark:border-gray-700/50 ${isPast ? 'grayscale opacity-70' : ''}`}>
 
@@ -162,7 +166,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
           </div>
           <div className="flex flex-col items-end">
              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Ár</span>
-             <span className="font-black text-indigo-600 dark:text-indigo-400">Helyszínen</span>
+             <span className="font-black text-indigo-600 dark:text-indigo-400">{displayPrice}{displayPrice !== 'Helyszínen' ? ' Ft' : ''}</span>
           </div>
         </div>
 
