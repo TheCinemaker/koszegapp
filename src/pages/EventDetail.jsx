@@ -343,6 +343,8 @@ export default function EventDetail() {
             onClick={() => {
               if (locationState?.fromAttraction) {
                 navigate(`/attractions/${locationState.fromAttraction.id}`);
+              } else if (locationState?.fromVarszinhaz || evt?.isVarszinhaz) {
+                navigate('/varszinhaz');
               } else {
                 navigate('/events');
               }

@@ -190,6 +190,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         <div className="grid grid-cols-2 gap-3">
           <Link
             to={`/events/${evt.id}`}
+            state={{ fromVarszinhaz: true }}
             className="py-3.5 rounded-2xl bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white font-black text-center text-xs uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-white/10 transition-all active:scale-[0.98]"
           >
             Infó
