@@ -367,14 +367,24 @@ export default function Varszinhaz() {
     <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Toaster position="top-right" />
 
-      {/* 1. SIMPLE HEADER (Back + Title) */}
-      <div className="max-w-7xl mx-auto flex items-center gap-4 mb-6 pt-2">
-        <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-          <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
-        </Link>
-        <h1 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          Kőszegi Várszínház
-        </h1>
+      <div className="max-w-7xl mx-auto flex flex-col items-center mb-8 pt-2 px-2">
+        <div className="w-full flex items-center mb-4">
+          <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+            <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
+          </Link>
+        </div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative"
+        >
+          <img 
+            src="/images/varszinhaz-logo.png" 
+            alt="Kőszegi Várszínház" 
+            className="h-32 sm:h-44 w-auto object-contain drop-shadow-md"
+          />
+        </motion.div>
       </div>
 
       <div className="max-w-7xl mx-auto">
