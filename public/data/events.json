@@ -19,7 +19,6 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209728",
     "name": "Lőrinc László: 25 selfie",
     "date": "2026-05-15",
     "time": "17:00",
@@ -28,20 +27,20 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Lőrinc László: 25 selfie – könyvbemutató. A belépés ingyenes!",
+    "description": "Szeretettel várunk minden történelemrajongót Lőrinc László, író és történelemtanár, a Történelemtanárok Egylete Bizottmányi tagja 25 szelfi és a Híres merényletek című könyveinek bemutatójára és író-olvasó találkozóra.",
     "tags": [
       "könyv",
       "irodalom",
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "25szelfi.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209728"
   },
   {
-    "id": "new_1771696209729",
     "name": "Nyárindító tánc és ének a Hajnalcsillag Néptáncegyüttessel",
     "date": "2026-05-16",
     "time": "10:00",
@@ -57,13 +56,13 @@
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "nyarinditotanc.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209729"
   },
   {
-    "id": "new_1771696209730",
     "name": "Rozán Eszter: Álhírek és csodagyógyítók",
     "date": "2026-05-28",
     "time": "17:00",
@@ -72,17 +71,18 @@
       "lat": 47.389592,
       "lng": 16.54243
     },
-    "description": "Rozán Eszter: Álhírek és csodagyógyítók – Hogyan ismerjük fel, ha a pénztárcánkra vadásznak? A belépés ingyenes!",
+    "description": "Rozán Eszter: Álhírek és csodagyógyítók - Hogyan ismerjük fel, ha a pénztárcánkra vadásznak? Előadónk a rendezvényteremben a Magyar Reumabetegek Egyesülete elnöke, lelkes közösségszervező, okleveles biblioterapeuta, a Vas megyei Reumaklub vezetője is egyben. Pár kérdés, melyekre választ kapunk az előadásán: Hogyan lehet rohanó világunk hírdömpingjében kiszűrni az álhíreket? Hihetünk-e a szemünknek? Miért veszélyes az információs buborék? Hogyan születnek a legendák? Milyen szerepet töltenek be a babonák az életünkben? Melyek az áltudomány jellemzői? Hogyan ismerjük fel a „csodadoktorokat”, telefonos csalókat, és mit tehetünk ellenük?",
     "tags": [
       "előadás",
       "egészség",
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "rozan.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "id": "new_1771696209730"
   },
   {
     "id": "new_1771696209731",
@@ -760,5 +760,64 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1778440076872"
+  },
+  {
+    "name": "Kapcsolódásaink – Dance Jam évadzáró műsor",
+    "date": "2026-05-16",
+    "time": "17:00",
+    "location": "Jurisics vár – Lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Kapcsolódásaink – Dance Jam évadzáró műsor",
+    "tags": [
+      "tánc",
+      "bemutató"
+    ],
+    "image": "dancejam.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778493470762"
+  },
+  {
+    "name": "Fabrice Roger-Lacan A SZOMSZÉD AJTÓ színházi bemutató",
+    "date": "2026-05-28",
+    "time": "19:00",
+    "location": "Jurisics vár – Lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Fabrice Roger-Lacan\nA SZOMSZÉD AJTÓ\nromantikus vígjáték\nA Kőszegi Várszínház és a Kultkikötő magyarországi bemutatója\n\nKét ember, akik valaki mást keresnek. És közben képtelenek leszállni egymásról…\nA nő pszichológus. A férfi marketinges, joghurtokat reklámoz. A férfi mindent el tud intézni egy félmondattal. A nő mindig visszakérdez. Semmiben nem értenek egyet. A férfi könnyedén kezeli a világot. A nő ezt nem hagyja szó nélkül. Szomszédok. Udvariasan és nagy igyekezettel gyűlölik egymást. Folyton csatáznak. Minden találkozásuk veszekedéssel végződik. Mégis újra és újra átmennek a másikhoz. Valójában mindketten társat keresnek. Persze olyasvalakit, aki pont az ellentéte annak a pokoli alaknak, aki a szomszéd ajtó mögött lakik. És amikor az online társkereső oldalakon végre megtalálják az ideális párt, nem tudják megállni, hogy ne mondják el a másiknak. Nem örömből. Hanem hogy újra összecsapjanak…\nFabrice Roger-Lacan francia író a mai párkapcsolatok egyik legpontosabb és legszellemesebb megfigyelője, aki szerint nem az a nehéz, hogy megszólítsuk a másikat, hanem hogy meghalljuk. A szomszéd ajtó című rendkívül izgalmas, humoros, nagyon emberi és elgondolkodtató darabja a Kőszegi Várszínház és a Kultkikötő közös produkciója Őze Áron és Auksz Éva főszereplésével. A színészházaspár most játszik először együtt kétszemélyes előadásban. Öröm lesz nézni, ahogy civódnak…\n\nFérfi: Őze Áron\nNő: Auksz Éva\n\nFordította: Oláh Krisztina\nDramaturg: Karácsony Ágnes\nJelmeztervező: Rákay Tamás\nDíszlettervező: Szalai József és Hatvani Mónika\nRendezőasszisztens: Eisenhauer Réka\n\nRendező: Naszlady Éva",
+    "tags": [
+      "bemutató",
+      "színház"
+    ],
+    "image": "fabrice.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778493697590"
+  },
+  {
+    "name": "Kőszeg Város Ifjúsági Zenekara koncertje",
+    "date": "2026-05-30",
+    "time": "17:30",
+    "location": "Jurisics vár – Lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Kőszeg Város Ifjúsági Zenekara koncertje JAZZ-ES(T) a Jurisics vár lovagtermében 2026. május 30-án, szombaton, 17.30-kor. Egy kicsi mindenből, ami jazz - ifjúsági zenekarra",
+    "tags": [
+      "koncert"
+    ],
+    "image": "jazzest.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778493789899"
   }
 ]
