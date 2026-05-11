@@ -819,5 +819,43 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1778493789899"
+  },
+  {
+    "name": "Hősök-napi megemlékezés",
+    "date": "2026-05-31",
+    "time": "18:00",
+    "location": "Hősök tornya",
+    "coords": {
+      "lat": 47.389182,
+      "lng": 16.539745
+    },
+    "description": "Hősök-napi megemlékezés",
+    "tags": [
+      "megemlékezés"
+    ],
+    "image": "chatgpt-image-2026.-apr.-14.-09_48_51.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778493969074"
+  },
+  {
+    "name": "Egyszer fenn…. – Egészen elröppent időutazás a szárnyak nyomában - Ziránó színház",
+    "date": "2026-06-02",
+    "time": "10:00",
+    "location": "Jurisics vár – Lovagterem",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Az előadások 10:00 és 13:00-kor kezdődnek! \n\nJoseph-Michel Montgolfier öccsével, Jacques-Étienne-nel együtt találta fel az első, ember irányította hőlégballont. A kezdeti, bíztató kísérletek után, elérkezett a nagy kérdés, vajon egy élő szervezet kibírja – e az utazást a magasban?\nA Montgolfier testvérek következő, 18 méter átmérőjű ballonjukat már a király jelenlétében bocsátották fel. A kosárban XVI. Lajos személyes parancsára kis ketrecben egy kacsát, egy tyúkot és egy birkát is elhelyeztek. A világ első légi utasai épségben értek vissza a földre, így az is kiderült: a repülés nem árt az élő szervezeteknek. A tyúk ugyan kicsit megviseltnek látszott, de a beható vizsgálat tisztázta: nem a magasság ártott neki, hanem az, hogy a birka rálépett.  Ezek a tények, de hogy mi történt az utazás során a három légi utassal, azt senki sem tudja.  A három állat különböző módon éli meg élete nagy kalandját, de mindannyian meg vannak győződve róla, hogy nevük bekerül a történelemkönyvekbe, hiszen maga a király küldte fel őket a levegőbe.\n\nStáblista\nÍrta: Kolozsi Angéla\nRendezte: Veres András\nTervezte: Rumi Zsófia\nKészítette: Rumi Zsófia, Szigeti Árpád, Balogh Mihály\nZenéjét szerezte: Gyulai Csaba\nJátszók: Pfeifer Zsófia, Varga Péter Róbert",
+    "tags": [
+      "színház"
+    ],
+    "image": "joseph.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "id": "event-2026-1778494098393"
   }
 ]
