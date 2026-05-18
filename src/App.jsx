@@ -141,6 +141,7 @@ function MainAppContent() {
     location.pathname.startsWith('/gem/') ||
     location.pathname === '/teaser' ||
     location.pathname === '/eats-auth' ||
+    location.pathname.startsWith('/kiosk') ||
     location.pathname.startsWith('/menu');  // QR Platform – teljesen izolált
 
   // --- MAINTENANCE MODE LOGIC ---

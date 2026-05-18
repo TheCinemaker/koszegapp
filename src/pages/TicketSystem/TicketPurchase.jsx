@@ -29,15 +29,21 @@ export default function TicketPurchase() {
     }, []);
 
     useEffect(() => {
-        if (location.state?.directEventId && events.length > 0) {
-            const ev = events.find(e => e.id === location.state.directEventId);
-            if (ev) {
-                setSelectedEvent(ev);
-                // Scroll to top to ensure the user sees the selected event/form
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (events.length > 0) {
+            const searchParams = new URLSearchParams(location.search);
+            const eventIdParam = searchParams.get('event_id');
+            const directId = location.state?.directEventId || eventIdParam;
+
+            if (directId) {
+                const ev = events.find(e => String(e.id) === String(directId));
+                if (ev) {
+                    setSelectedEvent(ev);
+                    // Scroll to top to ensure the user sees the selected event/form
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
         }
-    }, [location.state, events]);
+    }, [location.state, location.search, events]);
 
     const fetchEvents = async () => {
         try {
