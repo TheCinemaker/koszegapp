@@ -1510,5 +1510,23 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1778570272433"
+  },
+  {
+    "name": "Pünkösdi Nyitott Pincék | Borkóstoló",
+    "date": "2026-05-23",
+    "time": "19:00",
+    "location": "Tóth Pincészet Kőszeg",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "Ha pünkösd, akkor nyitott pincék! 🍷☀️\n\nTartsatok velünk és töltsünk együtt egy hangulatos estét a finom kőszegi borok társaságában. 6 tételes borkóstolóval és magyaros hidegtállal készülünk.\n\nA kóstolóest ára: 8250,- / fő.\n\nBejelentkezését pénteken 19:00-ig kérjük a 06 94 364 128 telefonszámon vagy személyesen.\n\n📍 Helyszín: Tóth Pincészet Borház\n📅 Időpont: 2026. május 23. 19:00 (Pünkösd szombat)\n\nOszd meg az eseményt, hívd meg barátaidat is!",
+    "tags": [],
+    "image": "borkostolo-1779096640453.png",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": true,
+    "highlightLabel": "Pünkösdi Nyitott Pincék | Borkóstoló",
+    "isVarszinhaz": false,
+    "id": "event-2026-1779096644239"
   }
 ]
