@@ -66,7 +66,6 @@
     "id": "new_1771696209730"
   },
   {
-    "id": "new_1771696209731",
     "name": "„Ébredés” – Kasztner Andrea és Rózsás Dorina kiállítása",
     "date": "2026-06-09",
     "time": "17:00",
@@ -82,10 +81,12 @@
       "program",
       "könyvtár"
     ],
-    "image": "event_default.jpg",
+    "image": "ebredes-1779097768281.jpg",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": ""
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "new_1771696209731"
   },
   {
     "id": "new_1771696209732",
