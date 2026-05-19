@@ -180,17 +180,38 @@ export default function KioskSelfie() {
     setTimeout(() => setIsFlashing(false), 200);
 
     const video = videoRef.current;
-    
+    const videoWidth = video.videoWidth || video.width || 640;
+    const videoHeight = video.videoHeight || video.height || 480;
+
     // Create capturing canvas matching postcard dimensions
     const canvas = document.createElement('canvas');
     canvas.width = 600;
     canvas.height = 800; // 3:4 portrait
     const ctx = canvas.getContext('2d');
 
-    // 1) Mirror horizontally and draw video frame
+    // Calculate cropping parameters for center-cover (preserving 3:4 aspect ratio)
+    const targetRatio = canvas.width / canvas.height; // 0.75
+    const sourceRatio = videoWidth / videoHeight;
+
+    let sX = 0;
+    let sY = 0;
+    let sWidth = videoWidth;
+    let sHeight = videoHeight;
+
+    if (sourceRatio > targetRatio) {
+      // Source is wider than 3:4 (standard landscape) -> crop sides
+      sWidth = videoHeight * targetRatio;
+      sX = (videoWidth - sWidth) / 2;
+    } else {
+      // Source is taller than 3:4 -> crop top/bottom
+      sHeight = videoWidth / targetRatio;
+      sY = (videoHeight - sHeight) / 2;
+    }
+
+    // 1) Mirror horizontally and draw cropped video frame
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(video, sX, sY, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
     ctx.setTransform(1, 0, 0, 1, 0, 0); // reset scale transform
 
     // 2) Draw selected overlay frame
