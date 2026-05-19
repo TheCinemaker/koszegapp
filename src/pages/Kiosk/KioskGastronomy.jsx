@@ -4,11 +4,13 @@ import { IoRestaurantOutline, IoLocationOutline, IoWalkOutline, IoCallOutline } 
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import { fetchRestaurants } from '../../api';
 import { getDistance, formatDistance } from './KioskAttractions';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 const KIOSK_LAT = 47.388451231945666;
 const KIOSK_LNG = 16.542002964713447;
 
 export default function KioskGastronomy() {
+  const { t } = useKioskLang();
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,13 +50,13 @@ export default function KioskGastronomy() {
         <div className="flex flex-col gap-1">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider flex items-center gap-1">
             <IoRestaurantOutline className="text-sm" />
-            Gasztronómiai Kalauz
+            {t('gastronomy.subtitle')}
           </span>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
-            Éttermek & Borozók a közelemben
+            {t('gastronomy.title')}
           </h2>
           <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold">
-            Kőszeg vendéglátóhelyei, kávézói és történelmi borozói, a Portré Étteremtől való távolságuk alapján rendezve.
+            {t('gastronomy.desc')}
           </p>
         </div>
 
@@ -62,11 +64,11 @@ export default function KioskGastronomy() {
         <div className="flex flex-col gap-4">
           {loading ? (
             <div className="text-center py-16 text-zinc-400 text-sm font-semibold animate-pulse">
-              Gasztronómiai adatok betöltése...
+              {t('gastronomy.loading')}
             </div>
           ) : sortedRestaurants.length === 0 ? (
             <div className="text-center py-16 text-zinc-400 text-sm font-semibold">
-              Jelenleg nem található vendéglátóhely az adatbázisban.
+              {t('gastronomy.empty')}
             </div>
           ) : (
             sortedRestaurants.map((rest) => (
@@ -99,7 +101,7 @@ export default function KioskGastronomy() {
                     <div className="flex justify-between items-start gap-4">
                       <div>
                         <span className="text-[9px] font-black px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mr-2 inline-block">
-                          {rest.type || 'étterem'}
+                          {rest.type || t('gastronomy.defaultType')}
                         </span>
                         <h3 className="text-lg font-bold text-zinc-950 dark:text-white leading-tight inline">
                           {rest.name}
@@ -109,7 +111,7 @@ export default function KioskGastronomy() {
                       {/* Distance badge */}
                       <span className="shrink-0 flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 border border-indigo-500/20 dark:border-indigo-400/20 text-indigo-600 dark:text-indigo-400 text-xs font-black">
                         <IoWalkOutline className="text-sm" />
-                        {formatDistance(rest._distance)}
+                        {formatDistance(rest._distance, t('common.rightHere'))}
                       </span>
                     </div>
 

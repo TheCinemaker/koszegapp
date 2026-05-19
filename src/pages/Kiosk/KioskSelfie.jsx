@@ -1,12 +1,14 @@
 // src/pages/Kiosk/KioskSelfie.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { IoCameraOutline, IoRefreshOutline, IoDownloadOutline, IoSparklesOutline, IoCloseCircleOutline } from 'react-icons/io5';
+import { IoCameraOutline, IoRefreshOutline, IoSparklesOutline, IoCloseCircleOutline } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import { supabase } from '../../lib/supabaseClient';
 import { toast, Toaster } from 'react-hot-toast';
 import QRCode from 'qrcode';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 export default function KioskSelfie() {
+  const { t } = useKioskLang();
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   
@@ -38,11 +40,11 @@ export default function KioskSelfie() {
     ctx.closePath();
   };
 
-  // 3 Postcard Overlays (Premium Apple-inspired typography & glassmorphism capsules)
-  const frames = [
+  // 3 Postcard Overlays — translated via useMemo so canvas text updates on lang change
+  const frames = React.useMemo(() => [
     {
       id: 0,
-      name: 'Üdvözlet',
+      name: t('selfie.frame0.name'),
       color: 'from-slate-800 to-slate-950',
       draw: (ctx, w, h) => {
         // Thin elegant white inner border framing the photo
@@ -64,16 +66,16 @@ export default function KioskSelfie() {
         ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 28px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Üdvözlet Kőszegről!', w / 2, h - 70);
+        ctx.fillText(t('selfie.frame0.text'), w / 2, h - 70);
 
         ctx.font = 'bold 10px sans-serif';
         ctx.fillStyle = '#94A3B8';
-        ctx.fillText(`LÁTOGATÁS DÁTUMA: ${new Date().toLocaleDateString('hu-HU')}`, w / 2, h - 45);
+        ctx.fillText(`${t('selfie.frame0.datePrefix')} ${new Date().toLocaleDateString()}`, w / 2, h - 45);
       }
     },
     {
       id: 1,
-      name: 'Kőszeg',
+      name: t('selfie.frame1.name'),
       color: 'from-zinc-500 to-zinc-700',
       draw: (ctx, w, h) => {
         // Thin elegant white inner border framing the photo
@@ -95,16 +97,16 @@ export default function KioskSelfie() {
         ctx.fillStyle = '#0F172A';
         ctx.font = '900 24px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('KŐSZEG', w / 2, h - 72);
+        ctx.fillText(t('selfie.frame1.text'), w / 2, h - 72);
 
         ctx.font = 'italic bold 13px Georgia, serif';
         ctx.fillStyle = '#475569';
-        ctx.fillText('Ahol a múlt jelen van', w / 2, h - 47);
+        ctx.fillText(t('selfie.frame1.subtext'), w / 2, h - 47);
       }
     },
     {
       id: 2,
-      name: 'KőszegPass',
+      name: t('selfie.frame2.name'),
       color: 'from-indigo-600 to-indigo-800',
       draw: (ctx, w, h) => {
         // Thin elegant white inner border framing the photo
@@ -126,14 +128,15 @@ export default function KioskSelfie() {
         ctx.fillStyle = '#F8FAFC';
         ctx.font = 'bold 24px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('KőszegPass Pillanatok 🌟', w / 2, h - 70);
+        ctx.fillText(t('selfie.frame2.text'), w / 2, h - 70);
 
         ctx.font = 'black 10px sans-serif';
-        ctx.fillStyle = '#C7D2FE'; // Indigo-200
-        ctx.fillText('FELFEDEZNI KŐSZEGET', w / 2, h - 45);
+        ctx.fillStyle = '#C7D2FE';
+        ctx.fillText(t('selfie.frame2.subtext'), w / 2, h - 45);
       }
     }
-  ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ], [t]);
 
   // Start Webcam stream on mount
   useEffect(() => {
@@ -253,7 +256,7 @@ export default function KioskSelfie() {
 
   const uploadSelfie = async (dataUrl) => {
     setUploading(true);
-    const toastId = toast.loading('Képeslap mentése és letöltő QR-kód generálása...');
+    const toastId = toast.loading(t('selfie.toastLoading'));
 
     try {
       // Convert base64 to Blob
@@ -291,10 +294,10 @@ export default function KioskSelfie() {
         console.error("Local QR generation failed:", qrErr);
       }
 
-      toast.success('Képeslap sikeresen elkészült!', { id: toastId });
+      toast.success(t('selfie.toastSuccess'), { id: toastId });
     } catch (err) {
       console.error("Postcard upload failed:", err);
-      toast.error('Hiba történt a feltöltés során. Próbáld újra!', { id: toastId });
+      toast.error(t('selfie.toastError'), { id: toastId });
     } finally {
       setUploading(false);
     }
@@ -342,10 +345,10 @@ export default function KioskSelfie() {
         <div className="flex flex-col gap-1">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider flex items-center gap-1">
             <IoSparklesOutline className="text-sm" />
-            Visitkoszeg szelfipont
+            {t('selfie.subtitle')}
           </span>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
-            Digitális Képeslap Küldő
+            {t('selfie.title')}
           </h2>
         </div>
 
@@ -358,8 +361,8 @@ export default function KioskSelfie() {
               {cameraError ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center text-zinc-400 gap-3">
                   <IoCloseCircleOutline className="text-5xl text-rose-500" />
-                  <h4 className="font-bold text-lg text-white">Webkamera Hiba</h4>
-                  <p className="text-xs">Nem sikerült elérni a gép beépített webkameráját. Kérjük ellenőrizze a csatlakozást és a böngésző engedélyeket!</p>
+                  <h4 className="font-bold text-lg text-white">{t('selfie.cameraError.title')}</h4>
+                  <p className="text-xs">{t('selfie.cameraError.desc')}</p>
                 </div>
               ) : (
                 <>
@@ -383,10 +386,10 @@ export default function KioskSelfie() {
                     {activeFrame === 0 && (
                       <div className="bg-slate-950/75 backdrop-blur-md p-4 rounded-3xl text-center border border-white/20 shadow-xl mx-4 my-1 z-20 transition-all duration-300">
                         <span className="text-white font-bold tracking-tight block text-sm sm:text-base font-serif">
-                          Üdvözlet Kőszegről!
+                          {t('selfie.frame0.text')}
                         </span>
                         <span className="text-slate-400 font-extrabold tracking-widest text-[8px] block uppercase mt-0.5 font-mono">
-                          Látogatás dátuma: {new Date().toLocaleDateString('hu-HU')}
+                          {t('selfie.frame0.datePrefix')} {new Date().toLocaleDateString()}
                         </span>
                       </div>
                     )}
@@ -394,10 +397,10 @@ export default function KioskSelfie() {
                     {activeFrame === 1 && (
                       <div className="bg-white/85 backdrop-blur-md p-4 rounded-3xl text-center border border-white/60 shadow-xl mx-4 my-1 z-20 transition-all duration-300">
                         <span className="text-slate-900 font-black tracking-widest block text-sm sm:text-base">
-                          KŐSZEG
+                          {t('selfie.frame1.text')}
                         </span>
                         <span className="text-slate-600 font-bold italic block text-[10px] font-serif mt-0.5">
-                          Ahol a múlt jelen van
+                          {t('selfie.frame1.subtext')}
                         </span>
                       </div>
                     )}
@@ -405,10 +408,10 @@ export default function KioskSelfie() {
                     {activeFrame === 2 && (
                       <div className="bg-indigo-950/80 backdrop-blur-md p-4 rounded-3xl text-center border border-white/25 shadow-xl mx-4 my-1 z-20 transition-all duration-300">
                         <span className="text-white font-extrabold block text-sm sm:text-base">
-                          KőszegPass Pillanatok 🌟
+                          {t('selfie.frame2.text')}
                         </span>
                         <span className="text-indigo-200 font-black tracking-widest text-[8px] block uppercase mt-0.5 font-mono">
-                          FELFEDEZNI KŐSZEGET
+                          {t('selfie.frame2.subtext')}
                         </span>
                       </div>
                     )}
@@ -428,7 +431,7 @@ export default function KioskSelfie() {
 
             {/* Frame selector (Carousel-like big touch tiles) */}
             <div className="w-full max-w-[450px] flex flex-col gap-3">
-              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest text-center">Válassz feliratot a képhez!</span>
+              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest text-center">{t('selfie.frameLabel')}</span>
               <div className="grid grid-cols-3 gap-2">
                 {frames.map((f, idx) => (
                   <button
@@ -480,20 +483,20 @@ export default function KioskSelfie() {
             <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-4 max-w-sm">
               <div className="flex items-center gap-1.5 justify-center md:justify-start text-xs font-black text-rose-500 tracking-widest uppercase">
                 <IoSparklesOutline className="animate-spin text-base" />
-                ELKÉSZÜLT A KÉPESLAPOD!
+                {t('selfie.done')}
               </div>
               <h3 className="text-2xl font-black text-zinc-950 dark:text-white tracking-tight uppercase leading-none">
-                Töltsd le a mobilodra!
+                {t('selfie.downloadTitle')}
               </h3>
               <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold leading-relaxed">
-                Olvasd be ezt a QR-kódot a telefonod kamerájával, és töltsd le az egyedi képeslapot azonnal a mobilodra, hogy megoszthasd a barátaiddal és családoddal!
+                {t('selfie.downloadDesc')}
               </p>
 
               {/* QR Image Box */}
               {uploading ? (
                 <div className="w-48 h-48 bg-white/50 dark:bg-zinc-900/30 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/80 flex flex-col items-center justify-center text-xs font-bold text-indigo-500 gap-2 mt-2">
                   <IoRefreshOutline className="text-2xl animate-spin" />
-                  Kód generálása...
+                  {t('selfie.generating')}
                 </div>
               ) : qrImageSrc ? (
                 <div className="p-4 bg-white rounded-3xl shadow-lg border border-zinc-200 dark:border-zinc-700 mt-2 active:scale-95 transition-transform duration-300">
@@ -505,7 +508,7 @@ export default function KioskSelfie() {
                 </div>
               ) : (
                 <div className="w-48 h-48 bg-rose-500/10 rounded-3xl border border-rose-500/20 flex flex-col items-center justify-center text-xs font-bold text-rose-500 gap-1 mt-2">
-                  Feltöltési hiba.
+                  {t('selfie.uploadError')}
                 </div>
               )}
 
@@ -515,7 +518,7 @@ export default function KioskSelfie() {
                 className="mt-4 flex items-center gap-1.5 px-6 py-3 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold active:scale-95 transition-all text-sm shadow-md border border-zinc-700/50"
               >
                 <IoRefreshOutline className="text-lg" />
-                Új kép készítése
+                {t('selfie.retake')}
               </button>
             </div>
 

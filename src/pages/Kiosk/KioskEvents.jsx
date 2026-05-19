@@ -1,12 +1,21 @@
 // src/pages/Kiosk/KioskEvents.jsx
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IoCalendarOutline, IoLocationOutline, IoWalkOutline, IoBookmarkOutline } from 'react-icons/io5';
+import { IoCalendarOutline, IoLocationOutline, IoWalkOutline } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import { getDistance, formatDistance } from './KioskAttractions';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 const KIOSK_LAT = 47.388451231945666;
 const KIOSK_LNG = 16.542002964713447;
+
+const getEventImage = (image) => {
+  if (!image) return '/images/fo_ter.jpg';
+  if (image.startsWith('http')) return image;
+  if (image === 'event_default.jpg') return '/images/fo_ter.jpg';
+  if (image === 'varszinhaz_default.jpg') return '/images/events/varszinhaz_default.jpg';
+  return `/images/events/${image}`;
+};
 
 export const VENUE_COORDS = {
   "jurisics-vár": { lat: 47.3900222, lng: 16.539825 },
@@ -21,11 +30,12 @@ export const VENUE_COORDS = {
 
 export default function KioskEvents({ events }) {
   const navigate = useNavigate();
+  const { t } = useKioskLang();
 
-  // Compute event coordinates and distances
+  // Compute event coordinates and distances, and sort them chronologically
   const processedEvents = useMemo(() => {
     if (!events) return [];
-    return events.map(evt => {
+    const mapped = events.map(evt => {
       const locKey = String(evt.location || '').toLowerCase().trim();
       let coords = null;
 
@@ -40,6 +50,18 @@ export default function KioskEvents({ events }) {
       const dist = coords ? getDistance(KIOSK_LAT, KIOSK_LNG, coords.lat, coords.lng) : null;
       return { ...evt, _distance: dist };
     });
+
+    // Sort chronologically by date and time
+    return mapped.sort((a, b) => {
+      const dateA = a.date || '';
+      const dateB = b.date || '';
+      if (dateA !== dateB) {
+        return dateA.localeCompare(dateB);
+      }
+      const timeA = a.time || '';
+      const timeB = b.time || '';
+      return timeA.localeCompare(timeB);
+    });
   }, [events]);
 
   return (
@@ -52,13 +74,13 @@ export default function KioskEvents({ events }) {
         <div className="flex flex-col gap-1">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider flex items-center gap-1">
             <IoCalendarOutline className="text-sm" />
-            Városi Programfüzet
+            {t('events.subtitle')}
           </span>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
-            Események & Rendezvények
+            {t('events.title')}
           </h2>
           <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold">
-            Böngészd Kőszeg legújabb kulturális, boros és szabadidős eseményeit közvetlenül a terminálról.
+            {t('events.desc')}
           </p>
         </div>
 
@@ -66,7 +88,7 @@ export default function KioskEvents({ events }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {processedEvents.length === 0 ? (
             <div className="col-span-2 text-center py-16 text-zinc-400 text-sm font-semibold animate-pulse">
-              Események betöltése...
+              {t('events.loading')}
             </div>
           ) : (
             processedEvents.map((evt) => (
@@ -84,11 +106,7 @@ export default function KioskEvents({ events }) {
                 <div 
                   className="w-full h-40 bg-cover bg-center bg-zinc-200 dark:bg-zinc-800 relative"
                   style={{ 
-                    backgroundImage: `url(${
-                      evt.image 
-                        ? (evt.image.startsWith('http') ? evt.image : `/images/events/${evt.image}`) 
-                        : '/images/event_default.jpg'
-                    })`
+                    backgroundImage: `url(${getEventImage(evt.image)})`
                   }}
                 >
                   {/* Distance badge if resolved */}

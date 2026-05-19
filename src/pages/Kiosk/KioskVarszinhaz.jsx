@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline, IoSearchOutline, IoTicketOutline, IoSparklesOutline } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import { fetchEvents } from '../../api';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 export default function KioskVarszinhaz() {
   const navigate = useNavigate();
+  const { t } = useKioskLang();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -60,28 +62,14 @@ export default function KioskVarszinhaz() {
 
       <main className="flex-1 w-full max-w-3xl mx-auto px-6 py-8 flex flex-col justify-start gap-8 select-none animate-fadeIn">
         
-        {/* Page Title & Logo */}
-        <div className="flex flex-col items-center gap-4 text-center">
+        {/* Cinematic Puppet Art Hero Banner */}
+        <div className="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden w-full aspect-[2.3/1] sm:h-[280px] shadow-2xl border border-zinc-200/30 dark:border-zinc-800/50 bg-slate-950 shrink-0">
           <img 
-            src="/images/varszinhaz-logo.png" 
-            alt="Kőszegi Várszínház" 
-            className="h-28 w-auto object-contain drop-shadow-md dark:brightness-110"
-            onError={(e) => {
-              e.target.style.display = 'none';
-            }}
+            src="/images/varszinhaz_hero.png" 
+            alt="Kőszegi Várszínház Szezon" 
+            className="w-full h-full object-cover"
           />
-          <div className="flex flex-col gap-1">
-            <span className="text-amber-600 dark:text-amber-500 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1">
-              <IoSparklesOutline className="text-sm" />
-              Kőszegi Várszínház
-            </span>
-            <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
-              Nyári Előadások 2026
-            </h2>
-            <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold max-w-md">
-              Böngészd a Kőszegi Várszínház szezonális színházi, zenés és szabadtéri programjait!
-            </p>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
         </div>
 
         {/* Search & Month Filter Segmented Control */}
@@ -92,7 +80,7 @@ export default function KioskVarszinhaz() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Keress előadásra, darabra, színészre..."
+              placeholder={t('varszinhaz.searchPlaceholder')}
               className="w-full px-5 py-4 pl-12 rounded-2xl bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800/80 text-sm font-bold text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm transition-all"
             />
             <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-zinc-400" />
@@ -101,10 +89,10 @@ export default function KioskVarszinhaz() {
           {/* Month Segmented Control */}
           <div className="grid grid-cols-4 gap-1 p-1 bg-zinc-200/50 dark:bg-zinc-950/40 rounded-2xl border border-zinc-200/10 dark:border-zinc-850/10">
             {[
-              { id: 'all', label: 'Összes' },
-              { id: 'june', label: 'Június' },
-              { id: 'july', label: 'Július' },
-              { id: 'august', label: 'Augusztus' }
+              { id: 'all', label: t('varszinhaz.months.all') },
+              { id: 'june', label: t('varszinhaz.months.june') },
+              { id: 'july', label: t('varszinhaz.months.july') },
+              { id: 'august', label: t('varszinhaz.months.august') }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -127,11 +115,11 @@ export default function KioskVarszinhaz() {
         <div className="flex flex-col gap-4">
           {loading ? (
             <div className="text-center py-16 text-zinc-400 text-sm font-semibold">
-              Előadások betöltése...
+              {t('varszinhaz.loading')}
             </div>
           ) : filteredEvents.length === 0 ? (
             <div className="text-center py-16 text-zinc-400 text-sm font-semibold">
-              Nincs a keresési feltételnek megfelelő előadás.
+              {t('varszinhaz.empty')}
             </div>
           ) : (
             filteredEvents.map((evt) => (
@@ -161,7 +149,7 @@ export default function KioskVarszinhaz() {
                 {/* Details */}
                 <div className="flex-1 flex flex-col gap-1 min-w-0 text-left">
                   <span className="text-amber-600 dark:text-amber-500 text-[10px] font-black uppercase tracking-wider leading-none">
-                    {evt.date} • {evt.time || 'Egész nap'}
+                    {evt.date} • {evt.time || t('common.allDay')}
                   </span>
                   <h3 className="text-lg font-black text-zinc-900 dark:text-zinc-100 tracking-tight leading-snug uppercase truncate group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
                     {evt.name}
@@ -176,7 +164,7 @@ export default function KioskVarszinhaz() {
                 <div className="shrink-0 flex items-center justify-center">
                   <div className="px-3.5 py-2 rounded-2xl bg-indigo-500/10 dark:bg-indigo-400/10 border border-indigo-500/20 dark:border-indigo-400/20 text-indigo-600 dark:text-indigo-400 font-black text-xs uppercase flex items-center gap-1">
                     <IoTicketOutline className="text-sm" />
-                    Infó
+                    {t('common.info')}
                   </div>
                 </div>
               </div>

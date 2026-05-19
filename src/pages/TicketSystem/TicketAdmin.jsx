@@ -31,7 +31,8 @@ export default function TicketAdmin() {
         category: 'Koncert',
         is_evergreen: false,
         payment_type: 'paid', // 'paid' or 'on_site_reservation'
-        image_url: ''
+        image_url: '',
+        organizer_email: ''
     });
 
     useEffect(() => {
@@ -159,7 +160,8 @@ export default function TicketAdmin() {
                 category: 'Koncert',
                 is_evergreen: false,
                 payment_type: 'paid',
-                image_url: ''
+                image_url: '',
+                organizer_email: ''
             });
             fetchEvents();
         } catch (error) {
@@ -292,7 +294,8 @@ export default function TicketAdmin() {
                                 category: 'Koncert',
                                 is_evergreen: false,
                                 payment_type: 'paid',
-                                image_url: ''
+                                image_url: '',
+                                organizer_email: ''
                             });
                             setShowCreateForm(true);
                         }}
@@ -448,6 +451,20 @@ export default function TicketAdmin() {
                                             <option value="Egyéb">Egyéb</option>
                                         </select>
                                     </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                        Szervező e-mail címe (Értesítések fogadásához)
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={formData.organizer_email}
+                                        onChange={(e) => setFormData({ ...formData, organizer_email: e.target.value })}
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                                        placeholder="szervezo@visitkoszeg.hu"
+                                        required
+                                    />
                                 </div>
 
                                 <div className="grid grid-cols-3 gap-4">
@@ -674,7 +691,8 @@ export default function TicketAdmin() {
                                                             category: event.category || 'Koncert',
                                                             is_evergreen: event.is_evergreen || false,
                                                             payment_type: event.payment_type || 'paid',
-                                                            image_url: event.image_url || ''
+                                                            image_url: event.image_url || '',
+                                                            organizer_email: event.organizer_email || ''
                                                         });
                                                         setShowCreateForm(true);
                                                     }}

@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline, IoWalkOutline, IoCompassOutline } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 // Portré Étterem coordinates (kiosk location)
 const KIOSK_LAT = 47.388451231945666;
@@ -22,15 +23,16 @@ export function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-export function formatDistance(meters) {
+export function formatDistance(meters, nearText = 'Itt van melletted') {
   if (meters === Infinity) return '';
-  if (meters < 15) return 'Itt van melletted';
+  if (meters < 15) return nearText;
   if (meters < 1000) return `${Math.round(meters)} m`;
   return `${(meters / 1000).toFixed(1)} km`;
 }
 
 export default function KioskAttractions({ attractions }) {
   const navigate = useNavigate();
+  const { t } = useKioskLang();
 
   // Compute distances and sort by proximity
   const sortedAttractions = useMemo(() => {
@@ -53,13 +55,13 @@ export default function KioskAttractions({ attractions }) {
         <div className="flex flex-col gap-1">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider flex items-center gap-1">
             <IoCompassOutline className="text-sm" />
-            Turisztikai Felfedező
+            {t('attractions.subtitle')}
           </span>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
-            Látnivalók a közelemben
+            {t('attractions.title')}
           </h2>
           <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold">
-            Kőszeg történelmi látványosságai és műemlékei, a Portré Étteremtől való távolságuk alapján rendezve.
+            {t('attractions.desc')}
           </p>
         </div>
 
@@ -67,7 +69,7 @@ export default function KioskAttractions({ attractions }) {
         <div className="flex flex-col gap-4">
           {sortedAttractions.length === 0 ? (
             <div className="text-center py-16 text-zinc-400 text-sm font-semibold animate-pulse">
-              Adatok betöltése...
+              {t('attractions.loading')}
             </div>
           ) : (
             sortedAttractions.map((attr) => (
@@ -104,7 +106,7 @@ export default function KioskAttractions({ attractions }) {
                       {/* Distance badge */}
                       <span className="shrink-0 flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 border border-indigo-500/20 dark:border-indigo-400/20 text-indigo-600 dark:text-indigo-400 text-xs font-black">
                         <IoWalkOutline className="text-sm" />
-                        {formatDistance(attr._distance)}
+                        {formatDistance(attr._distance, t('common.rightHere'))}
                       </span>
                     </div>
                     <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed line-clamp-2 font-semibold">

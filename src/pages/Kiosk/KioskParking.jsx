@@ -4,11 +4,13 @@ import { IoCarSportOutline, IoLocationOutline, IoWalkOutline, IoCardOutline, IoT
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import { fetchParkingZones, fetchParkingMachines } from '../../api';
 import { getDistance, formatDistance } from './KioskAttractions';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 const KIOSK_LAT = 47.388451231945666;
 const KIOSK_LNG = 16.542002964713447;
 
 export default function KioskParking() {
+  const { t } = useKioskLang();
   const [zones, setZones] = useState([]);
   const [machines, setMachines] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,20 +55,20 @@ export default function KioskParking() {
         <div className="flex flex-col gap-1">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider flex items-center gap-1">
             <IoCarSportOutline className="text-sm" />
-            Parkolási Tájékoztató
+            {t('parking.subtitle')}
           </span>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
-            Parkolási Rend Kőszegen
+            {t('parking.title')}
           </h2>
           <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold">
-            Ismerje meg a városi parkolási zónákat, díjakat, és keresse meg a legközelebbi fizetőautomatát.
+            {t('parking.desc')}
           </p>
         </div>
 
         {/* Zones Presentation */}
         <div className="flex flex-col gap-4">
           <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none uppercase">
-            Parkolási Zónák & Árak
+            {t('parking.zonesTitle')}
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -75,21 +77,21 @@ export default function KioskParking() {
             <div className="rounded-3xl p-6 bg-rose-500/5 dark:bg-rose-500/10 border border-rose-500/20 dark:border-rose-500/15 flex flex-col gap-4">
               <div className="flex justify-between items-center">
                 <span className="px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-black tracking-wider uppercase">
-                  Kiemelt / Piros Zóna
+                  {t('parking.zoneA.name')}
                 </span>
                 <span className="text-2xl font-black text-rose-600 dark:text-rose-400 font-mono">400 Ft/óra</span>
               </div>
               <p className="text-zinc-600 dark:text-zinc-300 text-xs font-semibold leading-relaxed">
-                Kőszeg közvetlen belvárosi magja, történelmi utcái és a Vár környéki parkolók.
+                {t('parking.zoneA.desc')}
               </p>
               <div className="flex flex-col gap-2 pt-2 border-t border-rose-500/10 text-zinc-500 dark:text-zinc-400 text-[10px] font-bold">
                 <div className="flex items-center gap-2">
                   <IoTimeOutline className="text-xs text-rose-500" />
-                  <span>Díjköteles: H-P 8:00 - 18:00, Szo 8:00 - 12:00</span>
+                  <span>{t('parking.zoneA.hours')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <IoCardOutline className="text-xs text-rose-500" />
-                  <span>Készpénz, Bankkártya, Mobil SMS fizetés</span>
+                  <span>{t('parking.zoneA.payment')}</span>
                 </div>
               </div>
             </div>
@@ -98,21 +100,21 @@ export default function KioskParking() {
             <div className="rounded-3xl p-6 bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 dark:border-amber-500/15 flex flex-col gap-4">
               <div className="flex justify-between items-center">
                 <span className="px-3 py-1 rounded-full bg-amber-500 text-zinc-950 text-xs font-black tracking-wider uppercase">
-                  Normál / Sárga Zóna
+                  {t('parking.zoneB.name')}
                 </span>
                 <span className="text-2xl font-black text-amber-600 dark:text-amber-500 font-mono">240 Ft/óra</span>
               </div>
               <p className="text-zinc-600 dark:text-zinc-300 text-xs font-semibold leading-relaxed">
-                Belváros peremén elhelyezkedő parkolók, utcák (pl. Várkör távolabbi szakaszai).
+                {t('parking.zoneB.desc')}
               </p>
               <div className="flex flex-col gap-2 pt-2 border-t border-amber-500/10 text-zinc-500 dark:text-zinc-400 text-[10px] font-bold">
                 <div className="flex items-center gap-2">
                   <IoTimeOutline className="text-xs text-amber-500" />
-                  <span>Díjköteles: H-P 8:00 - 18:00, Szo 8:00 - 12:00</span>
+                  <span>{t('parking.zoneB.hours')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <IoCardOutline className="text-xs text-amber-500" />
-                  <span>Készpénz, Mobil SMS fizetés</span>
+                  <span>{t('parking.zoneB.payment')}</span>
                 </div>
               </div>
             </div>
@@ -123,17 +125,17 @@ export default function KioskParking() {
         {/* Closest Automatons */}
         <div className="flex flex-col gap-4">
           <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none uppercase">
-            Legközelebbi fizetőautomaták
+            {t('parking.machinesTitle')}
           </h3>
 
           <div className="flex flex-col gap-3">
             {loading ? (
               <div className="text-center py-8 text-zinc-400 text-sm font-semibold animate-pulse">
-                Automaták betöltése...
+                {t('parking.machinesLoading')}
               </div>
             ) : sortedMachines.length === 0 ? (
               <div className="text-center py-8 text-zinc-400 text-xs font-semibold">
-                Nincsenek elérhető automata adatok.
+                {t('parking.machinesEmpty')}
               </div>
             ) : (
               sortedMachines.slice(0, 4).map((mach, idx) => (
@@ -147,7 +149,7 @@ export default function KioskParking() {
                 >
                   <div className="flex flex-col gap-1">
                     <h4 className="text-sm font-extrabold text-zinc-900 dark:text-white leading-none">
-                      {mach.name || `${idx + 1}. számú automata`}
+                      {mach.name || `${idx + 1}${t('parking.machineSuffix')}`}
                     </h4>
                     <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-semibold flex items-center gap-1">
                       <IoLocationOutline className="text-xs text-indigo-500 dark:text-indigo-400" />
@@ -157,7 +159,7 @@ export default function KioskParking() {
 
                   <span className="shrink-0 flex items-center gap-0.5 px-3 py-1 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 border border-indigo-500/20 dark:border-indigo-400/20 text-indigo-600 dark:text-indigo-400 text-xs font-black">
                     <IoWalkOutline className="text-sm" />
-                    {formatDistance(mach._distance)}
+                    {formatDistance(mach._distance, t('common.rightHere'))}
                   </span>
                 </div>
               ))

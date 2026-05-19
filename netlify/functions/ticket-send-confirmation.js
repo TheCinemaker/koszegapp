@@ -217,6 +217,113 @@ export const handler = async (event) => {
       .update({ email_sent_at: now })
       .in('id', ticketIds);
 
+    // Send notification email to the organizer if specified
+    if (ticketEvent.organizer_email) {
+      try {
+        const isReservation = tickets[0]?.status === 'reserved';
+        const organizerSubject = `🎟️ Új ${isReservation ? 'foglalás' : 'jegyvásárlás'}: ${ticketEvent.name}`;
+        
+        console.log(`[OrganizerNotification] Sending email to ${ticketEvent.organizer_email} for event ${ticketEvent.name}`);
+
+        const totalGuests = tickets.reduce((sum, t) => sum + (t.guest_count || 1), 0);
+        const displayAmount = order.amount
+          ? `${(order.amount / 100).toLocaleString('hu-HU')} Ft`
+          : `${(parseFloat(ticketEvent.price) * totalGuests).toLocaleString('hu-HU')} Ft`;
+
+        await resend.emails.send({
+          from: emailConfig.from,
+          to: [ticketEvent.organizer_email],
+          subject: organizerSubject,
+          html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Új jegyrendelés - ${ticketEvent.name}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f7; margin: 0; padding: 0; color: #1d1d1f; }
+    .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .header { background: #4f46e5; padding: 30px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .content { padding: 40px; }
+    .greeting { font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 10px; }
+    .lead { font-size: 15px; color: #4b5563; margin-bottom: 25px; line-height: 1.5; }
+    .card { background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 16px; padding: 24px; margin-bottom: 25px; }
+    .event-title { font-size: 18px; font-weight: 700; margin: 0 0 12px 0; color: #111827; }
+    .detail-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 14px; color: #374151; }
+    .detail-icon { margin-right: 10px; font-size: 16px; }
+    .divider { height: 1px; background-color: #e5e7eb; margin: 20px 0; border: none; }
+    .btn-container { text-align: center; margin-top: 30px; }
+    .admin-btn { display: inline-block; background-color: #4f46e5; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 12px; font-size: 15px; font-weight: 600; }
+    .footer { background: #f9fafb; padding: 25px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #f3f4f6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>KőszegTicket - Szervezői Értesítő</h1>
+    </div>
+    
+    <div class="content">
+      <div class="greeting">Kedves Szervező!</div>
+      <div class="lead">
+        Örömmel értesítünk, hogy új ${isReservation ? 'helyfoglalás' : 'jegyvásárlás'} történt az eseményedre! A rendelés részleteit alább találod:
+      </div>
+
+      <div class="card">
+        <h2 class="event-title">${ticketEvent.name}</h2>
+        <div class="detail-row">
+          <span class="detail-icon">📅</span> <strong>${eventDate}, ${ticketEvent.time}</strong>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📍</span> ${ticketEvent.location}
+        </div>
+      </div>
+
+      <div class="card" style="border-left: 4px solid #4f46e5;">
+        <h3 style="margin-top: 0; color: #111827; font-size: 16px;">Vásárlási adatok</h3>
+        <div class="detail-row">
+          <span class="detail-icon">👤</span> <strong>Név:</strong> &nbsp; ${order.name}
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">✉️</span> <strong>Email:</strong> &nbsp; <a href="mailto:${order.email}" style="color: #4f46e5; text-decoration: none;">${order.email}</a>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">👥</span> <strong>Vendégek száma:</strong> &nbsp; ${totalGuests} fő
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">💰</span> <strong>Fizetési mód:</strong> &nbsp; ${isReservation ? '🟡 Helyszíni fizetésű foglalás' : '🟢 Online Stripe fizetés'}
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">💳</span> <strong>Összeg:</strong> &nbsp; <strong>${displayAmount}</strong>
+        </div>
+      </div>
+
+      <p style="font-size: 13px; color: #6b7280; text-align: center; margin-top: 20px;">
+        A vásárló megkapta a visszaigazoló levelet a jegy QR-kódjaival és a Wallet pass linkekkel.
+      </p>
+
+      <div class="btn-container">
+        <a href="${getAppUrl()}/admin" class="admin-btn">Vendéglista Megnyitása</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; ${new Date().getFullYear()} KőszegAPP. Minden jog fenntartva.</p>
+      <p>Ez egy automatikus rendszerértesítés a KőszegTicket-től. Kérjük, ne válaszolj erre az e-mailre.</p>
+    </div>
+  </div>
+</body>
+</html>
+          `
+        });
+        console.log('✅ Organizer email sent successfully to:', ticketEvent.organizer_email);
+      } catch (orgEmailErr) {
+        console.error('❌ Failed to send email to organizer:', orgEmailErr);
+      }
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({

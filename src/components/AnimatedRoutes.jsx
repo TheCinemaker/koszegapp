@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import { lazyWithRetry } from '../utils/lazyWithRetry';
 import ProvidersPage from '../pages/ProvidersPage';
+import KioskInnerRoutes from './Kiosk/KioskInnerRoutes';
 
 
 // Importing Pages
@@ -73,15 +74,6 @@ const TicketPrint = lazyWithRetry(() => import('../pages/TicketSystem/TicketPrin
 
 // Kiosk System Components (Fully Isolated)
 const KioskIdleWrapper = lazyWithRetry(() => import('./Kiosk/KioskIdleWrapper'));
-const KioskHome = lazyWithRetry(() => import('../pages/Kiosk/KioskHome'));
-const KioskAttractions = lazyWithRetry(() => import('../pages/Kiosk/KioskAttractions'));
-const KioskAttractionDetail = lazyWithRetry(() => import('../pages/Kiosk/KioskAttractionDetail'));
-const KioskEvents = lazyWithRetry(() => import('../pages/Kiosk/KioskEvents'));
-const KioskEventDetail = lazyWithRetry(() => import('../pages/Kiosk/KioskEventDetail'));
-const KioskGastronomy = lazyWithRetry(() => import('../pages/Kiosk/KioskGastronomy'));
-const KioskParking = lazyWithRetry(() => import('../pages/Kiosk/KioskParking'));
-const KioskSelfie = lazyWithRetry(() => import('../pages/Kiosk/KioskSelfie'));
-const KioskVarszinhaz = lazyWithRetry(() => import('../pages/Kiosk/KioskVarszinhaz'));
 
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
@@ -245,17 +237,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           {/* ═══════════════════════════════════════════════ */}
           <Route path="/kiosk/*" element={
             <KioskIdleWrapper>
-              <Routes>
-                <Route path="/" element={<KioskHome appData={appData} weather={weather} />} />
-                <Route path="/attractions" element={<KioskAttractions attractions={appData.attractions} />} />
-                <Route path="/attractions/:id" element={<KioskAttractionDetail />} />
-                <Route path="/events" element={<KioskEvents events={appData.events} />} />
-                <Route path="/events/:id" element={<KioskEventDetail />} />
-                <Route path="/gastronomy" element={<KioskGastronomy restaurants={appData.restaurants} />} />
-                {/* <Route path="/parking" element={<KioskParking parking={appData.parking} />} /> */}
-                <Route path="/varszinhaz" element={<KioskVarszinhaz />} />
-                <Route path="/selfie" element={<KioskSelfie />} />
-              </Routes>
+              <KioskInnerRoutes appData={appData} weather={weather} />
             </KioskIdleWrapper>
           } />
 

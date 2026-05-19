@@ -4,20 +4,28 @@ import { useParams } from 'react-router-dom';
 import { IoLocationOutline, IoWalkOutline, IoTicketOutline, IoBookmarkOutline } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import { fetchEventById } from '../../api';
-import QRCode from 'qrcode';
 import { supabase } from '../../lib/supabaseClient';
 import { getDistance, formatDistance } from './KioskAttractions';
 import { VENUE_COORDS } from './KioskEvents';
+import { useKioskLang } from '../../contexts/KioskLangContext';
 
 const KIOSK_LAT = 47.388451231945666;
 const KIOSK_LNG = 16.542002964713447;
 
+const getEventImage = (image) => {
+  if (!image) return '/images/fo_ter.jpg';
+  if (image.startsWith('http')) return image;
+  if (image === 'event_default.jpg') return '/images/fo_ter.jpg';
+  if (image === 'varszinhaz_default.jpg') return '/images/events/varszinhaz_default.jpg';
+  return `/images/events/${image}`;
+};
+
 export default function KioskEventDetail() {
   const { id } = useParams();
+  const { t } = useKioskLang();
   const [evt, setEvt] = useState(null);
   const [ticketEvent, setTicketEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [qrImageSrc, setQrImageSrc] = useState('');
 
   // 1) Fetch local event details
   useEffect(() => {
@@ -48,11 +56,11 @@ export default function KioskEventDetail() {
           .select('*')
           .eq('name', evt.name)
           .eq('status', 'active')
-          .limit(1);
+          .maybeSingle();
 
         if (error) throw error;
-        if (isMounted && data && data.length > 0) {
-          setTicketEvent(data[0]);
+        if (isMounted && data) {
+          setTicketEvent(data);
         }
       } catch (err) {
         console.error("Error looking up ticket in Kiosk:", err);
@@ -68,7 +76,7 @@ export default function KioskEventDetail() {
       <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/40 via-zinc-50 to-zinc-100 dark:from-indigo-950/10 dark:via-zinc-950 dark:to-black">
         <KioskHeader />
         <div className="flex-1 flex items-center justify-center text-zinc-400 font-bold animate-pulse">
-          Esemény részletei...
+          {t('eventDetail.loading')}
         </div>
       </div>
     );
@@ -79,7 +87,7 @@ export default function KioskEventDetail() {
       <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/40 via-zinc-50 to-zinc-100 dark:from-indigo-950/10 dark:via-zinc-950 dark:to-black">
         <KioskHeader />
         <div className="flex-1 flex items-center justify-center text-rose-500 font-bold">
-          Az esemény nem található.
+          {t('eventDetail.notFound')}
         </div>
       </div>
     );
@@ -96,20 +104,11 @@ export default function KioskEventDetail() {
   }
   const distance = venueCoords ? getDistance(KIOSK_LAT, KIOSK_LNG, venueCoords.lat, venueCoords.lng) : null;
 
-  // Build the QR Code URL
-  const qrPurchaseUrl = ticketEvent 
-    ? `${window.location.origin}/tickets?event_id=${ticketEvent.id}` 
-    : '';
-
-  useEffect(() => {
-    if (!qrPurchaseUrl) {
-      setQrImageSrc('');
-      return;
-    }
-    QRCode.toDataURL(qrPurchaseUrl, { width: 300, margin: 2, errorCorrectionLevel: 'M' })
-      .then(url => setQrImageSrc(url))
-      .catch(err => console.error("Event QR failed:", err));
-  }, [qrPurchaseUrl]);
+  // Ticket card dynamic values based on database entry
+  const ticketHeader = t('eventDetail.ticketHeader');
+  const ticketTitle = t('eventDetail.ticketTitle');
+  const ticketDesc = t('eventDetail.ticketDesc');
+  const ticketPrice = ticketEvent ? `${parseInt(ticketEvent.price).toLocaleString()} Ft` : null;
 
   return (
     <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/40 via-zinc-50 to-zinc-100 dark:from-indigo-950/10 dark:via-zinc-950 dark:to-black transition-colors duration-500 overflow-y-auto">
@@ -122,11 +121,7 @@ export default function KioskEventDetail() {
           <div 
             className="absolute inset-0 bg-cover bg-center"
             style={{ 
-              backgroundImage: `url(${
-                evt.image 
-                  ? (evt.image.startsWith('http') ? evt.image : `/images/events/${evt.image}`) 
-                  : '/images/event_default.jpg'
-              })`
+              backgroundImage: `url(${getEventImage(evt.image)})`
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
@@ -135,7 +130,7 @@ export default function KioskEventDetail() {
           {distance !== null && (
             <div className="absolute bottom-4 right-4 flex items-center gap-1 px-4 py-2 rounded-full bg-white/90 dark:bg-zinc-900/90 text-indigo-600 dark:text-indigo-400 font-extrabold text-sm shadow-md border border-zinc-200/20 dark:border-zinc-700/20">
               <IoWalkOutline className="text-lg" />
-              <span>{formatDistance(distance)} tőled</span>
+              <span>{formatDistance(distance, t('common.rightHere'))} {t('common.fromYou')}</span>
             </div>
           )}
         </div>
@@ -143,7 +138,7 @@ export default function KioskEventDetail() {
         {/* Header Titles */}
         <div className="flex flex-col gap-1.5">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-widest">
-            {evt.date} • {evt.time || 'Egész nap'}
+            {evt.date} • {evt.time || t('common.allDay')}
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight leading-tight uppercase">
             {evt.name}
@@ -159,7 +154,7 @@ export default function KioskEventDetail() {
           <div className="rounded-3xl p-6 bg-white/80 dark:bg-zinc-900/55 border border-zinc-200/50 dark:border-zinc-800/80 shadow-sm">
             <h3 className="text-sm font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-3 flex items-center gap-1">
               <IoBookmarkOutline />
-              Esemény részletei
+              {t('eventDetail.detailsTitle')}
             </h3>
             <p className="text-zinc-700 dark:text-zinc-250 text-sm leading-relaxed font-semibold whitespace-pre-line">
               {evt.description}
@@ -172,23 +167,25 @@ export default function KioskEventDetail() {
               <div className="flex-1 flex flex-col gap-3 text-center md:text-left relative z-10">
                 <div className="flex items-center gap-2 justify-center md:justify-start text-xs font-black text-indigo-600 dark:text-indigo-400 tracking-widest uppercase">
                   <IoTicketOutline className="text-base" />
-                  KőszegTICKET ONLINE JEGY
+                  {ticketHeader}
                 </div>
                 <h4 className="text-2xl font-black text-zinc-950 dark:text-white tracking-tight uppercase leading-none">
-                  Vásárold meg a mobilodon!
+                  {ticketTitle}
                 </h4>
                 <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold leading-relaxed">
-                  Szkenneld be ezt a QR-kódot a telefonoddal, és intézd a jegyvásárlást vagy foglalást biztonságosan a saját készülékeden, másodpercek alatt!
+                  {ticketDesc}
                 </p>
-                <div className="mt-2 text-2xl font-black text-indigo-600 dark:text-indigo-400 font-mono">
-                  {parseInt(ticketEvent.price).toLocaleString()} Ft
-                </div>
+                {ticketPrice && (
+                  <div className="mt-2 text-2xl font-black text-indigo-600 dark:text-indigo-400 font-mono">
+                    {ticketPrice}
+                  </div>
+                )}
               </div>
 
               {/* QR Image Frame */}
               <div className="shrink-0 p-4 bg-white rounded-3xl shadow-lg border border-zinc-200/50 dark:border-zinc-700/50 relative z-10 hover:scale-105 active:scale-95 transition-transform duration-300">
                 <img 
-                  src={qrImageSrc} 
+                  src="/images/theticket_qr.png" 
                   alt="Jegyvásárlás QR kód" 
                   className="w-40 h-40 object-contain block rounded-xl"
                   loading="lazy"

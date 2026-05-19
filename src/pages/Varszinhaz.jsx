@@ -324,23 +324,25 @@ export default function Varszinhaz() {
     <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Toaster position="top-right" />
 
-      <div className="max-w-7xl mx-auto flex flex-col items-center mb-8 pt-2 px-2">
-        <div className="w-full flex items-center mb-4">
+      <div className="max-w-7xl mx-auto mb-8 pt-4 px-2 flex flex-col gap-4">
+        <div className="flex items-center">
           <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
             <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
           </Link>
         </div>
-        
+
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative"
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden w-full aspect-[2.3/1] sm:h-[350px] shadow-2xl border border-zinc-200/30 dark:border-zinc-800/50 bg-slate-950"
         >
           <img 
-            src="/images/varszinhaz-logo.png" 
-            alt="Kőszegi Várszínház" 
-            className="h-32 sm:h-44 w-auto object-contain drop-shadow-md"
+            src="/images/varszinhaz_hero.png" 
+            alt="Kőszegi Várszínház Szezon" 
+            className="w-full h-full object-cover transition-all duration-1000 hover:scale-102"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
         </motion.div>
       </div>
 
