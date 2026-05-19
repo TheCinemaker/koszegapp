@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow, differenceInMinutes } from 'date-fns';
 import { hu } from 'date-fns/locale';
-import { IoCameraOutline, IoCloseOutline, IoLocationOutline, IoSendOutline, IoImagesOutline, IoTimeOutline } from 'react-icons/io5';
+import { IoCameraOutline, IoCloseOutline, IoLocationOutline, IoSendOutline, IoImagesOutline, IoTimeOutline, IoArrowBack } from 'react-icons/io5';
 import { supabase } from '../lib/supabaseClient';
 import { containsProfanity } from '../utils/badWordsHU';
 import { FadeUp } from '../components/AppleMotion';
@@ -35,6 +35,7 @@ function compressImage(file, maxW = 1080) {
 }
 
 export default function Moments() {
+  const navigate = useNavigate();
   const [moments, setMoments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showPost, setShowPost] = useState(false);
@@ -142,13 +143,22 @@ export default function Moments() {
       {/* Header */}
       <FadeUp>
         <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
-              📸 KőszegReels
-            </h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
-              Pillanatok amelyek 24 óra múlva eltűnnek · {moments.length} aktív
-            </p>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/')}
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-zinc-800/80 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-zinc-700 active:scale-95 transition-all shrink-0"
+              aria-label="Vissza"
+            >
+              <IoArrowBack className="text-lg" />
+            </button>
+            <div>
+              <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
+                📸 KőszegReels
+              </h1>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
+                Pillanatok amelyek 24 óra múlva eltűnnek · {moments.length} aktív
+              </p>
+            </div>
           </div>
           <button
             onClick={() => setShowPost(true)}
