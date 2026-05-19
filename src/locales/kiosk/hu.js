@@ -131,6 +131,18 @@ export const hu = {
     toastLoading: 'Képeslap mentése és letöltő QR-kód generálása...',
     toastSuccess: 'Képeslap sikeresen elkészült!',
     toastError: 'Hiba történt a feltöltés során. Próbáld újra!',
+    wall: {
+      title: 'Kerüljön fel a falra?',
+      desc: 'Jelenjen meg a képed a terminál screensaverén, hogy más látogatók is lássák Kőszeg iránti lelkesedésedet?',
+      namePlaceholder: 'Neved (opcionális) – pl. Marco, Olaszország',
+      messagePlaceholder: 'Üzeneted (opcionális) – pl. Csodás kis város! ❤️',
+      yes: 'Igen, kerüljön fel!',
+      no: 'Nem, köszi',
+      gdpr: 'Hozzájárulásával a képed és üzeneted nyilvánosan jelenik meg ezen a terminálon. Adatkezelő: Kőszeg Város.',
+      thanks: 'Köszönjük! Hamarosan ott leszel a falon 🌟',
+      declined: 'Rendben – a képedet csak te éred el a QR-kódodon.',
+      profanityError: 'Kérjük, kulturált szöveget írj! 🙏',
+    },
   },
   map: {
     events: 'Események',

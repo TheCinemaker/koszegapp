@@ -9,6 +9,7 @@ import {
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import KioskFlag from '../../components/Kiosk/KioskFlag';
 import { useKioskLang } from '../../contexts/KioskLangContext';
+import { supabase } from '../../lib/supabaseClient';
 
 const LANGS = [
   { code: 'hu', label: 'HU' },
@@ -23,6 +24,7 @@ export default function KioskHome({ appData, weather }) {
     sessionStorage.getItem('kiosk-started') !== 'true'
   );
   const [activeSlide, setActiveSlide] = useState(0);
+  const [visitorPhotos, setVisitorPhotos] = useState([]);
 
   // Predefined authentic local photos of Kőszeg
   const screensaverImages = useMemo(() => {
@@ -60,6 +62,18 @@ export default function KioskHome({ appData, weather }) {
     window.addEventListener('kiosk-idle-trigger', handleIdleTrigger);
     return () => window.removeEventListener('kiosk-idle-trigger', handleIdleTrigger);
   }, []);
+
+  // Fetch visitor wall photos whenever screensaver becomes active
+  useEffect(() => {
+    if (!showScreensaver) return;
+    supabase
+      .from('kiosk_visitor_messages')
+      .select('id, photo_url, visitor_name, message')
+      .order('created_at', { ascending: false })
+      .limit(12)
+      .then(({ data }) => { if (data?.length) setVisitorPhotos(data); })
+      .catch(() => {});
+  }, [showScreensaver]);
 
   const handleStart = () => {
     sessionStorage.setItem('kiosk-started', 'true');
@@ -121,6 +135,39 @@ export default function KioskHome({ appData, weather }) {
             </button>
           </div>
         </div>
+
+        {/* ── Visitor Wall Strip ── */}
+        {visitorPhotos.length > 0 && (
+          <div className="relative z-10 px-6 pb-6 w-full">
+            <p className="text-zinc-400 text-xs font-black uppercase tracking-[0.25em] mb-4 text-center">
+              📸 Látogatóink Kőszegen
+            </p>
+            <div className="flex gap-4 overflow-x-hidden justify-center flex-wrap max-h-[320px] overflow-hidden">
+              {visitorPhotos.map(p => (
+                <div key={p.id} className="relative w-36 h-48 rounded-2xl overflow-hidden border border-white/20 shadow-xl shrink-0 group bg-slate-950/40 backdrop-blur-sm">
+                  <img
+                    src={p.photo_url}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Glassmorphic overlay for name & message at the bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col gap-0.5 text-center">
+                    {p.visitor_name && (
+                      <span className="text-white text-xs font-black truncate drop-shadow-md">
+                        {p.visitor_name}
+                      </span>
+                    )}
+                    {p.message && (
+                      <span className="text-zinc-200 text-[10px] font-semibold line-clamp-2 leading-tight drop-shadow-sm">
+                        {p.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="relative z-10 p-8 w-full flex justify-between items-center text-zinc-400 text-xs font-semibold border-t border-white/10 bg-black/40 backdrop-blur-md">
           <div className="flex items-center gap-2">

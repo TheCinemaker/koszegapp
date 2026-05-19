@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next'; // Added import
 
 import LiveHero from '../components/LiveHero';
 import NearbyDiscoveryCard from '../components/NearbyDiscoveryCard';
+import MomentsStrip from '../components/MomentsStrip';
 
 export default function Home({ appData, weather }) {
   const { t } = useTranslation('home'); // Load 'home' namespace
@@ -68,6 +69,9 @@ export default function Home({ appData, weather }) {
         <FadeUp delay={0.3}>
           <NearbyDiscoveryCard appData={appData} />
         </FadeUp>
+
+        {/* EPHEMERAL CITY MOMENTS */}
+        <MomentsStrip />
 
 
         {/* --- ULTRA-COMPACT BENTO GRID --- */}

@@ -6,6 +6,8 @@ import { supabase } from '../../lib/supabaseClient';
 import { toast, Toaster } from 'react-hot-toast';
 import QRCode from 'qrcode';
 import { useKioskLang } from '../../contexts/KioskLangContext';
+import { containsProfanity } from '../../utils/badWordsHU';
+import KioskKeyboard from '../../components/Kiosk/KioskKeyboard';
 
 export default function KioskSelfie() {
   const { t } = useKioskLang();
@@ -24,6 +26,11 @@ export default function KioskSelfie() {
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState('');
   const [qrImageSrc, setQrImageSrc] = useState('');
+  const [consentState, setConsentState] = useState(null); // null | 'yes' | 'no'
+  const [visitorName, setVisitorName] = useState('');
+  const [visitorMessage, setVisitorMessage] = useState('');
+  const [profanityWarning, setProfanityWarning] = useState(false);
+  const [activeInput, setActiveInput] = useState(null); // null | 'name' | 'message'
 
   // Helper to draw rounded rectangles on 2D context
   const drawRoundedRect = (ctx, x, y, width, height, radius) => {
@@ -303,10 +310,37 @@ export default function KioskSelfie() {
     }
   };
 
+  const handleConsentYes = async () => {
+    const name = visitorName.trim();
+    const msg = visitorMessage.trim();
+    if (containsProfanity(name) || containsProfanity(msg)) {
+      setProfanityWarning(true);
+      return;
+    }
+    setConsentState('yes');
+    try {
+      await supabase.from('kiosk_visitor_messages').insert({
+        photo_url: downloadUrl,
+        visitor_name: name || null,
+        message: msg || null,
+        lang: localStorage.getItem('kiosk-lang') || 'hu',
+      });
+    } catch (err) {
+      console.error('Visitor wall insert failed:', err);
+    }
+  };
+
+  const handleConsentNo = () => setConsentState('no');
+
   const handleRetake = async () => {
     setCapturedImage(null);
     setDownloadUrl('');
     setQrImageSrc('');
+    setConsentState(null);
+    setVisitorName('');
+    setVisitorMessage('');
+    setProfanityWarning(false);
+    setActiveInput(null);
     setCameraError(false);
 
     try {
@@ -468,6 +502,7 @@ export default function KioskSelfie() {
 
         {/* --- POST-CAPTURE DISPLAY / QR BRIDGE --- */}
         {capturedImage && (
+          <>
           <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
             
             {/* Captured Picture Frame */}
@@ -523,6 +558,94 @@ export default function KioskSelfie() {
             </div>
 
           </div>
+
+          {/* ── Visitor Wall Consent Card ───────────────────── */}
+          {qrImageSrc && consentState === null && (
+            <div className="w-full rounded-3xl border-2 border-indigo-500/30 bg-indigo-50/80 dark:bg-indigo-950/30 p-6 flex flex-col gap-4 animate-fadeIn">
+              <div className="flex flex-col gap-1">
+                <h4 className="text-lg font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
+                  🌟 {t('selfie.wall.title')}
+                </h4>
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold leading-relaxed">
+                  {t('selfie.wall.desc')}
+                </p>
+              </div>
+
+              <input
+                type="text"
+                value={visitorName}
+                readOnly
+                onClick={() => setActiveInput('name')}
+                placeholder={t('selfie.wall.namePlaceholder')}
+                className={`w-full px-4 py-3 rounded-2xl border bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm font-semibold placeholder:text-zinc-400 cursor-pointer focus:outline-none transition-all ${activeInput === 'name' ? 'border-indigo-500 ring-2 ring-indigo-500/30' : 'border-zinc-200/80 dark:border-zinc-700/80'}`}
+              />
+
+              <input
+                type="text"
+                value={visitorMessage}
+                readOnly
+                onClick={() => setActiveInput('message')}
+                placeholder={t('selfie.wall.messagePlaceholder')}
+                className={`w-full px-4 py-3 rounded-2xl border bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm font-semibold placeholder:text-zinc-400 cursor-pointer focus:outline-none transition-all ${activeInput === 'message' ? 'border-indigo-500 ring-2 ring-indigo-500/30' : 'border-zinc-200/80 dark:border-zinc-700/80'}`}
+              />
+
+              {profanityWarning && (
+                <p className="text-rose-500 text-xs font-black text-center animate-fadeIn">
+                  {t('selfie.wall.profanityError')}
+                </p>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  onClick={handleConsentYes}
+                  className="flex-1 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-black text-sm shadow-lg shadow-indigo-500/20 active:scale-95 transition-all border border-indigo-500/30"
+                >
+                  ✓ {t('selfie.wall.yes')}
+                </button>
+                <button
+                  onClick={handleConsentNo}
+                  className="flex-1 py-4 rounded-2xl bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-bold text-sm border border-zinc-200 dark:border-zinc-700 active:scale-95 transition-all"
+                >
+                  {t('selfie.wall.no')}
+                </button>
+              </div>
+
+              <p className="text-zinc-400 dark:text-zinc-600 text-[10px] font-semibold leading-relaxed text-center">
+                {t('selfie.wall.gdpr')}
+              </p>
+            </div>
+          )}
+
+          {/* Post-consent feedback */}
+          {consentState === 'yes' && (
+            <div className="w-full rounded-3xl bg-indigo-600/10 border border-indigo-500/20 p-5 text-center text-indigo-700 dark:text-indigo-300 font-black text-sm animate-fadeIn">
+              {t('selfie.wall.thanks')}
+            </div>
+          )}
+          {consentState === 'no' && (
+            <div className="w-full rounded-3xl bg-zinc-100 dark:bg-zinc-900/40 border border-zinc-200/50 dark:border-zinc-800/50 p-5 text-center text-zinc-500 dark:text-zinc-400 font-semibold text-xs animate-fadeIn">
+              {t('selfie.wall.declined')}
+            </div>
+          )}
+          </>
+        )}
+
+        {/* Virtual keyboard — shown when a wall input is active */}
+        {activeInput === 'name' && (
+          <KioskKeyboard
+            value={visitorName}
+            onChange={val => { if (val.length <= 50) { setVisitorName(val); setProfanityWarning(false); } }}
+            onClose={() => setActiveInput(null)}
+            onEnter={() => setActiveInput(null)}
+          />
+        )}
+        {activeInput === 'message' && (
+          <KioskKeyboard
+            value={visitorMessage}
+            onChange={val => { if (val.length <= 80) { setVisitorMessage(val); setProfanityWarning(false); } }}
+            onClose={() => setActiveInput(null)}
+            onEnter={() => setActiveInput(null)}
+          />
         )}
 
       </main>

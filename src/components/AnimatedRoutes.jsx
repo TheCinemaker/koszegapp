@@ -59,6 +59,7 @@ const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
 const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
 const NearbyDiscoveryDemo = lazyWithRetry(() => import('../pages/NearbyDiscoveryDemo'));
 const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
+const Moments = lazyWithRetry(() => import('../pages/Moments'));
 
 // QR Platform (Standalone – Digitális Pincér)
 const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
@@ -231,6 +232,9 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           {/* New Eats Landing */}
           <Route path="/eats-landing" element={<EatsLanding />} />
+
+          {/* Ephemeral Moments Feed */}
+          <Route path="/moments" element={<PageWrapper><Moments /></PageWrapper>} />
 
           {/* ═══════════════════════════════════════════════ */}
           {/* Kioszk Felület – Városi Terminál (Teljesen Izolált) */}

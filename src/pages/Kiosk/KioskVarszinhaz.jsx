@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline, IoSearchOutline, IoTicketOutline, IoSparklesOutline } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
+import KioskKeyboard from '../../components/Kiosk/KioskKeyboard';
 import { fetchEvents } from '../../api';
 import { useKioskLang } from '../../contexts/KioskLangContext';
 
@@ -13,6 +14,7 @@ export default function KioskVarszinhaz() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeMonth, setActiveMonth] = useState('all');
+  const [showKeyboard, setShowKeyboard] = useState(false);
 
   useEffect(() => {
     fetchEvents()
@@ -79,9 +81,10 @@ export default function KioskVarszinhaz() {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              readOnly
+              onClick={() => setShowKeyboard(true)}
               placeholder={t('varszinhaz.searchPlaceholder')}
-              className="w-full px-5 py-4 pl-12 rounded-2xl bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800/80 text-sm font-bold text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm transition-all"
+              className={`w-full px-5 py-4 pl-12 rounded-2xl bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border text-sm font-bold text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none shadow-sm transition-all cursor-pointer ${showKeyboard ? 'border-amber-500 ring-2 ring-amber-500/30' : 'border-zinc-200/60 dark:border-zinc-800/80'}`}
             />
             <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-zinc-400" />
           </div>
@@ -173,6 +176,15 @@ export default function KioskVarszinhaz() {
         </div>
 
       </main>
+
+      {showKeyboard && (
+        <KioskKeyboard
+          value={searchQuery}
+          onChange={val => setSearchQuery(val)}
+          onClose={() => setShowKeyboard(false)}
+          onEnter={() => setShowKeyboard(false)}
+        />
+      )}
     </div>
   );
 }

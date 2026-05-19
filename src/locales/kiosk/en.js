@@ -131,6 +131,18 @@ export const en = {
     toastLoading: 'Saving postcard and generating download QR code...',
     toastSuccess: 'Postcard created successfully!',
     toastError: 'An error occurred during upload. Please try again!',
+    wall: {
+      title: 'Want to be on the wall?',
+      desc: 'Let your photo appear on the terminal screensaver so other visitors can see your Kőszeg spirit!',
+      namePlaceholder: 'Your name (optional) – e.g. Marco, Italy',
+      messagePlaceholder: 'A message (optional) – e.g. What a beautiful town! ❤️',
+      yes: 'Yes, put me up there!',
+      no: 'No thanks',
+      gdpr: 'By agreeing, your photo and message will be displayed publicly on this terminal. Data controller: City of Kőszeg.',
+      thanks: 'Thank you! You\'ll be on the wall soon 🌟',
+      declined: 'No problem – your photo is only accessible via your QR code.',
+      profanityError: 'Please keep it friendly! 🙏',
+    },
   },
   map: {
     events: 'Events',

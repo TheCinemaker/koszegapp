@@ -131,6 +131,18 @@ export const de = {
     toastLoading: 'Postkarte wird gespeichert und QR-Code wird generiert...',
     toastSuccess: 'Postkarte erfolgreich erstellt!',
     toastError: 'Beim Hochladen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!',
+    wall: {
+      title: 'Möchten Sie an die Wand?',
+      desc: 'Lassen Sie Ihr Foto im Screensaver des Terminals erscheinen, damit andere Besucher Ihre Begeisterung für Kőszeg sehen!',
+      namePlaceholder: 'Ihr Name (optional) – z. B. Marco, Italien',
+      messagePlaceholder: 'Eine Nachricht (optional) – z. B. Wunderschöne Stadt! ❤️',
+      yes: 'Ja, an die Wand!',
+      no: 'Nein, danke',
+      gdpr: 'Mit Ihrer Zustimmung werden Ihr Foto und Ihre Nachricht öffentlich auf diesem Terminal angezeigt. Verantwortlicher: Stadt Kőszeg.',
+      thanks: 'Danke! Sie erscheinen bald an der Wand 🌟',
+      declined: 'Kein Problem – Ihr Foto ist nur über Ihren QR-Code erreichbar.',
+      profanityError: 'Bitte bleiben Sie freundlich! 🙏',
+    },
   },
   map: {
     events: 'Veranstaltungen',
