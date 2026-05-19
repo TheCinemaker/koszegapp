@@ -246,7 +246,7 @@ export default function Moments() {
                   </div>
                 </div>
               )}
-              <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFile} />
+              <input type="file" accept="image/*" className="hidden" onChange={handleFile} />
             </label>
 
             {/* Caption */}
