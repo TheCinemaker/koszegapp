@@ -23,94 +23,114 @@ export default function KioskSelfie() {
   const [downloadUrl, setDownloadUrl] = useState('');
   const [qrImageSrc, setQrImageSrc] = useState('');
 
-  // 3 Postcard Overlays
+  // Helper to draw rounded rectangles on 2D context
+  const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  };
+
+  // 3 Postcard Overlays (Premium Apple-inspired typography & glassmorphism capsules)
   const frames = [
     {
       id: 0,
-      name: 'Üdvözlet Kőszegről',
-      color: 'from-amber-400 to-amber-600',
+      name: 'Üdvözlet',
+      color: 'from-slate-800 to-slate-950',
       draw: (ctx, w, h) => {
-        // Gold double border
-        ctx.strokeStyle = '#D4AF37';
-        ctx.lineWidth = 14;
-        ctx.strokeRect(7, 7, w - 14, h - 14);
+        // Thin elegant white inner border framing the photo
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(20, 20, w - 40, h - 40);
 
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(18, 18, w - 36, h - 36);
+        // Frosted Dark Glassmorphism Bottom Capsule
+        ctx.save();
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.76)';
+        drawRoundedRect(ctx, 40, h - 110, w - 80, 80, 20);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
 
-        // Bottom text plate
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.65)';
-        ctx.fillRect(18, h - 110, w - 36, 92);
-
-        // Serif Elegant title
+        // Typography
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 32px Georgia, serif';
+        ctx.font = 'bold 28px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Üdvözlet Kőszegről!', w / 2, h - 68);
+        ctx.fillText('Üdvözlet Kőszegről!', w / 2, h - 70);
 
-        // Subtitle
-        ctx.font = 'bold 12px sans-serif';
-        ctx.fillStyle = '#A1A1AA';
-        ctx.fillText(`Látogatás dátuma: ${new Date().toLocaleDateString('hu-HU')}`, w / 2, h - 38);
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillStyle = '#94A3B8';
+        ctx.fillText(`LÁTOGATÁS DÁTUMA: ${new Date().toLocaleDateString('hu-HU')}`, w / 2, h - 45);
       }
     },
     {
       id: 1,
-      name: 'Kőszegi Borkóstoló',
-      color: 'from-red-500 to-rose-700',
+      name: 'Kőszeg',
+      color: 'from-zinc-500 to-zinc-700',
       draw: (ctx, w, h) => {
-        // Burgundy double border
-        ctx.strokeStyle = '#800020';
-        ctx.lineWidth = 14;
-        ctx.strokeRect(7, 7, w - 14, h - 14);
+        // Thin elegant white inner border framing the photo
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(20, 20, w - 40, h - 40);
 
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(18, 18, w - 36, h - 36);
+        // Frosted White Glassmorphism Bottom Capsule
+        ctx.save();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.86)';
+        drawRoundedRect(ctx, 40, h - 110, w - 80, 80, 20);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
 
-        // Bottom text plate
-        ctx.fillStyle = 'rgba(45, 0, 10, 0.7)';
-        ctx.fillRect(18, h - 110, w - 36, 92);
-
-        // Title
-        ctx.fillStyle = '#F472B6';
-        ctx.font = 'black 28px sans-serif';
+        // Typography
+        ctx.fillStyle = '#0F172A';
+        ctx.font = '900 24px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('PÜNKÖSDI BORKÓSTOLÓ', w / 2, h - 68);
+        ctx.fillText('KŐSZEG', w / 2, h - 72);
 
-        ctx.font = 'bold 14px sans-serif';
-        ctx.fillStyle = '#FCD34D'; // Golden grape text
-        ctx.fillText('🍷 KŐSZEG BORVIDÉK 🍷', w / 2, h - 38);
+        ctx.font = 'italic bold 13px Georgia, serif';
+        ctx.fillStyle = '#475569';
+        ctx.fillText('Ahol a múlt jelen van', w / 2, h - 47);
       }
     },
     {
       id: 2,
-      name: 'Kőszegi Várkapitány',
-      color: 'from-blue-500 to-indigo-700',
+      name: 'KőszegPass',
+      color: 'from-indigo-600 to-indigo-800',
       draw: (ctx, w, h) => {
-        // Slate border
-        ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 14;
-        ctx.strokeRect(7, 7, w - 14, h - 14);
+        // Thin elegant white inner border framing the photo
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(20, 20, w - 40, h - 40);
 
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(18, 18, w - 36, h - 36);
+        // Frosted Dark Indigo Glassmorphism Bottom Capsule
+        ctx.save();
+        ctx.fillStyle = 'rgba(20, 15, 45, 0.84)';
+        drawRoundedRect(ctx, 40, h - 110, w - 80, 80, 20);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.26)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
 
-        // Bottom text plate
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.7)';
-        ctx.fillRect(18, h - 110, w - 36, 92);
-
-        // Title
-        ctx.fillStyle = '#E2E8F0';
-        ctx.font = 'italic bold 30px Georgia, serif';
+        // Typography
+        ctx.fillStyle = '#F8FAFC';
+        ctx.font = 'bold 24px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('⚔️ Kőszegi Várkapitány ⚔️', w / 2, h - 68);
+        ctx.fillText('KőszegPass Pillanatok 🌟', w / 2, h - 70);
 
-        ctx.font = 'bold 11px sans-serif';
-        ctx.fillStyle = '#94A3B8';
-        ctx.fillText('HŐSÖK TERMÉNEK EMLÉKÉRE', w / 2, h - 38);
+        ctx.font = 'black 10px sans-serif';
+        ctx.fillStyle = '#C7D2FE'; // Indigo-200
+        ctx.fillText('FELFEDEZNI KŐSZEGET', w / 2, h - 45);
       }
     }
   ];
@@ -322,7 +342,7 @@ export default function KioskSelfie() {
         <div className="flex flex-col gap-1">
           <span className="text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider flex items-center gap-1">
             <IoSparklesOutline className="text-sm" />
-            Turinform Szelfipont
+            Visitkoszeg szelfipont
           </span>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight uppercase">
             Digitális Képeslap Küldő
@@ -352,16 +372,46 @@ export default function KioskSelfie() {
                     className="w-full h-full object-cover scale-x-[-1]" // Mirrored for natural selfie preview
                   />
 
-                  {/* Dynamic HTML Preview Overlay Frame */}
-                  <div className="absolute inset-0 z-10 pointer-events-none border-[12px] border-double border-white/60 flex flex-col justify-between p-4">
+                  {/* Premium, dynamic HTML Glassmorphism Preview Overlay Frame */}
+                  <div className="absolute inset-0 z-10 pointer-events-none p-5 flex flex-col justify-between">
+                    {/* Sleek, thin white inner border line (Apple style) */}
+                    <div className="absolute inset-5 border border-white/40 rounded-3xl" />
+                    
                     <div />
-                    <div className="bg-black/60 backdrop-blur-sm p-4 rounded-2xl text-center border border-white/10">
-                      <span className="text-white font-extrabold tracking-tight uppercase block text-sm sm:text-base">
-                        {activeFrame === 0 && 'Üdvözlet Kőszegről!'}
-                        {activeFrame === 1 && '🍷 PÜNKÖSDI BORKÓSTOLÓ 🍷'}
-                        {activeFrame === 2 && '⚔️ KŐSZEGI VÁRKAPITÁNY ⚔️'}
-                      </span>
-                    </div>
+                    
+                    {/* Elegant frosted bottom glass capsules */}
+                    {activeFrame === 0 && (
+                      <div className="bg-slate-950/75 backdrop-blur-md p-4 rounded-3xl text-center border border-white/20 shadow-xl mx-4 my-1 z-20 transition-all duration-300">
+                        <span className="text-white font-bold tracking-tight block text-sm sm:text-base font-serif">
+                          Üdvözlet Kőszegről!
+                        </span>
+                        <span className="text-slate-400 font-extrabold tracking-widest text-[8px] block uppercase mt-0.5 font-mono">
+                          Látogatás dátuma: {new Date().toLocaleDateString('hu-HU')}
+                        </span>
+                      </div>
+                    )}
+
+                    {activeFrame === 1 && (
+                      <div className="bg-white/85 backdrop-blur-md p-4 rounded-3xl text-center border border-white/60 shadow-xl mx-4 my-1 z-20 transition-all duration-300">
+                        <span className="text-slate-900 font-black tracking-widest block text-sm sm:text-base">
+                          KŐSZEG
+                        </span>
+                        <span className="text-slate-600 font-bold italic block text-[10px] font-serif mt-0.5">
+                          Ahol a múlt jelen van
+                        </span>
+                      </div>
+                    )}
+
+                    {activeFrame === 2 && (
+                      <div className="bg-indigo-950/80 backdrop-blur-md p-4 rounded-3xl text-center border border-white/25 shadow-xl mx-4 my-1 z-20 transition-all duration-300">
+                        <span className="text-white font-extrabold block text-sm sm:text-base">
+                          KőszegPass Pillanatok 🌟
+                        </span>
+                        <span className="text-indigo-200 font-black tracking-widest text-[8px] block uppercase mt-0.5 font-mono">
+                          FELFEDEZNI KŐSZEGET
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Countdown overlay */}
@@ -378,7 +428,7 @@ export default function KioskSelfie() {
 
             {/* Frame selector (Carousel-like big touch tiles) */}
             <div className="w-full max-w-[450px] flex flex-col gap-3">
-              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest text-center">Válassz egy egyedi kőszegi keretet!</span>
+              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest text-center">Válassz feliratot a képhez!</span>
               <div className="grid grid-cols-3 gap-2">
                 {frames.map((f, idx) => (
                   <button
@@ -392,7 +442,7 @@ export default function KioskSelfie() {
                       }
                     `}
                   >
-                    {f.name.split(' ')[1] || f.name}
+                    {f.name}
                   </button>
                 ))}
               </div>
