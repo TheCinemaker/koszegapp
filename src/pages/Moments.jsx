@@ -129,7 +129,7 @@ export default function Moments() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
-              📸 Kőszeg most
+              📸 KőszegReels
             </h1>
             <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
               Pillanatok amelyek 24 óra múlva eltűnnek · {moments.length} aktív

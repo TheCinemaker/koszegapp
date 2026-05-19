@@ -56,7 +56,7 @@ export default function MomentsStrip() {
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-sm font-black uppercase tracking-[0.2em] text-gray-500 dark:text-zinc-400 flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-            📸 Kőszeg most · Élő pillanatok
+            📸 KőszegReels · 24h Élő feed
           </h2>
           <Link
             to="/moments"
