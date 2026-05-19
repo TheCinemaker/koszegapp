@@ -34,6 +34,19 @@ export default function MomentsStrip() {
       }
     }
     fetchLatestMoments();
+
+    // ⚡ REALTIME CSATORNA BEKÖTÉSE
+    const channel = supabase
+      .channel('realtime_moments_strip')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'city_moments' }, (payload) => {
+        // Új pillanat beszúrása a sáv elejére (maximum 8 elemet tartunk meg)
+        setMoments((prev) => [payload.new, ...prev].slice(0, 8));
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   if (loading) {

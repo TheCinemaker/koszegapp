@@ -58,7 +58,22 @@ export default function Moments() {
     setLoading(false);
   }, []);
 
-  useEffect(() => { fetchMoments(); }, [fetchMoments]);
+  useEffect(() => { 
+    fetchMoments(); 
+
+    // ⚡ REALTIME CSATORNA BEKÖTÉSE
+    const channel = supabase
+      .channel('realtime_moments_page')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'city_moments' }, (payload) => {
+        // Új pillanat beszúrása a feed tetejére (maximum 40 elemet tartunk meg)
+        setMoments((prev) => [payload.new, ...prev].slice(0, 40));
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [fetchMoments]);
 
   const handleFile = (e) => {
     const f = e.target.files?.[0];
