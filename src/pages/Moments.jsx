@@ -237,7 +237,7 @@ export default function Moments() {
                 </div>
               ) : (
                 <div className="rounded-2xl border-2 border-dashed border-indigo-500/30 dark:border-indigo-400/20 aspect-[4/3] flex flex-col items-center justify-center gap-3 text-zinc-400 hover:border-indigo-500 hover:text-indigo-500 bg-zinc-50/50 dark:bg-zinc-950/20 transition-all duration-300">
-                  <div className="w-16 h-16 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 animate-pulse">
+                  <div className="w-16 h-16 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                     <IoCameraOutline className="text-3xl" />
                   </div>
                   <div className="text-center px-4">
