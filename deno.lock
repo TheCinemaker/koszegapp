@@ -13,6 +13,7 @@
       "dependencies": [
         "npm:@google/generative-ai@~0.24.1",
         "npm:@supabase/supabase-js@^2.90.1",
+        "npm:@vitejs/plugin-basic-ssl@^2.1.4",
         "npm:@vitejs/plugin-react@3",
         "npm:aframe@^1.4.2",
         "npm:autoprefixer@10",

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { DarkModeProvider } from './contexts/DarkModeContext';
 import App from './App';
 import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
@@ -24,16 +25,16 @@ L.Icon.Default.mergeOptions({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/">
-      {/* A DarkModeProvider öleli körbe a FavoritesProvider-t */}
-      <DarkModeProvider>
-        {/* A FavoritesProvider öleli körbe az App-ot */}
-        <FavoritesProvider>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
-        </FavoritesProvider>
-      </DarkModeProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter basename="/">
+        <DarkModeProvider>
+          <FavoritesProvider>
+            <ErrorBoundary>
+              <App />
+            </ErrorBoundary>
+          </FavoritesProvider>
+        </DarkModeProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>
 );

@@ -18,6 +18,7 @@ import {
 } from 'react-icons/io5';
 
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 // Ikon-leképezés (Io5 verziók)
 const iconMap = {
@@ -94,6 +95,12 @@ export default function Info() {
 
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+        <SEO
+            title="Kőszeg – Hasznos információk"
+            description="Minden, amit Kőszegről tudni érdemes: nyitvatartások, tömegközlekedés, vészhelyzeti elérhetőségek, turisztikai iroda és praktikus tanácsok."
+            url="/info"
+            keywords="Kőszeg info, Kőszeg turisztikai iroda, Kőszeg közlekedés, Kőszeg nyitvatartás"
+        />
 
       {/* GLOBAL BACKGROUND NOISE */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>

@@ -43,6 +43,7 @@ const MONTH_NAMES = ['Január', 'Február', 'Március', 'Április', 'Május', 'J
 const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
 import GhostImage from '../components/GhostImage'; // ADDED IMPORT
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 // --- Helper Logic (Same as before) ---
 function computeRange(evt) {
@@ -364,6 +365,12 @@ export default function Events() {
   // CLEAN MINIMAL BACKGROUND (DASHBOARD STYLE)
   return (
     <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+      <SEO
+          title="Kőszegi programok és rendezvények"
+          description="Aktuális kőszegi eseménynaptár: fesztiválok, koncertek, múzeumi programok, városi rendezvények. Vedd meg a jegyed az appon belül másodpercek alatt."
+          url="/events"
+          keywords="Kőszeg esemény, Kőszeg program, Kőszeg fesztivál, kőszegi rendezvény"
+      />
       <Toaster position="top-right" />
 
       {/* 1. SIMPLE HEADER (Back + Title) */}

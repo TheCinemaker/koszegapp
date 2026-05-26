@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGame } from '../hooks/useGame';
 import { motion, AnimatePresence } from 'framer-motion';
 import PlayerNameInput from '../screens/game/PlayerNameInput';
+import SEO from '../components/SEO';
 
 export default function GameIntro() {
   const navigate = useNavigate();
@@ -57,6 +58,12 @@ export default function GameIntro() {
 
   return (
     <div className="min-h-screen bg-[#0b0b0c] text-neutral-100 relative overflow-hidden flex flex-col items-center px-6 selection:bg-white/20">
+        <SEO
+            title="Kőszeg Quest – Az 1532-es ostrom titkai"
+            description="AR kalandjáték Kőszeg utcáin: QR kódos kincskeresés, időkapuk és rejtett nyomok. Keltsd életre az 1532-es ostrom történetét! Ingyenes, mindenki számára."
+            url="/game/intro"
+            keywords="Kőszeg Quest, Kőszeg AR játék, Kőszeg kincskeresés, 1532 ostrom, Kőszeg kaland"
+        />
 
       {/* ===== ÉVSZÁM – 30px FENTRŐL ===== */}
       <div className="absolute top-[30px] left-0 right-0 flex flex-col items-center pointer-events-none z-0">

@@ -18,6 +18,7 @@ import {
 } from 'react-icons/io5';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 export default function Attractions() {
   const { t } = useTranslation('attractions'); // Load namespace
@@ -110,6 +111,12 @@ export default function Attractions() {
 
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+        <SEO
+            title="Látnivalók Kőszegen"
+            description="Kőszeg legjobb látnivalói: a Jurisics-vár, a Városkapu, barokk templomok, múzeumok és sétaútvonalak — interaktív térképpel és útikalauzzal."
+            url="/attractions"
+            keywords="Kőszeg látnivalók, Kőszegi vár, Jurisics-vár, Kőszeg Városkapu, Kőszeg múzeum"
+        />
 
       {/* GLOBAL BACKGROUND NOISE (Subtle) */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>

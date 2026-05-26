@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaArrowLeft, FaMapMarkerAlt, FaBed } from 'react-icons/fa';
 import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 export default function Hotels() {
   const { t } = useTranslation('hotels'); // Load namespace 
@@ -44,6 +45,12 @@ export default function Hotels() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+          <SEO
+              title="Szállások Kőszegen"
+              description="Kőszegi szállodák, panziók és vendégházak — minden kategóriában, a vár árnyékától a szőlőhegyekig. Foglalj szállást a lovagok városában."
+              url="/hotels"
+              keywords="Kőszeg szállás, Kőszeg hotel, Kőszeg panzió, Kőszeg vendégház"
+          />
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500"></div>
       </div>
     );

@@ -12,7 +12,7 @@
 
   .dark body {
     /* Deep Oled-like Black for Gigatrendy feel */
-    background-color: rgb(5, 5, 10);
+    background-color: #030816;
     color: #e2e8f0;
   }
 }

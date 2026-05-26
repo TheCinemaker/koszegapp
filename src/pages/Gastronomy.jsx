@@ -6,6 +6,7 @@ import { FaSearch } from 'react-icons/fa';
 import { FadeUp } from '../components/AppleMotion';
 
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const featuredIds = ['gastro-10'];
 
@@ -72,6 +73,12 @@ export default function Gastronomy({ restaurants = [], loading }) {
 
   return (
     <div className="min-h-screen pb-24 pt-0 px-4">
+      <SEO
+          title="Éttermek és gasztronómia Kőszegen"
+          description="Kőszeg legjobb éttermeinek, borozóinak és kávézóinak listája. Helyi specialitások, Kőszegi bor, asztalfoglalás és ételrendelés egy helyen."
+          url="/gastronomy"
+          keywords="Kőszeg étterem, Kőszeg bor, kőszegi gasztronómia, Kőszeg kávézó, Kőszeg borozó"
+      />
       {/* 1. HEADER section wrapper matching Attractions */}
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-4 pt-2">

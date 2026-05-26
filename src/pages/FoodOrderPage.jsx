@@ -9,6 +9,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import KoszegPassProfile from './KoszegPassProfile';
 import { FadeUp, ParallaxImage } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 // --- HELPER FUNCTIONS ---
 const getOrderStatusText = (status) => {
@@ -170,6 +171,12 @@ function WeeklyMenuDisplay({ restaurant, onAddToCart }) {
 
     return (
         <div className="mt-4 mb-2">
+            <SEO
+                title="KőszegEats – Ételrendelés Kőszegen"
+                description="Rendeld meg kedvenced Kőszeg legjobb éttermeiből. Gyors kiszállítás, élő rendeléskövetés, Stripe fizetés és hűségpontok — a KőszegEats platformon."
+                url="/eats"
+                keywords="Kőszeg ételrendelés, KőszegEats, Kőszeg kiszállítás, Kőszeg food delivery"
+            />
             <button 
                 onClick={() => setMainExpanded(!mainExpanded)}
                 className="w-full relative overflow-hidden group rounded-2xl border border-gray-200 dark:border-white/10 p-4 bg-white dark:bg-[#1a1c2e] active:scale-[0.98] transition-all flex items-center justify-between shadow-sm hover:border-amber-500/50"

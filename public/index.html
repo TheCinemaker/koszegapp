@@ -1,11 +1,255 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KőszegAPP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- ═══════════════════════════════════════════════
+         PRIMARY META
+    ═══════════════════════════════════════════════ -->
+    <title>VisitKőszeg – Kőszeg digitális útitársa | Jegyek, Térkép, Éttermek</title>
+    <meta name="description" content="A VisitKőszeg app – Kőszeg város teljes digitális ökoszisztémája. Vedd meg a jegyed, rendelj ételt, fedezd fel a várost élő térképen, foglalj időpontot és játssz AR kalandjátékot. Ingyenes, telepítés nélkül." />
+    <meta name="keywords" content="Kőszeg, VisitKőszeg, Kőszeg app, Kőszeg térkép, Kőszeg jegy, Kőszeg étterem, Kőszeg program, Kőszeg látnivalók, Kőszeg vár, Kőszeg turisztika, Kőszeg szállás, kőszegi várszínház, Kőszeg quest, KőszegEats" />
+    <meta name="author" content="VisitKőszeg" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://koszeg.app/" />
+
+    <!-- ═══════════════════════════════════════════════
+         OPEN GRAPH (Facebook, LinkedIn, WhatsApp, stb.)
+    ═══════════════════════════════════════════════ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://koszeg.app/" />
+    <meta property="og:site_name" content="VisitKőszeg" />
+    <meta property="og:locale" content="hu_HU" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta property="og:title" content="VisitKőszeg – Kőszeg digitális útitársa" />
+    <meta property="og:description" content="Jegyek, ételrendelés, élő térkép, AR kalandjáték és KőszegReels — Kőszeg teljes digitális ökoszisztémája egyetlen appban. Ingyenes, telepítés nélkül." />
+    <meta property="og:image" content="https://koszeg.app/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://koszeg.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="VisitKőszeg – Kőszeg digitális szuperapp" />
+
+    <!-- ═══════════════════════════════════════════════
+         TWITTER CARD
+    ═══════════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@visitkoszeg" />
+    <meta name="twitter:title" content="VisitKőszeg – Kőszeg digitális útitársa" />
+    <meta name="twitter:description" content="Jegyek, ételrendelés, élő térkép, AR kalandjáték és KőszegReels — Kőszeg teljes digitális ökoszisztémája egyetlen appban." />
+    <meta name="twitter:image" content="https://koszeg.app/og-image.jpg" />
+
+    <!-- ═══════════════════════════════════════════════
+         GEO / LOCAL SEO (Kőszeg: 47.3897°N, 16.5428°E)
+    ═══════════════════════════════════════════════ -->
+    <meta name="geo.region" content="HU-VA" />
+    <meta name="geo.placename" content="Kőszeg, Magyarország" />
+    <meta name="geo.position" content="47.3897;16.5428" />
+    <meta name="ICBM" content="47.3897, 16.5428" />
+
+    <!-- ═══════════════════════════════════════════════
+         PWA / MOBILE APP
+    ═══════════════════════════════════════════════ -->
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: light)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="VisitKőszeg" />
+    <meta name="application-name" content="VisitKőszeg" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#1e40af" />
+    <meta name="msapplication-TileImage" content="/android-chrome-192x192.png" />
+    <meta name="msapplication-config" content="none" />
+
+    <!-- ═══════════════════════════════════════════════
+         ICONS & MANIFEST
+    ═══════════════════════════════════════════════ -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- ═══════════════════════════════════════════════
+         PERFORMANCE: PRECONNECT
+    ═══════════════════════════════════════════════ -->
+    <link rel="preconnect" href="https://ebsxjwqdzraazinacbma.supabase.co" />
+    <link rel="dns-prefetch" href="https://ebsxjwqdzraazinacbma.supabase.co" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- ═══════════════════════════════════════════════
+         STRUCTURED DATA – JSON-LD
+    ═══════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://koszeg.app/#webapp",
+          "name": "VisitKőszeg",
+          "url": "https://koszeg.app",
+          "description": "Kőszeg város teljes digitális ökoszisztémája: jegyrendszer, ételrendelés, élő térkép, AR kalandjáték, időpontfoglaló, KőszegReels.",
+          "applicationCategory": "TravelApplication",
+          "applicationSubCategory": "Smart City Platform",
+          "operatingSystem": "Web, iOS, Android (PWA)",
+          "browserRequirements": "Requires JavaScript. HTML5 browser.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HUF"
+          },
+          "author": {
+            "@id": "https://koszeg.app/#organization"
+          },
+          "featureList": [
+            "Jegyvásárlás (Várszínház, múzeumok)",
+            "Apple Wallet és Google Wallet integráció",
+            "KőszegEats ételrendelés és kiszállítás",
+            "Élő interaktív térkép geolokációval",
+            "Időpontfoglaló (fodrász, kozmetikus, masszázs, orvos)",
+            "KőszegReels – 24 órás ephemeral pillanatok",
+            "Kőszeg Quest – AR kincskeresős kalandjáték",
+            "Valós idejű rendeléskövetés (Supabase Realtime)",
+            "PWA: natív telepítés push értesítésekkel"
+          ],
+          "screenshot": "https://koszeg.app/og-image.jpg",
+          "softwareVersion": "2.0",
+          "releaseNotes": "SuperApp ökoszisztéma – 2025/2026"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://koszeg.app/#organization",
+          "name": "VisitKőszeg",
+          "url": "https://koszeg.app",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://koszeg.app/android-chrome-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://koszeg.app"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "availableLanguage": ["Hungarian", "German", "English"]
+          }
+        },
+        {
+          "@type": "TouristDestination",
+          "@id": "https://koszeg.app/#destination",
+          "name": "Kőszeg",
+          "alternateName": ["Güns", "The City of Chivalry", "A lovagok városa"],
+          "description": "Kőszeg – Magyarország egyik legjobban megőrzött középkori városa, az 1532-es hősies ostrom helyszíne, UNESCO-jelölt óvárossal, barokk épületekkel és világhírű borvidékkel.",
+          "url": "https://koszeg.app",
+          "touristType": ["Cultural Tourism", "Historical Tourism", "Gastronomic Tourism", "Active Tourism", "Family Tourism"],
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 47.3897,
+            "longitude": 16.5428,
+            "elevation": "265 m"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kőszeg",
+            "postalCode": "9730",
+            "addressCountry": "HU",
+            "addressRegion": "Vas megye"
+          },
+          "containedInPlace": {
+            "@type": "State",
+            "name": "Vas megye"
+          },
+          "hasMap": "https://koszeg.app/live-map",
+          "image": "https://koszeg.app/teaser-bg.jpg",
+          "includesAttraction": [
+            {
+              "@type": "TouristAttraction",
+              "name": "Kőszegi Vár (Jurisics-vár)",
+              "description": "Az 1532-es törökellenes ostrom helyszíne, Kőszeg ikonikus erődítménye.",
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 47.3886,
+                "longitude": 16.5396
+              }
+            },
+            {
+              "@type": "TouristAttraction",
+              "name": "Kőszegi Városkapu",
+              "description": "Kőszeg jelképe, a belváros középkori bejárata.",
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 47.3895,
+                "longitude": 16.5411
+              }
+            },
+            {
+              "@type": "TouristAttraction",
+              "name": "Jurisics tér",
+              "description": "Kőszeg gyönyörű barokk főtere, éttermekkel és patinás épületekkel.",
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 47.3893,
+                "longitude": 16.5418
+              }
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Hogyan lehet jegyet venni a kőszegi Várszínházba?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A VisitKőszeg appon belül a Jegyvásárlás menüpontban vehetsz jegyet a Várszínházba és más kőszegi intézményekbe. A vásárlás 0.2 másodpercig tart, a jegy azonnal megjelenik az Apple Walletben."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Van ételt rendelni Kőszegen?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Igen! A KőszegEats platformon belül Kőszeg legjobb éttermeinek ételeit rendelheted kiszállítással, valós idejű futárkövetéssel. Elérhető az appon belül a /eats oldalon."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Mi a Kőszeg Quest?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A Kőszeg Quest egy AR (kiterjesztett valóság) kalandjáték, amelyben a város utcáin sétálva QR kódokat olvashatsz be, titkos nyomokat fejthetsz meg és éled újra az 1532-es ostrom történetét."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Kell telepíteni a VisitKőszeg appot?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nem kell! A VisitKőszeg egy PWA (Progressive Web App), amely bármilyen böngészőből használható telepítés nélkül. Ha szeretnéd, natív appként is telepítheted a telefonodra az App Store vagy a Chrome menüjéből."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Ingyenes a VisitKőszeg?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Igen, a VisitKőszeg alapfunkciói – térkép, programok, látnivalók, jegyvásárlás – teljesen ingyenesek. Az ételrendelés és egyes szolgáltatások a szokásos piaci áron vehetők igénybe."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
-  <body class="bg-gray-50 text-gray-800">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

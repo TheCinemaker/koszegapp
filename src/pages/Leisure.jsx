@@ -6,6 +6,7 @@ import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import { FaHeart, FaRegHeart, FaSearch, FaArrowLeft, FaMapMarkerAlt, FaHiking } from 'react-icons/fa';
 import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 export default function Leisure() {
   const { t } = useTranslation('leisure'); // Load namespace 
@@ -58,6 +59,12 @@ export default function Leisure() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+          <SEO
+              title="Szabadidős programok Kőszegen"
+              description="Túraútvonalak, kerékpározás, sportkomplexumok és aktív szabadidős lehetőségek Kőszeg körzetében. A természettől a kulturális élményekig."
+              url="/leisure"
+              keywords="Kőszeg kirándulás, Kőszeg túra, Kőszeg kerékpár, Kőszeg sport, Kőszeg aktív"
+          />
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-lime-500"></div>
       </div>
     );

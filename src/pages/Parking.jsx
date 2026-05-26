@@ -14,6 +14,7 @@ import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
 import { AnimatePresence } from 'framer-motion';
 import SMSParkingCard from '../components/SMSParkingCard';
+import SEO from '../components/SEO';
 
 export default function Parking() {
   const { t } = useTranslation('parking'); // Load namespace
@@ -35,6 +36,12 @@ export default function Parking() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+          <SEO
+              title="Parkolás Kőszegen – Zónák, díjak, helyek"
+              description="Kőszeg parkolóinak interaktív térképe: parkolási övezetek, aktuális díjak, szabad helyek és navigáció — naprakész információk az appon."
+              url="/parking"
+              keywords="Kőszeg parkolás, Kőszeg parkoló, Kőszeg parkolási zóna, Kőszeg P+R"
+          />
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-500"></div>
       </div>
     );

@@ -43,6 +43,7 @@ const MONTH_NAMES = ['Január', 'Február', 'Március', 'Április', 'Május', 'J
 const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
 import GhostImage from '../components/GhostImage'; // ADDED IMPORT
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 // --- Helper Logic (Same as before) ---
 function computeRange(evt) {
@@ -108,6 +109,12 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
 
   return (
     <div className={`group relative w-full bg-white dark:bg-gray-800 rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-700 hover:-translate-y-2 border border-gray-100 dark:border-gray-700/50 ${isPast ? 'grayscale opacity-70' : ''}`}>
+        <SEO
+            title="Kőszegi Várszínház – Jegyek és műsor"
+            description="A Kőszegi Várszínház aktuális műsora és online jegyvásárlás. Foglalj helyet percek alatt, a jegy azonnal az Apple Walletedbe kerül."
+            url="/varszinhaz"
+            keywords="Kőszegi Várszínház, Kőszeg színház jegy, Kőszeg nyári színház"
+        />
 
       {/* Image Container */}
       <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-gray-900">

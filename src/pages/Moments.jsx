@@ -6,6 +6,7 @@ import { IoCameraOutline, IoCloseOutline, IoLocationOutline, IoSendOutline, IoIm
 import { supabase } from '../lib/supabaseClient';
 import { containsProfanity } from '../utils/badWordsHU';
 import { FadeUp } from '../components/AppleMotion';
+import SEO from '../components/SEO';
 
 const BUCKET = 'moments';
 
@@ -139,6 +140,12 @@ export default function Moments() {
 
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 max-w-4xl mx-auto">
+        <SEO
+            title="KőszegReels – 24 órás pillanatok"
+            description="Az igazi Kőszeg a helyiek és turisták szemével. Nézz, posztolj és oszd meg pillanataidat — minden kép 24 óra múlva örökre eltűnik."
+            url="/moments"
+            keywords="KőszegReels, Kőszeg pillanatok, Kőszeg közösség, Kőszeg élő feed"
+        />
 
       {/* Header */}
       <FadeUp>

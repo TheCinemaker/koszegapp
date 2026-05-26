@@ -1,0 +1,27 @@
+# VisitKőszeg – robots.txt
+# https://koszeg.app
+
+User-agent: *
+Allow: /
+
+# Admin és backend felületek – nem indexelendők
+Disallow: /admin
+Disallow: /superadmin
+Disallow: /auth
+Disallow: /eats-admin
+Disallow: /eats-auth
+Disallow: /eats/print/
+Disallow: /menu-admin
+Disallow: /tickets/admin
+Disallow: /tickets/scanner
+Disallow: /tickets/print/
+Disallow: /business
+Disallow: /provider-setup
+Disallow: /secret-setup
+Disallow: /kiosk/
+
+# Crawler sebességkorlátozás
+Crawl-delay: 2
+
+# Sitemap
+Sitemap: https://koszeg.app/sitemap.xml

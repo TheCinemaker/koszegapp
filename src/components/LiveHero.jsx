@@ -95,7 +95,7 @@ const LiveHero = ({ appData, weather }) => {
         const code = weather.icon;
         if (code.includes('01')) return 'Ragyogó napsütés';
         if (code.includes('02')) return 'Kevés felhő, kellemes idő';
-        if (code.includes('03')) return 'Felhős az égbolt';
+        if (code.includes('03')) return 'Változóan felhős';
         if (code.includes('04')) return 'Borús, szürke idő';
         if (code.includes('09')) return 'Szemerkél az eső';
         if (code.includes('10')) return 'Esős időjárás';

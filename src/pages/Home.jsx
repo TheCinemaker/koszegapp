@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next'; // Added import
 import LiveHero from '../components/LiveHero';
 import NearbyDiscoveryCard from '../components/NearbyDiscoveryCard';
 import MomentsStrip from '../components/MomentsStrip';
+import SEO from '../components/SEO';
 
 export default function Home({ appData, weather }) {
   const { t } = useTranslation('home'); // Load 'home' namespace
@@ -46,6 +47,12 @@ export default function Home({ appData, weather }) {
 
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative">
+        <SEO
+            title="Fedezd fel Kőszeg csodáit"
+            description="Kőszeg digitális szuperappja: élő térkép, jegyvásárlás, ételrendelés, AR kalandjáték, KőszegReels és időpontfoglaló — mindezt egyetlen helyen, ingyen."
+            url="/"
+            keywords="Kőszeg, VisitKőszeg, Kőszeg app, Kőszeg program, Kőszeg látnivalók"
+        />
 
       {/* GLOBAL BACKGROUND NOISE (Subtle) */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
