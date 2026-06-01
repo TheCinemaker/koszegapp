@@ -67,16 +67,15 @@
     "highlightLabel": ""
   },
   {
-    "id": "new_1771696209733",
     "name": "Múzeumok Éjszakája",
     "date": "2026-06-20",
     "time": "17:00",
-    "location": "Kőszegi Városi Múzeum és Könyvtár",
+    "location": "Postamúzeum",
     "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
+      "lat": 47.38956510036567,
+      "lng": 16.53997106086683
     },
-    "description": "Múzeumok Éjszakája rendezvényei Kőszegen. Részletes program hamarosan!",
+    "description": "🌙✨ MÚZEUMOK ÉJSZAKÁJA 2026 ✨🌙\nJúnius 20-án különleges esti kalandra hívunk benneteket! 🏛️🔦\nFedezzétek fel tárlatvezetéseinken a múzeum rejtett történeteit és izgalmas titkait az alábbi időpontokban:\n🕕 18:00\n🕖 19:00 – Sons Left Behind akusztikus koncert 🎶🎸\n🕗 20:00\n🕘 21:00\n🕙 22:00 – csak a legbátrabbaknak! 👻😉\nAz élmény mellé finom italokkal és borfalatokkal készülünk 🍷🧀. Ha az időjárás is kegyes lesz hozzánk, a hangulatos teraszon várunk benneteket! ☀️🌿\nTöltsünk együtt egy varázslatos nyári estét, ahol a kultúra, a zene és a gasztronómia találkozik! ✨",
     "tags": [
       "múzeum",
       "fesztivál",
@@ -86,7 +85,9 @@
     "image": "event_default.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "Múzeumok Éjszakája"
+    "highlightLabel": "Múzeumok Éjszakája",
+    "isVarszinhaz": false,
+    "id": "new_1771696209733"
   },
   {
     "id": "new_1771696209734",
