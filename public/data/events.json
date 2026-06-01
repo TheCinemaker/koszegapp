@@ -1371,5 +1371,27 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1779617774643"
+  },
+  {
+    "name": "Czuczi László séf svédasztalos ebédje",
+    "date": "2026-06-07",
+    "time": "12:00",
+    "location": "Hotel Írottkő étterme",
+    "coords": {
+      "lat": 47.38821923076026,
+      "lng": 16.542546177963406
+    },
+    "description": "Czuczi László séf svédasztalos ebédje\n\nÍrottkő Hotel Étterme\n\n📅 2026. 06. 07. vasárnap\n🕐 12:00–14:30\n\n2 féle leves • 3 féle főétel • 3 féle köret • saláták • desszert • kávé és limonádé\n\n8.990 Ft / fő\n\n+ 10% szervizdíj\n\n🍽️ Asztalfoglalás szükséges\n\n👥 Helyek korlátozott számban\n\n📞 Helyfoglalás: +36-94/562-451",
+    "tags": [
+      "ebéd",
+      "étterem",
+      "séf"
+    ],
+    "image": "cuczi.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780328534340"
   }
 ]
