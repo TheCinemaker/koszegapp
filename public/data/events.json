@@ -1393,5 +1393,133 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780328534340"
+  },
+  {
+    "name": "Szent Iván esti varázslat - Meggie - Tomsa",
+    "date": "2026-06-19",
+    "time": "19:30",
+    "location": "Tóth Pincészet",
+    "coords": {
+      "lat": 47.387277073180876,
+      "lng": 16.541747386177313
+    },
+    "description": "Nyár, péntek este, az év legrövidebb éjszakája, jó borok, csodás zenészek. Kell ennél több?\nKóstold meg Sgraffito Sunshine gyöngyözőborunk is! 🙂\nAsztalfoglalás ajánlott!\n🎟 Belépő: 1500 Ft\n📞 +36 94 364 128 | Asztalfoglalás ajánlott!\n📍 Tóth Pincészet Borház | Kőszeg, Rákóczi utca 6.\n2 fős foglalásoknál előfordulhat, hogy egy másik 2 fős társasággal közös asztalt tudunk biztosítani.\nTóth Pincészet Borház\nKőszeg, Rákóczi utca 6.\nTel: 94 364 128\ninfo@tothpinceszet.hu\nwww.tothpinceszet.hu",
+    "tags": [
+      "mulatság",
+      "zene",
+      "tánc",
+      "élőzene"
+    ],
+    "image": "meggie-1780397920815.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780397972157"
+  },
+  {
+    "name": "Kisvonattal a Kőszegi-hegységbe",
+    "date": "2026-06-06",
+    "time": "09:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "2026. június 3. (szerda) 10:00-15:00 óráig\n2026. június 6. (szombat) 9:00-14:00 óráig\n2026. június 7. (vasárnap ) 9:00-14:00 óráig\n🕘 Indulás | 🏁 Érkezés | 📍 Kőszeg, Főtér\nTöltse a nyár egyik legszebb napját egy különleges élményutazással a Kőszegi-hegység szívébe! 🌳🌷 A Kőszegi Kisvonat kalandos útvonalon visz keresztül dombokon, völgyeken, erdők mélyén és történelmi helyszíneken – miközben felfrissül a természet ölelésében, és ízelítőt kap a helyi kultúrából és gasztronómiából is! ✨🍇\nÚtvonalunk:\n🔹 Szabó-hegy – egy csodás panorámás út, ahol a város lassan eltűnik a háttérben, és átadja helyét a zöldellő hegyvidéknek ⛰️\n🔹 Borha forrás – egy rövid séta után megpihenünk a csendes forrásnál, ahol csak a víz csobogása hallatszik, és a természet minden érzékszervünket elvarázsolja 💧🌿\n🔹 Velem – Novák üdülőfalu – itt kisvonatunk rövid megállót tart, ahol lehetőség nyílik étel-ital fogyasztásra és egy frissítő fagylaltra is. A kellemes pihenő után feltöltődve folytatjuk az utunkat 🍽️🍦🥤\n🔹 Szent Vid kápolna – Kőszeg egyik legkülönlegesebb látványossága, ahonnan lélegzetelállító kilátás nyílik a városra és a környező tájra. A történelem szinte tapintható e szakrális helyen ⛪🌄\n🔹 Cáki pincesor – a túra méltó zárásaként megérkezünk a festői pincesorra, ahol a múlt és a jelen találkozik. A zsuppfedeles pincék kinyílnak, a borospoharak koccannak – és ha kedve tartja, hazavihet egy palackkal a kőszegi borászok remekeiből is 🍷🏡\nKísérőnk végigkalauzol bennünket a történeteken, legendákon és érdekességeken át – így a kirándulás nemcsak látványos, de tanulságos is lesz! 📖😊\n🎫 Részvételi díj:\nFelnőtteknek: 3950 Ft/fő\nGyermekeknek: 3750 Ft/fő\n(A díj tartalmazza a Cáki pincesor belépőjét is!)\n🕔 A program időtartama: kb. 5 óra\nTökéletes hétvégi kikapcsolódás családoknak, pároknak, baráti társaságoknak, sőt idősebbeknek is! 👨‍👩‍👧‍👦👵👴\n📞 Előzetes jelentkezés szükséges!\n☎️ +36 30 628 8884",
+    "tags": [
+      "kivonat",
+      "kirándulás",
+      "túra"
+    ],
+    "image": "kisvonat-1780398198734.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780398203026"
+  },
+  {
+    "name": "LOVASSZÍNHÁZI előadás",
+    "date": "2026-06-09",
+    "time": "18:00",
+    "location": "Lovarda",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "Kedves Szülők, Rokonok, Ismerősök, érdeklődők!\nSzeretettel várunk június 9-én (kedden) LOVARDÁNKBA a színjátszós és lovasszakkörös diákjaink LOVASSZÍNHÁZI előadására!",
+    "tags": [
+      "színház",
+      "előadás"
+    ],
+    "image": "lovas.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780398327924"
+  },
+  {
+    "name": "Mesés kalandok a égyszögletű Kerek Erdő lakóival",
+    "date": "2026-06-20",
+    "time": "19:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Kilencven éve született Lázár Ervin, művei sokunk kedvencei, kicsiket és nagyokat is elvarázsolnak.\nReméljük, hogy velünk tartanak a mai napon, amikor az íróra emlékezünk gyermekkönyvtári foglalkozásunkon.\nLázár Ervin: A Négyszögletű Kerek Erdő meséiből láncolvasással olvasunk fel meséket, a foglalkozás látogatóinak közreműködésével.\nKézműves foglalkozásunkon meselámpást készítünk pauszpapírból és színes kartonból.\nA foglalkozás költsége: 300 Ft / fő",
+    "tags": [
+      "Mese",
+      "gyerek",
+      "kézműves"
+    ],
+    "image": "meses.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780398495654"
+  },
+  {
+    "name": "Nyáresti Szerenád a Kőszegi Zsinagógában",
+    "date": "2026-07-06",
+    "time": "18:00",
+    "location": "Zsinagóga",
+    "coords": {
+      "lat": 47.391408,
+      "lng": 16.541513
+    },
+    "description": "Nyáresti Szerenád a Kőszegi Zsinagógában 🎻✨\nEgy különleges nyári este, ahol a klasszikus zene találkozik a történelmi atmoszférával.\nSzeretettel várunk minden zenekedvelőt egy meghitt, inspiráló koncertre a kőszegi nyár egyik legszebb helyszínén!\nA budapesti Liszt Ferenc Zeneművészeti Egyetem hallgatóinak előadásában hegedű- és énekszó tölti meg a lenyűgöző Kőszegi Zsinagóga terét, hogy együtt élhessük át a klasszikus zene időtlen erejét.\n🎼 Fellépők:\n• Varga Lili Sára – hegedű\n• Sólyom-Nagyné Erdélyi Krisztina – zongora\n• Vanó Zétény és Schuszter Júlia – ének\n📍 Helyszín:\nKőszegi Zsinagóga\n📅 Időpont:\n2026. július 6. (hétfő)\n🕕 18:00\n🎟 A belépés ingyenes.\nAz eseményen a fellépő művészek támogatására adományokat hálásan fogadunk.\nAz est társszervezője és fő támogatója a Felsőbbfokú Tanulmányok Intézete és az Institute of Advanced Studies Kőszeg.\nKapcsolódj ki, lassulj le egy estére, és engedd, hogy a dallamok vigyenek magukkal a nyári alkonyatban. 🌙",
+    "tags": [
+      "szerenád"
+    ],
+    "image": "szerenad.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780398640040"
+  },
+  {
+    "name": "Megemlékezés - Trianoni békediktátum 106. évfordulója",
+    "date": "2026-06-04",
+    "time": "15:30",
+    "location": "Kálvária-hegy lábánál, az első stációnál",
+    "coords": {
+      "lat": 47.396935085801374,
+      "lng": 16.53567251742364
+    },
+    "description": "A Kőszegi Polgári Kaszinó tisztelettel meghívja június 4-én (csütörtökön) délután, a Trianoni békediktátum 106. évfordulója alkalmából tartandó megemlékezésre.\nProgram:\n- 15:30: Gyülekező a Kálvária-hegy lábánál, az első stációnál, ahonnan nemzetünkért imádkozva indulunk a keresztúton a Trianon kereszthez Kirner Antal Zoltán plébános vezetésével.\n- 16:32: megemlékezés a Trianon keresztnél. Beszédet mond: dr. Kapiller Sarolta. Közreműködik: Kósa Csabáné Székely Orsolya - vers; Tánczos Zoltán - tárogató\n- 17:00: Ökunemikus imaróa, énekes taizéi a Kálvária templomban határon túli magyar testvéreinkért. Közreműködik: Árpád-házi Szent Margit Általános Iskola és Gimnázium - ének\nA programváltozás jogát fenntartjuk (az egyes programelemek kezdési időpontjai változhatnak, attól függően, mikor érkezünk meg az egyes állomásokra). A megemlékezés kedvezőtlen időjárás esetén elmarad",
+    "tags": [
+      "megemlékezés"
+    ],
+    "image": "trianon.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780399158764"
   }
 ]
