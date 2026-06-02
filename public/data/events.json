@@ -1643,5 +1643,26 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780401514023"
+  },
+  {
+    "name": "Retro éjszaka - DJ Ráduly",
+    "date": "2026-06-13",
+    "time": "21:00",
+    "location": "Hattyú büfé ",
+    "coords": {
+      "lat": 47.397485966275994,
+      "lng": 16.537565730664575
+    },
+    "description": "Visszarepítünk az időben! ⏳ Készülj fel egy felejthetetlen bulira, ahol a 90-es 2000-es-2010-es évek legnagyobb slágerei dübörögnek majd! 🎧✨\n​Tarts velünk egy éjszakára, ahol a jó hangulat garantált, a zenéért pedig nem más felel, mint DJ RADULY! 🎶🔥\n​📌 Amit kínálunk:\n✅ A legjobb retro slágerek hajnalig 🕺\n✅ Jéghideg italok széles választéka a bárpultban 🍹🍻\n✅ Ingyenes belépés! 🆓\n✅ Hattyú transzfer – hogy a hazajutás is kényelmes legyen! 🚐💨\n​📍 Helyszín: Hattyú Büfé, Kőszeg\n📅 Dátum: Június 13., szombat\n​Ne maradj otthon, gyere el és táncold át az éjszakát velünk! Hívd meg a barátaidat is, találkozzunk a táncparketten! 👋🎊",
+    "tags": [
+      "disco",
+      "retro"
+    ],
+    "image": "hattyu.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780418005554"
   }
 ]
