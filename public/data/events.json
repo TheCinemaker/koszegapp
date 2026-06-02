@@ -1521,5 +1521,127 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780399158764"
+  },
+  {
+    "name": "Mesés Kalandok a Hétfejű Tündérrel",
+    "date": "2026-06-20",
+    "time": "16:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Kilencven éve született Lázár Ervin, művei sokunk kedvencei, kicsiket és nagyokat is elvarázsolnak. Reméljük, hogy velünk tartanak a mai napon, amikor az íróra emlékezünk gyermekkönyvtári foglalkozásunkon.\nPapírszínház és kézműves foglalkozás a gyermekkönyvtárban:\nPapírszínházzal várjuk a látogatóinkat, ahol Lázár Ervin: A Hétfejű Tündér című meséjét láthatják és hallhatják az érdeklődők.\nEzt követően varázspálcát készítünk dekorgumiból, dekorfilcből és hurkapálcából.\nA foglalkozás költsége: 300 Ft / fő.",
+    "tags": [
+      "mese",
+      "kézműves"
+    ],
+    "image": "meses-1780400847882.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780400851174"
+  },
+  {
+    "name": "GrünerSee kisbuszos kirándulás",
+    "date": "2026-06-18",
+    "time": "08:00",
+    "location": "Bezerédy Imre utca 10.",
+    "coords": {
+      "lat": 47.39720596651094,
+      "lng": 16.545781850348448
+    },
+    "description": "1 vagy 2 napos túra a Felső-Ausztriai Gleinkersee-hez... 21.900 ft - vagy 2 napos út egy éjszakával egy hegyi hüttében 1100 méter magasan reggelivel 59.000 ft... Az árak 8 fő utazásánál érvényesek...\n2026. Június 11-12 / Szabad helyek 0 fő / Betelt\n2026. Június 18 / Szabad helyek 8 fő\n2026. Június 19 / Szabad helyek 0 fő / Betelt\n2026. Június 25-26 / Szabad helyek 8 fő\n2026. Július 2 / Szabad helyek 0 fő / Betelt\n2026. Július 3 / Szabad helyek 8 fő\n2026. Július 9 / Szabad helyek 0 fő / Betelt\n2026. Július 10 / Szabad helyek 8 fő",
+    "tags": [
+      "kirándulás"
+    ],
+    "image": "alpok.jpeg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780401016108"
+  },
+  {
+    "name": "Zsófi és Zoli acustic - Ismert dalok akusztikus köntösben",
+    "date": "2026-06-20",
+    "time": "22:00",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38909197186627,
+      "lng": 16.540936918985697
+    },
+    "description": "A Múzeumok Éjszakája jellegzetes hangulata szinte el sem képzelhető élő akusztikus zene nélkül. Korponay Zsófi és Bánó Zoli akusztikus koncertje egyszerre frissítő, mint egy limonádé, és melengető, mint a nyári nap maga. Tökéletes program egy kis kultúrára, minőségi zenére, kikapcsolódásra vágyó közönségnek: könnyen emészthető, de mégsem kommersz zenei élményt nyújt.",
+    "tags": [
+      "Koncert",
+      "zene"
+    ],
+    "image": "meses-1780401129092.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780401179770"
+  },
+  {
+    "name": "Hangtálas gyermekjóga Vercsivel - A boszorkány és a  varázspálca",
+    "date": "2026-06-20",
+    "time": "18:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Egy mágikusan varázsos történet tündérekről, boszorkányokról és a barátság erejéről.\nA gyermekjóga foglalkozáson megismerkedhetünk Lunával és a barátaival. Luna nagy bajba kerül, mikor egy véletlen folytán eltörik a varázspálcája. Vajon a kis boszorkánynak időben sikerül megszereznie a gyógyfüveket és a többi hozzávalót, amivel megjavíthatja a pálcáját? Sikerül neki véghez vinni a varázslatot? A barátság ereje most is segíthet?\nVárlak szeretettel a gyermekjóga foglalkozásomra! Legyél egy órára boszorkány vagy tündér! Varázsolódj el és egy mágikus kalandban, mutasd meg a bátorságod! Nevess, mozogj, kalandozz, érezd jól magad!\nA foglalkozás 4-10 éves korig ajánlott. Felszerelés: Kényelmes ruha a mozgáshoz, zokni. Külön szandál, cipő nem kell, mivel ezek tönkreteszik a jógaszőnyegeket. Folyadék legyen a gyermeknél, lehetőség szerint víz, vagy cukormentes tea, üdítő. Amennyiben van otthon jógamatrac, takaró, nyugodtan el lehet hozni.",
+    "tags": [
+      "jóga"
+    ],
+    "image": "meses-1780401321404.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780401325324"
+  },
+  {
+    "name": "Mesék palackpostába - Az akarat birodalma - Interaktív mesefoglalkozás Szűcs P. Roxánával",
+    "date": "2026-06-20",
+    "time": "17:00",
+    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Mesék palackpostába - Az akarat birodalma - Interaktív mesefoglalkozás Szűcs P. Roxánával\nA foglalkozás során a gyerekek és az írónő életre keltik a 2025-ben megjelent mesekönyv egyik történetét.\nA résztvevők bábokat készítenek, melyekkel lehetőség lesz közösen eljátszani a mesét a program idejének második felében",
+    "tags": [
+      "Mese"
+    ],
+    "image": "meses-1780401387709.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780401391272"
+  },
+  {
+    "name": "Egy évtizednyi ecsetvonás - Baradács Anett kiállítása",
+    "date": "2026-06-06",
+    "time": "16:00",
+    "location": "Hotel Írottkő",
+    "coords": {
+      "lat": 47.38839534285719,
+      "lng": 16.542454386933958
+    },
+    "description": "Köszönöm Nektek, akik támogattatok, szívem tele hálàval, mert számomra a festészet nem pillanat , hanem út. 😇\nImmár 10 ève.\nSzeretettel hívlak, hogy velem együtt nézz vissza erre az útra, mert minden kép egy történet.\nÉs Én örömmel osztom meg Veled !\nHa velünk tartanál lesz móka- kacagás, evès- ivás, tánc ès vigalom. Mindez a festményeim ölelésében.\nÖrülnék, ha ott lennél, és osztozhatnánk, örömünkben!\nAnett",
+    "tags": [
+      "kiállítás"
+    ],
+    "image": "anett.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780401514023"
   }
 ]
