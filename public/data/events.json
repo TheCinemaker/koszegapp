@@ -1,27 +1,5 @@
 [
   {
-    "name": "Rozán Eszter: Álhírek és csodagyógyítók",
-    "date": "2026-05-28",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Rozán Eszter: Álhírek és csodagyógyítók - Hogyan ismerjük fel, ha a pénztárcánkra vadásznak? Előadónk a rendezvényteremben a Magyar Reumabetegek Egyesülete elnöke, lelkes közösségszervező, okleveles biblioterapeuta, a Vas megyei Reumaklub vezetője is egyben. Pár kérdés, melyekre választ kapunk az előadásán: Hogyan lehet rohanó világunk hírdömpingjében kiszűrni az álhíreket? Hihetünk-e a szemünknek? Miért veszélyes az információs buborék? Hogyan születnek a legendák? Milyen szerepet töltenek be a babonák az életünkben? Melyek az áltudomány jellemzői? Hogyan ismerjük fel a „csodadoktorokat”, telefonos csalókat, és mit tehetünk ellenük?",
-    "tags": [
-      "előadás",
-      "egészség",
-      "program",
-      "könyvtár"
-    ],
-    "image": "rozan.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "new_1771696209730"
-  },
-  {
     "name": "„Ébredés” – Kasztner Andrea és Rózsás Dorina kiállítása",
     "date": "2026-06-09",
     "time": "17:00",
@@ -547,102 +525,6 @@
     "highlightLabel": ""
   },
   {
-    "name": "Városi gyereknap",
-    "date": "2026-05-31",
-    "time": "11:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "PROGRAM:\n09.00 – 11.00 óráig horgászverseny a\nCsónakázó-tónál gyerekeknek (engedély nem szükséges)\nNevezés: 08.45-től a helyszínen\n\nJurisics vár:\nNevezés a versenyekre 13.30 órától!\nÓvodás és iskolás kerékpáros ügyességi verseny\nBÜTYKÖLDE\nnemezelés\nmézeskalácsdíszítés\ntésztanyaklánc készítés\nszínezés\n\nA gyermekeknek ingyenes ugrálóvár a rendezvény alatt!\nA Kőszegi Tűzoltóság és Rendőrkapitányság bemutatója!\nMinden versenyt külön díjazunk!\n\nA versenyek résztvevői tombolaszelvényt kapnak,\nmelyek az eredményhirdetés után külön sorsoláson vesznek részt.",
-    "tags": [
-      "gyereknap"
-    ],
-    "image": "tuzigyereknap.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1778438654733"
-  },
-  {
-    "name": "Fabrice Roger-Lacan A SZOMSZÉD AJTÓ színházi bemutató",
-    "date": "2026-05-28",
-    "time": "19:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Fabrice Roger-Lacan\nA SZOMSZÉD AJTÓ\nromantikus vígjáték\nA Kőszegi Várszínház és a Kultkikötő magyarországi bemutatója\n\nKét ember, akik valaki mást keresnek. És közben képtelenek leszállni egymásról…\nA nő pszichológus. A férfi marketinges, joghurtokat reklámoz. A férfi mindent el tud intézni egy félmondattal. A nő mindig visszakérdez. Semmiben nem értenek egyet. A férfi könnyedén kezeli a világot. A nő ezt nem hagyja szó nélkül. Szomszédok. Udvariasan és nagy igyekezettel gyűlölik egymást. Folyton csatáznak. Minden találkozásuk veszekedéssel végződik. Mégis újra és újra átmennek a másikhoz. Valójában mindketten társat keresnek. Persze olyasvalakit, aki pont az ellentéte annak a pokoli alaknak, aki a szomszéd ajtó mögött lakik. És amikor az online társkereső oldalakon végre megtalálják az ideális párt, nem tudják megállni, hogy ne mondják el a másiknak. Nem örömből. Hanem hogy újra összecsapjanak…\nFabrice Roger-Lacan francia író a mai párkapcsolatok egyik legpontosabb és legszellemesebb megfigyelője, aki szerint nem az a nehéz, hogy megszólítsuk a másikat, hanem hogy meghalljuk. A szomszéd ajtó című rendkívül izgalmas, humoros, nagyon emberi és elgondolkodtató darabja a Kőszegi Várszínház és a Kultkikötő közös produkciója Őze Áron és Auksz Éva főszereplésével. A színészházaspár most játszik először együtt kétszemélyes előadásban. Öröm lesz nézni, ahogy civódnak…\n\nFérfi: Őze Áron\nNő: Auksz Éva\n\nFordította: Oláh Krisztina\nDramaturg: Karácsony Ágnes\nJelmeztervező: Rákay Tamás\nDíszlettervező: Szalai József és Hatvani Mónika\nRendezőasszisztens: Eisenhauer Réka\n\nRendező: Naszlady Éva",
-    "tags": [
-      "bemutató",
-      "színház"
-    ],
-    "image": "fabrice.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1778493697590"
-  },
-  {
-    "name": "Kőszeg Város Ifjúsági Zenekara koncertje",
-    "date": "2026-05-30",
-    "time": "17:30",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Kőszeg Város Ifjúsági Zenekara koncertje JAZZ-ES(T) a Jurisics vár lovagtermében 2026. május 30-án, szombaton, 17.30-kor. Egy kicsi mindenből, ami jazz - ifjúsági zenekarra",
-    "tags": [
-      "koncert"
-    ],
-    "image": "jazzest.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1778493789899"
-  },
-  {
-    "name": "Hősök-napi megemlékezés",
-    "date": "2026-05-31",
-    "time": "18:00",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.389182,
-      "lng": 16.539745
-    },
-    "description": "Hősök-napi megemlékezés",
-    "tags": [
-      "megemlékezés"
-    ],
-    "image": "chatgpt-image-2026.-apr.-14.-09_48_51.png",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1778493969074"
-  },
-  {
-    "name": "Egyszer fenn…. – Egészen elröppent időutazás a szárnyak nyomában - Ziránó színház",
-    "date": "2026-06-02",
-    "time": "10:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Az előadások 10:00 és 13:00-kor kezdődnek! \n\nJoseph-Michel Montgolfier öccsével, Jacques-Étienne-nel együtt találta fel az első, ember irányította hőlégballont. A kezdeti, bíztató kísérletek után, elérkezett a nagy kérdés, vajon egy élő szervezet kibírja – e az utazást a magasban?\nA Montgolfier testvérek következő, 18 méter átmérőjű ballonjukat már a király jelenlétében bocsátották fel. A kosárban XVI. Lajos személyes parancsára kis ketrecben egy kacsát, egy tyúkot és egy birkát is elhelyeztek. A világ első légi utasai épségben értek vissza a földre, így az is kiderült: a repülés nem árt az élő szervezeteknek. A tyúk ugyan kicsit megviseltnek látszott, de a beható vizsgálat tisztázta: nem a magasság ártott neki, hanem az, hogy a birka rálépett.  Ezek a tények, de hogy mi történt az utazás során a három légi utassal, azt senki sem tudja.  A három állat különböző módon éli meg élete nagy kalandját, de mindannyian meg vannak győződve róla, hogy nevük bekerül a történelemkönyvekbe, hiszen maga a király küldte fel őket a levegőbe.\n\nStáblista\nÍrta: Kolozsi Angéla\nRendezte: Veres András\nTervezte: Rumi Zsófia\nKészítette: Rumi Zsófia, Szigeti Árpád, Balogh Mihály\nZenéjét szerezte: Gyulai Csaba\nJátszók: Pfeifer Zsófia, Varga Péter Róbert",
-    "tags": [
-      "színház"
-    ],
-    "image": "joseph.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1778494098393"
-  },
-  {
     "name": "Pünkösdi Lili: Örökösök",
     "date": "2026-06-05",
     "time": "19:00",
@@ -658,48 +540,6 @@
     "highlight": false,
     "highlightLabel": "",
     "id": "event-2026-1778494220410"
-  },
-  {
-    "id": "varszinhaz-20260528-6",
-    "name": "Fabrice Roger-Lacan: A SZOMSZÉD AJTÓ",
-    "date": "2026-05-28",
-    "time": "19:00",
-    "location": "Jurisics vár lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Fabrice Roger-Lacan: A SZOMSZÉD AJTÓ\nIdőpontok: 2026. Május 28.,19:00-tól Helyszín: Jurisics vár lovagterem Jegyár: 4.000.-\n\nFabrice Roger-Lacan\nA SZOMSZÉD AJTÓ\nromantikus vígjáték\nA Kőszegi Várszínház és a Kultkikötő magyarországi bemutatója\nKét ember, akik valaki mást keresnek. És közben képtelenek leszállni egymásról…\nA nő pszichológus. A férfi marketinges, joghurtokat reklámoz. A férfi mindent el tud intézni egy félmondattal. A nő mindig visszakérdez. Semmiben nem értenek egyet. A férfi könnyedén kezeli a világot. A nő ezt nem hagyja szó nélkül. Szomszédok. Udvariasan és nagy igyekezettel gyűlölik egymást. Folyton csatáznak. Minden találkozásuk veszekedéssel végződik. Mégis újra és újra átmennek a másikhoz. Valójában mindketten társat keresnek. Persze olyasvalakit, aki pont az ellentéte annak a pokoli alaknak, aki a szomszéd ajtó mögött lakik. És amikor az online társkereső oldalakon végre megtalálják az ideális párt, nem tudják megállni, hogy ne mondják el a másiknak. Nem örömből. Hanem hogy újra összecsapjanak…\nFabrice Roger-Lacan francia író a mai párkapcsolatok egyik legpontosabb és legszellemesebb megfigyelője, aki szerint nem az a nehéz, hogy megszólítsuk a másikat, hanem hogy meghalljuk. A szomszéd ajtó című rendkívül izgalmas, humoros, nagyon emberi és elgondolkodtató darabja a Kőszegi Várszínház és a Kultkikötő közös produkciója Őze Áron és Auksz Éva főszereplésével. A színészházaspár most játszik először együtt kétszemélyes előadásban. Öröm lesz nézni, ahogy civódnak…\nFérfi: Őze Áron\nNő: Auksz Éva\nFordította: Oláh Krisztina\nDramaturg: Karácsony Ágnes\nJelmeztervező: Rákay Tamás\nDíszlettervező: Szalai József és Hatvani Mónika\nRendezőasszisztens: Eisenhauer Réka\nRendező: Naszlady Éva",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4755_pic3_4755.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260602-7",
-    "name": "Egyszer fenn…. – Egészen elröppent időutazás a szárnyak nyomában",
-    "date": "2026-06-02",
-    "time": "19:00",
-    "location": "Jurisics vár lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Egyszer fenn…. – Egészen elröppent időutazás a szárnyak nyomában\nZiránó Színház\nIdőpontok: 2026. Június 2.,13:30-tól Helyszín: Jurisics vár lovagterem Jegyár: 2.000.-\n\nJoseph-Michel Montgolfier öccsével, Jacques-Étienne-nel együtt találta fel az első, ember irányította hőlégballont. A kezdeti, bíztató kísérletek után, elérkezett a nagy kérdés, vajon egy élő szervezet kibírja – e az utazást a magasban?\nA Montgolfier testvérek következő, 18 méter átmérőjű ballonjukat már a király jelenlétében bocsátották fel. A kosárban XVI. Lajos személyes parancsára kis ketrecben egy kacsát, egy tyúkot és egy birkát is elhelyeztek. A világ első légi utasai épségben értek vissza a földre, így az is kiderült: a repülés nem árt az élő szervezeteknek. A tyúk ugyan kicsit megviseltnek látszott, de a beható vizsgálat tisztázta: nem a magasság ártott neki, hanem az, hogy a birka rálépett.  Ezek a tények, de hogy mi történt az utazás során a három légi utassal, azt senki sem tudja.  A három állat különböző módon éli meg élete nagy kalandját, de mindannyian meg vannak győződve róla, hogy nevük bekerül a történelemkönyvekbe, hiszen maga a király küldte fel őket a levegőbe.\nStáblista\nÍrta: Kolozsi Angéla\nRendezte: Veres András\nTervezte: Rumi Zsófia\nKészítette: Rumi Zsófia, Szigeti Árpád, Balogh Mihály\nZenéjét szerezte: Gyulai Csaba\nJátszók: Pfeifer Zsófia, Varga Péter Róbert",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4753_pic3_4753.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
   },
   {
     "id": "varszinhaz-20260611-10",
@@ -765,8 +605,7 @@
     "isVarszinhaz": true
   },
   {
-    "id": "varszinhaz-20260620-13",
-    "name": "„Művészet\" - vígjáték",
+    "name": "Yasmina Reza - „Művészet\" - vígjáték",
     "date": "2026-06-20",
     "time": "19:00",
     "location": "Jurisics vár nagyszínpad",
@@ -783,7 +622,8 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz-20260620-13"
   },
   {
     "id": "varszinhaz-20260624-14",
@@ -1664,5 +1504,85 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780418005554"
+  },
+  {
+    "name": "Sisi nyomában",
+    "date": "2026-06-10",
+    "time": "11:00",
+    "location": "Kőszegi Evangélikus Gimnázium, Technikum, Szakképző iskola és Kollégium Díszterme",
+    "coords": {
+      "lat": 47.39222332995563,
+      "lng": 16.5398248973294
+    },
+    "description": "🌹 Sisi nyomában – különleges időutazás Kőszegen! 👑\nSzeretettel hívunk minden érdeklődőt egy rendhagyó előadásra és ruhabemutatóra, ahol megelevenedik a legendás Erzsébet királyné, Sisi világa.\n✨ Czédly Mónika divattervező lenyűgöző, korhű ruhakölteményein keresztül bepillantást nyerhetünk a 19. századi udvari divatba, miközben izgalmas történeteket hallhatunk Sisi életéről, személyiségéről és máig tartó kultuszáról.\n📅 Időpont: 2026. június 10. (szerda) 11:00\n📍 Helyszín: Kőszegi Evangélikus Középiskola – Díszterem\nEgy különleges délelőtt, ahol a történelem, az elegancia és a divatművészet találkozik.\n🎟️ A program nyilvános, a részvétel díjmentes.\nMinden érdeklődőt szeretettel várunk! 🌹👑",
+    "tags": [
+      "bemutató"
+    ],
+    "image": "sisi.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780921888605"
+  },
+  {
+    "name": "Apróságok a kriptákból",
+    "date": "2026-06-20",
+    "time": "17:00",
+    "location": "Arany egyszarvú patikamúzeum",
+    "coords": {
+      "lat": 47.38927783028315,
+      "lng": 16.541078059630838
+    },
+    "description": "Minitárlatvezetések Simon Zsófia régésszel\nAz Arany Egyszarvú Patikamúzeum 2. termében egy tárlónyi érdekesség a kőszegi Szent Jakab-, és Szent Imre-templom kriptáinak feltárásából. Vallási emlékek és egyéb használati tárgyak a kora újkorból.\nRövid tárlatvezetések az alábbi időpontokban:\n17:00-17:20\n20:00-20:20\n21:30-21:50",
+    "tags": [
+      "tárlat"
+    ],
+    "image": "meses-1780922067181.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780922070934"
+  },
+  {
+    "name": "Ataru Taiko jubileumi koncert",
+    "date": "2026-08-09",
+    "time": "19:30",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "✨🎶 FÉNYEK. TŰZ. ZENE. ÜNNEP. 🎶 ✨\n20 évvel ezelőtt egy álom indult útjára. Most pedig elérkezett az idő, hogy ezt a rendkívüli jubileumot méltó módon ünnepeljük meg – ott, ahol minden elkezdődött.\nSzülővárosunkban, Kőszegen egy látványos jubileumi koncerttel készülünk a XIX. Ostromnapok keretein belül, amelyet különleges pirotechnikai elemek, fényhatások és felejthetetlen színpadi látvány tesz igazán egyedivé.\nLángok és fények. Lélegzetelállító pirotechnikai show.\nEgy este, amelyre sokáig emlékezni fogunk.\nEz nem csupán egy koncert lesz, hanem egy közös ünnep mindazokkal, akik az elmúlt 20 év során velünk voltak és támogattak minket!\n📅 2026.08.09. 19:30📍 Kőszeg, Jurisics vár\nA belépés díjtalan!",
+    "tags": [
+      "koncert"
+    ],
+    "image": "ataru.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780922291897"
+  },
+  {
+    "name": "Erdélyi kopó - Kőszegi Ostromnapok bemutatója",
+    "date": "2026-08-08",
+    "time": "11:00",
+    "location": "Várárok",
+    "coords": {
+      "lat": 47.38907282842178,
+      "lng": 16.538244715582017
+    },
+    "description": "Az erdélyi kopó máig a legkisebb egyedszámú magyar kutyafajta. Előadásunkban a kopó, a kopótartás és a kopózás hagyományának felvillantása mellett kitérünk arra is, hogy mikortól beszélhetünk erdélyi kopóról és bemutatjuk a kopós vadászati mód múltját és napjainkban kevesek által űzött jelenét is. Egyúttal bepillantást engedünk ezzel a hungarikum kutyafajtával való együttélés mindennapjaiba is. A bemutató alkalmával a résztvevőknek lehetősége van kutyasimogatásra, valamint vadászati munka- és engedelmességi feladatok (visszahívás, helybemaradás) megtekintésére.\nHelyszín: XIX. Kőszegi Ostromnapok, Várárok, Kőszeg, 9730\nIdőpont: 2026. augusztus 8., szombat, 11.00–12.00",
+    "tags": [
+      "bemutató"
+    ],
+    "image": "kopo.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780922440860"
   }
 ]
