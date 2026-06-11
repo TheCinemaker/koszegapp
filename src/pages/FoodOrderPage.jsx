@@ -504,6 +504,12 @@ export default function FoodOrderPage({ appData }) {
         return saved ? new Set(JSON.parse(saved)) : new Set();
     });
 
+    // The orders table has no updated_at column, so a finished order (delivered/rejected/cancelled)
+    // would vanish the instant its status flips. Instead we remember when the client FIRST saw it
+    // finished and keep the tracker visible for FINISHED_LINGER_MS after that — consistent every time.
+    const FINISHED_LINGER_MS = 90 * 1000;
+    const finishedSeenRef = useRef(JSON.parse(localStorage.getItem('finished_seen_at') || '{}'));
+
     // Safety fallback for stuck Auth
     const [showAuthFallback, setShowAuthFallback] = useState(false);
     useEffect(() => {
@@ -540,18 +546,22 @@ export default function FoodOrderPage({ appData }) {
             .select('*, restaurants(name)')
             .eq('user_id', user.id)
             .gte('created_at', twelveHoursAgo)
-            .in('status', ['new', 'accepted', 'preparing', 'ready', 'delivering', 'delivered', 'rejected', 'cancelled'])
+            .in('status', ['new', 'pending', 'accepted', 'preparing', 'ready', 'delivering', 'delivered', 'rejected', 'cancelled'])
             .order('created_at', { ascending: false });
 
         if (data) {
-            const now = new Date();
+            const now = Date.now();
+            const seen = finishedSeenRef.current;
             const filtered = data.filter(o => {
                 if (dismissedOrderIds.has(o.id)) return false;
-                if (['new', 'accepted', 'preparing', 'ready', 'delivering'].includes(o.status)) return true;
-                const orderDate = new Date(o.updated_at || o.created_at);
-                const diffMinutes = (now - orderDate) / (1000 * 60);
-                return diffMinutes < 1; 
+                if (['new', 'pending', 'accepted', 'preparing', 'ready', 'delivering'].includes(o.status)) return true;
+                // Finished order: linger for a fixed time after the client first sees it finished, then drop.
+                if (!seen[o.id]) seen[o.id] = now;
+                return (now - seen[o.id]) < FINISHED_LINGER_MS;
             });
+            // Keep the localStorage map tidy — forget entries older than the 12h fetch window.
+            Object.keys(seen).forEach(id => { if (now - seen[id] > 12 * 60 * 60 * 1000) delete seen[id]; });
+            localStorage.setItem('finished_seen_at', JSON.stringify(seen));
             setActiveOrders(filtered);
         }
     };
@@ -1441,7 +1451,7 @@ function MenuItemCard({ item, onAdd, flashRule }) {
 function ActiveOrderTracker({ order, onDismiss }) {
     if (!order) return null;
 
-    const statuses = ['new', 'accepted', 'preparing', 'ready', 'delivering', 'delivered'];
+    const statuses = ['new', 'pending', 'accepted', 'preparing', 'ready', 'delivering', 'delivered'];
     const currentIndex = statuses.indexOf(order.status);
     const isCollection = order.address === 'Személyes átvétel';
     const isClosed = ['delivered', 'rejected', 'cancelled'].includes(order.status);
@@ -1455,7 +1465,7 @@ function ActiveOrderTracker({ order, onDismiss }) {
 
     // Determine current logical step index for the simplified UI
     let activeStep = 0;
-    if (order.status === 'new') activeStep = 0;
+    if (order.status === 'new' || order.status === 'pending') activeStep = 0;
     if (order.status === 'accepted' || order.status === 'preparing') activeStep = 1;
     if (order.status === 'ready' || order.status === 'delivering') activeStep = 2;
     if (order.status === 'delivered') activeStep = 3;
