@@ -22,15 +22,15 @@ const WIN98 = {
 // Helper function to translate status to Hungarian
 const getStatusText = (status) => {
     const map = {
-        'new': 'ÚJ KÉRÉS!',
-        'pending': 'Függőben',
-        'accepted': 'Elfogadva',
+        'new': 'ÚJ KÉRÉS! 🚨',
+        'pending': 'Függőben ⏳',
+        'accepted': 'Elfogadva 👍',
         'preparing': 'Készül 👨‍🍳',
-        'ready': 'Kész',
+        'ready': 'Elkészült ✅',
         'delivering': 'Futár úton 🛵',
-        'delivered': 'Kézbesítve',
-        'rejected': 'Elutasítva',
-        'cancelled': 'Törölve'
+        'delivered': 'Kézbesítve 🏁',
+        'rejected': 'Elutasítva ❌',
+        'cancelled': 'Törölve 🚫'
     };
     return map[status] || status;
 };
