@@ -121,27 +121,24 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         className="relative h-full bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg border border-white/60 dark:border-white/10"
       >
 
-        {/* Image Container — inset design for clean portrait/landscape handling */}
+        {/* Image Container — inset design, shows full flyer */}
         <div className="p-3 pb-0">
-          <div className="relative aspect-[3/2] overflow-hidden rounded-xl isolate">
+          <div className="relative overflow-hidden rounded-xl isolate bg-gray-100 dark:bg-zinc-800">
             {evt.image && evt.image !== 'balkep_default.jpg' ? (
               <img
                 src={`/images/events/${evt.image}`}
                 alt={evt.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                className="w-full h-auto max-h-[280px] object-contain mx-auto transition-transform duration-700 group-hover:scale-[1.03]"
                 loading="lazy"
                 onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
               />
             ) : (
-              <GhostImage className="w-full h-full rounded-xl" />
+              <GhostImage className="w-full aspect-[3/2] rounded-xl" />
             )}
             {/* Fallback for onError (hidden by default) */}
-            <div className="hidden w-full h-full absolute inset-0">
+            <div className="hidden w-full aspect-[3/2] absolute inset-0">
               <GhostImage className="w-full h-full" />
             </div>
-
-            {/* Bottom gradient fade */}
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
 
             {/* Floating Date Badge */}
             <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-lg border border-white/20">
