@@ -333,7 +333,7 @@ export default function KoszegPassProfile() {
                             `}
                             style={{ backfaceVisibility: 'hidden' }}
                         >
-                            <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+                            <div className="absolute inset-0 opacity-[0.15] bg-[url('/noise.svg')] mix-blend-overlay" />
                             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
 
                             <div className="relative z-10 h-full flex flex-col justify-between pt-0">

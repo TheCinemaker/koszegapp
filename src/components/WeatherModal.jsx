@@ -4,8 +4,6 @@ import { hu } from 'date-fns/locale';
 import { WiHumidity, WiStrongWind, WiRaindrop, WiSunrise, WiSunset, WiBarometer, WiThermometer } from 'react-icons/wi';
 import { IoClose } from 'react-icons/io5';
 
-const API_KEY = 'ebe4857b9813fcfd39e7ce692e491045';
-
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default function WeatherModal({ onClose }) {
@@ -15,7 +13,7 @@ export default function WeatherModal({ onClose }) {
 
   useEffect(() => {
     setAnimate(true);
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=Koszeg,HU&units=metric&appid=${API_KEY}&lang=hu`)
+    fetch(`/.netlify/functions/weather-proxy?type=forecast&lang=hu`)
       .then(res => res.json())
       .then(data => {
         if (data && data.list) {

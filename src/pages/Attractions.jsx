@@ -119,7 +119,7 @@ export default function Attractions() {
         />
 
       {/* GLOBAL BACKGROUND NOISE (Subtle) */}
-      <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
+      <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
 

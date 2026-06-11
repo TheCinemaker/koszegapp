@@ -3,11 +3,10 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { lazyWithRetry } from '../utils/lazyWithRetry';
-import ProvidersPage from '../pages/ProvidersPage';
 import KioskInnerRoutes from './Kiosk/KioskInnerRoutes';
 
-
 // Importing Pages
+const ProvidersPage = lazyWithRetry(() => import('../pages/ProvidersPage'));
 const Home = lazyWithRetry(() => import('../pages/Home'));
 const Attractions = lazyWithRetry(() => import('../pages/Attractions'));
 const AttractionDetail = lazyWithRetry(() => import('../pages/AttractionDetail'));

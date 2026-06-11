@@ -56,7 +56,7 @@ export default function KioskHeader() {
   // 3) Weather — re-fetches when language changes to get translated descriptions
   useEffect(() => {
     const owmLang = OWM_LANG[lang] || 'hu';
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045&lang=${owmLang}`)
+    fetch(`/.netlify/functions/weather-proxy?type=forecast&lang=${owmLang}`)
       .then(res => res.json())
       .then(data => {
         if (!data?.list) return;

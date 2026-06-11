@@ -6,17 +6,17 @@
        FŐOLDALAK
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/</loc>
+    <loc>https://visitkoszeg.hu/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="hu" href="https://koszeg.app/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://koszeg.app/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://koszeg.app/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://visitkoszeg.hu/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://visitkoszeg.hu/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://visitkoszeg.hu/" />
   </url>
 
   <url>
-    <loc>https://koszeg.app/showcase</loc>
+    <loc>https://visitkoszeg.hu/showcase</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -26,63 +26,63 @@
        FELFEDEZÉS
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/attractions</loc>
+    <loc>https://visitkoszeg.hu/attractions</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/events</loc>
+    <loc>https://visitkoszeg.hu/events</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/gastronomy</loc>
+    <loc>https://visitkoszeg.hu/gastronomy</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/hotels</loc>
+    <loc>https://visitkoszeg.hu/hotels</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/leisure</loc>
+    <loc>https://visitkoszeg.hu/leisure</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/live-map</loc>
+    <loc>https://visitkoszeg.hu/live-map</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/weather</loc>
+    <loc>https://visitkoszeg.hu/weather</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>always</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/moments</loc>
+    <loc>https://visitkoszeg.hu/moments</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>always</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/nearby-demo</loc>
+    <loc>https://visitkoszeg.hu/nearby-demo</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
@@ -92,14 +92,14 @@
        PARKOLÁS
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/parking</loc>
+    <loc>https://visitkoszeg.hu/parking</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/parking-map</loc>
+    <loc>https://visitkoszeg.hu/parking-map</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -109,14 +109,14 @@
        JEGYRENDSZER
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/tickets</loc>
+    <loc>https://visitkoszeg.hu/tickets</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/varszinhaz</loc>
+    <loc>https://visitkoszeg.hu/varszinhaz</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -126,14 +126,14 @@
        KŐSZEGEATS
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/eats</loc>
+    <loc>https://visitkoszeg.hu/eats</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/eats-landing</loc>
+    <loc>https://visitkoszeg.hu/eats-landing</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -143,14 +143,14 @@
        KŐSZEG QUEST
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/game/intro</loc>
+    <loc>https://visitkoszeg.hu/game/intro</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/game/rules</loc>
+    <loc>https://visitkoszeg.hu/game/rules</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -160,14 +160,14 @@
        KŐSZEGPASS
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/pass</loc>
+    <loc>https://visitkoszeg.hu/pass</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/city-pass</loc>
+    <loc>https://visitkoszeg.hu/city-pass</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -177,14 +177,14 @@
        SZOLGÁLTATÁSOK / B2B
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/idopontfoglalas</loc>
+    <loc>https://visitkoszeg.hu/idopontfoglalas</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/koszegieknek</loc>
+    <loc>https://visitkoszeg.hu/koszegieknek</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -194,35 +194,35 @@
        INFO / JOGI
   ═══════════════════════════════════ -->
   <url>
-    <loc>https://koszeg.app/info</loc>
+    <loc>https://visitkoszeg.hu/info</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/about</loc>
+    <loc>https://visitkoszeg.hu/about</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/partners</loc>
+    <loc>https://visitkoszeg.hu/partners</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/adatvedelem</loc>
+    <loc>https://visitkoszeg.hu/adatvedelem</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://koszeg.app/terms-provider</loc>
+    <loc>https://visitkoszeg.hu/terms-provider</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

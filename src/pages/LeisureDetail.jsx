@@ -87,7 +87,7 @@ export default function LeisureDetail() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-teal-500 selection:text-white">
 
       {/* GLOBAL BACKGROUND NOISE */}
-      <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
+      <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       {/* --- HERO IMAGE SECTION --- */}
       <div className="relative h-[65vh] w-full overflow-hidden cursor-zoom-in" onClick={() => setShowLightbox(true)}>

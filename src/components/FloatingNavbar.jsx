@@ -2,25 +2,17 @@ import { triggerHaptic } from '../utils/haptics'; // Import utility
 import { useTranslation } from 'react-i18next'; // Hook
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { IoHomeOutline, IoCalendarOutline, IoRestaurantOutline, IoBedOutline, IoBicycleOutline, IoCarOutline, IoMapOutline, IoCloudyNightOutline, IoInformationCircleOutline, IoLocationOutline, IoPersonCircleOutline, IoKeyOutline, IoHome, IoCalendar, IoRestaurant, IoBed, IoBicycle, IoCar, IoMap, IoCloudyNight, IoInformationCircle, IoLocation, IoPersonCircle, IoKey, IoSearch, IoSearchOutline, IoTicketOutline, IoTicket } from 'react-icons/io5';
+import {
+  IoHomeOutline, IoHome,
+  IoCalendarOutline, IoCalendar,
+  IoTicketOutline, IoTicket,
+  IoMapOutline, IoMap,
+  IoPersonCircleOutline, IoPersonCircle,
+  IoKeyOutline, IoKey
+} from 'react-icons/io5';
 
 export default function FloatingNavbar() {
   const { t } = useTranslation(); // Hook
-  const navItems = [
-    { to: "/", icon: IoHomeOutline, activeIcon: IoHome, label: t('nav.home') },
-    { to: "/tickets", icon: IoTicketOutline, activeIcon: IoTicket, label: t('nav.tickets') || 'Jegyek' },
-    { to: "/events", icon: IoCalendarOutline, activeIcon: IoCalendar, label: t('nav.events') },
-    { to: "/attractions", icon: IoLocationOutline, activeIcon: IoLocation, label: t('nav.attractions') },
-    { to: "/gastronomy", icon: IoRestaurantOutline, activeIcon: IoRestaurant, label: t('nav.gastronomy') },
-    { to: "/hotels", icon: IoBedOutline, activeIcon: IoBed, label: t('nav.hotels') },
-    { to: "/booking", icon: IoSearchOutline, activeIcon: IoSearch, label: t('nav.booking') },
-    { to: "/leisure", icon: IoBicycleOutline, activeIcon: IoBicycle, label: t('nav.leisure') },
-    { to: "/parking", icon: IoCarOutline, activeIcon: IoCar, label: t('nav.parking') },
-    { to: "/live-map", icon: IoMapOutline, activeIcon: IoMap, label: t('nav.map') },
-    { to: "/weather", icon: IoCloudyNightOutline, activeIcon: IoCloudyNight, label: t('nav.weather') },
-    { to: "/info", icon: IoInformationCircleOutline, activeIcon: IoInformationCircle, label: t('nav.info') },
-  ];
-
   const { user } = useAuth();
 
   // Dynamic Auth Item
@@ -28,15 +20,21 @@ export default function FloatingNavbar() {
     ? { to: "/pass/profile", icon: IoPersonCircleOutline, activeIcon: IoPersonCircle, label: t('nav.profile') }
     : { to: "/pass/register", icon: IoKeyOutline, activeIcon: IoKey, label: t('nav.login') };
 
-  // Add to nav items
-  const allNavItems = [...navItems, authItem];
+  // 5 fixed navigation items — no horizontal scrolling
+  const navItems = [
+    { to: "/", icon: IoHomeOutline, activeIcon: IoHome, label: t('nav.home') },
+    { to: "/events", icon: IoCalendarOutline, activeIcon: IoCalendar, label: t('nav.events') },
+    { to: "/tickets", icon: IoTicketOutline, activeIcon: IoTicket, label: t('nav.tickets') || 'Jegyek' },
+    { to: "/live-map", icon: IoMapOutline, activeIcon: IoMap, label: t('nav.map') },
+    authItem,
+  ];
 
   return (
     <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] sm:max-w-md pointer-events-none">
       <div className="
         pointer-events-auto
-        flex items-center gap-1
-        px-2 py-1.5
+        flex items-center justify-around
+        px-3 py-2
         bg-white/40 dark:bg-[#1a1c2e]/40 
         backdrop-blur-[25px] 
         backdrop-saturate-[1.8]
@@ -45,16 +43,16 @@ export default function FloatingNavbar() {
         border border-white/50 dark:border-white/20 
         shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
         transition-all duration-300
-        overflow-x-auto scrollbar-hide snap-x snap-mandatory
       ">
-        {allNavItems.map((item) => (
+        {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
+            end={item.to === '/'}
             onClick={() => triggerHaptic()}
             className={({ isActive }) => `
-              relative group flex flex-col items-center justify-center
-              min-w-[4rem] h-10 rounded-[1rem] snap-center
+              relative group flex flex-col items-center justify-center flex-1
+              h-12 rounded-[1rem]
               transition-all duration-200 ease-out
               active:scale-90
               ${isActive
@@ -74,13 +72,13 @@ export default function FloatingNavbar() {
                   `} />
 
                   {/* Label */}
-                  <span className="text-[9px] font-medium tracking-tight z-10 transition-opacity duration-300 leading-none whitespace-nowrap">
+                  <span className="text-[10px] sm:text-xs font-medium tracking-tight z-10 transition-opacity duration-300 leading-none whitespace-nowrap">
                     {item.label}
                   </span>
 
                   {/* Active Indicator (Dot) */}
                   {isActive && (
-                    <div className="absolute -bottom-1 w-1 h-1 bg-current rounded-full opacity-60" />
+                    <div className="absolute -bottom-0.5 w-1 h-1 bg-current rounded-full opacity-60" />
                   )}
                 </>
               );

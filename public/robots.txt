@@ -1,5 +1,5 @@
 # VisitKőszeg – robots.txt
-# https://koszeg.app
+# https://visitkoszeg.hu
 
 User-agent: *
 Allow: /
@@ -24,4 +24,4 @@ Disallow: /kiosk/
 Crawl-delay: 2
 
 # Sitemap
-Sitemap: https://koszeg.app/sitemap.xml
+Sitemap: https://visitkoszeg.hu/sitemap.xml

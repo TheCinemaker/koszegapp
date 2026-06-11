@@ -74,7 +74,7 @@ export default function AboutDetail() {
         {/* Subtle Ambient Orbs */}
         <div className="absolute top-[-10%] right-[-10%] w-[80vw] h-[80vw] bg-indigo-900/10 rounded-full blur-[150px] mix-blend-screen" />
         <div className="absolute bottom-[10%] left-[-20%] w-[60vw] h-[60vw] bg-blue-900/10 rounded-full blur-[150px] mix-blend-screen" />
-        <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+        <div className="absolute inset-0 opacity-[0.07] bg-[url('/noise.svg')] mix-blend-overlay"></div>
       </div>
 
       {/* --- FLOATING NAV --- */}

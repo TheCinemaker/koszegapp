@@ -7,6 +7,11 @@
   to = "/.netlify/functions/wallet-service"
   status = 200
 
+[[edge_functions]]
+  path = "/*"
+  function = "seo-optimizer"
+  excluded_paths = ["/assets/*", "/v1/*", "/*.js", "/*.css", "/*.png", "/*.jpg", "/*.svg", "/site.webmanifest", "/favicon.png"]
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"

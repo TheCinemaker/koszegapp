@@ -4,6 +4,32 @@ Ebben a fájlban követjük a projekt haladását, az elvégzett módosításoka
 
 ---
 
+## 📅 2026. június 11. - SEO, Biztonság, Hozzáférhetőség és Kódszétvágás Fixek
+
+### 🔍 SEO & Közösségi Előnézet (Open Graph)
+- [x] **Netlify Edge Function (`seo-optimizer.js`):** Létrehozva a Deno-alapú edge funkció, ami a kéréseket lefülelve automatikusan és villámgyorsan behelyettesíti a helyes Open Graph (`og:title`, `og:description`, `og:image`) és Twitter Card meta tageket a bots/crawlers kéréseihez, a Supabase-ből lekérve a dinamikus étterem és esemény adatokat (így működik a Facebook/Twitter megosztás előnézete).
+- [x] **Regisztráció:** Konfigurálva a `netlify.toml`-ben az Edge Function futtatása a dokumentum kérésekhez (kivéve a statikus asseteket).
+
+### 🌐 Domain Javítások (Robots.txt & Sitemap & SEO)
+- [x] **robots.txt & sitemap.xml:** Minden nem létező `koszeg.app` domain hivatkozás lecserélve a helyes `visitkoszeg.hu`-ra, megelőzve az NXDOMAIN hibát a keresőmotoroknál.
+- [x] **SEO.jsx:** A `BASE_URL` konstans átírva a helyes domainre.
+
+### 🛡️ Időjárás API Biztonság (OpenWeatherMap)
+- [x] **Weather Proxy Netlify Function (`weather-proxy.js`):** Létrehozva egy backend proxy funkció az OpenWeatherMap hívásokhoz, így a privát API kulcs kikerült a kliens oldali JS bundle-ből.
+- [x] **Hibrid kliens-oldali integráció (`weather.js`):** A központi lekérő funkció átírva, hogy a proxyt használja, de tartalmaz egy automatikus fallback logikát közvetlen hívásra, ha helyi fejlesztésben a Netlify CLI proxy nem fut. A KioskHeader, WeatherModal és ProgramModal komponensek átirányítva a proxyra.
+
+### ⚡ Kódszétvágás és Bundle optimalizálás
+- [x] **App.jsx importok tisztítása:** Eltávolítva 23 darab nem használt statikus lap importálás (Home, Attractions, Events, stb.), amelyek blokkolták a Vite beépített kódszétvágását (code-splitting). Ennek köszönhetően a fő JS bundle mérete töredékére csökkent, a lapok (pl. ARView ~3.2MB, FoodAdmin ~520KB, TicketScanner ~340KB) külön chunkokba kerültek, amiket a vendég csak szükség esetén tölt le.
+- [x] **ProvidersPage lazy load:** Átalakítva dinamikus importtá az `AnimatedRoutes.jsx`-ben.
+
+### ♿ WCAG és Hozzáférhetőség
+- [x] **Viewport nagyítás:** Az `index.html`-ből eltávolítva a `maximum-scale=1.0` és `user-scalable=no` korlátozás, így a gyengébben látó és idősebb turisták szabadon nagyíthatják az oldalt mobilról.
+
+### 🖼️ Lazy Képbetöltés Fix
+- [x] **MutationObserver a DOM helyett:** Az `index.html`-ben lévő statikus `DOMContentLoaded` esemény lecserélve egy dinamikus `MutationObserver` alapú megoldásra, ami a React által futásidőben felcsatolt (mounted) képeket is sikeresen észleli, és ellátja a `loading="lazy"` attribútummal.
+
+---
+
 ## 📅 Utolsó frissítés: 2026. április 16.
 
 ### 🎯 Jelenlegi fókusz: DIGITÁLIS PINCÉR (QR PLATFORM) ÉLESÍTÉSE

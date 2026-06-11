@@ -46,7 +46,7 @@ export default function Partners() {
     return (
         <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-32">
             {/* ATMOSPHERE */}
-            <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none"></div>
+            <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none"></div>
 
             {/* HEADER */}
             <div className="max-w-4xl mx-auto px-6 pt-12 pb-24 text-center">

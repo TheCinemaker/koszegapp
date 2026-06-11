@@ -103,7 +103,7 @@ export default function Info() {
         />
 
       {/* GLOBAL BACKGROUND NOISE */}
-      <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
+      <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       <div className="max-w-3xl mx-auto relative z-10">
 

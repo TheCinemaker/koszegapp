@@ -17,7 +17,7 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>visitKőszeg – Élmények. Élőben.</title>
 
   <link rel="icon" href="/favicon.png" />
@@ -38,13 +38,22 @@
     gtag('config', 'G-D0XMCLKMTC');
   </script>
 
-  <!-- Lazy képbetöltés -->
+  <!-- Lazy képbetöltés MutationObserver-rel (React-kompatibilis) -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll('img').forEach(function (img) {
-        if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.tagName === 'IMG') {
+            if (!node.hasAttribute('loading')) node.setAttribute('loading', 'lazy');
+          } else if (node.querySelectorAll) {
+            node.querySelectorAll('img').forEach((img) => {
+              if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+            });
+          }
+        });
       });
     });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
   </script>
 
 </head>

@@ -176,9 +176,9 @@ export default function ProgramModal({ onClose }) {
         setEvents(parsed);
 
         // Weather (opcionális)
-        fetch('https://api.openweathermap.org/data/2.5/weather?q=Koszeg,HU&units=metric&appid=ebe4857b9813fcfd39e7ce692e491045')
+        fetch('/.netlify/functions/weather-proxy?type=weather&lang=hu')
           .then(r => r.json())
-          .then(d => { if (d.cod === 200) setWeatherData({ temp: Math.round(d.main.temp), description: d.weather[0].description, icon: d.weather[0].icon }); })
+          .then(d => { if (d && (d.cod === 200 || d.main)) setWeatherData({ temp: Math.round(d.main.temp), description: d.weather[0].description, icon: d.weather[0].icon }); })
           .catch(() => { });
 
         // Induló visszaszámláló célpont beállítása az első eseményhez

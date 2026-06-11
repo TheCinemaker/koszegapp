@@ -20,7 +20,7 @@ export default function WeatherDetail() {
             <IoSunny className="text-9xl text-yellow-300 blur-xl" />
           </div>
 
-          <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
+          <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("/noise.svg")' }}></div>
         </div>
 
         {/* Gradient Overlay (Top & Bottom) */}

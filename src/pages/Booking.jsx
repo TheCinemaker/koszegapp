@@ -85,7 +85,7 @@ export default function Booking() {
             {/* --- PREMIUM BACKGROUND ELEMENTS --- */}
             <div className="fixed inset-0 pointer-events-none z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 blur-[120px] rounded-full" />
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay" />
+                <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.02] mix-blend-overlay" />
             </div>
 
             <div className="relative z-10 max-w-lg mx-auto px-4 pt-3">

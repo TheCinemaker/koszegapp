@@ -22,30 +22,7 @@ import AIAssistant from './components/AIAssistant';
 import { AIOrchestratorProvider } from './contexts/AIOrchestratorContext.jsx';
 import AISmartLayer from './components/AISmartLayer.jsx';
 import AIDebugPanel from './components/AIDebugPanel.jsx';
-
-import Home from './pages/Home';
-import Attractions from './pages/Attractions';
-import AttractionDetail from './pages/AttractionDetail';
-import Events from './pages/Events';
-import EventDetail from './pages/EventDetail';
-import Gastronomy from './pages/Gastronomy';
-import RestaurantDetail from './pages/RestaurantDetail';
-import Hotels from './pages/Hotels';
-import HotelDetail from './pages/HotelDetail';
-import Leisure from './pages/Leisure';
-import LeisureDetail from './pages/LeisureDetail';
-import Parking from './pages/Parking';
-import ParkingDetail from './pages/ParkingDetail';
-import ParkingMap from './pages/ParkingMap';
-import Info from './pages/Info';
-import AboutDetail from './pages/AboutDetail';
-import WeatherDetail from './pages/WeatherDetail';
-import Adatvedelem from './pages/Adatvedelem';
-import GemDetail from './pages/GemDetail';
-import GameIntro from './pages/GameIntro';
-import IntroExperience from './pages/IntroExperience';
 import ProgramModal from './components/ProgramModal';
-import FeatureShowcase from './pages/FeatureShowcase';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import WeatherModal from './components/WeatherModal';
@@ -94,8 +71,15 @@ function MainAppContent() {
   const { dark, toggleDark } = useContext(DarkModeContext);
   const { favorites, isFavorite, pruneFavorites } = useFavorites();
 
-  // 🧠 Page Tracking for Behavior Engine
+  // 🧠 Page Tracking for Behavior Engine & Google Analytics
   useEffect(() => {
+    // Google Analytics 4 - Pageview Event (SPA route handling)
+    if (typeof window.gtag === 'function') {
+      window.gtag('config', 'G-D0XMCLKMTC', {
+        page_path: location.pathname + location.search
+      });
+    }
+
     const start = Date.now();
 
     return () => {

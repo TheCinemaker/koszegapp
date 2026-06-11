@@ -1,14 +1,34 @@
 // src/api/weather.js
-const API_KEY = 'ebe4857b9813fcfd39e7ce692e491045';
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
-export async function fetchCurrentWeather() {
-  const url = `${BASE_URL}/weather?q=Koszeg,HU&units=metric&appid=${API_KEY}`;
+async function fetchWithFallback(type, params = {}) {
+  try {
+    const queryParams = new URLSearchParams({ type, ...params }).toString();
+    const res = await fetch(`/.netlify/functions/weather-proxy?${queryParams}`);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.warn("Weather proxy failed, using direct OpenWeatherMap fallback...", e);
+  }
+
+  // Direct fallback call (used for local development if Netlify CLI isn't running)
+  const API_KEY = 'ebe4857b9813fcfd39e7ce692e491045';
+  const queryParams = new URLSearchParams({
+    q: 'Koszeg,HU',
+    units: 'metric',
+    appid: API_KEY,
+    ...params
+  }).toString();
+  const url = `https://api.openweathermap.org/data/2.5/${type}?${queryParams}`;
   const res = await fetch(url);
   if (!res.ok) {
-    throw new Error('Hiba az aktuális időjárás lekérésekor');
+    throw new Error(`Hiba az időjárás lekérésekor (${type})`);
   }
-  const data = await res.json();
+  return await res.json();
+}
+
+export async function fetchCurrentWeather() {
+  const data = await fetchWithFallback('weather', { lang: 'hu' });
   return {
     temp: Math.round(data.main.temp),
     icon: data.weather[0].icon,
@@ -17,12 +37,7 @@ export async function fetchCurrentWeather() {
 }
 
 export async function fetchForecastWeather() {
-  const url = `${BASE_URL}/forecast?q=Koszeg,HU&units=metric&appid=${API_KEY}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error('Hiba az előrejelzés lekérésekor');
-  }
-  const data = await res.json();
+  const data = await fetchWithFallback('forecast', { lang: 'hu' });
 
   // Csoportosítás napokra
   const dailyMap = {};
@@ -49,12 +64,7 @@ export async function fetchForecastWeather() {
 }
 
 export async function fetchUpcomingWeather() {
-  const url = `${BASE_URL}/forecast?q=Koszeg,HU&units=metric&appid=${API_KEY}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error('Hiba az előrejelzés lekérésekor');
-  }
-  const data = await res.json();
+  const data = await fetchWithFallback('forecast', { lang: 'hu' });
 
   // Return the first 4 items (next 12 hours) to check for imminent changes
   return data.list.slice(0, 4).map(item => ({
@@ -64,3 +74,4 @@ export async function fetchUpcomingWeather() {
     pop: item.pop // Probability of precipitation
   }));
 }
+

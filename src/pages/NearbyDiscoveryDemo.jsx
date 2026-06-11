@@ -40,7 +40,7 @@ export default function NearbyDiscoveryDemo({ appData, weather }) {
     <div className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative bg-slate-50 dark:bg-zinc-950">
       
       {/* BACKGROUND NOISE */}
-      <div className="fixed inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
+      <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         

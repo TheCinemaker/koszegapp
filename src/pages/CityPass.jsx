@@ -67,7 +67,7 @@ const CityPass = () => {
                                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-700 rounded-[2rem]" />
                                 <div className="relative aspect-[1.58] rounded-[2rem] overflow-hidden bg-gradient-to-br from-[#1a1c2e] to-[#2d3748] border border-white/10 shadow-2xl p-6 sm:p-8 flex flex-col justify-between text-white">
                                     {/* Texture */}
-                                    <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+                                    <div className="absolute inset-0 opacity-10 bg-[url('/noise.svg')]" />
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[60px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
                                     <div className="flex justify-between items-start z-10">
