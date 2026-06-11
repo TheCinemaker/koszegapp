@@ -19,7 +19,7 @@ import {
   IoLockClosed
 } from 'react-icons/io5';
 import { motion } from 'framer-motion';
-import { FadeUp } from '../components/AppleMotion';
+import { FadeUp, SpringUp } from '../components/AppleMotion';
 
 import { useTranslation } from 'react-i18next'; // Added import
 
@@ -28,22 +28,25 @@ import NearbyDiscoveryCard from '../components/NearbyDiscoveryCard';
 import MomentsStrip from '../components/MomentsStrip';
 import SEO from '../components/SEO';
 
+// Link with framer-motion spring physics on hover/press — felt every interaction, mouse or touch.
+const MotionLink = motion(Link);
+
 export default function Home({ appData, weather }) {
   const { t } = useTranslation('home'); // Load 'home' namespace
 
   const sections = [
-    { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, gradient: 'from-indigo-600 to-purple-800', span: 'col-span-2 sm:col-span-2', delay: 0.05 },
-    { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, gradient: 'from-pink-500 to-rose-600', span: 'col-span-1 sm:col-span-1', delay: 0.08 },
-    { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, gradient: 'from-amber-500 to-orange-600', span: 'col-span-1 sm:col-span-1', delay: 0.10 },
-    { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, gradient: 'from-blue-600 to-indigo-700', span: 'col-span-2 sm:col-span-2', delay: 0.12 },
-    { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, gradient: 'from-emerald-500 to-teal-700', span: 'col-span-1 sm:col-span-1', delay: 0.14 },
-    { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, gradient: 'from-orange-500 to-red-600', span: 'col-span-1 sm:col-span-2', delay: 0.16 },
-    { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, gradient: 'from-blue-700 to-blue-900', span: 'col-span-1 sm:col-span-1', delay: 0.18 },
-    { to: '/hotels', label: t('sections.hotels.label'), desc: t('sections.hotels.desc'), icon: IoBedOutline, gradient: 'from-violet-600 to-purple-800', span: 'col-span-1 sm:col-span-1', delay: 0.20 },
-    { to: '/weather', label: t('sections.weather.label'), desc: t('sections.weather.desc'), icon: IoCloudyNightOutline, gradient: 'from-sky-500 to-blue-700', span: 'col-span-1 sm:col-span-1', delay: 0.22 },
-    { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, gradient: 'from-lime-500 to-green-700', span: 'col-span-1 sm:col-span-1', delay: 0.24 },
-    { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, gradient: 'from-zinc-600 to-gray-800', span: 'col-span-1 sm:col-span-1', delay: 0.26 },
-    { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, gradient: 'from-teal-500 to-cyan-700', span: 'col-span-1 sm:col-span-1', delay: 0.28 },
+    { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, span: 'col-span-2 sm:col-span-2', delay: 0.05 },
+    { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
+    { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
+    { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, span: 'col-span-2 sm:col-span-2', delay: 0.12 },
+    { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.14 },
+    { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, span: 'col-span-1 sm:col-span-2', delay: 0.16 },
+    { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.18 },
+    { to: '/hotels', label: t('sections.hotels.label'), desc: t('sections.hotels.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.20 },
+    { to: '/weather', label: t('sections.weather.label'), desc: t('sections.weather.desc'), icon: IoCloudyNightOutline, span: 'col-span-1 sm:col-span-1', delay: 0.22 },
+    { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, span: 'col-span-1 sm:col-span-1', delay: 0.24 },
+    { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, span: 'col-span-1 sm:col-span-1', delay: 0.26 },
+    { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, span: 'col-span-1 sm:col-span-1', delay: 0.28 },
   ];
 
   return (
@@ -85,9 +88,12 @@ export default function Home({ appData, weather }) {
         {/* --- ULTRA-COMPACT BENTO GRID --- */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 auto-rows-fr">
           {sections.map((sec) => (
-            <FadeUp key={sec.label} delay={sec.delay * 0.5 + 0.1} duration={0.6} className={sec.span}>
-              <Link
+            <SpringUp key={sec.label} delay={sec.delay * 0.5 + 0.1} className={sec.span}>
+              <MotionLink
                 to={sec.external || sec.comingSoon ? '#' : sec.to}
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
                 onClick={(e) => {
                   if (sec.comingSoon) {
                     e.preventDefault();
@@ -99,23 +105,21 @@ export default function Home({ appData, weather }) {
                 }}
                 className={`
                       relative h-full block rounded-[1.5rem] p-5 lg:p-6
-                      bg-white/70 dark:bg-white/5 
-                      backdrop-blur-[20px] backdrop-saturate-[1.6]
-                      border border-white/60 dark:border-white/10
-                      shadow-sm hover:shadow-xl hover:shadow-indigo-500/10
-                      transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]
+                      ${sec.featured
+                        ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10'
+                        : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
+                      shadow-sm hover:shadow-lg
                       flex flex-col justify-between overflow-hidden group
                       ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
                   `}
               >
-                {/* Internal Glow Gradient */}
-                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${sec.gradient} opacity-40 blur-[40px] rounded-full -mr-8 -mt-8 group-hover:scale-150 transition-transform duration-1000 ease-out`} />
-
-                {/* Icon (Ultra Compact) */}
+                {/* Icon — monochrome on neutral material; single accent on hover */}
                 <div className={`
                       relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3
-                      bg-gradient-to-br ${sec.gradient} text-white shadow-md shadow-gray-300/30 dark:shadow-none
-                      group-hover:rotate-6 group-hover:scale-110 transition-all duration-300 ease-out
+                      transition-all duration-300 ease-out group-hover:scale-105
+                      ${sec.featured
+                        ? 'bg-white/15 text-white'
+                        : 'bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 group-hover:text-[#0a97be]'}
                   `}>
                   <sec.icon />
                 </div>
@@ -123,19 +127,19 @@ export default function Home({ appData, weather }) {
                 {/* Content (Delayed Reveal) */}
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-0.5">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-none tracking-tight">
+                    <h3 className={`text-xl font-bold leading-none tracking-tight ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                       {sec.label}
                     </h3>
                     {!sec.comingSoon && (
-                      <IoChevronForward className="text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm" />
+                      <IoChevronForward className={`opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm ${sec.featured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'}`} />
                     )}
                   </div>
                   {/* Delayed Fade-in for slogan */}
                   <motion.p
                     initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 0.9, y: 0 }}
+                    animate={{ opacity: sec.featured ? 0.8 : 0.9, y: 0 }}
                     transition={{ delay: sec.delay * 0.5 + 0.3, duration: 0.6, ease: "easeOut" }}
-                    className="text-xs font-semibold text-gray-500 dark:text-gray-400 leading-tight group-hover:text-indigo-500 transition-colors duration-500"
+                    className={`text-xs font-semibold leading-tight transition-colors duration-500 ${sec.featured ? 'text-white/80' : 'text-gray-500 dark:text-gray-400 group-hover:text-[#0a97be]'}`}
                   >
                     {sec.desc}
                   </motion.p>
@@ -150,8 +154,8 @@ export default function Home({ appData, weather }) {
                     </div>
                   </div>
                 )}
-              </Link>
-            </FadeUp>
+              </MotionLink>
+            </SpringUp>
           ))}
         </div>
       </div>

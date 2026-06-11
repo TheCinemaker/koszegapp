@@ -24,6 +24,34 @@ export const FadeUp = ({ children, delay = 0, duration = 0.7, className = "" }) 
 };
 
 /**
+ * Spring-physics entrance — momentum + a touch of overshoot, the way iOS moves.
+ * Transform springs; opacity uses a short tween so it never lingers faded.
+ */
+export const SpringUp = ({ children, delay = 0, className = "" }) => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
+
+    return (
+        <motion.div
+            ref={ref}
+            className={className}
+            initial={{ opacity: 0, y: 32, scale: 0.94 }}
+            animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+            transition={{
+                type: 'spring',
+                stiffness: 300,
+                damping: 18,
+                mass: 0.9,
+                delay,
+                opacity: { duration: 0.3, delay },
+            }}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
+/**
  * Parallax Image container.
  * Must be placed inside a relative container with overflow-hidden types.
  */
