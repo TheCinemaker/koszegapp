@@ -25,8 +25,9 @@ const getStatusText = (status) => {
         'new': 'ÚJ KÉRÉS!',
         'pending': 'Függőben',
         'accepted': 'Elfogadva',
-        'preparing': 'Készül',
+        'preparing': 'Készül 👨‍🍳',
         'ready': 'Kész',
+        'delivering': 'Futár úton 🛵',
         'delivered': 'Kézbesítve',
         'rejected': 'Elutasítva',
         'cancelled': 'Törölve'
@@ -402,36 +403,52 @@ function OrderList({ restaurantId, restaurantName }) {
                                     }
                                 `}
                             >
-                                <td className={`p-4 border-b ${order.status === 'new' ? 'border-amber-200 dark:border-amber-900/50' : 'border-gray-100 dark:border-white/5'}`}>{new Date(order.created_at).toLocaleTimeString()}</td>
-                                <td className={`p-4 border-b ${order.status === 'new' ? 'border-amber-200 dark:border-amber-900/50' : 'border-gray-100 dark:border-white/5'} font-bold`}>{order.customer_name}</td>
-                                <td className={`p-4 border-b ${order.status === 'new' ? 'border-amber-200 dark:border-amber-900/50' : 'border-gray-100 dark:border-white/5'} text-xs truncate max-w-[150px] opacity-70`} title={order.customer_address}>{order.customer_address}</td>
                                 <td className={`p-4 border-b ${order.status === 'new' ? 'border-amber-200 dark:border-amber-900/50' : 'border-gray-100 dark:border-white/5'} text-xs italic opacity-80`}>
                                     {order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}
                                     {order.customer_note && <span className={`font-bold ml-1 ${order.status === 'new' ? 'text-amber-900' : 'text-red-500 dark:text-red-400'}`}> (! {order.customer_note})</span>}
                                 </td>
                                 <td className={`p-4 border-b ${order.status === 'new' ? 'border-amber-200 dark:border-amber-900/50' : 'border-gray-100 dark:border-white/5'} text-right font-medium`}>{order.total_price} Ft</td>
                                 <td className={`p-4 border-b ${order.status === 'new' ? 'border-amber-200 dark:border-amber-900/50' : 'border-gray-100 dark:border-white/5'} text-center`}>
-                                    <span className={`px-2 py-1 rounded-md text-xs uppercase font-bold 
-                                        ${order.status === 'new' ? 'bg-amber-600 text-white shadow-sm' :
-                                            order.status === 'accepted' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30' :
-                                                order.status === 'ready' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30' : 'bg-green-100 text-green-800 dark:bg-green-900/30'}
+                                    <span className={`px-2.5 py-1 rounded-md text-xs uppercase font-bold tracking-wider border
+                                        ${order.status === 'new' ? 'bg-amber-600 text-white border-amber-700 shadow-sm shadow-amber-500/20' :
+                                            order.status === 'accepted' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 border-amber-200 dark:border-amber-800/30' :
+                                                order.status === 'preparing' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800/30' :
+                                                    (order.status === 'ready' || order.status === 'delivering') ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800/30' :
+                                                        order.status === 'delivered' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 border-green-200 dark:border-green-800/30' :
+                                                            'bg-gray-100 text-gray-800 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700/50'}
                                      `}>
                                         {getStatusText(order.status)}
                                     </span>
                                 </td>
-                                <td className="p-4 border-b border-gray-100 dark:border-white/5 flex gap-2 justify-center">
+                                <td className="p-4 border-b border-gray-100 dark:border-white/5 flex gap-2 justify-center flex-wrap">
                                     {order.status === 'new' ? (
                                         <>
-                                            <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'accepted'); }} className={`${WIN98.btn}`}>Ok</button>
-                                            <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'rejected'); }} className={`${WIN98.btn}`}>Nem</button>
+                                            <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'accepted'); }} className="border border-green-200 dark:border-green-800/50 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-700 dark:text-green-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Elfogad</button>
+                                            <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'rejected'); }} className="border border-red-200 dark:border-red-800/50 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-700 dark:text-red-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Elutasít</button>
                                         </>
                                     ) : (
                                         <>
                                             {order.status === 'accepted' && (
-                                                <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'ready'); }} className={`${WIN98.btn}`}>Futár</button>
+                                                <>
+                                                    <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'preparing'); }} className="border border-purple-200 dark:border-purple-800/50 bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Készül</button>
+                                                    {order.customer_address === 'Személyes átvétel' ? (
+                                                        <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'ready'); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Elkészült</button>
+                                                    ) : (
+                                                        <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'delivering'); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Szállítjuk</button>
+                                                    )}
+                                                </>
                                             )}
-                                            {order.status === 'ready' && (
-                                                <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'delivered'); }} className={`${WIN98.btn}`}>Kész</button>
+                                            {order.status === 'preparing' && (
+                                                <>
+                                                    {order.customer_address === 'Személyes átvétel' ? (
+                                                        <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'ready'); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Elkészült</button>
+                                                    ) : (
+                                                        <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'delivering'); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-medium px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Szállítjuk</button>
+                                                    )}
+                                                </>
+                                            )}
+                                            {(order.status === 'ready' || order.status === 'delivering') && (
+                                                <button onClick={(e) => { e.stopPropagation(); handleStatusChange(order.id, 'delivered'); }} className="border border-green-200 dark:border-green-800/50 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-700 dark:text-green-400 active:scale-95 font-bold px-3 py-1.5 text-xs rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1">Kész</button>
                                             )}
                                         </>
                                     )}
@@ -1806,17 +1823,34 @@ function OrderDetailModal({ order, onClose, onStatusChange, onPrint }) {
 
                     {order.status === 'new' && (
                         <>
-                            <button onClick={() => { onStatusChange(order.id, 'accepted'); onClose(); }} className={`${WIN98.btn} bg-green-200 font-bold border-green-800`}>Elfogad</button>
-                            <button onClick={() => { onStatusChange(order.id, 'rejected'); onClose(); }} className={`${WIN98.btn} bg-red-200`}>Elutasít</button>
+                            <button onClick={() => { onStatusChange(order.id, 'accepted'); onClose(); }} className="border border-green-200 dark:border-green-800/50 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-700 dark:text-green-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Elfogad</button>
+                            <button onClick={() => { onStatusChange(order.id, 'rejected'); onClose(); }} className="border border-red-200 dark:border-red-800/50 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-700 dark:text-red-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Elutasít</button>
                         </>
                     )}
 
                     {order.status === 'accepted' && (
-                        <button onClick={() => { onStatusChange(order.id, 'ready'); onClose(); }} className={`${WIN98.btn} font-bold`}>Futárnak Átad</button>
+                        <>
+                            <button onClick={() => { onStatusChange(order.id, 'preparing'); onClose(); }} className="border border-purple-200 dark:border-purple-800/50 bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Készül</button>
+                            {order.customer_address === 'Személyes átvétel' ? (
+                                <button onClick={() => { onStatusChange(order.id, 'ready'); onClose(); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Elkészült</button>
+                            ) : (
+                                <button onClick={() => { onStatusChange(order.id, 'delivering'); onClose(); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Szállítjuk</button>
+                            )}
+                        </>
                     )}
 
-                    {order.status === 'ready' && (
-                        <button onClick={() => { onStatusChange(order.id, 'delivered'); onClose(); }} className={`${WIN98.btn} font-bold`}>Kész / Kiszállítva</button>
+                    {order.status === 'preparing' && (
+                        <>
+                            {order.customer_address === 'Személyes átvétel' ? (
+                                <button onClick={() => { onStatusChange(order.id, 'ready'); onClose(); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Elkészült</button>
+                            ) : (
+                                <button onClick={() => { onStatusChange(order.id, 'delivering'); onClose(); }} className="border border-blue-200 dark:border-blue-800/50 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Szállítjuk</button>
+                            )}
+                        </>
+                    )}
+
+                    {(order.status === 'ready' || order.status === 'delivering') && (
+                        <button onClick={() => { onStatusChange(order.id, 'delivered'); onClose(); }} className="border border-green-200 dark:border-green-800/50 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-700 dark:text-green-400 active:scale-95 font-bold px-4 py-1.5 text-sm rounded-xl shadow-sm transition-all outline-none flex items-center justify-center gap-1.5">Kész / Kiszállítva</button>
                     )}
 
                     <button onClick={onClose} className={`${WIN98.btn} min-w-[60px]`}>Bezár</button>
@@ -1973,11 +2007,16 @@ function SearchPanel({ restaurantId }) {
                                     <td className="p-1 border-r border-gray-200 text-xs">{order.customer_address}</td>
                                     <td className="p-1 border-r border-gray-200 dark:border-white/5 text-right font-mono text-gray-900 dark:text-white">{order.total_price} Ft</td>
                                     <td className="p-1 text-center text-xs">
-                                        <span className={`px-1 rounded-sm
-                                            ${order.status === 'delivered' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
-                                                order.status === 'rejected' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-400'}
+                                        <span className={`px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border
+                                            ${order.status === 'new' ? 'bg-amber-600 text-white border-amber-700' :
+                                                order.status === 'accepted' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 border-amber-200 dark:border-amber-800/30' :
+                                                    order.status === 'preparing' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800/30' :
+                                                        (order.status === 'ready' || order.status === 'delivering') ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800/30' :
+                                                            order.status === 'delivered' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 border-green-200 dark:border-green-800/30' :
+                                                                order.status === 'rejected' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 border-red-200 dark:border-red-800/30' :
+                                                                    'bg-gray-100 text-gray-800 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700/50'}
                                          `}>
-                                            {order.status}
+                                            {getStatusText(order.status)}
                                         </span>
                                     </td>
                                 </tr>
