@@ -123,28 +123,34 @@ export default function Home({ appData, weather }) {
                   {sec.morphId && (
                     <motion.div
                       layoutId={sec.morphId}
-                      transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
+                      transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
                       className="absolute inset-0 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
                     />
                   )}
 
-                  {/* Icon — monochrome on neutral material; single accent on hover */}
-                  <div className={`
+                  {/* Icon — monochrome on neutral material; for the morph card it flies into the page hero */}
+                  <motion.div
+                    layoutId={sec.morphId ? `${sec.morphId}-icon` : undefined}
+                    transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+                    className={`
                         relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3
-                        transition-all duration-300 ease-out group-hover:scale-105
+                        transition-colors duration-300 ease-out group-hover:scale-105
                         ${sec.featured
                           ? 'bg-white/15 text-white'
                           : 'bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 group-hover:text-[#0a97be]'}
                     `}>
                     <sec.icon />
-                  </div>
+                  </motion.div>
 
                   {/* Content (Delayed Reveal) */}
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-0.5">
-                      <h3 className={`text-xl font-bold leading-none tracking-tight ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                      <motion.h3
+                        layoutId={sec.morphId ? `${sec.morphId}-title` : undefined}
+                        transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+                        className={`text-xl font-bold leading-none tracking-tight ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                         {sec.label}
-                      </h3>
+                      </motion.h3>
                       {!sec.comingSoon && (
                         <IoChevronForward className={`opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm ${sec.featured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'}`} />
                       )}

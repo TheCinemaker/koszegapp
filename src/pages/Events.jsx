@@ -36,6 +36,7 @@ import {
   FaInfoCircle,
   FaGem
 } from 'react-icons/fa';
+import { IoCalendarOutline } from 'react-icons/io5';
 import { Toaster, toast } from 'react-hot-toast';
 import EventImageCard from '../components/EventImageCard'; // Using logic, but custom render? Or adapting? Let's use custom for max control.
 
@@ -360,15 +361,26 @@ export default function Events() {
       {/* Morph target must exist during loading too, or the shared-element has nothing to connect to */}
       <motion.div
         layoutId="morph-events"
-        transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
+        transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
         className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
       >
-        <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-          <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
+        <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <FaArrowLeft className="text-lg" />
         </Link>
-        <h1 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          {t('header')}
-        </h1>
+        <motion.div
+          layoutId="morph-events-icon"
+          transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100"
+        >
+          <IoCalendarOutline />
+        </motion.div>
+        <motion.h1
+          layoutId="morph-events-title"
+          transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+          className="text-xl font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          Események
+        </motion.h1>
       </motion.div>
       <div className="flex justify-center mt-20">
         <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-2xl animate-spin"></div>
@@ -391,15 +403,26 @@ export default function Events() {
       {/* 1. HEADER — shared-element morph target (matches the Home "Események" card) */}
       <motion.div
         layoutId="morph-events"
-        transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
+        transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
         className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
       >
-        <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-          <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
+        <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <FaArrowLeft className="text-lg" />
         </Link>
-        <h1 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          {t('header')}
-        </h1>
+        <motion.div
+          layoutId="morph-events-icon"
+          transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100"
+        >
+          <IoCalendarOutline />
+        </motion.div>
+        <motion.h1
+          layoutId="morph-events-title"
+          transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+          className="text-xl font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          Események
+        </motion.h1>
       </motion.div>
 
       <div className="max-w-7xl mx-auto">
