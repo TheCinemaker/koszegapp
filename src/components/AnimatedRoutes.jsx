@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Routes, Route, useLocation, useNavigationType, Navigate } from 'react-router-dom';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 
 import { lazyWithRetry } from '../utils/lazyWithRetry';
 import KioskInnerRoutes from './Kiosk/KioskInnerRoutes';
@@ -79,35 +79,49 @@ const KioskIdleWrapper = lazyWithRetry(() => import('./Kiosk/KioskIdleWrapper'))
 import Footer from './Footer';
 
 // iOS-style Slide Over Variants
+// direction: 1 = forward (push), -1 = back (pop). Mirrors iOS native push/pop.
+const DirectionContext = React.createContext(1);
+
 const pageVariants = {
-  initial: {
-    opacity: 0,
-    x: '20vw',  // Slide in from right (reduced distance for smoother feel)
-    scale: 0.99 // Slight depth effect
-  },
+  initial: (dir) => ({
+    x: dir >= 0 ? '100%' : '-28%',   // forward: enter full from right | back: enter as parallax from left
+    scale: dir >= 0 ? 1 : 0.96,
+    zIndex: dir >= 0 ? 2 : 1,        // the full-travel page rides on top
+  }),
   in: {
-    opacity: 1,
     x: 0,
-    scale: 1
+    scale: 1,
+    zIndex: 1,
   },
-  out: {
-    opacity: 0,
-    x: '-5vw',  // Slight parallax exit to left
-    scale: 0.99
-  }
+  out: (dir) => ({
+    x: dir >= 0 ? '-28%' : '100%',   // forward: exit as parallax to left | back: exit full to right
+    scale: dir >= 0 ? 0.96 : 1,
+    zIndex: dir >= 0 ? 1 : 2,
+  }),
 };
 
 const pageTransition = {
-  type: 'tween',
-  ease: [0.25, 0.1, 0.25, 1], // iOS ease curve
-  duration: 0.35
+  type: 'spring',
+  stiffness: 300,
+  damping: 32,
+  mass: 0.9,
 };
 
 export default function AnimatedRoutes({ appData, weather }) {
   const location = useLocation();
+  const navType = useNavigationType();
+  // Direction by route depth — robust even when "back" buttons use navigate('/path') (a PUSH).
+  // Going to a shallower path (detail → list → home) reads as back, mirroring iOS pop.
+  const prevDepthRef = React.useRef(null);
+  const depth = location.pathname.replace(/\/+$/, '').split('/').filter(Boolean).length;
+  const direction =
+    prevDepthRef.current !== null && depth < prevDepthRef.current ? -1
+    : navType === 'POP' && prevDepthRef.current !== null && depth === prevDepthRef.current ? -1
+    : 1;
+  React.useEffect(() => { prevDepthRef.current = depth; }, [location.pathname]);
 
   return (
-    <AnimatePresence mode="wait">
+    <DirectionContext.Provider value={direction}>
       <Suspense fallback={
         <div className="flex h-screen w-full items-center justify-center bg-zinc-50 dark:bg-zinc-900">
           <div className="flex flex-col items-center gap-4">
@@ -116,13 +130,15 @@ export default function AnimatedRoutes({ appData, weather }) {
           </div>
         </div>
       }>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageWrapper><Home appData={appData} weather={weather} /></PageWrapper>} />
+        <LayoutGroup>
+        <AnimatePresence custom={direction} initial={false}>
+          <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageWrapper morph><Home appData={appData} weather={weather} /></PageWrapper>} />
 
           <Route path="/attractions" element={<PageWrapper><Attractions attractions={appData.attractions} loading={appData.loading} /></PageWrapper>} />
           <Route path="/attractions/:id" element={<PageWrapper><AttractionDetail /></PageWrapper>} />
 
-          <Route path="/events" element={<PageWrapper><Events events={appData.events} loading={appData.loading} /></PageWrapper>} />
+          <Route path="/events" element={<PageWrapper morph><Events events={appData.events} loading={appData.loading} /></PageWrapper>} />
           <Route path="/varszinhaz" element={<PageWrapper><Varszinhaz /></PageWrapper>} />
           <Route path="/events/:id" element={<PageWrapper><EventDetail /></PageWrapper>} />
 
@@ -251,21 +267,33 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/menu/:restaurantId/:tableId" element={<QRMenu />} />
           <Route path="/menu-admin" element={<QRAdmin />} />
 
-        </Routes>
+          </Routes>
+        </AnimatePresence>
+        </LayoutGroup>
       </Suspense>
-    </AnimatePresence>
+    </DirectionContext.Provider>
   );
 }
 
 // Wrapper to apply animation
-const PageWrapper = ({ children, showFooter = true }) => (
+// Opacity-only variants for routes that own a shared-element morph — the slide would fight the morph.
+const morphVariants = {
+  initial: { opacity: 0 },
+  in: { opacity: 1 },
+  out: { opacity: 0 },
+};
+
+const PageWrapper = ({ children, showFooter = true, morph = false }) => {
+  const direction = React.useContext(DirectionContext);
+  return (
   <motion.div
+    custom={direction}
     initial="initial"
     animate="in"
     exit="out"
-    variants={pageVariants}
-    transition={pageTransition}
-    className="w-full"
+    variants={morph ? morphVariants : pageVariants}
+    transition={morph ? { duration: 0.25 } : pageTransition}
+    className="w-full bg-gray-50 dark:bg-zinc-900"
     style={{
       position: 'absolute', // Critical for preventing layout jumps (flicker)
       width: '100%',
@@ -283,4 +311,5 @@ const PageWrapper = ({ children, showFooter = true }) => (
       {showFooter && <Footer />}
     </div>
   </motion.div>
-);
+  );
+};

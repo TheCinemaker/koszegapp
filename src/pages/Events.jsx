@@ -356,8 +356,22 @@ export default function Events() {
 
   // --- Render ---
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-2xl animate-spin"></div>
+    <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100">
+      {/* Morph target must exist during loading too, or the shared-element has nothing to connect to */}
+      <motion.div
+        layoutId="morph-events"
+        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
+      >
+        <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+          <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
+        </Link>
+        <h1 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          {t('header')}
+        </h1>
+      </motion.div>
+      <div className="flex justify-center mt-20">
+        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-2xl animate-spin"></div>
+      </div>
     </div>
   );
   if (error) return <p className="text-red-500 p-8 text-center bg-red-50 m-4 rounded-xl">Hiba: {error}</p>;
@@ -373,15 +387,18 @@ export default function Events() {
       />
       <Toaster position="top-right" />
 
-      {/* 1. SIMPLE HEADER (Back + Title) */}
-      <div className="max-w-7xl mx-auto flex items-center gap-4 mb-6 pt-2">
+      {/* 1. HEADER — shared-element morph target (matches the Home "Események" card) */}
+      <motion.div
+        layoutId="morph-events"
+        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
+      >
         <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
           <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
         </Link>
         <h1 className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
           {t('header')}
         </h1>
-      </div>
+      </motion.div>
 
       <div className="max-w-7xl mx-auto">
 
@@ -460,7 +477,7 @@ export default function Events() {
         {upcoming.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {upcoming.map((evt, idx) => (
-              <FadeUp key={evt.id} delay={idx * 0.15} duration={1.6}>
+              <FadeUp key={evt.id} delay={idx * 0.08}>
                 <GigatrendyCard
                   evt={evt}
                   isFavorite={isFavorite(evt.id)}

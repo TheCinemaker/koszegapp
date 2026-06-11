@@ -38,7 +38,7 @@ export default function Home({ appData, weather }) {
     { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, span: 'col-span-2 sm:col-span-2', delay: 0.05 },
     { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
-    { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, span: 'col-span-2 sm:col-span-2', delay: 0.12 },
+    { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.12 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.14 },
     { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, span: 'col-span-1 sm:col-span-2', delay: 0.16 },
     { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.18 },
@@ -105,14 +105,25 @@ export default function Home({ appData, weather }) {
                 }}
                 className={`
                       relative h-full block rounded-[1.5rem] p-5 lg:p-6
-                      ${sec.featured
-                        ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10'
-                        : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
+                      ${sec.morphId
+                        ? 'border border-white/50 dark:border-white/10'
+                        : sec.featured
+                          ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10'
+                          : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
                       shadow-sm hover:shadow-lg
-                      flex flex-col justify-between overflow-hidden group
+                      flex flex-col justify-between group
+                      ${sec.morphId ? 'overflow-visible' : 'overflow-hidden'}
                       ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
                   `}
               >
+                {/* Shared-element morph surface — flies up to become the Events page header */}
+                {sec.morphId && (
+                  <motion.div
+                    layoutId={sec.morphId}
+                    className="absolute inset-0 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
+                  />
+                )}
+
                 {/* Icon — monochrome on neutral material; single accent on hover */}
                 <div className={`
                       relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3

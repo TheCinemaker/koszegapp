@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import { toast } from 'react-hot-toast';
-import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaTicketAlt, FaCreditCard } from 'react-icons/fa';
+import { FaCalendarAlt, FaMapMarkerAlt, FaUsers, FaTicketAlt, FaCreditCard, FaArrowLeft } from 'react-icons/fa';
 
 export default function TicketPurchase() {
     const navigate = useNavigate();
@@ -157,7 +157,14 @@ export default function TicketPurchase() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+        <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+            <button
+                onClick={() => navigate(-1)}
+                aria-label="Vissza"
+                className="absolute top-4 left-4 z-50 w-10 h-10 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/40 dark:border-white/15 flex items-center justify-center text-zinc-900 dark:text-white shadow-lg hover:bg-white dark:hover:bg-white/20 active:scale-90 transition-all"
+            >
+                <FaArrowLeft />
+            </button>
             <div className="max-w-4xl mx-auto">
                 {/* Header with KőszegTICKET Branding */}
                 <div className="text-center mb-16">
