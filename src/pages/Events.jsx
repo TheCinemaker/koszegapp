@@ -123,12 +123,12 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
 
         {/* Image Container — inset design for clean portrait/landscape handling */}
         <div className="p-3 pb-0">
-          <div className="relative aspect-[3/2] overflow-hidden rounded-xl">
+          <div className="relative aspect-[3/2] overflow-hidden rounded-xl isolate">
             {evt.image && evt.image !== 'balkep_default.jpg' ? (
               <img
                 src={`/images/events/${evt.image}`}
                 alt={evt.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 loading="lazy"
                 onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
               />
