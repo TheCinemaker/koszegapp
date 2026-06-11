@@ -89,11 +89,8 @@ export default function Home({ appData, weather }) {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 auto-rows-fr">
           {sections.map((sec) => (
             <SpringUp key={sec.label} delay={sec.delay * 0.5 + 0.1} className={sec.span}>
-              <MotionLink
+              <Link
                 to={sec.external || sec.comingSoon ? '#' : sec.to}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
                 onClick={(e) => {
                   if (sec.comingSoon) {
                     e.preventDefault();
@@ -103,70 +100,77 @@ export default function Home({ appData, weather }) {
                     window.open(sec.to, '_blank', 'noopener,noreferrer');
                   }
                 }}
-                className={`
-                      relative h-full block rounded-[1.5rem] p-5 lg:p-6
-                      ${sec.morphId
-                        ? 'border border-white/50 dark:border-white/10'
-                        : sec.featured
-                          ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10'
-                          : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
-                      shadow-sm hover:shadow-lg
-                      flex flex-col justify-between group
-                      ${sec.morphId ? 'overflow-visible' : 'overflow-hidden'}
-                      ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
-                  `}
+                className="block h-full cursor-pointer"
               >
-                {/* Shared-element morph surface — flies up to become the Events page header */}
-                {sec.morphId && (
-                  <motion.div
-                    layoutId={sec.morphId}
-                    transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
-                    className="absolute inset-0 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
-                  />
-                )}
+                <motion.div
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
+                  className={`
+                        relative h-full rounded-[1.5rem] p-5 lg:p-6
+                        ${sec.morphId
+                          ? 'border border-white/50 dark:border-white/10'
+                          : sec.featured
+                            ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10'
+                            : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
+                        shadow-sm hover:shadow-lg
+                        flex flex-col justify-between group
+                        ${sec.morphId ? 'overflow-visible' : 'overflow-hidden'}
+                        ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
+                    `}
+                >
+                  {/* Shared-element morph surface — flies up to become the Events page header */}
+                  {sec.morphId && (
+                    <motion.div
+                      layoutId={sec.morphId}
+                      transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
+                      className="absolute inset-0 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
+                    />
+                  )}
 
-                {/* Icon — monochrome on neutral material; single accent on hover */}
-                <div className={`
-                      relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3
-                      transition-all duration-300 ease-out group-hover:scale-105
-                      ${sec.featured
-                        ? 'bg-white/15 text-white'
-                        : 'bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 group-hover:text-[#0a97be]'}
-                  `}>
-                  <sec.icon />
-                </div>
-
-                {/* Content (Delayed Reveal) */}
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-0.5">
-                    <h3 className={`text-xl font-bold leading-none tracking-tight ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
-                      {sec.label}
-                    </h3>
-                    {!sec.comingSoon && (
-                      <IoChevronForward className={`opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm ${sec.featured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'}`} />
-                    )}
+                  {/* Icon — monochrome on neutral material; single accent on hover */}
+                  <div className={`
+                        relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3
+                        transition-all duration-300 ease-out group-hover:scale-105
+                        ${sec.featured
+                          ? 'bg-white/15 text-white'
+                          : 'bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 group-hover:text-[#0a97be]'}
+                    `}>
+                    <sec.icon />
                   </div>
-                  {/* Delayed Fade-in for slogan */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: sec.featured ? 0.8 : 0.9, y: 0 }}
-                    transition={{ delay: sec.delay * 0.5 + 0.3, duration: 0.6, ease: "easeOut" }}
-                    className={`text-xs font-semibold leading-tight transition-colors duration-500 ${sec.featured ? 'text-white/80' : 'text-gray-500 dark:text-gray-400 group-hover:text-[#0a97be]'}`}
-                  >
-                    {sec.desc}
-                  </motion.p>
-                </div>
 
-                {/* Coming Soon Lock Badge */}
-                {sec.comingSoon && (
-                  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/30 dark:bg-black/50 backdrop-blur-[10px] rounded-[1.5rem]">
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/70 dark:bg-white/15 rounded-full">
-                      <IoLockClosed className="text-white text-sm" />
-                      <span className="text-white text-xs font-semibold tracking-wide">Hamarosan</span>
+                  {/* Content (Delayed Reveal) */}
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between mb-0.5">
+                      <h3 className={`text-xl font-bold leading-none tracking-tight ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                        {sec.label}
+                      </h3>
+                      {!sec.comingSoon && (
+                        <IoChevronForward className={`opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-sm ${sec.featured ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'}`} />
+                      )}
                     </div>
+                    {/* Delayed Fade-in for slogan */}
+                    <motion.p
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: sec.featured ? 0.8 : 0.9, y: 0 }}
+                      transition={{ delay: sec.delay * 0.5 + 0.3, duration: 0.6, ease: "easeOut" }}
+                      className={`text-xs font-semibold leading-tight transition-colors duration-500 ${sec.featured ? 'text-white/80' : 'text-gray-500 dark:text-gray-400 group-hover:text-[#0a97be]'}`}
+                    >
+                      {sec.desc}
+                    </motion.p>
                   </div>
-                )}
-              </MotionLink>
+
+                  {/* Coming Soon Lock Badge */}
+                  {sec.comingSoon && (
+                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/30 dark:bg-black/50 backdrop-blur-[10px] rounded-[1.5rem]">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/70 dark:bg-white/15 rounded-full">
+                        <IoLockClosed className="text-white text-sm" />
+                        <span className="text-white text-xs font-semibold tracking-wide">Hamarosan</span>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              </Link>
             </SpringUp>
           ))}
         </div>
