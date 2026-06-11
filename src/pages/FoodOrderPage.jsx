@@ -485,7 +485,7 @@ function SimplePointsDisplay({ user }) {
 export default function FoodOrderPage({ appData }) {
     const [activeTab, setActiveTab] = useState('home');
     const [view, setView] = useState('restaurants');
-    const [restaurants, setRestaurants] = useState(appData?.restaurants || []);
+    const [restaurants, setRestaurants] = useState([]);
     const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [categories, setCategories] = useState([]);
     const [realCategories, setRealCategories] = useState([]);
