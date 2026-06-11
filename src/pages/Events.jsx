@@ -360,6 +360,7 @@ export default function Events() {
       {/* Morph target must exist during loading too, or the shared-element has nothing to connect to */}
       <motion.div
         layoutId="morph-events"
+        transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
         className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
       >
         <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
@@ -390,6 +391,7 @@ export default function Events() {
       {/* 1. HEADER — shared-element morph target (matches the Home "Események" card) */}
       <motion.div
         layoutId="morph-events"
+        transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
         className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
       >
         <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">

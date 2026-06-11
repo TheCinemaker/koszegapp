@@ -120,6 +120,7 @@ export default function Home({ appData, weather }) {
                 {sec.morphId && (
                   <motion.div
                     layoutId={sec.morphId}
+                    transition={{ layout: { type: 'spring', stiffness: 170, damping: 22, mass: 1 } }}
                     className="absolute inset-0 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
                   />
                 )}
