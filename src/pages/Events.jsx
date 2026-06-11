@@ -36,7 +36,7 @@ import {
   FaInfoCircle,
   FaGem
 } from 'react-icons/fa';
-import { IoCalendarOutline } from 'react-icons/io5';
+import { IoCalendarOutline, IoChevronForward } from 'react-icons/io5';
 import { Toaster, toast } from 'react-hot-toast';
 import EventImageCard from '../components/EventImageCard'; // Using logic, but custom render? Or adapting? Let's use custom for max control.
 
@@ -113,142 +113,87 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
 
 
   return (
-    <div className={`group relative w-full bg-white/80 dark:bg-gray-800/60 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-2xl hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] transition-all duration-500 hover:-translate-y-2 border border-white/40 dark:border-gray-700/40 ${isPast ? 'grayscale opacity-70' : ''}`}>
+    <Link to={`/events/${evt.id}`} className={`group relative block w-full ${isPast ? 'grayscale opacity-70' : ''}`}>
+      <motion.div
+        whileHover={{ scale: 1.03, y: -2 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
+        className="relative h-full bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg border border-white/60 dark:border-white/10"
+      >
 
-      {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-        {evt.image && evt.image !== 'balkep_default.jpg' ? (
-          <img
-            src={`/images/events/${evt.image}`}
-            alt={evt.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-            onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
-          />
-        ) : (
-          <GhostImage className="w-full h-full" />
-        )}
-        {/* Fallback for onError (hidden by default) */}
-        <div className="hidden w-full h-full absolute inset-0">
-          <GhostImage className="w-full h-full" />
-        </div>
-
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
-
-        {/* Floating Date Badge */}
-        <div className="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl p-2 min-w-[60px] text-center shadow-lg border border-white/20">
-          <div className="text-xs font-bold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">{monthStr}</div>
-          <div className="text-2xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
-        </div>
-
-
-        {/* Favorite Button (Floating) */}
-        {!isPast && (
-          <button
-            onClick={(e) => { e.preventDefault(); toggleFavorite(evt.id); }}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/60 dark:bg-white/20 backdrop-blur-md border border-white/40 dark:border-white/30 flex items-center justify-center text-zinc-900 dark:text-white hover:bg-white dark:hover:bg-white hover:text-rose-600 dark:hover:text-rose-500 transition-all shadow-lg active:scale-90"
-          >
-            {isFavorite ? <FaHeart className="text-rose-600 dark:text-rose-500 drop-shadow-md" /> : <FaRegHeart className="text-zinc-900 dark:text-white" />}
-          </button>
-        )}
-
-        {/* Tags / MultiDay Badge */}
-        <div className="absolute bottom-4 left-4 flex gap-2 overflow-hidden max-w-[80%]">
-          {isMultiDay && (
-            <span className="px-3 py-1 rounded-full bg-amber-400/90 text-amber-900 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm">
-              {t('multiDay')}
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-5 relative space-y-4">
-        <div>
-          <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 mb-2 line-clamp-2 leading-tight min-h-[3.5rem]">
-            {evt.name}
-          </h3>
-
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-            {evt.location && (
-              <span className="flex items-center gap-1 truncate max-w-[60%]">
-                <FaMapMarkerAlt className="text-indigo-500 shrink-0" />
-                <span className="truncate">{evt.location}</span>
-              </span>
+        {/* Image Container — inset design for clean portrait/landscape handling */}
+        <div className="p-3 pb-0">
+          <div className="relative aspect-[3/2] overflow-hidden rounded-xl">
+            {evt.image && evt.image !== 'balkep_default.jpg' ? (
+              <img
+                src={`/images/events/${evt.image}`}
+                alt={evt.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+                onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
+              />
+            ) : (
+              <GhostImage className="w-full h-full rounded-xl" />
             )}
-            <span className="mx-1">•</span>
-            <span>{timeStr}</span>
+            {/* Fallback for onError (hidden by default) */}
+            <div className="hidden w-full h-full absolute inset-0">
+              <GhostImage className="w-full h-full" />
+            </div>
+
+            {/* Bottom gradient fade */}
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+
+            {/* Floating Date Badge */}
+            <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-lg border border-white/20">
+              <div className="text-[10px] font-bold uppercase text-[#0a97be] dark:text-[#0bc9f8] tracking-wider">{monthStr}</div>
+              <div className="text-xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
+            </div>
+
+            {/* Favorite Button (Floating) */}
+            {!isPast && (
+              <button
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(evt.id); }}
+                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/70 dark:bg-black/30 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-zinc-900 dark:text-white hover:bg-white dark:hover:bg-black/50 transition-all shadow-sm active:scale-90"
+              >
+                {isFavorite ? <FaHeart className="text-rose-600 dark:text-rose-500 drop-shadow-md text-sm" /> : <FaRegHeart className="text-zinc-900 dark:text-white text-sm" />}
+              </button>
+            )}
+
+            {/* Tags / MultiDay Badge */}
+            <div className="absolute bottom-3 left-3 flex gap-2 overflow-hidden max-w-[80%]">
+              {isMultiDay && (
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-400/90 text-amber-900 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm">
+                  {t('multiDay')}
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Action Buttons Box */}
-        <div className="space-y-2.5">
-          {/* Top Row: Wallet & Calendar */}
-          {!isPast && (
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                onClick={(e) => { e.preventDefault(); onGeneratePass(evt); }}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-1"
-                title={t('addToWallet')}
-              >
-                <img
-                  src="/images/apple_badges/addtoapplewallet.png"
-                  alt="Add to Apple Wallet"
-                  className="w-[90px] h-auto object-contain"
-                />
-              </button>
+        {/* Info */}
+        <div className="p-4">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight line-clamp-2 leading-snug mb-2 min-h-[3rem]">
+            {evt.name}
+          </h3>
+          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium">
+            {evt.location && (
+              <span className="flex items-center gap-1 truncate">
+                <FaMapMarkerAlt className="text-[#0a97be] shrink-0" />
+                <span className="truncate">{evt.location}</span>
+              </span>
+            )}
+            {evt.location && <span className="text-gray-300 dark:text-gray-600">•</span>}
+            <span className="shrink-0">{timeStr}</span>
+          </div>
 
-              <button
-                onClick={async (e) => {
-                  e.preventDefault();
-                  const toastId = toast.loading(t('generatingPass') || "Google Wallet...");
-                  try {
-                    const res = await fetch('/.netlify/functions/create-event-pass-google', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify(evt),
-                    });
-                    if (!res.ok) throw new Error('Generálási hiba');
-                    const { url } = await res.json();
-                    toast.success("Átirányítás...", { id: toastId });
-                    window.open(url, '_blank');
-                  } catch (e) {
-                    console.error(e);
-                    toast.error(`Hiba: ${e.message}`, { id: toastId });
-                  }
-                }}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent hover:scale-[1.02] active:scale-95 transition-all outline-none border border-gray-200 dark:border-white/10 px-1"
-                title="Add to Google Wallet"
-              >
-                <img
-                  src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
-                  alt="Add to Google Wallet"
-                  className="w-[90px] h-auto object-contain"
-                />
-              </button>
-
-              <a
-                href={`data:text/calendar;charset=utf8,${encodeURIComponent(toICS(evt))}`}
-                download={`${evt.name.replace(/\s+/g, '_')}.ics`}
-                className="h-11 flex items-center justify-center rounded-xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
-                title={t('saveToCalendar')}
-              >
-                <FaCalendarPlus className="text-indigo-500 text-lg" />
-              </a>
-            </div>
-          )}
-
-          {/* Bottom Row: Details */}
-          <Link
-            to={`/events/${evt.id}`}
-            className="block w-full py-3.5 rounded-xl bg-indigo-600 text-white font-bold text-center text-sm shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition-all active:scale-[0.98]"
-          >
-            {t('details') || 'Részletek'}
-          </Link>
+          {/* Részletek row — matching Home chevron pattern */}
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100 dark:border-white/5">
+            <span className="text-xs font-semibold text-[#0a97be] dark:text-[#0bc9f8]">Részletek</span>
+            <IoChevronForward className="text-[#0a97be] dark:text-[#0bc9f8] text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+          </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </Link>
   );
 };
 
