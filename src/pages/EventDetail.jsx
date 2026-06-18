@@ -69,7 +69,7 @@ function ImageModal({ src, onClose }) {
     >
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-[10000] w-12 h-12 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-xl border border-white/10 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all"
+        className="absolute top-6 right-6 z-[10000] w-12 h-12 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-xl border border-white/10 text-white shadow-sm hover:scale-110 active:scale-95 transition-all"
       >
         <span className="text-2xl">×</span>
       </button>
@@ -293,7 +293,7 @@ export default function EventDetail() {
         <p className="text-red-500 mb-6 text-lg font-medium">Hiba: {error || "Az esemény nem található."}</p>
         <button
           onClick={() => navigate('/events')}
-          className="px-6 py-3 bg-purple-600 text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform"
+          className="px-6 py-3 bg-[#123a57] text-white rounded-full font-bold shadow-sm hover:scale-105 transition-transform"
         >
           Vissza az eseményekhez
         </button>
@@ -302,7 +302,7 @@ export default function EventDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-purple-500 selection:text-white relative">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden pb-10 selection:bg-indigo-500 selection:text-white relative">
       <Toaster position="top-right" />
 
       {/* Zoomable Image Modal */}
@@ -349,7 +349,7 @@ export default function EventDetail() {
                 navigate('/events');
               }
             }}
-            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 text-gray-900 dark:text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group pointer-events-auto"
+            className="w-14 h-14 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 text-gray-900 dark:text-white shadow-sm hover:scale-110 active:scale-95 transition-all duration-300 group pointer-events-auto"
           >
             <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
           </button>
@@ -364,8 +364,8 @@ export default function EventDetail() {
         >
           <div className="flex gap-4 items-end mb-6">
             {/* Giant Calendar Date */}
-            <div className="shrink-0 w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-3xl border border-white/30 dark:border-white/20 overflow-hidden flex flex-col text-center shadow-2xl">
-              <div className="bg-red-500 text-white text-xs font-bold uppercase py-1.5 tracking-widest">
+            <div className="shrink-0 w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-3xl border border-white/30 dark:border-white/20 overflow-hidden flex flex-col text-center shadow-sm">
+              <div className="bg-[#123a57] text-white text-xs font-bold uppercase py-1.5 tracking-widest">
                 {monthName}
               </div>
               <div className="flex-1 flex items-center justify-center text-4xl font-black text-gray-900 dark:text-white">
@@ -374,14 +374,14 @@ export default function EventDetail() {
             </div>
             <div>
               {isMultiDay && (
-                <span className="px-3 py-1 rounded-full bg-amber-500/80 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest mb-2 inline-block shadow-lg">
+                <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest mb-2 inline-block border border-white/20">
                   Többnapos
                 </span>
               )}
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-2xl tracking-tighter leading-none max-w-4xl">
+          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg tracking-tight leading-tight max-w-3xl">
             {evt.name}
           </h1>
         </motion.div>
@@ -392,10 +392,10 @@ export default function EventDetail() {
         <FadeUp duration={1}>
           <div className="
               bg-white/80 dark:bg-[#1a1c2e]/90
-              backdrop-blur-[50px]
-              rounded-[3rem]
+              backdrop-blur-xl
+              rounded-[1.5rem]
               border border-white/40 dark:border-white/5
-              shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.3)]
+              shadow-sm
               p-8 sm:p-12
               min-h-[50vh]
           ">
@@ -407,14 +407,14 @@ export default function EventDetail() {
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-gray-500 dark:text-gray-400">
                   {evt.location && (
                     <div className="flex items-center gap-2">
-                      <IoLocationOutline className="text-blue-500 text-xl" />
+                      <IoLocationOutline className="text-[#0a97be] text-xl" />
                       <span className="font-bold text-lg">{evt.location}</span>
                     </div>
                   )}
                   {(evt.location && timeText) && <span className="text-gray-300 dark:text-gray-700">•</span>}
                   {timeText && (
                     <div className="flex items-center gap-2">
-                      <IoTimeOutline className="text-blue-500 text-xl" />
+                      <IoTimeOutline className="text-[#0a97be] text-xl" />
                       <span className="font-bold text-lg">{timeText}</span>
                     </div>
                   )}
@@ -422,7 +422,7 @@ export default function EventDetail() {
 
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Rövid leírás</h2>
                 <div className="prose dark:prose-invert prose-lg max-w-none">
-                  <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium whitespace-pre-wrap">
+                  <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
                     {evt.description}
                   </p>
                 </div>
@@ -484,7 +484,7 @@ export default function EventDetail() {
                         className="h-14 flex items-center justify-center rounded-2xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
                         title="Esemény naptárhoz adása"
                       >
-                        <IoCalendarClearOutline className="text-blue-500 text-2xl" />
+                        <IoCalendarClearOutline className="text-[#0a97be] text-2xl" />
                       </a>
 
                       <button
@@ -503,7 +503,7 @@ export default function EventDetail() {
                         className="h-14 flex items-center justify-center rounded-2xl bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all border border-gray-200 dark:border-white/10"
                         title="Megosztás"
                       >
-                        <IoShareSocialOutline className="text-purple-500 text-2xl" />
+                        <IoShareSocialOutline className="text-[#0a97be] text-2xl" />
                       </button>
                     </div>
 
@@ -513,7 +513,7 @@ export default function EventDetail() {
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
                         onClick={() => navigate('/tickets', { state: { directEventId: ticketEvent.id } })}
-                        className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black text-sm flex items-center justify-center gap-3 shadow-xl shadow-indigo-500/20"
+                        className="w-full py-4 bg-[#123a57] text-white rounded-2xl font-black text-sm flex items-center justify-center gap-3 shadow-sm"
                       >
                         <IoTicketOutline className="text-xl" />
                         JEGYVÁSÁRLÁS ({ticketEvent.price} Ft)
@@ -526,7 +526,7 @@ export default function EventDetail() {
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
                         onClick={handleBookingClick}
-                        className="w-full py-4 bg-[#007AFF] text-white rounded-2xl font-black text-sm flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                        className="w-full py-4 bg-white dark:bg-white/5 text-[#123a57] dark:text-white border border-gray-200 dark:border-white/10 rounded-2xl font-bold text-sm flex items-center justify-center gap-3 hover:bg-gray-50 dark:hover:bg-white/10 transition-colors"
                       >
                         <IoBedOutline className="text-xl" />
                         FOGLALÁS A BOOKING-ON
@@ -543,7 +543,7 @@ export default function EventDetail() {
                         rel="noopener noreferrer"
                         className="h-12 w-full bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-transparent dark:border-white/5"
                       >
-                        <IoGlobeOutline className="text-sm text-purple-500" />
+                        <IoGlobeOutline className="text-sm text-[#0a97be]" />
                         Hivatalos weboldal megnyitása
                       </motion.a>
                     )}
@@ -556,7 +556,7 @@ export default function EventDetail() {
             {/* Map Section */}
             {evt.coords && (
               <FadeUp delay={0.3} className="mt-16">
-                <div className="overflow-hidden rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-xl relative group h-80">
+                <div className="overflow-hidden rounded-[1.5rem] border border-gray-200 dark:border-white/10 shadow-sm relative group h-80">
                   <iframe
                     title="Térkép"
                     src={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}&z=16&output=embed`}
@@ -586,11 +586,8 @@ export default function EventDetail() {
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
             className="fixed bottom-24 left-4 right-4 z-[100] sm:left-auto sm:right-6 sm:w-80"
           >
-            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl border border-white dark:border-white/10 p-5 rounded-[2rem] shadow-2xl flex items-center gap-4 relative overflow-hidden group">
-              {/* Background Glow */}
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/10 blur-2xl rounded-full group-hover:bg-blue-500/20 transition-colors" />
-
-              <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30">
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white dark:border-white/10 p-5 rounded-[1.5rem] shadow-sm flex items-center gap-4 relative overflow-hidden group">
+              <div className="w-12 h-12 bg-[#123a57] rounded-2xl flex items-center justify-center shrink-0 shadow-sm">
                 <IoBedOutline className="text-2xl text-white" />
               </div>
 
@@ -603,7 +600,7 @@ export default function EventDetail() {
                 </p>
                 <button
                   onClick={handleBookingClick}
-                  className="mt-2 text-xs font-black text-blue-600 dark:text-blue-400 flex items-center gap-1 hover:gap-2 transition-all"
+                  className="mt-2 text-xs font-black text-[#0a97be] dark:text-[#0bc9f8] flex items-center gap-1 hover:gap-2 transition-all"
                 >
                   {t('bubbleBtn')} <span>→</span>
                 </button>

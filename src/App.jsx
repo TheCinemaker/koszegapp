@@ -9,7 +9,6 @@ import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHot
 import { AuthProvider } from './contexts/AuthContext';
 import { parseISO, endOfDay } from 'date-fns';
 import {
-  IoCloudyNightOutline,
   IoMapOutline,
   IoHeartOutline,
   IoHeart,
@@ -25,7 +24,6 @@ import AIDebugPanel from './components/AIDebugPanel.jsx';
 import ProgramModal from './components/ProgramModal';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
-import WeatherModal from './components/WeatherModal';
 import FloatingNavbar from './components/FloatingNavbar';
 import FloatingButtons from './components/FloatingButtons';
 import SmartSpotlight from './components/SmartSpotlight';
@@ -114,7 +112,6 @@ function MainAppContent() {
     loading: true
   });
   const [showFavorites, setShowFavorites] = useState(false);
-  const [showWeatherModal, setShowWeatherModal] = useState(false);
   const [showProgramModal, setShowProgramModal] = useState(true);
 
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
@@ -434,20 +431,7 @@ function MainAppContent() {
                       <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
                     </button>
 
-                    {/* Weather Button (Compact) */}
-                    <button
-                      onClick={() => { setShowWeatherModal(true); triggerHaptic(); }}
-                      className="flex items-center gap-1.5 h-8 px-2.5 sm:h-10 sm:px-4 rounded-full
-                                bg-white/20 dark:bg-black/20
-                                backdrop-blur-md
-                                text-gray-700 dark:text-gray-200
-                                border border-white/20
-                                hover:bg-white/40 dark:hover:bg-black/40
-                                transition-all duration-300 hover:scale-105 active:scale-95"
-                    >
-                      <IoCloudyNightOutline className="text-base sm:text-lg" />
-                      <span className="text-[10px] sm:text-xs font-bold">{weather.temp}°</span>
-                    </button>
+
 
                     {/* Map Button */}
                     <Link
@@ -519,7 +503,6 @@ function MainAppContent() {
           {!isInGameMode && (
             <>
               <Toaster position="bottom-center" />
-              {showWeatherModal && <WeatherModal onClose={() => setShowWeatherModal(false)} />}
               {showResidentModal && <ResidentCheckModal onClose={() => setShowResidentModal(false)} />}
               <UserMessageRibbon />
 

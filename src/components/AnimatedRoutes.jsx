@@ -25,7 +25,7 @@ const ParkingDetail = lazyWithRetry(() => import('../pages/ParkingDetail'));
 const ParkingMap = lazyWithRetry(() => import('../pages/ParkingMap'));
 const Info = lazyWithRetry(() => import('../pages/Info'));
 const AboutDetail = lazyWithRetry(() => import('../pages/AboutDetail'));
-const WeatherDetail = lazyWithRetry(() => import('../pages/WeatherDetail'));
+const WeatherDashboard = lazyWithRetry(() => import('../pages/WeatherDashboard/WeatherDashboard'));
 const Adatvedelem = lazyWithRetry(() => import('../pages/Adatvedelem'));
 const GemDetail = lazyWithRetry(() => import('../pages/GemDetail'));
 const MyGems = lazyWithRetry(() => import('../pages/MyGems'));
@@ -165,7 +165,7 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           <Route path="/superadmin" element={<PageWrapper showFooter={false}><SuperAdmin /></PageWrapper>} />
 
-          <Route path="/weather" element={<PageWrapper><WeatherDetail /></PageWrapper>} />
+          <Route path="/weather" element={<PageWrapper><WeatherDashboard /></PageWrapper>} />
           <Route path="/info" element={<PageWrapper><Info /></PageWrapper>} />
           <Route path="/info/:id" element={<PageWrapper><AboutDetail /></PageWrapper>} />
           <Route path="/adatvedelem" element={<PageWrapper><Adatvedelem /></PageWrapper>} />

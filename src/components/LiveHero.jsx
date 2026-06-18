@@ -13,7 +13,8 @@ import {
     MapPin,
     TrendingUp,
     Wind,
-    Droplets
+    Droplets,
+    Mountain
 } from 'lucide-react';
 import { isAfter, isBefore, differenceInSeconds, format } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -80,31 +81,6 @@ const LiveHero = ({ appData, weather }) => {
         return { hours, minutes, seconds };
     }, [nextEvent, isRunning, now]);
 
-    const weatherIcon = useMemo(() => {
-        if (!weather?.icon) return <Sun className="w-6 h-6 text-yellow-400" />;
-        const code = weather.icon;
-        if (code.includes('01') || code.includes('02')) return <Sun className="w-10 h-10 text-yellow-400" />;
-        if (code.includes('03') || code.includes('04')) return <Cloud className="w-10 h-10 text-slate-400" />;
-        if (code.includes('09') || code.includes('10')) return <CloudRain className="w-10 h-10 text-blue-400" />;
-        if (code.includes('11')) return <Wind className="w-10 h-10 text-indigo-400" />;
-        return <Sun className="w-10 h-10 text-yellow-400" />;
-    }, [weather]);
-
-    const weatherDesc = useMemo(() => {
-        if (!weather?.icon) return '';
-        const code = weather.icon;
-        if (code.includes('01')) return 'Ragyogó napsütés';
-        if (code.includes('02')) return 'Kevés felhő, kellemes idő';
-        if (code.includes('03')) return 'Változóan felhős';
-        if (code.includes('04')) return 'Borús, szürke idő';
-        if (code.includes('09')) return 'Szemerkél az eső';
-        if (code.includes('10')) return 'Esős időjárás';
-        if (code.includes('11')) return 'Viharos az idő';
-        if (code.includes('13')) return 'Szállingózik a hó';
-        if (code.includes('50')) return 'Párás, ködös levegő';
-        return '';
-    }, [weather]);
-
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -120,35 +96,27 @@ const LiveHero = ({ appData, weather }) => {
 
                 <div className="relative z-10 flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
 
-                    {/* Left Section: Greeting & Weather */}
+                    {/* Left Section: Greeting & Weather Button */}
                     <div className="flex-1 space-y-4">
-                        <div className="flex items-center gap-4">
-                            <motion.div
-                                animate={{ rotate: [0, 5, -5, 0] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        <div>
+                            <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight mb-2">
+                                {greeting}
+                            </h1>
+                            <Link
+                                to="/weather"
+                                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 group active:scale-95 text-gray-800 dark:text-white shadow-sm"
                             >
-                                {weatherIcon}
-                            </motion.div>
-                            <div>
-                                <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight">
-                                    {greeting}
-                                </h1>
-                                <div className="flex flex-col mt-0.5">
-                                    {weatherDesc && (
-                                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest opacity-80 mb-0.5">
-                                            {weatherDesc}
-                                        </span>
-                                    )}
-                                    <div className="flex items-center gap-3 text-sm font-medium text-gray-500 dark:text-gray-400">
-                                        <span className="flex items-center gap-1">
-                                            <Droplets className="w-4 h-4 text-blue-400" />
-                                            {weather?.temp || '--'}°C
-                                        </span>
-                                        <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700" />
-                                        <span>{format(now, 'HH:mm')}</span>
+                                <Mountain className="w-5 h-5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+                                <div className="text-left">
+                                    <div className="text-sm sm:text-base font-black text-gray-900 dark:text-white leading-tight mb-0.5">
+                                        Időjárás
+                                    </div>
+                                    <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest leading-none flex items-center gap-1.5">
+                                        Helyi mérések alapján
+                                        <ArrowRight className="w-3 h-3 text-indigo-500 dark:text-indigo-400 group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
 
