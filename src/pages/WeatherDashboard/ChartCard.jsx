@@ -45,44 +45,43 @@ export const CHART_CONFIGS = [
   { key: 'HUMIDEX',    label: 'Humidex',       icon: <Droplet className="w-4 h-4 text-[#0a97be]" />, unit: '',   color: '#0a97be' },
 ];
 
-export default function ChartCard({ config, timestamps, data, loading }) {
-  const { label, icon, color, unit, type } = config;
+// Megosztott chart-építők, hogy a ChartCard és a részletező modal ugyanazt használja.
+export function makeChartData(config, timestamps, data) {
+  if (!timestamps || !data || data.length === 0) return null;
+  const { color, type } = config;
   const isBar = type === 'bar';
+  return {
+    labels: timestamps,
+    datasets: [{
+      data: data,
+      borderColor: color,
+      // Függőleges gradiens kitöltés a vonaldiagramokhoz (felül telített, lent áttetsző)
+      backgroundColor: isBar
+        ? color + 'cc'
+        : (ctx) => {
+            const { chart } = ctx;
+            const { ctx: c, chartArea } = chart;
+            if (!chartArea) return color + '20';
+            const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            g.addColorStop(0, color + '59');
+            g.addColorStop(1, color + '00');
+            return g;
+          },
+      borderWidth: isBar ? 0 : 2.5,
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: color,
+      fill: !isBar,
+      tension: 0.4,
+      borderRadius: isBar ? 4 : 0,
+      spanGaps: true,
+    }]
+  };
+}
 
-  const hasData = useMemo(() => data && data.length > 0 && data.some(v => v !== null && v !== undefined), [data]);
-
-  const chartData = useMemo(() => {
-    if (!timestamps || !data || data.length === 0) return null;
-    return {
-      labels: timestamps,
-      datasets: [{
-        data: data,
-        borderColor: color,
-        // Függőleges gradiens kitöltés a vonaldiagramokhoz (felül telített, lent áttetsző)
-        backgroundColor: isBar
-          ? color + 'cc'
-          : (ctx) => {
-              const { chart } = ctx;
-              const { ctx: c, chartArea } = chart;
-              if (!chartArea) return color + '20';
-              const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-              g.addColorStop(0, color + '59');
-              g.addColorStop(1, color + '00');
-              return g;
-            },
-        borderWidth: isBar ? 0 : 2.5,
-        pointRadius: 0,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: color,
-        fill: !isBar,
-        tension: 0.4,
-        borderRadius: isBar ? 4 : 0,
-        spanGaps: true,
-      }]
-    };
-  }, [timestamps, data, color, isBar]);
-
-  const options = {
+export function makeChartOptions(config) {
+  const { unit } = config;
+  return {
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
@@ -139,6 +138,15 @@ export default function ChartCard({ config, timestamps, data, loading }) {
       }
     }
   };
+}
+
+export default function ChartCard({ config, timestamps, data, loading }) {
+  const { label, icon, type } = config;
+  const isBar = type === 'bar';
+
+  const hasData = useMemo(() => data && data.length > 0 && data.some(v => v !== null && v !== undefined), [data]);
+  const chartData = useMemo(() => makeChartData(config, timestamps, data), [config, timestamps, data]);
+  const options = useMemo(() => makeChartOptions(config), [config]);
 
   return (
     <div className="bg-beige-50/70 dark:bg-white/5 border border-[#e9d8c9]/60 dark:border-white/10 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] flex flex-col justify-between overflow-hidden">

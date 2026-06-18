@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoArrowBack, IoCloudy, IoRefresh } from 'react-icons/io5';
 import useWeatherData from './useWeatherData';
 import SunBar from './SunBar';
 import StatCard, { STAT_CARDS_CONFIG } from './StatCard';
 import ChartCard, { CHART_CONFIGS } from './ChartCard';
+import StatDetailModal from './StatDetailModal';
 import { FadeUp } from '../../components/AppleMotion';
 import { Mountain, AlertTriangle, MapPin, ExternalLink } from 'lucide-react';
 
@@ -61,6 +62,11 @@ export default function WeatherDashboard() {
   }, [series.timestamps]);
 
   const results = series.results || {};
+
+  // Részletező modal: mely metrikákhoz van előzmény-grafikon, és melyik aktív
+  const [activeKey, setActiveKey] = useState(null);
+  const chartableKeys = useMemo(() => new Set(CHART_CONFIGS.map(c => c.key)), []);
+  const activeMetric = useMemo(() => CHART_CONFIGS.find(c => c.key === activeKey) || null, [activeKey]);
 
   // Napszakhoz igazodó égbolt + időjárás-állapot (VisitKőszeg paletta).
   const weatherState = useMemo(() => {
@@ -356,6 +362,7 @@ export default function WeatherDashboard() {
                   config={cfg}
                   val={lastMeasure[cfg.key]}
                   loading={loading && !currentData}
+                  onClick={chartableKeys.has(cfg.key) ? () => setActiveKey(cfg.key) : undefined}
                 />
               ))}
             </div>
@@ -400,6 +407,15 @@ export default function WeatherDashboard() {
           </div>
         </FadeUp>
       </div>
+
+      {/* Részletező modal — a csempéből morfol elő */}
+      <StatDetailModal
+        metric={activeMetric}
+        timestamps={timestamps}
+        data={activeKey ? (results[activeKey] || []) : []}
+        currentValue={activeKey ? lastMeasure[activeKey] : null}
+        onClose={() => setActiveKey(null)}
+      />
 
     </div>
   );

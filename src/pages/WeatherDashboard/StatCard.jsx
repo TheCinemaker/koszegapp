@@ -1,19 +1,21 @@
 import React from 'react';
-import { 
-  Thermometer, 
-  Flame, 
-  Droplet, 
-  Droplets, 
-  CloudFog, 
-  Gauge, 
-  Wind, 
-  Compass, 
-  CloudRain, 
-  Umbrella, 
-  ArrowUp, 
-  ArrowDown, 
-  TrendingUp, 
-  TrendingDown 
+import { motion } from 'framer-motion';
+import {
+  Thermometer,
+  Flame,
+  Droplet,
+  Droplets,
+  CloudFog,
+  Gauge,
+  Wind,
+  Compass,
+  CloudRain,
+  Umbrella,
+  ArrowUp,
+  ArrowDown,
+  TrendingUp,
+  TrendingDown,
+  Maximize2
 } from 'lucide-react';
 
 // Wind direction helper
@@ -43,8 +45,9 @@ export const STAT_CARDS_CONFIG = [
   { key: 'SLP_TREND',  label: 'Légnyomás trend',  icon: <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-[#0a97be]" />, unit: '',    color: '#0a97be', fmt: v => typeof v === 'number' ? (v > 0 ? '+' : '') + v.toFixed(2) + ' hPa/h' : v, isTrend: true },
 ];
 
-export default function StatCard({ config, val, loading }) {
+export default function StatCard({ config, val, loading, onClick }) {
   const { label, icon, unit, color, isWind, isTrend } = config;
+  const clickable = typeof onClick === 'function';
 
   const hasValue = val !== undefined && val !== null;
   const isNum = hasValue && typeof val === 'number' && !isNaN(val);
@@ -104,9 +107,19 @@ export default function StatCard({ config, val, loading }) {
   }
 
   return (
-    <div className="bg-beige-50/70 dark:bg-white/5 border border-[#e9d8c9]/60 dark:border-white/10 rounded-2xl p-3.5 sm:p-4 shadow-sm flex flex-col justify-between h-[115px] sm:h-[135px] relative overflow-hidden transition-all hover:scale-[1.02] hover:shadow-md">
+    <motion.div
+      layoutId={clickable ? `metric-${config.key}` : undefined}
+      onClick={onClick}
+      transition={{ type: 'spring', stiffness: 30, damping: 9 }}
+      className={`bg-beige-50/70 dark:bg-white/5 border rounded-2xl p-3.5 sm:p-4 shadow-sm flex flex-col justify-between h-[115px] sm:h-[135px] relative overflow-hidden transition-shadow ${clickable ? 'cursor-pointer group border-[#e9d8c9]/60 hover:border-[#0a97be]/50 hover:shadow-lg hover:shadow-[#123a57]/10 dark:border-white/10' : 'border-[#e9d8c9]/60 dark:border-white/10 hover:shadow-md'}`}
+    >
       {/* Dynamic top line accent matching config color */}
       <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ backgroundColor: color }} />
+
+      {/* Kattinthatóság jelzése */}
+      {clickable && (
+        <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-[#0a97be]/40 group-hover:text-[#0a97be] transition-colors" />
+      )}
 
       <div className="flex items-center gap-2">
         <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#123a57]/5 dark:bg-white/10 flex items-center justify-center">
@@ -126,6 +139,6 @@ export default function StatCard({ config, val, loading }) {
           {subContent}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
