@@ -32,15 +32,17 @@ ChartJS.register(
   Filler
 );
 
+// VisitKőszeg paletta: terrakotta (#d68743 / #b36022) a meleg metrikákhoz,
+// mély tengerkék–türkiz (#123a57 / #0a97be / #0bc9f8) a hűvös/légköri metrikákhoz.
 export const CHART_CONFIGS = [
-  { key: 'T',          label: 'Hőmérséklet',  icon: <Thermometer className="w-4 h-4 text-[#38bdf8]" />, unit: '°C', color: '#38bdf8' },
-  { key: 'U',          label: 'Páratartalom', icon: <Droplets className="w-4 h-4 text-[#34d399]" />, unit: '%',  color: '#34d399' },
-  { key: 'FF',         label: 'Szélsebesség', icon: <Wind className="w-4 h-4 text-[#60a5fa]" />, unit: 'm/s',color: '#60a5fa' },
-  { key: 'FXY',        label: 'Széllökések',  icon: <Wind className="w-4 h-4 text-[#f472b6]" />, unit: 'm/s',color: '#f472b6' },
-  { key: 'SLP',        label: 'Légnyomás',    icon: <Gauge className="w-4 h-4 text-[#c084fc]" />, unit: 'hPa',color: '#c084fc' },
-  { key: 'RR_1H',      label: 'Csapadék 1h',  icon: <CloudRain className="w-4 h-4 text-[#0ea5e9]" />, unit: 'mm', color: '#0ea5e9', type: 'bar' },
-  { key: 'HEAT_INDEX', label: 'Hőérzet',      icon: <Flame className="w-4 h-4 text-[#fb923c]" />, unit: '°C', color: '#fb923c' },
-  { key: 'HUMIDEX',    label: 'Humidex',       icon: <Droplet className="w-4 h-4 text-[#818cf8]" />, unit: '',   color: '#818cf8' },
+  { key: 'T',          label: 'Hőmérséklet',  icon: <Thermometer className="w-4 h-4 text-[#d68743]" />, unit: '°C', color: '#d68743' },
+  { key: 'U',          label: 'Páratartalom', icon: <Droplets className="w-4 h-4 text-[#0bc9f8]" />, unit: '%',  color: '#0bc9f8' },
+  { key: 'FF',         label: 'Szélsebesség', icon: <Wind className="w-4 h-4 text-[#0a97be]" />, unit: 'm/s',color: '#0a97be' },
+  { key: 'FXY',        label: 'Széllökések',  icon: <Wind className="w-4 h-4 text-[#3385a2]" />, unit: 'm/s',color: '#3385a2' },
+  { key: 'SLP',        label: 'Légnyomás',    icon: <Gauge className="w-4 h-4 text-[#123a57]" />, unit: 'hPa',color: '#123a57' },
+  { key: 'RR_1H',      label: 'Csapadék 1h',  icon: <CloudRain className="w-4 h-4 text-[#0bc9f8]" />, unit: 'mm', color: '#0bc9f8', type: 'bar' },
+  { key: 'HEAT_INDEX', label: 'Hőérzet',      icon: <Flame className="w-4 h-4 text-[#b36022]" />, unit: '°C', color: '#b36022' },
+  { key: 'HUMIDEX',    label: 'Humidex',       icon: <Droplet className="w-4 h-4 text-[#0a97be]" />, unit: '',   color: '#0a97be' },
 ];
 
 export default function ChartCard({ config, timestamps, data, loading }) {
@@ -56,7 +58,18 @@ export default function ChartCard({ config, timestamps, data, loading }) {
       datasets: [{
         data: data,
         borderColor: color,
-        backgroundColor: isBar ? color + 'aa' : color + '15',
+        // Függőleges gradiens kitöltés a vonaldiagramokhoz (felül telített, lent áttetsző)
+        backgroundColor: isBar
+          ? color + 'cc'
+          : (ctx) => {
+              const { chart } = ctx;
+              const { ctx: c, chartArea } = chart;
+              if (!chartArea) return color + '20';
+              const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+              g.addColorStop(0, color + '59');
+              g.addColorStop(1, color + '00');
+              return g;
+            },
         borderWidth: isBar ? 0 : 2.5,
         pointRadius: 0,
         pointHoverRadius: 5,
@@ -128,13 +141,13 @@ export default function ChartCard({ config, timestamps, data, loading }) {
   };
 
   return (
-    <div className="bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] flex flex-col justify-between overflow-hidden">
+    <div className="bg-beige-50/70 dark:bg-white/5 border border-[#e9d8c9]/60 dark:border-white/10 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all hover:scale-[1.01] flex flex-col justify-between overflow-hidden">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+        <div className="text-sm font-bold text-[#123a57] dark:text-white flex items-center gap-2">
           <span>{icon}</span>
           <span>{label}</span>
         </div>
-        <div className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-gray-950/5 dark:bg-white/10 text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+        <div className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#123a57]/5 dark:bg-white/10 text-[#0a97be] dark:text-gray-400 uppercase tracking-wider">
           24h
         </div>
       </div>
@@ -147,7 +160,7 @@ export default function ChartCard({ config, timestamps, data, loading }) {
           )
         ) : loading ? (
           <div className="w-full h-full bg-gray-200/5 dark:bg-white/5 rounded-2xl flex flex-col items-center justify-center gap-2">
-            <div className="w-6 h-6 border-2 border-indigo-500 animate-spin" />
+            <div className="w-6 h-6 border-2 border-[#0a97be] animate-spin" />
             <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
               Diagram betöltése...
             </span>
