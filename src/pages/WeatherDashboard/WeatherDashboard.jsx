@@ -268,7 +268,7 @@ export default function WeatherDashboard() {
               <div className="space-y-1">
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white">Köszönjük az adatokat!</h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-2xl">
-                  A mérések és adatok biztosításáért köszönet illeti a <strong className="text-indigo-600 dark:text-indigo-400">Kőszegi Időjárás Előrejelzés</strong> közösséget. Kövesd be őket a legfrissebb helyi elemzésekért!
+                  A mérések és adatok biztosításáért köszönet <strong className="text-indigo-600 dark:text-indigo-400">Ráduly Lászlónak</strong> (Kőszegi Időjárás Előrejelzés)! Kövesd be a legfrissebb helyi elemzésekért!
                 </p>
               </div>
               <a
