@@ -12,8 +12,7 @@ const CURRENT_HEADERS = {
 const HISTORY_HEADERS = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'X-SmartMixin-Context': 'UI',
-  'X-SmartMixin-Units': JSON.stringify({ T: 0, RR: 0, FF: 0, SLP: 0 })
+  'X-SmartMixin-Context': 'UI'
 };
 
 export default function useWeatherData() {
