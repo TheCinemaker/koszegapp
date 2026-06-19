@@ -7,7 +7,7 @@ import StatCard, { STAT_CARDS_CONFIG } from './StatCard';
 import ChartCard, { CHART_CONFIGS } from './ChartCard';
 import StatDetailModal from './StatDetailModal';
 import { FadeUp } from '../../components/AppleMotion';
-import { Mountain, AlertTriangle, MapPin, ExternalLink } from 'lucide-react';
+import { Mountain, AlertTriangle, MapPin, ExternalLink, Info } from 'lucide-react';
 
 // Holdfázis a mai dátumból. phase: 0=újhold, 0.5=telihold; illumination: 0..1.
 const SYNODIC = 29.530588853; // szinodikus hónap napokban
@@ -376,6 +376,14 @@ export default function WeatherDashboard() {
             <div className="text-xs font-black tracking-widest uppercase text-[#b36022] dark:text-gray-500 mt-10 mb-4 flex items-center gap-2">
               <span>24 órás előzmények</span>
               <div className="flex-1 h-[1px] bg-[#e9d8c9]/70 dark:bg-white/10" />
+            </div>
+
+            {/* Adathiány-tájékoztató — a szerver nem küld folyamatos adatot */}
+            <div className="mb-4 p-3.5 sm:p-4 rounded-2xl bg-[#0a97be]/5 dark:bg-[#0a97be]/10 border border-[#0a97be]/20 flex items-start gap-3">
+              <Info className="w-4 h-4 text-[#0a97be] shrink-0 mt-0.5" />
+              <p className="text-[11px] sm:text-xs text-[#123a57]/80 dark:text-gray-300 leading-relaxed">
+                Az időjárás-állomás szervere <strong className="font-bold text-[#123a57] dark:text-white">nem mindig küld folyamatos adatot</strong>, ezért egy-egy grafikon átmenetileg üres lehet — ez nem az alkalmazás hibája. Ilyenkor nyomd meg párszor a <strong className="font-bold text-[#0a97be]">Frissítés</strong> gombot, 2-3 percenként.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
