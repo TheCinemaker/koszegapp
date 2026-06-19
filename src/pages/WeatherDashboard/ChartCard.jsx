@@ -37,8 +37,8 @@ ChartJS.register(
 export const CHART_CONFIGS = [
   { key: 'T',          label: 'Hőmérséklet',  icon: <Thermometer className="w-4 h-4 text-[#d68743]" />, unit: '°C', color: '#d68743' },
   { key: 'U',          label: 'Páratartalom', icon: <Droplets className="w-4 h-4 text-[#0bc9f8]" />, unit: '%',  color: '#0bc9f8' },
-  { key: 'FF',         label: 'Szélsebesség', icon: <Wind className="w-4 h-4 text-[#0a97be]" />, unit: 'm/s',color: '#0a97be' },
-  { key: 'FXY',        label: 'Széllökések',  icon: <Wind className="w-4 h-4 text-[#3385a2]" />, unit: 'm/s',color: '#3385a2' },
+  { key: 'FF',         label: 'Szélsebesség', icon: <Wind className="w-4 h-4 text-[#0a97be]" />, unit: 'km/h',color: '#0a97be' },
+  { key: 'FXY',        label: 'Széllökések',  icon: <Wind className="w-4 h-4 text-[#3385a2]" />, unit: 'km/h',color: '#3385a2' },
   { key: 'SLP',        label: 'Légnyomás',    icon: <Gauge className="w-4 h-4 text-[#123a57]" />, unit: 'hPa',color: '#123a57' },
   { key: 'RR_1H',      label: 'Csapadék 1h',  icon: <CloudRain className="w-4 h-4 text-[#0bc9f8]" />, unit: 'mm', color: '#0bc9f8', type: 'bar' },
   { key: 'HEAT_INDEX', label: 'Hőérzet',      icon: <Flame className="w-4 h-4 text-[#b36022]" />, unit: '°C', color: '#b36022' },

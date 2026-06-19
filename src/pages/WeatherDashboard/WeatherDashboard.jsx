@@ -33,7 +33,7 @@ export default function WeatherDashboard() {
   const navigate = useNavigate();
   const {
     currentData,
-    historyData,
+    historySeries,
     loading,
     error,
     lastUpdate,
@@ -48,20 +48,25 @@ export default function WeatherDashboard() {
   const lastMeasure = currentData?.last_measure || {};
   const sunInfo = currentData?.sun_info || {};
 
-  // Extract history series
-  const series = historyData?.[0] || {};
-  const timestamps = useMemo(() => {
-    return (series.timestamps || []).map(ts => {
-      const d = new Date(ts * 1000);
-      return d.toLocaleTimeString('hu-HU', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        timeZone: 'Europe/Budapest' 
-      });
-    });
-  }, [series.timestamps]);
-
-  const results = series.results || {};
+  // Metrikánkénti grafikon-sorozatok: { [key]: { labels:[hh:mm], data:[] } }
+  // (minden metrika a saját időbélyegeit hozza, mert eltérő ablakból jöhet)
+  const chartSeries = useMemo(() => {
+    const out = {};
+    for (const k in historySeries) {
+      const { ts, data } = historySeries[k];
+      out[k] = {
+        labels: ts.map(t =>
+          new Date(t * 1000).toLocaleTimeString('hu-HU', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Europe/Budapest'
+          })
+        ),
+        data
+      };
+    }
+    return out;
+  }, [historySeries]);
 
   // Részletező modal: mely metrikákhoz van előzmény-grafikon, és melyik aktív
   const [activeKey, setActiveKey] = useState(null);
@@ -378,8 +383,8 @@ export default function WeatherDashboard() {
                 <ChartCard
                   key={cfg.key}
                   config={cfg}
-                  timestamps={timestamps}
-                  data={results[cfg.key] || []}
+                  timestamps={chartSeries[cfg.key]?.labels || []}
+                  data={chartSeries[cfg.key]?.data || []}
                   loading={loading}
                 />
               ))}
@@ -394,7 +399,7 @@ export default function WeatherDashboard() {
                 </p>
               </div>
               <a
-                href="https://www.facebook.com/search/top?q=k%C5%91szegi%20id%C5%91j%C3%A1r%C3%A1s%20el%C5%91rejelz%C3%A9s"
+                href="https://www.facebook.com/idojaraskoszeg.hu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#123a57] hover:bg-[#0a97be] text-white font-bold text-xs shadow-md shadow-[#123a57]/20 transition-all hover:scale-[1.02] active:scale-95 shrink-0"
@@ -411,8 +416,8 @@ export default function WeatherDashboard() {
       {/* Részletező modal — a csempéből morfol elő */}
       <StatDetailModal
         metric={activeMetric}
-        timestamps={timestamps}
-        data={activeKey ? (results[activeKey] || []) : []}
+        timestamps={activeKey ? (chartSeries[activeKey]?.labels || []) : []}
+        data={activeKey ? (chartSeries[activeKey]?.data || []) : []}
         currentValue={activeKey ? lastMeasure[activeKey] : null}
         onClose={() => setActiveKey(null)}
       />
