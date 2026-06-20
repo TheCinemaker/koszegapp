@@ -18,7 +18,7 @@ import {
   IoStarOutline,
   IoLockClosed
 } from 'react-icons/io5';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FadeUp, SpringUp } from '../components/AppleMotion';
 
 import { useTranslation } from 'react-i18next'; // Added import
@@ -33,6 +33,22 @@ const MotionLink = motion(Link);
 
 export default function Home({ appData, weather }) {
   const { t } = useTranslation('home'); // Load 'home' namespace
+  const [showPromo, setShowPromo] = useState(false);
+
+  useEffect(() => {
+    const isShown = sessionStorage.getItem('museumNightPromoShown');
+    if (!isShown) {
+      const timer = setTimeout(() => {
+        setShowPromo(true);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const closePromo = () => {
+    setShowPromo(false);
+    sessionStorage.setItem('museumNightPromoShown', 'true');
+  };
 
   const sections = [
     { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, span: 'col-span-2 sm:col-span-2', delay: 0.05 },
@@ -180,6 +196,84 @@ export default function Home({ appData, weather }) {
           ))}
         </div>
       </div>
+
+      {/* Múzeumok Éjszakája Promo Modal */}
+      <AnimatePresence>
+        {showPromo && (
+          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+            {/* Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closePromo}
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="relative w-full max-w-lg bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden z-10"
+            >
+              {/* Header Banner - Sleek Dark Gradient representing Night */}
+              <div className="relative h-48 bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 p-6 flex flex-col justify-end overflow-hidden">
+                {/* Glow Effects */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-purple-500/30 rounded-full blur-3xl pointer-events-none" />
+                
+                {/* Close Button */}
+                <button
+                  onClick={closePromo}
+                  className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all active:scale-90 text-xl font-light focus:outline-none"
+                  aria-label="Bezárás"
+                >
+                  &times;
+                </button>
+
+                {/* Badge & Title */}
+                <div className="relative z-10 flex flex-col items-start">
+                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/25 border border-indigo-400/30 text-indigo-300 text-[10px] font-bold uppercase tracking-wider">
+                    Rendkívüli program
+                  </span>
+                  <h2 className="text-2xl font-black text-white mt-2 leading-none tracking-tight">
+                    Múzeumok Éjszakája
+                  </h2>
+                  <p className="text-xs font-semibold text-[#0bc9f8] mt-1">
+                    2026. június 20. szombat
+                  </p>
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-6 md:p-8">
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                  Ma van a <span className="text-[#0a97be] dark:text-[#0bc9f8] font-bold">Múzeumok Éjszakája</span>! 
+                  Válogass a lehetőségek közül és érezd jól magad a Kőszegi Városi Múzeum, Könyvtár és Levéltár programjain, 
+                  vagy fedezd fel a Posta Múzeumot és a Boráriumot aperitivo üzemmódban!
+                </p>
+                
+                <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100/50 dark:border-indigo-900/20 mb-6">
+                  <p className="text-xs font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-2">
+                    🏛️ 5 helyszínen, több mint 20 izgalmas programmal várunk!
+                  </p>
+                </div>
+
+                {/* Action Button */}
+                <Link
+                  to="/events"
+                  onClick={closePromo}
+                  className="flex items-center justify-center w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-95 text-center"
+                >
+                  Mutasd a programokat!
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

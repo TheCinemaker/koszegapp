@@ -53,7 +53,7 @@
       "lat": 47.38956510036567,
       "lng": 16.53997106086683
     },
-    "description": "🌙✨ MÚZEUMOK ÉJSZAKÁJA 2026 ✨🌙\nJúnius 20-án különleges esti kalandra hívunk benneteket! 🏛️🔦\nFedezzétek fel tárlatvezetéseinken a múzeum rejtett történeteit és izgalmas titkait az alábbi időpontokban:\n🕕 18:00\n🕖 19:00 – Sons Left Behind akusztikus koncert 🎶🎸\n🕗 20:00\n🕘 21:00\n🕙 22:00 – csak a legbátrabbaknak! 👻😉\nAz élmény mellé finom italokkal és borfalatokkal készülünk 🍷🧀. Ha az időjárás is kegyes lesz hozzánk, a hangulatos teraszon várunk benneteket! ☀️🌿\nTöltsünk együtt egy varázslatos nyári estét, ahol a kultúra, a zene és a gasztronómia találkozik! ✨",
+    "description": "Ma van a Múzeumok Éjszakája! Válogass a lehetőségek közül és érezd jól magad a Kőszegi Városi Múzeum, Könyvtár és Levéltár programjain, vagy fedezd fel a Posta Múzeumot és a Boráriumot aperitivo üzemmódban!\n\n2026. június 20-án 5 helyszínen, több mint 20 programmal várunk!\n\n🏛️✨ MÚZEUMOK ÉJSZAKÁJA KŐSZEG SZÍVÉBEN ✨🎶\nMi történik, amikor a kultúra, az élő zene és az aperitivo életérzés találkozik egy kellemes nyári estén? 🍹🌙\nEgy igazán különleges program, amit nem érdemes kihagyni!\n\n📅 2026. június 20. (szombat)\n⏰ 18:00–24:00\n📍 Posta Múzeum és Borárium, Kőszeg\n\n🏛️ Ingyenes tárlatvezetések minden órában:\n18:00 és 22:00 között óránként indulnak a díjmentes tárlatvezetések a Posta Múzeumban. Fedezd fel a kiállítást egy különleges, esti hangulatban!\n\n🎸 Zene, hangulat és nyári esték:\n🎶 19:00 – Sons Left Behind akusztikus koncert\n🍹 18:00–22:00 (24:00-ig) – Balzsew\nA múzeum udvarát kellemes chill dallamok, finom falatok, hűsítő italok és jó társaság tölti meg. Érkezz egy tárlatvezetésre, maradj a zenéért, koccints velünk, és élvezd a nyár egyik leghangulatosabb estéjét! ✨🥂\n\n🎟️ A belépés és a tárlatvezetések ingyenesek!",
     "tags": [
       "múzeum",
       "fesztivál",
@@ -1301,9 +1301,9 @@
     "id": "event-2026-1780398327924"
   },
   {
-    "name": "Mesés kalandok a égyszögletű Kerek Erdő lakóival",
+    "name": "Lázár Ervin: A Négyszögletű Kerek Erdő - láncolvasás + meselámpás készítés",
     "date": "2026-06-20",
-    "time": "19:00",
+    "time": "19:00-21:00",
     "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
       "lat": 47.389579,
@@ -1363,9 +1363,9 @@
     "id": "event-2026-1780399158764"
   },
   {
-    "name": "Mesés Kalandok a Hétfejű Tündérrel",
+    "name": "Lázár Ervin: A Hétfejű Tündér - papírszínház + varázspálca készítés",
     "date": "2026-06-20",
-    "time": "16:00",
+    "time": "16:00-17:00",
     "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
       "lat": 47.389579,
@@ -1376,7 +1376,7 @@
       "mese",
       "kézműves"
     ],
-    "image": "meses-1780400847882.jpg",
+    "image": "meses.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
@@ -1404,20 +1404,20 @@
     "id": "event-2026-1780401016108"
   },
   {
-    "name": "Zsófi és Zoli acustic - Ismert dalok akusztikus köntösben",
+    "name": "Zsófi & Zoli Acoustic koncert - Szentivánéji koncert",
     "date": "2026-06-20",
-    "time": "22:00",
+    "time": "22:00-23:00",
     "location": "Jurisics tér",
     "coords": {
       "lat": 47.38909197186627,
       "lng": 16.540936918985697
     },
-    "description": "A Múzeumok Éjszakája jellegzetes hangulata szinte el sem képzelhető élő akusztikus zene nélkül. Korponay Zsófi és Bánó Zoli akusztikus koncertje egyszerre frissítő, mint egy limonádé, és melengető, mint a nyári nap maga. Tökéletes program egy kis kultúrára, minőségi zenére, kikapcsolódásra vágyó közönségnek: könnyen emészthető, de mégsem kommersz zenei élményt nyújt.",
+    "description": "A Múzeumok Éjszakája jellegzetes hangulata szinte el sem képzelhető élő akusztikus zene nélkül. Zsófi & Zoli Acoustic koncert- Ismert dalok akusztikus köntösben - Szentivánéji koncert Korponay Zsófival és Bánó Zoltánnal. Könnyen emészthető, de mégsem kommersz zenei élményt nyújt.",
     "tags": [
       "Koncert",
       "zene"
     ],
-    "image": "meses-1780401129092.jpg",
+    "image": "meses.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
@@ -1425,9 +1425,9 @@
     "id": "event-2026-1780401179770"
   },
   {
-    "name": "Hangtálas gyermekjóga Vercsivel - A boszorkány és a  varázspálca",
+    "name": "A boszorkány és a varázspálca - Hangtálas gyermekjóga Vercsivel",
     "date": "2026-06-20",
-    "time": "18:00",
+    "time": "18:00-19:00",
     "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
       "lat": 47.389579,
@@ -1437,7 +1437,7 @@
     "tags": [
       "jóga"
     ],
-    "image": "meses-1780401321404.jpg",
+    "image": "meses.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
@@ -1445,9 +1445,9 @@
     "id": "event-2026-1780401325324"
   },
   {
-    "name": "Mesék palackpostába - Az akarat birodalma - Interaktív mesefoglalkozás Szűcs P. Roxánával",
+    "name": "Mesék palackpostába - Az akarat birodalma - Interaktív mesefoglalkozás",
     "date": "2026-06-20",
-    "time": "17:00",
+    "time": "17:00-18:00",
     "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
     "coords": {
       "lat": 47.389579,
@@ -1457,7 +1457,7 @@
     "tags": [
       "Mese"
     ],
-    "image": "meses-1780401387709.jpg",
+    "image": "meses.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
@@ -1538,7 +1538,7 @@
     "tags": [
       "tárlat"
     ],
-    "image": "meses-1780922067181.jpg",
+    "image": "meses.jpg",
     "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
@@ -1584,5 +1584,133 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780922440860"
+  },
+  {
+    "id": "event-2026-1780402000001",
+    "name": "Kis méretű könyvritkaságok időszaki kiállításmegnyitó",
+    "date": "2026-06-20",
+    "time": "16:00-17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Kis méretű könyvritkaságok időszaki kiállításmegnyitó a felnőttrészlegen - Megnyitja: Lajos Tiborné Intézményvezető-helyettes\nKözreműködik: Várnai Éva szólóénekes",
+    "tags": [
+      "kiállítás",
+      "könyvtár",
+      "program"
+    ],
+    "image": "meses.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "event-2026-1780402000002",
+    "name": "Rozán Eszter írói munkásságának bemutatása",
+    "date": "2026-06-20",
+    "time": "17:00-18:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Rozán Eszter írói munkásságának bemutatása regényeinek tükrében a rendezvényteremben - Beszélgetőtárs: Csuti Borbála",
+    "tags": [
+      "irodalom",
+      "program",
+      "könyvtár"
+    ],
+    "image": "rozan.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "event-2026-1780402000003",
+    "name": "Boszorkányos 'Polcok mentén' Czagány Tündével",
+    "date": "2026-06-20",
+    "time": "18:00-19:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389579,
+      "lng": 16.542464
+    },
+    "description": "Boszorkányos \"Polcok mentén\" Czagány Tündével a felnőttrészlegen",
+    "tags": [
+      "könyvtár",
+      "program"
+    ],
+    "image": "polcok_menten.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "event-2026-1780402000004",
+    "name": "Élőszereplős ostromtársasjáték és flashmob",
+    "date": "2026-06-20",
+    "time": "16:00-20:00",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38909197186627,
+      "lng": 16.540936918985697
+    },
+    "description": "Élőszereplős ostromtársasjáték, meglepetés flashmob a Jurisics téren.",
+    "tags": [
+      "játék",
+      "program"
+    ],
+    "image": "meses.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "event-2026-1780402000005",
+    "name": "Sváb sördalok harmonikán Peltzer Gézával",
+    "date": "2026-06-20",
+    "time": "18:00-19:00",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38909197186627,
+      "lng": 16.540936918985697
+    },
+    "description": "Sváb sördalok harmonikán Peltzer Gézával a Jurisics téren.",
+    "tags": [
+      "zene",
+      "program"
+    ],
+    "image": "meses.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "event-2026-1780402000006",
+    "name": "Günsburg Villa kortárs művészeti galéria kapunyitás",
+    "date": "2026-06-20",
+    "time": "18:30-23:00",
+    "location": "Günsburg Villa (Fő tér 23.)",
+    "coords": {
+      "lat": 47.3883,
+      "lng": 16.5411
+    },
+    "description": "Kapunyitás a kortárs művészeti galériában + tárlatvezetések, Szentgyörgy-hegyi borok és aperitiv, 22 óra után party.",
+    "tags": [
+      "kiállítás",
+      "program"
+    ],
+    "image": "meses.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   }
 ]
