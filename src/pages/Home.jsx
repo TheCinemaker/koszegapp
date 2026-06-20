@@ -36,12 +36,18 @@ export default function Home({ appData, weather }) {
   const [showPromo, setShowPromo] = useState(false);
 
   useEffect(() => {
-    const isShown = sessionStorage.getItem('museumNightPromoShown');
-    if (!isShown) {
-      const timer = setTimeout(() => {
-        setShowPromo(true);
-      }, 800);
-      return () => clearTimeout(timer);
+    const today = new Date();
+    // 2026. június 20. (month is 0-indexed, so June is 5)
+    const isJune20_2026 = today.getFullYear() === 2026 && today.getMonth() === 5 && today.getDate() === 20;
+
+    if (isJune20_2026) {
+      const isShown = sessionStorage.getItem('museumNightPromoShown');
+      if (!isShown) {
+        const timer = setTimeout(() => {
+          setShowPromo(true);
+        }, 800);
+        return () => clearTimeout(timer);
+      }
     }
   }, []);
 
