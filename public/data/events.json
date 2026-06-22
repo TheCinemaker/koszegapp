@@ -1,73 +1,5 @@
 [
   {
-    "name": "„Ébredés” – Kasztner Andrea és Rózsás Dorina kiállítása",
-    "date": "2026-06-09",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "„Ébredés” – Kasztner Andrea és Rózsás Dorina kiállításmegnyitója. A belépés ingyenes!",
-    "tags": [
-      "kiállítás",
-      "művészet",
-      "program",
-      "könyvtár"
-    ],
-    "image": "ebredes-1779097768281.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "new_1771696209731"
-  },
-  {
-    "id": "new_1771696209732",
-    "name": "Ünnepi Könyvhét – „Mi, magyarok…”",
-    "date": "2026-06-11",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Ünnepi Könyvhét – „Mi, magyarok…” Közönségtalálkozó Sal Endre íróval. A belépés ingyenes!",
-    "tags": [
-      "irodalom",
-      "találkozó",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "name": "Múzeumok Éjszakája",
-    "date": "2026-06-20",
-    "time": "17:00",
-    "location": "Postamúzeum",
-    "coords": {
-      "lat": 47.38956510036567,
-      "lng": 16.53997106086683
-    },
-    "description": "Ma van a Múzeumok Éjszakája! Válogass a lehetőségek közül és érezd jól magad a Kőszegi Városi Múzeum, Könyvtár és Levéltár programjain, vagy fedezd fel a Posta Múzeumot és a Boráriumot aperitivo üzemmódban!\n\n2026. június 20-án 5 helyszínen, több mint 20 programmal várunk!\n\n🏛️✨ MÚZEUMOK ÉJSZAKÁJA KŐSZEG SZÍVÉBEN ✨🎶\nMi történik, amikor a kultúra, az élő zene és az aperitivo életérzés találkozik egy kellemes nyári estén? 🍹🌙\nEgy igazán különleges program, amit nem érdemes kihagyni!\n\n📅 2026. június 20. (szombat)\n⏰ 18:00–24:00\n📍 Posta Múzeum és Borárium, Kőszeg\n\n🏛️ Ingyenes tárlatvezetések minden órában:\n18:00 és 22:00 között óránként indulnak a díjmentes tárlatvezetések a Posta Múzeumban. Fedezd fel a kiállítást egy különleges, esti hangulatban!\n\n🎸 Zene, hangulat és nyári esték:\n🎶 19:00 – Sons Left Behind akusztikus koncert\n🍹 18:00–22:00 (24:00-ig) – Balzsew\nA múzeum udvarát kellemes chill dallamok, finom falatok, hűsítő italok és jó társaság tölti meg. Érkezz egy tárlatvezetésre, maradj a zenéért, koccints velünk, és élvezd a nyár egyik leghangulatosabb estéjét! ✨🥂\n\n🎟️ A belépés és a tárlatvezetések ingyenesek!",
-    "tags": [
-      "múzeum",
-      "fesztivál",
-      "program",
-      "éjszaka"
-    ],
-    "image": "posta.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Múzeumok Éjszakája",
-    "isVarszinhaz": false,
-    "id": "new_1771696209733"
-  },
-  {
     "id": "new_1771696209734",
     "name": "Berecz Mátyás: Fegyvert s vitézt éneklek",
     "date": "2026-08-08",
@@ -523,65 +455,6 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
-  },
-  {
-    "name": "Pünkösdi Lili: Örökösök",
-    "date": "2026-06-05",
-    "time": "19:00",
-    "location": "Jurisics vár – Lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Pünkösdi Lili: Örökösök\nA hűség fogságában\nIdőpontok: 2026. Június 5.,19:00-tól Helyszín: Jurisics vár lovagterem Jegyár: 5.000.-\n\n„A Kőszegi Várszínház tavaly A bosszú fogadójával indította el a magyar színházi életben egyedülálló vállalását: Kőszeghez kapcsolódó, új magyar történelmi kamaradarabok bemutatását, amelyek a mi ötleteinkre épülnek. Bár történelmi alakok a szereplők, ezek a művek nem történelmi tablók: emberi sorsokról, sűrített emberi helyzetekről szólnak. Az Örökösökkel visszalépünk a 15. századba, a Garai család történetéhez. Az előadás nem dokumentumdráma, de történész segítőnk, E. Kovács Péter szakmai jelenléte biztos támpontot ad”, mondta Pócza Zoltán, a várszínház igazgatója.\n„Egy hatszáz évvel ezelőtti világot akkor tudunk igazán megmutatni, ha nem vitrinbe tesszük, hanem hagyjuk megszólalni benne az embert. Ezt teszi Pünkösdi Lili darabja. A szerző azt írta meg érzékenyen, hogy a viselkedésminták, a félelmek, az érdekek szinte mindig ugyanazok. A környezet, a kor változik – az ember kevésbé. Miközben az Örökösök a régmúltban játszódik – nyilván él a színházi fikció szabadságával –, a néző egészen biztosan ráismer a jelen helyzeteire is. Vagyis ez nem egy történelem lecke: különböző sorsok, hitek, szándékok keresztezik egymást. Nem a történelmi távolságot érezzük, hanem az emberi közelséget. Minden szereplő ugyanazokkal a belső dilemmákkal küzd: meddig tart a hűség és mikor válik önfeladássá”, fogalmazott Csiby Gergely, az Örökösök rendezője.\nSzereplők:\nGarai Miklós, nádor: Őze Áron\nCillei Borbála, királyné: Bánfalvi Eszter\nCillei Anna, a nádor felesége: Varga Izabella\nIzsák, zsidó borkereskedő: Epres Attila\nJohannes, ferences szerzetes: Tóth András\nKonzultáns: Prof. Dr. Kovács Péter\nDramaturg: Karácsony Ágnes\nDíszlet, jelmez: Trifusz Péter\nFény, hang: Bakos Zoltán\nRendezőasszisztens: Efstratiadu Zoé\nRendező: Csiby Gergely\nTámogatók: Nemzeti Kulturális Támogatáskezelő, MOL- Új Európa Alapítvány, Kőszeg Város Önkormányzata. A Sárkányrend lovagja című EMT-SZ-P-25-0006 pályázat támogatásával.",
-    "tags": [],
-    "image": "lili.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "id": "event-2026-1778494220410"
-  },
-  {
-    "id": "varszinhaz-20260611-10",
-    "name": "Florian Zeller: A fiú",
-    "date": "2026-06-11",
-    "time": "19:00",
-    "location": "Jurisics vár lovagterem",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Florian Zeller: A fiú\nA Kőszegi Várszínház és a Karinthy Színház közös bemutatója\nIdőpontok: 2026. Június 11.,19:00-tól Helyszín: Jurisics vár lovagterem Jegyár: 5.000.-\n\nAmikor problémákkal küszködnek az embereknek, azért szeretnek színházba járni, mert ott testvériségi, együvé tartozási élményt kapnak. Térben és időben együtt vannak a színészekkel, a többi nézővel, és mindannyian átélnek valamit, ami akkor, ott, a jelenben zajlik, megismételhetetlen, csak azon az estén történik meg velük.” (Florian Zeller)\nKamasznak lenni útvesztő. Labirintus. Hiába tudjuk, hogy be kell menni és van belőle kiút, mégis riadt és elveszett kisgyerekké válunk újra, akik belépni kényszerülünk. És nem elég egyszer megtalálni a kijáratban felsejlő fényt, amikor mi magunk szorongjuk pánikban keresztül az úton, de még a saját gyerekeink kamaszkorát is teljes villanyoltásban kell végig kísérnünk. És az a fonál, amibe görcsösen kapaszkodva átvergődtünk rajta, ott mit sem ér: minden kamaszkor egy új labirintus, új fonállal, egy új Minótaurosszal a közepén. Van, aki simán begyalogol rövidnadrágban és mintha mi se történt volna, kisétál öltönyben. Mások meg véresen lihegve, de büszkén. És vannak páran, akik sajnos bent maradnak. Akik nem élik túl a Szörnnyel való találkozást.\nZeller triptichonjának Fiú-ja ennek az átváltozásnak a folyamatát boncolgatja. Mennyi és hol van a szülői felelősség az irányítás átadásban? Mikor és mennyire kell beleszólni egy függetlenedni vágyó kamasz sorsába? Észrevesszük-e időben a jelzését? Tudunk-e segíteni neki, hogyan jelezzék a bajt, mielőtt még bekövetkezne a tragédia?\nSzereplők: Karácsony Gergely, Sárközi József m.v., Dobra Mara, Kovács Vecei Fanni\nLátványtervező: Narek Tumanian\nRendező: Ilja Bocsarnikovsz\n122 perc 2 felvonásban\nAz előadást 16 éven felülieknek ajánljuk!",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4731_pic3_4731.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260613-11",
-    "name": "Segítség megnősültem!",
-    "date": "2026-06-13",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Segítség megnősültem!\nPindroch Csaba egyszemélyes komédiája\nIdőpontok: 2026. Június 13. (esőnap: Június 14.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 6.000.-\n\nA Sebestyén Elemér azonos című regénye alapján írt kortárs komédiáját Pindroch Csaba társ-dramaturgként, producerként és az előadás egyedüli szereplőjeként jegyzi, a darab rendezője Radnai Márk.\nA hagyományos bohózat és a modern stand-up comedy stílusjegyeit egyaránt felvonultató előadás sajátos görbe tükröt tart az esküvő előtti és utáni hétköznapok legkülönbözőbb komikus vagy éppen keserű pillanatainak. Mindannyiunk számára ismerős helyzeteket láthatunk, felszabadult nevetéssel ismerhetünk magunkra Pindroch Csaba sokoldalú és őszinte játékát nézve, aki a házasság témájában jártas és végtelenül szerethető színészként bravúrosan tálalja ezt a nem mindennapi színházi fogást.\nA zabolátlan humor és irónia ellenére azonban ez az anekdota-szerű történetekből álló férfimonológ nem más, mint tisztelgés a nők, a szerelem és a házasság előtt.\n„Bár tele van csípős megjegyzésekkel és humoros szituációkkal, mégis olyan ez a darab, mint egy szerelmi vallomás. Üzenet tőlem személyesen a feleségemnek, továbbá minden férfitól valamennyi nőnek, köszönetképpen azért a fontos, hihetetlenül boldogító, de olykor végtelenül bosszantó és így rengeteg humorforrást adó csodálatos emberi kapcsolatért, amit úgy hívunk, hogy házasság” – mondja Pindroch Csaba.\nAlkotók:\nElőadó: Pindroch Csaba\nÍró: Sebestyén Elemér\nRendező: Radnai Márk\nLátvány: Pater Sparrow\nProducerek: Pindroch Csaba, Verebes Linda\n \nAz előadás hossza: 80 perc",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4733_pic3_4733.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
   },
   {
     "id": "varszinhaz-20260618-12",
@@ -1172,69 +1045,6 @@
     "isVarszinhaz": true
   },
   {
-    "name": "Mi, magyarok... Közönségtalálkozó Sal Endrével",
-    "date": "2026-06-11",
-    "time": "17:00",
-    "location": "Kőszegi Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389579,
-      "lng": 16.542464
-    },
-    "description": "Sal Endre író, az Újságmúzeum főszerkesztője lesz intézményünk vendége a 97. Ünnepi Könyvhét első napján.\nMi, magyarok...\n2015. óta szenvedélyesen kutat elfeledett magyarjainkról, a Magyarországon és a világban élő vagy élt kimagasló alkotást, találmányt, gyűjteményt hátrahagyó, különleges életpályát, vagy valamilyen okból tragikus életpályát megélt magyarokról.\nA Mi, magyarok... sorozatban három kötete jelent meg, kapcsolódóként \"negyedikként\" a Hősök és kalandorok (mesél a Fiumei úti sírkert), a Budai Vár újjáépítéséről egy külön önálló kötet Mestermű születik és tavaly Jókai Mórról egy különleges, sok-sok érdekességet feltáró kötet Jókai Mór harmincháromszor címmel.\nSaját kötetei mellett társszerzője az Inspiráló magyarok, a (F)eljegyzés - Útikalauz az életkezdéshez műveknek, és a Budapest - Amire büszkék vagyunk műnek.\nSal Endre több televíziós műsorban, rádióműsorban szerepelt és szerepel, a Fiumei úti sírkertben pedig az évek során vezetett sétákat tartott, ápolva az elhunyt magyarjaink emlékét.\nÚjságmúzeum facebook oldalát 2017. március 24-én indította útjára, melynek mára már 230.000 követője lett. Minden reggel 7 órakor megjelenik egy bejegyzés napindító olvasmányként, és már napközben is lehet újakra bukkanni.\nSal Endre 2020-ban létrehozta kimagaslóan igényes Újságmúzeum weboldalát, ahol különböző kategóriákban sok-sok értékes írás olvasható színészekről, színésznőkről, filmekről, mesékről, századelős történetekről, túlvilági levelekről, élet írta történetekről.\nA személyes találkozón számos érdekes és értékes történetet hallunk majd elfeledett és majdnem elfeledett magyarjainkról, Sal Endre hitvallásáról, álmairól, kulisszatitkokról, újsággyűjteményéről, az Újságmúzeumról.\nA közönségtalálkozóra sok szeretettel várunk minden érdeklődőt!\nA rendezvényen való részvétel ingyenes!",
-    "tags": [
-      "találkozó"
-    ],
-    "image": "salendre.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1779102480924"
-  },
-  {
-    "name": "Jurisics kupa",
-    "date": "2026-06-05",
-    "time": "15:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.389025,
-      "lng": 16.541018
-    },
-    "description": "17.Jurisics Kupa-Nemzetközi Ökölvívó Verseny-június 5-6.Kőszeg-Gyere el,ott a helyed!!!😉👊👊💪🎶👏🥊🇭🇺❤️",
-    "tags": [
-      "box",
-      "sport"
-    ],
-    "image": "box.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1779617774643"
-  },
-  {
-    "name": "Czuczi László séf svédasztalos ebédje",
-    "date": "2026-06-07",
-    "time": "12:00",
-    "location": "Hotel Írottkő étterme",
-    "coords": {
-      "lat": 47.38821923076026,
-      "lng": 16.542546177963406
-    },
-    "description": "Czuczi László séf svédasztalos ebédje\n\nÍrottkő Hotel Étterme\n\n📅 2026. 06. 07. vasárnap\n🕐 12:00–14:30\n\n2 féle leves • 3 féle főétel • 3 féle köret • saláták • desszert • kávé és limonádé\n\n8.990 Ft / fő\n\n+ 10% szervizdíj\n\n🍽️ Asztalfoglalás szükséges\n\n👥 Helyek korlátozott számban\n\n📞 Helyfoglalás: +36-94/562-451",
-    "tags": [
-      "ebéd",
-      "étterem",
-      "séf"
-    ],
-    "image": "cuczi.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780328534340"
-  },
-  {
     "name": "Szent Iván esti varázslat - Meggie - Tomsa",
     "date": "2026-06-19",
     "time": "19:30",
@@ -1256,49 +1066,6 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780397972157"
-  },
-  {
-    "name": "Kisvonattal a Kőszegi-hegységbe",
-    "date": "2026-06-06",
-    "time": "09:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.389025,
-      "lng": 16.541018
-    },
-    "description": "2026. június 3. (szerda) 10:00-15:00 óráig\n2026. június 6. (szombat) 9:00-14:00 óráig\n2026. június 7. (vasárnap ) 9:00-14:00 óráig\n🕘 Indulás | 🏁 Érkezés | 📍 Kőszeg, Főtér\nTöltse a nyár egyik legszebb napját egy különleges élményutazással a Kőszegi-hegység szívébe! 🌳🌷 A Kőszegi Kisvonat kalandos útvonalon visz keresztül dombokon, völgyeken, erdők mélyén és történelmi helyszíneken – miközben felfrissül a természet ölelésében, és ízelítőt kap a helyi kultúrából és gasztronómiából is! ✨🍇\nÚtvonalunk:\n🔹 Szabó-hegy – egy csodás panorámás út, ahol a város lassan eltűnik a háttérben, és átadja helyét a zöldellő hegyvidéknek ⛰️\n🔹 Borha forrás – egy rövid séta után megpihenünk a csendes forrásnál, ahol csak a víz csobogása hallatszik, és a természet minden érzékszervünket elvarázsolja 💧🌿\n🔹 Velem – Novák üdülőfalu – itt kisvonatunk rövid megállót tart, ahol lehetőség nyílik étel-ital fogyasztásra és egy frissítő fagylaltra is. A kellemes pihenő után feltöltődve folytatjuk az utunkat 🍽️🍦🥤\n🔹 Szent Vid kápolna – Kőszeg egyik legkülönlegesebb látványossága, ahonnan lélegzetelállító kilátás nyílik a városra és a környező tájra. A történelem szinte tapintható e szakrális helyen ⛪🌄\n🔹 Cáki pincesor – a túra méltó zárásaként megérkezünk a festői pincesorra, ahol a múlt és a jelen találkozik. A zsuppfedeles pincék kinyílnak, a borospoharak koccannak – és ha kedve tartja, hazavihet egy palackkal a kőszegi borászok remekeiből is 🍷🏡\nKísérőnk végigkalauzol bennünket a történeteken, legendákon és érdekességeken át – így a kirándulás nemcsak látványos, de tanulságos is lesz! 📖😊\n🎫 Részvételi díj:\nFelnőtteknek: 3950 Ft/fő\nGyermekeknek: 3750 Ft/fő\n(A díj tartalmazza a Cáki pincesor belépőjét is!)\n🕔 A program időtartama: kb. 5 óra\nTökéletes hétvégi kikapcsolódás családoknak, pároknak, baráti társaságoknak, sőt idősebbeknek is! 👨‍👩‍👧‍👦👵👴\n📞 Előzetes jelentkezés szükséges!\n☎️ +36 30 628 8884",
-    "tags": [
-      "kivonat",
-      "kirándulás",
-      "túra"
-    ],
-    "image": "kisvonat-1780398198734.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780398203026"
-  },
-  {
-    "name": "LOVASSZÍNHÁZI előadás",
-    "date": "2026-06-09",
-    "time": "18:00",
-    "location": "Lovarda",
-    "coords": {
-      "lat": 0,
-      "lng": 0
-    },
-    "description": "Kedves Szülők, Rokonok, Ismerősök, érdeklődők!\nSzeretettel várunk június 9-én (kedden) LOVARDÁNKBA a színjátszós és lovasszakkörös diákjaink LOVASSZÍNHÁZI előadására!",
-    "tags": [
-      "színház",
-      "előadás"
-    ],
-    "image": "lovas.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780398327924"
   },
   {
     "name": "Lázár Ervin: A Négyszögletű Kerek Erdő - láncolvasás + meselámpás készítés",
@@ -1341,26 +1108,6 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780398640040"
-  },
-  {
-    "name": "Megemlékezés - Trianoni békediktátum 106. évfordulója",
-    "date": "2026-06-04",
-    "time": "15:30",
-    "location": "Kálvária-hegy lábánál, az első stációnál",
-    "coords": {
-      "lat": 47.396935085801374,
-      "lng": 16.53567251742364
-    },
-    "description": "A Kőszegi Polgári Kaszinó tisztelettel meghívja június 4-én (csütörtökön) délután, a Trianoni békediktátum 106. évfordulója alkalmából tartandó megemlékezésre.\nProgram:\n- 15:30: Gyülekező a Kálvária-hegy lábánál, az első stációnál, ahonnan nemzetünkért imádkozva indulunk a keresztúton a Trianon kereszthez Kirner Antal Zoltán plébános vezetésével.\n- 16:32: megemlékezés a Trianon keresztnél. Beszédet mond: dr. Kapiller Sarolta. Közreműködik: Kósa Csabáné Székely Orsolya - vers; Tánczos Zoltán - tárogató\n- 17:00: Ökunemikus imaróa, énekes taizéi a Kálvária templomban határon túli magyar testvéreinkért. Közreműködik: Árpád-házi Szent Margit Általános Iskola és Gimnázium - ének\nA programváltozás jogát fenntartjuk (az egyes programelemek kezdési időpontjai változhatnak, attól függően, mikor érkezünk meg az egyes állomásokra). A megemlékezés kedvezőtlen időjárás esetén elmarad",
-    "tags": [
-      "megemlékezés"
-    ],
-    "image": "trianon.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780399158764"
   },
   {
     "name": "Lázár Ervin: A Hétfejű Tündér - papírszínház + varázspálca készítés",
@@ -1463,67 +1210,6 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1780401391272"
-  },
-  {
-    "name": "Egy évtizednyi ecsetvonás - Baradács Anett kiállítása",
-    "date": "2026-06-06",
-    "time": "16:00",
-    "location": "Hotel Írottkő",
-    "coords": {
-      "lat": 47.38839534285719,
-      "lng": 16.542454386933958
-    },
-    "description": "Köszönöm Nektek, akik támogattatok, szívem tele hálàval, mert számomra a festészet nem pillanat , hanem út. 😇\nImmár 10 ève.\nSzeretettel hívlak, hogy velem együtt nézz vissza erre az útra, mert minden kép egy történet.\nÉs Én örömmel osztom meg Veled !\nHa velünk tartanál lesz móka- kacagás, evès- ivás, tánc ès vigalom. Mindez a festményeim ölelésében.\nÖrülnék, ha ott lennél, és osztozhatnánk, örömünkben!\nAnett",
-    "tags": [
-      "kiállítás"
-    ],
-    "image": "anett.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780401514023"
-  },
-  {
-    "name": "Retro éjszaka - DJ Ráduly",
-    "date": "2026-06-13",
-    "time": "21:00",
-    "location": "Hattyú büfé ",
-    "coords": {
-      "lat": 47.397485966275994,
-      "lng": 16.537565730664575
-    },
-    "description": "Visszarepítünk az időben! ⏳ Készülj fel egy felejthetetlen bulira, ahol a 90-es 2000-es-2010-es évek legnagyobb slágerei dübörögnek majd! 🎧✨\n​Tarts velünk egy éjszakára, ahol a jó hangulat garantált, a zenéért pedig nem más felel, mint DJ RADULY! 🎶🔥\n​📌 Amit kínálunk:\n✅ A legjobb retro slágerek hajnalig 🕺\n✅ Jéghideg italok széles választéka a bárpultban 🍹🍻\n✅ Ingyenes belépés! 🆓\n✅ Hattyú transzfer – hogy a hazajutás is kényelmes legyen! 🚐💨\n​📍 Helyszín: Hattyú Büfé, Kőszeg\n📅 Dátum: Június 13., szombat\n​Ne maradj otthon, gyere el és táncold át az éjszakát velünk! Hívd meg a barátaidat is, találkozzunk a táncparketten! 👋🎊",
-    "tags": [
-      "disco",
-      "retro"
-    ],
-    "image": "hattyu.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780418005554"
-  },
-  {
-    "name": "Sisi nyomában",
-    "date": "2026-06-10",
-    "time": "11:00",
-    "location": "Kőszegi Evangélikus Gimnázium, Technikum, Szakképző iskola és Kollégium Díszterme",
-    "coords": {
-      "lat": 47.39222332995563,
-      "lng": 16.5398248973294
-    },
-    "description": "🌹 Sisi nyomában – különleges időutazás Kőszegen! 👑\nSzeretettel hívunk minden érdeklődőt egy rendhagyó előadásra és ruhabemutatóra, ahol megelevenedik a legendás Erzsébet királyné, Sisi világa.\n✨ Czédly Mónika divattervező lenyűgöző, korhű ruhakölteményein keresztül bepillantást nyerhetünk a 19. századi udvari divatba, miközben izgalmas történeteket hallhatunk Sisi életéről, személyiségéről és máig tartó kultuszáról.\n📅 Időpont: 2026. június 10. (szerda) 11:00\n📍 Helyszín: Kőszegi Evangélikus Középiskola – Díszterem\nEgy különleges délelőtt, ahol a történelem, az elegancia és a divatművészet találkozik.\n🎟️ A program nyilvános, a részvétel díjmentes.\nMinden érdeklődőt szeretettel várunk! 🌹👑",
-    "tags": [
-      "bemutató"
-    ],
-    "image": "sisi.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780921888605"
   },
   {
     "name": "Apróságok a kriptákból",
@@ -1712,5 +1398,94 @@
     "highlight": false,
     "highlightLabel": "",
     "isVarszinhaz": false
+  },
+  {
+    "name": "Kertmozi úgy ahogyan még sosem volt...",
+    "date": "2026-06-25",
+    "time": "18:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.3883949246185,
+      "lng": 16.541821033084613
+    },
+    "description": "Kertmozi úgy ahogyan még sosem volt...\nTalálkozzunk Kőszeg Fő terén, Biegonál 25-én csütörtökön 18 és 19 óra között!\nHa szeretnél velünk enni, inni valamit indulás előtt, akkor hatra gyere, ha az induláskor szeretnél csatlakozni, akkor ráérsz hétre!\nA westpannon szervezésében különleges moziélmény vár egy kedves(német nyelvű, angol feliratozású) filmvígjátékkal a strand területén! A vetítés és az időben kerékpárral érkezők.részére egy popcorn és üdítő a szervezők ajándéka!\nKőszegről bicajjal tekerünk közösen a Fő térről 19 órakor elindulva.\nA táv kb.:13km oda és ugyanennyi vissza a vetítés után!\nBukósisak használata kötelező!\nRészvétel kizárólag, kifogástalan, első és hátsó világítással ellátott kerékpárral lehetséges!\nTovábbi infókért kérdezz bátran az esemény beszélgetésében!",
+    "tags": [
+      "bicikli",
+      "túra",
+      "mozi",
+      "szórakozás"
+    ],
+    "image": "mozi.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782109410123"
+  },
+  {
+    "name": "Bozsodi Quartett Koncert",
+    "date": "2026-06-22",
+    "time": "18:00",
+    "location": "Zwinger",
+    "coords": {
+      "lat": 47.3880079529525,
+      "lng": 16.539560000073052
+    },
+    "description": "A koncert a 31. Nemzetközi Nyári Egyetem keretében valósul meg.\nA belépés ingyenes.",
+    "tags": [
+      "koncert",
+      "zene"
+    ],
+    "image": "bozsodi.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782109558386"
+  },
+  {
+    "name": "Kutyás hétvége a Kőszegi-hegységben és Ausztriában",
+    "date": "2026-08-20",
+    "time": "10:00",
+    "location": "Vöröskereszt",
+    "coords": {
+      "lat": 47.37403680920409,
+      "lng": 16.491433994858784
+    },
+    "description": "Augusztusi kutyás hétvégénket Magyarország nyugati határvidékére szervezzük, és még egy kis határon túli kalandozást is beiktatunk. Aktív, kutyás kikapcsolódásra invitálunk a Kőszegi-hegység és Ausztria egy pici szegletének megismerésére.\nHétvégénk során több útvonalon kirándulunk a Kőszegi-hegységben, ellátogatunk Ausztriába, ahol igazi hegyvidéki környezetben túrázunk, és még egy esti városnézést is beiktatunk Kőszegen.\nSzállásunk Kőszeg szívében lesz, ahol az aktív napokat követően, a szépen felújított, kutyabarát szállodában kényelmesen pihenhetünk.\nA kutyás hétvége részletei:\nIdőpont: 2026. augusztus 20–23. (4 nap/3 éjszaka)\nHelyszín: Kőszeg, a Kőszegi-hegység és Ausztria\nSzállás: kellemes hangulatú, kutyabarát szállodában\nSzobatípusok: főként kétágyas szobák\nEllátás: félpanziós ellátás (reggeli és vacsora a szállodában)\nUtazás: egyénileg\nProgramajánlatunk a következő szolgáltatásokat tartalmazza:\n- 3 éjszakás elhelyezés egy- vagy kétágyas- , igény esetén családi szobákban\n- félpanziós ellátás: reggeli és vacsora a szállodában\n- közös kutyás kirándulások a Kőszegi-hegységben és Ausztriában, esti városnézés Kőszegen – csütörtök délután egy rövidebb, pénteken és szombaton egy-egy hosszabb, majd vasárnap újból egy rövidebb kirándulást tervezünk.\nBővebb információ és jelentkezés:\nhttps://utazzkutyaddal.hu/.../kutyas-hetvege-koszegen.../\nE-mail: info@utazzkutyaddal.hu\nTel.: Hosszú Noémi: +36 70 945 0280\nFelhívjuk figyelmeteket, hogy az \"Ott leszek\" gomb megnyomása jelen esetben nem minősül jelentkezésnek, részvételnek. Kérjük, hogy honlapunkon jelentkezz a programunkra!\nRészvételi feltételek:\n- kérjük, hogy csak jól szocializált és nem agresszív kutyával vegyél részt a hétvégi programon\n- a program szervezői nem felelnek a résztvevő kutyákért, mindenki a saját kutyájáért felel\n- minden kutyának kötelező az érvényes oltások megléte, az oltási könyveket érkezéskor be kell mutatni\n- az erdőkben a kutyát szabály szerint pórázon kell vezetni\ntüzelő szukával a részvétel nem lehetséges\n- a programot min. 16 fő részvétele esetén szervezzük meg\n- programunkon mindenki saját felelősségére vesz részt\nHasznos tanácsok:\nA természet közelsége a sok kellemes élmény mellett veszélyeket is rejt. Kérjük, mindenképpen készüljetek szúnyog- és kullancs elleni szerekkel és alap egészségügyi csomaggal. A nyugati határvidék kullancsokkal kiemelten fertőzött, de megfelelő védekezéssel kiküszöbölhető a megbetegedés.\nAmennyiben felkeltettük érdeklődésedet, foglald le a hétvégét minél hamarabb!\nFelhívjuk figyelmedet, hogy a szállodában a szobák korlátozott számban állnak rendelkezésünkre.\nKérdéseiddel keress minket a következő e‑mail címen: info@utazzkutyaddal.hu",
+    "tags": [
+      "séta",
+      "kirándulás",
+      "kutya"
+    ],
+    "image": "kutyas.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782109719427"
+  },
+  {
+    "name": "Képernyőmentes élmény- fejlesztőtábor",
+    "date": "2026-07-13",
+    "time": "08:00",
+    "location": "Tó-part",
+    "coords": {
+      "lat": 47.39753939060948,
+      "lng": 16.53599740038872
+    },
+    "description": " Elég volt a telefonokból, tabletekből és a képernyők világából?\nIdén nyáron visszahozzuk a valódi gyermekkor legszebb pillanatait! 💚\nNálunk a gyerekek:\n🌳 a természetben játszanak,\n🏃‍♂️ mozognak,\n🎨 alkotnak,\n🤝 barátkoznak,\n😄 nevetnek,\n🌞 észrevétlenül fejlődnek,\nmiközben felejthetetlen élményekkel gazdagodnak!\nA kőszegi Csónakázó-tó gyönyörű környezetében várjuk az 5–9 éves gyermekeket egy szeretetteljes,\nbiztonságos és élményekkel teli táborba, ahol a játék és a felfedezés áll a középpontban. 🌿🦋\nA részvételi díj tartalmazza:\n🥪 tízórait\n🍲 2 fogásos ebédet\n🍏 uzsonnát\n🎨 minden program és foglalkozás költségét\n👩‍🏫 A foglalkozásokat diplomás óvónők vezetik, akik szakmai tudással és sok szeretettel gondoskodnak a gyermekekről.\n📅 Választható időpontok:\n🗓️ 2026. július 13–17.\n🗓️ 2026. július 27–31.\n💰 Részvételi díj: 59.000 Ft/fő\n👨‍👩‍👧‍👦 Testvérkedvezmény: 54.000 Ft/fő\n⚠️ A helyek száma korlátozott, ezért érdemes mielőbb jelentkezni!\n📩 Jelentkezés: szehof@gmail.com",
+    "tags": [
+      "tábor",
+      "gyerek",
+      "program",
+      "fejlesztő"
+    ],
+    "image": "tabor.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782109864323"
   }
 ]
