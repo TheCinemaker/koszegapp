@@ -1487,5 +1487,87 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1782109864323"
+  },
+  {
+    "name": "Egy kis geológia Kőszegen - szakvezetett túra",
+    "date": "2026-06-23",
+    "time": "16:00",
+    "location": "Mohás út eleje",
+    "coords": {
+      "lat": 47.375781132081194,
+      "lng": 16.52972827336297
+    },
+    "description": "A kövek világa rengeteg titkot rejt... Gyere, ismerkedj meg néhány titkokkal Horváth Csaba geológus szakvezetésével.",
+    "tags": [
+      "kirándulás",
+      "geológia"
+    ],
+    "image": "tura.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782110076576"
+  },
+  {
+    "name": "Agócs Julianna és Balog Benjamin koncertje",
+    "date": "2026-06-23",
+    "time": "18:00",
+    "location": "Zsinagóga",
+    "coords": {
+      "lat": 47.391408,
+      "lng": 16.541513
+    },
+    "description": "Agócs Julianna és Balog Benjamin koncertje",
+    "tags": [
+      "koncert",
+      "folk"
+    ],
+    "image": "folk.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782110229114"
+  },
+  {
+    "name": "Természetismereti séta az \"iskola a határon\" parkjában - szakvezetés",
+    "date": "2026-06-25",
+    "time": "14:00",
+    "location": "Fő tér 2.",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "Illés Péter biológiatanár élvezetes programján megismerheted Ottlik Géza Iskola a határon regényének helyszínét, egy csodálatos ősfás parkot!",
+    "tags": [
+      "túra"
+    ],
+    "image": "iskolaahataron.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782110373899"
+  },
+  {
+    "name": "Az Abért-tó madárvilága - szakvezetett séta",
+    "date": "2026-06-27",
+    "time": "09:00",
+    "location": "Abért-tó parkoló",
+    "coords": {
+      "lat": 47.3615520766961,
+      "lng": 16.56683569296715
+    },
+    "description": "Illés Péter biológiatanár és madarász vár Téged, hogy megismertesse veled szíve csücskét, a madarakat :)!",
+    "tags": [
+      "túra"
+    ],
+    "image": "abertmadar.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782110509673"
   }
 ]
