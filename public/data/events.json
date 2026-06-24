@@ -1589,5 +1589,47 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1782281711046"
+  },
+  {
+    "name": "Könnyed Nyáresti Térzene",
+    "date": "2026-06-26",
+    "time": "19:00",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.389014755134845,
+      "lng": 16.54096886481705
+    },
+    "description": "Kőszeg Város Fúvószenekara\n\n📅 Időpont: 2026. június 26. (péntek)\n🕖 Kezdés: 19:00\n📍 Helyszín: Jurisics tér, Kőszeg\n\nMeghívó szöveg\n\nHozzátok magatokkal a családot, barátokat, dőljetek hátra egy kicsit, és élvezzétek velünk a zene örömét a nyári este meghitt hangulatában!\n\nÜzenet\n\nSzeretettel várunk mindenkit!",
+    "tags": [
+      "koncert"
+    ],
+    "image": "terzene.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782290352972"
+  },
+  {
+    "name": "V. Ostrom Várvédő Jótékonysági Futás",
+    "date": "2026-08-08",
+    "time": "09:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "🏃 V. Ostrom Várvédő Jótékonysági Futás\n\nJubileumi futóesemény\n\n🏰 5 éve együtt a vár falai között\n\n📅 Időpont: 2026. augusztus 8.\n📍 Helyszín: Kőszeg, Fő tér\n🕘 Kezdés: 9:00\n\nTávok\n👧 Gyermekfutam\n1,5 km\n🏃 Felnőtt futamok\n7 km\n14 km\n21,5 km\nRajtidők\n8:30\n8:55\n9:00\nHelyszíni nevezés\n\n📝 7:00 – 8:30\n\nOnline nevezés\n\n🌐 e-nevezes.hu\n(a plakát szerint 2026. június 1-től elérhető)\n\nJótékonysági cél\n\nA nevezés teljes bevételét a Myrtill Alapítványon keresztül két kőszegi gyermek, Hanna és Julcsi kapja.",
+    "tags": [
+      "jótékonykodás",
+      "futás",
+      "sport"
+    ],
+    "image": "futas.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782290581508"
   }
 ]
