@@ -1569,5 +1569,25 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1782110509673"
+  },
+  {
+    "name": "Naplementés teljesítménytúra",
+    "date": "2026-06-27",
+    "time": "17:30",
+    "location": "Kőszegi Tenisz Klub",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "Gyere velünk egy felejthetetlen nyári kalandra a Kőszegi-hegység ösvényein!\nIdén is várunk szeretettel minden természetjárót, túrázót, futót, családot, barátot és négylábú kísérőt újra gondolt, közkedvelt, esti, kőszegi teljesítménytúránkra!\nA Kőszegi Naplemente Teljesítménytúrák új útvonalakkal várnak benneteket! A túra nemcsak a lábadat, de a lelkedet is feltölti – különösen, amikor a naplemente fényei aranyba borítják az erdőt...\n\nA teljesítménytúra elszámolható a Dunántúl Kupa sorozatban is (ráadásul a 40 és a 30 km-es táv teljesíti az Írott-kő feltételt is!). A 40 km-es táv a Maraton Kupa, a 20 km-es táv a Félmaraton Kupa mozgalomba számítható be, a 10 és az 7 km-es pedig a CsigaBiga Liga mozgalomban. Hozd magaddal a pecsétgyűjtő füzete(i)det!\nA túra idén része az Ötpróba sorozatnak is. Gyűjts nálunk is pontokat!\n\nDiák/nyugdíjas igazolvánnyal, MTSZ vagy TTT tagságival szintén 200 Ft kedvezmény.\nA kedvezmények nem összevonhatóak.\n6 éven aluli gyermekek számára a részvétel díjmentes.\nTovábbi részletekkel folyamatosan frissítjük a leírást.\nVárunk Benneteket szeretettel!",
+    "tags": [
+      "túra"
+    ],
+    "image": "ttura.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782281711046"
   }
 ]
