@@ -1231,5 +1231,27 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1782290581508"
+  },
+  {
+    "name": "Bass Piknik 2026 Tó-part Kőszeg",
+    "date": "2026-07-25",
+    "time": "16:00",
+    "location": "Tó-part Kőszeg",
+    "coords": {
+      "lat": 47.39739431712201,
+      "lng": 16.536139317236852
+    },
+    "description": "Helló Piknikezők!\nA Bass Piknik nem csak egy rendezvény. Nem csak egy buli. Sokkal inkább egy egész napos közösségi élmény a természetben, ahol nappal a kikapcsolódásé, este pedig a zenéé a főszerep.\nAhogy a nap lejjebb ereszkedik a tó fölé, fokozatosan átváltunk a naplementés hangulatból az esti tánctér energiájába, amikor az Illegal Control DJ-i érkeznek a masszívabb hangzásokkal.\n�\n🌿 A kőszegi tópart zöld füvén várunk benneteket egy családias hangulatú napra, ahol barátok, családok, gyerekek, kutyák és persze a jó zenék férnek meg egymás mellett.��👨‍👩‍👧‍👦🐾 Család- és kisállatbarát rendezvény vagyunk. Hozhatod akár a teknősödet is, csak porázt ne felejtsd el, nehogy elhagyd.\n\nNapközben közösségi programokkal, pihenéssel, beszélgetésekkel, piknikhangulattal és kellemes háttérzenével készülünk. ��🎶 Lineup\n• Raul Young\n• Baluca\n• Somex\n• Seges\n• Berry\n• Gabriel Sanchoz\n🌅 Nappal piknik.\n🌄 Naplementében találkozások.\n🌙 Este pedig buli a csillagok alatt.\n\nJegyek hamarosan az alábbi oldalon:\nbasspiknik.com\n(Regisztrálva azonnal értesülhettek az jegy értékesítésről!)",
+    "tags": [
+      "Buli",
+      "zene",
+      "piknik"
+    ],
+    "image": "bass-1782652556618.jpeg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": true,
+    "highlightLabel": "Bass Piknik 2026 Tó-Part",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782652560646"
   }
 ]
