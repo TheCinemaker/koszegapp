@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import QRCode from 'qrcode';
 import {
     IoRestaurant, IoAdd, IoClose, IoCheckmarkCircle, IoTimeOutline,
     IoCardOutline, IoTrashOutline, IoPencil, IoAlertCircle,
@@ -98,7 +99,14 @@ export default function QRAdmin() {
                     if (closed.includes(newOrder.status)) {
                         setOrders(prev => prev.filter(o => o.id !== newOrder.id));
                     } else {
-                        setOrders(prev => prev.map(o => o.id === newOrder.id ? newOrder : o));
+                        setOrders(prev => {
+                            const exists = prev.some(o => o.id === newOrder.id);
+                            if (exists) {
+                                return prev.map(o => o.id === newOrder.id ? newOrder : o);
+                            } else {
+                                return [newOrder, ...prev];
+                            }
+                        });
                     }
                 }
             })
@@ -126,8 +134,7 @@ export default function QRAdmin() {
 
                 if (qrRestaurant?.id) {
                     try {
-                        // EXPLICIT REVIVAL: Force refresh the session to ensure network is healthy
-                        await supabase.auth.getSession();
+                        // Re-fetch orders to ensure data is synced after focus/wake
                         await loadOrders(true);
                     } catch (err) {
                         console.error('[QRAdmin] Re-sync failed:', err);
@@ -225,8 +232,15 @@ export default function QRAdmin() {
     }, []);
 
     const handleLogout = useCallback(async () => {
-        await supabase.auth.signOut();
-        toast.success('Kijelentkezve');
+        try {
+            await supabase.auth.signOut();
+        } catch (e) {
+            console.error('[Logout] Sign out error:', e);
+        } finally {
+            setAuthUser(null);
+            setQrRestaurant(null);
+            toast.success('Kijelentkezve');
+        }
     }, []);
 
     const handleRegistered = useCallback((restaurant) => {
@@ -306,6 +320,7 @@ export default function QRAdmin() {
                         loading={loadingOrders}
                         connStatus={connStatus}
                         setIsBusy={setIsBusy}
+                        syncNonce={syncNonce}
                     />
                 )}
                 {activeTab === 'menu' && <MenuEditor qrRestaurantId={qrRestaurant.id} />}
@@ -530,9 +545,21 @@ function QRRegisterScreen({ userId, userEmail, onRegistered, onLogout }) {
 // ══════════════════════════════════════════════
 // TAB 3: ASZTAL LINKEK & QR GENERATOR
 // ══════════════════════════════════════════════
+const QRCodeImage = ({ link, tableId }) => {
+    const [url, setUrl] = useState('');
+    useEffect(() => {
+        QRCode.toDataURL(link, { width: 300, margin: 1 })
+            .then(u => setUrl(u))
+            .catch(e => console.error(e));
+    }, [link]);
+    if (!url) return <div className="w-full h-full bg-zinc-800 animate-pulse rounded-lg" />;
+    return <img src={url} alt={`QR Code for ${tableId}`} className="w-full h-full object-contain bg-white p-1 rounded" />;
+};
+
 function QRLinksView({ qrRestaurant }) {
     const [tableInput, setTableInput] = useState('');
     const [tables, setTables] = useState(['1-es', '2-es', '3-as', 'VIP-1', 'Terasz-1']);
+    const [activeQRTable, setActiveQRTable] = useState(null);
     const BASE = window.location.origin;
 
     const makeLink = (tableId) =>
@@ -613,6 +640,11 @@ function QRLinksView({ qrRestaurant }) {
                                     Másolás
                                 </button>
                                 <button
+                                    onClick={() => setActiveQRTable(tableId)}
+                                    className={`${C.btn} bg-zinc-800 text-amber-400 text-[10px] border border-amber-500/20 hover:bg-amber-500/10`}>
+                                    QR Kód 📷
+                                </button>
+                                <button
                                     onClick={() => removeTable(tableId)}
                                     className={`${C.btn} ${C.card} text-red-400 border border-red-500/20 text-[10px]`}>
                                     ×
@@ -622,6 +654,94 @@ function QRLinksView({ qrRestaurant }) {
                     ))}
                 </div>
             </div>
+
+            {/* QR Modal */}
+            <AnimatePresence>
+                {activeQRTable && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }}
+                            onClick={() => setActiveQRTable(null)} 
+                            className="absolute inset-0 bg-black/80 backdrop-blur-sm z-40" 
+                        />
+                        <motion.div 
+                            initial={{ scale: 0.95, opacity: 0 }} 
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className={`relative z-50 w-full max-w-sm ${C.surface} border ${C.border} rounded-3xl p-6 text-center shadow-2xl`}
+                        >
+                            <h3 className="text-lg font-black mb-1">🪑 {activeQRTable} asztal</h3>
+                            <p className={`text-xs ${C.muted} mb-5 truncate`}>{makeLink(activeQRTable)}</p>
+                            
+                            <div className="flex justify-center p-3 bg-white rounded-2xl mx-auto w-44 h-44 mb-6 border border-zinc-700/30">
+                                <QRCodeImage link={makeLink(activeQRTable)} tableId={activeQRTable} />
+                            </div>
+
+                            <div className="space-y-2">
+                                <button 
+                                    onClick={() => {
+                                        QRCode.toDataURL(makeLink(activeQRTable), { width: 600, margin: 2 })
+                                            .then(url => {
+                                                const a = document.createElement('a');
+                                                a.href = url;
+                                                a.download = `visitkoszeg_asztal_${activeQRTable}.png`;
+                                                document.body.appendChild(a);
+                                                a.click();
+                                                document.body.removeChild(a);
+                                                toast.success('Letöltés elindult!');
+                                            });
+                                    }}
+                                    className="w-full py-3 bg-amber-500 text-black font-black text-sm rounded-xl active:scale-95 transition-all"
+                                >
+                                    Letöltés (PNG)
+                                </button>
+                                <button 
+                                    onClick={() => {
+                                        QRCode.toDataURL(makeLink(activeQRTable), { width: 600, margin: 2 })
+                                            .then(url => {
+                                                const win = window.open("");
+                                                win.document.write(
+                                                    '<html>' +
+                                                    '<head>' +
+                                                    '    <title>QR Kód - ' + activeQRTable + ' asztal</title>' +
+                                                    '    <style>' +
+                                                    '        body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0; background: #fff; color: #000; }' +
+                                                    '        h1 { margin-bottom: 5px; font-size: 24px; font-weight: 900; }' +
+                                                    '        p { margin-top: 0; font-size: 16px; color: #666; font-weight: bold; }' +
+                                                    '        img { width: 350px; height: 350px; border: 1px solid #ccc; padding: 10px; border-radius: 15px; }' +
+                                                    '    </style>' +
+                                                    '</head>' +
+                                                    '<body>' +
+                                                    '    <h1>' + qrRestaurant.name + '</h1>' +
+                                                    '    <p>🪑 ' + activeQRTable + ' asztal</p>' +
+                                                    '    <img src="' + url + '" />' +
+                                                    '    <script>' +
+                                                    '        setTimeout(function() { window.print(); window.close(); }, 350);' +
+                                                    '    </script>' +
+                                                    '</body>' +
+                                                    '</html>'
+                                                );
+                                            });
+                                    }}
+                                    className="w-full py-3 bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-700 font-black text-sm rounded-xl active:scale-95 transition-all"
+                                >
+                                    Nyomtatás
+                                </button>
+                            </div>
+                            
+                            <button 
+                                onClick={() => setActiveQRTable(null)}
+                                className={`w-full text-center mt-4 py-2 text-sm ${C.muted} hover:text-white transition-colors`}
+                            >
+                                Bezárás
+                            </button>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
 
             {/* URL format explanation */}
             <div className={`${C.surface} border border-zinc-700/30 rounded-2xl p-5`}>
@@ -677,16 +797,15 @@ const TablesView = memo(({ qrRestaurantId, orders, loading, connStatus, setIsBus
     const handleServe = useCallback(async (o, itemId) => { 
         setIsBusy(true);
         try { 
-            const dupes = orders.filter(d => d.table_id === o.table_id);
             await Promise.race([
-                Promise.all(dupes.map(dup => markItemServed(dup.id, itemId, dup.items))),
+                markItemServed(o.id, itemId, o.items),
                 new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 15000))
             ]);
         } catch (e) { 
             toast.error(e.message === 'Timeout' ? 'A szerver nem válaszol. Próbáld újra!' : 'Hiba történt a felszolgáláskor.'); 
         } 
         finally { setIsBusy(false); }
-    }, [orders, setIsBusy]);
+    }, [setIsBusy]);
 
     const handleClose = useCallback(async (id) => { 
         if (!window.confirm('Biztosan lezárod az asztalt?')) return;

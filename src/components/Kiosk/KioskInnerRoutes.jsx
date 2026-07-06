@@ -12,6 +12,9 @@ const KioskVarszinhaz     = lazy(() => import('../../pages/Kiosk/KioskVarszinhaz
 const KioskSelfie         = lazy(() => import('../../pages/Kiosk/KioskSelfie'));
 const KioskServices       = lazy(() => import('../../pages/Kiosk/KioskServices'));
 const KioskMap            = lazy(() => import('../../pages/Kiosk/KioskMap'));
+const KioskDraw           = lazy(() => import('../../pages/Kiosk/KioskDraw'));
+const KioskDrawGallery    = lazy(() => import('../../pages/Kiosk/KioskDrawGallery'));
+const KioskDrawAdmin      = lazy(() => import('../../pages/Kiosk/KioskDrawAdmin'));
 
 const fadeSlide = {
   initial: { opacity: 0, y: 14 },
@@ -44,6 +47,9 @@ export default function KioskInnerRoutes({ appData, weather }) {
             <Route path="/selfie"         element={<KioskSelfie />} />
             <Route path="/services"       element={<KioskServices />} />
             <Route path="/map"            element={<KioskMap />} />
+            <Route path="/draw"           element={<KioskDraw />} />
+            <Route path="/draw-gallery"   element={<KioskDrawGallery />} />
+            <Route path="/draw-admin"     element={<KioskDrawAdmin />} />
           </Routes>
         </Suspense>
       </motion.div>

@@ -12,9 +12,10 @@ export default function KioskIdleWrapper({ children }) {
   const needsReload = useRef(false);
   const pageLoadTime = useRef(Date.now());
 
-  // Determine timeout duration based on path (e.g. 180s for selfie camera posing, 90s for others)
+  // Determine timeout duration based on path (e.g. 180s for selfie camera posing or drawing, 90s for others)
   const isSelfiePage = location.pathname.includes('/selfie');
-  const timeoutMs = isSelfiePage ? 180000 : 90000; 
+  const isDrawPage = location.pathname.includes('/draw');
+  const timeoutMs = (isSelfiePage || isDrawPage) ? 180000 : 90000; 
 
   const resetTimer = () => {
     if (idleTimer.current) {

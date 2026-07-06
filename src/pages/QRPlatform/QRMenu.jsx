@@ -55,6 +55,17 @@ export default function QRMenu() {
     const [showServiceModal, setShowServiceModal] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
+    const loadMenuData = useCallback(async () => {
+        if (!restaurantId) return;
+        try {
+            const menuData = await getQRMenu(restaurantId);
+            setMenu(menuData);
+            setActiveCategory(prev => prev || (menuData.length > 0 ? menuData[0].id : null));
+        } catch (e) {
+            console.error('[QRMenu] Hiba a menü betöltésekor:', e);
+        }
+    }, [restaurantId]);
+
     // ── Load ──────────────────────────────────────────────
     useEffect(() => {
         // Minimum intro time
@@ -79,9 +90,7 @@ export default function QRMenu() {
                 document.title = `${rest.name} – Digitális Étlap`;
 
                 // Fetch isolated QR menu (qr_menu_categories + qr_menu_items)
-                const menuData = await getQRMenu(restaurantId);
-                setMenu(menuData);
-                if (menuData.length > 0) setActiveCategory(menuData[0].id);
+                await loadMenuData();
 
                 // Get or create today's table session (qr_orders)
                 const sess = await getOrCreateTableSession(restaurantId, decodeURIComponent(tableId));
@@ -111,7 +120,49 @@ export default function QRMenu() {
         };
 
         init();
-    }, [restaurantId, tableId]);
+    }, [restaurantId, tableId, loadMenuData]);
+
+    // ── Realtime menu updates ─────────────────────────────
+    useEffect(() => {
+        if (!restaurantId) return;
+
+        const channel = supabaseGuest
+            .channel(`qr-menu-realtime-${restaurantId}`)
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'qr_menu_items',
+                filter: `qr_restaurant_id=eq.${restaurantId}`
+            }, () => {
+                console.log('[Realtime] Menu item update received.');
+                loadMenuData();
+            })
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'qr_menu_categories',
+                filter: `qr_restaurant_id=eq.${restaurantId}`
+            }, () => {
+                console.log('[Realtime] Category update received.');
+                loadMenuData();
+            })
+            .subscribe();
+
+        return () => supabaseGuest.removeChannel(channel);
+    }, [restaurantId, loadMenuData]);
+
+    // ── Auto-remove unavailable items from cart ──────────
+    useEffect(() => {
+        if (menu.length === 0) return;
+        const availableIds = new Set(menu.flatMap(cat => (cat.items || []).map(i => i.id)));
+        setCart(prev => {
+            const filtered = prev.filter(item => availableIds.has(item.id));
+            if (filtered.length !== prev.length) {
+                toast('Egyes kosárba tett ételek elfogytak, eltávolítottuk őket.', { icon: '⚠️' });
+            }
+            return filtered;
+        });
+    }, [menu]);
 
     // ── Realtime session updates ──────────────────────────
     useEffect(() => {

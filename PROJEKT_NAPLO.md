@@ -4,6 +4,48 @@ Ebben a fájlban követjük a projekt haladását, az elvégzett módosításoka
 
 ---
 
+## 📅 2026. július 6. - Gyerekrajz (Kiosk Mode) Modul és Eseményszűrés
+
+### 🎨 Gyerekrajz (Kids Drawing) – Kiosk Mode integráció
+- [x] **[KioskDraw.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/Kiosk/KioskDraw.jsx) [ÚJ]:** Készítettünk egy 60 FPS HTML5 Canvas alapú rajzoló alkalmazást 16 beépített színnel és 3 ecsetmérettel, gyerekbarát életkor-választóval és virtuális érintő-billentyűzettel a név/ország megadásához.
+- [x] **[KioskDrawGallery.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/Kiosk/KioskDrawGallery.jsx) [ÚJ]:** Létrehoztuk a Kioszk Gyermekgaléria oldalt a jóváhagyott rajzok böngészéséhez, lapozható elrendezéssel.
+- [x] **[KioskDrawAdmin.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/Kiosk/KioskDrawAdmin.jsx) [ÚJ]:** Elkészítettünk egy adminisztrációs jóváhagyó felületet a beküldött rajzok moderálására, a biztonságos `admin9730` belépőkóddal védve.
+- [x] **[KioskHome.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/Kiosk/KioskHome.jsx):** Integráltuk a rajzok és a galéria kártyáit a Kioszk Főoldal Bento-menüjébe (sűrűbb, szimmetrikus 10 csempés elrendezés), valamint bekötöttük a jóváhagyott rajzokat a képernyővédő (Standby) diavetítésébe, stílusos elmosott hátterű és alkotó-metadata kiírással.
+- [x] **[KioskIdleWrapper.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/components/Kiosk/KioskIdleWrapper.jsx):** A rajzoló oldalon az inaktivitási időkorlátot 180 másodpercre növeltük, hogy a gyerekeknek elegendő idejük legyen befejezni a rajzaikat.
+- [x] **[KioskShareQR.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/components/Kiosk/KioskShareQR.jsx):** Letiltottuk a lebegő QR-kód megosztó gombot a rajzoló, galéria és admin oldalakon, mivel ezek a funkciók kizárólag a kioszk terminálra készültek.
+- [x] **[20260706_kiosk_kids_drawing.sql](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/supabase_migrations/20260706_kiosk_kids_drawing.sql) [ÚJ]:** Megírtuk a szükséges Supabase adatbázis sémát (kiosk_drawings tábla, RLS szabályok beszúráshoz/lekérdezéshez/módosításhoz anon és authenticated szerepköröknek is, valamint a storage bucket és annak biztonsági szabályai).
+- [x] **Fordítások:** Kiegészítettük a **hu.js**, **en.js**, **de.js** kioszk nyelvi fájlokat a rajzoló, galéria és admin oldalak összes feliratával.
+
+### 📅 Események lejárat-alapú szűrése a Kioszkon
+- [x] **[KioskEvents.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/Kiosk/KioskEvents.jsx):** Bevezettünk egy helyi időzónát követő dátumszűrést, így az Események oldalon a kioszk kizárólag a mai vagy a jövőbeli eseményeket listázza ki.
+- [x] **[KioskVarszinhaz.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/Kiosk/KioskVarszinhaz.jsx):** Ugyanezt a lejárat-szűrést alkalmaztuk a Várszínház eseménylistájára is, elrejtve az összes múltbéli előadást.
+
+---
+
+## 📅 2026. június 24. - QR Admin és Menü Valós Idejű & Biztonsági Fixek
+
+### ⚙️ Supabase Holtpontok és Web Locks Bypass
+- [x] **[supabaseClient.js](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/lib/supabaseClient.js):** Bevezettük a `lock` no-op zárolás-megkerülést a Supabase kliensekhez, orvosolva a böngészős Web Locks holtpont-fagyásait (`locks.ts` / `AbortError`).
+
+### 🛎️ Admin Rendeléskezelés és Teljesítmény Optimalizálás
+- [x] **[qrService.js](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/api/qrService.js):** Átirányítottuk a `getActiveOrders`, `markItemServed`, `closeTable` és `acknowledgeWaiterCall` lekérdezéseket a `supabaseGuest` kliensre, teljesen kiküszöbölve az admin JWT token-frissítési fagyásait.
+- [x] **[QRAdmin.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/QRPlatform/QRAdmin.jsx):** Finomítottuk a `handleServe` funkciót, hogy ne hívjon meg felesleges és lassú frissítéseket az összes asztali duplikált rendelésre, hanem csak arra az egy konkrét rendelésre, amelyre a pincér rákattintott.
+
+### 📋 Élő Étlap szinkronizáció (Real-time Menu Updates)
+- [x] **[QRMenu.jsx](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/src/pages/QRPlatform/QRMenu.jsx):** Feliratkoztattuk a vendégoldalt a `qr_menu_items` és `qr_menu_categories` táblák változásaira, valamint bevezettünk egy automatikus kosártisztítást a menet közben elfogyott tételekre.
+- [x] **[20260624_fix_qr_rls.sql](file:///c:/Users/Szilveszter/.gemini/antigravity-ide/scratch/koszegapp/koszegapp/supabase_migrations/20260624_fix_qr_rls.sql) (Új SQL):** Létrehoztunk egy új adatbázis migrációs fájlt az RLS szabályok megnyitására (`FOR SELECT USING (true)`) és a `REPLICA IDENTITY FULL` beállítására a kategória és tétel táblákra. Ez biztosítja, hogy a Supabase Realtime ne dobja el az UPDATE/DELETE eseményeket a nem-elsődleges kulcs alapú szűréseknél (pl. `qr_restaurant_id`).
+
+---
+
+## 📅 2026. június 22. - Esemény Plakátok Megjelenítési Fixek
+
+### 🖼️ Plakátok (Flyer-ek) Torzulásának és Levágásának Javítása
+- [x] **EventDetail.jsx:** A korábbi `ParallaxImage` (`object-cover`) lecserélve egy kétkomponensű elrendezésre: egy homályosított háttérkép (`blur-3xl`) és egy éles előtérkép (`object-contain`) kombinációjára, így a teljes plakát látszódik cropping nélkül.
+- [x] **Events.jsx:** A kártyákon a képtárolót fix `aspect-[3/2]` arányra formáltuk, és azon belül a plakátokat a fenti homályos háttér + `object-contain` sémára alakítottuk át, megakadályozva a rácsszerkezet elcsúszását és a képek levágását.
+- [x] **Varszinhaz.jsx:** A Várszínház kártyáinál is bevezettük a homályos háttér + `object-contain` technikát a fix `aspect-[4/5]` konténeren belül.
+
+---
+
 ## 📅 2026. június 11. - SEO, Biztonság, Hozzáférhetőség és Kódszétvágás Fixek
 
 ### 🔍 SEO & Közösségi Előnézet (Open Graph)

@@ -10,7 +10,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
-        storageKey: 'visitkoszeg-admin-auth'
+        storageKey: 'visitkoszeg-admin-auth',
+        lock: async (name, acquireTimeout, fn) => {
+            return await fn();
+        }
     }
 });
 
@@ -19,6 +22,9 @@ export const supabaseGuest = createClient(supabaseUrl, supabaseAnonKey, {
         persistSession: false,
         autoRefreshToken: false,
         detectSessionInUrl: false,
-        storageKey: 'visitkoszeg-guest-auth'
+        storageKey: 'visitkoszeg-guest-auth',
+        lock: async (name, acquireTimeout, fn) => {
+            return await fn();
+        }
     }
 });

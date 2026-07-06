@@ -120,28 +120,35 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
         className="relative h-full bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg border border-white/60 dark:border-white/10"
       >
-
         {/* Image Container — inset design, shows full flyer */}
         <div className="p-3 pb-0">
-          <div className="relative overflow-hidden rounded-xl isolate bg-gray-100 dark:bg-zinc-800">
+          <div className="relative aspect-[3/2] overflow-hidden rounded-xl isolate bg-gray-100 dark:bg-zinc-800 flex items-center justify-center">
             {evt.image && evt.image !== 'balkep_default.jpg' ? (
-              <img
-                src={`/images/events/${evt.image}`}
-                alt={evt.name}
-                className="w-full h-auto max-h-[280px] object-contain mx-auto transition-transform duration-700 group-hover:scale-[1.03]"
-                loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
-              />
+              <>
+                <img
+                  src={`/images/events/${evt.image}`}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-110 pointer-events-none"
+                  loading="lazy"
+                />
+                <img
+                  src={`/images/events/${evt.image}`}
+                  alt={evt.name}
+                  className="relative max-w-full max-h-full object-contain z-10 transition-transform duration-700 group-hover:scale-[1.03]"
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.previousSibling.style.display = 'none'; e.currentTarget.parentNode.querySelector('.fallback-ghost').style.display = 'block'; }}
+                />
+              </>
             ) : (
-              <GhostImage className="w-full aspect-[3/2] rounded-xl" />
+              <GhostImage className="w-full h-full rounded-xl" />
             )}
             {/* Fallback for onError (hidden by default) */}
-            <div className="hidden w-full aspect-[3/2] absolute inset-0">
+            <div className="fallback-ghost hidden w-full h-full absolute inset-0">
               <GhostImage className="w-full h-full" />
             </div>
 
             {/* Floating Date Badge */}
-            <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-lg border border-white/20">
+            <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-lg border border-white/20 z-20">
               <div className="text-[10px] font-bold uppercase text-[#0a97be] dark:text-[#0bc9f8] tracking-wider">{monthStr}</div>
               <div className="text-xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
             </div>
@@ -150,14 +157,14 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
             {!isPast && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(evt.id); }}
-                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/70 dark:bg-black/30 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-zinc-900 dark:text-white hover:bg-white dark:hover:bg-black/50 transition-all shadow-sm active:scale-90"
+                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/70 dark:bg-black/30 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-zinc-900 dark:text-white hover:bg-white dark:hover:bg-black/50 transition-all shadow-sm active:scale-90 z-20"
               >
                 {isFavorite ? <FaHeart className="text-rose-600 dark:text-rose-500 drop-shadow-md text-sm" /> : <FaRegHeart className="text-zinc-900 dark:text-white text-sm" />}
               </button>
             )}
 
             {/* Tags / MultiDay Badge */}
-            <div className="absolute bottom-3 left-3 flex gap-2 overflow-hidden max-w-[80%]">
+            <div className="absolute bottom-3 left-3 flex gap-2 overflow-hidden max-w-[80%] z-20">
               {isMultiDay && (
                 <span className="px-2.5 py-0.5 rounded-full bg-amber-400/90 text-amber-900 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm">
                   {t('multiDay')}

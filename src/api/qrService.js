@@ -229,7 +229,7 @@ export async function requestPayment(orderId, method) {
 // ── PINCÉR / ADMIN ────────────────────────────────────────
 
 export async function getActiveOrders(qrRestaurantId) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseGuest
         .from('qr_orders')
         .select('*')
         .eq('qr_restaurant_id', qrRestaurantId)
@@ -243,7 +243,7 @@ export async function markItemServed(orderId, itemUid, existingItems) {
     const updated = existingItems.map(item =>
         item.uid === itemUid ? { ...item, served: true } : item
     );
-    const { data, error } = await supabase
+    const { data, error } = await supabaseGuest
         .from('qr_orders')
         .update({ items: updated })
         .eq('id', orderId)
@@ -253,7 +253,7 @@ export async function markItemServed(orderId, itemUid, existingItems) {
 }
 
 export async function closeTable(orderId) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseGuest
         .from('qr_orders')
         .update({ status: 'paid', paid_at: new Date().toISOString() })
         .eq('id', orderId)
@@ -263,7 +263,7 @@ export async function closeTable(orderId) {
 }
 
 export async function acknowledgeWaiterCall(orderId) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseGuest
         .from('qr_orders')
         .update({ waiter_called: false })
         .eq('id', orderId)

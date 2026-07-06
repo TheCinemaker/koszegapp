@@ -28,14 +28,26 @@ export const VENUE_COORDS = {
   "stefanich pincészet": { lat: 47.384315, lng: 16.545902 }
 };
 
+const getLocalDateString = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function KioskEvents({ events }) {
   const navigate = useNavigate();
   const { t } = useKioskLang();
 
-  // Compute event coordinates and distances, and sort them chronologically
+  // Compute event coordinates and distances, filter future events, and sort them chronologically
   const processedEvents = useMemo(() => {
     if (!events) return [];
-    const mapped = events.map(evt => {
+
+    const today = getLocalDateString();
+    const currentEvents = events.filter(evt => (evt.date || '') >= today);
+
+    const mapped = currentEvents.map(evt => {
       const locKey = String(evt.location || '').toLowerCase().trim();
       let coords = null;
 

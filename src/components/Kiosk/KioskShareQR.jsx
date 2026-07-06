@@ -51,7 +51,7 @@ export default function KioskShareQR() {
   const isScreensaver =
     (location.pathname === '/kiosk' || location.pathname === '/kiosk/') &&
     sessionStorage.getItem('kiosk-started') !== 'true';
-  const noSharePages = ['/kiosk/services'];
+  const noSharePages = ['/kiosk/services', '/kiosk/draw', '/kiosk/draw-gallery', '/kiosk/draw-admin'];
   if (isScreensaver || noSharePages.includes(location.pathname)) return null;
 
   return (

@@ -117,24 +117,32 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         />
 
       {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-gray-900">
+      <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
         {evt.image && evt.image !== 'balkep_default.jpg' ? (
-          <img
-            src={`/images/events/${evt.image}`}
-            alt={evt.name}
-            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            loading="lazy"
-            onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'block'; }}
-          />
+          <>
+            <img
+              src={`/images/events/${evt.image}`}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-110 pointer-events-none"
+              loading="lazy"
+            />
+            <img
+              src={`/images/events/${evt.image}`}
+              alt={evt.name}
+              className="relative max-w-full max-h-full object-contain z-10 transition-transform duration-1000 group-hover:scale-105"
+              loading="lazy"
+              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.previousSibling.style.display = 'none'; e.currentTarget.parentNode.querySelector('.fallback-ghost').style.display = 'block'; }}
+            />
+          </>
         ) : (
           <GhostImage className="w-full h-full" />
         )}
-        <div className="hidden w-full h-full absolute inset-0">
+        <div className="fallback-ghost hidden w-full h-full absolute inset-0">
           <GhostImage className="w-full h-full" />
         </div>
 
         {/* Floating Date Badge (iOS Style) */}
-        <div className="absolute top-5 left-5 bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-2xl p-2.5 min-w-[55px] text-center shadow-sm border border-white/20">
+        <div className="absolute top-5 left-5 bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-2xl p-2.5 min-w-[55px] text-center shadow-sm border border-white/20 z-20">
           <div className="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-400 tracking-tighter leading-none mb-0.5">{monthStr}</div>
           <div className="text-xl font-black text-gray-900 dark:text-white leading-none">{dayStr}</div>
         </div>
@@ -143,17 +151,17 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         {!isPast && (
           <button
             onClick={(e) => { e.preventDefault(); toggleFavorite(evt.id); }}
-            className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-xl flex items-center justify-center text-gray-900 dark:text-white hover:bg-white dark:hover:bg-white/20 transition-all active:scale-90"
+            className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-xl flex items-center justify-center text-gray-900 dark:text-white hover:bg-white dark:hover:bg-white/20 transition-all active:scale-90 z-20"
           >
             {isFavorite ? <FaHeart className="text-rose-500 scale-110" /> : <FaRegHeart />}
           </button>
         )}
 
         {/* Bottom Gradient Overlay */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent z-20 pointer-events-none" />
 
         {/* Location Info (Overlayed on image for cleaner look) */}
-        <div className="absolute bottom-5 left-5 right-5 text-white">
+        <div className="absolute bottom-5 left-5 right-5 text-white z-20 pointer-events-none">
           <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest opacity-90 mb-1">
             <FaMapMarkerAlt className="text-indigo-400" />
             <span className="truncate">{evt.location}</span>

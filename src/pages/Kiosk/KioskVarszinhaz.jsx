@@ -7,6 +7,14 @@ import KioskKeyboard from '../../components/Kiosk/KioskKeyboard';
 import { fetchEvents } from '../../api';
 import { useKioskLang } from '../../contexts/KioskLangContext';
 
+const getLocalDateString = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function KioskVarszinhaz() {
   const navigate = useNavigate();
   const { t } = useKioskLang();
@@ -19,11 +27,16 @@ export default function KioskVarszinhaz() {
   useEffect(() => {
     fetchEvents()
       .then(data => {
+        const today = getLocalDateString();
         const norm = data.map(e => ({
           ...e,
           tags: (e.tags || []).map(t => String(t).toLowerCase())
         }));
-        const varszinhazEvents = norm.filter(e => e.isVarszinhaz === true || e.tags.includes('várszínház') || e.tags.includes('varszinhaz'));
+        const varszinhazEvents = norm.filter(e => {
+          const isMatch = e.isVarszinhaz === true || e.tags.includes('várszínház') || e.tags.includes('varszinhaz');
+          const isNotExpired = (e.date || '') >= today;
+          return isMatch && isNotExpired;
+        });
         const sorted = varszinhazEvents.sort((a, b) => a.date.localeCompare(b.date));
         setEvents(sorted);
         setLoading(false);

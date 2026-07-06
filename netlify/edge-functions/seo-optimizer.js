@@ -18,6 +18,12 @@ export default async (request, context) => {
     return response;
   }
 
+  // Safe checks: If response is not valid HTML (e.g. redirects, Not Modified, empty responses) bypass HTMLRewriter
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("text/html") || response.status === 304 || (response.status >= 300 && response.status < 400)) {
+    return response;
+  }
+
   let title = "visitKőszeg – Élmények. Élőben.";
   let description = "Kőszeg hivatalos digitális útitársa - látnivalók, programok, éttermek és események egy helyen.";
   let image = "https://visitkoszeg.hu/og-image.jpg";
@@ -29,10 +35,11 @@ export default async (request, context) => {
   // Dynamic route rendering logic
   if (url.pathname.startsWith('/menu/') && supabaseUrl && supabaseAnonKey) {
     const parts = url.pathname.split('/');
-    const restaurantId = parts[2]; // e.g., "pizzeria-palace"
+    const restaurantId = parts[2]; // e.g., "7f054252-ff1c-48fa-93cd-1d5fc40e36dc"
     if (restaurantId) {
       try {
-        const res = await fetch(`${supabaseUrl}/rest/v1/restaurants?id=eq.${restaurantId}&select=name,description,logo_url`, {
+        // CORRECTION: Query qr_restaurants (Digital Waiter) instead of restaurants (Eats)
+        const res = await fetch(`${supabaseUrl}/rest/v1/qr_restaurants?id=eq.${restaurantId}&select=name,description,logo_url`, {
           headers: {
             "apikey": supabaseAnonKey,
             "Authorization": `Bearer ${supabaseAnonKey}`
@@ -79,26 +86,37 @@ export default async (request, context) => {
     description = "Rendelj heti menüt és állandó ételeket Kőszeg legjobb éttermeiből házhozszállítással!";
   }
 
-  // Rewrite standard HTML response
-  return new HTMLRewriter()
-    .on("title", {
-      element(el) {
-        el.replace(`<title>${title}</title>`);
-      }
-    })
-    .on("head", {
-      element(el) {
-        el.append(`<meta name="description" content="${description}" />`, { html: true });
-        el.append(`<meta property="og:title" content="${title}" />`, { html: true });
-        el.append(`<meta property="og:description" content="${description}" />`, { html: true });
-        el.append(`<meta property="og:image" content="${image}" />`, { html: true });
-        el.append(`<meta property="og:url" content="${request.url}" />`, { html: true });
-        el.append(`<meta property="og:type" content="website" />`, { html: true });
-        el.append(`<meta name="twitter:card" content="summary_large_image" />`, { html: true });
-        el.append(`<meta name="twitter:title" content="${title}" />`, { html: true });
-        el.append(`<meta name="twitter:description" content="${description}" />`, { html: true });
-        el.append(`<meta name="twitter:image" content="${image}" />`, { html: true });
-      }
-    })
-    .transform(response);
+  try {
+    // Rewrite standard HTML response
+    return new HTMLRewriter()
+      .on("title", {
+        element(el) {
+          el.setInnerContent(title);
+        }
+      })
+      .on("head", {
+        element(el) {
+          el.append(`<meta name="description" content="${description}" />`, { html: true });
+          el.append(`<meta property="og:title" content="${title}" />`, { html: true });
+          el.append(`<meta property="og:description" content="${description}" />`, { html: true });
+          el.append(`<meta property="og:image" content="${image}" />`, { html: true });
+          el.append(`<meta property="og:url" content="${request.url}" />`, { html: true });
+          el.append(`<meta property="og:type" content="website" />`, { html: true });
+          el.append(`<meta name="twitter:card" content="summary_large_image" />`, { html: true });
+          el.append(`<meta name="twitter:title" content="${title}" />`, { html: true });
+          el.append(`<meta name="twitter:description" content="${description}" />`, { html: true });
+          el.append(`<meta name="twitter:image" content="${image}" />`, { html: true });
+        }
+      })
+      .transform(response);
+  } catch (rewriterErr) {
+    console.error("HTMLRewriter failed, bypassing:", rewriterErr);
+    return response;
+  }
+};
+
+// Netlify configuration override for safety
+export const config = {
+  path: "/*",
+  onError: "bypass"
 };

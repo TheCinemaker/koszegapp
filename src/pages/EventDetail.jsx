@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../lib/supabaseClient';
 
 import GhostImage from '../components/GhostImage';
-import { FadeUp, ParallaxImage } from '../components/AppleMotion';
+import { FadeUp } from '../components/AppleMotion';
 import { shouldShowBookingBubble, getBookingDatesFromEvent, getDistanceKm } from '../utils/bookingUtils';
 import { LocationContext } from '../contexts/LocationContext';
 
@@ -324,11 +324,18 @@ export default function EventDetail() {
           title="Kattints a nagyításhoz"
         >
           {evt.image && evt.image !== 'balkep_default.jpg' ? (
-            <ParallaxImage
-              src={`/images/events/${evt.image}`}
-              className="w-full h-full"
-              scale={1.15}
-            />
+            <div className="relative w-full h-full bg-gray-950 flex items-center justify-center overflow-hidden">
+              <img
+                src={`/images/events/${evt.image}`}
+                className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-110 pointer-events-none"
+                alt=""
+              />
+              <img
+                src={`/images/events/${evt.image}`}
+                className="relative max-h-full max-w-full object-contain z-10"
+                alt={evt.name}
+              />
+            </div>
           ) : (
             <GhostImage className="w-full h-full" />
           )}

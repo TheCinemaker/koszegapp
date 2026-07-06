@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   IoCalendarOutline, IoMapOutline, IoRestaurantOutline,
   IoCameraOutline, IoSparklesOutline, IoLocationOutline,
-  IoCompassOutline, IoGlobeOutline
+  IoCompassOutline, IoGlobeOutline, IoBrushOutline, IoColorPaletteOutline
 } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import KioskFlag from '../../components/Kiosk/KioskFlag';
@@ -46,13 +46,61 @@ export default function KioskHome({ appData, weather }) {
     return [...photos].sort(() => Math.random() - 0.5);
   }, [showScreensaver]);
 
+  const [approvedDrawings, setApprovedDrawings] = useState([]);
+
+  // Fetch visitor wall photos and approved drawings whenever screensaver becomes active
+  useEffect(() => {
+    if (!showScreensaver) return;
+    
+    supabase
+      .from('kiosk_visitor_messages')
+      .select('id, photo_url, visitor_name, message')
+      .order('created_at', { ascending: false })
+      .limit(12)
+      .then(({ data }) => { if (data?.length) setVisitorPhotos(data); })
+      .catch(() => {});
+
+    supabase
+      .from('kiosk_drawings')
+      .select('*')
+      .eq('approved', true)
+      .order('created_at', { ascending: false })
+      .limit(10)
+      .then(({ data }) => { if (data?.length) setApprovedDrawings(data); })
+      .catch(() => {});
+  }, [showScreensaver]);
+
+  // Construct combined slides (photos + approved kid drawings)
+  const slides = useMemo(() => {
+    const photoSlides = screensaverImages.map(img => ({ type: 'photo', url: img }));
+    const drawSlides = approvedDrawings.map(d => ({ type: 'drawing', url: d.image_path, drawing: d }));
+    
+    const mixed = [];
+    let drawIdx = 0;
+    
+    for (let i = 0; i < photoSlides.length; i++) {
+      mixed.push(photoSlides[i]);
+      // Every 2 photos, insert a drawing if we have one
+      if (drawIdx < drawSlides.length && (i + 1) % 2 === 0) {
+        mixed.push(drawSlides[drawIdx]);
+        drawIdx++;
+      }
+    }
+    // Append remaining drawings if any
+    while (drawIdx < drawSlides.length) {
+      mixed.push(drawSlides[drawIdx]);
+      drawIdx++;
+    }
+    return mixed.length > 0 ? mixed : photoSlides;
+  }, [screensaverImages, approvedDrawings]);
+
   useEffect(() => {
     if (!showScreensaver) return;
     const interval = setInterval(() => {
-      setActiveSlide(prev => (prev + 1) % screensaverImages.length);
+      setActiveSlide(prev => (prev + 1) % slides.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [showScreensaver, screensaverImages.length]);
+  }, [showScreensaver, slides.length]);
 
   useEffect(() => {
     const handleIdleTrigger = () => {
@@ -62,18 +110,6 @@ export default function KioskHome({ appData, weather }) {
     window.addEventListener('kiosk-idle-trigger', handleIdleTrigger);
     return () => window.removeEventListener('kiosk-idle-trigger', handleIdleTrigger);
   }, []);
-
-  // Fetch visitor wall photos whenever screensaver becomes active
-  useEffect(() => {
-    if (!showScreensaver) return;
-    supabase
-      .from('kiosk_visitor_messages')
-      .select('id, photo_url, visitor_name, message')
-      .order('created_at', { ascending: false })
-      .limit(12)
-      .then(({ data }) => { if (data?.length) setVisitorPhotos(data); })
-      .catch(() => {});
-  }, [showScreensaver]);
 
   const handleStart = () => {
     sessionStorage.setItem('kiosk-started', 'true');
@@ -88,15 +124,36 @@ export default function KioskHome({ appData, weather }) {
     { to: '/kiosk/varszinhaz',  labelKey: 'home.varszinhaz.label',  descKey: 'home.varszinhaz.desc',  icon: IoSparklesOutline,   gradient: 'from-amber-500 via-orange-500 to-amber-700', span: 'col-span-2 sm:col-span-1' },
     { to: '/kiosk/services',    labelKey: 'home.services.label',    descKey: 'home.services.desc',    icon: IoCompassOutline,    gradient: 'from-violet-500 to-indigo-800',              span: 'col-span-2 sm:col-span-1' },
     { to: '/kiosk/map',         labelKey: 'home.map.label',         descKey: 'home.map.desc',         icon: IoGlobeOutline,      gradient: 'from-cyan-500 to-blue-600',                  span: 'col-span-2 sm:col-span-1' },
+    { to: '/kiosk/draw',        labelKey: 'home.draw.label',        descKey: 'home.draw.desc',        icon: IoBrushOutline,      gradient: 'from-amber-500 to-orange-600',               span: 'col-span-2 sm:col-span-1' },
+    { to: '/kiosk/draw-gallery',labelKey: 'home.drawGallery.label', descKey: 'home.drawGallery.desc', icon: IoColorPaletteOutline, gradient: 'from-purple-500 to-pink-600', span: 'col-span-2 sm:col-span-1' },
   ];
 
   if (showScreensaver) {
     return (
       <div onClick={handleStart} className="fixed inset-0 z-[100] w-screen h-screen overflow-hidden flex flex-col justify-between cursor-pointer select-none">
         <div className="absolute inset-0 z-0 bg-black">
-          {screensaverImages.map((img, idx) => (
-            <div key={idx} className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${idx === activeSlide ? 'opacity-55' : 'opacity-0'}`} style={{ backgroundImage: `url(${img})` }} />
-          ))}
+          {slides.map((slide, idx) => {
+            const isActive = idx === activeSlide;
+            if (slide.type === 'drawing') {
+              return (
+                <div key={idx} className={`absolute inset-0 flex flex-col justify-center items-center transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                  {/* Blurred background duplicate of the drawing */}
+                  <div className="absolute inset-0 bg-cover bg-center blur-3xl opacity-35 scale-110" style={{ backgroundImage: `url(${slide.url})` }} />
+                  {/* Fitted drawing */}
+                  <img src={slide.url} alt="" className="relative max-w-[85vw] max-h-[70vh] object-contain shadow-2xl rounded-2xl border-4 border-white/20 z-10" />
+                  
+                  {/* Artist metadata capsule in Standby mode */}
+                  <div className="relative mt-5 z-20 px-6 py-2.5 rounded-full bg-black/70 border border-white/10 text-white font-extrabold text-sm shadow-xl flex items-center gap-2">
+                    🎨 {slide.drawing.name} {slide.drawing.age ? `(${slide.drawing.age})` : ''} 
+                    {slide.drawing.country ? ` - ${slide.drawing.country}` : ''}
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div key={idx} className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-55' : 'opacity-0'}`} style={{ backgroundImage: `url(${slide.url})` }} />
+            );
+          })}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/70" />
         </div>
 
