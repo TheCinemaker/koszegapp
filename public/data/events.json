@@ -457,48 +457,6 @@
     "highlightLabel": ""
   },
   {
-    "id": "varszinhaz-20260703-17",
-    "name": "Különkiadás",
-    "date": "2026-07-03",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Válogatás Örkény István és Esterházy Péter írásaiból\nKülönkiadás\nMáté Gábor, Mácsai Pál és Lukács Miklós (cimbalom)\nIdőpontok: 2026. Július 3. (esőnap: Július 4.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.000.-\n\nÖrkény István és Esterházy Péter nem ismerték egymást, de hogy közük van egymáshoz, nem kérdéses. Miféle összefüggés ez? „A Fancsikó és Pinta írásakor végig ott volt a fülemben” - vall első kötetéről Esterházy. Máshol ezt írja Örkényről: „Nem lehet aktualizálni, de mindig aktuális”.\nA két író világa generációs távolságuk, stiláris különbözőségük ellenére nagyon is alkalmas a párbeszédre. Mintha két alak, két szereplő lennének, de ugyanabból a színdarabból. Talán a helyszín teszi: Magyarország.\nLukács Miklós, Máté Gábor és Mácsai Pál most egy felolvasás keretében idézi meg a két író gondolkodása közti kapcsolatot, és ahogy egy zenés színdarabnál sűríti a történetet és az időt, úgy fogja össze az elhangzó szövegeket Bartók, a jazz, a népdalok motívumai, vagy a szabad zenei improvizáció.\n(Fotó: Rozmanitz Gábor)",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4771_pic3_4771.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260705-18",
-    "name": "Komolyzenei hangverseny",
-    "date": "2026-07-05",
-    "time": "19:00",
-    "location": "Evangélikus Templom",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Komolyzenei hangverseny\nIdőpontok: 2026. Július 5.,19:00-tól Helyszín: Evangélikus Templom Jegyár: Ingyenes\n\n",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "varszinhaz_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
     "id": "varszinhaz-20260707-19",
     "name": "Komolyzenei hangverseny",
     "date": "2026-07-07",
