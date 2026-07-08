@@ -1457,10 +1457,8 @@
     "endDate": "2026-07-20"
   },
   {
-    "id": "varszinhaz_2026_22",
     "name": "Marius von Mayenburg: EX",
     "date": "2026-07-23",
-    "endDate": "2026-07-23",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1473,40 +1471,17 @@
       "színház",
       "előadás"
     ],
-    "image": "event_default.jpg",
+    "image": "ex.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_22",
+    "endDate": "2026-07-23"
   },
   {
-    "id": "varszinhaz_2026_23",
-    "name": "Házastársas",
-    "date": "2026-07-25",
-    "endDate": "2026-07-25",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Különleges és humoros színházi este a párkapcsolati játszmákról. Esőnap: július 26.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz_2026_24",
     "name": "Moravetz Levente: Jöhetsz drágám!",
     "date": "2026-07-27",
-    "endDate": "2026-07-27",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1519,17 +1494,17 @@
       "színház",
       "előadás"
     ],
-    "image": "event_default.jpg",
+    "image": "johetsz.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_24",
+    "endDate": "2026-07-27"
   },
   {
-    "id": "varszinhaz_2026_25",
     "name": "Dan Goggin: Apácák",
     "date": "2026-07-30",
-    "endDate": "2026-07-30",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1543,17 +1518,17 @@
       "előadás",
       "musical"
     ],
-    "image": "event_default.jpg",
+    "image": "apacak.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_25",
+    "endDate": "2026-07-30"
   },
   {
-    "id": "varszinhaz_2026_26",
     "name": "Dés-Geszti-Békés: A dzsungel könyve",
     "date": "2026-08-01",
-    "endDate": "2026-08-01",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1571,13 +1546,13 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_26",
+    "endDate": "2026-08-01"
   },
   {
-    "id": "varszinhaz_2026_27",
     "name": "Fabrice Roger-Lacan: A szomszéd ajtó",
     "date": "2026-08-03",
-    "endDate": "2026-08-03",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1594,7 +1569,9 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_27",
+    "endDate": "2026-08-03"
   },
   {
     "id": "ostrom_2026_1",
