@@ -457,28 +457,6 @@
     "highlightLabel": ""
   },
   {
-    "id": "varszinhaz-20260707-19",
-    "name": "Komolyzenei hangverseny",
-    "date": "2026-07-07",
-    "time": "19:00",
-    "location": "Evangélikus Templom",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Komolyzenei hangverseny\nIdőpontok: 2026. Július 7.,19:00-tól Helyszín: Evangélikus Templom Jegyár: Ingyenes\n\n",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "varszinhaz_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260709-20",
     "name": "Jutalomjáték",
     "date": "2026-07-09",
     "time": "19:00",
@@ -492,14 +470,14 @@
       "várszínház",
       "színház"
     ],
-    "image": "v_event_4756_pic3_4756.jpg",
+    "image": "jutalomjatek-1783504421913.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz-20260709-20"
   },
   {
-    "id": "varszinhaz-20260710-21",
     "name": "Jutalomjáték",
     "date": "2026-07-10",
     "time": "19:00",
@@ -513,14 +491,14 @@
       "várszínház",
       "színház"
     ],
-    "image": "v_event_4757_pic3_4757.jpg",
+    "image": "jutalomjatek-1783504407537.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz-20260710-21"
   },
   {
-    "id": "varszinhaz-20260711-22",
     "name": "Jutalomjáték",
     "date": "2026-07-11",
     "time": "19:00",
@@ -534,11 +512,12 @@
       "várszínház",
       "színház"
     ],
-    "image": "v_event_4758_pic3_4758.jpg",
+    "image": "jutalomjatek-1783504437839.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz-20260711-22"
   },
   {
     "id": "varszinhaz-20260713-23",
@@ -898,26 +877,6 @@
     "isVarszinhaz": true
   },
   {
-    "name": "Nyáresti Szerenád a Kőszegi Zsinagógában",
-    "date": "2026-07-06",
-    "time": "18:00",
-    "location": "Zsinagóga",
-    "coords": {
-      "lat": 47.391408,
-      "lng": 16.541513
-    },
-    "description": "Nyáresti Szerenád a Kőszegi Zsinagógában 🎻✨\nEgy különleges nyári este, ahol a klasszikus zene találkozik a történelmi atmoszférával.\nSzeretettel várunk minden zenekedvelőt egy meghitt, inspiráló koncertre a kőszegi nyár egyik legszebb helyszínén!\nA budapesti Liszt Ferenc Zeneművészeti Egyetem hallgatóinak előadásában hegedű- és énekszó tölti meg a lenyűgöző Kőszegi Zsinagóga terét, hogy együtt élhessük át a klasszikus zene időtlen erejét.\n🎼 Fellépők:\n• Varga Lili Sára – hegedű\n• Sólyom-Nagyné Erdélyi Krisztina – zongora\n• Vanó Zétény és Schuszter Júlia – ének\n📍 Helyszín:\nKőszegi Zsinagóga\n📅 Időpont:\n2026. július 6. (hétfő)\n🕕 18:00\n🎟 A belépés ingyenes.\nAz eseményen a fellépő művészek támogatására adományokat hálásan fogadunk.\nAz est társszervezője és fő támogatója a Felsőbbfokú Tanulmányok Intézete és az Institute of Advanced Studies Kőszeg.\nKapcsolódj ki, lassulj le egy estére, és engedd, hogy a dallamok vigyenek magukkal a nyári alkonyatban. 🌙",
-    "tags": [
-      "szerenád"
-    ],
-    "image": "szerenad.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780398640040"
-  },
-  {
     "name": "Ataru Taiko jubileumi koncert",
     "date": "2026-08-09",
     "time": "19:30",
@@ -1094,10 +1053,8 @@
     "endDate": "2026-07-10"
   },
   {
-    "id": "varszinhaz_2026_4",
     "name": "Fő téri zene – Duo Don Pedro'z",
     "date": "2026-07-11",
-    "endDate": "2026-07-11",
     "time": "19:00",
     "location": "Fő tér",
     "coords": {
@@ -1111,17 +1068,17 @@
       "koncert",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "pedroz-1783504471102.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": false,
+    "id": "varszinhaz_2026_4",
+    "endDate": "2026-07-11"
   },
   {
-    "id": "varszinhaz_2026_5",
     "name": "Fő téri zene – Bujtás Ervin",
     "date": "2026-07-12",
-    "endDate": "2026-07-12",
     "time": "19:00",
     "location": "Fő tér",
     "coords": {
@@ -1135,17 +1092,17 @@
       "koncert",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "bujtas-1783504493228.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": false,
+    "id": "varszinhaz_2026_5",
+    "endDate": "2026-07-12"
   },
   {
-    "id": "varszinhaz_2026_6",
     "name": "A bőgős fia és az ördögök (meg a malac)",
     "date": "2026-07-13",
-    "endDate": "2026-07-13",
     "time": "18:00",
     "location": "Jurisics Vár, Toronyudvar",
     "coords": {
@@ -1159,17 +1116,17 @@
       "bábszínház",
       "gyerek"
     ],
-    "image": "event_default.jpg",
+    "image": "harlekin-1783504517183.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_6",
+    "endDate": "2026-07-13"
   },
   {
-    "id": "varszinhaz_2026_7",
     "name": "Kiss Ágnes: A tenger szeme",
     "date": "2026-07-14",
-    "endDate": "2026-07-14",
     "time": "18:00",
     "location": "Jurisics Vár, Toronyudvar",
     "coords": {
@@ -1183,11 +1140,13 @@
       "előadás",
       "gyerek"
     ],
-    "image": "event_default.jpg",
+    "image": "barabocas-1783504536980.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_7",
+    "endDate": "2026-07-14"
   },
   {
     "id": "varszinhaz_2026_8",
@@ -1213,10 +1172,8 @@
     "isVarszinhaz": true
   },
   {
-    "id": "varszinhaz_2026_9",
     "name": "Tiszavirág",
     "date": "2026-07-15",
-    "endDate": "2026-07-15",
     "time": "18:00",
     "location": "Jurisics Vár, Toronyudvar",
     "coords": {
@@ -1230,17 +1187,17 @@
       "előadás",
       "gyerek"
     ],
-    "image": "event_default.jpg",
+    "image": "barabocas-1783504554769.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_9",
+    "endDate": "2026-07-15"
   },
   {
-    "id": "varszinhaz_2026_10",
     "name": "Fő téri zene – Korponay Zsófia és Bánó Zoltán",
     "date": "2026-07-15",
-    "endDate": "2026-07-15",
     "time": "19:00",
     "location": "Fő tér",
     "coords": {
@@ -1254,17 +1211,17 @@
       "koncert",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "enek-1783504576344.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_10",
+    "endDate": "2026-07-15"
   },
   {
-    "id": "varszinhaz_2026_11",
     "name": "Deres Péter: A bábjátékos – Kemény Henrik emlékére",
     "date": "2026-07-15",
-    "endDate": "2026-07-15",
     "time": "20:30",
     "location": "Kamaraudvar (Jurisich Gimnázium)",
     "coords": {
@@ -1277,17 +1234,17 @@
       "színház",
       "előadás"
     ],
-    "image": "event_default.jpg",
+    "image": "babjatekos.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_11",
+    "endDate": "2026-07-15"
   },
   {
-    "id": "varszinhaz_2026_12",
     "name": "Stefan Vögel: Egy apró kérés",
     "date": "2026-07-16",
-    "endDate": "2026-07-16",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1300,17 +1257,17 @@
       "színház",
       "előadás"
     ],
-    "image": "event_default.jpg",
+    "image": "aprokeres-1783504651010.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_12",
+    "endDate": "2026-07-16"
   },
   {
-    "id": "varszinhaz_2026_13",
     "name": "Az igazmondó juhász",
     "date": "2026-07-17",
-    "endDate": "2026-07-17",
     "time": "18:00",
     "location": "Jurisics Vár, Toronyudvar",
     "coords": {
@@ -1324,22 +1281,22 @@
       "előadás",
       "gyerek"
     ],
-    "image": "event_default.jpg",
+    "image": "zirano.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_13",
+    "endDate": "2026-07-17"
   },
   {
-    "id": "varszinhaz_2026_14",
     "name": "Prof. Dr. Kovács Péter előadása",
     "date": "2026-07-17",
-    "endDate": "2026-07-17",
     "time": "19:00",
-    "location": "Jurisics Vár, Kősház",
+    "location": "Jurisics vár",
     "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
+      "lat": 47.389582,
+      "lng": 16.538988
     },
     "description": "Prof. Dr. Kovács Péter: A Garai család felemelkedése a 15. században című tudományos előadás.",
     "tags": [
@@ -1347,11 +1304,13 @@
       "előadás",
       "történelem"
     ],
-    "image": "event_default.jpg",
+    "image": "prof.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_14",
+    "endDate": "2026-07-17"
   },
   {
     "id": "varszinhaz_2026_15",
