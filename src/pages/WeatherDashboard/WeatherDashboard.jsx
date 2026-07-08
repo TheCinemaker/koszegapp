@@ -417,6 +417,25 @@ export default function WeatherDashboard() {
               </a>
             </div>
 
+            {/* kiemet.hu link banner */}
+            <div className="mt-4 p-5 sm:p-6 rounded-3xl bg-amber-500/5 dark:bg-amber-400/5 border border-amber-500/10 dark:border-[#0a97be]/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left transition-all duration-300">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-amber-800 dark:text-amber-400">Részletes Kőszegi Meteorológiai Adatok</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
+                  Minden további mérési adatot, előrejelzést és részletes grafikont megtalálsz a kiemet.hu oldalon!
+                </p>
+              </div>
+              <a
+                href="https://kiemet.hu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs shadow-md transition-all hover:scale-[1.02] active:scale-95 shrink-0"
+              >
+                <span>kiemet.hu</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
           </div>
         </FadeUp>
       </div>

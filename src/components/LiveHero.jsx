@@ -102,6 +102,7 @@ const LiveHero = ({ appData, weather }) => {
                             <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight mb-2">
                                 {greeting}
                             </h1>
+                        <div className="flex flex-col items-start">
                             <Link
                                 to="/weather"
                                 className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 group active:scale-95 text-gray-800 dark:text-white shadow-sm"
@@ -117,6 +118,15 @@ const LiveHero = ({ appData, weather }) => {
                                     </div>
                                 </div>
                             </Link>
+                            <a 
+                                href="https://kiemet.hu" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="mt-2 text-[10px] font-bold text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors px-1"
+                            >
+                                Minden adat: kiemet.hu
+                            </a>
+                        </div>
                         </div>
                     </div>
 

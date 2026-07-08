@@ -31,7 +31,7 @@ export default function Footer() {
                     <span className="opacity-50">•</span>
                     <span className="opacity-70">AI with Antigravity</span>
                     <span className="opacity-50">•</span>
-                    <span className="opacity-30">v3.5</span>
+                    <span className="opacity-30">v4.0</span>
                 </p>
             </div>
             {/* Extra spacing for FloatingNavbar */}

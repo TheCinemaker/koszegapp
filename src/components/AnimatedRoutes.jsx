@@ -59,6 +59,7 @@ const FeatureShowcase = lazyWithRetry(() => import('../pages/FeatureShowcase'));
 const NearbyDiscoveryDemo = lazyWithRetry(() => import('../pages/NearbyDiscoveryDemo'));
 const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
 const Moments = lazyWithRetry(() => import('../pages/Moments'));
+const OstromPage = lazyWithRetry(() => import('../pages/OstromPage'));
 
 // QR Platform (Standalone – Digitális Pincér)
 const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
@@ -238,6 +239,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           {/* Ticket System Routes (Isolated Module) */}
           <Route path="/tickets" element={<PageWrapper><TicketPurchase /></PageWrapper>} />
           <Route path="/tickets/success" element={<PageWrapper><TicketSuccess /></PageWrapper>} />
+          <Route path="/ostrom" element={<PageWrapper><OstromPage /></PageWrapper>} />
           <Route path="/tickets/scanner" element={<PageWrapper showFooter={false}><TicketScanner /></PageWrapper>} />
           <Route path="/tickets/admin" element={<PageWrapper><TicketAdmin /></PageWrapper>} />
           <Route path="/tickets/print/:ticketId" element={<PageWrapper showFooter={false}><TicketPrint /></PageWrapper>} />

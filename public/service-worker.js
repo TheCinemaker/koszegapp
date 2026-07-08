@@ -1,4 +1,6 @@
 
+// Version: 4.0.0
+
 let favoriteEvents = [];
 let notifiedEventIds = new Set();
 let sentEmergencyMessageIds = new Set();

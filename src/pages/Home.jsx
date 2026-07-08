@@ -16,7 +16,8 @@ import {
   IoQrCode,
   IoTicketOutline,
   IoStarOutline,
-  IoLockClosed
+  IoLockClosed,
+  IoShieldOutline
 } from 'react-icons/io5';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FadeUp, SpringUp } from '../components/AppleMotion';
@@ -57,6 +58,7 @@ export default function Home({ appData, weather }) {
   };
 
   const sections = [
+    { to: '/ostrom', label: 'Ostromnapok', desc: '2026.08.07. - 08.09. | Kőszeg kiemelt rendezvénye', icon: IoShieldOutline, featured: true, bgImage: '/images/ostrom_2026/ostromhero.png', span: 'col-span-2 sm:col-span-2', delay: 0.03 },
     { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, span: 'col-span-2 sm:col-span-2', delay: 0.05 },
     { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
@@ -132,7 +134,7 @@ export default function Home({ appData, weather }) {
                         ${sec.morphId
                           ? 'border border-white/50 dark:border-white/10'
                           : sec.featured
-                            ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10'
+                            ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10 text-white'
                             : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
                         shadow-sm hover:shadow-lg
                         flex flex-col justify-between group
@@ -140,6 +142,16 @@ export default function Home({ appData, weather }) {
                         ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
                     `}
                 >
+                  {sec.bgImage && (
+                    <div className="absolute top-0 right-0 bottom-0 w-[55%] pointer-events-none overflow-hidden select-none z-0 rounded-r-[1.5rem]">
+                      <img 
+                        src={sec.bgImage} 
+                        alt="" 
+                        className="h-full w-auto object-cover object-right ml-auto" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#123a57] via-[#123a57]/45 to-transparent dark:from-[#0e2c44] dark:via-[#0e2c44]/45" />
+                    </div>
+                  )}
                   {/* Shared-element morph surface — flies up to become the Events page header */}
                   {sec.morphId && (
                     <motion.div
@@ -164,7 +176,7 @@ export default function Home({ appData, weather }) {
                   </motion.div>
 
                   {/* Content (Delayed Reveal) */}
-                  <div className="relative z-10">
+                  <div className={`relative z-10 ${sec.bgImage ? 'max-w-[55%] sm:max-w-[65%]' : ''}`}>
                     <div className="flex items-center justify-between mb-0.5">
                       <motion.h3
                         layoutId={sec.morphId ? `${sec.morphId}-title` : undefined}
