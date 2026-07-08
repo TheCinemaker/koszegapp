@@ -1080,7 +1080,19 @@ function AdminApp() {
       const res = await fetch(`/.netlify/functions/get-github-json?path=${encodeURIComponent(config.path)}`, { cache: "no-store" });
       if (!res.ok) throw new Error("Letöltési hiba");
       const data = await res.json();
-      setContentData(Array.isArray(data) ? data : []);
+      let arrayData = Array.isArray(data) ? data : [];
+      if (key === "events") {
+        arrayData.sort((a, b) => {
+          const dateA = a.date || "";
+          const dateB = b.date || "";
+          const cmp = dateA.localeCompare(dateB);
+          if (cmp !== 0) return cmp;
+          const timeA = a.time || "";
+          const timeB = b.time || "";
+          return timeA.localeCompare(timeB);
+        });
+      }
+      setContentData(arrayData);
     } catch (e) {
       toast.error(`Hiba: ${e.message}`);
     } finally {
@@ -1196,8 +1208,19 @@ function AdminApp() {
       const q = query.toLowerCase();
       d = d.filter(item => Object.values(item).some(val => String(val).toLowerCase().includes(q)));
     }
+    if (currentKey === "events") {
+      d = [...d].sort((a, b) => {
+        const dateA = a.date || "";
+        const dateB = b.date || "";
+        const cmp = dateA.localeCompare(dateB);
+        if (cmp !== 0) return cmp;
+        const timeA = a.time || "";
+        const timeB = b.time || "";
+        return timeA.localeCompare(timeB);
+      });
+    }
     return d;
-  }, [contentData, query, user.id, hasPermission, currentConfig]);
+  }, [contentData, query, user.id, hasPermission, currentConfig, currentKey]);
 
 
 
@@ -1401,8 +1424,25 @@ function AdminApp() {
             onSave={(val) => {
               setContentData(prev => {
                 const idx = prev.findIndex(x => x.id === val.id);
-                if (idx >= 0) { const c = [...prev]; c[idx] = val; return c; }
-                return [...prev, val];
+                let next;
+                if (idx >= 0) {
+                  next = [...prev];
+                  next[idx] = val;
+                } else {
+                  next = [...prev, val];
+                }
+                if (currentKey === "events") {
+                  next.sort((a, b) => {
+                    const dateA = a.date || "";
+                    const dateB = b.date || "";
+                    const cmp = dateA.localeCompare(dateB);
+                    if (cmp !== 0) return cmp;
+                    const timeA = a.time || "";
+                    const timeB = b.time || "";
+                    return timeA.localeCompare(timeB);
+                  });
+                }
+                return next;
               });
               setEditingItem(null);
               toast.success("Helyi mentés kész! Ne felejts el szinkronizálni.");
