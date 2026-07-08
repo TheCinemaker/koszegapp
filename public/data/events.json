@@ -1,462 +1,5 @@
 [
   {
-    "id": "new_1771696209734",
-    "name": "Berecz Mátyás: Fegyvert s vitézt éneklek",
-    "date": "2026-08-08",
-    "time": "14:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Berecz Mátyás: Fegyvert s vitézt éneklek – A török elleni harcok és az európai hadügyi forradalom. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209735",
-    "name": "Tangl Balázs: Hol éltek a katonák Kőszegen?",
-    "date": "2026-09-03",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Tangl Balázs: Hol éltek a katonák Kőszegen a boldog békeidők éveiben? – Őszi szabadegyetemi előadás. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209736",
-    "name": "Keppel Csilla: Hadisebesültek görbe tükörben",
-    "date": "2026-09-17",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Keppel Csilla: Hadisebesültek görbe tükörben – Őszi szabadegyetemi előadás. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209737",
-    "name": "Kulturális Örökség Napjai",
-    "date": "2026-09-19",
-    "endDate": "2026-09-20",
-    "time": "Egész nap",
-    "location": "Kőszegi Városi Múzeum és Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Kulturális Örökség Napjai Kőszegen. Ingyenesen látogatható műemlékek és különleges programok.",
-    "tags": [
-      "műemlék",
-      "történelem",
-      "program",
-      "ingyenes"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Örökség Napok"
-  },
-  {
-    "id": "new_1771696209738",
-    "name": "Kőszegi Szüret - Fúvószenekari Találkozó",
-    "date": "2026-09-25",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209739",
-    "name": "Hideg István: Kőszeg a császári és királyi haditengerészet szolgálatában",
-    "date": "2026-10-01",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Hideg István: Kőszeg a császári és királyi haditengerészet szolgálatában – Őszi szabadegyetemi előadás. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209740",
-    "name": "„Mozaikdarabkák hulló életek” – Fasching Zsuzsanna előadása",
-    "date": "2026-10-06",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "„Mozaikdarabkák hulló életek” – Fasching Zsuzsanna zeneterapeuta előadása a demenciáról. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "zeneterápia",
-      "egészség",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209741",
-    "name": "„Saját utakon” – Mörk Leonóra író-olvasó találkozója",
-    "date": "2026-10-07",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "„Saját utakon” – író-olvasó találkozó Mörk Leonórával. A belépés ingyenes!",
-    "tags": [
-      "irodalom",
-      "találkozó",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209742",
-    "name": "Őszi tánc és ének a Hajnalcsillag Néptáncegyüttessel",
-    "date": "2026-10-10",
-    "time": "10:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Őszi tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
-    "tags": [
-      "néptánc",
-      "zene",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209743",
-    "name": "Németh Balázs: A Vas vármegyei császári és királyi 83. gyalogezred története",
-    "date": "2026-10-15",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Németh Balázs: A Vas vármegyei császári és királyi 83. gyalogezred története – Őszi szabadegyetemi előadás. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209744",
-    "name": "Orsolya-napi Vásár",
-    "date": "2026-10-17",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209745",
-    "name": "Lovass Tibor: A forgatókönyvtől a filmig",
-    "date": "2026-10-29",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Lovass Tibor: A forgatókönyvtől a filmig – Téli filmklub. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "film",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209746",
-    "name": "Simon Zsófia: A hóhér pallosa",
-    "date": "2026-11-10",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Simon Zsófia: A hóhér pallosa – Levéltári estek. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "levéltár",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209747",
-    "name": "Nemzetközi Speciális Filmfesztivál",
-    "date": "2026-11-19",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Nemzetközi Speciális Filmfesztivál – Téli filmklub. A belépés ingyenes!",
-    "tags": [
-      "filmfesztivál",
-      "mozi",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209748",
-    "name": "Téli tánc és ének a Hajnalcsillag Néptáncegyüttessel",
-    "date": "2026-11-28",
-    "time": "10:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Téli tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
-    "tags": [
-      "néptánc",
-      "zene",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209749",
-    "name": "Advent Vár",
-    "date": "2026-11-28",
-    "time": "17:00",
-    "location": "Kőszeg",
-    "coords": {
-      "lat": 47.3883,
-      "lng": 16.5411
-    },
-    "description": "Előzetes információ, bővebben később",
-    "tags": [
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209750",
-    "name": "Boros Ferenc: Magyar zenés filmek",
-    "date": "2026-12-03",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Boros Ferenc: Magyar zenés filmek – Téli filmklub. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "film",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209751",
-    "name": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal",
-    "date": "2026-12-05",
-    "time": "10:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal. A belépés ingyenes!",
-    "tags": [
-      "koncert",
-      "zene",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209752",
-    "name": "Csík István: A Szent Korona Kőszegen",
-    "date": "2026-12-08",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Csík István: A Szent Korona Kőszegen – Levéltári estek. A belépés ingyenes!",
-    "tags": [
-      "előadás",
-      "történelem",
-      "levéltár",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209753",
-    "name": "Luca-nap",
-    "date": "2026-12-12",
-    "time": "10:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Luca-nap a könyvtárban. Hagyományőrző kézművesség és játékok. A belépés ingyenes!",
-    "tags": [
-      "hagyomány",
-      "családi",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
-    "id": "new_1771696209754",
-    "name": "Karácsonyi műsor",
-    "date": "2026-12-18",
-    "time": "17:00",
-    "location": "Chernel Kálmán Városi Könyvtár",
-    "coords": {
-      "lat": 47.389592,
-      "lng": 16.54243
-    },
-    "description": "Karácsonyi ünnepi műsor a könyvtárban. A belépés ingyenes!",
-    "tags": [
-      "ünnep",
-      "zene",
-      "program",
-      "könyvtár"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": ""
-  },
-  {
     "name": "Jutalomjáték",
     "date": "2026-07-09",
     "time": "19:00",
@@ -476,534 +19,6 @@
     "highlightLabel": "",
     "isVarszinhaz": true,
     "id": "varszinhaz-20260709-20"
-  },
-  {
-    "name": "Jutalomjáték",
-    "date": "2026-07-10",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Bernard Slade\nJutalomjáték\nA Kőszegi Várszínház bemutatója\nIdőpontok: 2026. Július 10. (esőnap: Július 12.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.500.-\n\nFőhőse a felelőtlenség játékosa. Tehetségét és családját kockáztatta az azonnali örömért. A környezetében is tapsra vágyott Scottie Templeton s így vesztette el a feleségét s ébresztett haragot s tán bosszút a fiában. Ez a Jutalomjáték, meglehet az utolsó. Egy halálosan beteg ember vicceit beárnyékolja a szörnyű betegség. A vígjáték azonban a fordulatok műfaja s az izgalmak bővelkedő komédia könnyes mosollyal békíti össze a családot.\nLou Daniels Marton Róbert\nDr. Gladys Petrelli Dobra Mara\nScottie Templeton Schneider Zoltán\nJud Templeton Sándor Soma\nSally Haines Mikecz Estilla\nMaggie Stratton Balázs Andrea\nHilary Kovács Vecei Fanni\ndramaturg: Karácsony Ágnes\nfordító: Olt Tamás\ndíszlet: Szalai József\njelmez: Cselényi Nóra\nrendező: Olt Tamás",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "jutalomjatek-1783504407537.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz-20260710-21"
-  },
-  {
-    "name": "Jutalomjáték",
-    "date": "2026-07-11",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Bernard Slade\nJutalomjáték\nA Kőszegi Várszínház  bemutatója\nIdőpontok: 2026. Július 11. (esőnap: Július 12.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.500.-\n\nFőhőse a felelőtlenség játékosa. Tehetségét és családját kockáztatta az azonnali örömért. A környezetében is tapsra vágyott Scottie Templeton s így vesztette el a feleségét s ébresztett haragot s tán bosszút a fiában. Ez a Jutalomjáték, meglehet az utolsó. Egy halálosan beteg ember vicceit beárnyékolja a szörnyű betegség. A vígjáték azonban a fordulatok műfaja s az izgalmak bővelkedő komédia könnyes mosollyal békíti össze a családot.\nLou Daniels Marton Róbert\nDr. Gladys Petrelli Dobra Mara\nScottie Templeton Schneider Zoltán\nJud Templeton Sándor Soma\nSally Haines Mikecz Estilla\nMaggie Stratton Balázs Andrea\nHilary Kovács Vecei Fanni\ndramaturg: Karácsony Ágnes\nfordító: Olt Tamás\ndíszlet: Szalai József\njelmez: Cselényi Nóra\nrendező: Olt Tamás",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "jutalomjatek-1783504437839.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz-20260711-22"
-  },
-  {
-    "id": "varszinhaz-20260713-23",
-    "name": "152 lépés Auschwitz felé",
-    "date": "2026-07-13",
-    "time": "19:00",
-    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Nagy Márk és Karácsony Gergely\n152 lépés Auschwitz felé\nIdőpontok: 2026. Július 13. (esőnap: Július 14.),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\nRudolf Franz Ferdinand Höß az auschwitzi haláltábor parancsnoka. Hogy válhat náci tömeggyilkos egy ötgyermekes családapából? Sérti-e az áldozatok emlékét, hogy egy ilyen ember életútját mutassuk be másfél-két órán át?\nMegpróbáljuk megérteni a megérthetetlent, - hogyan jöttek létre azok a bűnösök, akik irányításával megtörténhetett a történelem legmegbotránkoztatóbb tragédiája: a holokauszt -.  hogy ne felejtsünk, hogy a történelem ne ismételje önmagát, hogy mindig feltegyük a kérdést: az az út, amin mi járunk, helyes-e?.\n„Nem törtem a fejemet azon, hogy helytelen-e a dolog. Szükségesnek látszott” - Rudolf Höss\nMerle Mesterségem a halál című regényének és Rudolf Höss emlékiratainak felhasználásával\na szövegkönyvet írta: Nagy Márk és Karácsony Gergely\nFőszerepben: Karácsony Gergely\nLátványtervező: Virág Vivien\nRendező: Nagy Márk",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4759_pic3_4759.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260713-24",
-    "name": "A bőgős fia és az ördögök (meg a malac) - Harlekin Bábszínház",
-    "date": "2026-07-13",
-    "time": "19:00",
-    "location": "Jurisics vár-Gyerekudvar",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "A magyar népmesét bábszínpadra írta: Veres András\nA bőgős fia és az ördögök (meg a malac) - Harlekin Bábszínház\n- zene, tréfa, báb -\nIdőpontok: 2026. Július 13.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nNem könnyű az élete egy bőgős tizenkettedik fiának. Különösen akkor nem, ha ez a bőgős a harsány családi élet elől egészen a pokolig menekül, ahonnan aztán nincs visszatérés, legalábbis az ördögök szerint. Szerencsére a tizenkettedik fiúnak, Zsigának helyén van az esze és a szíve, elszántan apja felkutatására indul. Hogy ne egyedül kelljen szembeszállnia a nagyvilággal, mellé szegődik a család féltve őrzött malaca is, mint nélkülözhetetlen útitárs. El is jutnak a pokol kapujáig, ahol aztán ördögök egész seregével kell szembenézniük. Ehhez bátorságra, furfangra és egy kis humorérzékre van leginkább szükség. És talán még a szerelem is rátalál útközben Zsigára…\n \nA Harlekin Bábszínház előadásában a hagyományos bábjáték, a zene és a kortárs színház eszközeinek segítségével elevenedik meg ez a fordulatokban és izgalmakban gazdag népmese.\nJátssza: Zádori Szilárd\nÍró: Veres András\nTervező: Trifusz Péter\nZeneszerző: Zádori Szilárd\nDramaturg: Szabó Attila\nRendező: Veres András\nKorosztály: 4+\nAz előadás hossza: 50 perc",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4778_pic3_4778.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260714-25",
-    "name": "A tenger szeme",
-    "date": "2026-07-14",
-    "time": "19:00",
-    "location": "Jurisics vár-Gyerekudvar",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Kiss Ágnes\nA tenger szeme\nBarboncás Társulat\nIdőpontok: 2026. Július 14.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nHilda a világítótorony és a tenger gyönyörűséges lényei, boldogan élnek a napsütötte ég alatt.\nMég az sem zavarja meg az idilli állapotot, hogy egy horgász, minden áldott nap kis csónakjával kimegy a vízre pecázni, ám egy napon egyre több hajó érkezik a csendes kis helyre, ami most már egyáltalán nem csendes kis hely.\nA mese hullámain kalandozva, a mesélő a gyerekek segítségével menti meg a tengert és annak csodás birodalmát!\nA mesét írta, rendezte és játssza: Kiss Ágnes\nDíszlet: Jerney János, Kiss Attila Etele\nBábkészítők: Kiss Attila Etele, Tóth Andrea, Tóth Eszter",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4793_pic3_4793.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260715-26",
-    "name": "A bábjátékos",
-    "date": "2026-07-15",
-    "time": "19:00",
-    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Deres Péter\nA bábjátékos\nKemény Henrik emlékére\nIdőpontok: 2026. Július 15. (esőnap: Július 17.!),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\nKemény Henrik vitathatatlanul a legfontosabb 20. századi magyar bábművész, a vásári bábszínház hagyományainak gondozója, egyszersmind új játékstílus, új karakterek megteremtője. Vicceit, mókás fordulatait, jellegzetes hanghordozását országszerte ismerik, akárcsak Hakapeszi Makit, Gyufa Gyurit és persze Vitéz Lászlót, a bábfigurákat, akiket ő tett híressé.\nNizsai Dániel egyszemélyes előadása, A bábjátékos arra tesz kísérletet, hogy bemutassa rendkívül gazdag életének legfontosabb állomásait. Mozaikos portré egy különleges emberről, akinek a sorsát a 20. századi Magyarország tragikus eseményei formálták. Igaz mese sikerekről, viszontagságokról, hősökről, családról és mindenekelőtt a színház, a játék csodájáról.\nÍrta: Deres Péter\nJátssza: Nizsai Dániel\nAz előadás az MMA-MMKI ösztöndíj pályázatának keretében tudott létrejönni.\nAz előadást 16 éven felülieknek ajánljuk!",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4781_pic3_4781.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260715-27",
-    "name": "Tiszavirág",
-    "date": "2026-07-15",
-    "time": "19:00",
-    "location": "Jurisics vár-Gyerekudvar",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Tombácz János meséiből a történetet írta: Vészits Andrea, Kiss Ágnes\nTiszavirág\nBarboncás Társulat\nIdőpontok: 2026. Július 15.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nA Tiszavirág című bábelőadás, Tombácz János szatymazi pásztorember, két meséjéből készült.\nMeséi gyönyörűek, ám hosszúak, hömpölygőek, mint maga a szegedi csodás szőke folyónk a Tisza.\nDe ahogy a folyó számtalanszor kiöntött, és meg kellett zabolázni, mederbe terelni, gátakat kellett felhúzni, hogy amit épít és táplál ne tudja elmosni, úgy a Tombácz meséket is meg kellett szelídíteni. Ha már szelídítünk, legyen az valóban szelídítés. Szóljon a Tiszáról, a boszorkányszigetről, a tiszavirágokról és egy szerelemről.\n„Régen a Tisza is csak olyan folyó volt, mint sok más. Hömpölygött a medrében, táplálta a földeket és néha kiöntött. De aztán egy szép napon kivirágzott. Más folyók nem virágzanak. Csak a Tisza virágzik tiszavirágot. S hogy miért, erről szól ez a mese.”\nRendezte, játssza: Kiss Ágnes\nZene: Ágoston Béla\nDíszlet: Kiss Ágnes (ötlet), Jerney János (megvalósítás)\nBábkészítők: Kiss Attila Etele, Tóth Andrea",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4794_pic3_4794.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260716-28",
-    "name": "Egy apró kérés",
-    "date": "2026-07-16",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Stefan Vögel\nEgy apró kérés\nA Kőszegi Várszínház előadása\nIdőpontok: 2026. Július 16. (esőnap: Július 17.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 6.000.-\n\nArnold, a sikeres építész megkapta élete legnagyobb felkérését: tervezzen látványos toronyházat Párizs közepére. Minden oka megvan az ünneplésre, erre is készül feleségével és legjobb barátaival. Kathrin azonban váratlan hírrel érkezik haza; egy pillanat alatt az összes közép- és hosszabb távú tervük új megvilágításba kerül. A két házaspár olyan meglepő komikus játszmák és szópárbajok közepén találja magát, amelyeknek egyikük sem sejti a kimenetelét. A vígjáték kapcsolatokról, viszonyokról, hazugságról és igazságról szól őszintén és cinkos humorral.\nSzereplők:\nKATHRIN – Herczeg Adrienn\nARNOLD – Pindroch Csaba\nDIANA – Réti Adrienn\nGÖTZ – Takács Zalán\nrendező: Paczolay Béla\nrendezőasszisztens: Skrabán Judit\ndíszlettervező: Khell Csörsz\njelmeztervező: Fekete Györgyi\nzene: Furák Péter",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4740_pic3_4740.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260717-29",
-    "name": "Az igazmondó juhász",
-    "date": "2026-07-17",
-    "time": "19:00",
-    "location": "Jurisics vár-Gyerekudvar",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Az igazmondó juhász\nZiránó Színház\nIdőpontok: 2026. Július 17.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nIgazat mondani nem mindig könnyű. Különösen nem az, ha egy egyszerű juhász nagyhatalmú királyok vitájának kellős közepébe csöppen. Az igazságot ugyanis sokféleképpen el lehet mondani, rengeteg nézőpontból lehet vizsgálni. Ez benne a macerás. Ki mondja? Kinek mondja? Miért mondja?\nRáadásul hősünk úgy született, hogy csak igazat tud mondani. Így bizony nem zökkenőmentes az élet, hát még, ha a szerelem is rabul ejti az ember szívét.\nA Ziránó Színház új előadásában az ismert magyar népmese frissen, humorral és sok játékkal igyekszik megtalálni az igazságot.\nStáblista\nÍrta: Veres András\nRendezte: Veres András\nTervezte: Rumi Zsófia\nKészítette: Sipos Katalin, Balogh Mihály, Szigeti Árpád, Bischoff Henrik Max\nZenéjét szerezte: Kiss Dávid\nJátszók: Pfeifer Zsófia, Varga Péter Róbert",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4741_pic3_4741.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260718-30",
-    "name": "Operett-musical est",
-    "date": "2026-07-18",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Operett-musical est\nIdőpontok: 2026. Július 18. (esőnap: Július 19.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 6.000.-\n\nNagyszabású operett-musical parádét láthat a közönség, amely igazi kikapcsolódást ígér a műfaj kedvelőinek. Felcsendülnek a legnagyobb operett slágerek a műfaj kiválóságainak előadásában. Könnyed dallamok, szerelem és humor fergeteges hangulattal fűszerezve!\nA népszerű sztárok közül fellép: Mahó Andrea, Kardffy Aisa, \nBorbély Richárd és Kerényi Miklós Máté",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4735_pic3_4735.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260718-31",
-    "name": "Reggel és este",
-    "date": "2026-07-18",
-    "time": "19:00",
-    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Jon Fosse\nReggel és este\nÖrdögkatlan Produkció\nIdőpontok: 2026. Július 18. (esőnap: Július 19.),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\n… és a kisember megérkezik a rideg világba és magára marad, leszakad Martáról, leszakad mindenkiről, magára marad, és ha elérkezik az ő ideje, elporlik és visszatér oda, ahonnan jött, semmiből lett és semmivé lesz, ez az élet rendje, embernek, állatnak, madárnak, halnak, háznak, szerszámnak, minden létező lénynek és tárgynak ez a sorsa. (Jon Fosse: Reggel és este)\nSemmi és minden\n„Minden megtörtént és semmi sem történt”, mondja az egyik főhős az általam 2024 őszén rendezett Őszi álom című Fosse-drámában. Maradok tehát egyik legkedvesebb szerzőmnél és újra kísérletet teszek arra, hogy alkotótársaimmal együtt megérintsem az Időt. Mert Fosse és minden valamirevaló szerző alaptémája ez: a véges és végtelen találkozása, mely pillanat minden egyes ember sorsát szikráztatja fel. Reggel és este, születés és halál, semmi és minden mezsgyéjén játszódik Fosse kisregénye: ahogyan a csecsemő kiszakad az őt óvó anyaméhből, és ahogyan a kihunyó élet utolsó káprázatában egy ember, egy egyszerű halászember teste-lelke átlép a semmibe. Avagy a mindenbe.\nSzületés és halál, fény és sötétség – egymást feltételezik. Megrendítő, gyönyörű kettősség. Vagy ahogyan Knausgard fogalmaz Fosse műveiről: „bennük a sötétség fényes és reményteli.” (Bérczes László, rendező)\nJátsszák: Pál András, Mészáros Sára, Rozs Tamás\nFordította: A. Dobos Éva\nSzínpadi változat: Bérczes László\nZeneszerző: Rozs Tamás\nDramaturg: Kiss Mónika\nJelmeztervező: Kárpáti Enikő\nFénytervező: Mervel Miklós\nAsszisztens: Skrabán Judit\nRendező: Bérczes László\nFotó: Éder Vera\nAz előadás a Colombine Teaterförlag, Stockholm és a Mayer-Szilágyi Színházi Ügynökség, Budapest engedélyével jött létre.\nAz előadás időtartama 85 perc",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4782_pic3_4782.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260719-32",
-    "name": "A zöldszakállú király",
-    "date": "2026-07-19",
-    "time": "19:00",
-    "location": "Jurisics vár-Gyerekudvar",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "A zöldszakállú király\nZiránó Színház\nIdőpontok: 2026. Július 19.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nA nyughatatlanul vándorló zöldszakállú király felelőtlen ígéretet tesz a szakállát el nem eresztő ördögkirálynak; átengedi neki azt, amiről nem tud a birodalmában. Igen ám, de nem is sejti, hogy míg ő úton volt, otthon született egy fia…\nA fordulatokban, izgalmakban gazdag történet során aggódhatunk a királyfiért, megcsodálhatjuk a szerelmes királylány furfangjait, szurkolhatunk a szerelmesek boldogságáért.\nA bábszínház különböző eszközeit bátran használó előadás kicsiknek és nagyoknak egyaránt nagyszerű szórakozást nyújt, és el is gondolkodtat.\nStáblista\nÍrta: Veres András (Blattner-díjas)\nRendezte: Veres András (Blattner-díjas)\nTervezte és készítette: Grosschmid Erik (Blattner-díjas)\nZenéjét szerezte: Takács Dániel\nJátszók: Pfeifer Zsófia, Varga Péter Róbert",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4742_pic3_4742.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260720-33",
-    "name": "Kerülőút - 6SZÍN",
-    "date": "2026-07-20",
-    "time": "19:00",
-    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Rényi Ádám\nKerülőút - 6SZÍN\nKeserédes fuvar forgalmi dugóban egy részben\nIdőpontok: 2026. Július 20. (esőnap: Július 21.),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\nEgy férfi és egy nő. Egy taxisofőr és az utasa a reménytelen budapesti dugóban. Banális, mindennapos helyzet. Két idegen élet találkozása egy szűk térben, a folytatás esélye nélkül. De mi történik, ha a felületes csevejből őszinte beszélgetés kerekedik? Talán könnyebb egy ismeretlen ember előtt vállalni tökéletlenségeinket, félelmeinket? És elképzelhető, hogy életük legfontosabb kérdéseire épp a másiknál van meg a válasz?\nEbben a humorban és érzelmekben egyaránt gazdag színdarabban egy életközepi válságát élő túlhajszolt családanya és egy nyugdíj előtt álló, magának való férfi életébe kapunk betekintést, de nem kizárt, hogy általuk végül önmagunkra ismerünk. Az utas persze végül kiszáll, és az élet megy tovább. Vajon ugyanarra?\nA nő: Réti Andrienn\nA férfi: Kerekes József\nRendező: Horgas Ádám\nAz előadás hossza: 70 perc",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4775_pic3_4775.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260720-34",
-    "name": "Robin Hood",
-    "date": "2026-07-20",
-    "time": "19:00",
-    "location": "Jurisics vár-Gyerekudvar",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Robin Hood\nBábos vásári játék\nIdőpontok: 2026. Július 20.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nKi ne hallott volna Robin Hoodról, a sherwoodi erdő lakóinak bátor vezéréről? A tréfára mindig kész, szabadságszerető bujdosók történetei 800 éve köztünk élnek és most a tisztelt nagyérdeműhöz is elérnek. Az interaktív előadást, amely a vásári bábjátékok hagyományaiból merít az Illaberek Bábszínház hozta el Önöknek.\nAz előadás hossza: 45 perc.\n5 éves kortól ajánlott.\nÍrta: Laboda Kornél \nBábokat tervezte: Horváth Márk \nJátssza: Nyirkó Krisztina és Nizsai Dániel",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4780_pic3_4780.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260723-35",
-    "name": "Ex - vígjáték",
-    "date": "2026-07-23",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Marius von Mayenburg\nEx - vígjáték\nOrlai produkció\nIdőpontok: 2026. Július 23. (esőnap: Július 24.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.000.-\n\nKéső este van. A gyerekek már alszanak. A feleség egy dokumentumfilmet nézne, a férj a maradék lasagnát eszi. Az idegek már ettől pattanásig feszülnek, hiszen régóta házasok. És ekkor még nem is sejtik, hogy egyikük exe úton van hozzájuk. Ez nem lesz egy sima éjszaka.\nSenki ne dőljön hátra, exe mindenkinek van!\nSzereplők\nJáró Zsuzsa\nPéter Kata\nSchruff Milán\nFordította: Deés Enikő, Dömötör András\nDramaturg: Deés Enikő\nDíszlettervező: Darvay Botond\nJelmeztervező: Tihanyi Ildi\nZene: Vranik Krisztián\nA rendező munkatársa: Dicső Dorka\nRendező: Dömötör András\nProducer: Orlai Tibor",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4777_pic3_4777.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260725-36",
-    "name": "Házastársas",
-    "date": "2026-07-25",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Házastársas\nKönnyed párkapcsolat-gazdagító előadás humorral, rögtönzéssel és szakértőkkel.\nIdőpontok: 2026. Július 25. (esőnap: Július 26.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 6.000.-\n\nKit ne foglalkoztatna, hogy miért ért a nő és a férfi mást ugyanazon a mondaton és hogyan lesz ebből azonnal parázs vita? Ki ne ment volna már a falnak, mert már olyan sokszor kért valamit a párjától, de az csak nem teljesítette a kérését? Mi történik akkor, hogyha egy hosszú házasságban, párkapcsolatban élve már nem lobog olyan nagy lánggal a tűz? Hogyan jutunk el odáig lépésről-lépésre, hogy a hatalmas izzó szerelemből egyszer csak a hétköznapok megszokásában találjuk magunkat?\nJátékmesterek: Gönczi Dorka (moderátor) és Varga Zsolt (kommunikációs szakértő)\nSzereplők: Ötvös András és Balsai Móni színművészek\nAz előadás hossza: 90 perc, szünet nélkül.",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4736_pic3_4736.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260727-37",
-    "name": "Jöhetsz Drágám!",
-    "date": "2026-07-27",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Moravetz Levente\nJöhetsz Drágám!\nHadart Színház\nIdőpontok: 2026. Július 27. (esőnap: Július 28.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.000.-\n\nAdva van egy látszólag békés otthon, ahol azért akarnak kutyát venni, hogy legalább valaki hűséges legyen a családban. A szerelmi sokszög csak bonyolódik, amikor megérkezik egy halom bűvészkellék, amit Merlin, a világhírű kanadai bűvész küld előre, akinek magyarországi turnéját a család feje szervezi. A bűvészkellékek megérkeznek, a bűvész nem, de jön helyette betörő, elhagyott szerető, aktuális szerető, be nem vallott gyermek, s ha ez még nem elég a nevetőizmok próbatételéhez, a bűvészkellékek önhatalmúlag átveszik az irányítást és működni kezdenek, a család legnagyobb rémületére.\nSzereplők:\nLajos, a férj – Háda János\nJolán, a feleség – Mérai Kata\nRezsőke, a titkár -  Szabó Máté\nLompos, a betörő – Bordás Mihály\nViki, a lány -  Andrádi Zsanett\nKatica – Zsigmond Réka\nMirtill – Végh Judit\nRendező: Háda János\nÍrta: Moravetz Levente",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4738_pic3_4738.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260730-38",
-    "name": "Apácák",
-    "date": "2026-07-30",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Dan Goggin\nApácák\nzenés előadás\nIdőpontok: 2026. Július 30. (esőnap: Július 30.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 8.000.-\n\nHa vezettek már háztartást, tudják, mekkora felelősség, egy család mindennapjait elterelgetni. Minél többen vagyunk, annál nagyobb a felelősség. És annál nagyobb a lehetőség az apró-cseprő malőrökre. Ahogy az esélye is annak, hogy a végére mégse legyen olyan apró az a cseprő, egészen addig, amíg aztán végzetessé nem növekszik.\n Na most, ha mindez egy zárdában történik, ahol ugye sok-sok elhivatott nővér összezárva, kérem, az bizony könnyen megoldhatatlannak tűnő feladat elé állítja „Jézus mennyasszonyait”. Az egész egy (Vigyázz! Spoiler! – gomba)levessel kezdődik. És hát el tudják képzelni, hogy végződött. A túlélők, akik a leves-eset idején (Hozsánna!) épp „kiküldetésben”, kénytelenek megoldást találni az afférra. Talán egy jótékonysági esztrádműsor segítség lehet a temetésre elegendő pénz összegyűjtéséhez – így is tesznek hát. Szép lassan dalról-dalra kiderül, hogy bár ők már apácák, nem voltak ám mindig „azok”, és hogy bár látszólag mind hátrahagyták, azért a zárda előtt is volt élet. S hogy sikerül-e a tervük? Az nem is kérdés, na de, hogy hogyan?... annak már azért érdemes lesz velük utánajárni.\nSzereplők\nBalázs Andrea\nDobra Mara\nMikecz Estilla\nVándor Éva\nPápai Erika\nZenei Vezető\nFekete Mari\nLátvány és videótervező\nHatvani Balázs\nJelmez\nSzélyes Andrea\nKoreográfus\nLénárt Gábor\nRendező\nPataki András",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4761_pic3_4761.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz-20260803-39",
-    "name": "A SZOMSZÉD AJTÓ",
-    "date": "2026-08-03",
-    "time": "19:00",
-    "location": "Jurisics vár nagyszínpad",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Fabrice Roger-Lacan\nA SZOMSZÉD AJTÓ\nA Kőszegi Várszínház és a Kultkikötő magyarországi bemutatója\nIdőpontok: 2026. Augusztus 3. (esőnap: Augusztus 4.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 5.000.-\n\nKét ember, akik valaki mást keresnek. És közben képtelenek leszállni egymásról…\nA nő pszichológus. A férfi marketinges, joghurtokat reklámoz. A férfi mindent el tud intézni egy félmondattal. A nő mindig visszakérdez. Semmiben nem értenek egyet. A férfi könnyedén kezeli a világot. A nő ezt nem hagyja szó nélkül. Szomszédok. Udvariasan és nagy igyekezettel gyűlölik egymást. Folyton csatáznak. Minden találkozásuk veszekedéssel végződik. Mégis újra és újra átmennek a másikhoz. Valójában mindketten társat keresnek. Persze olyasvalakit, aki pont az ellentéte annak a pokoli alaknak, aki a szomszéd ajtó mögött lakik. És amikor az online társkereső oldalakon végre megtalálják az ideális párt, nem tudják megállni, hogy ne mondják el a másiknak. Nem örömből. Hanem hogy újra összecsapjanak…\nFabrice Roger-Lacan francia író a mai párkapcsolatok egyik legpontosabb és legszellemesebb megfigyelője, aki szerint nem az a nehéz, hogy megszólítsuk a másikat, hanem hogy meghalljuk. A szomszéd ajtó című rendkívül izgalmas, humoros, nagyon emberi és elgondolkodtató darabja a Kőszegi Várszínház és a Kultkikötő közös produkciója Őze Áron és Auksz Éva főszereplésével. A színészházaspár most játszik először együtt kétszemélyes előadásban. Öröm lesz nézni, ahogy civódnak…\nFérfi: Őze Áron\nNő: Auksz Éva\nFordította: Oláh Krisztina\nDramaturg: Karácsony Ágnes\nDíszlettervező: Szalai József, Hatvani Mónika\nRendezőasszisztens: Eisenhauer Réka\nRendező: Naszlady Éva",
-    "tags": [
-      "várszínház",
-      "színház"
-    ],
-    "image": "v_event_4760_pic3_4760.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "name": "Ataru Taiko jubileumi koncert",
-    "date": "2026-08-09",
-    "time": "19:30",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "✨🎶 FÉNYEK. TŰZ. ZENE. ÜNNEP. 🎶 ✨\n20 évvel ezelőtt egy álom indult útjára. Most pedig elérkezett az idő, hogy ezt a rendkívüli jubileumot méltó módon ünnepeljük meg – ott, ahol minden elkezdődött.\nSzülővárosunkban, Kőszegen egy látványos jubileumi koncerttel készülünk a XIX. Ostromnapok keretein belül, amelyet különleges pirotechnikai elemek, fényhatások és felejthetetlen színpadi látvány tesz igazán egyedivé.\nLángok és fények. Lélegzetelállító pirotechnikai show.\nEgy este, amelyre sokáig emlékezni fogunk.\nEz nem csupán egy koncert lesz, hanem egy közös ünnep mindazokkal, akik az elmúlt 20 év során velünk voltak és támogattak minket!\n📅 2026.08.09. 19:30📍 Kőszeg, Jurisics vár\nA belépés díjtalan!",
-    "tags": [
-      "koncert"
-    ],
-    "image": "ataru.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780922291897"
-  },
-  {
-    "name": "Erdélyi kopó - Kőszegi Ostromnapok bemutatója",
-    "date": "2026-08-08",
-    "time": "11:00",
-    "location": "Várárok",
-    "coords": {
-      "lat": 47.38907282842178,
-      "lng": 16.538244715582017
-    },
-    "description": "Az erdélyi kopó máig a legkisebb egyedszámú magyar kutyafajta. Előadásunkban a kopó, a kopótartás és a kopózás hagyományának felvillantása mellett kitérünk arra is, hogy mikortól beszélhetünk erdélyi kopóról és bemutatjuk a kopós vadászati mód múltját és napjainkban kevesek által űzött jelenét is. Egyúttal bepillantást engedünk ezzel a hungarikum kutyafajtával való együttélés mindennapjaiba is. A bemutató alkalmával a résztvevőknek lehetősége van kutyasimogatásra, valamint vadászati munka- és engedelmességi feladatok (visszahívás, helybemaradás) megtekintésére.\nHelyszín: XIX. Kőszegi Ostromnapok, Várárok, Kőszeg, 9730\nIdőpont: 2026. augusztus 8., szombat, 11.00–12.00",
-    "tags": [
-      "bemutató"
-    ],
-    "image": "kopo.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1780922440860"
-  },
-  {
-    "name": "Kutyás hétvége a Kőszegi-hegységben és Ausztriában",
-    "date": "2026-08-20",
-    "time": "10:00",
-    "location": "Vöröskereszt",
-    "coords": {
-      "lat": 47.37403680920409,
-      "lng": 16.491433994858784
-    },
-    "description": "Augusztusi kutyás hétvégénket Magyarország nyugati határvidékére szervezzük, és még egy kis határon túli kalandozást is beiktatunk. Aktív, kutyás kikapcsolódásra invitálunk a Kőszegi-hegység és Ausztria egy pici szegletének megismerésére.\nHétvégénk során több útvonalon kirándulunk a Kőszegi-hegységben, ellátogatunk Ausztriába, ahol igazi hegyvidéki környezetben túrázunk, és még egy esti városnézést is beiktatunk Kőszegen.\nSzállásunk Kőszeg szívében lesz, ahol az aktív napokat követően, a szépen felújított, kutyabarát szállodában kényelmesen pihenhetünk.\nA kutyás hétvége részletei:\nIdőpont: 2026. augusztus 20–23. (4 nap/3 éjszaka)\nHelyszín: Kőszeg, a Kőszegi-hegység és Ausztria\nSzállás: kellemes hangulatú, kutyabarát szállodában\nSzobatípusok: főként kétágyas szobák\nEllátás: félpanziós ellátás (reggeli és vacsora a szállodában)\nUtazás: egyénileg\nProgramajánlatunk a következő szolgáltatásokat tartalmazza:\n- 3 éjszakás elhelyezés egy- vagy kétágyas- , igény esetén családi szobákban\n- félpanziós ellátás: reggeli és vacsora a szállodában\n- közös kutyás kirándulások a Kőszegi-hegységben és Ausztriában, esti városnézés Kőszegen – csütörtök délután egy rövidebb, pénteken és szombaton egy-egy hosszabb, majd vasárnap újból egy rövidebb kirándulást tervezünk.\nBővebb információ és jelentkezés:\nhttps://utazzkutyaddal.hu/.../kutyas-hetvege-koszegen.../\nE-mail: info@utazzkutyaddal.hu\nTel.: Hosszú Noémi: +36 70 945 0280\nFelhívjuk figyelmeteket, hogy az \"Ott leszek\" gomb megnyomása jelen esetben nem minősül jelentkezésnek, részvételnek. Kérjük, hogy honlapunkon jelentkezz a programunkra!\nRészvételi feltételek:\n- kérjük, hogy csak jól szocializált és nem agresszív kutyával vegyél részt a hétvégi programon\n- a program szervezői nem felelnek a résztvevő kutyákért, mindenki a saját kutyájáért felel\n- minden kutyának kötelező az érvényes oltások megléte, az oltási könyveket érkezéskor be kell mutatni\n- az erdőkben a kutyát szabály szerint pórázon kell vezetni\ntüzelő szukával a részvétel nem lehetséges\n- a programot min. 16 fő részvétele esetén szervezzük meg\n- programunkon mindenki saját felelősségére vesz részt\nHasznos tanácsok:\nA természet közelsége a sok kellemes élmény mellett veszélyeket is rejt. Kérjük, mindenképpen készüljetek szúnyog- és kullancs elleni szerekkel és alap egészségügyi csomaggal. A nyugati határvidék kullancsokkal kiemelten fertőzött, de megfelelő védekezéssel kiküszöbölhető a megbetegedés.\nAmennyiben felkeltettük érdeklődésedet, foglald le a hétvégét minél hamarabb!\nFelhívjuk figyelmedet, hogy a szállodában a szobák korlátozott számban állnak rendelkezésünkre.\nKérdéseiddel keress minket a következő e‑mail címen: info@utazzkutyaddal.hu",
-    "tags": [
-      "séta",
-      "kirándulás",
-      "kutya"
-    ],
-    "image": "kutyas.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1782109719427"
-  },
-  {
-    "name": "Képernyőmentes élmény- fejlesztőtábor",
-    "date": "2026-07-13",
-    "time": "08:00",
-    "location": "Tó-part",
-    "coords": {
-      "lat": 47.39753939060948,
-      "lng": 16.53599740038872
-    },
-    "description": " Elég volt a telefonokból, tabletekből és a képernyők világából?\nIdén nyáron visszahozzuk a valódi gyermekkor legszebb pillanatait! 💚\nNálunk a gyerekek:\n🌳 a természetben játszanak,\n🏃‍♂️ mozognak,\n🎨 alkotnak,\n🤝 barátkoznak,\n😄 nevetnek,\n🌞 észrevétlenül fejlődnek,\nmiközben felejthetetlen élményekkel gazdagodnak!\nA kőszegi Csónakázó-tó gyönyörű környezetében várjuk az 5–9 éves gyermekeket egy szeretetteljes,\nbiztonságos és élményekkel teli táborba, ahol a játék és a felfedezés áll a középpontban. 🌿🦋\nA részvételi díj tartalmazza:\n🥪 tízórait\n🍲 2 fogásos ebédet\n🍏 uzsonnát\n🎨 minden program és foglalkozás költségét\n👩‍🏫 A foglalkozásokat diplomás óvónők vezetik, akik szakmai tudással és sok szeretettel gondoskodnak a gyermekekről.\n📅 Választható időpontok:\n🗓️ 2026. július 13–17.\n🗓️ 2026. július 27–31.\n💰 Részvételi díj: 59.000 Ft/fő\n👨‍👩‍👧‍👦 Testvérkedvezmény: 54.000 Ft/fő\n⚠️ A helyek száma korlátozott, ezért érdemes mielőbb jelentkezni!\n📩 Jelentkezés: szehof@gmail.com",
-    "tags": [
-      "tábor",
-      "gyerek",
-      "program",
-      "fejlesztő"
-    ],
-    "image": "tabor.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1782109864323"
-  },
-  {
-    "name": "V. Ostrom Várvédő Jótékonysági Futás",
-    "date": "2026-08-08",
-    "time": "09:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.389025,
-      "lng": 16.541018
-    },
-    "description": "🏃 V. Ostrom Várvédő Jótékonysági Futás\n\nJubileumi futóesemény\n\n🏰 5 éve együtt a vár falai között\n\n📅 Időpont: 2026. augusztus 8.\n📍 Helyszín: Kőszeg, Fő tér\n🕘 Kezdés: 9:00\n\nTávok\n👧 Gyermekfutam\n1,5 km\n🏃 Felnőtt futamok\n7 km\n14 km\n21,5 km\nRajtidők\n8:30\n8:55\n9:00\nHelyszíni nevezés\n\n📝 7:00 – 8:30\n\nOnline nevezés\n\n🌐 e-nevezes.hu\n(a plakát szerint 2026. június 1-től elérhető)\n\nJótékonysági cél\n\nA nevezés teljes bevételét a Myrtill Alapítványon keresztül két kőszegi gyermek, Hanna és Julcsi kapja.",
-    "tags": [
-      "jótékonykodás",
-      "futás",
-      "sport"
-    ],
-    "image": "futas.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1782290581508"
-  },
-  {
-    "name": "Bass Piknik 2026 Tó-part Kőszeg",
-    "date": "2026-07-25",
-    "time": "16:00",
-    "location": "Tó-part Kőszeg",
-    "coords": {
-      "lat": 47.39739431712201,
-      "lng": 16.536139317236852
-    },
-    "description": "Helló Piknikezők!\nA Bass Piknik nem csak egy rendezvény. Nem csak egy buli. Sokkal inkább egy egész napos közösségi élmény a természetben, ahol nappal a kikapcsolódásé, este pedig a zenéé a főszerep.\nAhogy a nap lejjebb ereszkedik a tó fölé, fokozatosan átváltunk a naplementés hangulatból az esti tánctér energiájába, amikor az Illegal Control DJ-i érkeznek a masszívabb hangzásokkal.\n�\n🌿 A kőszegi tópart zöld füvén várunk benneteket egy családias hangulatú napra, ahol barátok, családok, gyerekek, kutyák és persze a jó zenék férnek meg egymás mellett.��👨‍👩‍👧‍👦🐾 Család- és kisállatbarát rendezvény vagyunk. Hozhatod akár a teknősödet is, csak porázt ne felejtsd el, nehogy elhagyd.\n\nNapközben közösségi programokkal, pihenéssel, beszélgetésekkel, piknikhangulattal és kellemes háttérzenével készülünk. ��🎶 Lineup\n• Raul Young\n• Baluca\n• Somex\n• Seges\n• Berry\n• Gabriel Sanchoz\n🌅 Nappal piknik.\n🌄 Naplementében találkozások.\n🌙 Este pedig buli a csillagok alatt.\n\nJegyek hamarosan az alábbi oldalon:\nbasspiknik.com\n(Regisztrálva azonnal értesülhettek az jegy értékesítésről!)",
-    "tags": [
-      "Buli",
-      "zene",
-      "piknik"
-    ],
-    "image": "bass-1782652556618.jpeg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
-    "highlight": true,
-    "highlightLabel": "Bass Piknik 2026 Tó-Part",
-    "isVarszinhaz": false,
-    "id": "event-2026-1782652560646"
   },
   {
     "name": "Kőszeg Város Fúvószenekarának térzenéje",
@@ -1030,6 +45,27 @@
     "endDate": "2026-07-09"
   },
   {
+    "name": "Jutalomjáték",
+    "date": "2026-07-10",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Bernard Slade\nJutalomjáték\nA Kőszegi Várszínház bemutatója\nIdőpontok: 2026. Július 10. (esőnap: Július 12.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.500.-\n\nFőhőse a felelőtlenség játékosa. Tehetségét és családját kockáztatta az azonnali örömért. A környezetében is tapsra vágyott Scottie Templeton s így vesztette el a feleségét s ébresztett haragot s tán bosszút a fiában. Ez a Jutalomjáték, meglehet az utolsó. Egy halálosan beteg ember vicceit beárnyékolja a szörnyű betegség. A vígjáték azonban a fordulatok műfaja s az izgalmak bővelkedő komédia könnyes mosollyal békíti össze a családot.\nLou Daniels Marton Róbert\nDr. Gladys Petrelli Dobra Mara\nScottie Templeton Schneider Zoltán\nJud Templeton Sándor Soma\nSally Haines Mikecz Estilla\nMaggie Stratton Balázs Andrea\nHilary Kovács Vecei Fanni\ndramaturg: Karácsony Ágnes\nfordító: Olt Tamás\ndíszlet: Szalai József\njelmez: Cselényi Nóra\nrendező: Olt Tamás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "jutalomjatek-1783504407537.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true,
+    "id": "varszinhaz-20260710-21"
+  },
+  {
     "name": "Madarász Éva: Csók Lilly",
     "date": "2026-07-10",
     "time": "19:00",
@@ -1051,6 +87,27 @@
     "isVarszinhaz": true,
     "id": "varszinhaz_2026_3",
     "endDate": "2026-07-10"
+  },
+  {
+    "name": "Jutalomjáték",
+    "date": "2026-07-11",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Bernard Slade\nJutalomjáték\nA Kőszegi Várszínház  bemutatója\nIdőpontok: 2026. Július 11. (esőnap: Július 12.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 7.500.-\n\nFőhőse a felelőtlenség játékosa. Tehetségét és családját kockáztatta az azonnali örömért. A környezetében is tapsra vágyott Scottie Templeton s így vesztette el a feleségét s ébresztett haragot s tán bosszút a fiában. Ez a Jutalomjáték, meglehet az utolsó. Egy halálosan beteg ember vicceit beárnyékolja a szörnyű betegség. A vígjáték azonban a fordulatok műfaja s az izgalmak bővelkedő komédia könnyes mosollyal békíti össze a családot.\nLou Daniels Marton Róbert\nDr. Gladys Petrelli Dobra Mara\nScottie Templeton Schneider Zoltán\nJud Templeton Sándor Soma\nSally Haines Mikecz Estilla\nMaggie Stratton Balázs Andrea\nHilary Kovács Vecei Fanni\ndramaturg: Karácsony Ágnes\nfordító: Olt Tamás\ndíszlet: Szalai József\njelmez: Cselényi Nóra\nrendező: Olt Tamás",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "jutalomjatek-1783504437839.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true,
+    "id": "varszinhaz-20260711-22"
   },
   {
     "name": "Fő téri zene – Duo Don Pedro'z",
@@ -1101,6 +158,29 @@
     "endDate": "2026-07-12"
   },
   {
+    "name": "Képernyőmentes élmény- fejlesztőtábor",
+    "date": "2026-07-13",
+    "time": "08:00",
+    "location": "Tó-part",
+    "coords": {
+      "lat": 47.39753939060948,
+      "lng": 16.53599740038872
+    },
+    "description": " Elég volt a telefonokból, tabletekből és a képernyők világából?\nIdén nyáron visszahozzuk a valódi gyermekkor legszebb pillanatait! 💚\nNálunk a gyerekek:\n🌳 a természetben játszanak,\n🏃‍♂️ mozognak,\n🎨 alkotnak,\n🤝 barátkoznak,\n😄 nevetnek,\n🌞 észrevétlenül fejlődnek,\nmiközben felejthetetlen élményekkel gazdagodnak!\nA kőszegi Csónakázó-tó gyönyörű környezetében várjuk az 5–9 éves gyermekeket egy szeretetteljes,\nbiztonságos és élményekkel teli táborba, ahol a játék és a felfedezés áll a középpontban. 🌿🦋\nA részvételi díj tartalmazza:\n🥪 tízórait\n🍲 2 fogásos ebédet\n🍏 uzsonnát\n🎨 minden program és foglalkozás költségét\n👩‍🏫 A foglalkozásokat diplomás óvónők vezetik, akik szakmai tudással és sok szeretettel gondoskodnak a gyermekekről.\n📅 Választható időpontok:\n🗓️ 2026. július 13–17.\n🗓️ 2026. július 27–31.\n💰 Részvételi díj: 59.000 Ft/fő\n👨‍👩‍👧‍👦 Testvérkedvezmény: 54.000 Ft/fő\n⚠️ A helyek száma korlátozott, ezért érdemes mielőbb jelentkezni!\n📩 Jelentkezés: szehof@gmail.com",
+    "tags": [
+      "tábor",
+      "gyerek",
+      "program",
+      "fejlesztő"
+    ],
+    "image": "tabor.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782109864323"
+  },
+  {
     "name": "A bőgős fia és az ördögök (meg a malac)",
     "date": "2026-07-13",
     "time": "18:00",
@@ -1123,6 +203,48 @@
     "isVarszinhaz": true,
     "id": "varszinhaz_2026_6",
     "endDate": "2026-07-13"
+  },
+  {
+    "id": "varszinhaz-20260713-23",
+    "name": "152 lépés Auschwitz felé",
+    "date": "2026-07-13",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Nagy Márk és Karácsony Gergely\n152 lépés Auschwitz felé\nIdőpontok: 2026. Július 13. (esőnap: Július 14.),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\nRudolf Franz Ferdinand Höß az auschwitzi haláltábor parancsnoka. Hogy válhat náci tömeggyilkos egy ötgyermekes családapából? Sérti-e az áldozatok emlékét, hogy egy ilyen ember életútját mutassuk be másfél-két órán át?\nMegpróbáljuk megérteni a megérthetetlent, - hogyan jöttek létre azok a bűnösök, akik irányításával megtörténhetett a történelem legmegbotránkoztatóbb tragédiája: a holokauszt -.  hogy ne felejtsünk, hogy a történelem ne ismételje önmagát, hogy mindig feltegyük a kérdést: az az út, amin mi járunk, helyes-e?.\n„Nem törtem a fejemet azon, hogy helytelen-e a dolog. Szükségesnek látszott” - Rudolf Höss\nMerle Mesterségem a halál című regényének és Rudolf Höss emlékiratainak felhasználásával\na szövegkönyvet írta: Nagy Márk és Karácsony Gergely\nFőszerepben: Karácsony Gergely\nLátványtervező: Virág Vivien\nRendező: Nagy Márk",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4759_pic3_4759.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260713-24",
+    "name": "A bőgős fia és az ördögök (meg a malac) - Harlekin Bábszínház",
+    "date": "2026-07-13",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "A magyar népmesét bábszínpadra írta: Veres András\nA bőgős fia és az ördögök (meg a malac) - Harlekin Bábszínház\n- zene, tréfa, báb -\nIdőpontok: 2026. Július 13.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nNem könnyű az élete egy bőgős tizenkettedik fiának. Különösen akkor nem, ha ez a bőgős a harsány családi élet elől egészen a pokolig menekül, ahonnan aztán nincs visszatérés, legalábbis az ördögök szerint. Szerencsére a tizenkettedik fiúnak, Zsigának helyén van az esze és a szíve, elszántan apja felkutatására indul. Hogy ne egyedül kelljen szembeszállnia a nagyvilággal, mellé szegődik a család féltve őrzött malaca is, mint nélkülözhetetlen útitárs. El is jutnak a pokol kapujáig, ahol aztán ördögök egész seregével kell szembenézniük. Ehhez bátorságra, furfangra és egy kis humorérzékre van leginkább szükség. És talán még a szerelem is rátalál útközben Zsigára…\n \nA Harlekin Bábszínház előadásában a hagyományos bábjáték, a zene és a kortárs színház eszközeinek segítségével elevenedik meg ez a fordulatokban és izgalmakban gazdag népmese.\nJátssza: Zádori Szilárd\nÍró: Veres András\nTervező: Trifusz Péter\nZeneszerző: Zádori Szilárd\nDramaturg: Szabó Attila\nRendező: Veres András\nKorosztály: 4+\nAz előadás hossza: 50 perc",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4778_pic3_4778.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   },
   {
     "name": "Kiss Ágnes: A tenger szeme",
@@ -1172,28 +294,46 @@
     "isVarszinhaz": true
   },
   {
-    "name": "Tiszavirág",
+    "id": "varszinhaz-20260715-26",
+    "name": "A bábjátékos",
     "date": "2026-07-15",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
     "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
+      "lat": 47.389582,
+      "lng": 16.538988
     },
-    "description": "Gyerekudvar - Barboncás Társulat előadása.",
+    "description": "Deres Péter\nA bábjátékos\nKemény Henrik emlékére\nIdőpontok: 2026. Július 15. (esőnap: Július 17.!),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\nKemény Henrik vitathatatlanul a legfontosabb 20. századi magyar bábművész, a vásári bábszínház hagyományainak gondozója, egyszersmind új játékstílus, új karakterek megteremtője. Vicceit, mókás fordulatait, jellegzetes hanghordozását országszerte ismerik, akárcsak Hakapeszi Makit, Gyufa Gyurit és persze Vitéz Lászlót, a bábfigurákat, akiket ő tett híressé.\nNizsai Dániel egyszemélyes előadása, A bábjátékos arra tesz kísérletet, hogy bemutassa rendkívül gazdag életének legfontosabb állomásait. Mozaikos portré egy különleges emberről, akinek a sorsát a 20. századi Magyarország tragikus eseményei formálták. Igaz mese sikerekről, viszontagságokról, hősökről, családról és mindenekelőtt a színház, a játék csodájáról.\nÍrta: Deres Péter\nJátssza: Nizsai Dániel\nAz előadás az MMA-MMKI ösztöndíj pályázatának keretében tudott létrejönni.\nAz előadást 16 éven felülieknek ajánljuk!",
     "tags": [
       "várszínház",
-      "gyerekudvar",
-      "előadás",
-      "gyerek"
+      "színház"
     ],
-    "image": "barabocas-1783504554769.jpg",
+    "image": "v_event_4781_pic3_4781.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_9",
-    "endDate": "2026-07-15"
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260715-27",
+    "name": "Tiszavirág",
+    "date": "2026-07-15",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Tombácz János meséiből a történetet írta: Vészits Andrea, Kiss Ágnes\nTiszavirág\nBarboncás Társulat\nIdőpontok: 2026. Július 15.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nA Tiszavirág című bábelőadás, Tombácz János szatymazi pásztorember, két meséjéből készült.\nMeséi gyönyörűek, ám hosszúak, hömpölygőek, mint maga a szegedi csodás szőke folyónk a Tisza.\nDe ahogy a folyó számtalanszor kiöntött, és meg kellett zabolázni, mederbe terelni, gátakat kellett felhúzni, hogy amit épít és táplál ne tudja elmosni, úgy a Tombácz meséket is meg kellett szelídíteni. Ha már szelídítünk, legyen az valóban szelídítés. Szóljon a Tiszáról, a boszorkányszigetről, a tiszavirágokról és egy szerelemről.\n„Régen a Tisza is csak olyan folyó volt, mint sok más. Hömpölygött a medrében, táplálta a földeket és néha kiöntött. De aztán egy szép napon kivirágzott. Más folyók nem virágzanak. Csak a Tisza virágzik tiszavirágot. S hogy miért, erről szól ez a mese.”\nRendezte, játssza: Kiss Ágnes\nZene: Ágoston Béla\nDíszlet: Kiss Ágnes (ötlet), Jerney János (megvalósítás)\nBábkészítők: Kiss Attila Etele, Tóth Andrea",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4794_pic3_4794.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   },
   {
     "name": "Fő téri zene – Korponay Zsófia és Bánó Zoltán",
@@ -1337,29 +477,25 @@
     "endDate": "2026-07-17"
   },
   {
-    "name": "Operett-Musical Est",
+    "id": "varszinhaz-20260718-30",
+    "name": "Operett-musical est",
     "date": "2026-07-18",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
     "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
+      "lat": 47.389582,
+      "lng": 16.538988
     },
-    "description": "Népszerű operett- és musicalslágerek csendülnek fel a csodás hangulatú nagyszínpadon. Esőnap: július 19.",
+    "description": "Operett-musical est\nIdőpontok: 2026. Július 18. (esőnap: Július 19.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 6.000.-\n\nNagyszabású operett-musical parádét láthat a közönség, amely igazi kikapcsolódást ígér a műfaj kedvelőinek. Felcsendülnek a legnagyobb operett slágerek a műfaj kiválóságainak előadásában. Könnyed dallamok, szerelem és humor fergeteges hangulattal fűszerezve!\nA népszerű sztárok közül fellép: Mahó Andrea, Kardffy Aisa, \nBorbély Richárd és Kerényi Miklós Máté",
     "tags": [
       "várszínház",
-      "zene",
-      "operett",
-      "musical",
-      "előadás"
+      "színház"
     ],
-    "image": "operett.jpg",
+    "image": "v_event_4735_pic3_4735.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_16",
-    "endDate": "2026-07-18"
+    "isVarszinhaz": true
   },
   {
     "name": "Jon Fosse: Reggel és este",
@@ -1433,28 +569,46 @@
     "endDate": "2026-07-19"
   },
   {
-    "name": "Robin Hood",
+    "id": "varszinhaz-20260720-33",
+    "name": "Kerülőút - 6SZÍN",
     "date": "2026-07-20",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
+    "time": "19:00",
+    "location": "Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.)",
     "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
+      "lat": 47.389582,
+      "lng": 16.538988
     },
-    "description": "Gyerekudvar - Robin Hood bábos vásári játék, Illaberek Bábszínház előadása.",
+    "description": "Rényi Ádám\nKerülőút - 6SZÍN\nKeserédes fuvar forgalmi dugóban egy részben\nIdőpontok: 2026. Július 20. (esőnap: Július 21.),20:30-tól Helyszín: Kamaraudvar (Jurisich Miklós Gimnázium, Hunyadi u. 10.) Jegyár: 5.000.-\n\nEgy férfi és egy nő. Egy taxisofőr és az utasa a reménytelen budapesti dugóban. Banális, mindennapos helyzet. Két idegen élet találkozása egy szűk térben, a folytatás esélye nélkül. De mi történik, ha a felületes csevejből őszinte beszélgetés kerekedik? Talán könnyebb egy ismeretlen ember előtt vállalni tökéletlenségeinket, félelmeinket? És elképzelhető, hogy életük legfontosabb kérdéseire épp a másiknál van meg a válasz?\nEbben a humorban és érzelmekben egyaránt gazdag színdarabban egy életközepi válságát élő túlhajszolt családanya és egy nyugdíj előtt álló, magának való férfi életébe kapunk betekintést, de nem kizárt, hogy általuk végül önmagunkra ismerünk. Az utas persze végül kiszáll, és az élet megy tovább. Vajon ugyanarra?\nA nő: Réti Andrienn\nA férfi: Kerekes József\nRendező: Horgas Ádám\nAz előadás hossza: 70 perc",
     "tags": [
       "várszínház",
-      "gyerekudvar",
-      "bábszínház",
-      "gyerek"
+      "színház"
     ],
-    "image": "robinhood-1783505047214.jpg",
+    "image": "v_event_4775_pic3_4775.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_20",
-    "endDate": "2026-07-20"
+    "isVarszinhaz": true
+  },
+  {
+    "id": "varszinhaz-20260720-34",
+    "name": "Robin Hood",
+    "date": "2026-07-20",
+    "time": "19:00",
+    "location": "Jurisics vár-Gyerekudvar",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Robin Hood\nBábos vásári játék\nIdőpontok: 2026. Július 20.,18:00-tól Helyszín: Jurisics vár-Gyerekudvar Jegyár: 2.000.-\n\nKi ne hallott volna Robin Hoodról, a sherwoodi erdő lakóinak bátor vezéréről? A tréfára mindig kész, szabadságszerető bujdosók történetei 800 éve köztünk élnek és most a tisztelt nagyérdeműhöz is elérnek. Az interaktív előadást, amely a vásári bábjátékok hagyományaiból merít az Illaberek Bábszínház hozta el Önöknek.\nAz előadás hossza: 45 perc.\n5 éves kortól ajánlott.\nÍrta: Laboda Kornél \nBábokat tervezte: Horváth Márk \nJátssza: Nyirkó Krisztina és Nizsai Dániel",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4780_pic3_4780.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   },
   {
     "name": "Marius von Mayenburg: EX",
@@ -1478,6 +632,49 @@
     "isVarszinhaz": true,
     "id": "varszinhaz_2026_22",
     "endDate": "2026-07-23"
+  },
+  {
+    "name": "Bass Piknik 2026 Tó-part Kőszeg",
+    "date": "2026-07-25",
+    "time": "16:00",
+    "location": "Tó-part Kőszeg",
+    "coords": {
+      "lat": 47.39739431712201,
+      "lng": 16.536139317236852
+    },
+    "description": "Helló Piknikezők!\nA Bass Piknik nem csak egy rendezvény. Nem csak egy buli. Sokkal inkább egy egész napos közösségi élmény a természetben, ahol nappal a kikapcsolódásé, este pedig a zenéé a főszerep.\nAhogy a nap lejjebb ereszkedik a tó fölé, fokozatosan átváltunk a naplementés hangulatból az esti tánctér energiájába, amikor az Illegal Control DJ-i érkeznek a masszívabb hangzásokkal.\n�\n🌿 A kőszegi tópart zöld füvén várunk benneteket egy családias hangulatú napra, ahol barátok, családok, gyerekek, kutyák és persze a jó zenék férnek meg egymás mellett.��👨‍👩‍👧‍👦🐾 Család- és kisállatbarát rendezvény vagyunk. Hozhatod akár a teknősödet is, csak porázt ne felejtsd el, nehogy elhagyd.\n\nNapközben közösségi programokkal, pihenéssel, beszélgetésekkel, piknikhangulattal és kellemes háttérzenével készülünk. ��🎶 Lineup\n• Raul Young\n• Baluca\n• Somex\n• Seges\n• Berry\n• Gabriel Sanchoz\n🌅 Nappal piknik.\n🌄 Naplementében találkozások.\n🌙 Este pedig buli a csillagok alatt.\n\nJegyek hamarosan az alábbi oldalon:\nbasspiknik.com\n(Regisztrálva azonnal értesülhettek az jegy értékesítésről!)",
+    "tags": [
+      "Buli",
+      "zene",
+      "piknik"
+    ],
+    "image": "bass-1782652556618.jpeg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": true,
+    "highlightLabel": "Bass Piknik 2026 Tó-Part",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782652560646"
+  },
+  {
+    "id": "varszinhaz-20260725-36",
+    "name": "Házastársas",
+    "date": "2026-07-25",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Házastársas\nKönnyed párkapcsolat-gazdagító előadás humorral, rögtönzéssel és szakértőkkel.\nIdőpontok: 2026. Július 25. (esőnap: Július 26.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 6.000.-\n\nKit ne foglalkoztatna, hogy miért ért a nő és a férfi mást ugyanazon a mondaton és hogyan lesz ebből azonnal parázs vita? Ki ne ment volna már a falnak, mert már olyan sokszor kért valamit a párjától, de az csak nem teljesítette a kérését? Mi történik akkor, hogyha egy hosszú házasságban, párkapcsolatban élve már nem lobog olyan nagy lánggal a tűz? Hogyan jutunk el odáig lépésről-lépésre, hogy a hatalmas izzó szerelemből egyszer csak a hétköznapok megszokásában találjuk magunkat?\nJátékmesterek: Gönczi Dorka (moderátor) és Varga Zsolt (kommunikációs szakértő)\nSzereplők: Ötvös András és Balsai Móni színművészek\nAz előadás hossza: 90 perc, szünet nélkül.",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4736_pic3_4736.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   },
   {
     "name": "Moravetz Levente: Jöhetsz drágám!",
@@ -1549,6 +746,27 @@
     "isVarszinhaz": true,
     "id": "varszinhaz_2026_26",
     "endDate": "2026-08-01"
+  },
+  {
+    "id": "varszinhaz-20260803-39",
+    "name": "A SZOMSZÉD AJTÓ",
+    "date": "2026-08-03",
+    "time": "19:00",
+    "location": "Jurisics vár nagyszínpad",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "Fabrice Roger-Lacan\nA SZOMSZÉD AJTÓ\nA Kőszegi Várszínház és a Kultkikötő magyarországi bemutatója\nIdőpontok: 2026. Augusztus 3. (esőnap: Augusztus 4.),20:30-tól Helyszín: Jurisics vár nagyszínpad Jegyár: 5.000.-\n\nKét ember, akik valaki mást keresnek. És közben képtelenek leszállni egymásról…\nA nő pszichológus. A férfi marketinges, joghurtokat reklámoz. A férfi mindent el tud intézni egy félmondattal. A nő mindig visszakérdez. Semmiben nem értenek egyet. A férfi könnyedén kezeli a világot. A nő ezt nem hagyja szó nélkül. Szomszédok. Udvariasan és nagy igyekezettel gyűlölik egymást. Folyton csatáznak. Minden találkozásuk veszekedéssel végződik. Mégis újra és újra átmennek a másikhoz. Valójában mindketten társat keresnek. Persze olyasvalakit, aki pont az ellentéte annak a pokoli alaknak, aki a szomszéd ajtó mögött lakik. És amikor az online társkereső oldalakon végre megtalálják az ideális párt, nem tudják megállni, hogy ne mondják el a másiknak. Nem örömből. Hanem hogy újra összecsapjanak…\nFabrice Roger-Lacan francia író a mai párkapcsolatok egyik legpontosabb és legszellemesebb megfigyelője, aki szerint nem az a nehéz, hogy megszólítsuk a másikat, hanem hogy meghalljuk. A szomszéd ajtó című rendkívül izgalmas, humoros, nagyon emberi és elgondolkodtató darabja a Kőszegi Várszínház és a Kultkikötő közös produkciója Őze Áron és Auksz Éva főszereplésével. A színészházaspár most játszik először együtt kétszemélyes előadásban. Öröm lesz nézni, ahogy civódnak…\nFérfi: Őze Áron\nNő: Auksz Éva\nFordította: Oláh Krisztina\nDramaturg: Karácsony Ágnes\nDíszlettervező: Szalai József, Hatvani Mónika\nRendezőasszisztens: Eisenhauer Réka\nRendező: Naszlady Éva",
+    "tags": [
+      "várszínház",
+      "színház"
+    ],
+    "image": "v_event_4760_pic3_4760.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   },
   {
     "name": "Fabrice Roger-Lacan: A szomszéd ajtó",
@@ -1647,32 +865,6 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_4",
-    "name": "V. Ostrom Várvédő Jótékonysági Futóverseny",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "09:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "V. Ostrom Várvédő Jótékonysági Futóverseny. Távok: 1.5 km (tömegfutás/gyerekfutam az Óvároson és török táboron át), 7 km, 14 km, 22 km. Rajt: Jurisics tér. A nevezések teljes bevételét a Myrtill Alapítványon keresztül Hanna és Julcsi támogatására ajánlják fel.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "sport",
-      "futás",
-      "jótékonyság",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Jótékonysági Futás",
     "isOstrom": true
   },
   {
@@ -1941,6 +1133,54 @@
     "isOstrom": true
   },
   {
+    "name": "V. Ostrom Várvédő Jótékonysági Futás",
+    "date": "2026-08-08",
+    "time": "09:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "🏃 V. Ostrom Várvédő Jótékonysági Futás\n\nJubileumi futóesemény\n\n🏰 5 éve együtt a vár falai között\n\n📅 Időpont: 2026. augusztus 8.\n📍 Helyszín: Kőszeg, Fő tér\n🕘 Kezdés: 9:00\n\nTávok\n👧 Gyermekfutam\n1,5 km\n🏃 Felnőtt futamok\n7 km\n14 km\n21,5 km\nRajtidők\n8:30\n8:55\n9:00\nHelyszíni nevezés\n\n📝 7:00 – 8:30\n\nOnline nevezés\n\n🌐 e-nevezes.hu\n(a plakát szerint 2026. június 1-től elérhető)\n\nJótékonysági cél\n\nA nevezés teljes bevételét a Myrtill Alapítványon keresztül két kőszegi gyermek, Hanna és Julcsi kapja.",
+    "tags": [
+      "jótékonykodás",
+      "futás",
+      "sport"
+    ],
+    "image": "futas.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782290581508"
+  },
+  {
+    "id": "ostrom_2026_4",
+    "name": "V. Ostrom Várvédő Jótékonysági Futóverseny",
+    "date": "2026-08-08",
+    "endDate": "2026-08-08",
+    "time": "09:00",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.3888,
+      "lng": 16.5411
+    },
+    "description": "V. Ostrom Várvédő Jótékonysági Futóverseny. Távok: 1.5 km (tömegfutás/gyerekfutam az Óvároson és török táboron át), 7 km, 14 km, 22 km. Rajt: Jurisics tér. A nevezések teljes bevételét a Myrtill Alapítványon keresztül Hanna és Julcsi támogatására ajánlják fel.",
+    "tags": [
+      "ostrom",
+      "ostromnapok",
+      "sport",
+      "futás",
+      "jótékonyság",
+      "program"
+    ],
+    "image": "ostromhero.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Jótékonysági Futás",
+    "isOstrom": true
+  },
+  {
     "id": "ostrom_2026_16",
     "name": "Éjszakai patronok kilövése",
     "date": "2026-08-08",
@@ -2062,6 +1302,26 @@
     "isOstrom": true
   },
   {
+    "name": "Erdélyi kopó - Kőszegi Ostromnapok bemutatója",
+    "date": "2026-08-08",
+    "time": "11:00",
+    "location": "Várárok",
+    "coords": {
+      "lat": 47.38907282842178,
+      "lng": 16.538244715582017
+    },
+    "description": "Az erdélyi kopó máig a legkisebb egyedszámú magyar kutyafajta. Előadásunkban a kopó, a kopótartás és a kopózás hagyományának felvillantása mellett kitérünk arra is, hogy mikortól beszélhetünk erdélyi kopóról és bemutatjuk a kopós vadászati mód múltját és napjainkban kevesek által űzött jelenét is. Egyúttal bepillantást engedünk ezzel a hungarikum kutyafajtával való együttélés mindennapjaiba is. A bemutató alkalmával a résztvevőknek lehetősége van kutyasimogatásra, valamint vadászati munka- és engedelmességi feladatok (visszahívás, helybemaradás) megtekintésére.\nHelyszín: XIX. Kőszegi Ostromnapok, Várárok, Kőszeg, 9730\nIdőpont: 2026. augusztus 8., szombat, 11.00–12.00",
+    "tags": [
+      "bemutató"
+    ],
+    "image": "kopo.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780922440860"
+  },
+  {
     "id": "ostrom_2026_21",
     "name": "Vadászkutyabemutató",
     "date": "2026-08-08",
@@ -2181,6 +1441,28 @@
     "highlight": false,
     "highlightLabel": "",
     "isOstrom": true
+  },
+  {
+    "id": "new_1771696209734",
+    "name": "Berecz Mátyás: Fegyvert s vitézt éneklek",
+    "date": "2026-08-08",
+    "time": "14:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Berecz Mátyás: Fegyvert s vitézt éneklek – A török elleni harcok és az európai hadügyi forradalom. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   },
   {
     "id": "ostrom_2026_26",
@@ -2839,5 +2121,482 @@
     "highlight": true,
     "highlightLabel": "Ataru Taiko",
     "isOstrom": true
+  },
+  {
+    "name": "Ataru Taiko jubileumi koncert",
+    "date": "2026-08-09",
+    "time": "19:30",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389582,
+      "lng": 16.538988
+    },
+    "description": "✨🎶 FÉNYEK. TŰZ. ZENE. ÜNNEP. 🎶 ✨\n20 évvel ezelőtt egy álom indult útjára. Most pedig elérkezett az idő, hogy ezt a rendkívüli jubileumot méltó módon ünnepeljük meg – ott, ahol minden elkezdődött.\nSzülővárosunkban, Kőszegen egy látványos jubileumi koncerttel készülünk a XIX. Ostromnapok keretein belül, amelyet különleges pirotechnikai elemek, fényhatások és felejthetetlen színpadi látvány tesz igazán egyedivé.\nLángok és fények. Lélegzetelállító pirotechnikai show.\nEgy este, amelyre sokáig emlékezni fogunk.\nEz nem csupán egy koncert lesz, hanem egy közös ünnep mindazokkal, akik az elmúlt 20 év során velünk voltak és támogattak minket!\n📅 2026.08.09. 19:30📍 Kőszeg, Jurisics vár\nA belépés díjtalan!",
+    "tags": [
+      "koncert"
+    ],
+    "image": "ataru.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1780922291897"
+  },
+  {
+    "name": "Kutyás hétvége a Kőszegi-hegységben és Ausztriában",
+    "date": "2026-08-20",
+    "time": "10:00",
+    "location": "Vöröskereszt",
+    "coords": {
+      "lat": 47.37403680920409,
+      "lng": 16.491433994858784
+    },
+    "description": "Augusztusi kutyás hétvégénket Magyarország nyugati határvidékére szervezzük, és még egy kis határon túli kalandozást is beiktatunk. Aktív, kutyás kikapcsolódásra invitálunk a Kőszegi-hegység és Ausztria egy pici szegletének megismerésére.\nHétvégénk során több útvonalon kirándulunk a Kőszegi-hegységben, ellátogatunk Ausztriába, ahol igazi hegyvidéki környezetben túrázunk, és még egy esti városnézést is beiktatunk Kőszegen.\nSzállásunk Kőszeg szívében lesz, ahol az aktív napokat követően, a szépen felújított, kutyabarát szállodában kényelmesen pihenhetünk.\nA kutyás hétvége részletei:\nIdőpont: 2026. augusztus 20–23. (4 nap/3 éjszaka)\nHelyszín: Kőszeg, a Kőszegi-hegység és Ausztria\nSzállás: kellemes hangulatú, kutyabarát szállodában\nSzobatípusok: főként kétágyas szobák\nEllátás: félpanziós ellátás (reggeli és vacsora a szállodában)\nUtazás: egyénileg\nProgramajánlatunk a következő szolgáltatásokat tartalmazza:\n- 3 éjszakás elhelyezés egy- vagy kétágyas- , igény esetén családi szobákban\n- félpanziós ellátás: reggeli és vacsora a szállodában\n- közös kutyás kirándulások a Kőszegi-hegységben és Ausztriában, esti városnézés Kőszegen – csütörtök délután egy rövidebb, pénteken és szombaton egy-egy hosszabb, majd vasárnap újból egy rövidebb kirándulást tervezünk.\nBővebb információ és jelentkezés:\nhttps://utazzkutyaddal.hu/.../kutyas-hetvege-koszegen.../\nE-mail: info@utazzkutyaddal.hu\nTel.: Hosszú Noémi: +36 70 945 0280\nFelhívjuk figyelmeteket, hogy az \"Ott leszek\" gomb megnyomása jelen esetben nem minősül jelentkezésnek, részvételnek. Kérjük, hogy honlapunkon jelentkezz a programunkra!\nRészvételi feltételek:\n- kérjük, hogy csak jól szocializált és nem agresszív kutyával vegyél részt a hétvégi programon\n- a program szervezői nem felelnek a résztvevő kutyákért, mindenki a saját kutyájáért felel\n- minden kutyának kötelező az érvényes oltások megléte, az oltási könyveket érkezéskor be kell mutatni\n- az erdőkben a kutyát szabály szerint pórázon kell vezetni\ntüzelő szukával a részvétel nem lehetséges\n- a programot min. 16 fő részvétele esetén szervezzük meg\n- programunkon mindenki saját felelősségére vesz részt\nHasznos tanácsok:\nA természet közelsége a sok kellemes élmény mellett veszélyeket is rejt. Kérjük, mindenképpen készüljetek szúnyog- és kullancs elleni szerekkel és alap egészségügyi csomaggal. A nyugati határvidék kullancsokkal kiemelten fertőzött, de megfelelő védekezéssel kiküszöbölhető a megbetegedés.\nAmennyiben felkeltettük érdeklődésedet, foglald le a hétvégét minél hamarabb!\nFelhívjuk figyelmedet, hogy a szállodában a szobák korlátozott számban állnak rendelkezésünkre.\nKérdéseiddel keress minket a következő e‑mail címen: info@utazzkutyaddal.hu",
+    "tags": [
+      "séta",
+      "kirándulás",
+      "kutya"
+    ],
+    "image": "kutyas.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1782109719427"
+  },
+  {
+    "id": "new_1771696209735",
+    "name": "Tangl Balázs: Hol éltek a katonák Kőszegen?",
+    "date": "2026-09-03",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Tangl Balázs: Hol éltek a katonák Kőszegen a boldog békeidők éveiben? – Őszi szabadegyetemi előadás. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209736",
+    "name": "Keppel Csilla: Hadisebesültek görbe tükörben",
+    "date": "2026-09-17",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Keppel Csilla: Hadisebesültek görbe tükörben – Őszi szabadegyetemi előadás. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209737",
+    "name": "Kulturális Örökség Napjai",
+    "date": "2026-09-19",
+    "endDate": "2026-09-20",
+    "time": "Egész nap",
+    "location": "Kőszegi Városi Múzeum és Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Kulturális Örökség Napjai Kőszegen. Ingyenesen látogatható műemlékek és különleges programok.",
+    "tags": [
+      "műemlék",
+      "történelem",
+      "program",
+      "ingyenes"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Örökség Napok"
+  },
+  {
+    "id": "new_1771696209738",
+    "name": "Kőszegi Szüret - Fúvószenekari Találkozó",
+    "date": "2026-09-25",
+    "time": "17:00",
+    "location": "Kőszeg",
+    "coords": {
+      "lat": 47.3883,
+      "lng": 16.5411
+    },
+    "description": "Előzetes információ, bővebben később",
+    "tags": [
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209739",
+    "name": "Hideg István: Kőszeg a császári és királyi haditengerészet szolgálatában",
+    "date": "2026-10-01",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Hideg István: Kőszeg a császári és királyi haditengerészet szolgálatában – Őszi szabadegyetemi előadás. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209740",
+    "name": "„Mozaikdarabkák hulló életek” – Fasching Zsuzsanna előadása",
+    "date": "2026-10-06",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "„Mozaikdarabkák hulló életek” – Fasching Zsuzsanna zeneterapeuta előadása a demenciáról. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "zeneterápia",
+      "egészség",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209741",
+    "name": "„Saját utakon” – Mörk Leonóra író-olvasó találkozója",
+    "date": "2026-10-07",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "„Saját utakon” – író-olvasó találkozó Mörk Leonórával. A belépés ingyenes!",
+    "tags": [
+      "irodalom",
+      "találkozó",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209742",
+    "name": "Őszi tánc és ének a Hajnalcsillag Néptáncegyüttessel",
+    "date": "2026-10-10",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Őszi tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
+    "tags": [
+      "néptánc",
+      "zene",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209743",
+    "name": "Németh Balázs: A Vas vármegyei császári és királyi 83. gyalogezred története",
+    "date": "2026-10-15",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Németh Balázs: A Vas vármegyei császári és királyi 83. gyalogezred története – Őszi szabadegyetemi előadás. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209744",
+    "name": "Orsolya-napi Vásár",
+    "date": "2026-10-17",
+    "time": "17:00",
+    "location": "Kőszeg",
+    "coords": {
+      "lat": 47.3883,
+      "lng": 16.5411
+    },
+    "description": "Előzetes információ, bővebben később",
+    "tags": [
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209745",
+    "name": "Lovass Tibor: A forgatókönyvtől a filmig",
+    "date": "2026-10-29",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Lovass Tibor: A forgatókönyvtől a filmig – Téli filmklub. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "film",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209746",
+    "name": "Simon Zsófia: A hóhér pallosa",
+    "date": "2026-11-10",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Simon Zsófia: A hóhér pallosa – Levéltári estek. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "levéltár",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209747",
+    "name": "Nemzetközi Speciális Filmfesztivál",
+    "date": "2026-11-19",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Nemzetközi Speciális Filmfesztivál – Téli filmklub. A belépés ingyenes!",
+    "tags": [
+      "filmfesztivál",
+      "mozi",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209748",
+    "name": "Téli tánc és ének a Hajnalcsillag Néptáncegyüttessel",
+    "date": "2026-11-28",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Téli tánc és ének a Hajnalcsillag Néptáncegyüttessel. A belépés ingyenes!",
+    "tags": [
+      "néptánc",
+      "zene",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209749",
+    "name": "Advent Vár",
+    "date": "2026-11-28",
+    "time": "17:00",
+    "location": "Kőszeg",
+    "coords": {
+      "lat": 47.3883,
+      "lng": 16.5411
+    },
+    "description": "Előzetes információ, bővebben később",
+    "tags": [
+      "program"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209750",
+    "name": "Boros Ferenc: Magyar zenés filmek",
+    "date": "2026-12-03",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Boros Ferenc: Magyar zenés filmek – Téli filmklub. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "film",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209751",
+    "name": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal",
+    "date": "2026-12-05",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal. A belépés ingyenes!",
+    "tags": [
+      "koncert",
+      "zene",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209752",
+    "name": "Csík István: A Szent Korona Kőszegen",
+    "date": "2026-12-08",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Csík István: A Szent Korona Kőszegen – Levéltári estek. A belépés ingyenes!",
+    "tags": [
+      "előadás",
+      "történelem",
+      "levéltár",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209753",
+    "name": "Luca-nap",
+    "date": "2026-12-12",
+    "time": "10:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Luca-nap a könyvtárban. Hagyományőrző kézművesség és játékok. A belépés ingyenes!",
+    "tags": [
+      "hagyomány",
+      "családi",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "new_1771696209754",
+    "name": "Karácsonyi műsor",
+    "date": "2026-12-18",
+    "time": "17:00",
+    "location": "Chernel Kálmán Városi Könyvtár",
+    "coords": {
+      "lat": 47.389592,
+      "lng": 16.54243
+    },
+    "description": "Karácsonyi ünnepi műsor a könyvtárban. A belépés ingyenes!",
+    "tags": [
+      "ünnep",
+      "zene",
+      "program",
+      "könyvtár"
+    ],
+    "image": "event_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
   }
 ]
