@@ -1,14 +1,698 @@
 [
   {
+    "datum": "2026-08-05",
+    "esemenyek": [
+      {
+        "id": "ostrom_2026_1",
+        "idopont": "2026-08-05T10:00:00",
+        "veg_idopont": "2026-08-05T11:00:00",
+        "nev": "18. Ostrom Kupa - Nemzetközi ökölvívó verseny",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "XIX. Kőszegi Ostromnapok felvezető ökölvívó versenye. Kiemelt esemény: U15-ös magyar válogatott megmérkőzik a szerb válogatottal. A rendezvény ideje alatt gyűjtést szervezünk a Myrtill Alapítvány közreműködésével két rászoruló kisgyermek, Hanna és Julcsi javára. Rossz idő esetén: Balog Iskola tornacsarnok."
+      }
+    ]
+  },
+  {
     "datum": "2026-08-07",
-    "esemenyek": []
+    "esemenyek": [
+      {
+        "id": "ostrom_2026_2",
+        "idopont": "2026-08-07T10:00:00",
+        "veg_idopont": "2026-08-07T11:00:00",
+        "nev": "Honvédelmi Sportnap - Önvédelmi bemutató & megemlékezés",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "Honvédelmi Sportnap ökölvívó önvédelmi bemutatóval a Főtéren, hagyományőrző bemutatókkal, majd koszorúzás és megemlékezés Jurisics Miklós szobránál."
+      },
+      {
+        "id": "ostrom_2026_3",
+        "idopont": "2026-08-07T11:15:00",
+        "veg_idopont": "2026-08-07T12:15:00",
+        "nev": "Honvédelmi Sportnap - Íjászat és akadálypálya",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Diáksétány",
+          "lat": 47.3898,
+          "lng": 16.5413
+        },
+        "leiras": "Íjászprogram, lézerlövészet, paintball lövészet, akadálypálya álcahálóval és bójákkal a Diáksétányon."
+      },
+      {
+        "id": "ostrom_2026_5",
+        "idopont": "2026-08-07T15:32:00",
+        "veg_idopont": "2026-08-07T16:32:00",
+        "nev": "XIX. Kőszegi Ostromnapokat megnyitó puskalövések",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Hősök tornya",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "XIX. Kőszegi Ostromnapok hivatalos megnyitása hagyományőrző puskalövésekkel a Hősök tornyánál."
+      },
+      {
+        "id": "ostrom_2026_6",
+        "idopont": "2026-08-07T16:00:00",
+        "veg_idopont": "2026-08-07T17:00:00",
+        "nev": "Ostrom kupa „megtámadása”",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "Az Ostrom Kupa jelképes, játékos megtámadása a Főtéren."
+      },
+      {
+        "id": "ostrom_2026_7",
+        "idopont": "2026-08-07T16:30:00",
+        "veg_idopont": "2026-08-07T17:30:00",
+        "nev": "Kőszegi Vonósok Koncert",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Tábornokház loggia",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "A Kőszegi Vonósok hangulatos szabadtéri hangversenye a Tábornokház loggiájáról."
+      },
+      {
+        "id": "ostrom_2026_8",
+        "idopont": "2026-08-07T17:20:00",
+        "veg_idopont": "2026-08-07T18:20:00",
+        "nev": "BE-JÓ Történelmi Táncegyüttes bemutatója",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "Történelmi és reneszánsz táncok bemutatója a Jurisics téren."
+      },
+      {
+        "id": "ostrom_2026_9",
+        "idopont": "2026-08-07T17:50:00",
+        "veg_idopont": "2026-08-07T18:50:00",
+        "nev": "Kőszegi Tornyosok zenéje",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Hősök tornya",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "Toronyzene a Hősök tornyából a Kőszegi Tornyosok előadásában."
+      },
+      {
+        "id": "ostrom_2026_10",
+        "idopont": "2026-08-07T18:00:00",
+        "veg_idopont": "2026-08-07T19:00:00",
+        "nev": "Ostromállapot kihirdetése",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "A város ostromállapotának ünnepélyes kihirdetése és a török ultimátum felolvasása."
+      },
+      {
+        "id": "ostrom_2026_11",
+        "idopont": "2026-08-07T19:00:00",
+        "veg_idopont": "2026-08-07T20:00:00",
+        "nev": "Német táncház – Pornóapáti Néptáncegyüttes",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "Népzenei koncert és táncház a Pornóapáti Néptáncegyüttessel."
+      },
+      {
+        "id": "ostrom_2026_12",
+        "idopont": "2026-08-07T20:00:00",
+        "veg_idopont": "2026-08-07T21:00:00",
+        "nev": "„Ég a város, ég a ház is” - tüzes török támadás",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Lépcsős várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "Látványos tüzes show és csatajelenet a Lépcsős vároroknál a török csapatok ostromának emlékére."
+      },
+      {
+        "id": "ostrom_2026_13",
+        "idopont": "2026-08-07T20:30:00",
+        "veg_idopont": "2026-08-07T21:30:00",
+        "nev": "Kutyán Budavásár Koncert",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "A Kutyán Budavásár zenekar nyáresti koncertje a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_14",
+        "idopont": "2026-08-07T21:05:00",
+        "veg_idopont": "2026-08-07T22:05:00",
+        "nev": "Fáklyás felvonulás a Jurisics térre",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "Hangulatos fáklyás menet a vároroktól a Jurisics térre a hagyományőrző csapatok részvételével."
+      },
+      {
+        "id": "ostrom_2026_15",
+        "idopont": "2026-08-07T21:30:00",
+        "veg_idopont": "2026-08-07T22:30:00",
+        "nev": "„Török lesen” jelmezes túra",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Tourinform iroda",
+          "lat": 47.3882,
+          "lng": 16.5417
+        },
+        "leiras": "Jelmezes éjszakai túra és nyomozás a belvárosban. Találkozó a Fő téri Tourinform irodánál."
+      }
+    ]
   },
   {
     "datum": "2026-08-08",
-    "esemenyek": []
+    "esemenyek": [
+      {
+        "id": "ostrom_2026_4",
+        "idopont": "2026-08-08T09:00:00",
+        "veg_idopont": "2026-08-08T10:00:00",
+        "nev": "V. Ostrom Várvédő Jótékonysági Futóverseny",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "V. Ostrom Várvédő Jótékonysági Futóverseny. Távok: 1.5 km (tömegfutás/gyerekfutam az Óvároson és török táboron át), 7 km, 14 km, 22 km. Rajt: Jurisics tér. A nevezések teljes bevételét a Myrtill Alapítványon keresztül Hanna és Julcsi támogatására ajánlják fel."
+      },
+      {
+        "id": "ostrom_2026_16",
+        "idopont": "2026-08-08T09:00:00",
+        "veg_idopont": "2026-08-08T10:00:00",
+        "nev": "Éjszakai patronok kilövése",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Hősök tornya",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "Ébresztő lövések a Hősök tornyánál, indítva az ostromhétvége szombati napját."
+      },
+      {
+        "id": "ostrom_2026_17",
+        "idopont": "2026-08-08T09:15:00",
+        "veg_idopont": "2026-08-08T10:15:00",
+        "nev": "Kőszeg védművei – Történelmi séta",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Hősök tornya",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "Tematikus vár- és várostörténeti séta az ostrom kulcsfontosságú pontjain. Vezeti: Révész József múzeumigazgató."
+      },
+      {
+        "id": "ostrom_2026_18",
+        "idopont": "2026-08-08T10:00:00",
+        "veg_idopont": "2026-08-08T11:00:00",
+        "nev": "A török sereg sétája a belvárosban",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "A török katonák bevonulása és hangos portyája a kőszegi történelmi utcákon."
+      },
+      {
+        "id": "ostrom_2026_19",
+        "idopont": "2026-08-08T10:00:00",
+        "veg_idopont": "2026-08-08T11:00:00",
+        "nev": "Ifjú vitézek próba",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Vitézi próbák, játékos kiképzés gyermekek részére a várudvarban (12-13 óra között szünetel)."
+      },
+      {
+        "id": "ostrom_2026_20",
+        "idopont": "2026-08-08T10:30:00",
+        "veg_idopont": "2026-08-08T11:30:00",
+        "nev": "Gyermek ostrom",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel."
+      },
+      {
+        "id": "ostrom_2026_21",
+        "idopont": "2026-08-08T11:00:00",
+        "veg_idopont": "2026-08-08T12:00:00",
+        "nev": "Vadászkutyabemutató",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "Különleges vadászkutya engedelmességi és ügyességi bemutató a várárokban."
+      },
+      {
+        "id": "ostrom_2026_22",
+        "idopont": "2026-08-08T11:00:00",
+        "veg_idopont": "2026-08-08T12:00:00",
+        "nev": "Várvédő mustra",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "A várvédő katonai csapatok felsorakozása, fegyvermustrája a Jurisics téren."
+      },
+      {
+        "id": "ostrom_2026_23",
+        "idopont": "2026-08-08T11:30:00",
+        "veg_idopont": "2026-08-08T12:30:00",
+        "nev": "Szablyatánc – Czenki Hársfa Néptáncegyüttes",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "Hagyományos szablyatánc-bemutató és néptánc előadás."
+      },
+      {
+        "id": "ostrom_2026_24",
+        "idopont": "2026-08-08T13:00:00",
+        "veg_idopont": "2026-08-08T14:00:00",
+        "nev": "Vásárütés",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "A török portyázó csapatok rajtaütése a történelmi belváros kézműves vásárán."
+      },
+      {
+        "id": "ostrom_2026_25",
+        "idopont": "2026-08-08T13:00:00",
+        "veg_idopont": "2026-08-08T14:00:00",
+        "nev": "Tárlatvezetés a Jurisics vár kiállításában",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár lovagterem",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Vezetett történelmi séta a Jurisics vár állandó kiállításában. Érvényes várbelépő vagy Múzeumostrom bérlet szükséges."
+      },
+      {
+        "id": "ostrom_2026_26",
+        "idopont": "2026-08-08T14:00:00",
+        "veg_idopont": "2026-08-08T15:00:00",
+        "nev": "Berecz Mátyás: Fegyvert s vitézt éneklek",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár lovagterem",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Berecz Mátyás előadása: Fegyvert s vitézt éneklek – A török elleni harcok és az európai hadügyi forradalom."
+      },
+      {
+        "id": "ostrom_2026_27",
+        "idopont": "2026-08-08T14:30:00",
+        "veg_idopont": "2026-08-08T15:30:00",
+        "nev": "Batthyány Lovas Bandérium és a Vitézlő Rend lovasbemutatója",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Lépcsős várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "Középkori fegyveres lovasbemutató a Batthyány Lovas Bandérium és a Nyugati Vármegye Vitézlő Rendje előadásában."
+      },
+      {
+        "id": "ostrom_2026_28",
+        "idopont": "2026-08-08T15:30:00",
+        "veg_idopont": "2026-08-08T16:30:00",
+        "nev": "Gyermek ostrom",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel (második menet)."
+      },
+      {
+        "id": "ostrom_2026_29",
+        "idopont": "2026-08-08T15:30:00",
+        "veg_idopont": "2026-08-08T16:30:00",
+        "nev": "SilverBirds Bellydance Egyesület hastánc",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "A SilverBirds Bellydance Egyesület látványos keleti táncbemutatója a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_30",
+        "idopont": "2026-08-08T16:30:00",
+        "veg_idopont": "2026-08-08T17:30:00",
+        "nev": "Ostrom felvonulás",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Jurisics vár - Diáksétány",
+          "lat": 47.3898,
+          "lng": 16.5413
+        },
+        "leiras": "A hagyományőrző gyalogos és lovas sereg díszes menete a Várparktól a Diáksétányig."
+      },
+      {
+        "id": "ostrom_2026_31",
+        "idopont": "2026-08-08T18:00:00",
+        "veg_idopont": "2026-08-08T19:00:00",
+        "nev": "Kőszegi Tornyosok zenéje",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Hősök tornya",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "Toronyzene a Hősök tornyából az ostrom szombati zárásaként."
+      },
+      {
+        "id": "ostrom_2026_32",
+        "idopont": "2026-08-08T18:30:00",
+        "veg_idopont": "2026-08-08T19:30:00",
+        "nev": "VÁROSTROM",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Várfal, Diáksétány",
+          "lat": 47.3898,
+          "lng": 16.5413
+        },
+        "leiras": "A Kőszegi Ostromnapok fő attrakciója: a kőszegi vár ostromának látványos élő csatarekonstrukciója puskaporral, ágyúkkal és vitézi küzdelmekkel a Diáksétánynál. Belépés támogatói jeggyel."
+      },
+      {
+        "id": "ostrom_2026_33",
+        "idopont": "2026-08-08T19:00:00",
+        "veg_idopont": "2026-08-08T20:00:00",
+        "nev": "SOMNIUM Koncert",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "A SOMNIUM zenekar pop-rock koncertje a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_34",
+        "idopont": "2026-08-08T20:00:00",
+        "veg_idopont": "2026-08-08T21:00:00",
+        "nev": "Kőszeg Város Koncert Fúvószenekara",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics tér",
+          "lat": 47.3888,
+          "lng": 16.5411
+        },
+        "leiras": "Fúvószenei koncert a Jurisics téren Kőszeg Város Koncert Fúvószenekara előadásában."
+      },
+      {
+        "id": "ostrom_2026_35",
+        "idopont": "2026-08-08T21:00:00",
+        "veg_idopont": "2026-08-08T22:00:00",
+        "nev": "Szelindek - Régi Világzenék koncert",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "Középkori ihletésű energikus világzene a Szelindek együttes tolmácsolásában."
+      },
+      {
+        "id": "ostrom_2026_36",
+        "idopont": "2026-08-08T22:00:00",
+        "veg_idopont": "2026-08-08T23:00:00",
+        "nev": "Ostrom Retro disco",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "Nyáresti szabadtéri retro buli és tánc a Fő téren késő éjszakáig."
+      }
+    ]
   },
   {
     "datum": "2026-08-09",
-    "esemenyek": []
+    "esemenyek": [
+      {
+        "id": "ostrom_2026_37",
+        "idopont": "2026-08-09T09:00:00",
+        "veg_idopont": "2026-08-09T10:00:00",
+        "nev": "Ostromtúra a Szulejmán-kilátóhoz",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Tourinform iroda",
+          "lat": 47.3882,
+          "lng": 16.5417
+        },
+        "leiras": "Gyalogos emléktúra a Szulejmán-kilátóhoz a Tourinform irodától indulva. Táv: 8 km."
+      },
+      {
+        "id": "ostrom_2026_38",
+        "idopont": "2026-08-09T10:00:00",
+        "veg_idopont": "2026-08-09T11:00:00",
+        "nev": "Kézműves foglalkozások a Csók István Művészkörrel",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Családi kézműves foglalkozás, agyagozás és rajzolás a vár udvarán."
+      },
+      {
+        "id": "ostrom_2026_39",
+        "idopont": "2026-08-09T10:30:00",
+        "veg_idopont": "2026-08-09T11:30:00",
+        "nev": "„Harangszóig” csatazajos megemlékezés",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Diáksétány",
+          "lat": 47.3898,
+          "lng": 16.5413
+        },
+        "leiras": "Megemlékezés az ostrom sikeres befejezéséről a történelmi 11 órás harangszó kíséretében, puskalövésekkel a Diáksétánynál."
+      },
+      {
+        "id": "ostrom_2026_40",
+        "idopont": "2026-08-09T11:00:00",
+        "veg_idopont": "2026-08-09T12:00:00",
+        "nev": "ESŐNAP - Szombati rossz idő esetén Várostrom",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Várfal, Diáksétány",
+          "lat": 47.3898,
+          "lng": 16.5413
+        },
+        "leiras": "Esőnap a szombati Várostrom esetleges pótlására a Diáksétánynál."
+      },
+      {
+        "id": "ostrom_2026_41",
+        "idopont": "2026-08-09T11:30:00",
+        "veg_idopont": "2026-08-09T12:30:00",
+        "nev": "Gyermek ostrom",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel a vasárnapi napon."
+      },
+      {
+        "id": "ostrom_2026_42",
+        "idopont": "2026-08-09T11:30:00",
+        "veg_idopont": "2026-08-09T12:30:00",
+        "nev": "Tárlatvezetés a Tábornokházban és a Hősök tornyában",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Hősök tornya",
+          "lat": 47.3887,
+          "lng": 16.5416
+        },
+        "leiras": "Vezetett történelmi séta a múzeum állandó kiállításaiban. Érvényes belépő vagy Múzeumostrom bérlet szükséges."
+      },
+      {
+        "id": "ostrom_2026_43",
+        "idopont": "2026-08-09T13:00:00",
+        "veg_idopont": "2026-08-09T14:00:00",
+        "nev": "Kőszegi Borkereskedelem - Jurisics Bandérium",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "Kőszegi borászati hagyományok bemutatása a Jurisics Bandérium katonai kíséretében a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_44",
+        "idopont": "2026-08-09T14:00:00",
+        "veg_idopont": "2026-08-09T15:00:00",
+        "nev": "Gyulaffy Bandérium viselet- és fegyverbemutató",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "A Gyulaffy Bandérium végvári vitézi viselet- és fegyverzeti bemutatója a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_45",
+        "idopont": "2026-08-09T14:30:00",
+        "veg_idopont": "2026-08-09T15:30:00",
+        "nev": "Gyermek ostrom",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel (délutáni menet)."
+      },
+      {
+        "id": "ostrom_2026_46",
+        "idopont": "2026-08-09T15:00:00",
+        "veg_idopont": "2026-08-09T16:00:00",
+        "nev": "SilverBirds Bellydance hastáncbemutató",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "A SilverBirds Bellydance Egyesület keleti hastánc előadása a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_47",
+        "idopont": "2026-08-09T15:00:00",
+        "veg_idopont": "2026-08-09T16:00:00",
+        "nev": "Barátkozás Marton-Szállás lovaival",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "Családi és gyerekprogram: simogatás és barátkozás a hagyományőrző lovakkal a várárokban."
+      },
+      {
+        "id": "ostrom_2026_48",
+        "idopont": "2026-08-09T15:32:00",
+        "veg_idopont": "2026-08-09T16:32:00",
+        "nev": "Hagyományőrző csapatok koszorúzása",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Lépcsős várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "A XIX. Kőszegi Ostromnapok végvári katonai egységeinek ünnepélyes koszorúzási szertartása a vároroknál."
+      },
+      {
+        "id": "ostrom_2026_49",
+        "idopont": "2026-08-09T16:00:00",
+        "veg_idopont": "2026-08-09T17:00:00",
+        "nev": "Gyermek-felnőtt közös ostrom",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Lépcsős várorok",
+          "lat": 47.3892,
+          "lng": 16.5401
+        },
+        "leiras": "Közös, játékos záróostrom ifjú vitézek és felnőtt hagyományőrzők részvételével a Lépcsős vároroknál."
+      },
+      {
+        "id": "ostrom_2026_50",
+        "idopont": "2026-08-09T16:00:00",
+        "veg_idopont": "2026-08-09T17:00:00",
+        "nev": "Boglya Népzenei Együttes koncert és táncház",
+        "kiemelt": false,
+        "helyszin": {
+          "nev": "Fő tér",
+          "lat": 47.3881,
+          "lng": 16.5415
+        },
+        "leiras": "A Boglya Népzenei Együttes népzenei koncertje és vidám táncháza a Fő téren."
+      },
+      {
+        "id": "ostrom_2026_51",
+        "idopont": "2026-08-09T17:30:00",
+        "veg_idopont": "2026-08-09T18:30:00",
+        "nev": "Marton-Szállás lovas íjász bemutató",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "Marton-Szállás lovas íjászainak látványos, ügyességi bemutatója a Jurisics vár udvarán."
+      },
+      {
+        "id": "ostrom_2026_52",
+        "idopont": "2026-08-09T19:00:00",
+        "veg_idopont": "2026-08-09T20:00:00",
+        "nev": "Ataru Taiko Ütőegyüttes koncert",
+        "kiemelt": true,
+        "helyszin": {
+          "nev": "Jurisics vár",
+          "lat": 47.3896,
+          "lng": 16.5404
+        },
+        "leiras": "A monumentális japán dobfesztivál hangulatát idéző Ataru Taiko Ütőegyüttes nagyszabású zárókoncertje a Várudvarban."
+      }
+    ]
   }
 ]
