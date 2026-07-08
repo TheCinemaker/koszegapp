@@ -1313,10 +1313,8 @@
     "endDate": "2026-07-17"
   },
   {
-    "id": "varszinhaz_2026_15",
     "name": "Fő téri zene – Sons Left Behind",
     "date": "2026-07-17",
-    "endDate": "2026-07-17",
     "time": "19:00",
     "location": "Fő tér",
     "coords": {
@@ -1330,17 +1328,17 @@
       "koncert",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "sons.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": false,
+    "id": "varszinhaz_2026_15",
+    "endDate": "2026-07-17"
   },
   {
-    "id": "varszinhaz_2026_16",
     "name": "Operett-Musical Est",
     "date": "2026-07-18",
-    "endDate": "2026-07-18",
     "time": "20:30",
     "location": "Jurisics Vár, Nagyszínpad",
     "coords": {
@@ -1355,17 +1353,17 @@
       "musical",
       "előadás"
     ],
-    "image": "event_default.jpg",
+    "image": "operett.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_16",
+    "endDate": "2026-07-18"
   },
   {
-    "id": "varszinhaz_2026_17",
     "name": "Jon Fosse: Reggel és este",
     "date": "2026-07-18",
-    "endDate": "2026-07-18",
     "time": "20:30",
     "location": "Kamaraudvar (Jurisich Gimnázium)",
     "coords": {
@@ -1378,17 +1376,17 @@
       "színház",
       "előadás"
     ],
-    "image": "event_default.jpg",
+    "image": "rggel.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_17",
+    "endDate": "2026-07-18"
   },
   {
-    "id": "varszinhaz_2026_18",
     "name": "A zöldszakállú király",
     "date": "2026-07-19",
-    "endDate": "2026-07-19",
     "time": "18:00",
     "location": "Jurisics Vár, Toronyudvar",
     "coords": {
@@ -1402,11 +1400,13 @@
       "előadás",
       "gyerek"
     ],
-    "image": "event_default.jpg",
+    "image": "zirano-1783505021473.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_18",
+    "endDate": "2026-07-19"
   },
   {
     "name": "Harmonikával a világ körül Peltzer Gézával",
@@ -1433,10 +1433,8 @@
     "endDate": "2026-07-19"
   },
   {
-    "id": "varszinhaz_2026_20",
     "name": "Robin Hood",
     "date": "2026-07-20",
-    "endDate": "2026-07-20",
     "time": "18:00",
     "location": "Jurisics Vár, Toronyudvar",
     "coords": {
@@ -1450,34 +1448,13 @@
       "bábszínház",
       "gyerek"
     ],
-    "image": "event_default.jpg",
+    "image": "robinhood-1783505047214.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz_2026_21",
-    "name": "Rényi Ádám: Kerülőút",
-    "date": "2026-07-20",
-    "endDate": "2026-07-20",
-    "time": "20:30",
-    "location": "Kamaraudvar (Jurisich Gimnázium)",
-    "coords": {
-      "lat": 47.3912,
-      "lng": 16.5422
-    },
-    "description": "Rényi Ádám: Kerülőút – A 6Szín előadása. Esőnap: július 21.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_20",
+    "endDate": "2026-07-20"
   },
   {
     "id": "varszinhaz_2026_22",
