@@ -1047,15 +1047,13 @@
     "id": "event-2026-1782652560646"
   },
   {
-    "id": "varszinhaz_2026_1",
     "name": "Kőszeg Város Fúvószenekarának térzenéje",
     "date": "2026-07-09",
-    "endDate": "2026-07-09",
     "time": "19:00",
     "location": "Jurisics tér",
     "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
+      "lat": 47.388924011818666,
+      "lng": 16.541013017794743
     },
     "description": "Kőszeg Város Fúvószenekarának ünnepi térzenéje a történelmi belvárosban.",
     "tags": [
@@ -1064,41 +1062,17 @@
       "fúvószene",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "fuvosok-1783502872710.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": false,
+    "id": "varszinhaz_2026_1",
+    "endDate": "2026-07-09"
   },
   {
-    "id": "varszinhaz_2026_2",
-    "name": "Bernard Slade: Jutalomjáték",
-    "date": "2026-07-09",
-    "endDate": "2026-07-11",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Bernard Slade: Jutalomjáték – a Kőszegi Várszínház bemutató előadása. Esőnap: július 12.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás",
-      "bemutató"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "varszinhaz_2026_3",
     "name": "Madarász Éva: Csók Lilly",
     "date": "2026-07-10",
-    "endDate": "2026-07-10",
     "time": "19:00",
     "location": "Portré Étterem",
     "coords": {
@@ -1111,11 +1085,13 @@
       "könyvbemutató",
       "program"
     ],
-    "image": "event_default.jpg",
+    "image": "iro-olvaso-talalkozo-normalbig7089.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "id": "varszinhaz_2026_3",
+    "endDate": "2026-07-10"
   },
   {
     "id": "varszinhaz_2026_4",
@@ -1474,10 +1450,8 @@
     "isVarszinhaz": true
   },
   {
-    "id": "varszinhaz_2026_19",
     "name": "Harmonikával a világ körül Peltzer Gézával",
     "date": "2026-07-19",
-    "endDate": "2026-07-19",
     "time": "19:00",
     "location": "Fő tér",
     "coords": {
@@ -1491,11 +1465,13 @@
       "harmonika",
       "koncert"
     ],
-    "image": "event_default.jpg",
+    "image": "peltzer.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": false,
+    "id": "varszinhaz_2026_19",
+    "endDate": "2026-07-19"
   },
   {
     "id": "varszinhaz_2026_20",
