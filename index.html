@@ -28,14 +28,44 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0XMCLKMTC"></script>
+  <!-- Analytics & Tag Manager Dynamic Integration -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    (function() {
+      var gtmId = "%VITE_GTM_ID%";
+      var verificationId = "%VITE_GOOGLE_SITE_VERIFICATION%";
 
-    gtag('config', 'G-D0XMCLKMTC');
+      // Google Search Console Site Verification Meta Tag
+      if (verificationId && !verificationId.startsWith("%") && verificationId.trim() !== "") {
+        var meta = document.createElement('meta');
+        meta.name = "google-site-verification";
+        meta.content = verificationId;
+        document.head.appendChild(meta);
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      // Google Tag Manager or fallback Google Analytics (GA4)
+      if (gtmId && !gtmId.startsWith("%") && gtmId.trim() !== "") {
+        // Load Google Tag Manager
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',gtmId);
+      } else {
+        // Fallback: load GA4 directly
+        var gaId = "G-D0XMCLKMTC"; // Default GA4 ID
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + gaId;
+        document.head.appendChild(script);
+
+        gtag('js', new Date());
+        gtag('config', gaId);
+      }
+    })();
   </script>
 
   <!-- Lazy képbetöltés MutationObserver-rel (React-kompatibilis) -->

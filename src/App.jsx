@@ -78,6 +78,15 @@ function MainAppContent() {
       });
     }
 
+    // Google Tag Manager - Custom Pageview Event
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'page_view',
+        page_path: location.pathname + location.search,
+        page_title: document.title || 'visitKőszeg'
+      });
+    }
+
     const start = Date.now();
 
     return () => {

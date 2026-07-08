@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html lang="hu" prefix="og: https://ogp.me/ns#">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0XMCLKMTC"></script>
+    <!-- Analytics & Tag Manager Dynamic Integration -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      (function() {
+        var gtmId = "%VITE_GTM_ID%";
+        var verificationId = "%VITE_GOOGLE_SITE_VERIFICATION%";
 
-      gtag('config', 'G-D0XMCLKMTC');
+        // Google Search Console Site Verification Meta Tag
+        if (verificationId && !verificationId.startsWith("%") && verificationId.trim() !== "") {
+          var meta = document.createElement('meta');
+          meta.name = "google-site-verification";
+          meta.content = verificationId;
+          document.head.appendChild(meta);
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        // Google Tag Manager or fallback Google Analytics (GA4)
+        if (gtmId && !gtmId.startsWith("%") && gtmId.trim() !== "") {
+          // Load Google Tag Manager
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer',gtmId);
+        } else {
+          // Fallback: load GA4 directly
+          var gaId = "G-D0XMCLKMTC"; // Default GA4 ID
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = "https://www.googletagmanager.com/gtag/js?id=" + gaId;
+          document.head.appendChild(script);
+
+          gtag('js', new Date());
+          gtag('config', gaId);
+        }
+      })();
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -21,20 +51,20 @@
     <meta name="keywords" content="Kőszeg, VisitKőszeg, Kőszeg app, Kőszeg térkép, Kőszeg jegy, Kőszeg étterem, Kőszeg program, Kőszeg látnivalók, Kőszeg vár, Kőszeg turisztika, Kőszeg szállás, kőszegi várszínház, Kőszeg quest, KőszegEats" />
     <meta name="author" content="VisitKőszeg" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="https://koszeg.app/" />
+    <link rel="canonical" href="https://visitkoszeg.hu/" />
 
     <!-- ═══════════════════════════════════════════════
          OPEN GRAPH (Facebook, LinkedIn, WhatsApp, stb.)
     ═══════════════════════════════════════════════ -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://koszeg.app/" />
+    <meta property="og:url" content="https://visitkoszeg.hu/" />
     <meta property="og:site_name" content="VisitKőszeg" />
     <meta property="og:locale" content="hu_HU" />
     <meta property="og:locale:alternate" content="de_DE" />
     <meta property="og:title" content="VisitKőszeg – Kőszeg digitális útitársa" />
     <meta property="og:description" content="Jegyek, ételrendelés, élő térkép, AR kalandjáték és KőszegReels — Kőszeg teljes digitális ökoszisztémája egyetlen appban. Ingyenes, telepítés nélkül." />
-    <meta property="og:image" content="https://koszeg.app/og-image.jpg" />
-    <meta property="og:image:secure_url" content="https://koszeg.app/og-image.jpg" />
+    <meta property="og:image" content="https://visitkoszeg.hu/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://visitkoszeg.hu/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="VisitKőszeg – Kőszeg digitális szuperapp" />
@@ -46,7 +76,7 @@
     <meta name="twitter:site" content="@visitkoszeg" />
     <meta name="twitter:title" content="VisitKőszeg – Kőszeg digitális útitársa" />
     <meta name="twitter:description" content="Jegyek, ételrendelés, élő térkép, AR kalandjáték és KőszegReels — Kőszeg teljes digitális ökoszisztémája egyetlen appban." />
-    <meta name="twitter:image" content="https://koszeg.app/og-image.jpg" />
+    <meta name="twitter:image" content="https://visitkoszeg.hu/og-image.jpg" />
 
     <!-- ═══════════════════════════════════════════════
          GEO / LOCAL SEO (Kőszeg: 47.3897°N, 16.5428°E)
@@ -98,9 +128,9 @@
       "@graph": [
         {
           "@type": "WebApplication",
-          "@id": "https://koszeg.app/#webapp",
+          "@id": "https://visitkoszeg.hu/#webapp",
           "name": "VisitKőszeg",
-          "url": "https://koszeg.app",
+          "url": "https://visitkoszeg.hu",
           "description": "Kőszeg város teljes digitális ökoszisztémája: jegyrendszer, ételrendelés, élő térkép, AR kalandjáték, időpontfoglaló, KőszegReels.",
           "applicationCategory": "TravelApplication",
           "applicationSubCategory": "Smart City Platform",
@@ -112,7 +142,7 @@
             "priceCurrency": "HUF"
           },
           "author": {
-            "@id": "https://koszeg.app/#organization"
+            "@id": "https://visitkoszeg.hu/#organization"
           },
           "featureList": [
             "Jegyvásárlás (Várszínház, múzeumok)",
@@ -125,23 +155,23 @@
             "Valós idejű rendeléskövetés (Supabase Realtime)",
             "PWA: natív telepítés push értesítésekkel"
           ],
-          "screenshot": "https://koszeg.app/og-image.jpg",
+          "screenshot": "https://visitkoszeg.hu/og-image.jpg",
           "softwareVersion": "2.0",
           "releaseNotes": "SuperApp ökoszisztéma – 2025/2026"
         },
         {
           "@type": "Organization",
-          "@id": "https://koszeg.app/#organization",
+          "@id": "https://visitkoszeg.hu/#organization",
           "name": "VisitKőszeg",
-          "url": "https://koszeg.app",
+          "url": "https://visitkoszeg.hu",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://koszeg.app/android-chrome-512x512.png",
+            "url": "https://visitkoszeg.hu/android-chrome-512x512.png",
             "width": 512,
             "height": 512
           },
           "sameAs": [
-            "https://koszeg.app"
+            "https://visitkoszeg.hu"
           ],
           "contactPoint": {
             "@type": "ContactPoint",
@@ -151,11 +181,11 @@
         },
         {
           "@type": "TouristDestination",
-          "@id": "https://koszeg.app/#destination",
+          "@id": "https://visitkoszeg.hu/#destination",
           "name": "Kőszeg",
           "alternateName": ["Güns", "The City of Chivalry", "A lovagok városa"],
           "description": "Kőszeg – Magyarország egyik legjobban megőrzött középkori városa, az 1532-es hősies ostrom helyszíne, UNESCO-jelölt óvárossal, barokk épületekkel és világhírű borvidékkel.",
-          "url": "https://koszeg.app",
+          "url": "https://visitkoszeg.hu",
           "touristType": ["Cultural Tourism", "Historical Tourism", "Gastronomic Tourism", "Active Tourism", "Family Tourism"],
           "geo": {
             "@type": "GeoCoordinates",
@@ -174,8 +204,8 @@
             "@type": "State",
             "name": "Vas megye"
           },
-          "hasMap": "https://koszeg.app/live-map",
-          "image": "https://koszeg.app/teaser-bg.jpg",
+          "hasMap": "https://visitkoszeg.hu/live-map",
+          "image": "https://visitkoszeg.hu/teaser-bg.jpg",
           "includesAttraction": [
             {
               "@type": "TouristAttraction",
