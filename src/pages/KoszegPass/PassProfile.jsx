@@ -149,19 +149,14 @@ export default function PassProfile() {
                             >
                                 {/* CARD FRONT FACE */}
                                 <div
-                                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl border border-white/10 overflow-hidden bg-gradient-to-br from-[#0a1e3f] via-[#0C234B] to-[#123162] flex flex-col justify-between"
+                                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl border border-white/10 overflow-hidden bg-gradient-to-br from-[#1a237e] via-[#0d47a1] to-[#311b92] flex flex-col justify-between"
                                     style={{ 
                                         backfaceVisibility: 'hidden',
                                         WebkitBackfaceVisibility: 'hidden'
                                     }}
                                 >
-                                    {/* Faded Mascot Background */}
-                                    <img 
-                                        src="/images/koszegpass_mascot.jpg" 
-                                        alt="Mascot" 
-                                        className="absolute inset-0 w-full h-full object-cover opacity-35" 
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0C234B] via-[#0C234B]/50 to-transparent" />
+                                    <div className="absolute inset-0 opacity-[0.15] bg-[url('/noise.svg')] mix-blend-overlay" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
                                     
                                     {/* Holographic reflection effect */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 skew-x-12 -translate-y-full group-hover:animate-shine pointer-events-none" />

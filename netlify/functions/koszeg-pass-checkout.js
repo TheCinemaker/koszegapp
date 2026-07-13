@@ -1,9 +1,5 @@
-// netlify/functions/koszeg-pass-checkout.js
-// KőszegPass – Stripe Checkout Session Creator
-//
-// ⚠️  Ez FÜGGETLEN a ticket-create-checkout.js-től
-//     Más Stripe metadata kulcsokat használ (pass_type, holder_name stb.)
-//     hogy a webhook biztosan csak a pass webhook-ban fusson le
+import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
 
 let stripeSecret = process.env.STRIPE_SECRET_KEY;
 if (process.env.CONTEXT && process.env.CONTEXT !== 'production') {
