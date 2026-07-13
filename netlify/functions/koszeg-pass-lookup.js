@@ -18,7 +18,17 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const APP_URL = process.env.URL || 'https://visitkoszeg.hu';
+// ⚠️  process.env.URL a Netlify-on MINDIG a production site URL-je – branch deploy-on is.
+//     A linkeket a hívó deploy hostjából építjük, különben a dev ágon kiküldött email
+//     a production site-ra mutatna, ahol ezek a route-ok még nem léteznek.
+function resolveBaseUrl(event) {
+    const host = event.headers?.host || '';
+    if (host) {
+        const protocol = host.includes('localhost') ? 'http' : 'https';
+        return `${protocol}://${host}`;
+    }
+    return process.env.DEPLOY_PRIME_URL || process.env.URL || 'https://visitkoszeg.hu';
+}
 
 const GENERIC_OK = {
     statusCode: 200,
@@ -48,6 +58,8 @@ export const handler = async (event) => {
     }
 
     try {
+        const APP_URL = resolveBaseUrl(event);
+
         const { email } = JSON.parse(event.body || '{}');
         const normalizedEmail = (email || '').trim().toLowerCase();
 

@@ -19,10 +19,26 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const APP_URL = process.env.URL || 'https://visitkoszeg.hu';
+// ⚠️  process.env.URL a Netlify-on MINDIG a production site URL-je – branch deploy-on is!
+//     Ha azt használjuk, az emailben minden link a production site-ra mutat, ahol a dev
+//     ágon fejlesztett route-ok és function-ök még nem léteznek → fehér oldal / 404.
+//     Ezért a hívó deploy hostjából építkezünk (a webhook/confirm ugyanezen a deploy-on fut,
+//     tehát az event.headers.host a helyes deploy címe), és csak végső esetben esünk vissza.
+function resolveBaseUrl(event) {
+    const host = event.headers?.host || '';
+    if (host) {
+        const protocol = host.includes('localhost') ? 'http' : 'https';
+        return `${protocol}://${host}`;
+    }
+    // DEPLOY_PRIME_URL = az aktuális branch deploy címe (production-ön == URL)
+    return process.env.DEPLOY_PRIME_URL || process.env.URL || 'https://visitkoszeg.hu';
+}
 
 export const handler = async (event) => {
     try {
+        const APP_URL = resolveBaseUrl(event);
+        console.log('[Pass Email] Base URL:', APP_URL);
+
         const { passId } = JSON.parse(event.body);
 
         if (!passId) {
