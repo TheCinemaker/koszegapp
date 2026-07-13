@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { IoQrCodeOutline, IoWalletOutline, IoRibbonOutline, IoCardOutline, IoArrowForward } from 'react-icons/io5';
+import { 
+    IoWalletOutline, 
+    IoRibbonOutline, 
+    IoCardOutline, 
+    IoArrowForward, 
+    IoSwapHorizontal 
+} from 'react-icons/io5';
 import { FadeUp } from '../../components/AppleMotion';
+import PassCard from './PassCard';
+import QRCode from 'qrcode';
 
 export default function PassLanding() {
     const navigate = useNavigate();
     const searchParams = new URLSearchParams(window.location.search);
     const hotel = searchParams.get('hotel') || searchParams.get('hotel_source') || '';
+
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [qrCodeUrl, setQrCodeUrl] = useState('');
+
+    useEffect(() => {
+        // Generálunk egy bemutató QR-kódot a mintakártyához
+        QRCode.toDataURL('https://visitkoszeg.hu/pass', {
+            width: 200,
+            margin: 1,
+            color: { dark: '#0C234B', light: '#FFFFFF' }
+        })
+        .then(setQrCodeUrl)
+        .catch((err) => console.error('Failed to generate mock QR:', err));
+    }, []);
 
     const handleStartRegister = () => {
         const target = hotel ? `/pass/register?hotel=${encodeURIComponent(hotel)}` : '/pass/register';
@@ -31,28 +53,32 @@ export default function PassLanding() {
                     </p>
                 </header>
 
-                {/* Mascot Card Image */}
+                {/* Interactive PassCard Preview (Bábus kép helyett a valódi, csillogó, pörgethető kék kártya) */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 mb-8 bg-zinc-950 aspect-[1.3] flex flex-col justify-end"
+                    className="mb-8 flex flex-col items-center"
                 >
-                    <img 
-                        src="/images/koszegpass_mascot.jpg" 
-                        alt="KőszegPass Kabala Család" 
-                        className="absolute inset-0 w-full h-full object-cover opacity-80"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-                    
-                    {/* Badge */}
-                    <div className="absolute top-4 right-4 bg-[#C8AF64] text-[#0C234B] text-xs font-black uppercase px-3 py-1.5 rounded-full shadow-lg">
-                        2026 EDITION
+                    <div className="w-full max-w-sm">
+                        <PassCard
+                            holderName="MINTA JÁNOS"
+                            passType="individual"
+                            serial={1}
+                            expiresAt={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString()}
+                            qrCodeUrl={qrCodeUrl}
+                            isExpired={false}
+                            isFlipped={isFlipped}
+                            onToggle={() => setIsFlipped(!isFlipped)}
+                        />
                     </div>
-
-                    <div className="relative p-6 z-10">
-                        <p className="text-xs font-bold text-yellow-400 uppercase tracking-widest mb-1">DIGITÁLIS KEDVEZMÉNYKÁRTYA</p>
-                        <h2 className="text-2xl font-black text-white">Fedezd fel Kőszeget kedvezményekkel!</h2>
+                    
+                    {/* Flip Hint */}
+                    <div className="flex justify-center items-center gap-1.5 mt-3 text-blue-200/40 pointer-events-none">
+                        <IoSwapHorizontal size={12} className="animate-pulse text-[#C8AF64]" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">
+                            Koppints a kártyára a bemutató forgatásához!
+                        </span>
                     </div>
                 </motion.div>
 
@@ -77,7 +103,7 @@ export default function PassLanding() {
                             <div>
                                 <h3 className="font-bold text-white text-lg mb-1">Azonnali Kedvezmények</h3>
                                 <p className="text-sm text-blue-100/60 leading-relaxed">
-                                    Vásárláskor mutasd fel a kártyát Kőszeg múzeumaiban, éttermeiben és helyi üzleteiben az azonnali x% kedvezményért.
+                                    Vásárláskor mutasd fel a kártyát Kőszeg múzeumaiban, éttermeiben és helyi üzleteiben az azonnali kedvezményekért.
                                 </p>
                             </div>
                         </div>
@@ -91,7 +117,7 @@ export default function PassLanding() {
                             <div>
                                 <h3 className="font-bold text-white text-lg mb-1">Apple & Google Wallet támogatás</h3>
                                 <p className="text-sm text-blue-100/60 leading-relaxed">
-                                    Vásárlás után egy kattintással elmentheted a telefonod digitális tárcájába (Wallet). Nem kell appot telepítened!
+                                    Vásárlás után egy kattintással elmentheted a telefonod digitális tárcájába (Wallet). Nem kell külön applikációt letöltened!
                                 </p>
                             </div>
                         </div>
@@ -105,7 +131,7 @@ export default function PassLanding() {
                             <div>
                                 <h3 className="font-bold text-white text-lg mb-1">Egy évig érvényes</h3>
                                 <p className="text-sm text-blue-100/60 leading-relaxed">
-                                    A kártya a vásárlás napjától számítva pontosan 1 évig érvényes. Minden évben egyedi új dizájnnal és kabalákkal érkezik.
+                                    A kártya a vásárlás napjától számítva pontosan 1 évig érvényes. Minden évben megújuló egyedi dizájnnal és kedvezményekkel vár.
                                 </p>
                             </div>
                         </div>
