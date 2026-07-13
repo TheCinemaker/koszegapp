@@ -13,7 +13,7 @@ export const de = {
     days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
   },
   screensaver: {
-    terminal: 'Städtisches Informationsterminal',
+    terminal: 'Visitkoszeg DVH',
     headline1: 'Entdecke',
     headline2: 'Kőszeg!',
     subtext: 'Sehenswürdigkeiten, Restaurants, Veranstaltungen und eine kostenlose Postkarten-Selfiestation — alles an einem Ort.',
@@ -159,6 +159,14 @@ export const de = {
     today: 'Heute',
     open: 'Öffnen',
     layerHint: 'Tippen Sie hier für Kartenebenen',
+    wayfinderTitle: 'FUSSGÄNGER-WEGWEISER',
+    searchPlaceholder: 'Orte suchen...',
+    walkCircle5Min: '5 Min. Fußweg (400m)',
+    walkCircle15Min: '15 Min. Fußweg (1200m)',
+    legendTitle: 'Legende',
+    walkTimeSuffix: 'Min',
+    filterAll: 'Alle',
+    terminalName: 'Nahe Portré (Fő tér 7)',
   },
   share: {
     button: 'Mitnehmen!',

@@ -49,9 +49,12 @@ const FoodOrderPage = lazyWithRetry(() => import('../pages/FoodOrderPage'));
 const FoodAdmin = lazyWithRetry(() => import('../pages/FoodAdmin'));
 const FoodAuthPage = lazyWithRetry(() => import('../pages/FoodAuthPage'));
 const OrderPrintView = lazyWithRetry(() => import('../pages/OrderPrintView'));
-const KoszegPassRegister = lazyWithRetry(() => import('../pages/KoszegPassRegister'));
-const KoszegPassProfile = lazyWithRetry(() => import('../pages/KoszegPassProfile'));
-const ScannerPage = lazyWithRetry(() => import('../pages/ScannerPage'));
+const PassLanding = lazyWithRetry(() => import('../pages/KoszegPass/PassLanding'));
+const PassRegister = lazyWithRetry(() => import('../pages/KoszegPass/PassRegister'));
+const PassPurchase = lazyWithRetry(() => import('../pages/KoszegPass/PassPurchase'));
+const PassSuccess = lazyWithRetry(() => import('../pages/KoszegPass/PassSuccess'));
+const PassProfile = lazyWithRetry(() => import('../pages/KoszegPass/PassProfile'));
+const PassScanner = lazyWithRetry(() => import('../pages/KoszegPass/PassScanner'));
 const Partners = lazyWithRetry(() => import('../pages/Partners'));
 const SuperAdmin = lazyWithRetry(() => import('../pages/SuperAdmin'));
 const TermsProvider = lazyWithRetry(() => import('../pages/TermsProvider'));
@@ -75,6 +78,10 @@ const TicketPrint = lazyWithRetry(() => import('../pages/TicketSystem/TicketPrin
 
 // Kiosk System Components (Fully Isolated)
 const KioskIdleWrapper = lazyWithRetry(() => import('./Kiosk/KioskIdleWrapper'));
+
+// VisitPointer Standalone Apps
+const VisitPointerDisplay = lazyWithRetry(() => import('../pages/VisitPointer/Display'));
+const VisitPointerPhone = lazyWithRetry(() => import('../pages/VisitPointer/Phone'));
 
 // Footer is small and used everywhere, keep static to avoid flicker
 import Footer from './Footer';
@@ -231,10 +238,13 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/food-auth" element={<Navigate to="/eats-auth" replace />} />
 
           {/* KőszegPass Routes (Isolated Flow) */}
-          <Route path="/pass" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
-          <Route path="/pass/register" element={<PageWrapper showFooter={false}><KoszegPassRegister /></PageWrapper>} />
-          <Route path="/pass/profile" element={<PageWrapper showFooter={false}><KoszegPassProfile /></PageWrapper>} />
-          <Route path="/scanner" element={<PageWrapper showFooter={false}><ScannerPage /></PageWrapper>} />
+          <Route path="/pass" element={<PageWrapper showFooter={false}><PassLanding /></PageWrapper>} />
+          <Route path="/pass/register" element={<PageWrapper showFooter={false}><PassRegister /></PageWrapper>} />
+          <Route path="/pass/buy" element={<PageWrapper showFooter={false}><PassPurchase /></PageWrapper>} />
+          <Route path="/pass/success" element={<PageWrapper showFooter={false}><PassSuccess /></PageWrapper>} />
+          <Route path="/pass/profile" element={<PageWrapper showFooter={false}><PassProfile /></PageWrapper>} />
+          <Route path="/pass/scanner" element={<PageWrapper showFooter={false}><PassScanner /></PageWrapper>} />
+          <Route path="/p/:slug" element={<PageWrapper showFooter={false}><PassProfile /></PageWrapper>} />
 
           {/* Ticket System Routes (Isolated Module) */}
           <Route path="/tickets" element={<PageWrapper><TicketPurchase /></PageWrapper>} />
@@ -252,6 +262,10 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           {/* Ephemeral Moments Feed */}
           <Route path="/moments" element={<PageWrapper><Moments /></PageWrapper>} />
+
+          {/* VisitPointer Standalone Apps */}
+          <Route path="/remote" element={<VisitPointerPhone />} />
+          <Route path="/pointer-display" element={<VisitPointerDisplay appData={appData} />} />
 
           {/* ═══════════════════════════════════════════════ */}
           {/* Kioszk Felület – Városi Terminál (Teljesen Izolált) */}

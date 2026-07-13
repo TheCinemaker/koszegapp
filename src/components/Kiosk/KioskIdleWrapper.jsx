@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { KioskLangProvider } from '../../contexts/KioskLangContext';
 import KioskShareQR from './KioskShareQR';
+import KioskVisitPointer from './KioskVisitPointer';
 import './kiosk-contrast.css';
 
 export default function KioskIdleWrapper({ children }) {
@@ -102,6 +103,7 @@ export default function KioskIdleWrapper({ children }) {
       <div className="kiosk-idle-container w-full h-full min-h-screen relative">
         {children}
         <KioskShareQR />
+        <KioskVisitPointer />
       </div>
     </KioskLangProvider>
   );

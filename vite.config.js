@@ -17,6 +17,13 @@ export default defineConfig({
     port: 3000,
     host: true, // Listen on all addresses
     strictPort: true,
+    proxy: {
+      '/.netlify/functions': {
+        target: 'http://localhost:9999',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   },
   resolve: {
     alias: {

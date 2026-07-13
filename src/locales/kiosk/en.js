@@ -13,7 +13,7 @@ export const en = {
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   },
   screensaver: {
-    terminal: 'City Information Terminal',
+    terminal: 'Visitkoszeg DVH',
     headline1: 'Discover',
     headline2: 'Kőszeg!',
     subtext: 'Sights, restaurants, events and a free postcard selfie station — all in one place.',
@@ -159,6 +159,14 @@ export const en = {
     today: 'Today',
     open: 'Open',
     layerHint: 'Tap here to show map layers',
+    wayfinderTitle: 'PEDESTRIAN GUIDE',
+    searchPlaceholder: 'Search locations...',
+    walkCircle5Min: '5-min walk (400m)',
+    walkCircle15Min: '15-min walk (1200m)',
+    legendTitle: 'Legend',
+    walkTimeSuffix: 'min',
+    filterAll: 'All',
+    terminalName: 'Near Portré (Main Square 7)',
   },
   share: {
     button: 'Take it with you!',

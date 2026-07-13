@@ -1,21 +1,60 @@
 // src/pages/Kiosk/KioskHome.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import L from 'leaflet';
 import {
   IoCalendarOutline, IoMapOutline, IoRestaurantOutline,
   IoCameraOutline, IoSparklesOutline, IoLocationOutline,
-  IoCompassOutline, IoGlobeOutline, IoBrushOutline, IoColorPaletteOutline
+  IoCompassOutline, IoGlobeOutline, IoBrushOutline, IoColorPaletteOutline, IoWalkOutline
 } from 'react-icons/io5';
 import KioskHeader from '../../components/Kiosk/KioskHeader';
 import KioskFlag from '../../components/Kiosk/KioskFlag';
 import { useKioskLang } from '../../contexts/KioskLangContext';
 import { supabase } from '../../lib/supabaseClient';
 
+const KIOSK_LAT = 47.388451231945666;
+const KIOSK_LNG = 16.542002964713447;
+
 const LANGS = [
   { code: 'hu', label: 'HU' },
   { code: 'en', label: 'EN' },
   { code: 'de', label: 'DE' },
 ];
+
+const kioskIcon = L.divIcon({
+  className: 'kiosk-position-icon',
+  html: `
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;width:72px">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:52px;height:52px;border-radius:50%;background:#4f46e5;opacity:0.2;animation:kmap-ping 2s ease-in-out infinite"></div>
+      <div style="width:30px;height:30px;border-radius:50%;background:#4f46e5;border:3px solid white;box-shadow:0 6px 20px rgba(79,70,229,0.55);display:flex;align-items:center;justify-content:center;position:relative;z-index:2">
+        <svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+      </div>
+      <div style="width:2px;height:10px;background:#4f46e5;opacity:0.5;border-radius:1px;margin-top:-1px"></div>
+    </div>`,
+  iconSize: [72, 72],
+  iconAnchor: [36, 62],
+});
+
+function getDistance(lat1, lon1, lat2, lon2) {
+  if (!lat1 || !lon1 || !lat2 || !lon2) return Infinity;
+  const R = 6371000;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function formatDistance(meters, nearText = 'Itt van melletted') {
+  if (meters === Infinity) return '';
+  if (meters < 15) return nearText;
+  if (meters < 1000) return `${Math.round(meters)} m`;
+  return `${(meters / 1000).toFixed(1)} km`;
+}
 
 export default function KioskHome({ appData, weather }) {
   const navigate = useNavigate();
@@ -42,13 +81,11 @@ export default function KioskHome({ appData, weather }) {
       '/images/varoshaza.jpg',
       '/images/zwinger_oregtorony.jpg'
     ];
-    // Shuffle the photos to show them in a randomized order each time
     return [...photos].sort(() => Math.random() - 0.5);
   }, [showScreensaver]);
 
   const [approvedDrawings, setApprovedDrawings] = useState([]);
 
-  // Fetch visitor wall photos and approved drawings whenever screensaver becomes active
   useEffect(() => {
     if (!showScreensaver) return;
     
@@ -70,7 +107,6 @@ export default function KioskHome({ appData, weather }) {
       .catch(() => {});
   }, [showScreensaver]);
 
-  // Construct combined slides (photos + approved kid drawings)
   const slides = useMemo(() => {
     const photoSlides = screensaverImages.map(img => ({ type: 'photo', url: img }));
     const drawSlides = approvedDrawings.map(d => ({ type: 'drawing', url: d.image_path, drawing: d }));
@@ -80,13 +116,11 @@ export default function KioskHome({ appData, weather }) {
     
     for (let i = 0; i < photoSlides.length; i++) {
       mixed.push(photoSlides[i]);
-      // Every 2 photos, insert a drawing if we have one
       if (drawIdx < drawSlides.length && (i + 1) % 2 === 0) {
         mixed.push(drawSlides[drawIdx]);
         drawIdx++;
       }
     }
-    // Append remaining drawings if any
     while (drawIdx < drawSlides.length) {
       mixed.push(drawSlides[drawIdx]);
       drawIdx++;
@@ -137,12 +171,8 @@ export default function KioskHome({ appData, weather }) {
             if (slide.type === 'drawing') {
               return (
                 <div key={idx} className={`absolute inset-0 flex flex-col justify-center items-center transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  {/* Blurred background duplicate of the drawing */}
                   <div className="absolute inset-0 bg-cover bg-center blur-3xl opacity-35 scale-110" style={{ backgroundImage: `url(${slide.url})` }} />
-                  {/* Fitted drawing */}
                   <img src={slide.url} alt="" className="relative max-w-[85vw] max-h-[70vh] object-contain shadow-2xl rounded-2xl border-4 border-white/20 z-10" />
-                  
-                  {/* Artist metadata capsule in Standby mode */}
                   <div className="relative mt-5 z-20 px-6 py-2.5 rounded-full bg-black/70 border border-white/10 text-white font-extrabold text-sm shadow-xl flex items-center gap-2">
                     🎨 {slide.drawing.name} {slide.drawing.age ? `(${slide.drawing.age})` : ''} 
                     {slide.drawing.country ? ` - ${slide.drawing.country}` : ''}
@@ -207,7 +237,6 @@ export default function KioskHome({ appData, weather }) {
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Glassmorphic overlay for name & message at the bottom */}
                   <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col gap-0.5 text-center">
                     {p.visitor_name && (
                       <span className="text-white text-xs font-black truncate drop-shadow-md">
@@ -256,43 +285,196 @@ export default function KioskHome({ appData, weather }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/40 via-zinc-50 to-zinc-100 dark:from-indigo-950/10 dark:via-zinc-950 dark:to-black transition-colors duration-500 overflow-y-auto">
+    <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/40 via-zinc-50 to-zinc-100 dark:from-indigo-950/10 dark:via-zinc-950 dark:to-black transition-colors duration-500 overflow-hidden" style={{ height: '100dvh' }}>
       <KioskHeader />
-      <main className="flex-1 w-full max-w-3xl mx-auto px-6 py-8 flex flex-col justify-start gap-8 select-none">
-        <div className="flex flex-col gap-1.5">
-          <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none uppercase">{t('home.welcome')}</h2>
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm font-semibold flex items-center gap-1.5">
-            <IoLocationOutline className="text-indigo-500 dark:text-indigo-400 text-base" />
-            {t('home.location')}
-          </p>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          {menuItems.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                onClick={() => navigate(item.to)}
-                className={`${item.span} relative rounded-[2rem] p-6 cursor-pointer overflow-hidden group bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200/60 dark:border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] flex flex-col justify-between gap-6 ${item.highlight ? 'ring-2 ring-rose-500/20 dark:ring-rose-500/10' : ''}`}
-              >
-                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.gradient} opacity-[0.08] dark:opacity-[0.15] blur-3xl rounded-full -mr-8 -mt-8 group-hover:scale-125 transition-transform duration-500`} />
-                <div className="flex justify-between items-start">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-gradient-to-br ${item.gradient} text-white shadow-md group-hover:rotate-3 group-hover:scale-105 transition-all duration-300`}><Icon /></div>
-                  {item.highlight && (
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 dark:bg-rose-500/20 text-rose-500 text-[10px] font-black tracking-wider uppercase border border-rose-500/20">
-                      <span className="w-1.5 h-1.5 bg-rose-500 rounded-full" />{t('home.free')}
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-1.5 relative z-10">
-                  <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{t(item.labelKey)}</h3>
-                  <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold leading-relaxed">{t(item.descKey)}</p>
-                </div>
+
+      <style>{`
+        @keyframes kmap-ping {
+          0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.25; }
+          50%       { transform: translateX(-50%) scale(1.6); opacity: 0; }
+        }
+        .kiosk-position-icon { background: none !important; border: none !important; }
+        .kiosk-small-poi { background: none !important; border: none !important; }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 5px;
+          height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.15);
+          border-radius: 99px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255,255,255,0.15);
+        }
+      `}</style>
+
+      {/* Main split-screen container: stacked on Kiosk vertical screens (Map on top, Bento on bottom) */}
+      <div className="flex-1 flex flex-col overflow-hidden relative">
+        
+        {/* TOP: Legible London Map Area */}
+        <div className="w-full h-[40%] shrink-0 relative border-b border-zinc-200 dark:border-zinc-800 shadow-sm z-20">
+          
+          {/* Walking Circle Legend Box */}
+          <div className="absolute top-4 right-4 z-[1000] p-3 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl shadow-lg flex flex-col gap-2">
+            <span className="text-[9px] font-black uppercase text-zinc-400 dark:text-zinc-500 tracking-wider">
+              {t('map.legendTitle', { defaultValue: 'JELMAGYARÁZAT' })}
+            </span>
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-0.5 border-b-2 border-dashed border-amber-400" />
+                <span className="text-[9px] font-bold text-zinc-700 dark:text-zinc-300">
+                  {t('map.walkCircle5Min', { defaultValue: '5 perces séta (400m)' })}
+                </span>
               </div>
-            );
-          })}
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-0.5 border-b-2 border-dashed border-blue-500" />
+                <span className="text-[9px] font-bold text-zinc-700 dark:text-zinc-300">
+                  {t('map.walkCircle15Min', { defaultValue: '15 perces séta (1200m)' })}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <MapContainer
+            center={[KIOSK_LAT, KIOSK_LNG]}
+            zoom={16}
+            className="w-full h-full"
+            style={{ height: '100%' }}
+            zoomControl={false}
+          >
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              attribution="&copy; CARTO"
+            />
+
+            {/* Concentric walking circles */}
+            <Circle
+              center={[KIOSK_LAT, KIOSK_LNG]}
+              radius={400}
+              pathOptions={{
+                color: '#eab308',
+                weight: 1.5,
+                dashArray: '8, 8',
+                fillColor: '#eab308',
+                fillOpacity: 0.03
+              }}
+            />
+
+            <Circle
+              center={[KIOSK_LAT, KIOSK_LNG]}
+              radius={1200}
+              pathOptions={{
+                color: '#2563eb',
+                weight: 1.5,
+                dashArray: '8, 8',
+                fillColor: '#2563eb',
+                fillOpacity: 0.01
+              }}
+            />
+
+            {/* Kiosk location pin */}
+            <Marker position={[KIOSK_LAT, KIOSK_LNG]} icon={kioskIcon} zIndexOffset={1000}>
+              <Popup>
+                <div className="p-3 text-center min-w-[155px]">
+                  <span className="text-[8px] font-black uppercase text-indigo-500 tracking-wider">
+                    {t('screensaver.terminal')}
+                  </span>
+                  <h4 className="text-xs font-bold text-zinc-900 mt-1">Fő tér 7.</h4>
+                  <p className="text-[10px] text-zinc-400 mt-0.5">Portré mellett</p>
+                </div>
+              </Popup>
+            </Marker>
+
+            {/* Render small POI dots for local sights */}
+            {appData?.attractions?.map(item => {
+              const coords = item.coords || item.coordinates || item.coordinate || null;
+              if (!coords?.lat || !coords?.lng) return null;
+              const distance = getDistance(KIOSK_LAT, KIOSK_LNG, coords.lat, coords.lng);
+              
+              const smallPinIcon = L.divIcon({
+                className: 'kiosk-small-poi',
+                html: `<div style="width:14px;height:14px;border-radius:50%;background:#007AFF;border:1.5px solid white;box-shadow:0 2px 5px rgba(0,0,0,0.3)"></div>`,
+                iconSize: [14, 14],
+                iconAnchor: [7, 7],
+              });
+
+              return (
+                <Marker key={item.id} position={[coords.lat, coords.lng]} icon={smallPinIcon}>
+                  <Popup>
+                    <div className="p-2 min-w-[140px]">
+                      <span className="text-[8px] font-black text-blue-500 uppercase">Látnivaló</span>
+                      <h4 className="text-xs font-bold text-zinc-900 mt-0.5">{item.name}</h4>
+                      <p className="text-[9px] text-zinc-500 mt-1 flex items-center gap-0.5">
+                        <IoWalkOutline /> {Math.max(1, Math.round(distance / 80))} perc ({formatDistance(distance)})
+                      </p>
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })}
+          </MapContainer>
         </div>
-      </main>
+
+        {/* BOTTOM: Scrollable Bento grid menu dashboard */}
+        <div className="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar">
+          <div className="flex flex-col gap-5">
+            
+            {/* Welcome message */}
+            <div className="flex flex-col gap-1 shrink-0">
+              <h2 className="text-2xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none uppercase">
+                {t('home.welcome')}
+              </h2>
+              <p className="text-zinc-500 dark:text-zinc-400 text-xs font-semibold flex items-center gap-1.5">
+                <IoLocationOutline className="text-indigo-500 dark:text-indigo-400 text-base" />
+                {t('home.location')}
+              </p>
+            </div>
+
+            {/* Bento Grid layout */}
+            <div className="grid grid-cols-2 gap-4">
+              {menuItems.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => navigate(item.to)}
+                    className={`
+                      ${item.span} relative rounded-[2rem] p-5 cursor-pointer overflow-hidden group
+                      bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200/60 dark:border-zinc-800/80
+                      shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300
+                      hover:scale-[1.005] active:scale-[0.98] flex flex-col justify-between gap-5
+                      ${item.highlight ? 'ring-2 ring-rose-500/10 dark:ring-rose-500/5' : ''}
+                    `}
+                  >
+                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.gradient} opacity-[0.08] dark:opacity-[0.15] blur-3xl rounded-full -mr-8 -mt-8 group-hover:scale-125 transition-transform duration-500`} />
+                    <div className="flex justify-between items-start">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-br ${item.gradient} text-white shadow-sm group-hover:rotate-3 group-hover:scale-105 transition-all duration-300`}><Icon /></div>
+                      {item.highlight && (
+                        <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/15 dark:bg-rose-500/20 text-rose-500 text-[9px] font-black tracking-wider uppercase border border-rose-500/15">
+                          <span className="w-1.2 h-1.2 bg-rose-500 rounded-full" />{t('home.free')}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1 relative z-10">
+                      <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        {t(item.labelKey)}
+                      </h3>
+                      <p className="text-zinc-500 dark:text-zinc-400 text-[11px] font-semibold leading-relaxed">
+                        {t(item.descKey)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

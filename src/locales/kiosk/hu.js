@@ -13,7 +13,7 @@ export const hu = {
     days: ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'],
   },
   screensaver: {
-    terminal: 'Városi Információs Terminál',
+    terminal: 'Visitkoszeg DVH',
     headline1: 'Fedezd fel',
     headline2: 'Kőszeg csodáit!',
     subtext: 'Látnivalók, éttermek, aktív programok és ingyenes képeslap szelfipont egyetlen helyen.',
@@ -159,6 +159,14 @@ export const hu = {
     today: 'Ma',
     open: 'Megnyitás',
     layerHint: 'Érintsd meg a rétegek megjelenítéséhez',
+    wayfinderTitle: 'GYALOGOS ÚTMUTATÓ',
+    searchPlaceholder: 'Helyszínek keresése...',
+    walkCircle5Min: '5 perces séta (400m)',
+    walkCircle15Min: '15 perces séta (1200m)',
+    legendTitle: 'Jelmagyarázat',
+    walkTimeSuffix: 'perc',
+    filterAll: 'Összes',
+    terminalName: 'Fő tér 7. (Portré mellett)',
   },
   share: {
     button: 'Vidd magaddal!',
