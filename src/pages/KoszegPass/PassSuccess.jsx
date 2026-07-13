@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { IoCheckmarkCircle, IoMail, IoDownload, IoHome, IoQrCodeOutline } from 'react-icons/io5';
+import { IoCheckmarkCircle, IoMail, IoHome, IoSwapHorizontal, IoLinkOutline } from 'react-icons/io5';
 import { supabase } from '../../lib/supabaseClient';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
+import PassCard from './PassCard';
 
 export default function PassSuccess() {
     const [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ export default function PassSuccess() {
     const [loading, setLoading] = useState(true);
     const [pass, setPass] = useState(null);
     const [qrCodeUrl, setQrCodeUrl] = useState('');
+    const [isFlipped, setIsFlipped] = useState(false);
 
     useEffect(() => {
         async function fetchPassData() {
@@ -20,20 +22,22 @@ export default function PassSuccess() {
             }
 
             try {
-                // Fetch pass based on Stripe session ID
+                // Biztonságos, nem érzékeny mezőket adó RPC (a session id titkos, csak a vevőnél van).
                 const { data, error } = await supabase
-                    .from('koszeg_passes')
-                    .select('*')
-                    .eq('stripe_session_id', sessionId)
-                    .single();
+                    .rpc('get_koszeg_pass_by_session', { p_session: sessionId });
 
                 if (error) throw error;
-                
-                setPass(data);
+
+                const row = Array.isArray(data) ? data[0] : data;
+                if (!row) {
+                    setLoading(false);
+                    return;
+                }
+
+                setPass(row);
 
                 // Generate local QR code for display
-                const qrVal = data.qr_token;
-                const qrUrl = await QRCode.toDataURL(qrVal, {
+                const qrUrl = await QRCode.toDataURL(row.qr_token, {
                     width: 200,
                     margin: 1,
                     color: { dark: '#0C234B', light: '#FFFFFF' }
@@ -61,6 +65,21 @@ export default function PassSuccess() {
         window.location.href = `/.netlify/functions/koszeg-pass-apple?passId=${pass.id}`;
     };
 
+    // A kártya állandó, személyes linkje (token-alapú – bármikor megnyitható)
+    const passLink = pass
+        ? `${window.location.origin}/p/${pass.slug}?token=${pass.qr_token}`
+        : '';
+
+    const handleCopyLink = async () => {
+        if (!passLink) return;
+        try {
+            await navigator.clipboard.writeText(passLink);
+            toast.success('Link kimásolva! Mentsd el egy biztos helyre.');
+        } catch {
+            toast.error('Nem sikerült a másolás – jelöld ki és másold kézzel.');
+        }
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white">
@@ -86,11 +105,6 @@ export default function PassSuccess() {
         );
     }
 
-    const formatHu = (dateStr) =>
-        new Date(dateStr).toLocaleDateString('hu-HU', {
-            year: 'numeric', month: '2-digit', day: '2-digit'
-        });
-
     return (
         <div className="min-h-screen bg-[#0C234B] text-white flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
             {/* Background effects */}
@@ -112,42 +126,27 @@ export default function PassSuccess() {
                         KőszegPass kártyád elkészült és aktív.
                     </p>
 
-                    {/* Pass Card Display */}
-                    <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-lg p-5 text-left aspect-[1.58] mb-6 flex flex-col justify-between bg-zinc-950">
-                        <img 
-                            src="/images/koszegpass_mascot.jpg" 
-                            alt="Mascot" 
-                            className="absolute inset-0 w-full h-full object-cover opacity-30" 
+                    {/* Kártya */}
+                    <div className="mb-2">
+                        <PassCard
+                            holderName={pass.holder_name}
+                            passType={pass.pass_type}
+                            serial={pass.serial}
+                            expiresAt={pass.expires_at}
+                            qrCodeUrl={qrCodeUrl}
+                            isExpired={false}
+                            isFlipped={isFlipped}
+                            onToggle={() => setIsFlipped(!isFlipped)}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0C234B] via-black/30 to-transparent" />
-                        
-                        <div className="z-10 flex justify-between items-start">
-                            <div>
-                                <p className="text-[8px] font-black text-yellow-400 uppercase tracking-widest">KŐSZEGPASS</p>
-                                <h3 className="text-base font-bold tracking-tight text-white leading-tight mt-0.5">{pass.holder_name}</h3>
-                            </div>
-                            <span className="text-[9px] bg-[#C8AF64] text-[#0C234B] font-black px-2 py-0.5 rounded-full uppercase">
-                                {pass.pass_type === 'family' ? 'Családi' : 'Egyéni'}
-                            </span>
-                        </div>
-
-                        <div className="z-10 flex justify-between items-end">
-                            <div>
-                                <p className="text-[7px] text-blue-200/40 uppercase tracking-wider">Érvényesség</p>
-                                <p className="text-[10px] font-mono text-[#C8AF64] font-bold">{formatHu(pass.expires_at)}</p>
-                            </div>
-                            <div className="bg-white p-1 rounded-lg">
-                                <IoQrCodeOutline className="text-2xl text-[#0C234B]" />
-                            </div>
-                        </div>
                     </div>
 
-                    {/* QR Code Scan Display */}
-                    {qrCodeUrl && (
-                        <div className="bg-white rounded-2xl p-4 w-48 h-48 mx-auto mb-8 shadow-xl flex items-center justify-center border border-white/10">
-                            <img src={qrCodeUrl} alt="KőszegPass QR" className="w-full h-full" />
-                        </div>
-                    )}
+                    {/* Flip hint */}
+                    <div className="flex justify-center items-center gap-2 mb-8 pointer-events-none">
+                        <IoSwapHorizontal className="text-[#C8AF64] text-xs animate-pulse" />
+                        <span className="text-[10px] font-semibold text-blue-200/50 uppercase tracking-widest">
+                            Koppints a kártyára a QR-kódhoz!
+                        </span>
+                    </div>
 
                     {/* Wallet Buttons */}
                     <div className="space-y-3 mb-6">
@@ -166,6 +165,30 @@ export default function PassSuccess() {
                         </button>
                     </div>
 
+                    {/* Állandó, személyes link */}
+                    <div className="bg-[#C8AF64]/10 border border-[#C8AF64]/25 rounded-xl p-4 mb-6 text-left">
+                        <p className="text-xs font-bold text-white mb-1 flex items-center gap-1.5">
+                            <IoLinkOutline className="text-[#C8AF64]" /> A személyes linked
+                        </p>
+                        <p className="text-[10px] text-blue-100/60 leading-relaxed mb-3">
+                            Ezzel bármikor megnyithatod a kártyád – Wallet nélkül is. Mentsd el, vagy tedd ki a telefonod kezdőképernyőjére!
+                        </p>
+                        <div className="flex gap-2">
+                            <input
+                                readOnly
+                                value={passLink}
+                                onFocus={(e) => e.target.select()}
+                                className="flex-1 min-w-0 bg-black/25 border border-white/10 rounded-lg px-3 py-2 text-[10px] text-blue-100/70 font-mono truncate focus:outline-none"
+                            />
+                            <button
+                                onClick={handleCopyLink}
+                                className="shrink-0 bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-black px-4 rounded-lg text-xs transition-colors"
+                            >
+                                Másolás
+                            </button>
+                        </div>
+                    </div>
+
                     {/* Email note */}
                     <div className="bg-white/5 border border-white/5 rounded-xl p-3.5 flex gap-3 text-left mb-8">
                         <div className="text-xl shrink-0 text-[#C8AF64]">
@@ -174,7 +197,7 @@ export default function PassSuccess() {
                         <div>
                             <p className="text-xs font-bold text-white mb-0.5">Küldtünk egy emailt</p>
                             <p className="text-[10px] text-blue-100/50 leading-relaxed">
-                                A kártyádat tartalmazó levelet, a Wallet linkeket és a számládat megküldtük a megadott email címre (<strong className="text-white">{pass.holder_email}</strong>).
+                                A kártyádat tartalmazó levelet, a Wallet linkeket, ezt a személyes linket és a számládat is elküldtük a vásárláskor megadott email címre.
                             </p>
                         </div>
                     </div>

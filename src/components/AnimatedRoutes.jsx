@@ -54,6 +54,7 @@ const PassRegister = lazyWithRetry(() => import('../pages/KoszegPass/PassRegiste
 const PassPurchase = lazyWithRetry(() => import('../pages/KoszegPass/PassPurchase'));
 const PassSuccess = lazyWithRetry(() => import('../pages/KoszegPass/PassSuccess'));
 const PassProfile = lazyWithRetry(() => import('../pages/KoszegPass/PassProfile'));
+const PassLookup = lazyWithRetry(() => import('../pages/KoszegPass/PassLookup'));
 const PassScanner = lazyWithRetry(() => import('../pages/KoszegPass/PassScanner'));
 const Partners = lazyWithRetry(() => import('../pages/Partners'));
 const SuperAdmin = lazyWithRetry(() => import('../pages/SuperAdmin'));
@@ -243,6 +244,7 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/pass/buy" element={<PageWrapper showFooter={false}><PassPurchase /></PageWrapper>} />
           <Route path="/pass/success" element={<PageWrapper showFooter={false}><PassSuccess /></PageWrapper>} />
           <Route path="/pass/profile" element={<PageWrapper showFooter={false}><PassProfile /></PageWrapper>} />
+          <Route path="/pass/megkeresem" element={<PageWrapper showFooter={false}><PassLookup /></PageWrapper>} />
           <Route path="/pass/scanner" element={<PageWrapper showFooter={false}><PassScanner /></PageWrapper>} />
           <Route path="/p/:slug" element={<PageWrapper showFooter={false}><PassProfile /></PageWrapper>} />
 

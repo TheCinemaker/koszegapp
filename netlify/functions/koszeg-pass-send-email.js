@@ -51,6 +51,9 @@ export const handler = async (event) => {
         const appleWalletUrl = `${APP_URL}/.netlify/functions/koszeg-pass-apple?passId=${passData.id}`;
         const googleWalletUrl = `${APP_URL}/.netlify/functions/koszeg-pass-google?passId=${passData.id}`;
 
+        // Állandó, személyes link a kártyához (token-alapú, Wallet nélkül is megnyitható)
+        const passLink = `${APP_URL}/p/${passData.slug}?token=${passData.qr_token}`;
+
         // 4. Dátum formázás
         const formatHu = (dateStr) =>
             new Date(dateStr).toLocaleDateString('hu-HU', {
@@ -117,6 +120,21 @@ export const handler = async (event) => {
                   </td>
                 </tr>
               </table>
+            </td>
+          </tr>
+
+          <!-- Állandó link – nyisd meg bármikor -->
+          <tr>
+            <td style="padding:32px 40px;border-bottom:1px solid #eef0f6;text-align:center;">
+              <h3 style="color:#0C234B;font-size:15px;font-weight:700;margin:0 0 8px;">Nyissa meg bármikor</h3>
+              <p style="color:#555;font-size:13px;line-height:1.6;margin:0 0 16px;">
+                Ez az Ön személyes linkje – kattintson rá bármikor a kártya megnyitásához.
+                Nincs szükség Apple vagy Google Wallet-re. Tipp: mentse el, vagy tegye ki a telefon kezdőképernyőjére!
+              </p>
+              <a href="${passLink}"
+                 style="display:inline-block;background:#C8AF64;color:#0C234B;text-decoration:none;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:800;">
+                🎫 Kártya megnyitása
+              </a>
             </td>
           </tr>
 

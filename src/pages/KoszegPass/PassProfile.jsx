@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { 
-    IoQrCodeOutline, 
-    IoShieldCheckmark, 
-    IoCalendar, 
-    IoArrowBack, 
-    IoInformationCircleOutline, 
-    IoSwapHorizontal, 
+import { useSearchParams, Link } from 'react-router-dom';
+import {
+    IoShieldCheckmark,
+    IoCalendar,
+    IoArrowBack,
+    IoInformationCircleOutline,
+    IoSwapHorizontal,
     IoSparkles
 } from 'react-icons/io5';
 import { supabase } from '../../lib/supabaseClient';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
+import PassCard from './PassCard';
+import AddToHomeHint from './AddToHomeHint';
 
 export default function PassProfile() {
-    const { slug } = useParams();
     const [searchParams] = useSearchParams();
-    const passId = searchParams.get('id') || '';
+    // A hozzáféréshez a token KÖTELEZŐ (nem kitalálható) – a slug önmagában nem elég.
     const qrToken = searchParams.get('token') || '';
-    
+
     const [loading, setLoading] = useState(true);
     const [pass, setPass] = useState(null);
     const [qrCodeUrl, setQrCodeUrl] = useState('');
@@ -27,31 +26,28 @@ export default function PassProfile() {
 
     useEffect(() => {
         async function fetchPass() {
-            if (!passId && !qrToken && !slug) {
+            if (!qrToken) {
                 setLoading(false);
                 return;
             }
 
             try {
-                let query = supabase.from('koszeg_passes').select('*');
-
-                if (passId) {
-                    query = query.eq('id', passId);
-                } else if (qrToken) {
-                    query = query.eq('qr_token', qrToken);
-                } else if (slug) {
-                    query = query.eq('slug', slug);
-                }
-
-                const { data, error } = await query.single();
+                // Csak a nem érzékeny mezőket adja vissza (security definer RPC).
+                const { data, error } = await supabase
+                    .rpc('get_koszeg_pass_by_token', { p_token: qrToken });
 
                 if (error) throw error;
 
-                setPass(data);
+                const row = Array.isArray(data) ? data[0] : data;
+                if (!row) {
+                    setLoading(false);
+                    return;
+                }
 
-                // Generate local QR code URL
-                const qrVal = data.qr_token;
-                const qrUrl = await QRCode.toDataURL(qrVal, {
+                setPass(row);
+
+                // A QR-t magából a tokenből generáljuk (nem kérjük le az adatbázisból).
+                const qrUrl = await QRCode.toDataURL(qrToken, {
                     width: 250,
                     margin: 1,
                     color: { dark: '#0C234B', light: '#FFFFFF' }
@@ -67,7 +63,15 @@ export default function PassProfile() {
         }
 
         fetchPass();
-    }, [passId, qrToken, slug]);
+    }, [qrToken]);
+
+    // A kezdőképernyőre kitett ikon szép nevéhez (iOS a dokumentum címét használja)
+    useEffect(() => {
+        if (!pass) return;
+        const prev = document.title;
+        document.title = 'KőszegPass';
+        return () => { document.title = prev; };
+    }, [pass]);
 
     const handleGoogleWallet = () => {
         if (!pass) return;
@@ -93,12 +97,19 @@ export default function PassProfile() {
     if (!pass) {
         return (
             <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white p-4 text-center">
-                <div>
+                <div className="max-w-sm">
                     <h1 className="text-2xl font-black text-red-400 mb-4">Érvénytelen Kártya ⚠️</h1>
-                    <p className="text-blue-200/60 mb-6 text-sm">A megadott kártya nem található vagy nem aktív.</p>
-                    <Link to="/pass" className="inline-block bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all text-sm">
-                        Vissza a kezdőlapra
-                    </Link>
+                    <p className="text-blue-200/60 mb-6 text-sm">
+                        A link hiányos vagy érvénytelen. Ha elvesztetted a kártyád linkjét, e-mailben újra elküldjük.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Link to="/pass/megkeresem" className="inline-block bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] px-6 py-3 rounded-xl font-bold transition-all text-sm">
+                            Kártyám megkeresése
+                        </Link>
+                        <Link to="/pass" className="inline-block bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all text-sm">
+                            Vissza a kezdőlapra
+                        </Link>
+                    </div>
                 </div>
             </div>
         );
@@ -134,79 +145,18 @@ export default function PassProfile() {
                         <div className="w-10 h-10" /> {/* Spacer */}
                     </div>
 
-                    {/* 3D Flipping Card Container */}
-                    <div className="flex justify-center mb-8">
-                        <div
-                            className="relative w-full aspect-[1.586/1] group cursor-pointer"
-                            style={{ perspective: '1200px' }}
-                            onClick={() => setIsFlipped(!isFlipped)}
-                        >
-                            <motion.div
-                                className="w-full h-full relative"
-                                animate={{ rotateY: isFlipped ? 180 : 0 }}
-                                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                                style={{ transformStyle: 'preserve-3d' }}
-                            >
-                                {/* CARD FRONT FACE */}
-                                <div
-                                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl border border-white/10 overflow-hidden bg-gradient-to-br from-[#1a237e] via-[#0d47a1] to-[#311b92] flex flex-col justify-between"
-                                    style={{ 
-                                        backfaceVisibility: 'hidden',
-                                        WebkitBackfaceVisibility: 'hidden'
-                                    }}
-                                >
-                                    <div className="absolute inset-0 opacity-[0.15] bg-[url('/noise.svg')] mix-blend-overlay" />
-                                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-                                    
-                                    {/* Holographic reflection effect */}
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 skew-x-12 -translate-y-full group-hover:animate-shine pointer-events-none" />
-
-                                    <div className="z-10 flex justify-between items-start">
-                                        <div>
-                                            <p className="text-[8px] font-black text-yellow-400 uppercase tracking-widest">KŐSZEGPASS</p>
-                                            <h3 className="text-lg font-bold tracking-tight text-white leading-tight mt-0.5 max-w-[180px] truncate">{pass.holder_name}</h3>
-                                        </div>
-                                        <span className={`text-[9px] font-black px-2.5 py-1 rounded-full uppercase shadow-lg ${
-                                            isExpired ? 'bg-red-500 text-white' : 'bg-[#C8AF64] text-[#0C234B]'
-                                        }`}>
-                                            {isExpired ? 'Lejárt' : (pass.pass_type === 'family' ? 'Családi' : 'Egyéni')}
-                                        </span>
-                                    </div>
-
-                                    <div className="z-10 flex justify-between items-end">
-                                        <div>
-                                            <p className="text-[7px] text-blue-200/40 uppercase tracking-wider font-semibold">Érvényesség</p>
-                                            <p className="text-xs font-mono text-[#C8AF64] font-bold mt-0.5">{formatHu(pass.expires_at)}</p>
-                                        </div>
-                                        <div className="bg-white/10 p-2 rounded-xl backdrop-blur-md border border-white/10 flex items-center justify-center">
-                                            <IoQrCodeOutline className="text-lg text-[#C8AF64]" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* CARD BACK FACE */}
-                                <div
-                                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl overflow-hidden bg-white text-zinc-950 border border-zinc-200 dark:border-white/10 flex flex-col items-center justify-center text-center"
-                                    style={{ 
-                                        backfaceVisibility: 'hidden',
-                                        WebkitBackfaceVisibility: 'hidden',
-                                        transform: 'rotateY(180deg)' 
-                                    }}
-                                >
-                                    {!isExpired && qrCodeUrl ? (
-                                        <div className="bg-white p-2 rounded-xl border border-zinc-100 shadow-inner mb-3">
-                                            <img src={qrCodeUrl} alt="KőszegPass QR" className="w-28 h-28 object-contain" />
-                                        </div>
-                                    ) : (
-                                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl p-4 mb-3 font-bold text-[10px]">
-                                            ⚠️ A kártya érvényessége lejárt, a QR-kód letiltva.
-                                        </div>
-                                    )}
-                                    <span className="text-[8px] text-zinc-400 font-mono uppercase tracking-wider mb-0.5">Azonosító</span>
-                                    <span className="font-mono text-[9px] font-bold text-zinc-600 break-all px-4">{pass.id}</span>
-                                </div>
-                            </motion.div>
-                        </div>
+                    {/* Kártya */}
+                    <div className="mb-8">
+                        <PassCard
+                            holderName={pass.holder_name}
+                            passType={pass.pass_type}
+                            serial={pass.serial}
+                            expiresAt={pass.expires_at}
+                            qrCodeUrl={qrCodeUrl}
+                            isExpired={isExpired}
+                            isFlipped={isFlipped}
+                            onToggle={() => setIsFlipped(!isFlipped)}
+                        />
                     </div>
 
                     {/* Card Flip Hint */}
@@ -232,6 +182,9 @@ export default function PassProfile() {
                             <span>Típus: <strong className="text-white">{pass.pass_type === 'family' ? 'Családi kártya' : 'Egyéni kártya'}</strong></span>
                         </div>
                     </div>
+
+                    {/* Kezdőképernyőre tipp (Wallet-alternatíva) */}
+                    {!isExpired && <AddToHomeHint />}
 
                     {/* Wallet Buttons */}
                     {!isExpired && (
