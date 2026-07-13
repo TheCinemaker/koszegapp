@@ -62,13 +62,20 @@ export default function PassCard({
                     {/* holografikus csillanás hoverre */}
                     <div className="absolute top-[-60%] left-[-20%] w-[55%] h-[220%] rotate-[18deg] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none transition-[left] duration-[900ms] ease-out group-hover:left-[130%]" />
 
-                    {/* felső sor: wordmark + típus */}
-                    <div className="relative z-10 flex justify-between items-start">
-                        <span className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-[#e6cf8a]">
-                            KŐSZEGPASS
-                        </span>
+                    {/* felső sor: logo, wordmark + típus */}
+                    <div className="relative z-10 flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                            <img 
+                                src="/images/koeszeg_logo_nobg.png" 
+                                alt="Kőszeg Logo" 
+                                className="h-6 w-auto object-contain brightness-0 invert" 
+                            />
+                            <span className="text-[13px] font-black tracking-wider text-[#e6cf8a]">
+                                KőszegPASS
+                            </span>
+                        </div>
                         <span
-                            className={`text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wide shadow-lg ${
+                            className={`text-[7px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow-lg ${
                                 isExpired ? 'bg-red-500 text-white' : 'bg-[#C8AF64] text-[#0C234B]'
                             }`}
                         >
@@ -91,10 +98,7 @@ export default function PassCard({
                     {/* alsó sor: tulajdonos + érvényesség */}
                     <div className="relative z-10 flex justify-between items-end">
                         <div className="min-w-0">
-                            <p className="text-[7px] uppercase tracking-[0.18em] text-blue-200/55 font-bold">
-                                Kártyatulajdonos
-                            </p>
-                            <p className="text-sm font-semibold tracking-[0.06em] uppercase text-white truncate max-w-[180px] mt-0.5">
+                            <p className="text-sm font-semibold tracking-[0.06em] uppercase text-white truncate max-w-[180px]">
                                 {holderName}
                             </p>
                         </div>
@@ -107,9 +111,9 @@ export default function PassCard({
                     </div>
                 </div>
 
-                {/* ---- HÁTLAP: csak QR ---- */}
+                {/* ---- HÁTLAP: QR + KőszegPASS ---- */}
                 <div
-                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl overflow-hidden bg-white flex items-center justify-center"
+                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl overflow-hidden bg-white flex flex-col items-center justify-center gap-1.5"
                     style={{
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
@@ -117,9 +121,14 @@ export default function PassCard({
                     }}
                 >
                     {!isExpired && qrCodeUrl ? (
-                        <div className="bg-white p-1.5 rounded-xl">
-                            <img src={qrCodeUrl} alt="KőszegPass QR" className="w-32 h-32 object-contain" />
-                        </div>
+                        <>
+                            <div className="bg-white p-1 rounded-xl">
+                                <img src={qrCodeUrl} alt="KőszegPass QR" className="w-28 h-28 object-contain" />
+                            </div>
+                            <span className="text-[10px] font-black tracking-wider text-[#0C234B]">
+                                KőszegPASS
+                            </span>
+                        </>
                     ) : (
                         <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl p-4 font-bold text-[10px] text-center">
                             ⚠️ A kártya érvényessége lejárt, a QR-kód letiltva.

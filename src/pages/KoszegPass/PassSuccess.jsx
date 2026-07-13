@@ -154,19 +154,29 @@ export default function PassSuccess() {
                     </div>
 
                     {/* Wallet Buttons */}
-                    <div className="space-y-3 mb-6">
+                    <div className="flex gap-4 justify-center items-center mb-6">
                         <button
                             onClick={handleAppleWallet}
-                            className="w-full bg-black hover:bg-zinc-900 border border-zinc-800 text-white font-bold h-12 rounded-xl flex items-center justify-center gap-2 text-xs transition-colors"
+                            className="h-12 flex-1 flex items-center justify-center rounded-xl bg-black border border-zinc-800 hover:bg-zinc-900 hover:scale-[1.02] active:scale-95 transition-all outline-none px-4"
+                            title="Add to Apple Wallet"
                         >
-                            🍎 Hozzáadás Apple Wallet-hez
+                            <img
+                                src="/addToAppleWallet.svg"
+                                alt="Add to Apple Wallet"
+                                className="h-8 w-auto object-contain"
+                            />
                         </button>
                         
                         <button
                             onClick={handleGoogleWallet}
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-12 rounded-xl flex items-center justify-center gap-2 text-xs transition-colors"
+                            className="h-12 flex-1 flex items-center justify-center rounded-xl bg-black border border-zinc-800 hover:bg-zinc-900 hover:scale-[1.02] active:scale-95 transition-all outline-none px-4"
+                            title="Add to Google Wallet"
                         >
-                            🔵 Hozzáadás Google Wallet-hez
+                            <img
+                                src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
+                                alt="Add to Google Wallet"
+                                className="h-8 w-auto object-contain"
+                            />
                         </button>
                     </div>
 
