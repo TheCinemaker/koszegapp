@@ -80,6 +80,17 @@ export const handler = async (event) => {
         const amount = PASS_PRICES[passType];
         const label = PASS_LABELS[passType];
 
+        let requestOrigin = APP_URL;
+        if (event.headers.origin) {
+            requestOrigin = event.headers.origin;
+        } else if (event.headers.referer) {
+            try {
+                requestOrigin = new URL(event.headers.referer).origin;
+            } catch (e) {
+                // fallback
+            }
+        }
+
         // Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -99,8 +110,8 @@ export const handler = async (event) => {
             ],
             mode: 'payment',
             // ⚠️  /pass/success route → PassSuccess.jsx fogja kezelni
-            success_url: `${APP_URL}/pass/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${APP_URL}/pass/buy?cancelled=true`,
+            success_url: `${requestOrigin}/pass/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${requestOrigin}/pass/buy?cancelled=true`,
             customer_email: holderEmail,
             // ⚠️  Metadata kulcsok: "kp_" prefix → webhook egyértelműen azonosíthatja
             //     hogy ez KőszegPass és nem ticket vásárlás

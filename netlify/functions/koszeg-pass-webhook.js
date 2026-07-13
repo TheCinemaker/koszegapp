@@ -212,7 +212,10 @@ export const handler = async (event) => {
 
         // 6. Megerősítő email küldés
         try {
-            const emailUrl = `${APP_URL}/.netlify/functions/koszeg-pass-send-email`;
+            const host = event.headers.host || '';
+            const protocol = host.includes('localhost') ? 'http' : 'https';
+            const currentAppUrl = host ? `${protocol}://${host}` : APP_URL;
+            const emailUrl = `${currentAppUrl}/.netlify/functions/koszeg-pass-send-email`;
             const emailRes = await fetch(emailUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
