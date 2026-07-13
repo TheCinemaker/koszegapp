@@ -1,11 +1,11 @@
 import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
-import crypto from 'crypto';
 
-const supabase = createClient(
-    process.env.VITE_SUPABASE_URL,
-    process.env.VITE_SUPABASE_ANON_KEY
-);
+// ⚠️  Ez a függvény SEMMIT nem ír az adatbázisba – pontosan úgy, mint a működő
+//     ticket-create-checkout.js. A pass létrehozása fizetés UTÁN történik:
+//       - élesben: koszeg-pass-webhook.js (Stripe webhook)
+//       - mindig:  koszeg-pass-confirm.js (a /pass/success oldal hívja, ha a
+//                  webhook nem kézbesített – pl. dev branch deploy)
+//     Mindkettő SERVICE ROLE kulccsal ír (a koszeg_passes táblán RLS van).
 
 // Pass árak (HUF, fillér alapon Stripe-nak: × 100)
 const PASS_PRICES = {
@@ -19,21 +19,6 @@ const PASS_LABELS = {
 };
 
 const APP_URL = process.env.URL || 'https://visitkoszeg.hu';
-
-function slugifyName(name) {
-    const accents = {
-        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ö': 'o', 'ő': 'o',
-        'ú': 'u', 'ü': 'u', 'ű': 'u',
-        'Á': 'a', 'É': 'e', 'Í': 'i', 'Ó': 'o', 'Ö': 'o', 'Ő': 'o',
-        'Ú': 'u', 'Ü': 'u', 'Ű': 'u'
-    };
-    let clean = name.split('').map(char => accents[char] || char).join('');
-    clean = clean.toLowerCase()
-                 .replace(/[^a-z0-9\s.-]/g, '')
-                 .trim()
-                 .replace(/[\s.-]+/g, '.');
-    return clean || 'visitor';
-}
 
 export const handler = async (event) => {
     const headers = {
@@ -146,74 +131,11 @@ export const handler = async (event) => {
             }
         });
 
-        // In sandbox mode, immediately create the active pass record in the database.
-        // This bypasses the need for Stripe webhook delivery to preview/localhost sites during testing.
-        if (isSandbox) {
-            try {
-                const qrToken = crypto.randomUUID();
-                const purchasedAt = new Date();
-                const expiresAt = new Date(purchasedAt);
-                expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-
-                let baseSlug = slugifyName(holderName);
-                let finalSlug = baseSlug;
-                let counter = 1;
-                let slugExists = true;
-
-                while (slugExists) {
-                    const { data: existingSlug, error: slugCheckError } = await supabase
-                        .from('koszeg_passes')
-                        .select('id')
-                        .eq('slug', finalSlug)
-                        .maybeSingle();
-
-                    if (slugCheckError) {
-                        console.error('[Stripe Sandbox Checkout] Slug check error:', slugCheckError);
-                        break;
-                    }
-
-                    if (existingSlug) {
-                        counter++;
-                        finalSlug = `${baseSlug}.${counter}`;
-                    } else {
-                        slugExists = false;
-                    }
-                }
-
-                // Insert into Supabase
-                const { data: newPass, error: passInsertError } = await supabase
-                    .from('koszeg_passes')
-                    .insert({
-                        holder_name: holderName,
-                        holder_email: holderEmail,
-                        pass_type: passType,
-                        stripe_session_id: session.id,
-                        amount_paid: amount,
-                        status: 'active',
-                        qr_token: qrToken,
-                        slug: finalSlug,
-                        purchased_at: purchasedAt.toISOString(),
-                        expires_at: expiresAt.toISOString(),
-                        hotel_source: hotelSource || null,
-                        origin_zip: originZip || null,
-                        phone: phone || null,
-                        extra_info: extraInfo || null,
-                        billing_zip: zip,
-                        billing_city: city,
-                        billing_address: address
-                    })
-                    .select()
-                    .single();
-
-                if (passInsertError) {
-                    console.error('[Stripe Sandbox Checkout] Pass insert error:', passInsertError);
-                } else {
-                    console.log('⚡ [Stripe Sandbox Checkout] Pass pre-created successfully:', newPass.id);
-                }
-            } catch (innerErr) {
-                console.error('[Stripe Sandbox Checkout] Failed to pre-create pass:', innerErr);
-            }
-        }
+        // ⚠️  ITT SZÁNDÉKOSAN NINCS ADATBÁZIS ÍRÁS.
+        //     A korábbi "sandbox pre-create" anon kulccsal próbált inzertálni →
+        //     az RLS csendben eldobta → nem jött létre pass → a /pass/success
+        //     "Nem található KőszegPass"-t mutatott. Ráadásul fizetés ELŐTT hozott
+        //     létre aktív passt. A létrehozás most a webhook / confirm dolga.
 
         return {
             statusCode: 200,

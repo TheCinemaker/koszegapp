@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { IoCheckmarkCircle, IoMail, IoHome, IoSwapHorizontal, IoLinkOutline } from 'react-icons/io5';
-import { supabase } from '../../lib/supabaseClient';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
 import PassCard from './PassCard';
@@ -22,13 +21,19 @@ export default function PassSuccess() {
             }
 
             try {
-                // Biztonságos, nem érzékeny mezőket adó RPC (a session id titkos, csak a vevőnél van).
-                const { data, error } = await supabase
-                    .rpc('get_koszeg_pass_by_session', { p_session: sessionId });
+                // A confirm function a hiteles forrás: a Stripe-tól ellenőrzi, hogy
+                // tényleg fizettek-e, és ha a webhook nem futott le (pl. dev branch
+                // deploy), akkor ő hozza létre a passt + küldi az emailt. Idempotens.
+                const res = await fetch(
+                    `/.netlify/functions/koszeg-pass-confirm?session_id=${encodeURIComponent(sessionId)}`
+                );
+                const payload = await res.json();
 
-                if (error) throw error;
+                if (!res.ok) {
+                    throw new Error(payload.error || `Confirm failed (${res.status})`);
+                }
 
-                const row = Array.isArray(data) ? data[0] : data;
+                const row = payload.pass;
                 if (!row) {
                     setLoading(false);
                     return;
