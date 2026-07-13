@@ -11,16 +11,6 @@ import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
 import { createPartner, createInvoice, findPartnerByEmail } from './lib/billingoService.js';
-
-let stripeSecret = process.env.STRIPE_SECRET_KEY;
-let isSandbox = false;
-if (process.env.CONTEXT && process.env.CONTEXT !== 'production') {
-    stripeSecret = 'sk_test' + '_' + '51Sx4FHFP4cTmH9TY3MaJRoA1fuGsGl5VdcNiFIKNtqeh7o2tofZddq6hjhe0lcD5OsEzSkfulzN1Rd4vzbdghd5200gpRVgZ5s';
-    isSandbox = true;
-    console.log('⚡ [Stripe Webhook Sandbox] Enabled sandbox environment.');
-}
-const stripe = new Stripe(stripeSecret);
-
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -47,6 +37,18 @@ export const handler = async (event) => {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
+
+    const host = event.headers.host || '';
+    const isSandbox = (process.env.CONTEXT && process.env.CONTEXT !== 'production') || 
+                      host.includes('localhost') || 
+                      host.includes('netlify.app');
+
+    let stripeSecret = process.env.STRIPE_SECRET_KEY;
+    if (isSandbox) {
+        stripeSecret = 'sk_test' + '_' + '51Sx4FHFP4cTmH9TY3MaJRoA1fuGsGl5VdcNiFIKNtqeh7o2tofZddq6hjhe0lcD5OsEzSkfulzN1Rd4vzbdghd5200gpRVgZ5s';
+        console.log('⚡ [Stripe Webhook Sandbox] Enabled sandbox environment (host:', host, ').');
+    }
+    const stripe = new Stripe(stripeSecret);
 
     // Stripe signature ellenőrzés (KÖTELEZŐ – kivéve sandbox teszteknél)
     const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
