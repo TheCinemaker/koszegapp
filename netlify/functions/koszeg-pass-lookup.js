@@ -132,12 +132,21 @@ export const handler = async (event) => {
 </body>
 </html>`;
 
-        await resend.emails.send({
-            from: 'KőszegPass <pass@visitkoszeg.hu>',
+        // A küldő domain a Resendben hitelesített koszegapp.hu (a visitkoszeg.hu nem az).
+        // A Resend SDK nem dob kivételt – az error-t explicit nézni kell.
+        const { error: emailError } = await resend.emails.send({
+            from: 'KőszegPass <pass@koszegapp.hu>',
             to: [normalizedEmail],
             subject: '🎫 A KőszegPass kártyád linkje',
             html: emailHtml
         });
+
+        if (emailError) {
+            // Kifelé így is generikus választ adunk (nem áruljuk el, létezik-e a cím),
+            // de a logban legyen nyoma.
+            console.error('❌ [Pass Lookup] Resend error:', emailError);
+            return { ...GENERIC_OK, headers };
+        }
 
         console.log('✅ [Pass Lookup] Link email sent to:', normalizedEmail, '| passes:', rows.length);
 

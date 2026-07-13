@@ -6,9 +6,13 @@
 
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
-import QRCode from 'qrcode';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// ⚠️  A küldő domainnek HITELESÍTVE kell lennie a Resendben.
+//     A koszegapp.hu az (a ticket rendszer is innen küld, lásd ticket-config.json),
+//     a visitkoszeg.hu NEM → onnan a Resend 403-mal eldobja a levelet.
+const EMAIL_FROM = 'KőszegPass <pass@koszegapp.hu>';
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -37,15 +41,13 @@ export const handler = async (event) => {
             return { statusCode: 404, body: JSON.stringify({ error: 'Pass not found' }) };
         }
 
-        // 2. QR kód generálás (base64 PNG – beágyazva az emailbe)
-        const verifyUrl = `${APP_URL}/verify-pass/${passData.qr_token}`;
-        const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
-            width: 280,
-            margin: 2,
-            color: { dark: '#0C234B', light: '#FFFFFF' }
-        });
-        // base64 string kinyerése (data:image/png;base64, ... rész nélkül)
-        const qrBase64 = qrDataUrl.split(',')[1];
+        // 2. QR kód – hostolt képként (ugyanaz a mód, mint a működő ticket emailben).
+        //    ⚠️  A QR a NYERS qr_token-t kódolja, NEM URL-t! A szkenner a beolvasott
+        //        szöveget közvetlenül tokenként adja át a koszeg-pass-validate-nek
+        //        (.eq('qr_token', ...)), tehát URL-lel nem találná meg a passt.
+        //    (A beágyazott cid: attachment sok levelezőben nem jelenik meg – ezért nem azt használjuk.)
+        const qrImageUrl =
+            `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(passData.qr_token)}`;
 
         // 3. Wallet linkek
         const appleWalletUrl = `${APP_URL}/.netlify/functions/koszeg-pass-apple?passId=${passData.id}`;
@@ -115,8 +117,8 @@ export const handler = async (event) => {
                     <p style="color:#C8AF64;font-size:14px;font-weight:700;margin:0;">${formatHu(passData.expires_at)}</p>
                   </td>
                   <td align="right" style="vertical-align:middle;">
-                    <img src="cid:qrcode" alt="QR kód" width="120" height="120"
-                         style="display:block;border-radius:8px;border:3px solid rgba(255,255,255,0.15);" />
+                    <img src="${qrImageUrl}" alt="QR kód" width="120" height="120"
+                         style="display:block;border-radius:8px;border:3px solid rgba(255,255,255,0.15);background:#fff;" />
                   </td>
                 </tr>
               </table>
@@ -218,27 +220,26 @@ export const handler = async (event) => {
 </body>
 </html>`;
 
-        // 6. Email küldés (QR kép beágyazva)
-        const emailResult = await resend.emails.send({
-            from: 'KőszegPass <pass@visitkoszeg.hu>',
+        // 6. Email küldés
+        // ⚠️  A Resend SDK NEM dob kivételt – { data, error }-t ad vissza.
+        //     Korábban ezt nem néztük, így hiba esetén is "✅ Sent"-et logoltunk.
+        const { data: emailData, error: emailError } = await resend.emails.send({
+            from: EMAIL_FROM,
             to: [passData.holder_email],
             subject: `✅ KőszegPass aktiválva – ${passData.holder_name}`,
-            html: emailHtml,
-            attachments: [
-                {
-                    filename: 'koszegpass_qr.png',
-                    content: qrBase64,
-                    content_type: 'image/png',
-                    content_id: 'qrcode'  // cid: referencia az emailben
-                }
-            ]
+            html: emailHtml
         });
 
-        console.log('✅ [Pass Email] Sent to:', passData.holder_email, '| ID:', emailResult.id);
+        if (emailError) {
+            console.error('❌ [Pass Email] Resend error:', emailError);
+            throw new Error(emailError.message || 'Resend send failed');
+        }
+
+        console.log('✅ [Pass Email] Sent to:', passData.holder_email, '| ID:', emailData?.id);
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ ok: true, emailId: emailResult.id })
+            body: JSON.stringify({ ok: true, emailId: emailData?.id })
         };
 
     } catch (err) {
