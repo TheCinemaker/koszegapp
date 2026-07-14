@@ -154,7 +154,7 @@ export const handler = async (event) => {
                         // Fejléc kép (kabala/szkyline)
                         heroImage: {
                             sourceUri: {
-                                uri: 'https://visitkoszeg.hu/images/koszeg_skyline.jpg'
+                                uri: 'https://koszegapp.netlify.app/assets/images/wallet/koszeg_skyline.png'
                             },
                             contentDescription: {
                                 defaultValue: { language: 'hu', value: 'Kőszeg látkép' }
