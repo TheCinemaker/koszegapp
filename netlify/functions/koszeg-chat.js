@@ -126,9 +126,28 @@ function situationSummary(s) {
     return lines.length ? lines.join(' ') : 'A vendég helyzetéről még nincs adat.';
 }
 
-function buildSystemPrompt(situation, frontendContext) {
+// Korábbi beszélgetésből ismert vendégprofil → rövid, promptba illő összefoglaló.
+function profileSummary(p) {
+    if (!p) return '';
+    const bits = [];
+    const comp = { alone: 'egyedül', couple: 'párként', family: 'családként', friends: 'baráti társaságként' }[p.companions];
+    if (comp) bits.push(comp + ' érkezett');
+    if (Array.isArray(p.children) && p.children.length) {
+        const ages = p.children.map((c) => (c && c.age >= 0 ? `${c.age} éves` : 'gyerek')).join(', ');
+        bits.push(`gyerek(ek): ${ages}`);
+    }
+    if (p.has_dog) bits.push('kutyával van');
+    if (p.prefers_indoor === true) bits.push('beltéri programot kedvel');
+    if (p.prefers_indoor === false) bits.push('kültéri programot kedvel');
+    if (p.time_available_hours) bits.push(`kb. ${p.time_available_hours} órája van`);
+    if (Array.isArray(p.interests) && p.interests.length) bits.push(`érdekli: ${p.interests.join(', ')}`);
+    return bits.join('; ');
+}
+
+function buildSystemPrompt(situation, frontendContext, knownProfile) {
     const now = new Date();
     const huTime = now.toLocaleString('hu-HU', { timeZone: 'Europe/Budapest', dateStyle: 'full', timeStyle: 'short' });
+    const known = profileSummary(knownProfile);
 
     return `Te a "KőszegAI" vagy – Kőszeg város túravezető asszisztense, egy igazi angol úriember.
 Segítesz programot, látnivalót, éttermet, túrát és útvonalat találni, és a javaslatot a
@@ -174,7 +193,8 @@ PROFIL:
 AKTUÁLIS HELYZET:
 - Idő: ${huTime}
 - ${situationSummary(situation)}
-${frontendContext?.weather ? `- Időjárás adat: ${JSON.stringify(frontendContext.weather)}` : ''}`;
+${frontendContext?.weather ? `- Időjárás adat: ${JSON.stringify(frontendContext.weather)}` : ''}
+${known ? `\nAMIT MÁR TUDUNK A VENDÉGRŐL (korábbi beszélgetésből – használd, NE kérdezd újra): ${known}.` : ''}`;
 }
 
 // ── MOCK mód (nincs API kulcs) – földelt, de egyszerű teszt-válasz ────────────
@@ -230,7 +250,7 @@ export async function handler(event) {
 
     try {
         if (!event.body) throw new Error('Nincs kérés-törzs (body).');
-        const { query, conversationHistory = [], context = {} } = JSON.parse(event.body);
+        const { query, conversationHistory = [], context = {}, knownProfile = null } = JSON.parse(event.body);
         if (!query || !query.trim()) {
             return { statusCode: 400, headers, body: JSON.stringify({ error: 'A "query" mező kötelező.' }) };
         }
@@ -256,7 +276,7 @@ export async function handler(event) {
             { role: 'user', content: String(query) }
         ];
 
-        const system = buildSystemPrompt(situation, context);
+        const system = buildSystemPrompt(situation, context, knownProfile);
         let profile = null;
         let ended = false;
         let closing = null;

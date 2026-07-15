@@ -7,6 +7,8 @@ import { IoSend, IoArrowBack, IoLocateOutline, IoSparkles } from 'react-icons/io
 // Küld GPS-kontextust; kezeli a strukturált profilt és a moderációs lezárást.
 
 const ENDPOINT = '/.netlify/functions/koszeg-chat';
+const LS_MESSAGES = 'koszegai_messages';
+const LS_PROFILE = 'koszegai_profile';
 
 const GREETING = {
     role: 'assistant',
@@ -16,15 +18,41 @@ const GREETING = {
         'egy jó ebéd vagy épp egy legenda a régi falak közül – állok rendelkezésére.'
 };
 
+// Tartós memória: a korábbi beszélgetés + a strukturált profil localStorage-ban.
+// A profilt visszaküldjük a szervernek, így a robot akkor is "emlékszik, kivel
+// beszél", ha az appot bezárták és újranyitották ugyanazon a telefonon.
+function loadMessages() {
+    try {
+        const raw = localStorage.getItem(LS_MESSAGES);
+        const arr = raw ? JSON.parse(raw) : null;
+        if (Array.isArray(arr) && arr.length) return arr;
+    } catch { /* korrupt/nincs → alap */ }
+    return [GREETING];
+}
+function loadProfile() {
+    try {
+        const raw = localStorage.getItem(LS_PROFILE);
+        return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+}
+
 export default function KoszegChat() {
-    const [messages, setMessages] = useState([GREETING]);
+    const [messages, setMessages] = useState(loadMessages);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [ended, setEnded] = useState(false);
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState(loadProfile);
     const [coords, setCoords] = useState(null);
     const scrollRef = useRef(null);
     const inputRef = useRef(null);
+
+    // Mentés localStorage-ba (utolsó ~24 üzenet, hogy ne hízzon vég nélkül).
+    useEffect(() => {
+        try { localStorage.setItem(LS_MESSAGES, JSON.stringify(messages.slice(-24))); } catch { /* pl. tele/priv mód */ }
+    }, [messages]);
+    useEffect(() => {
+        try { if (profile) localStorage.setItem(LS_PROFILE, JSON.stringify(profile)); } catch { /* ignore */ }
+    }, [profile]);
 
     // GPS opcionálisan (nem blokkol, ha elutasítják).
     useEffect(() => {
@@ -57,8 +85,10 @@ export default function KoszegChat() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     query: text,
-                    conversationHistory: history,
-                    context: coords ? { location: coords } : {}
+                    // A tartós memória a profil; a nyers előzményből elég az utolsó pár üzenet.
+                    conversationHistory: history.slice(-12),
+                    context: coords ? { location: coords } : {},
+                    knownProfile: profile || null
                 })
             });
             const data = await res.json();
@@ -153,7 +183,12 @@ export default function KoszegChat() {
                         <div className="text-center py-2">
                             <p className="text-xs text-blue-200/60 mb-3">A beszélgetést lezártuk.</p>
                             <button
-                                onClick={() => { setMessages([GREETING]); setEnded(false); setProfile(null); }}
+                                onClick={() => {
+                                    setMessages([GREETING]);
+                                    setEnded(false);
+                                    setProfile(null);
+                                    try { localStorage.removeItem(LS_MESSAGES); localStorage.removeItem(LS_PROFILE); } catch { /* ignore */ }
+                                }}
                                 className="inline-flex items-center gap-2 bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-bold px-5 py-2.5 rounded-xl text-sm transition-colors"
                             >
                                 <IoSparkles size={16} /> Új beszélgetés
