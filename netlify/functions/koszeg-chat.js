@@ -1,188 +1,220 @@
 // netlify/functions/koszeg-chat.js
-// KőszegAI Concierge – Claude (Sonnet 5) alapú szituációs chatbot
+// KőszegAI Concierge – Claude alapú szituációs, adat-földelt chatbot
 //
-// 1. SZELET: működő váz + STRUKTURÁLT profilozás (a törékeny regex helyett).
-//    - Figyeli a szituációt (GPS/sebesség/idő) a meglévő situationAnalyzer-rel
-//    - A Claude tool-callinggal ad vissza egy validált vendégprofilt
-//      (társaság, gyerekek+koruk, kutya, bel-/kültéri preferencia, időkeret)
-//    - Természetes, meleg hangvételű szöveges választ ad a user nyelvén
+// KÉPESSÉGEK:
+//  - search_data tool: keres a valódi kőszegi adatokban (látnivalók, események,
+//    éttermek, túrák, rejtett helyek, szállások) → a modell EBBŐL dolgozik,
+//    nem hallucinál. Emberhez (társaság) és időjáráshoz köti a javaslatot.
+//  - web_search (Anthropic szerveroldali): ha az adatokban nincs meg valami,
+//    hivatalos/friss infóért kimehet a netre. DE SOHA nem talál ki adatot.
+//  - update_guest_profile: strukturált vendégprofil (regex helyett).
+//  - end_conversation: moderáció – káromkodás/politizálás esetén udvariasan zár.
 //
-//    KÉSŐBBI SZELETEK: parkolás (egy-koppintásos SMS), KőszegPass vásárlás,
-//    útvonal a rankingEngineV2 + itineraryEngine fölött.
+//  SOHA: nem generál kép/videó/média tartalmat; nem hallucinál; erőszak/szex tiltott.
+//
+//  KÉSŐBBI SZELETEK: start_parking (egy-koppintásos SMS), buy_pass, show_route.
 
 import Anthropic from '@anthropic-ai/sdk';
 import { analyzeSituation } from './ai-core-v2/situationAnalyzer.js';
+import { searchData, AVAILABLE_DATASETS } from './koszeg-data.js';
 
 const client = new Anthropic(); // ANTHROPIC_API_KEY a környezetből
 
 const MODEL = 'claude-sonnet-4-6';
+const MAX_TOOL_ROUNDS = 6;
 
-
-// ── Vendégprofil tool ────────────────────────────────────────────────────────
-// A Claude ezt hívja meg, amikor megtud valamit a társaságról. A strict:true
-// garantálja, hogy a visszaadott input pontosan illeszkedik a sémára – nincs
-// többé regex-alapú találgatás magyar szövegen.
+// ── TOOL: vendégprofil ────────────────────────────────────────────────────────
 const updateGuestProfile = {
     name: 'update_guest_profile',
     description:
         'Rögzíti vagy frissíti a vendég profilját, amikor kiderül valami a társaságáról ' +
-        'vagy a preferenciáiról a beszélgetésből. Csak azokat a mezőket töltsd ki, ' +
-        'amelyek ténylegesen elhangzottak vagy egyértelműen következnek – ne találgass.',
+        'vagy a preferenciáiról. Csak azt töltsd ki, ami tényleg elhangzott – ne találgass.',
     strict: true,
     input_schema: {
         type: 'object',
         additionalProperties: false,
         properties: {
-            companions: {
-                type: 'string',
-                enum: ['alone', 'couple', 'family', 'friends', 'unknown'],
-                description: 'A társaság típusa.'
-            },
+            companions: { type: 'string', enum: ['alone', 'couple', 'family', 'friends', 'unknown'] },
             children: {
                 type: 'array',
-                description: 'Gyerekek listája, ha vannak. Üres tömb, ha nincs gyerek.',
                 items: {
                     type: 'object',
                     additionalProperties: false,
-                    properties: {
-                        age: {
-                            type: 'integer',
-                            description: 'A gyerek életkora években. -1, ha nem tudjuk pontosan.'
-                        }
-                    },
+                    properties: { age: { type: 'integer', description: 'Kor években, -1 ha ismeretlen.' } },
                     required: ['age']
                 }
             },
-            has_dog: {
-                type: 'boolean',
-                description: 'Van-e velük kutya.'
-            },
-            prefers_indoor: {
-                type: ['boolean', 'null'],
-                description:
-                    'true = beltéri programot szeretne (pl. eső miatt), false = kültéri, ' +
-                    'null = nem tudjuk / mindegy.'
-            },
-            time_available_hours: {
-                type: ['number', 'null'],
-                description: 'Hány órája van a városnézésre. null, ha nem mondta.'
-            },
-            interests: {
-                type: 'array',
-                description: 'Érdeklődési címkék (pl. "vár", "bor", "gasztronómia", "túra", "múzeum").',
-                items: { type: 'string' }
-            }
+            has_dog: { type: 'boolean' },
+            prefers_indoor: { type: ['boolean', 'null'], description: 'true=beltéri, false=kültéri, null=mindegy' },
+            time_available_hours: { type: ['number', 'null'] },
+            interests: { type: 'array', items: { type: 'string' } }
         },
-        required: [
-            'companions',
-            'children',
-            'has_dog',
-            'prefers_indoor',
-            'time_available_hours',
-            'interests'
-        ]
+        required: ['companions', 'children', 'has_dog', 'prefers_indoor', 'time_available_hours', 'interests']
     }
 };
 
-// ── Szituáció → rövid, ember által is olvasható összefoglaló a system promptba ──
-function situationSummary(situation) {
-    const lines = [];
-    if (situation.status === 'in_city') {
-        lines.push(`A vendég MÁR Kőszegen van (a központtól kb. ${situation.distanceKm} km).`);
-    } else if (situation.status === 'not_in_city') {
-        if (situation.approaching) {
-            const eta = situation.arrivalInMinutes ? `, kb. ${situation.arrivalInMinutes} perc múlva ér ide` : '';
-            lines.push(`A vendég ÚTON van Kőszeg felé (${situation.distanceKm} km${eta}).`);
-        } else {
-            lines.push(`A vendég még NINCS Kőszegen (kb. ${situation.distanceKm} km).`);
+// ── TOOL: adatkeresés ─────────────────────────────────────────────────────────
+const searchDataTool = {
+    name: 'search_data',
+    description:
+        'Keres a hivatalos kőszegi adatokban. MINDIG ezt hívd, mielőtt konkrét látnivalót, ' +
+        'eseményt, éttermet, túrát, szállást vagy nyitvatartást/árat ajánlasz – csak a ' +
+        'találatokban szereplő adatokat használd, ne emlékezetből. Több hívást is indíthatsz. ' +
+        'FONTOS: rövid TŐ-kulcsszavakat adj meg (pl. "bor", nem "borozó"; "vár"; "túra"; "gyerek"), ' +
+        'mert a keresés szó-részletre illeszt. A query elhagyható, ha csak szűrőkre (esőbiztos, ' +
+        'gyerekbarát, romantikus, dátum) keresel.',
+    input_schema: {
+        type: 'object',
+        properties: {
+            query: { type: 'string', description: 'Rövid tő-kulcsszó(k), pl. "bor", "vár", "túra". Elhagyható.' },
+            datasets: {
+                type: 'array',
+                items: { type: 'string', enum: AVAILABLE_DATASETS },
+                description: 'Mely adathalmazokban keressen. Üresen: mind a fő halmaz.'
+            },
+            rainSafe: { type: 'boolean', description: 'Csak esőbiztos/beltéri helyek (esős idő esetén).' },
+            childFriendly: { type: 'boolean', description: 'Csak gyerekbarát helyek.' },
+            indoor: { type: 'boolean', description: 'Csak beltéri.' },
+            romantic: { type: 'boolean', description: 'Romantikus helyek (pároknak).' },
+            date_from: { type: 'string', description: 'Események: ettől a dátumtól (YYYY-MM-DD).' },
+            date_to: { type: 'string', description: 'Események: eddig a dátumig (YYYY-MM-DD).' },
+            limit: { type: 'integer', description: 'Max találat halmazonként (alap 6).' }
         }
     }
-    if (situation.withKids) lines.push('A beszélgetés alapján gyerek(ek) is vannak velük.');
-    if (situation.withDog) lines.push('Kutya is van velük.');
-    if (situation.weatherEffect === 'rain') lines.push('Jelenleg esik – beltéri program előnyösebb lehet.');
-    return lines.length ? lines.join(' ') : 'A vendég helyzetéről még nincs adat.';
-}
+};
 
-// ── MOCK mód ─────────────────────────────────────────────────────────────────
-// Ha nincs ANTHROPIC_API_KEY, a function determinisztikus, de a szituációra
-// reagáló választ ad – ugyanabban a formátumban, mint az igazi Claude-válasz.
-// Így a teljes folyamat (frontend, szituáció, profil, akciók) tesztelhető kulcs
-// és költség nélkül. A kulcs beállításakor automatikusan az igazi modell felel.
-function mockReply(situation, query) {
-    const q = (query || '').toLowerCase();
-    // A situationAnalyzer csak az előzményből néz gyereket/kutyát; a demóhoz az
-    // aktuális kérdésből is felismerjük (az igazi modell ezt amúgy is megteszi).
-    const family = situation.withKids || /gyerek|gyermek|kicsi|család|kid|child|kind/.test(q);
-    const dog = situation.withDog || /kutya|eb|dog|hund/.test(q);
-    const rain = situation.weatherEffect === 'rain';
-
-    let opener;
-    if (situation.status === 'in_city') {
-        opener = 'Szuper, akkor már itt is vagy Kőszegen! 🏰';
-    } else if (situation.approaching) {
-        const eta = situation.arrivalInMinutes ? ` Kb. ${situation.arrivalInMinutes} perc és itt vagy.` : '';
-        opener = `Látom, úton vagy felénk (${situation.distanceKm} km).${eta}`;
-    } else if (situation.status === 'not_in_city') {
-        opener = `Még ${situation.distanceKm} km a város, de addig is tervezgethetünk.`;
-    } else {
-        opener = 'Szia! Miben segíthetek a kőszegi látogatásodhoz?';
+// ── TOOL: beszélgetés lezárása (moderáció) ────────────────────────────────────
+const endConversationTool = {
+    name: 'end_conversation',
+    description:
+        'Lezárja a beszélgetést, ha a felhasználó káromkodik, sérteget, vagy politikai vitát ' +
+        'kezdeményez. Udvariasan megköszönöd és elköszönsz. Erőszakos/szexuális témánál NE ' +
+        'ezt használd önmagában – először tereld vissza; ismételt megszegésnél zárhatsz.',
+    strict: true,
+    input_schema: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+            reason: { type: 'string', enum: ['profanity', 'politics', 'abuse', 'other'] },
+            closing_message: { type: 'string', description: 'Rövid, udvarias záró üzenet a user nyelvén.' }
+        },
+        required: ['reason', 'closing_message']
     }
+};
 
-    const tips = [];
-    if (rain) tips.push('Mivel esik, javaslok pár beltéri programot: a Jurisics-vár és a múzeumok remekek ilyenkor.');
-    if (family) tips.push('Gyerekekkel a várudvar és a közeli játszótér mindig befutó, és a séták legyenek rövidek.');
-    if (dog) tips.push('A kutyust nyugodtan hozhatod, a belváros és a várfal körüli séta kutyabarát.');
-    if (/bor|wine|wein/.test(q)) tips.push('Ha a bor érdekel, a kőszegi borospincék és a Jézus Szíve-templom környéki helyek jó kiindulás.');
-    if (/étterem|enni|food|restaurant|essen/.test(q)) tips.push('Ebédre a főtér környéki éttermek kényelmesen elérhetők gyalog.');
-    if (!tips.length) tips.push('Mondd el, kivel érkezel és mi érdekel (vár, bor, gasztró, túra), és összerakok egy programot!');
+// Anthropic szerveroldali web-keresés (fallback, ha az adatokban nincs meg).
+const webSearchTool = { type: 'web_search_20260209', name: 'web_search', max_uses: 3 };
 
-    const content = `${opener}\n\n${tips.join(' ')}\n\n_(⚠️ Teszt mód: beállított API kulcs nélkül előre megírt válasz. A kulcs beállítása után az igazi KőszegAI felel.)_`;
+const TOOLS = [updateGuestProfile, searchDataTool, endConversationTool, webSearchTool];
 
-    // Profil "kiszűrése" egyszerű jelekből – az igazi modell ezt sokkal jobban csinálja.
-    let companions = 'unknown';
-    if (family) companions = 'family';
-    else if (/pár|feleség|férj|couple|partner|barátnő|barátom/.test(q)) companions = 'couple';
-    else if (/egyedül|alone|magam/.test(q)) companions = 'alone';
-    else if (/barát|friends|freunde|haver/.test(q)) companions = 'friends';
-
-    const hoursMatch = q.match(/(\d+)\s*(óra|órán|hour|std|stunde)/);
-    const profile = {
-        companions,
-        children: family ? [{ age: -1 }] : [],
-        has_dog: !!dog,
-        prefers_indoor: rain ? true : null,
-        time_available_hours: hoursMatch ? Number(hoursMatch[1]) : null,
-        interests: []
-    };
-    if (/bor|wine|wein/.test(q)) profile.interests.push('bor');
-    if (/vár|castle|burg/.test(q)) profile.interests.push('vár');
-    if (/túra|hike|wander/.test(q)) profile.interests.push('túra');
-
-    return { content, profile };
+// ── Szituáció → rövid összefoglaló a system promptba ──────────────────────────
+function situationSummary(s) {
+    const lines = [];
+    if (s.status === 'in_city') {
+        lines.push(`A vendég MÁR Kőszegen van (a központtól kb. ${s.distanceKm} km).`);
+    } else if (s.status === 'not_in_city') {
+        if (s.approaching) {
+            const eta = s.arrivalInMinutes ? `, kb. ${s.arrivalInMinutes} perc múlva ér ide` : '';
+            lines.push(`A vendég ÚTON van Kőszeg felé (${s.distanceKm} km${eta}).`);
+        } else {
+            lines.push(`A vendég még NINCS Kőszegen (kb. ${s.distanceKm} km).`);
+        }
+    }
+    if (s.withKids) lines.push('Gyerek(ek) is vannak velük.');
+    if (s.withDog) lines.push('Kutya is van velük.');
+    if (s.weatherEffect === 'rain') lines.push('Jelenleg esik – beltéri program előnyösebb.');
+    return lines.length ? lines.join(' ') : 'A vendég helyzetéről még nincs adat.';
 }
 
 function buildSystemPrompt(situation, frontendContext) {
     const now = new Date();
     const huTime = now.toLocaleString('hu-HU', { timeZone: 'Europe/Budapest', dateStyle: 'full', timeStyle: 'short' });
 
-    return `Te a "KőszegAI" vagy – Kőszeg város barátságos, helyismerő túravezető asszisztense.
-Segítesz a látogatóknak programot, látnivalót, éttermet és útvonalat találni a városban,
-és figyelsz arra, kivel és milyen körülmények közt érkeznek.
+    return `Te a "KőszegAI" vagy – Kőszeg város túravezető asszisztense, egy igazi angol úriember.
+Segítesz programot, látnivalót, éttermet, túrát és útvonalat találni, és a javaslatot a
+vendég társaságához (egyedül / pár / család gyerekkel / baráti kör) és az időjáráshoz igazítod.
 
-VISELKEDÉS:
-- Meleg, közvetlen, de tömör hangnem. A vendég nyelvén válaszolj (magyar, angol, német – ahogy ír).
-- Ne kérdezz feleslegesen: ami a szituációból már tudható (helyzet, idő, időjárás), azt használd.
-- Ha kiderül valami a társaságról (egyedül / pár / család / baráti kör, gyerekek kora, kutya,
-  bel- vagy kültéri preferencia, mennyi ideje van), hívd meg az update_guest_profile eszközt.
-  Csak azt rögzítsd, ami tényleg elhangzott – ne találgass.
-- Gyerekkel: rövidebb séták, játszótér, családbarát helyek. Pár: romantikus helyszínek, borozó.
-  Esőben: beltéri programok (vár, múzeum, cukrászda). Ezeket vedd figyelembe a javaslatoknál.
-- Egyelőre konkrét foglalást/parkolást/vásárlást NE ígérj – ezek a funkciók még fejlesztés alatt.
+KARAKTER (nagyon fontos, tartsd mindig):
+- Férfi, egy tökéletes angol úriember: kifogástalanul udvarias, előzékeny, választékos és elegáns,
+  mégis melegszívű és közvetlen. Kicsit régimódi báj, sosem fennhéjázó.
+- Meglepően szellemes: finom, száraz brit humor. Ha a vendég vevő rá, szinte bármiből tudsz
+  elegáns kis viccet, szójátékot faragni – de sosem a vendég rovására, és sosem tolakodóan.
+- Kőszeg avatott ismerője vagy: a város TÖRTÉNELME, VÁROSI LEGENDÁI és misztikus történetei
+  a kisujjadban vannak. Szívesen mesélsz egy-egy legendát vagy érdekes históriát a helyszínekhez.
+  Ha a vendég GYEREKKEL van, mesélhetsz is a gyerekeknek a városról – kedvesen, mesésen, korukhoz illően.
+- A legendákat legendaként meséld (nem tényként), és igaz, ismert történeteket mondj – kitalálni
+  hamis "történelmi tényt" tilos. Ha bizonytalan vagy, a web_search-csel utánanézhetsz.
+
+HANGNEM:
+- A vendég nyelvén válaszolj (magyar / angol / német – ahogy ír). Tömör, de sosem kapkodó.
+- Ne kérdezz feleslegesen: ami a szituációból tudható (helyzet, idő, időjárás), azt használd.
+
+ADATHASZNÁLAT – EZ A LEGFONTOSABB SZABÁLY:
+- Konkrét látnivalót, eseményt, éttermet, túrát, szállást, nyitvatartást vagy árat CSAK a
+  search_data tool találataiból ajánlhatsz. MINDIG hívd meg a search_data-t, mielőtt ilyet mondasz.
+- Esőben rainSafe:true / indoor:true, gyerekkel childFriendly:true, pároknak romantic:true szűrővel keress.
+- Ha az adatokban nincs meg, amit kérnek, használhatod a web_search-öt hivatalos/friss infóért.
+- SOHA NE TALÁLJ KI adatot: eseményt, dátumot, árat, nyitvatartást, nevet vagy címet. Ha valamit
+  nem találsz sem az adatokban, sem a neten, mondd meg őszintén, és irányítsd hivatalos forráshoz.
+- Csak azokra a linkekre/képekre hivatkozz, amelyek a találatokban ténylegesen szerepelnek.
+
+TILALMAK:
+- SOHA nem generálsz és nem találsz ki kép-, videó- vagy médiatartalmat.
+- Erőszakos és szexuális tartalom tilos – ilyet nem írsz és nem részletezel. A ROMANTIKA viszont
+  belefér és üdvözölt (pl. a Hármaspad hagyományosan a szerelmesek találkozóhelye volt).
+- Ha a felhasználó KÁROMKODIK, sértegeti a robotot/másokat, vagy POLITIKAI vitát kezdeményez,
+  ne állj bele: hívd meg az end_conversation toolt egy rövid, udvarias záró üzenettel
+  (köszönd meg a beszélgetést és zárj). Erőszakos/szexuális próbálkozásnál előbb terelj vissza a
+  kőszegi programokra; ismételt megszegésnél zárhatsz.
+
+PROFIL:
+- Ha kiderül valami a társaságról (egyedül/pár/család, gyerekek kora, kutya, bel-/kültéri
+  preferencia, mennyi ideje van), hívd meg az update_guest_profile toolt – csak a tényleg elhangzottakat.
 
 AKTUÁLIS HELYZET:
 - Idő: ${huTime}
 - ${situationSummary(situation)}
 ${frontendContext?.weather ? `- Időjárás adat: ${JSON.stringify(frontendContext.weather)}` : ''}`;
+}
+
+// ── MOCK mód (nincs API kulcs) – földelt, de egyszerű teszt-válasz ────────────
+async function mockReply(situation, query, host) {
+    const q = (query || '').toLowerCase();
+
+    // Egyszerű moderációs demó (a valódi moderációt a modell + end_conversation végzi)
+    if (/(kurva|fasz|geci|szar|bassz|baszd|baszom|picsa|köcsög|kocsog)/.test(q)) {
+        return { content: 'Köszönöm a beszélgetést! Ha kulturáltan folytatnánk, szívesen segítek Kőszeggel kapcsolatban. 👋', profile: null, ended: true };
+    }
+
+    const rain = situation.weatherEffect === 'rain';
+    const family = situation.withKids || /gyerek|gyermek|kicsi|család|kid|child|kind/.test(q);
+
+    // Rövid tő-kulcsszó kiszedése (a search_data szó-részletre illeszt).
+    const ROOTS = ['bor', 'vár', 'túra', 'tura', 'étter', 'etter', 'múze', 'muze', 'templom', 'kilát', 'kilat', 'játszó', 'jatszo', 'pince', 'strand', 'fürd', 'furd'];
+    const root = ROOTS.find((r) => q.includes(r));
+
+    const params = {};
+    if (root) params.query = root;
+    if (rain) params.rainSafe = true;
+    if (family) params.childFriendly = true;
+    if (/pár|feleség|férj|couple|romant/.test(q)) params.romantic = true;
+
+    let data = await searchData(params, host);
+    // Ha a kulcsszó túl szűk volt, próbáljuk csak a szűrőkkel.
+    if (!data.results.length && params.query) {
+        delete params.query;
+        data = await searchData(params, host);
+    }
+    const names = data.results.slice(0, 5).map((r) => `• ${r.name}${r.date ? ` (${r.date})` : ''}`);
+    const body = names.length
+        ? `Íme pár tipp az adatainkból:\n${names.join('\n')}`
+        : 'Nem találtam pontos találatot – pontosítsd, mi érdekel (vár, bor, gyerekprogram, túra)!';
+
+    return {
+        content: `${body}\n\n_(⚠️ Teszt mód: API kulcs nélkül egyszerűsített, de VALÓDI adatokból vett lista. A kulcs beállítása után az igazi KőszegAI válaszol, web-kereséssel és teljes érveléssel.)_`,
+        profile: null,
+        ended: false
+    };
 }
 
 export async function handler(event) {
@@ -191,43 +223,32 @@ export async function handler(event) {
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
+    if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+    if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
 
-    if (event.httpMethod === 'OPTIONS') {
-        return { statusCode: 200, headers, body: '' };
-    }
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
-    }
+    const host = (event.headers && event.headers.host) || '';
 
     try {
         if (!event.body) throw new Error('Nincs kérés-törzs (body).');
         const { query, conversationHistory = [], context = {} } = JSON.parse(event.body);
-
         if (!query || !query.trim()) {
             return { statusCode: 400, headers, body: JSON.stringify({ error: 'A "query" mező kötelező.' }) };
         }
 
-        // 1. Szituáció a meglévő analyzer-rel (GPS/sebesség/idő + a beszélgetés utolsó üzenetei)
         const situation = analyzeSituation(context, { history: conversationHistory });
 
-        // ── MOCK ág: nincs kulcs → determinisztikus teszt-válasz (nincs API hívás/költség) ──
+        // ── MOCK ág: nincs kulcs → földelt teszt-válasz, API hívás nélkül ──
         if (!process.env.ANTHROPIC_API_KEY) {
             console.log('[KőszegAI] MOCK mód (nincs ANTHROPIC_API_KEY).');
-            const mock = mockReply(situation, query);
+            const mock = await mockReply(situation, query, host);
             return {
                 statusCode: 200,
                 headers,
-                body: JSON.stringify({
-                    role: 'assistant',
-                    content: mock.content,
-                    profile: mock.profile,
-                    situation,
-                    mock: true
-                })
+                body: JSON.stringify({ role: 'assistant', content: mock.content, profile: mock.profile, ended: mock.ended, situation, mock: true })
             };
         }
 
-        // 2. Beszélgetés összeállítása – a történet + az aktuális kérdés
+        // ── Valódi Claude ág, tool-loop-pal ──
         const messages = [
             ...conversationHistory
                 .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && m.content)
@@ -235,51 +256,81 @@ export async function handler(event) {
             { role: 'user', content: String(query) }
         ];
 
-        // 3. Claude hívás (Sonnet 5). adaptive thinking bekapcsolva; sampling paramétert
-        //    NEM adunk meg (Sonnet 5 elutasítja a nem-default értékeket).
-        const response = await client.messages.create({
-            model: MODEL,
-            max_tokens: 2048,
-            thinking: { type: 'adaptive' },
-            system: buildSystemPrompt(situation, context),
-            tools: [updateGuestProfile],
-            messages
+        const system = buildSystemPrompt(situation, context);
+        let profile = null;
+        let ended = false;
+        let closing = null;
+
+        let response = await client.messages.create({
+            model: MODEL, max_tokens: 2048, thinking: { type: 'adaptive' }, system, tools: TOOLS, messages
         });
 
-        // 4. Válasz feldolgozása: szöveg + (opcionális) strukturált profil
-        let reply = '';
-        let profile = null;
-        for (const block of response.content) {
-            if (block.type === 'text') {
-                reply += block.text;
-            } else if (block.type === 'tool_use' && block.name === 'update_guest_profile') {
-                profile = block.input;
+        let round = 0;
+        while (round++ < MAX_TOOL_ROUNDS) {
+            if (response.stop_reason === 'pause_turn') {
+                // Szerveroldali tool (web_search) folytatása
+                messages.push({ role: 'assistant', content: response.content });
+                response = await client.messages.create({
+                    model: MODEL, max_tokens: 2048, thinking: { type: 'adaptive' }, system, tools: TOOLS, messages
+                });
+                continue;
             }
+            if (response.stop_reason !== 'tool_use') break;
+
+            const toolUses = response.content.filter((b) => b.type === 'tool_use');
+            messages.push({ role: 'assistant', content: response.content });
+
+            const toolResults = [];
+            for (const tu of toolUses) {
+                if (tu.name === 'update_guest_profile') {
+                    profile = tu.input;
+                    toolResults.push({ type: 'tool_result', tool_use_id: tu.id, content: 'Profil rögzítve.' });
+                } else if (tu.name === 'search_data') {
+                    const r = await searchData(tu.input, host);
+                    toolResults.push({ type: 'tool_result', tool_use_id: tu.id, content: JSON.stringify(r) });
+                } else if (tu.name === 'end_conversation') {
+                    ended = true;
+                    closing = tu.input.closing_message;
+                    toolResults.push({ type: 'tool_result', tool_use_id: tu.id, content: 'OK, beszélgetés lezárva.' });
+                } else {
+                    toolResults.push({ type: 'tool_result', tool_use_id: tu.id, content: 'Ismeretlen tool.', is_error: true });
+                }
+            }
+            messages.push({ role: 'user', content: toolResults });
+
+            // Ha lezártuk, nem kell újabb kör – a záró üzenet a closing.
+            if (ended) break;
+
+            response = await client.messages.create({
+                model: MODEL, max_tokens: 2048, thinking: { type: 'adaptive' }, system, tools: TOOLS, messages
+            });
         }
+
+        // Végső szöveg összeszedése
+        let reply = '';
+        for (const block of response.content) {
+            if (block.type === 'text') reply += block.text;
+        }
+        const content = ended ? (closing || reply.trim() || 'Köszönöm a beszélgetést! 👋') : (reply.trim() || '…');
 
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
                 role: 'assistant',
-                content: reply.trim() || '…',
-                profile,       // strukturált vendégprofil, ha a modell kiszűrte
-                situation,     // a nyers szituáció (debug/frontend használatra)
+                content,
+                profile,
+                ended,
+                situation,
                 stop_reason: response.stop_reason
             })
         };
     } catch (error) {
         console.error('[KőszegAI] handler error:', error);
-        // 200-at adunk vissza, hogy a UI szépen megjelenítse a hibát
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({
-                role: 'assistant',
-                content: `Sajnos hiba történt: ${error.message}`,
-                profile: null,
-                debug: error.message
-            })
+            body: JSON.stringify({ role: 'assistant', content: `Sajnos hiba történt: ${error.message}`, profile: null, ended: false, debug: error.message })
         };
     }
 }
