@@ -13,9 +13,9 @@ const LS_PROFILE = 'koszegai_profile';
 const GREETING = {
     role: 'assistant',
     content:
-        'Jó napot kívánok! KőszegAI vagyok, a város kalauza – öröm a találkozás. 🎩\n' +
-        'Mondja csak: kivel érkezik, mennyi ideje van, mihez volna kedve? Program, látnivaló, ' +
-        'egy jó ebéd vagy épp egy legenda a régi falak közül – állok rendelkezésére.'
+        'Szervusz! Dimitryj vagyok, Kőszeg kalauza – öröm, hogy itt vagy. 🎩\n' +
+        'Mondd csak: kivel jöttél, mennyi időd van, mihez volna kedved? Program, látnivaló, ' +
+        'egy jó ebéd vagy épp egy legenda a régi falak közül – állok rendelkezésedre.'
 };
 
 // Tartós memória: a korábbi beszélgetés + a strukturált profil localStorage-ban.
@@ -98,7 +98,7 @@ export default function KoszegChat() {
         } catch (err) {
             setMessages((prev) => [
                 ...prev,
-                { role: 'assistant', content: 'Elnézését kérem, épp nem érem el a szolgáltatást. Kérem, próbálja meg kicsit később.' }
+                { role: 'assistant', content: 'Elnézést, épp nem érem el a szolgáltatást. Kérlek, próbáld meg kicsit később.' }
             ]);
         } finally {
             setLoading(false);
@@ -115,7 +115,7 @@ export default function KoszegChat() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-[#0C234B] text-white">
+        <div className="-mt-4 h-[100dvh] flex flex-col overflow-hidden bg-[#0C234B] text-white">
             {/* Fejléc */}
             <header className="shrink-0 border-b border-white/10 bg-[#0C234B]/95 backdrop-blur-xl">
                 <div className="max-w-2xl mx-auto px-4 h-16 flex items-center gap-3">
@@ -126,8 +126,8 @@ export default function KoszegChat() {
                         🎩
                     </div>
                     <div className="min-w-0">
-                        <h1 className="font-black text-sm tracking-wide leading-tight">KőszegAI</h1>
-                        <p className="text-[11px] text-blue-200/60 leading-tight">a város kalauza — mindig szolgálatára</p>
+                        <h1 className="font-black text-sm tracking-wide leading-tight">Dimitryj</h1>
+                        <p className="text-[11px] text-blue-200/60 leading-tight">Kőszeg kalauza · béta</p>
                     </div>
                     {coords && (
                         <span className="ml-auto flex items-center gap-1 text-[10px] text-[#C8AF64]/70" title="Helyzet ismert">
@@ -216,7 +216,7 @@ export default function KoszegChat() {
                         </div>
                     )}
                     <p className="text-[10px] text-blue-200/35 text-center mt-2">
-                        KőszegAI hibázhat — fontos részleteket érdemes ellenőrizni.
+                        Dimitryj hibázhat — fontos részleteket érdemes ellenőrizni.
                     </p>
                 </div>
             </div>
