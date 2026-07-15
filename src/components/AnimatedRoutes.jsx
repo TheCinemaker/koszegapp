@@ -64,6 +64,7 @@ const NearbyDiscoveryDemo = lazyWithRetry(() => import('../pages/NearbyDiscovery
 const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
 const Moments = lazyWithRetry(() => import('../pages/Moments'));
 const OstromPage = lazyWithRetry(() => import('../pages/OstromPage'));
+const KoszegChat = lazyWithRetry(() => import('../pages/KoszegChat'));
 
 // QR Platform (Standalone – Digitális Pincér)
 const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
@@ -261,6 +262,9 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           {/* New Eats Landing */}
           <Route path="/eats-landing" element={<EatsLanding />} />
+
+          {/* KőszegAI – szituációs chatbot */}
+          <Route path="/koszegai" element={<PageWrapper showFooter={false}><KoszegChat /></PageWrapper>} />
 
           {/* Ephemeral Moments Feed */}
           <Route path="/moments" element={<PageWrapper><Moments /></PageWrapper>} />
