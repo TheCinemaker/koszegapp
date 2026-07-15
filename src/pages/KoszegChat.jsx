@@ -176,9 +176,9 @@ export default function KoszegChat() {
                 </div>
             </div>
 
-            {/* Bemenet / lezárás */}
-            <div className="shrink-0 border-t border-white/10 bg-[#0C234B]/95 backdrop-blur-xl">
-                <div className="max-w-2xl mx-auto px-4 py-3">
+            {/* Bemenet / lezárás – alul hagyunk helyet a lebegő FloatingNavbar-nak (~72px) */}
+            <div className="shrink-0 border-t border-white/10 bg-[#0C234B]/95 backdrop-blur-xl pb-[calc(84px+env(safe-area-inset-bottom))]">
+                <div className="max-w-2xl mx-auto px-4 pt-3">
                     {ended ? (
                         <div className="text-center py-2">
                             <p className="text-xs text-blue-200/60 mb-3">A beszélgetést lezártuk.</p>
