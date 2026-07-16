@@ -54,14 +54,47 @@ export default function KioskPurchase() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0C234B] text-white p-6 sm:p-12 relative overflow-hidden flex flex-col justify-between">
+        <div className="min-h-screen bg-[#0C234B] text-white p-6 sm:p-12 relative overflow-hidden flex flex-col justify-between pt-28">
             {/* Ambient glows */}
             <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 blur-[130px] rounded-full pointer-events-none" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-yellow-500/5 blur-[130px] rounded-full pointer-events-none" />
 
-            {/* Warning if hotel source is not configured */}
+            {/* Premium Custom Header (Matches main app header style) */}
+            <header className="fixed top-4 left-4 right-4 h-14 z-40 flex justify-center">
+                <div className="
+                    w-full max-w-5xl
+                    h-full
+                    flex items-center justify-between px-4 sm:px-6
+                    bg-white/10 dark:bg-white/5 
+                    backdrop-blur-[25px] 
+                    backdrop-saturate-[1.8]
+                    rounded-2xl 
+                    border border-white/20 
+                    shadow-[0_10px_40px_rgba(0,0,0,0.2)]
+                    relative
+                ">
+                    <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-70" />
+
+                    {/* Logo (same as main App navbar) */}
+                    <div className="flex items-center gap-1 shrink-0 select-none">
+                        <span className="text-lg sm:text-xl font-bold text-white tracking-tight uppercase">
+                            visit
+                        </span>
+                        <span className="text-lg sm:text-xl font-black bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] bg-clip-text text-transparent tracking-tighter uppercase">
+                            Kőszeg
+                        </span>
+                    </div>
+
+                    {/* Title */}
+                    <div className="text-xs sm:text-sm font-black text-[#C8AF64] tracking-widest uppercase flex items-center gap-1.5">
+                        <IoSparkles className="text-yellow-400" /> KŐSZEGPASS VÁSÁRLÁS
+                    </div>
+                </div>
+            </header>
+
+            {/* Warning if hotel source is not configured (No blink animation) */}
             {!hotelSource && (
-                <div className="max-w-4xl mx-auto w-full bg-red-500/10 border border-red-500/30 rounded-2xl p-4 mb-6 flex items-center gap-3 text-red-200 text-xs sm:text-sm animate-pulse z-10">
+                <div className="max-w-4xl mx-auto w-full bg-red-500/10 border border-red-500/30 rounded-2xl p-4 mb-6 flex items-center gap-3 text-red-200 text-xs sm:text-sm z-10">
                     <IoAlertCircle className="text-xl shrink-0 text-red-400" />
                     <div className="flex-1">
                         <strong>Nincs beállítva recepció azonosító (Hotel Source)!</strong> A kártyaértékesítések így nem lesznek szállodához rendelve. Kattints az oldal alján lévő fogaskerékre a beállításhoz!
@@ -69,19 +102,15 @@ export default function KioskPurchase() {
                 </div>
             )}
 
-            <div className="max-w-4xl mx-auto w-full z-10 flex-1 flex flex-col justify-center py-8">
+            <div className="max-w-4xl mx-auto w-full z-10 flex-1 flex flex-col justify-center py-6">
                 
                 {/* Main Card container */}
                 <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 sm:p-12 backdrop-blur-xl shadow-2xl text-center relative overflow-hidden">
                     
-                    <div className="absolute top-0 right-0 bg-[#C8AF64] text-[#0C234B] text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-bl-2xl">
-                        RECEPCIÓS VÁSÁRLÁS
-                    </div>
-
-                    {/* Logo / Header */}
+                    {/* Logo / Header (No pulse) */}
                     <div className="flex justify-center mb-6">
                         <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#C8AF64] to-[#e4cc7d] flex items-center justify-center text-[#0C234B] shadow-xl shadow-[#C8AF64]/10">
-                            <IoQrCodeOutline size={44} className="animate-pulse" />
+                            <IoQrCodeOutline size={44} />
                         </div>
                     </div>
 
@@ -101,7 +130,7 @@ export default function KioskPurchase() {
                             <p className="text-2xl font-black text-[#C8AF64]">4 000 Ft</p>
                             <p className="text-[9px] text-blue-100/40 mt-0.5">/ 1 év érvényesség</p>
                         </div>
-                        <div className="bg-white/5 border border-[#C8AF64]/20 rounded-2xl p-5 text-center relative">
+                        <div className="bg-white/5 border border-[#C8AF64]/25 rounded-2xl p-5 text-center relative">
                             <div className="absolute top-0 right-0 bg-[#C8AF64]/20 text-[#C8AF64] text-[8px] font-black px-2 py-0.5 rounded-bl-lg uppercase">
                                 Családi opció
                             </div>
