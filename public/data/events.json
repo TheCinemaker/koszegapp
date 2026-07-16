@@ -477,6 +477,26 @@
     "endDate": "2026-07-17"
   },
   {
+    "name": "Borházi Zenés Estek",
+    "date": "2026-07-17",
+    "time": "19:30",
+    "location": "Tóth Pincészet",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "2026. július 17-én pénteken este Horváth Meggie, Svertsits Tamás és Domby Bertalan zenei válogatására bulizhattok.\n\nJó kőszegi borok a Tóth Pincészetből, friss sörök. Vannak mindenmentes üdítőink, remek vasi Buti Pálinka rengeteg féle ízben, röviditalok széles választékban, no meg persze zsíros kenyér 🙂\n\nBelépő: 1500.- Ft / fő\nAsztalfoglalás ajánlott.\n\n2 fős foglalásoknál előfordulhat, hogy egy másik 2 fős társasággal közös asztalt tudunk biztosítani.\nTóth Pincészet Borház\n\nKőszeg, Rákóczi utca 6.\nTel: +36 94 364 128",
+    "tags": [
+      "élőzene"
+    ],
+    "image": "meggie10.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": true,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1784224774267"
+  },
+  {
     "id": "varszinhaz-20260718-30",
     "name": "Operett-musical est",
     "date": "2026-07-18",
