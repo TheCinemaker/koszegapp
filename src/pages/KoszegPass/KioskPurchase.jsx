@@ -49,7 +49,7 @@ export default function KioskPurchase() {
                     border: '1px solid rgba(200,175,100,0.3)'
                 }
             });
-        }, 5000); // 5000 milliseconds = 5 seconds
+        }, 5000);
         setPressTimer(timer);
     };
 
@@ -79,14 +79,18 @@ export default function KioskPurchase() {
     };
 
     return (
-        <div className="min-h-screen text-gray-900 dark:text-white p-6 sm:p-12 relative overflow-hidden flex flex-col justify-between pt-28 bg-transparent">
-            {/* Custom Header (Same style as main App header, includes dark-light switch) */}
+        <div className="h-screen w-screen text-gray-900 dark:text-white p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent select-none box-border pt-20">
+            {/* Ambient glows */}
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[130px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-500/5 blur-[130px] rounded-full pointer-events-none" />
+
+            {/* Premium Custom Header (Matches main app header style) */}
             <header className="fixed top-4 left-4 right-4 h-14 z-40 flex justify-center">
                 <div className="
                     w-full max-w-5xl
                     h-full
                     flex items-center justify-between px-4 sm:px-6
-                    bg-white/70 dark:bg-[#1a1c2e]/40 
+                    bg-white/75 dark:bg-[#1a1c2e]/40 
                     backdrop-blur-[25px] 
                     backdrop-saturate-[1.8]
                     rounded-2xl 
@@ -142,86 +146,104 @@ export default function KioskPurchase() {
 
             {/* Warning if hotel source is not configured (Static design) */}
             {!hotelSource && (
-                <div className="max-w-4xl mx-auto w-full bg-red-500/10 border border-red-500/30 rounded-2xl p-4 mb-6 flex items-center gap-3 text-red-700 dark:text-red-200 text-xs sm:text-sm z-10">
-                    <IoAlertCircle className="text-xl shrink-0 text-red-500 dark:text-red-400" />
-                    <div className="flex-1">
+                <div className="max-w-4xl mx-auto w-full bg-red-500/10 border border-red-500/30 rounded-xl p-3 mb-2 flex items-center gap-3 text-red-700 dark:text-red-200 text-xs z-10 shrink-0">
+                    <IoAlertCircle className="text-lg shrink-0 text-red-500 dark:text-red-400" />
+                    <div className="flex-1 text-[11px] leading-tight">
                         <strong>Nincs beállítva recepció azonosító (Hotel Source)!</strong> A kártyaértékesítések így nem lesznek szállodához rendelve. A beállításhoz a recepciós tartsa nyomva a bal felső <strong>visitKőszeg</strong> logót 5 másodpercig.
                     </div>
                 </div>
             )}
 
-            <div className="max-w-4xl mx-auto w-full z-10 flex-1 flex flex-col justify-center py-6">
+            {/* Main Content Area - flex-1 and flex col justify-center handles automatic vertical centering */}
+            <div className="max-w-4xl mx-auto w-full z-10 flex-1 flex flex-col justify-center overflow-hidden py-2 sm:py-4">
                 
-                {/* Main Card container (Matches Home Page cards styling) */}
-                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 text-gray-900 dark:text-white rounded-[2.5rem] p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden">
+                {/* 2-Column Responsive Card (Fits perfectly on tablet viewports without scrolling) */}
+                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 text-gray-900 dark:text-white rounded-[2rem] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
                     
-                    <div className="absolute top-0 right-0 bg-[#C8AF64] text-[#0C234B] text-[9px] font-black uppercase tracking-widest px-4 py-1.5 rounded-bl-2xl">
+                    <div className="absolute top-0 right-0 bg-[#C8AF64] text-[#0C234B] text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl">
                         RECEPCIÓS VÁSÁRLÁS
                     </div>
 
-                    {/* Logo */}
-                    <div className="flex justify-center mb-6">
-                        <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#C8AF64] to-[#e4cc7d] flex items-center justify-center text-[#0C234B] shadow-xl shadow-[#C8AF64]/10">
-                            <IoQrCodeOutline size={44} />
-                        </div>
-                    </div>
-
-                    <h1 className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-gray-900 via-[#C8AF64] to-gray-900 dark:from-white dark:via-[#C8AF64] dark:to-white bg-clip-text text-transparent tracking-tight mb-4">
-                        KőszegPass Vásárlás
-                    </h1>
-                    
-                    <p className="text-gray-600 dark:text-blue-200/70 max-w-xl mx-auto text-sm sm:text-base leading-relaxed mb-10">
-                        Vásárolja meg digitális kedvezménykártyáját a recepción, fizessen biztonságosan bankkártyával, majd szkennelje be a QR-kódot a kártya letöltéséhez közvetlenül a telefonjára!
-                    </p>
-
-                    {/* Pricing presentation */}
-                    <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
-                        <div className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-2xl p-5 text-center">
-                            <h4 className="font-bold text-gray-900 dark:text-white text-base mb-1">Egyéni Pass</h4>
-                            <p className="text-[10px] text-gray-500 dark:text-blue-200/50 mb-3">Egy személy részére</p>
-                            <p className="text-2xl font-black text-[#C8AF64]">4 000 Ft</p>
-                            <p className="text-[9px] text-gray-400 dark:text-blue-100/40 mt-0.5">/ 1 év érvényesség</p>
-                        </div>
-                        <div className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-[#C8AF64]/25 rounded-2xl p-5 text-center relative">
-                            <div className="absolute top-0 right-0 bg-[#C8AF64]/20 text-[#C8AF64] text-[8px] font-black px-2 py-0.5 rounded-bl-lg uppercase">
-                                Családi opció
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        
+                        {/* Left Column: Info & Benefits */}
+                        <div className="md:col-span-6 text-left space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C8AF64] to-[#e4cc7d] flex items-center justify-center text-[#0C234B] shadow-md shadow-[#C8AF64]/10 shrink-0">
+                                    <IoQrCodeOutline size={26} />
+                                </div>
+                                <div>
+                                    <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-gray-900 dark:text-white">
+                                        KőszegPass
+                                    </h1>
+                                    <span className="text-[10px] font-bold text-gray-500 dark:text-blue-200/50 uppercase tracking-widest leading-none">
+                                        Digitális Városkártya
+                                    </span>
+                                </div>
                             </div>
-                            <h4 className="font-bold text-gray-900 dark:text-white text-base mb-1">Családi Pass</h4>
-                            <p className="text-[10px] text-gray-500 dark:text-blue-200/50 mb-3">2 felnőtt + gyermekek részére</p>
-                            <p className="text-2xl font-black text-[#C8AF64]">10 000 Ft</p>
-                            <p className="text-[9px] text-gray-400 dark:text-blue-100/40 mt-0.5">/ 1 év érvényesség</p>
+                            
+                            <p className="text-gray-600 dark:text-blue-200/70 text-xs sm:text-sm leading-relaxed">
+                                Vásárolja meg digitális kedvezménykártyáját a recepción, fizessen biztonságosan bankkártyával, majd szkennelje be a QR-kódot a kártya letöltéséhez közvetlenül a telefonjára!
+                            </p>
+
+                            {/* Quick Benefits list */}
+                            <div className="space-y-2 pt-2 text-xs text-gray-600 dark:text-blue-200/60 font-semibold border-t border-gray-200 dark:border-white/5">
+                                <div className="flex items-center gap-2">
+                                    <IoRibbonOutline className="text-[#C8AF64] text-sm shrink-0" />
+                                    <span>Múzeumi és éttermi kedvezmények</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <IoWalletOutline className="text-[#C8AF64] text-sm shrink-0" />
+                                    <span>Apple & Google Wallet támogatás</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Big CTA Button */}
-                    <button
-                        onClick={handleStartPurchase}
-                        className="w-full max-w-lg mx-auto h-16 bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] hover:scale-[1.02] active:scale-95 text-[#0C234B] font-black rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-3 text-lg"
-                    >
-                        <IoCard size={22} />
-                        <span>Vásárlás indítása</span>
-                        <IoArrowForward size={20} />
-                    </button>
+                        {/* Right Column: Pricing & CTA */}
+                        <div className="md:col-span-6 flex flex-col gap-4">
+                            {/* Pricing selection */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl p-3.5 text-center">
+                                    <h4 className="font-bold text-gray-900 dark:text-white text-xs mb-0.5">Egyéni Pass</h4>
+                                    <p className="text-lg font-black text-[#C8AF64] leading-none my-1">4 000 Ft</p>
+                                    <p className="text-[8px] text-gray-400 dark:text-blue-100/40">/ 1 év érvényesség</p>
+                                </div>
+                                <div className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-[#C8AF64]/25 rounded-xl p-3.5 text-center relative">
+                                    <h4 className="font-bold text-gray-900 dark:text-white text-xs mb-0.5">Családi Pass</h4>
+                                    <p className="text-lg font-black text-[#C8AF64] leading-none my-1">10 000 Ft</p>
+                                    <p className="text-[8px] text-gray-400 dark:text-blue-100/40">/ 1 év érvényesség</p>
+                                </div>
+                            </div>
 
-                    {/* Quick Benefits list */}
-                    <div className="flex flex-wrap justify-center gap-6 mt-10 pt-8 border-t border-gray-200 dark:border-white/5 text-xs text-gray-500 dark:text-blue-200/60 font-medium">
-                        <span className="flex items-center gap-1.5"><IoRibbonOutline className="text-[#C8AF64] text-sm" /> Múzeumi és éttermi kedvezmények</span>
-                        <span className="flex items-center gap-1.5"><IoWalletOutline className="text-[#C8AF64] text-sm" /> Apple & Google Wallet támogatás</span>
+                            {/* Big CTA Button */}
+                            <button
+                                onClick={handleStartPurchase}
+                                className="w-full h-14 bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] hover:scale-[1.02] active:scale-95 text-[#0C234B] font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm mt-2"
+                            >
+                                <IoCard size={18} />
+                                <span>Vásárlás indítása</span>
+                                <IoArrowForward size={16} />
+                            </button>
+                        </div>
+
                     </div>
 
                 </div>
             </div>
 
-            {/* Bottom area: Hotel Badge (No settings button) */}
-            <div className="flex justify-start items-center max-w-4xl mx-auto w-full z-10 border-t border-gray-200 dark:border-white/5 pt-4">
-                <div>
+            {/* Bottom area: Hotel Badge */}
+            <div className="flex justify-between items-center max-w-4xl mx-auto w-full z-10 border-t border-gray-200 dark:border-white/5 pt-2 shrink-0">
+                <div className="text-left">
                     {hotelSource ? (
-                        <div className="bg-[#C8AF64]/10 border border-[#C8AF64]/20 rounded-xl px-3 py-1.5 text-xs text-[#C8AF64] font-bold inline-block">
+                        <div className="bg-[#C8AF64]/10 border border-[#C8AF64]/20 rounded-lg px-2.5 py-1 text-[10px] text-[#C8AF64] font-bold inline-block">
                             📍 Recepció: {hotelSource.toUpperCase()}
                         </div>
                     ) : (
-                        <span className="text-red-500 dark:text-red-400 text-xs font-semibold">⚠️ Recepció nincs konfigurálva</span>
+                        <span className="text-red-500 dark:text-red-400 text-[10px] font-semibold">⚠️ Recepció nincs konfigurálva</span>
                     )}
+                </div>
+                <div className="text-[9px] text-gray-400 dark:text-blue-200/30">
+                    visitkoszeg.hu | minden jog fenntartva
                 </div>
             </div>
 
@@ -233,7 +255,7 @@ export default function KioskPurchase() {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-[#0e2042] border border-white/10 rounded-3xl p-6 w-full max-w-sm relative shadow-2xl text-left text-white"
+                            className="bg-[#0e2042] border border-white/10 rounded-2xl p-6 w-full max-w-sm relative shadow-2xl text-left text-white"
                         >
                             <button
                                 onClick={() => setShowSettings(false)}
@@ -242,10 +264,10 @@ export default function KioskPurchase() {
                                 <IoCloseOutline size={22} />
                             </button>
 
-                            <h3 className="text-lg font-black text-white mb-2 flex items-center gap-1.5">
+                            <h3 className="text-base font-black text-white mb-1 flex items-center gap-1.5">
                                 <IoSunnyOutline className="text-[#C8AF64]" /> Kioszk Beállítások
                             </h3>
-                            <p className="text-xs text-blue-200/60 mb-6">
+                            <p className="text-xs text-blue-200/60 mb-4">
                                 Állítsa be a recepcióhoz tartozó kódot (pl. `irottko` vagy `szarvas`). Ez a kód mentésre kerül ezen a tableten.
                             </p>
 
@@ -259,13 +281,13 @@ export default function KioskPurchase() {
                                         value={hotelSourceInput}
                                         onChange={e => setHotelSourceInput(e.target.value)}
                                         placeholder="pl. irottko"
-                                        className="w-full h-11 bg-black/35 border border-white/10 rounded-xl px-4 text-sm text-white focus:border-[#C8AF64]/50 outline-none"
+                                        className="w-full h-10 bg-black/35 border border-white/10 rounded-xl px-3 text-xs text-white focus:border-[#C8AF64]/50 outline-none"
                                     />
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-black h-11 rounded-xl text-xs transition-colors"
+                                    className="w-full bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-black h-10 rounded-xl text-xs transition-colors"
                                 >
                                     Mentés és bezárás
                                 </button>
