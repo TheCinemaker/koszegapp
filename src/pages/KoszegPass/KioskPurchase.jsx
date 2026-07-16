@@ -85,17 +85,18 @@ export default function KioskPurchase() {
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[130px] rounded-full pointer-events-none" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-500/5 blur-[130px] rounded-full pointer-events-none" />
 
-            {/* Premium Custom Header (Matches main app header style 100%) */}
-            <header className="fixed top-4 left-4 right-4 h-14 z-40 flex justify-center">
+            {/* Premium Custom Header (Matches main app header style 100% exactly) */}
+            <header className="fixed top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 flex justify-center">
                 <div className="
                     w-full max-w-5xl
                     h-full
-                    flex items-center justify-between px-4 sm:px-6
-                    bg-white/75 dark:bg-[#1a1c2e]/40 
+                    flex items-center justify-between px-3 sm:px-6
+                    bg-white/40 dark:bg-[#1a1c2e]/40 
                     backdrop-blur-[25px] 
                     backdrop-saturate-[1.8]
-                    rounded-2xl 
-                    border border-white/60 dark:border-white/20 
+                    backdrop-brightness-[1.1]
+                    rounded-[2rem] 
+                    border border-white/50 dark:border-white/20 
                     shadow-[0_10px_40px_rgba(0,0,0,0.1)]
                     relative
                 ">
@@ -111,10 +112,10 @@ export default function KioskPurchase() {
                         className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 group"
                         title="Beállítások megnyitásához tartsa nyomva 5 másodpercig"
                     >
-                        <span className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight uppercase">
+                        <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
                             visit
                         </span>
-                        <span className="text-lg sm:text-xl font-black bg-gradient-to-r from-indigo-700 to-indigo-900 dark:from-indigo-400 dark:to-indigo-300 bg-clip-text text-transparent tracking-tighter uppercase">
+                        <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent tracking-tighter uppercase text-readability-shadow">
                             Kőszeg
                         </span>
                     </div>
@@ -127,18 +128,19 @@ export default function KioskPurchase() {
                         
                         <button
                             onClick={() => { toggleDark(); triggerHaptic(); }}
-                            className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
-                                bg-gray-100 dark:bg-black/20
+                            className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full
+                                bg-white/20 dark:bg-black/20
+                                backdrop-blur-md
                                 text-gray-700 dark:text-gray-200
-                                border border-gray-200 dark:border-white/20
-                                hover:bg-gray-200 dark:hover:bg-black/40
+                                border border-white/20
+                                hover:bg-white/40 dark:hover:bg-black/40
                                 transition-all duration-300 hover:scale-105 active:scale-95"
                             title={dark ? 'Világos mód' : 'Sötét mód'}
                         >
                             {dark ? (
-                                <IoSunnyOutline className="text-lg text-yellow-400" />
+                                <IoSunnyOutline className="text-base sm:text-lg text-yellow-400" />
                             ) : (
-                                <IoMoonOutline className="text-lg text-gray-600" />
+                                <IoMoonOutline className="text-base sm:text-lg text-gray-600" />
                             )}
                         </button>
                     </div>
@@ -158,8 +160,8 @@ export default function KioskPurchase() {
             {/* Main Content Area */}
             <div className="max-w-4xl mx-auto w-full z-10 flex-1 flex flex-col justify-center overflow-hidden py-2 sm:py-4">
                 
-                {/* 2-Column Responsive Card (Matches Home Page cards styling 100% - No Gold) */}
-                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10 text-slate-900 dark:text-white rounded-[2rem] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                {/* 2-Column Responsive Card (Matches Home Page KőszegPass bento grid card design 100%) */}
+                <div className="bg-gradient-to-br from-[#0c234b] via-[#16366f] to-[#0c234b] border border-white/10 text-white rounded-[2rem] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
                     
                     <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl">
                         RECEPCIÓS VÁSÁRLÁS
@@ -170,31 +172,31 @@ export default function KioskPurchase() {
                         {/* Left Column: Info & Benefits */}
                         <div className="md:col-span-6 text-left space-y-4">
                             <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 flex items-center justify-center shrink-0">
+                                <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#e4cc7d] flex items-center justify-center shrink-0">
                                     <IoQrCodeOutline size={26} />
                                 </div>
                                 <div>
-                                    <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-slate-900 dark:text-white">
+                                    <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-white">
                                         KőszegPass
                                     </h1>
-                                    <span className="text-[10px] font-bold text-gray-500 dark:text-blue-200/50 uppercase tracking-widest leading-none">
+                                    <span className="text-[10px] font-bold text-blue-200/50 uppercase tracking-widest leading-none">
                                         Digitális Városkártya
                                     </span>
                                 </div>
                             </div>
                             
-                            <p className="text-slate-600 dark:text-zinc-300 text-xs sm:text-sm leading-relaxed">
+                            <p className="text-blue-100/80 text-xs sm:text-sm leading-relaxed">
                                 Vásárolja meg digitális kedvezménykártyáját a recepción, fizessen biztonságosan bankkártyával, majd szkennelje be a QR-kódot a kártya letöltéséhez közvetlenül a telefonjára!
                             </p>
 
-                            <div className="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-white/5">
-                                <div className="space-y-2 text-xs text-slate-600 dark:text-zinc-300 font-semibold">
+                            <div className="flex flex-col gap-2 pt-2 border-t border-white/10">
+                                <div className="space-y-2 text-xs text-blue-100/70 font-semibold">
                                     <div className="flex items-center gap-2">
-                                        <IoRibbonOutline className="text-indigo-600 dark:text-indigo-400 text-sm shrink-0" />
+                                        <IoRibbonOutline className="text-blue-400 text-sm shrink-0" />
                                         <span>Múzeumi és éttermi kedvezmények</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <IoWalletOutline className="text-indigo-600 dark:text-indigo-400 text-sm shrink-0" />
+                                        <IoWalletOutline className="text-blue-400 text-sm shrink-0" />
                                         <span>Apple & Google Wallet támogatás</span>
                                     </div>
                                 </div>
@@ -202,7 +204,7 @@ export default function KioskPurchase() {
                                 {/* Info Button Modal Trigger */}
                                 <button 
                                     onClick={() => { setShowInfoModal(true); triggerHaptic(); }}
-                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline transition-colors mt-2 text-left self-start"
+                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-blue-300 hover:underline transition-colors mt-2 text-left self-start"
                                     type="button"
                                 >
                                     <IoInformationCircleOutline size={16} />
@@ -215,22 +217,22 @@ export default function KioskPurchase() {
                         <div className="md:col-span-6 flex flex-col gap-4">
                             {/* Pricing selection */}
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-white/80 dark:bg-white/10 border border-white/60 dark:border-white/15 rounded-2xl p-5 text-center shadow-sm">
-                                    <h4 className="font-extrabold text-slate-900 dark:text-white text-sm mb-1">Egyéni Kártya</h4>
-                                    <p className="text-2xl font-black text-indigo-600 dark:text-indigo-400 my-1.5 leading-none">4 000 Ft</p>
-                                    <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">/ 1 év érvényesség</p>
+                                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center shadow-sm">
+                                    <h4 className="font-extrabold text-white text-sm mb-1">Egyéni Kártya</h4>
+                                    <p className="text-2xl font-black text-white my-1.5 leading-none">4 000 Ft</p>
+                                    <p className="text-[10px] text-blue-200/50 font-medium">/ 1 év érvényesség</p>
                                 </div>
-                                <div className="bg-white/80 dark:bg-white/10 border border-white/60 dark:border-white/15 rounded-2xl p-5 text-center shadow-sm">
-                                    <h4 className="font-extrabold text-slate-900 dark:text-white text-sm mb-1">Családi Kártya</h4>
-                                    <p className="text-2xl font-black text-indigo-600 dark:text-indigo-400 my-1.5 leading-none">10 000 Ft</p>
-                                    <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">/ 1 év érvényesség</p>
+                                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center shadow-sm">
+                                    <h4 className="font-extrabold text-white text-sm mb-1">Családi Kártya</h4>
+                                    <p className="text-2xl font-black text-white my-1.5 leading-none">10 000 Ft</p>
+                                    <p className="text-[10px] text-blue-200/50 font-medium">/ 1 év érvényesség</p>
                                 </div>
                             </div>
 
-                            {/* Big CTA Button */}
+                            {/* Big CTA Button (Matches standard buttons on site) */}
                             <button
                                 onClick={handleStartPurchase}
-                                className="w-full h-15 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base mt-2 active:scale-95 py-4"
+                                className="w-full h-15 bg-white hover:bg-blue-50 text-[#0c234b] font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base mt-2 active:scale-95 py-4"
                             >
                                 <IoCard size={20} />
                                 <span>Vásárlás indítása</span>
@@ -312,7 +314,7 @@ export default function KioskPurchase() {
             {/* Info Modal / Partner List explaining what the pass is for */}
             <AnimatePresence>
                 {showInfoModal && (
-                    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+                    <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
