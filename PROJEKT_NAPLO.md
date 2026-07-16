@@ -4,6 +4,12 @@ Ebben a fájlban követjük a projekt haladását, az elvégzett módosításoka
 
 ---
 
+## ⚠️ KRITIKUS SZABÁLY (2026. július 16-tól)
+**Ág-kezelés:** Minden új módosítást, dizájn átrendezést és tisztítást szigorúan a **`koszegapp3`** git ágra kell feltölteni (push). A `main` ághoz közvetlenül nem nyúlunk, kivéve ha kifejezetten a main-en lévő hiba javítására kapunk utasítást.
+
+---
+
+
 ## 📅 2026. július 6. - Gyerekrajz (Kiosk Mode) Modul és Eseményszűrés
 
 ### 🎨 Gyerekrajz (Kids Drawing) – Kiosk Mode integráció

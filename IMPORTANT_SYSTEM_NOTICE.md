@@ -1,5 +1,9 @@
 # ⚠️ FONTOS RENDSZERÜZENET / CRITICAL SYSTEM NOTICE
 
+## 🌿 FEJLESZTÉSI ÁG SZABÁLY (2026. július 16.)
+**Minden fejlesztést és dizájn módosítást a `koszegapp3` git ágon végzünk és oda pusholunk!** A `main` ághoz közvetlenül nem nyúlunk, kivéve ha a felhasználó kifejezetten kéri a main-en lévő hiba javítását.
+
+
 ## [HU] JEGYVÁSÁRLÁSI ÉS SZÁMLÁZÁSI RENDSZER
 **Állapot:** ÉLES / STABIL
 **Szabály:** EHHEZ A MODULHOZ SOHA TÖBBET NEM NYÚLUNK HOZZÁ!
