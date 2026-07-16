@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next'; // Added import
 
 import LiveHero from '../components/LiveHero';
 import NearbyDiscoveryCard from '../components/NearbyDiscoveryCard';
-import MomentsStrip from '../components/MomentsStrip';
+// import MomentsStrip from '../components/MomentsStrip';
 import SEO from '../components/SEO';
 
 // Link with framer-motion spring physics on hover/press — felt every interaction, mouse or touch.
@@ -60,12 +60,12 @@ export default function Home({ appData, weather }) {
   const sections = [
     { to: '/ostrom', label: 'Ostromnapok', desc: '2026.08.07. - 08.09. | Kőszeg kiemelt rendezvénye', icon: IoShieldOutline, featured: true, bgImage: '/images/ostrom_2026/ostromhero.png', span: 'col-span-2 sm:col-span-2', delay: 0.03 },
     // { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, span: 'col-span-2 sm:col-span-2', delay: 0.05 }, // KőszegPass - átépítés alatt
-    { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
-    { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
+    // { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.12 },
+    { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.14 },
     { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, span: 'col-span-1 sm:col-span-2', delay: 0.16 },
-    { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.18 },
+    // { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.18 },
     { to: '/hotels', label: t('sections.hotels.label'), desc: t('sections.hotels.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.20 },
     { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, span: 'col-span-1 sm:col-span-1', delay: 0.24 },
     { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, span: 'col-span-1 sm:col-span-1', delay: 0.26 },
@@ -105,7 +105,7 @@ export default function Home({ appData, weather }) {
         </FadeUp>
 
         {/* EPHEMERAL CITY MOMENTS */}
-        <MomentsStrip />
+        {/* <MomentsStrip /> */}
 
 
         {/* --- ULTRA-COMPACT BENTO GRID --- */}

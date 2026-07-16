@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import {
     IoShieldCheckmark,
     IoCalendar,
     IoArrowBack,
     IoInformationCircleOutline,
     IoSwapHorizontal,
-    IoSparkles
+    IoSparkles,
+    IoLogOutOutline
 } from 'react-icons/io5';
 import { supabase } from '../../lib/supabaseClient';
 import toast from 'react-hot-toast';
@@ -16,8 +17,17 @@ import AddToHomeHint from './AddToHomeHint';
 
 export default function PassProfile() {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    
     // A hozzáféréshez a token KÖTELEZŐ (nem kitalálható) – a slug önmagában nem elég.
-    const qrToken = searchParams.get('token') || '';
+    const [qrToken, setQrToken] = useState(() => {
+        const urlToken = searchParams.get('token') || '';
+        if (urlToken) {
+            localStorage.setItem('koszegpass_token', urlToken);
+            return urlToken;
+        }
+        return localStorage.getItem('koszegpass_token') || '';
+    });
 
     const [loading, setLoading] = useState(true);
     const [pass, setPass] = useState(null);
@@ -83,6 +93,14 @@ export default function PassProfile() {
         window.location.href = `/.netlify/functions/koszeg-pass-apple?passId=${pass.id}`;
     };
 
+    const handleLogout = () => {
+        if (window.confirm('Biztosan el akarod távolítani ezt a kártyát erről a telefonról?')) {
+            localStorage.removeItem('koszegpass_token');
+            toast.success('Kártya sikeresen eltávolítva.');
+            navigate('/pass');
+        }
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white">
@@ -142,7 +160,13 @@ export default function PassProfile() {
                         <h2 className="text-[#C8AF64] font-black text-sm uppercase tracking-widest flex items-center gap-1.5 justify-center">
                             <IoSparkles className="text-yellow-400" /> Személyes Pass
                         </h2>
-                        <div className="w-10 h-10" /> {/* Spacer */}
+                        <button 
+                            onClick={handleLogout}
+                            className="p-2 bg-white/5 hover:bg-red-500/10 hover:text-red-400 rounded-full transition-colors flex items-center justify-center w-10 h-10"
+                            title="Kártya eltávolítása"
+                        >
+                            <IoLogOutOutline size={20} />
+                        </button>
                     </div>
 
                     {/* Kártya */}

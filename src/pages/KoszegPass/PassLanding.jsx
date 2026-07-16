@@ -14,6 +14,14 @@ import QRCode from 'qrcode';
 
 export default function PassLanding() {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const savedToken = localStorage.getItem('koszegpass_token');
+        if (savedToken) {
+            navigate(`/pass/profile?token=${savedToken}`);
+        }
+    }, [navigate]);
+
     const searchParams = new URLSearchParams(window.location.search);
     const hotel = searchParams.get('hotel') || searchParams.get('hotel_source') || '';
 
@@ -166,6 +174,18 @@ export default function PassLanding() {
                         A regisztráció után a szálláshelyed automatikusan rögzítésre kerül.
                     </p>
                 )}
+
+                {/* Find card link */}
+                <FadeUp delay={0.7}>
+                    <div className="text-center mt-8">
+                        <button
+                            onClick={() => navigate('/pass/megkeresem')}
+                            className="text-xs font-bold text-[#C8AF64]/80 hover:text-[#C8AF64] underline transition-colors"
+                        >
+                            Már rendelkezel KőszegPass kártyával? Kártya megkeresése
+                        </button>
+                    </div>
+                </FadeUp>
             </div>
         </div>
     );
