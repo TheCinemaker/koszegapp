@@ -59,7 +59,7 @@ export default function Home({ appData, weather }) {
 
   const sections = [
     { to: '/ostrom', label: 'Ostromnapok', desc: '2026.08.07. - 08.09. | Kőszeg kiemelt rendezvénye', icon: IoShieldOutline, featured: true, bgImage: '/images/ostrom_2026/ostromhero.png', span: 'col-span-2 sm:col-span-2', delay: 0.03 },
-    // { to: '/pass', label: t('sections.pass.label'), desc: t('sections.pass.desc'), icon: IoQrCode, span: 'col-span-2 sm:col-span-2', delay: 0.05 }, // KőszegPass - átépítés alatt
+    { to: '/pass', label: 'KőszegPass', desc: 'A Te személyes kedvezménykártyád', icon: IoQrCode, featured: true, span: 'col-span-2 sm:col-span-2', delay: 0.05 },
     // { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.12 },
     { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
@@ -133,9 +133,11 @@ export default function Home({ appData, weather }) {
                         relative h-full rounded-[1.5rem] p-5 lg:p-6
                         ${sec.morphId
                           ? 'border border-white/50 dark:border-white/10'
-                          : sec.featured
-                            ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10 text-white'
-                            : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
+                          : sec.label === 'KőszegPass'
+                            ? 'bg-gradient-to-br from-[#0c234b] via-[#16366f] to-[#0c234b] border border-[#c8af64]/40 text-white shadow-[0_4px_25px_rgba(200,175,100,0.15)]'
+                            : sec.featured
+                              ? 'bg-[#123a57] dark:bg-[#0e2c44] border border-white/10 text-white'
+                              : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
                         shadow-sm hover:shadow-lg
                         flex flex-col justify-between group
                         ${sec.morphId ? 'overflow-visible' : 'overflow-hidden'}
@@ -168,9 +170,11 @@ export default function Home({ appData, weather }) {
                     className={`
                         relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3
                         transition-colors duration-300 ease-out group-hover:scale-105
-                        ${sec.featured
-                          ? 'bg-white/15 text-white'
-                          : 'bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 group-hover:text-[#0a97be]'}
+                        ${sec.label === 'KőszegPass'
+                          ? 'bg-[#c8af64]/20 text-[#e4cc7d]'
+                          : sec.featured
+                            ? 'bg-white/15 text-white'
+                            : 'bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100 group-hover:text-[#0a97be]'}
                     `}>
                     <sec.icon />
                   </motion.div>

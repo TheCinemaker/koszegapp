@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { IoCheckmarkCircle, IoMail, IoHome, IoSwapHorizontal, IoLinkOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import QRCode from 'qrcode';
@@ -7,11 +7,19 @@ import PassCard from './PassCard';
 
 export default function PassSuccess() {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const sessionId = searchParams.get('session_id');
+    const isKiosk = localStorage.getItem('kiosk_mode') === 'true' || searchParams.get('kiosk') === 'true';
+
     const [loading, setLoading] = useState(true);
     const [pass, setPass] = useState(null);
     const [qrCodeUrl, setQrCodeUrl] = useState('');
     const [isFlipped, setIsFlipped] = useState(false);
+
+    const handleKioskFinish = () => {
+        localStorage.removeItem('koszegpass_token');
+        navigate('/buy-pass');
+    };
 
     useEffect(() => {
         async function fetchPassData() {
@@ -41,9 +49,14 @@ export default function PassSuccess() {
 
                 setPass(row);
 
-                // Generate local QR code for display
-                const qrUrl = await QRCode.toDataURL(row.qr_token, {
-                    width: 200,
+                if (!isKiosk) {
+                    localStorage.setItem('koszegpass_token', row.qr_token);
+                }
+
+                // Generate local QR code for display pointing to the direct pass link URL
+                const targetUrl = `${window.location.origin}/pass/profile?token=${row.qr_token}`;
+                const qrUrl = await QRCode.toDataURL(targetUrl, {
+                    width: 250,
                     margin: 1,
                     color: { dark: '#0C234B', light: '#FFFFFF' }
                 });
@@ -125,84 +138,106 @@ export default function PassSuccess() {
                     </div>
 
                     <h1 className="text-2xl font-black bg-gradient-to-r from-white via-[#C8AF64] to-white bg-clip-text text-transparent mb-2">
-                        Sikeres Vásárlás! 🎉
+                        {isKiosk ? 'Köszönjük a vásárlást! 🎉' : 'Sikeres Vásárlás! 🎉'}
                     </h1>
                     <p className="text-blue-200/60 text-xs mb-8">
-                        KőszegPass kártyád elkészült és aktív.
+                        {isKiosk ? 'A KőszegPass kártya elkészült és aktív.' : 'KőszegPass kártyád elkészült és aktív.'}
                     </p>
 
-                    {/* Kártya */}
-                    <div className="mb-2">
-                        <PassCard
-                            holderName={pass.holder_name}
-                            passType={pass.pass_type}
-                            serial={pass.serial}
-                            expiresAt={pass.expires_at}
-                            qrCodeUrl={qrCodeUrl}
-                            isExpired={false}
-                            isFlipped={isFlipped}
-                            onToggle={() => setIsFlipped(!isFlipped)}
-                        />
-                    </div>
-
-                    {/* Flip hint */}
-                    <div className="flex justify-center items-center gap-2 mb-8 pointer-events-none">
-                        <IoSwapHorizontal className="text-[#C8AF64] text-xs animate-pulse" />
-                        <span className="text-[10px] font-semibold text-blue-200/50 uppercase tracking-widest">
-                            Koppints a kártyára a QR-kódhoz!
-                        </span>
-                    </div>
-
-                    {/* Wallet Buttons */}
-                    <div className="flex gap-4 justify-center items-center mb-6">
-                        <button
-                            onClick={handleAppleWallet}
-                            className="h-12 flex-1 flex items-center justify-center rounded-xl bg-black border border-zinc-800 hover:bg-zinc-900 hover:scale-[1.02] active:scale-95 transition-all outline-none px-4"
-                            title="Add to Apple Wallet"
-                        >
-                            <img
-                                src="/addToAppleWallet.svg"
-                                alt="Add to Apple Wallet"
-                                className="h-8 w-auto object-contain"
-                            />
-                        </button>
-                        
-                        <button
-                            onClick={handleGoogleWallet}
-                            className="h-12 flex-1 flex items-center justify-center rounded-xl bg-black border border-zinc-800 hover:bg-zinc-900 hover:scale-[1.02] active:scale-95 transition-all outline-none px-4"
-                            title="Add to Google Wallet"
-                        >
-                            <img
-                                src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
-                                alt="Add to Google Wallet"
-                                className="h-8 w-auto object-contain"
-                            />
-                        </button>
-                    </div>
-
-                    {/* Állandó, személyes link */}
-                    <div className="bg-[#C8AF64]/10 border border-[#C8AF64]/25 rounded-xl p-4 mb-6 text-left">
-                        <p className="text-xs font-bold text-white mb-1 flex items-center gap-1.5">
-                            <IoLinkOutline className="text-[#C8AF64]" /> A személyes linked
-                        </p>
-                        <p className="text-[10px] text-blue-100/60 leading-relaxed mb-3">
-                            Ezzel bármikor megnyithatod a kártyád – Wallet nélkül is. Mentsd el, vagy tedd ki a telefonod kezdőképernyőjére!
-                        </p>
-                        <div className="flex gap-2">
-                            <input
-                                readOnly
-                                value={passLink}
-                                onFocus={(e) => e.target.select()}
-                                className="flex-1 min-w-0 bg-black/25 border border-white/10 rounded-lg px-3 py-2 text-[10px] text-blue-100/70 font-mono truncate focus:outline-none"
-                            />
-                            <button
-                                onClick={handleCopyLink}
-                                className="shrink-0 bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-black px-4 rounded-lg text-xs transition-colors"
-                            >
-                                Másolás
-                            </button>
+                    {/* Kártya vagy Kiosk QR Kód */}
+                    {isKiosk ? (
+                        <div className="flex flex-col items-center mb-6">
+                            <div className="bg-white p-5 rounded-3xl inline-block mx-auto mb-4 border border-[#C8AF64]/30 shadow-2xl">
+                                <img src={qrCodeUrl} alt="KőszegPass QR kód" className="w-52 h-52 sm:w-60 sm:h-60 object-contain mx-auto" />
+                                <p className="text-[#0C234B] text-[10px] font-black uppercase tracking-wider mt-3">
+                                    Szkennelje be telefonjával!
+                                </p>
+                            </div>
+                            <div className="bg-yellow-500/10 border border-[#C8AF64]/30 rounded-2xl p-4 mb-6 text-center text-xs text-[#C8AF64] font-semibold leading-relaxed max-w-sm">
+                                📱 Szkennelje be ezt a QR-kódot a telefonja kamerájával a kártya letöltéséhez és telefonra mentéséhez!
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <>
+                            {/* Kártya */}
+                            <div className="mb-2">
+                                <PassCard
+                                    holderName={pass.holder_name}
+                                    passType={pass.pass_type}
+                                    serial={pass.serial}
+                                    expiresAt={pass.expires_at}
+                                    qrCodeUrl={qrCodeUrl}
+                                    isExpired={false}
+                                    isFlipped={isFlipped}
+                                    onToggle={() => setIsFlipped(!isFlipped)}
+                                />
+                            </div>
+
+                            {/* Flip hint */}
+                            <div className="flex justify-center items-center gap-2 mb-8 pointer-events-none">
+                                <IoSwapHorizontal className="text-[#C8AF64] text-xs animate-pulse" />
+                                <span className="text-[10px] font-semibold text-blue-200/50 uppercase tracking-widest">
+                                    Koppints a kártyára a QR-kódhoz!
+                                </span>
+                            </div>
+                        </>
+                    )}
+
+                    {/* Csak ha nem kiosk mód (személyes vásárlás) */}
+                    {!isKiosk && (
+                        <>
+                            {/* Wallet Buttons */}
+                            <div className="flex gap-4 justify-center items-center mb-6">
+                                <button
+                                    onClick={handleAppleWallet}
+                                    className="h-12 flex-1 flex items-center justify-center rounded-xl bg-black border border-zinc-800 hover:bg-zinc-900 hover:scale-[1.02] active:scale-95 transition-all outline-none px-4"
+                                    title="Add to Apple Wallet"
+                                >
+                                    <img
+                                        src="/addToAppleWallet.svg"
+                                        alt="Add to Apple Wallet"
+                                        className="h-8 w-auto object-contain"
+                                    />
+                                </button>
+                                
+                                <button
+                                    onClick={handleGoogleWallet}
+                                    className="h-12 flex-1 flex items-center justify-center rounded-xl bg-black border border-zinc-800 hover:bg-zinc-900 hover:scale-[1.02] active:scale-95 transition-all outline-none px-4"
+                                    title="Add to Google Wallet"
+                                >
+                                    <img
+                                        src="/images/google_badges/hu_add_to_google_wallet_add-wallet-badge.svg"
+                                        alt="Add to Google Wallet"
+                                        className="h-8 w-auto object-contain"
+                                    />
+                                </button>
+                            </div>
+
+                            {/* Állandó, személyes link */}
+                            <div className="bg-[#C8AF64]/10 border border-[#C8AF64]/25 rounded-xl p-4 mb-6 text-left">
+                                <p className="text-xs font-bold text-white mb-1 flex items-center gap-1.5">
+                                    <IoLinkOutline className="text-[#C8AF64]" /> A személyes linked
+                                </p>
+                                <p className="text-[10px] text-blue-100/60 leading-relaxed mb-3">
+                                    Ezzel bármikor megnyithatod a kártyád – Wallet nélkül is. Mentsd el, vagy tedd ki a telefonod kezdőképernyőjére!
+                                </p>
+                                <div className="flex gap-2">
+                                    <input
+                                        readOnly
+                                        value={passLink}
+                                        onFocus={(e) => e.target.select()}
+                                        className="flex-1 min-w-0 bg-black/25 border border-white/10 rounded-lg px-3 py-2 text-[10px] text-blue-100/70 font-mono truncate focus:outline-none"
+                                    />
+                                    <button
+                                        onClick={handleCopyLink}
+                                        className="shrink-0 bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-black px-4 rounded-lg text-xs transition-colors"
+                                    >
+                                        Másolás
+                                    </button>
+                                </div>
+                            </div>
+                        </>
+                    )}
 
                     {/* Email note */}
                     <div className="bg-white/5 border border-white/5 rounded-xl p-3.5 flex gap-3 text-left mb-8">
@@ -210,22 +245,36 @@ export default function PassSuccess() {
                             <IoMail />
                         </div>
                         <div>
-                            <p className="text-xs font-bold text-white mb-0.5">Küldtünk egy emailt</p>
+                            <p className="text-xs font-bold text-white mb-0.5">
+                                {isKiosk ? 'Küldtünk egy e-mailt a vendégnek' : 'Küldtünk egy emailt'}
+                            </p>
                             <p className="text-[10px] text-blue-100/50 leading-relaxed">
-                                A kártyádat tartalmazó levelet, a Wallet linkeket, ezt a személyes linket és a számládat is elküldtük a vásárláskor megadott email címre.
+                                {isKiosk 
+                                    ? 'A kártyát tartalmazó levelet, a Wallet linkeket, a személyes megnyitó linket és a számlát is kiküldtük a megadott e-mail címre.'
+                                    : 'A kártyádat tartalmazó levelet, a Wallet linkeket, ezt a személyes linket és a számládat is elküldtük a vásárláskor megadott email címre.'
+                                }
                             </p>
                         </div>
                     </div>
 
                     {/* Actions */}
                     <div className="flex gap-3">
-                        <Link
-                            to="/pass"
-                            className="flex-1 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold h-12 rounded-xl flex items-center justify-center gap-2 text-xs transition-all"
-                        >
-                            <IoHome size={16} />
-                            Főoldalra
-                        </Link>
+                        {isKiosk ? (
+                            <button
+                                onClick={handleKioskFinish}
+                                className="flex-1 bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] hover:scale-[1.01] active:scale-95 text-[#0C234B] font-black h-12 rounded-xl flex items-center justify-center gap-2 text-xs transition-all shadow-lg"
+                            >
+                                Kész / Új Vásárlás Indítása
+                            </button>
+                        ) : (
+                            <Link
+                                to="/pass"
+                                className="flex-1 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold h-12 rounded-xl flex items-center justify-center gap-2 text-xs transition-all"
+                            >
+                                <IoHome size={16} />
+                                Főoldalra
+                            </Link>
+                        )}
                     </div>
 
                 </div>
