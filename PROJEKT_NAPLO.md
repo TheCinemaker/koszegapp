@@ -9,6 +9,15 @@ Ebben a fájlban követjük a projekt haladását, az elvégzett módosításoka
 
 ---
 
+## 📅 2026. július 16. - KőszegPass Kioszk Portal és Főoldal Bento Grid
+- [x] **Főoldali Bento Grid Integráció:** Reaktiváltuk a megújult `KőszegPass` csempét egyedi prémium sötétkék/arany stílussal a főoldalon (`Home.jsx`).
+- [x] **Recepciós Kioszk Kezdőlap (`/buy-pass`):** Létrehoztuk a tabletekre szánt kezdőoldalt, amely letisztult headerrel, ár-bemutatóval és "Vásárlás indítása" gombbal rendelkezik. Nincs villódzó/pulse animáció.
+- [x] **Hotel Source Konfiguráció:** A kioszk oldal alján elhelyeztünk egy beállító fogaskereket a szállodák recepcióinak, amellyel a szálláshely kódja (pl. `irottko`) elmenthető a tablet memóriájában, és automatikusan csatolódik a vásárláshoz.
+- [x] **Kioszk Biztonsági Izoláció:** Ha a tablet kioszk módban fut, a teljes regisztrációs és fizetési folyamat alatt elrejtjük a globális fejlécet, a lebegő menüt és a spotlight panelt, megelőzve az elnavigálást.
+- [x] **Nagy Kioszk QR Kód Sikeres Fizetésnél:** A sikeres tranzakció után a tablet nem menti el a kártyát, hanem közvetlenül kirajzolja a nagy letöltő QR-kódot a kijelző közepére a vendégnek, majd a "Kész" gombbal visszaállítja a tabletet alaphelyzetbe.
+
+---
+
 
 ## 📅 2026. július 6. - Gyerekrajz (Kiosk Mode) Modul és Eseményszűrés
 
