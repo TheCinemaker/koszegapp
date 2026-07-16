@@ -80,17 +80,17 @@ export default function KioskPurchase() {
     };
 
     return (
-        <div className="h-screen w-screen text-slate-900 dark:text-white p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent select-none box-border pt-20">
+        <div className="h-screen w-screen text-slate-900 dark:text-white flex flex-col justify-center items-center overflow-hidden bg-transparent select-none box-border p-6 relative">
             {/* Ambient glows */}
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[130px] rounded-full pointer-events-none" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-500/5 blur-[130px] rounded-full pointer-events-none" />
 
             {/* Premium Custom Header (Matches main app header style 100% exactly) */}
-            <header className="fixed top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 flex justify-center">
+            <header className="absolute top-4 left-4 right-4 h-14 sm:h-16 z-50 flex justify-center">
                 <div className="
                     w-full max-w-5xl
                     h-full
-                    flex items-center justify-between px-3 sm:px-6
+                    flex items-center justify-between px-4 sm:px-6
                     bg-white/40 dark:bg-[#1a1c2e]/40 
                     backdrop-blur-[25px] 
                     backdrop-saturate-[1.8]
@@ -147,56 +147,56 @@ export default function KioskPurchase() {
                 </div>
             </header>
 
-            {/* Warning if hotel source is not configured (Static design) */}
+            {/* Warning if hotel source is not configured (Absolute placement below header) */}
             {!hotelSource && (
-                <div className="max-w-4xl mx-auto w-full bg-red-500/10 border border-red-500/30 rounded-xl p-3 mb-2 flex items-center gap-3 text-red-700 dark:text-red-200 text-xs z-10 shrink-0">
+                <div className="absolute top-22 left-4 right-4 max-w-4xl mx-auto w-full bg-red-500/10 border border-red-500/30 rounded-xl p-3 flex items-center gap-3 text-red-700 dark:text-red-200 text-xs z-40">
                     <IoAlertCircle className="text-lg shrink-0 text-red-500 dark:text-red-400" />
-                    <div className="flex-1 text-[11px] leading-tight">
+                    <div className="flex-1 text-[11px] leading-tight text-left">
                         <strong>Nincs beállítva recepció azonosító (Hotel Source)!</strong> A kártyaértékesítések így nem lesznek szállodához rendelve. A beállításhoz a recepciós tartsa nyomva a bal felső <strong>visitKőszeg</strong> logót 5 másodpercig.
                     </div>
                 </div>
             )}
 
-            {/* Main Content Area */}
-            <div className="max-w-4xl mx-auto w-full z-10 flex-1 flex flex-col justify-center overflow-hidden py-2 sm:py-4">
+            {/* Main Content Area - Enforced high card height to fill the screen vertically */}
+            <div className="w-full max-w-5xl h-[70vh] min-h-[420px] max-h-[540px] z-10 flex flex-col justify-center">
                 
-                {/* 2-Column Responsive Card (Matches Home Page KőszegPass bento grid card design 100%) */}
-                <div className="bg-gradient-to-br from-[#0c234b] via-[#16366f] to-[#0c234b] border border-white/10 text-white rounded-[2rem] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                {/* 2-Column Responsive Card (Matches Home Page KőszegPass bento grid card design 100% - Large Height) */}
+                <div className="bg-gradient-to-br from-[#0c234b] via-[#16366f] to-[#0c234b] border border-white/10 text-white rounded-[2rem] p-8 md:p-10 shadow-2xl relative overflow-hidden h-full flex items-center">
                     
-                    <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl">
+                    <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[8px] font-black uppercase tracking-widest px-4 py-1.5 rounded-bl-xl">
                         RECEPCIÓS VÁSÁRLÁS
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center w-full">
                         
                         {/* Left Column: Info & Benefits */}
-                        <div className="md:col-span-6 text-left space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#e4cc7d] flex items-center justify-center shrink-0">
-                                    <IoQrCodeOutline size={26} />
+                        <div className="md:col-span-6 text-left space-y-5">
+                            <div className="flex items-center gap-4">
+                                <div className="w-14 h-14 rounded-2xl bg-white/10 text-[#e4cc7d] flex items-center justify-center shrink-0">
+                                    <IoQrCodeOutline size={30} />
                                 </div>
                                 <div>
-                                    <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-none text-white">
+                                    <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-none text-white">
                                         KőszegPass
                                     </h1>
-                                    <span className="text-[10px] font-bold text-blue-200/50 uppercase tracking-widest leading-none">
+                                    <span className="text-[11px] font-bold text-blue-200/50 uppercase tracking-widest leading-none mt-1 block">
                                         Digitális Városkártya
                                     </span>
                                 </div>
                             </div>
                             
-                            <p className="text-blue-100/80 text-xs sm:text-sm leading-relaxed">
+                            <p className="text-blue-100/85 text-xs sm:text-sm leading-relaxed">
                                 Vásárolja meg digitális kedvezménykártyáját a recepción, fizessen biztonságosan bankkártyával, majd szkennelje be a QR-kódot a kártya letöltéséhez közvetlenül a telefonjára!
                             </p>
 
-                            <div className="flex flex-col gap-2 pt-2 border-t border-white/10">
-                                <div className="space-y-2 text-xs text-blue-100/70 font-semibold">
-                                    <div className="flex items-center gap-2">
-                                        <IoRibbonOutline className="text-blue-400 text-sm shrink-0" />
+                            <div className="flex flex-col gap-3 pt-3 border-t border-white/10">
+                                <div className="space-y-2.5 text-xs sm:text-sm text-blue-100/70 font-semibold">
+                                    <div className="flex items-center gap-3">
+                                        <IoRibbonOutline className="text-blue-400 text-lg shrink-0" />
                                         <span>Múzeumi és éttermi kedvezmények</span>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <IoWalletOutline className="text-blue-400 text-sm shrink-0" />
+                                    <div className="flex items-center gap-3">
+                                        <IoWalletOutline className="text-blue-400 text-lg shrink-0" />
                                         <span>Apple & Google Wallet támogatás</span>
                                     </div>
                                 </div>
@@ -204,39 +204,39 @@ export default function KioskPurchase() {
                                 {/* Info Button Modal Trigger */}
                                 <button 
                                     onClick={() => { setShowInfoModal(true); triggerHaptic(); }}
-                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-blue-300 hover:underline transition-colors mt-2 text-left self-start"
+                                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-400 hover:text-blue-300 hover:underline transition-colors mt-2 text-left self-start"
                                     type="button"
                                 >
-                                    <IoInformationCircleOutline size={16} />
+                                    <IoInformationCircleOutline size={18} />
                                     <span>Mire használható a KőszegPass?</span>
                                 </button>
                             </div>
                         </div>
 
                         {/* Right Column: Pricing & CTA (Enlarged and Emphasized) */}
-                        <div className="md:col-span-6 flex flex-col gap-4">
+                        <div className="md:col-span-6 flex flex-col gap-5 justify-center">
                             {/* Pricing selection */}
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center shadow-sm">
-                                    <h4 className="font-extrabold text-white text-sm mb-1">Egyéni Kártya</h4>
-                                    <p className="text-2xl font-black text-white my-1.5 leading-none">4 000 Ft</p>
-                                    <p className="text-[10px] text-blue-200/50 font-medium">/ 1 év érvényesség</p>
+                                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center shadow-sm flex flex-col justify-center min-h-[130px]">
+                                    <h4 className="font-extrabold text-white text-sm sm:text-base mb-1">Egyéni Kártya</h4>
+                                    <p className="text-2xl sm:text-3xl font-black text-white my-2 leading-none">4 000 Ft</p>
+                                    <p className="text-[10px] sm:text-xs text-blue-200/50 font-medium">/ 1 év érvényesség</p>
                                 </div>
-                                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center shadow-sm">
-                                    <h4 className="font-extrabold text-white text-sm mb-1">Családi Kártya</h4>
-                                    <p className="text-2xl font-black text-white my-1.5 leading-none">10 000 Ft</p>
-                                    <p className="text-[10px] text-blue-200/50 font-medium">/ 1 év érvényesség</p>
+                                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center shadow-sm flex flex-col justify-center min-h-[130px]">
+                                    <h4 className="font-extrabold text-white text-sm sm:text-base mb-1">Családi Kártya</h4>
+                                    <p className="text-2xl sm:text-3xl font-black text-white my-2 leading-none">10 000 Ft</p>
+                                    <p className="text-[10px] sm:text-xs text-blue-200/50 font-medium">/ 1 év érvényesség</p>
                                 </div>
                             </div>
 
-                            {/* Big CTA Button (Matches standard buttons on site) */}
+                            {/* Big CTA Button */}
                             <button
                                 onClick={handleStartPurchase}
-                                className="w-full h-15 bg-white hover:bg-blue-50 text-[#0c234b] font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base mt-2 active:scale-95 py-4"
+                                className="w-full h-16 bg-white hover:bg-blue-50 text-[#0c234b] font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base md:text-lg active:scale-95 py-4"
                             >
-                                <IoCard size={20} />
+                                <IoCard size={22} />
                                 <span>Vásárlás indítása</span>
-                                <IoArrowForward size={18} />
+                                <IoArrowForward size={20} />
                             </button>
                         </div>
 
@@ -245,8 +245,8 @@ export default function KioskPurchase() {
                 </div>
             </div>
 
-            {/* Bottom area: Hotel Badge */}
-            <div className="flex justify-between items-center max-w-4xl mx-auto w-full z-10 border-t border-gray-200 dark:border-white/5 pt-2 shrink-0">
+            {/* Bottom area: Hotel Badge (Absolute at bottom) */}
+            <div className="absolute bottom-4 left-4 right-4 max-w-5xl mx-auto w-full z-10 border-t border-gray-200 dark:border-white/5 pt-2 flex justify-between items-center shrink-0">
                 <div className="text-left">
                     {hotelSource ? (
                         <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/30 rounded-lg px-2.5 py-1 text-[10px] text-indigo-600 dark:text-indigo-400 font-bold inline-block">
