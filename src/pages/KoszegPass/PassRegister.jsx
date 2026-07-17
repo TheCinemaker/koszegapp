@@ -75,7 +75,7 @@ export default function PassRegister() {
             >
                 {/* Back button */}
                 <button 
-                    onClick={() => navigate('/pass')} 
+                    onClick={() => navigate(localStorage.getItem('kiosk_mode') === 'true' ? '/buy-pass' : '/pass')} 
                     className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors mb-6 flex items-center justify-center w-10 h-10"
                 >
                     <IoArrowBack size={20} />
