@@ -72,6 +72,11 @@ function MainAppContent() {
 
   // 🧠 Page Tracking for Behavior Engine & Google Analytics
   useEffect(() => {
+    // Clear kiosk mode if we navigate away from the kiosk/purchase flow
+    if (!location.pathname.startsWith('/pass') && !location.pathname.startsWith('/buy-pass')) {
+      localStorage.removeItem('kiosk_mode');
+    }
+
     // Google Analytics 4 - Pageview Event (SPA route handling)
     if (typeof window.gtag === 'function') {
       window.gtag('config', 'G-D0XMCLKMTC', {
