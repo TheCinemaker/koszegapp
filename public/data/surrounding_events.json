@@ -24,6 +24,30 @@
     "isVarszinhaz": false
   },
   {
+    "id": "surrounding-event-koszegfalva-20260725",
+    "name": "Kertmozi - Top Gun",
+    "settlement": "Kőszegfalva",
+    "date": "2026-07-25",
+    "time": "21:00 - 23:30",
+    "location": "Almafa Rendezvényház, HRSZ 096/10",
+    "coords": {
+      "lat": 47.37202383622611,
+      "lng": 16.579753442335512
+    },
+    "description": "Egy jó társaság, egy hideg ital és valami, amiért érdemes kicsit tovább fennmaradni...\nNa, valami ilyesmit szeretnénk július 25-én az Almáfában.\nTop Gun a vásznon, nyári este a csillagok alatt.\n\nNem fesztivál. Nem tömeg. Nem kötelező program.\nCsak egy jó este.\n\nA belépés ingyenes (az étel és ital nem). Film 21:00-tól naplemente után.",
+    "tags": [
+      "kertmozi",
+      "mozi",
+      "filmnap",
+      "szórakozás"
+    ],
+    "image": "kertmozi_top_gun.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "id": "surrounding-event-koszegdoroszlo-20260822",
     "name": "Sons Left Behind koncert",
     "settlement": "Kőszegdoroszló",
