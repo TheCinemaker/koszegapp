@@ -24,6 +24,10 @@ export async function fetchEvents() {
   return fetchData('/data/events.json', 'Az események betöltése sikertelen.');
 }
 
+export async function fetchSurroundingEvents() {
+  return fetchData('/data/surrounding_events.json', 'A környékbeli programok betöltése sikertelen.');
+}
+
 export async function fetchHotels() {
   return fetchData('/data/hotels.json', 'A szállások betöltése sikertelen.');
 }
@@ -108,7 +112,12 @@ export async function fetchAttractionById(id) {
 
 export async function fetchEventById(id) {
   const events = await fetchEvents();
-  return events.find(e => String(e.id) === String(id));
+  let found = events.find(e => String(e.id) === String(id));
+  if (!found) {
+    const surrounding = await fetchSurroundingEvents();
+    found = surrounding.find(e => String(e.id) === String(id));
+  }
+  return found;
 }
 
 export async function fetchHiddenGems() {

@@ -43,6 +43,10 @@
         "info": {
             "label": "Info",
             "desc": "Nützliches Wissen."
+        },
+        "surroundingEvents": {
+            "label": "Regionale Programme",
+            "desc": "Events in den Nachbarorten."
         }
     },
     "comingSoon": "DEMNÄCHST",

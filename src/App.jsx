@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
 import { DarkModeContext } from './contexts/DarkModeContext';
 import { useFavorites } from './contexts/FavoritesContext.jsx';
-import { fetchAttractions, fetchEvents, fetchLeisure, fetchRestaurants, fetchHotels, fetchParking } from './api';
+import { fetchAttractions, fetchEvents, fetchSurroundingEvents, fetchLeisure, fetchRestaurants, fetchHotels, fetchParking } from './api';
 import { AuthProvider } from './contexts/AuthContext';
 import { parseISO, endOfDay } from 'date-fns';
 import {
@@ -114,6 +114,7 @@ function MainAppContent() {
   const [appData, setAppData] = useState({
     attractions: [],
     events: [],
+    surroundingEvents: [],
     leisure: [],
     restaurants: [],
     hotels: [],
@@ -219,6 +220,7 @@ function MainAppContent() {
       const endpoints = [
         { name: 'attractions', fetch: fetchAttractions },
         { name: 'events', fetch: fetchEvents },
+        { name: 'surroundingEvents', fetch: fetchSurroundingEvents },
         { name: 'leisure', fetch: fetchLeisure },
         { name: 'restaurants', fetch: fetchRestaurants },
         { name: 'hotels', fetch: fetchHotels },
@@ -241,9 +243,8 @@ function MainAppContent() {
         }
       });
 
-      // Normalize events
-      const eventsData = data.events || [];
-      const normalizedEvents = eventsData.map(evt => {
+      // Normalize events function
+      const normalizeEvent = (evt) => {
         if (!evt) return null;
         let s, e;
         const parseLocal = (dateStr) => {
@@ -274,11 +275,15 @@ function MainAppContent() {
           }
         }
         return { ...evt, _s: s, _e: e };
-      }).filter(Boolean);
+      };
+
+      const normalizedEvents = (data.events || []).map(normalizeEvent).filter(Boolean);
+      const normalizedSurroundingEvents = (data.surroundingEvents || []).map(normalizeEvent).filter(Boolean);
 
       setAppData({
         attractions: data.attractions || [],
         events: normalizedEvents,
+        surroundingEvents: normalizedSurroundingEvents,
         leisure: data.leisure || [],
         restaurants: data.restaurants || [],
         hotels: data.hotels || [],
@@ -290,6 +295,7 @@ function MainAppContent() {
       const validIds = new Set([
         ...(data.attractions || []).map(a => String(a.id)),
         ...normalizedEvents.map(e => String(e.id)),
+        ...normalizedSurroundingEvents.map(e => String(e.id)),
         ...(data.leisure || []).map(l => String(l.id)),
         ...(data.restaurants || []).map(r => String(r.id)),
         ...(data.hotels || []).map(h => String(h.id)),

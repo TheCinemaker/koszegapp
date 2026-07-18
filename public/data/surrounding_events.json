@@ -1,0 +1,148 @@
+[
+  {
+    "id": "surrounding-event-cak-20260718",
+    "name": "Cáki Falunap",
+    "settlement": "Cák",
+    "date": "2026-07-18",
+    "time": "13:00 - 23:59",
+    "location": "Sportpálya és Könyvtár",
+    "coords": {
+      "lat": 47.3578,
+      "lng": 16.5074
+    },
+    "description": "Programok:\n\n13.00 – Ebéd\n14.00 – Operett műsor Simon Katával\n15.00 – Mollini bűvész show\n15.45 – Polgármesteri köszöntő\n16.00 – White Tiger RRC – Akrobatikus rock and roll bemutató\n16.30 – Regös–Foki Veronika – nyári slágerek\n17.30 – ApróCák – Mi vagyunk a Grund!\n18.00 – Tombola\n19.00 – Decsi fivérek – Retro koncert\n20.00 – BÁL, zenél: TIM TOM (Németh Tamás)\n\nEgész napos programok:\n- Kuglóf sütő verseny a könyvtárban\n- „Parasztházak kincsei” címmel kiállítás a Bartalos család felajánlott tárgyaiból\n- Retro játék kiállítás Horváth Csaba gyűjteményéből\n- ugrálóvár\n\nTovábbi információk:\nSütemény, tombolatárgy és egyéb felajánlásokat szívesen fogadunk!\nFehér Csabáné Kati 📞 +36 20 246 0180\n🌐 www.cak.hu\n✉️ onkormanyzat.cak@gmail.com\n\nFülepp BÜFÉ\nÉvaZoli\n\nA műsorváltoztatás jogát fenntartjuk! Várunk mindenkit szeretettel!",
+    "tags": [
+      "falunap",
+      "koncert",
+      "bál",
+      "családi"
+    ],
+    "image": "cak_falunap_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "✨ Cáki Falunap",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-velem-20261010",
+    "name": "Velemi Gesztenyenapok",
+    "settlement": "Velem",
+    "date": "2026-10-10",
+    "end_date": "2026-10-11",
+    "time": "10:00 - 18:00",
+    "location": "Velem, Rákóczi utca és környéke",
+    "coords": {
+      "lat": 47.3468,
+      "lng": 16.4912
+    },
+    "description": "A hagyományos Velemi Gesztenyenapok gesztenyesütéssel, kézműves vásárral, népművészeti bemutatókkal, zenei produkciókkal és gyermekprogramokkal várja az érdeklődőket.",
+    "tags": [
+      "gasztro",
+      "fesztivál",
+      "családi",
+      "hagyományőrző"
+    ],
+    "image": "",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-bozsok-20260912",
+    "name": "Bozsoki Falunap",
+    "settlement": "Bozsok",
+    "date": "2026-09-12",
+    "time": "13:00 - 23:59",
+    "location": "Bozsok Fő tér és a Sibrik-kastély parkja",
+    "coords": {
+      "lat": 47.3325,
+      "lng": 16.4851
+    },
+    "description": "Hagyományos Bozsoki Falunap helyi kulturális csoportok fellépésével, gyermekprogramokkal, koncertekkel és esti bállal.",
+    "tags": [
+      "falunap",
+      "zene",
+      "családi",
+      "program"
+    ],
+    "image": "",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-koszegdoroszlo-20260822",
+    "name": "Sons Left Behind koncert",
+    "settlement": "Kőszegdoroszló",
+    "date": "2026-08-22",
+    "time": "18:00 - 21:00",
+    "location": "Alasz Pince – Panoráma kóstoló",
+    "coords": {
+      "lat": 47.3718,
+      "lng": 16.5162
+    },
+    "description": "Élő rock/metál koncert az Alasz Pincénél, panorámás borkóstolással egybekötve Kőszegdoroszlón.",
+    "tags": [
+      "koncert",
+      "zene",
+      "bor",
+      "szórakozás"
+    ],
+    "image": "",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-koszegszerdahely-20260827",
+    "name": "Asztalkő Fesztivál",
+    "settlement": "Kőszegszerdahely",
+    "date": "2026-08-27",
+    "end_date": "2026-08-30",
+    "time": "10:00 - 22:00",
+    "location": "Bozsok, Cák, Kőszegdoroszló, Kőszegszerdahely, Velem",
+    "coords": {
+      "lat": 47.3486,
+      "lng": 16.5059
+    },
+    "description": "A Kőszeghegyalja nyárzáró összművészeti és gasztronómiai fesztiválja. Zenei fellépők, kiállítások, borkóstolók, színházi előadások és családi programok öt hegyaljai településen.",
+    "tags": [
+      "fesztivál",
+      "zene",
+      "gasztro",
+      "művészet"
+    ],
+    "image": "",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-lukacshaza-20260711",
+    "name": "Lukácsháza Falunap",
+    "settlement": "Lukácsháza",
+    "date": "2026-07-11",
+    "time": "13:00 - 23:59",
+    "location": "Közösségi Ház és Csömötei szőlőhegy",
+    "coords": {
+      "lat": 47.3115,
+      "lng": 16.5862
+    },
+    "description": "Gazdag programkínálat: néptáncbemutatók, aerobik, White Tiger RRC bemutató. Fellépők: Dömötör Balázs, Big Mouse Band, sztárvendég: Kabai Alex, majd DJ Szigi utcabálja.",
+    "tags": [
+      "falunap",
+      "koncert",
+      "zene",
+      "családi"
+    ],
+    "image": "",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  }
+]
