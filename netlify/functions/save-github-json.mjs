@@ -1,7 +1,5 @@
-import fetch from "node-fetch";
 // netlify/functions/save-github-json.mjs
-
-// Removed unused jsonwebtoken import
+// Removed node-fetch import to prevent ESM/CJS runtime conflicts on Netlify
 
 export async function handler(event) {
   try {
