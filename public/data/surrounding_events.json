@@ -48,6 +48,33 @@
     "isVarszinhaz": false
   },
   {
+    "id": "surrounding-event-velem-20260805",
+    "name": "11. Kaptár Tábor",
+    "settlement": "Velem",
+    "date": "2026-08-05",
+    "end_date": "2026-08-09",
+    "time": "Egész napos",
+    "location": "Novákfalva Üdülőfalu, Velem",
+    "coords": {
+      "lat": 47.3468,
+      "lng": 16.4912
+    },
+    "description": "Szeretettel várunk Téged a legnagyobb szlovákiai magyar katolikus táborba, a Kaptárba!\nEnnyi jelzővel elsőre kicsit ijesztőnek tűnhet a dolog, de ha már voltál, tudhatod, hogy ettől derűsebb, kellemesebb helyen nem is lehetnél - tele vagyunk zenével, játékkal, tánccal, nevetéssel.\n\nHa hitedet megélő, Istennel való kapcsolatát ápoló ember vagy, lehetőséged lesz elmélyíteni azt az előadások, beszélgetések által. Ha nem tartod magad hívőnek, vagy hited elgyengült, segítünk, hogy itt rátalálhass Istenre.\n\nIdén augusztus 5-9. között találkozunk a 11. alkalommal szervezett Kaptár táborban, idén harmadik alkalommal a csodás Velem - Novákfalva üdülőfaluban!\n\nKapcsolat:\n🌐 kaptar.sk\nFacebook: Kaptár\nInstagram: kaptar_official",
+    "tags": [
+      "tábor",
+      "közösség",
+      "katolikus",
+      "fiatalok",
+      "zene",
+      "program"
+    ],
+    "image": "kaptar_tabor_2026.png",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "id": "surrounding-event-koszegdoroszlo-20260822",
     "name": "Sons Left Behind koncert",
     "settlement": "Kőszegdoroszló",
@@ -115,6 +142,32 @@
       "program"
     ],
     "image": "bozsok_falunap.png",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-velem-20260918",
+    "name": "I. Magyar Spórafesztivál",
+    "settlement": "Velem",
+    "date": "2026-09-18",
+    "end_date": "2026-09-20",
+    "time": "Egész napos",
+    "location": "Novákfalva Üdülőfalu, Velem",
+    "coords": {
+      "lat": 47.3468,
+      "lng": 16.4912
+    },
+    "description": "2026 őszén kerül megrendezésre az első Magyar Spórafesztivál.\nSzakmai előadások, gombatúrák, és sok-sok közösségi program vár rátok.\nSzeretettel várunk, legyél akár amatőr gombász, akár gombaszakellenőr!\n\nELŐADÓK:\n- dr. Dima Bálint\n- dr. Benedek Lajos\n- dr. Pozsgai Zsolt\n- Szilva Árpád\n- Csordás Erik\n\nPROGRAMOK:\n- vezetett gombatúrák\n- gombahatározás: Császárné Erdélyi Katalin\n- mikroszkópos bemutató\n\nExtra programok a fesztivál ideje alatt:\n- növényismeret Vadókával\n- gomba fotó & rajz kiállítás - Molnár Renátó\n- társasjáték sarok játékmesterekkel\n\nRészvételi díj: 49 900 Ft/fő\nTartalmazza: szállást 2 éjszakára akár külön 2-3 fős házikóban, napi 2 étkezést, programokon való részvételt.\n\nKapcsolat:\ninfo@gombatanfolyam.hu\n+36 70 410 2145\n🌐 https://gombatanfolyam.hu/\nFacebook: https://www.facebook.com/gombatanfolyam",
+    "tags": [
+      "fesztivál",
+      "gombászat",
+      "szakmai",
+      "természet",
+      "program"
+    ],
+    "image": "magyar_sporafesztival_2026.png",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
