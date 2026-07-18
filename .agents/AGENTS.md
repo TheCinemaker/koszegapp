@@ -22,3 +22,10 @@ This file contains persistent workspace rules and historical context for AI agen
 - **Cohesion:** All new pages/dialogues must blend 100% with the design language of the visitKőszeg home page.
 - **No Random/Gold Accents:** Do not use custom gold borders (`#C8AF64`), gold text gradients, or sparkles icons unless explicitly requested for branding elements like the pass card itself. Standard text colors (`text-slate-900 dark:text-white`), bento card styles (`bg-white/70 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-[30px]`), and theme colors (indigo/blue `text-indigo-600 dark:text-indigo-400`, `bg-indigo-600`) must be used for buttons, links, and borders.
 - **No-Scroll Policy:** Tablet kiosk pages must use viewport-aware height (`h-screen overflow-hidden`) and compact grids/flexboxes to guarantee they fit within landscape viewports without introducing vertical scrollbars.
+
+## 🧠 SESSION MEMORY & ACTIVE RULES
+
+### 1. Manual Event & JSON Management (Active until 2026-07-26)
+- **Rule:** The user will not use the admin dashboard interface for new event creation for a week.
+- **Action:** Any new events sent by the user (images, flyers, descriptions) must be manually coded directly into `public/data/events.json` or `public/data/surrounding_events.json`. All uploaded flyers/images must be copied, staged, committed, and pushed directly to both `koszegapp3` and `main` branches by the agent. Do not ask the user to use the admin page.
+
