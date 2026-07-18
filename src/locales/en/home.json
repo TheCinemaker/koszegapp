@@ -43,6 +43,10 @@
         "info": {
             "label": "Info",
             "desc": "Useful knowledge."
+        },
+        "surroundingEvents": {
+            "label": "Regional Events",
+            "desc": "Programs in surrounding towns."
         }
     },
     "comingSoon": "COMING SOON",

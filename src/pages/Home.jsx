@@ -63,6 +63,7 @@ export default function Home({ appData, weather }) {
     // { to: '/tickets', label: t('sections.tickets.label') || 'Jegyek', desc: t('sections.tickets.desc') || 'Események és foglalás', icon: IoTicketOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.10 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.12 },
+    { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.13 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.14 },
     { to: '/gastronomy', label: t('sections.food.label'), desc: t('sections.food.desc'), icon: IoRestaurantOutline, span: 'col-span-1 sm:col-span-2', delay: 0.16 },
     // { to: '/booking', label: t('sections.booking.label'), desc: t('sections.booking.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.18 },
@@ -185,7 +186,7 @@ export default function Home({ appData, weather }) {
                       <motion.h3
                         layoutId={sec.morphId ? `${sec.morphId}-title` : undefined}
                         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-                        className={`text-xl font-bold leading-none tracking-tight ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                        className={`text-base font-extrabold uppercase leading-none tracking-wider ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                         {sec.label}
                       </motion.h3>
                       {!sec.comingSoon && (

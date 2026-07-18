@@ -5,7 +5,8 @@ import { FaSearch } from 'react-icons/fa';
 
 const SOURCES = [
   { url: "/data/attractions.json", label: "Látnivalók", key: "attractions", route: "/attractions" },
-  { url: "/data/events.json", label: "Események", key: "events", route: "/events" },
+  { url: "/data/events.json", label: "Programok", key: "events", route: "/events" },
+  { url: "/data/surrounding_events.json", label: "Hegyaljai programok", key: "surrounding_events", route: "/surrounding-events" },
   { url: "/data/hotels.json", label: "Szállások", key: "hotels", route: "/hotels" },
   { url: "/data/restaurants.json", label: "Vendéglátás", key: "restaurants", route: "/gastronomy" },
   { url: "/data/parking.json", label: "Parkolás", key: "parking", route: "/parking" },

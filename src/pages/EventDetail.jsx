@@ -352,6 +352,8 @@ export default function EventDetail() {
                 navigate(`/attractions/${locationState.fromAttraction.id}`);
               } else if (locationState?.fromVarszinhaz || evt?.isVarszinhaz) {
                 navigate('/varszinhaz');
+              } else if (locationState?.fromSurrounding || evt?.settlement) {
+                navigate('/surrounding-events');
               } else {
                 navigate('/events');
               }
@@ -415,7 +417,9 @@ export default function EventDetail() {
                   {evt.location && (
                     <div className="flex items-center gap-2">
                       <IoLocationOutline className="text-[#0a97be] text-xl" />
-                      <span className="font-bold text-lg">{evt.location}</span>
+                      <span className="font-bold text-lg">
+                        {evt.settlement ? `${evt.settlement}, ` : ''}{evt.location}
+                      </span>
                     </div>
                   )}
                   {(evt.location && timeText) && <span className="text-gray-300 dark:text-gray-700">•</span>}

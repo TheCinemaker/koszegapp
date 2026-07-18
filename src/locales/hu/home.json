@@ -5,7 +5,7 @@
             "desc": "Digitális városkártya."
         },
         "events": {
-            "label": "Események",
+            "label": "Programok",
             "desc": "Élmények. Élőben."
         },
         "attractions": {
@@ -47,6 +47,10 @@
         "booking": {
             "label": "Booking",
             "desc": "Szállásfoglalás."
+        },
+        "surroundingEvents": {
+            "label": "Hegyaljai programok",
+            "desc": "Közeli települések rendezvényei."
         }
     },
     "comingSoon": "HAMAROSAN",

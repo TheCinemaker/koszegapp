@@ -44,6 +44,7 @@ const USER_DISPLAY_NAMES = {
 // Ikonok hozzárendelése a menüpontokhoz
 const MENU_ICONS = {
   events: FaCalendarAlt,
+  surrounding_events: FaCalendarAlt,
   attractions: FaLandmark,
   restaurants: FaUtensils,
   hotels: FaBed,
@@ -54,7 +55,7 @@ const MENU_ICONS = {
 
 const EDITABLE_CONTENT = {
   events: {
-    name: "Események",
+    name: "Programok",
     description: "Városi programok és események kezelése.",
     path: "public/data/events.json",
     permissions: {
@@ -67,6 +68,21 @@ const EDITABLE_CONTENT = {
     },
     formComponent: EventForm,
     previewComponent: EventCard,
+  },
+  surrounding_events: {
+    name: "Hegyaljai programok",
+    description: "Környező települések programjainak kezelése.",
+    path: "public/data/surrounding_events.json",
+    permissions: {
+      view: ["events:view_all", "events:view_own"],
+      create: "events:create",
+      edit: "events:edit",
+      edit_own: "events:edit_own",
+      delete: "events:delete",
+      delete_own: "events:delete_own",
+    },
+    formComponent: SurroundingEventForm,
+    previewComponent: SurroundingEventCard,
   },
   attractions: {
     name: "Látnivalók",
@@ -573,6 +589,68 @@ function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
   );
 }
 
+function SurroundingEventCard({ item: ev, onClick, onDelete, canDelete }) {
+  const img = ev.image ? `${IMG_FUNC_BASE}${encodeURIComponent("public/images/events/" + ev.image)}` : "";
+  const dateClass = new Date(ev.date) < new Date() ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700";
+
+  return (
+    <CardBase onClick={onClick}>
+      {/* Action Buttons (Top Right) */}
+      <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
+        {canDelete && onDelete && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Don't open edit modal
+              onDelete(ev.id);
+            }}
+            className="p-2.5 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-colors"
+            title="Törlés"
+          >
+            <FaTrash size={14} />
+          </button>
+        )}
+      </div>
+
+      {/* ID Badge (Top Left) */}
+      <div className="absolute top-12 left-3 z-20">
+        <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-black/50 text-white backdrop-blur-sm">
+          #{ev.id}
+        </span>
+      </div>
+
+      <div className="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
+        {img && (
+          <img
+            src={img}
+            alt={ev.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
+        )}
+        <div className="absolute top-3 left-3 z-20">
+          <span className={`px-2 py-1 rounded-md text-xs font-bold shadow-sm ${dateClass}`}>
+            {ev.date}
+          </span>
+        </div>
+      </div>
+      <div className="p-4 flex flex-col flex-1">
+        {ev.settlement && (
+          <span className="self-start inline-block mb-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
+            {ev.settlement}
+          </span>
+        )}
+        <h3 className="font-bold text-gray-900 dark:text-white truncate group-hover:text-indigo-600 transition-colors">
+          {ev.name}
+        </h3>
+        <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
+          <span className="flex items-center gap-1"><FaCalendarAlt /> {ev.time}</span>
+          <span className="flex items-center gap-1 truncate"><FaMapMarkerAlt /> {ev.location}</span>
+        </div>
+      </div>
+    </CardBase>
+  );
+}
+
 
 // ---- ŰRLAPOK (MODERNIZED) ----
 // (A form logika ugyanaz, csak a kinézet változott a FormModal/Fields miatt)
@@ -794,6 +872,214 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
                 🔄 Pass frissítése
               </button>
             )}
+            <button type="button" onClick={onCancel} className="btn-secondary">Mégse</button>
+            <button type="submit" className="btn-primary"><FaSave className="inline mr-2" />Mentés</button>
+          </div>
+        </footer>
+      </form>
+    </FormModal>
+  );
+}
+
+function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
+  const { user, token, hasPermission } = useAuth();
+  const empty = { name: "", settlement: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
+  const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
+
+  const [v, setV] = useState({ ...empty, ...initial });
+  const [tagsInput, setTagsInput] = useState((initial?.tags || []).join(", "));
+  const [err, setErr] = useState("");
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadMsg, setUploadMsg] = useState("");
+  const [coordsInput, setCoordsInput] = useState("");
+
+  useEffect(() => {
+    setV({ ...empty, ...initial, createdBy: initial?.createdBy || user.id });
+    setTagsInput((initial?.tags || []).join(", "));
+    setErr(""); setUploadMsg("");
+    const c = initial?.coords;
+    setCoordsInput(c && (c.lat !== 0 || c.lng !== 0) ? `${c.lat}, ${c.lng}` : "");
+  }, [initial, user.id]);
+
+  const handleCoordsChange = (e) => {
+    const s = e.target.value;
+    setCoordsInput(s);
+    const parts = s.split(",").map((p) => p.trim());
+    if (parts.length === 2) {
+      const lat = parseFloat(parts[0]); const lng = parseFloat(parts[1]);
+      if (!isNaN(lat) && !isNaN(lng)) setV((prev) => ({ ...prev, coords: { lat, lng } }));
+    }
+  };
+
+  const handleLocationSelect = (e) => {
+    const locName = e.target.value;
+    if (!locName) return;
+
+    if (PREDEFINED_LOCATIONS[locName]) {
+      const coords = PREDEFINED_LOCATIONS[locName];
+      setV(prev => ({ ...prev, location: locName, coords: coords }));
+      setCoordsInput(`${coords.lat}, ${coords.lng}`);
+    } else {
+      setV(prev => ({ ...prev, location: locName }));
+    }
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    let finalData = { ...v };
+    if (!finalData.id || finalData.id.trim() === "") {
+      const year = new Date().getFullYear();
+      const timestamp = Date.now();
+      finalData.id = `surrounding-event-${year}-${timestamp}`;
+    }
+
+    if (!finalData.name?.trim()) return setErr("A 'Név' mező kitöltése kötelező.");
+    if (!finalData.settlement?.trim()) return setErr("A 'Település' mező kitöltése kötelező.");
+    if (!isValidDate(finalData.date)) return setErr("A dátum formátuma érvénytelen (ÉÉÉÉ-HH-NN).");
+    if (!isValidTime(finalData.time)) return setErr("Az idő formátuma érvénytelen (ÓÓ:PP).");
+    if (!finalData.location?.trim()) return setErr("A 'Helyszín' mező kitöltése kötelező.");
+
+    const tags = tagsInput.split(",").map((t) => t.trim()).filter(Boolean);
+    onSave({ ...finalData, tags, createdBy: finalData.createdBy || user.id });
+  };
+
+  const canEdit = hasPermission("events:edit") || (hasPermission("events:edit_own") && initial.createdBy === user.id) || (!initial.id && hasPermission("events:create"));
+
+  if (!canEdit && initial.id) {
+    return (
+      <FormModal title="Részletek (Csak olvasás)" onCancel={onCancel}>
+        <div className="p-8 text-center">
+          <p className="text-red-500 mb-4">Nincs jogosultságod ezt az elemet szerkeszteni.</p>
+          <button onClick={onCancel} className="btn-secondary">Bezárás</button>
+        </div>
+      </FormModal>
+    );
+  }
+
+  const uploadImage = async () => {
+    if (!file) { setUploadMsg("Válassz egy képfájlt!"); return; }
+    setUploading(true); setUploadMsg(""); setErr("");
+    try {
+      const contentBase64 = await fileToBase64(file);
+      const res = await fetch(FILE_UPLOAD_FN, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ filename: file.name, contentBase64, dir: "public/images/events", overwrite: false }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j?.error || "Feltöltési hiba.");
+      setV((prev) => ({ ...prev, image: j.filename }));
+      setUploadMsg(`✅ Sikeres feltöltés: ${j.filename}`);
+    } catch (e) {
+      setUploadMsg(`❌ ${e?.message || "Hiba."}`);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const imgUrl = v.image ? `${IMG_FUNC_BASE}${encodeURIComponent("public/images/events/" + v.image)}` : "";
+
+  const formSettlements = ["Bozsok", "Cák", "Csepreg", "Horvátzsidány", "Kőszegdoroszló", "Kőszegpaty", "Kőszegszerdahely", "Lukácsháza", "Nemescsó", "Pusztacsó", "Tömörd", "Velem"];
+
+  return (
+    <FormModal title={initial?.id ? "Környékbeli program szerkesztése" : "Új környékbeli program"} onCancel={onCancel}>
+      <form onSubmit={submit} className="flex flex-col h-full bg-gray-50/50 dark:bg-black/20">
+        <div className="flex-1 p-8 space-y-6">
+          {err && <div className="p-4 bg-red-100 text-red-700 rounded-xl">{err}</div>}
+          <FormRow>
+            <FormField label="ID (Auto)"><TextInput value={v.id} disabled={true} placeholder="Mentéskor generálódik..." /></FormField>
+            <FormField label="Név"><TextInput value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></FormField>
+          </FormRow>
+
+          <FormRow>
+            <FormField label="Település">
+              <select
+                value={v.settlement}
+                onChange={(e) => setV({ ...v, settlement: e.target.value })}
+                className={inputClasses}
+              >
+                <option value="">-- Válassz települést --</option>
+                {formSettlements.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </FormField>
+            <FormField label="Egyedi település (ha nincs a listában)"><TextInput value={v.settlement} onChange={(e) => setV({ ...v, settlement: e.target.value })} /></FormField>
+          </FormRow>
+
+          {/* Smart Spotlight */}
+          <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-xl border border-indigo-100 dark:border-indigo-500/30">
+            <FormField label="Smart Spotlight (Kiemelés)">
+              <Checkbox
+                label="Megjelenjen kiemeltként a főoldalon?"
+                checked={v.highlight || false}
+                onChange={(e) => setV({ ...v, highlight: e.target.checked })}
+              />
+            </FormField>
+            {v.highlight && (
+              <div className="mt-3 animate-in fade-in slide-in-from-top-2">
+                <FormField label="Kiemelés Címkéje (pl. '✨ Cáki Falunap')">
+                  <TextInput
+                    value={v.highlightLabel || ""}
+                    onChange={(e) => setV({ ...v, highlightLabel: e.target.value })}
+                    placeholder="Ha üres, az alapértelmezett szöveg jelenik meg."
+                  />
+                </FormField>
+              </div>
+            )}
+          </div>
+
+          <FormRow>
+            <FormField label="Dátum"><input type="date" value={v.date} onChange={(e) => setV({ ...v, date: e.target.value })} className={inputClasses} /></FormField>
+            <FormField label="Idő"><input type="time" value={v.time} onChange={(e) => setV({ ...v, time: e.target.value })} className={inputClasses} /></FormField>
+          </FormRow>
+
+          <FormRow>
+            <FormField label="Helyszín">
+              <div className="flex flex-col gap-2">
+                <select
+                  onChange={handleLocationSelect}
+                  className={inputClasses}
+                  value={PREDEFINED_LOCATIONS[v.location] ? v.location : ""}
+                >
+                  <option value="">-- Válassz gyorsan --</option>
+                  {Object.keys(PREDEFINED_LOCATIONS).sort().map(k => (
+                    <option key={k} value={k}>{k}</option>
+                  ))}
+                </select>
+                <TextInput
+                  placeholder="Vagy írd be kézzel..."
+                  value={v.location}
+                  onChange={(e) => setV({ ...v, location: e.target.value })}
+                />
+              </div>
+            </FormField>
+            <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
+          </FormRow>
+
+          <FormField label="Leírás"><TextArea value={v.description} onChange={(e) => setV({ ...v, description: e.target.value })} /></FormField>
+          <FormField label="Címkék"><TextInput value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} /></FormField>
+
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Képfeltöltés</label>
+            <div className="flex gap-4">
+              <label className="btn-secondary cursor-pointer">
+                Fájl kiválasztása
+                <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} className="hidden" />
+              </label>
+              <button type="button" onClick={uploadImage} disabled={uploading} className="btn-primary">{uploading ? "Feltöltés..." : "Feltöltés"}</button>
+            </div>
+            {(file || v.image) && <p className="mt-2 text-sm text-gray-500">{file ? file.name : v.image}</p>}
+            {uploadMsg && <p className="mt-2 text-sm">{uploadMsg}</p>}
+            {imgUrl && <img src={imgUrl} alt="Preview" className="mt-4 h-32 rounded-lg object-cover" />}
+          </div>
+        </div>
+
+        <footer className="p-6 bg-white dark:bg-gray-800 border-t dark:border-gray-700 flex justify-between">
+          {canDelete && initial.id && <button type="button" onClick={() => { if (window.confirm("Biztos törlöd?")) onDelete(initial.id); }} className="btn-danger"><FaTrash className="inline mr-2" />Törlés</button>}
+          <div className="flex gap-3 ml-auto">
             <button type="button" onClick={onCancel} className="btn-secondary">Mégse</button>
             <button type="submit" className="btn-primary"><FaSave className="inline mr-2" />Mentés</button>
           </div>
@@ -1065,7 +1351,7 @@ function AdminApp() {
 
     // Partner (Kulsos) sees LIMITED
     if (adminRole === 'partner') {
-      return ['events']; // Csak események
+      return ['events', 'surrounding_events']; // Események és környékbeli programok
     }
 
     return [];
@@ -1081,7 +1367,7 @@ function AdminApp() {
       if (!res.ok) throw new Error("Letöltési hiba");
       const data = await res.json();
       let arrayData = Array.isArray(data) ? data : [];
-      if (key === "events") {
+      if (key === "events" || key === "surrounding_events") {
         arrayData.sort((a, b) => {
           const dateA = a.date || "";
           const dateB = b.date || "";
@@ -1208,7 +1494,7 @@ function AdminApp() {
       const q = query.toLowerCase();
       d = d.filter(item => Object.values(item).some(val => String(val).toLowerCase().includes(q)));
     }
-    if (currentKey === "events") {
+    if (currentKey === "events" || currentKey === "surrounding_events") {
       d = [...d].sort((a, b) => {
         const dateA = a.date || "";
         const dateB = b.date || "";
@@ -1431,7 +1717,7 @@ function AdminApp() {
                 } else {
                   next = [...prev, val];
                 }
-                if (currentKey === "events") {
+                if (currentKey === "events" || currentKey === "surrounding_events") {
                   next.sort((a, b) => {
                     const dateA = a.date || "";
                     const dateB = b.date || "";
