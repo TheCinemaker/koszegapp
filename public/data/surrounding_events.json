@@ -24,55 +24,6 @@
     "isVarszinhaz": false
   },
   {
-    "id": "surrounding-event-velem-20261010",
-    "name": "Velemi Gesztenyenapok",
-    "settlement": "Velem",
-    "date": "2026-10-10",
-    "end_date": "2026-10-11",
-    "time": "10:00 - 18:00",
-    "location": "Velem, Rákóczi utca és környéke",
-    "coords": {
-      "lat": 47.3468,
-      "lng": 16.4912
-    },
-    "description": "A hagyományos Velemi Gesztenyenapok gesztenyesütéssel, kézműves vásárral, népművészeti bemutatókkal, zenei produkciókkal és gyermekprogramokkal várja az érdeklődőket.",
-    "tags": [
-      "gasztro",
-      "fesztivál",
-      "családi",
-      "hagyományőrző"
-    ],
-    "image": "",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
-    "id": "surrounding-event-bozsok-20260912",
-    "name": "Bozsoki Falunap",
-    "settlement": "Bozsok",
-    "date": "2026-09-12",
-    "time": "13:00 - 23:59",
-    "location": "Bozsok Fő tér és a Sibrik-kastély parkja",
-    "coords": {
-      "lat": 47.3325,
-      "lng": 16.4851
-    },
-    "description": "Hagyományos Bozsoki Falunap helyi kulturális csoportok fellépésével, gyermekprogramokkal, koncertekkel és esti bállal.",
-    "tags": [
-      "falunap",
-      "zene",
-      "családi",
-      "program"
-    ],
-    "image": "",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
     "id": "surrounding-event-koszegdoroszlo-20260822",
     "name": "Sons Left Behind koncert",
     "settlement": "Kőszegdoroszló",
@@ -122,22 +73,47 @@
     "isVarszinhaz": false
   },
   {
-    "id": "surrounding-event-lukacshaza-20260711",
-    "name": "Lukácsháza Falunap",
-    "settlement": "Lukácsháza",
-    "date": "2026-07-11",
+    "id": "surrounding-event-bozsok-20260912",
+    "name": "Bozsoki Falunap",
+    "settlement": "Bozsok",
+    "date": "2026-09-12",
     "time": "13:00 - 23:59",
-    "location": "Közösségi Ház és Csömötei szőlőhegy",
+    "location": "Bozsok Fő tér és a Sibrik-kastély parkja",
     "coords": {
-      "lat": 47.3115,
-      "lng": 16.5862
+      "lat": 47.3325,
+      "lng": 16.4851
     },
-    "description": "Gazdag programkínálat: néptáncbemutatók, aerobik, White Tiger RRC bemutató. Fellépők: Dömötör Balázs, Big Mouse Band, sztárvendég: Kabai Alex, majd DJ Szigi utcabálja.",
+    "description": "Hagyományos Bozsoki Falunap helyi kulturális csoportok fellépésével, gyermekprogramokkal, koncertekkel és esti bállal.",
     "tags": [
       "falunap",
-      "koncert",
       "zene",
-      "családi"
+      "családi",
+      "program"
+    ],
+    "image": "",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-velem-20261010",
+    "name": "Velemi Gesztenyenapok",
+    "settlement": "Velem",
+    "date": "2026-10-10",
+    "end_date": "2026-10-11",
+    "time": "10:00 - 18:00",
+    "location": "Velem, Rákóczi utca és környéke",
+    "coords": {
+      "lat": 47.3468,
+      "lng": 16.4912
+    },
+    "description": "A hagyományos Velemi Gesztenyenapok gesztenyesütéssel, kézműves vásárral, népművészeti bemutatókkal, zenei produkciókkal és gyermekprogramokkal várja az érdeklődőket.",
+    "tags": [
+      "gasztro",
+      "fesztivál",
+      "családi",
+      "hagyományőrző"
     ],
     "image": "",
     "createdBy": "admin",
