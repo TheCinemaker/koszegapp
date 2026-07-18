@@ -1,28 +1,5 @@
 [
   {
-    "id": "varszinhaz_2026_8",
-    "name": "Szabadtéren szabadabban?",
-    "date": "2026-07-14",
-    "endDate": "2026-07-14",
-    "time": "19:00",
-    "location": "Kamaraudvar (Jurisich Gimnázium)",
-    "coords": {
-      "lat": 47.3912,
-      "lng": 16.5422
-    },
-    "description": "Szakmai beszélgetés a szabadtéri színházak jelenéről és jövőjéről.",
-    "tags": [
-      "várszínház",
-      "beszélgetés",
-      "program"
-    ],
-    "image": "event_default.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true
-  },
-  {
     "name": "Tiszavirág",
     "date": "2026-07-15",
     "time": "18:00",
