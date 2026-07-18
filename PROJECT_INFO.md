@@ -1,6 +1,6 @@
 # Projekt Információk - KőszegApp
 
-Ez a fájl tartalmazza a projekt legfontosabb fejlesztési adatait, elérési útjait és konfigurációs kulcsait.
+Ez a fájl tartalmazza a KőszegApp (visitKőszeg.hu) legfontosabb fejlesztési adatait, elérési útjait és konfigurációs kulcsait.
 
 ---
 
@@ -9,16 +9,24 @@ Ez a fájl tartalmazza a projekt legfontosabb fejlesztési adatait, elérési ú
 * **Projekt neve**: KőszegApp (Fő Városi Alkalmazás)
 * **Helyi elérési út (Workspace)**: `/Users/thecinemaker/.gemini/antigravity/playground/koszegapp`
 * **IDE Workspace Link**: [koszegapp megnyitása ebben az IDE-ben](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp)
-* **Leírás**: Kőszeg városi mobil-barát webalkalmazás (látnivalók, események, környező települések programjai, parkolás, játék, QR menük, időjárás dashboard és Moments/Reels).
+* **Leírás**: Kőszeg városi mobil-barát webalkalmazás (látnivalók, események, környező hegyaljai települések programjai, parkolás, játékok, QR menük, időjárás és KőszegAI chat asszisztens).
 
 ---
 
-## ✨ Legutóbbi Fejlesztések
-* **Környező települések programjai (Surrounding Events)**:
-  * Adatfájl: [surrounding_events.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/surrounding_events.json)
-  * Képek: `public/images/events/` mappába mentve
-  * Elérés: `/surrounding-events` útvonalon, a főoldali bento grid kártyáról vagy a globális keresőből
-  * Admin felület: Külön kezelő fül a programok rögzítéséhez, szerkesztéséhez és törléséhez település kiválasztásával
+## ⚡ Aktuális Státusz & Fejlesztések
+
+* **Hegyaljai programok (Surrounding Events)**:
+  * Adatfájl: [surrounding_events.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/surrounding_events.json) (2026-os falunapok és rendezvények Bozsok, Cák, Velem, Lukácsháza, Kőszegszerdahely és Kőszegdoroszló településekről).
+  * Elérés: `/surrounding-events` útvonalon, a főoldal "HEGYALJAI PROGRAMOK" bento csempéjéről vagy a keresőből.
+  * Admin felület: Teljes CRUD támogatás (rögzítés, szerkesztés, törlés, képfeltöltés) a partnerek és adminok számára a `save-github-json` Netlify funkción keresztül.
+* **KőszegPass Kioszk (Tablet) Mód**:
+  * Céloldal: `/buy-pass` (szállodák recepciós tabletjeihez).
+  * Izoláció: Amikor a `kiosk_mode` be van állítva, a globális fejlécek, láblécek és a `SmartSpotlight` elrejtésre kerül a teljes fizetési folyamat alatt (`/pass/register`, `/pass/buy`, `/pass/success`).
+  * Különleges funkciók: A sikeres képernyő nagy QR kódot jelenít meg (a kártya letöltéséhez a vendégnek) és egy "Kész / Új Vásárlás" gombot, ami kiüríti a memóriát. A fogaskerék ikon törölve van, a konfigurációs ablak a logó fejlécében a "visit" szóra való 5 másodperces hosszú gombnyomással érhető el.
+* **KőszegAI Asszisztens (`/koszegai`)**:
+  * Chatbot "Dimitryj" névvel, barátságos tegeződő hangnemmel, helyi turisztikai és esemény-adatbázisra alapozva.
+  * Memória: Helyi tárolóban (`localStorage`) emlékszik a visszatérő vendégekre.
+  * Kialakítás: A beviteli mező 84px-el megemelve a lebegő menüsáv (`FloatingNavbar`) felett.
 
 ---
 
@@ -47,6 +55,12 @@ Ez a fájl tartalmazza a projekt legfontosabb fejlesztési adatait, elérési ú
 * **Stripe Fizetési Kapu (Test Mode)**:
   * `STRIPE_SECRET_KEY`: *Lásd a helyi .env fájlban*
   * `STRIPE_WEBHOOK_SECRET`: *Lásd a helyi .env fájlban*
+
+---
+
+## ⏭️ Elmaradt feladatok / TODO
+* [ ] **Email migráció**: A fejlesztés során használt `koszegapp@gmail.com` címet át kell ütemezni egy hivatalos `@visitkoszeg.hu` domainre a kiküldéseknél.
+* [ ] **Szolgáltatói bejelentkezés (Booking redirection)**: Ellenőrizni kell, hogy a bejelentkezetlen felhasználó foglaláskor sikeresen visszairányítódik-e a `BookingModal` felületre a hitelesítés után.
 
 ---
 
