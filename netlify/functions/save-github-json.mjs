@@ -1,5 +1,7 @@
 // netlify/functions/save-github-json.mjs
-// Removed node-fetch import to prevent ESM/CJS runtime conflicts on Netlify
+
+import fetch from "node-fetch";
+import jwt from 'jsonwebtoken'; // <-- ÚJ IMPORT
 
 export async function handler(event) {
   try {
@@ -13,7 +15,7 @@ export async function handler(event) {
     const GH_BRANCH = process.env.GITHUB_BRANCH || "main";
     const HOOK = process.env.NETLIFY_BUILD_HOOK || "";
     // ---- SUPABASE HITELESÍTÉS START ----
-    const authHeader = event.headers.authorization || event.headers.Authorization;
+    const authHeader = event.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return resp(401, { error: 'Auth failed: No token provided' });
     }
@@ -22,8 +24,8 @@ export async function handler(event) {
 
     // Initialize Supabase Client
     const { createClient } = await import('@supabase/supabase-js');
-    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_KEY;
+    const supabaseUrl = process.env.VITE_SUPABASE_URL;
+    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
