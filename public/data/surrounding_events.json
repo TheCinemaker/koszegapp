@@ -124,6 +124,32 @@
     "isVarszinhaz": false
   },
   {
+    "id": "surrounding-event-horvatzsidany-20260829",
+    "name": "A Madeus Mozart – Rákász Gergely orgonakoncertje",
+    "settlement": "Horvátzsidány",
+    "date": "2026-08-29",
+    "time": "20:30 - 22:00",
+    "location": "Marton-Szállás, Horvátzsidány",
+    "coords": {
+      "lat": 47.3969487,
+      "lng": 16.6156606
+    },
+    "description": "Marton-Szállás (Horvátzsidány, 0132/26, 9733 Magyarország)\nEsőnap: 2026. augusztus 30. - 20:30\n\nMozart mellett még két évforduló körül fordul meg a 2026-os műsor.\n\nMohács 500 megidézi a reneszánsz királyok udvari hangulatát, olasz, magyar és német dalnokok részvételével ahová már távolról beszűrődnek az oszmán-török birodalom muzsikájának hangjai. A gyűjtés lenyűgöző hangulatot ad a korszakból pláne orgonán, amely élethűen eleveníti meg úgy a harsogó harci trombitákat, mint a reneszánsz lakoma után, a függöny mögül kiszűrődő utolsó józan muzsikus kötelességtudó regál játékát.\n\nMásodik otthonom - emlékezetes tanulmányaim és első külföldi sikereim hazája - Amerika 250 éve kiáltotta ki függetlenségét, ez tehát történetének kezdete. Innen hozom többek között az első “igazi” amerikai klasszikus zenész Aaron Copland dallamait.\n\nÉs végül Mozart! A magamfajta súlyosan túlgondolkozó ember számára el kellett teljen lassan az életem fele, mire kapisgálni kezdtem az Univerzum, ha úgy tetszik Isten másik kezét, amely a fantasztikus rendet egy játékos szimfónián keresztül vonja körénk, amelyben nem kell gondolkozni, elemezni, hanem amelyre táncolni kell. Ez a tánc Mozart.\n\nSzeretettel várom! RG.",
+    "tags": [
+      "koncert",
+      "zene",
+      "klasszikus",
+      "orgona",
+      "kultúra",
+      "program"
+    ],
+    "image": "rg_mozart_koncert_2026.png",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "id": "surrounding-event-bozsok-20260912",
     "name": "Bozsoki Falunap",
     "settlement": "Bozsok",

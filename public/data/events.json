@@ -1665,27 +1665,29 @@
   },
   {
     "id": "ostrom_2026_52",
-    "name": "Ataru Taiko Ütőegyüttes koncert",
+    "name": "20. Jubileum Várkoncert – Ataru Taiko",
     "date": "2026-08-09",
     "endDate": "2026-08-09",
-    "time": "19:00",
-    "location": "Jurisics vár",
+    "time": "19:30",
+    "location": "Jurisics vár, Kőszeg",
     "coords": {
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "A monumentális japán dobfesztivál hangulatát idéző Ataru Taiko Ütőegyüttes nagyszabású zárókoncertje a Várudvarban.",
+    "description": "✨🎶 FÉNYEK. TŰZ. ZENE. ÜNNEP. 🎶 ✨\n20 évvel ezelőtt egy álom indult útjára. Most pedig elérkezett az idő, hogy ezt a rendkívüli jubileumot méltó módon ünnepeljük meg – ott, ahol minden elkezdődött.\n\nSzülővárosunkban, Kőszegen egy látványos jubileumi koncerttel készülünk a XIX. Ostromnapok keretein belül, amelyet különleges pirotechnikai elemek, fényhatások és felejthetetlen színpadi látvány tesz igazán egyedivé.\nLángok és fények. Lélegzetelállító pirotechnikai show. Egy este, amelyre sokáig emlékezni fogunk.\n\nEz nem csupán egy koncert lesz, hanem egy közös ünnep mindazokkal, akik az elmúlt 20 év során velünk voltak és támogattak minket!\n\nA belépés díjtalan!",
     "tags": [
       "ostrom",
       "ostromnapok",
       "zene",
       "dob",
-      "koncert"
+      "koncert",
+      "pirotechnika",
+      "látványos"
     ],
-    "image": "ostromhero.png",
+    "image": "ataru_taiko_20_jubileum.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "Ataru Taiko",
+    "highlightLabel": "20. Jubileumi Koncert",
     "isOstrom": true
   }
 ]
