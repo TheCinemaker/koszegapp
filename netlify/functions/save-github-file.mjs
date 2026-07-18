@@ -13,7 +13,7 @@ export async function handler(event) {
     const BUILD_HOOK = process.env.NETLIFY_BUILD_HOOK || "";
 
     // ---- SUPABASE HITELESÍTÉS START ----
-    const authHeader = event.headers.authorization;
+    const authHeader = event.headers.authorization || event.headers.Authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return resp(401, { error: 'Auth failed: No token provided' });
     }
@@ -24,8 +24,8 @@ export async function handler(event) {
     // Initialize Supabase Client
     // Ensure you have @supabase/supabase-js installed and process.env.VITE_SUPABASE_URL / ANON_KEY set
     const { createClient } = await import('@supabase/supabase-js');
-    const supabaseUrl = process.env.VITE_SUPABASE_URL;
-    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
