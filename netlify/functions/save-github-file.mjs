@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+// Removed unused jsonwebtoken import to prevent ESM/CJS resolution issues
 
 export async function handler(event) {
   try {

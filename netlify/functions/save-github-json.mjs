@@ -1,7 +1,7 @@
+import fetch from "node-fetch";
 // netlify/functions/save-github-json.mjs
 
-import fetch from "node-fetch";
-import jwt from 'jsonwebtoken'; // <-- ÚJ IMPORT
+// Removed unused jsonwebtoken import
 
 export async function handler(event) {
   try {
