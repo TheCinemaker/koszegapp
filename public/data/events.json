@@ -1,29 +1,5 @@
 [
   {
-    "name": "Kiss Ágnes: A tenger szeme",
-    "date": "2026-07-14",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Gyerekudvar - Barboncás Társulat előadása.",
-    "tags": [
-      "várszínház",
-      "gyerekudvar",
-      "előadás",
-      "gyerek"
-    ],
-    "image": "barabocas-1783504536980.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_7",
-    "endDate": "2026-07-14"
-  },
-  {
     "id": "varszinhaz_2026_8",
     "name": "Szabadtéren szabadabban?",
     "date": "2026-07-14",
@@ -232,7 +208,7 @@
     "id": "event-2026-1784224774267"
   },
   {
-    "id": "varszinhaz-20260718-30",
+    "id": "varszinhaz_2026_16",
     "name": "Operett-musical est",
     "date": "2026-07-18",
     "time": "20:30",
@@ -254,7 +230,6 @@
     "highlight": false,
     "highlightLabel": "",
     "isVarszinhaz": true,
-    "id": "varszinhaz_2026_16",
     "endDate": "2026-07-18"
   },
   {
@@ -546,32 +521,6 @@
     "isOstrom": true
   },
   {
-    "id": "ostrom_2026_4",
-    "name": "V. Ostrom Várvédő Jótékonysági Futóverseny",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "09:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "V. Ostrom Várvédő Jótékonysági Futóverseny. Távok: 1.5 km (tömegfutás/gyerekfutam az Óvároson és török táboron át), 7 km, 14 km, 22 km. Rajt: Jurisics tér. A nevezések teljes bevételét a Myrtill Alapítványon keresztül Hanna és Julcsi támogatására ajánlják fel.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "sport",
-      "futás",
-      "jótékonyság",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Jótékonysági Futás",
-    "isOstrom": true
-  },
-  {
     "id": "ostrom_2026_5",
     "name": "XIX. Kőszegi Ostromnapokat megnyitó puskalövések",
     "date": "2026-08-07",
@@ -834,6 +783,32 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
+    "isOstrom": true
+  },
+  {
+    "id": "ostrom_2026_4",
+    "name": "V. Ostrom Várvédő Jótékonysági Futóverseny",
+    "date": "2026-08-08",
+    "endDate": "2026-08-08",
+    "time": "09:00",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.3888,
+      "lng": 16.5411
+    },
+    "description": "V. Ostrom Várvédő Jótékonysági Futóverseny. Távok: 1.5 km (tömegfutás/gyerekfutam az Óvároson és török táboron át), 7 km, 14 km, 22 km. Rajt: Jurisics tér. A nevezések teljes bevételét a Myrtill Alapítványon keresztül Hanna és Julcsi támogatására ajánlják fel.",
+    "tags": [
+      "ostrom",
+      "ostromnapok",
+      "sport",
+      "futás",
+      "jótékonyság",
+      "program"
+    ],
+    "image": "ostromhero.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Jótékonysági Futás",
     "isOstrom": true
   },
   {
