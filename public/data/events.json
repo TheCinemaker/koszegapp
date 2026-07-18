@@ -768,12 +768,12 @@
     "date": "2026-08-08",
     "endDate": "2026-08-08",
     "time": "09:00",
-    "location": "Jurisics tér",
+    "location": "Kőszeg, Fő tér",
     "coords": {
       "lat": 47.3888,
       "lng": 16.5411
     },
-    "description": "V. Ostrom Várvédő Jótékonysági Futóverseny. Távok: 1.5 km (tömegfutás/gyerekfutam az Óvároson és török táboron át), 7 km, 14 km, 22 km. Rajt: Jurisics tér. A nevezések teljes bevételét a Myrtill Alapítványon keresztül Hanna és Julcsi támogatására ajánlják fel.",
+    "description": "Sziasztok futótársak! Idén jubileum! 5. alkalommal rendezzük meg a jótékonysági futásunkat! A dátum Augusztus 8. 9:00 óra, helyszín Kőszeg, Fő tér. Fuss egy jó ügyért! Távok: 1,5 km gyermekfutam, valamint 7 km, 14 km és 21,5 km. Online nevezés: e-nevezes.hu, helyszíni nevezés 7:00 - 8:30. A nevezések teljes bevételét a Myrtill Alapítványon keresztül két kisgyermek - Hanna és Julcsi - támogatására ajánlják fel.",
     "tags": [
       "ostrom",
       "ostromnapok",
@@ -782,7 +782,7 @@
       "jótékonyság",
       "program"
     ],
-    "image": "ostromhero.png",
+    "image": "ostrom_varvedo_jotekonysagi_futas.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "Jótékonysági Futás",
