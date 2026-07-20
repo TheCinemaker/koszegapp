@@ -18,7 +18,7 @@ import {
   IoLogoFacebook,
   IoLogoInstagram
 } from 'react-icons/io5';
-import { supabaseGuest } from '../lib/supabaseClient';
+
 
 const AMENITY_OPTIONS = [
   { id: 'bankkartya', label: 'Bankkártyás fizetés', icon: '💳' },
@@ -172,27 +172,6 @@ export default function Adatbekero() {
         localStorage.setItem('visitkoszeg_partner_submissions', JSON.stringify(updated));
       } catch (e) {
         console.warn('localStorage cache failed:', e);
-      }
-
-      // 3. Optional Supabase insert if table exists (non-blocking)
-      try {
-        if (supabaseGuest) {
-          await supabaseGuest.from('partner_submissions').insert([
-            {
-              name,
-              category_type: categoryType,
-              sub_type: subType,
-              address: `${zipCity}, ${address}`,
-              phone,
-              email,
-              website,
-              json_data: generatedJson,
-              status: 'pending_review'
-            }
-          ]);
-        }
-      } catch (err) {
-        console.warn('Optional Supabase sync skipped:', err);
       }
 
       setSubmitError(null);

@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import { supabase } from '../../lib/supabaseClient';
+
 import { 
   FaStore, 
   FaBed, 
@@ -48,27 +49,8 @@ export default function PartnerSubmissionsManager() {
       // 2. Load from localStorage (local cache fallback)
       const localData = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
 
-      // 3. Optional Supabase load if configured
-      let remoteData = [];
-      try {
-        if (supabase) {
-          const { data, error } = await supabase
-            .from('partner_submissions')
-            .select('id, json_data, created_at')
-            .order('created_at', { ascending: false });
-
-          if (!error && data) {
-            remoteData = data
-              .filter(row => row.json_data)
-              .map(row => ({ ...row.json_data, _dbId: row.id }));
-          }
-        }
-      } catch (err) {
-        console.warn('Optional Supabase fetch skipped:', err);
-      }
-
       // Combine & deduplicate by ID (GitHub submissions take priority)
-      const combined = [...githubSubmissions, ...localData, ...remoteData];
+      const combined = [...githubSubmissions, ...localData];
       const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
 
       setSubmissions(unique);
@@ -185,16 +167,7 @@ export default function PartnerSubmissionsManager() {
       console.warn('localStorage cleanup failed:', e);
     }
 
-    // Supabase sor törlése, ha onnan jött
-    if (target?._dbId) {
-      const { error } = await supabase.from('partner_submissions').delete().eq('id', target._dbId);
-      if (error) {
-        console.error('Supabase delete error:', error);
-        toast.error(`Nem sikerült törölni a szerverről: ${error.message}`);
-        loadSubmissions();
-        return;
-      }
-    }
+
 
     if (confirm) {
       toast.success('Adatlap kukázva.');
