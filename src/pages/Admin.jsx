@@ -1368,13 +1368,29 @@ function AdminApp() {
 
   const loadContent = async (key) => {
     if (!key) return;
+    const config = EDITABLE_CONTENT[key];
+    if (config?.isCustomManager) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setContentData([]);
     try {
-      const config = EDITABLE_CONTENT[key];
-      const res = await fetch(`/.netlify/functions/get-github-json?path=${encodeURIComponent(config.path)}`, { cache: "no-store" });
-      if (!res.ok) throw new Error("Letöltési hiba");
-      const data = await res.json();
+      let data = [];
+      try {
+        const res = await fetch(`/.netlify/functions/get-github-json?path=${encodeURIComponent(config.path)}`, { cache: "no-store" });
+        if (res.ok) {
+          data = await res.json();
+        } else {
+          const localRes = await fetch(`/${config.path.replace('public/', '')}`);
+          if (localRes.ok) data = await localRes.json();
+        }
+      } catch (err) {
+        const localRes = await fetch(`/${config.path.replace('public/', '')}`);
+        if (localRes.ok) data = await localRes.json();
+      }
+
       let arrayData = Array.isArray(data) ? data : [];
       if (key === "events" || key === "surrounding_events") {
         arrayData.sort((a, b) => {
@@ -1389,7 +1405,7 @@ function AdminApp() {
       }
       setContentData(arrayData);
     } catch (e) {
-      toast.error(`Hiba: ${e.message}`);
+      console.warn('Load content fallback handled:', e);
     } finally {
       setIsLoading(false);
     }
@@ -1637,47 +1653,49 @@ function AdminApp() {
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white hidden sm:block">{currentConfig.name}</h1>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="relative group">
-              <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
-              <input
-                type="text"
-                placeholder="Keresés..."
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-full text-sm border-none focus:ring-2 focus:ring-indigo-500 w-48 sm:w-64 transition-all"
-              />
+          {!currentConfig?.isCustomManager && (
+            <div className="flex items-center gap-4">
+              <div className="relative group">
+                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
+                <input
+                  type="text"
+                  placeholder="Keresés..."
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  className="pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-full text-sm border-none focus:ring-2 focus:ring-indigo-500 w-48 sm:w-64 transition-all"
+                />
+              </div>
+
+              {/* Expired Purge Button */}
+              {expiredEventsCount > 0 && (
+                <button
+                  onClick={handleBulkDeleteExpired}
+                  className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-full text-sm font-bold transition-colors"
+                  title="5 napnál régebbi események törlése"
+                >
+                  <FaTrash />
+                  <span className="hidden sm:inline">{expiredEventsCount} lejárt törlése</span>
+                </button>
+              )}
+
+              {canCreate && (
+                <button
+                  onClick={() => setEditingItem({ id: "", createdBy: user.id })}
+                  className="btn-primary flex items-center gap-2 shadow-lg shadow-indigo-500/30"
+                >
+                  <FaPlus className="text-xs" /> <span className="hidden sm:inline">Új létrehozása</span>
+                </button>
+              )}
+              <button
+                onClick={saveContent}
+                disabled={busy}
+                className="btn-secondary flex items-center gap-2"
+              >
+                {busy ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" /> : <FaSave />}
+                <span className="hidden sm:inline">Mentés</span>
+              </button>
             </div>
-
-            {/* Expired Purge Button */}
-            {expiredEventsCount > 0 && (
-              <button
-                onClick={handleBulkDeleteExpired}
-                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-full text-sm font-bold transition-colors"
-                title="5 napnál régebbi események törlése"
-              >
-                <FaTrash />
-                <span className="hidden sm:inline">{expiredEventsCount} lejárt törlése</span>
-              </button>
-            )}
-
-            {canCreate && (
-              <button
-                onClick={() => setEditingItem({ id: "", createdBy: user.id })}
-                className="btn-primary flex items-center gap-2 shadow-lg shadow-indigo-500/30"
-              >
-                <FaPlus className="text-xs" /> <span className="hidden sm:inline">Új létrehozása</span>
-              </button>
-            )}
-            <button
-              onClick={saveContent}
-              disabled={busy}
-              className="btn-secondary flex items-center gap-2"
-            >
-              {busy ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" /> : <FaSave />}
-              <span className="hidden sm:inline">Mentés</span>
-            </button>
-          </div>
+          )}
         </header>
 
         {/* CONTENT AREA */}
