@@ -218,8 +218,8 @@ export default function Adatbekero() {
               <div className="p-6 rounded-3xl bg-gradient-to-b from-indigo-950/40 to-slate-900 border border-indigo-500/20 shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
                 
-                <h2 className="text-2xl font-black tracking-tight text-white mb-2 flex items-center gap-2">
-                  <IoSparkles className="text-indigo-400" /> Adj tápot a turizmusnak Kőszegen!
+                <h2 className="text-2xl font-black tracking-tight text-white mb-2 uppercase flex items-center gap-2">
+                  <IoSparkles className="text-indigo-400" /> Adatbekérés
                 </h2>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   Töltsd ki az alábbi űrlapot kb. 1 perc alatt, hogy helyed naprakészen és pontos adatokkal jelenjen meg a <strong className="text-white font-bold">VISITKŐSZEG.HU</strong> hivatalos turisztikai platformon és alkalmazásban.
