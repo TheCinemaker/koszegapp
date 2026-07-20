@@ -8,7 +8,7 @@ import {
   IoCallOutline, 
   IoMailOutline, 
   IoGlobeOutline, 
-  IoMapPinOutline, 
+  IoLocationOutline, 
   IoTimeOutline, 
   IoInformationCircleOutline,
   IoCheckmark,
