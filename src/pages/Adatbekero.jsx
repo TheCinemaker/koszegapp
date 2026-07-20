@@ -149,7 +149,23 @@ export default function Adatbekero() {
     setSubmitting(true);
 
     try {
-      // 1. Save to local storage cache so admin can review instantly
+      // 1. Save directly to GitHub directory (public/data/submissions/<slug>.json) via Netlify Function
+      try {
+        const ghRes = await fetch('/.netlify/functions/submit-partner-form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(generatedJson)
+        });
+        if (ghRes.ok) {
+          console.log('[Adatbekero] Submission saved to GitHub submissions folder successfully!');
+        } else {
+          console.warn('[Adatbekero] GitHub submission notice:', await ghRes.text());
+        }
+      } catch (err) {
+        console.warn('[Adatbekero] Netlify function submit-partner-form skipped/failed:', err);
+      }
+
+      // 2. Save to local storage cache so admin can review instantly on same device
       try {
         const existing = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
         const updated = [generatedJson, ...existing.filter(x => x.id !== generatedJson.id)];
@@ -158,7 +174,7 @@ export default function Adatbekero() {
         console.warn('localStorage cache failed:', e);
       }
 
-      // 2. Optional Supabase insert if table exists (non-blocking)
+      // 3. Optional Supabase insert if table exists (non-blocking)
       try {
         if (supabaseGuest) {
           await supabaseGuest.from('partner_submissions').insert([

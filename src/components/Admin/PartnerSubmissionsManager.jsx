@@ -31,10 +31,24 @@ export default function PartnerSubmissionsManager() {
   const loadSubmissions = async () => {
     setLoading(true);
     try {
-      // 1. Load from localStorage (guaranteed to contain submissions on this machine)
+      // 1. Fetch live submission JSON files from GitHub public/data/submissions/ directory
+      let githubSubmissions = [];
+      try {
+        const ghRes = await fetch('/.netlify/functions/get-partner-submissions');
+        if (ghRes.ok) {
+          const ghData = await ghRes.json();
+          if (Array.isArray(ghData.submissions)) {
+            githubSubmissions = ghData.submissions;
+          }
+        }
+      } catch (err) {
+        console.warn('GitHub submissions fetch skipped:', err);
+      }
+
+      // 2. Load from localStorage (local cache fallback)
       const localData = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
 
-      // 2. Optional Supabase load if configured
+      // 3. Optional Supabase load if configured
       let remoteData = [];
       try {
         if (supabase) {
@@ -53,8 +67,8 @@ export default function PartnerSubmissionsManager() {
         console.warn('Optional Supabase fetch skipped:', err);
       }
 
-      // Combine & deduplicate by ID
-      const combined = [...localData, ...remoteData];
+      // Combine & deduplicate by ID (GitHub submissions take priority)
+      const combined = [...githubSubmissions, ...localData, ...remoteData];
       const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
 
       setSubmissions(unique);
@@ -105,7 +119,7 @@ export default function PartnerSubmissionsManager() {
       const currentList = await res.json();
       
       // Clean up metadata fields from submission object before merging
-      const { target_database, status, submitted_at, has_logo, photos_count, ...cleanItem } = item;
+      const { target_database, status, submitted_at, has_logo, photos_count, _githubPath, _githubSha, _filename, ...cleanItem } = item;
       
       // Append item
       const updatedList = [...currentList, cleanItem];
@@ -126,7 +140,7 @@ export default function PartnerSubmissionsManager() {
         toast.success(`Bedolgozási struktúra elkészült a(z) ${dbName} fájlhoz!`, { id: toastId });
       }
 
-      // Remove from pending list
+      // Remove from pending list and delete from GitHub submissions folder
       handleDeleteSubmission(item.id, false);
 
     } catch (err) {
@@ -146,6 +160,19 @@ export default function PartnerSubmissionsManager() {
     const target = submissions.find(s => s.id === id);
     const updated = submissions.filter(s => s.id !== id);
     setSubmissions(updated);
+
+    // GitHub mappából törlés ha felhős fájl volt
+    if (target?._githubPath) {
+      try {
+        await fetch('/.netlify/functions/delete-github-file', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: target._githubPath, sha: target._githubSha })
+        });
+      } catch (err) {
+        console.warn('GitHub submission delete failed:', err);
+      }
+    }
 
     // localStorage cache tisztítása
     try {
