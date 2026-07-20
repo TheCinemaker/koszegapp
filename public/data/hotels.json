@@ -1666,7 +1666,10 @@
       "lng": 16.5429777
     },
     "image": "belvarosi_apartman.jpg",
-    "gallery": [],
+    "logo": "belvarosi_apartman_logo.png",
+    "gallery": [
+      "belvarosi_apartman_logo.png"
+    ],
     "amenities": [
       "wifi",
       "klíma",
