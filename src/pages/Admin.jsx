@@ -172,7 +172,7 @@ const EDITABLE_CONTENT = {
   partner_submissions: {
     name: "Partner Bekérők",
     description: "Beérkezett partneri adatlapok átnézése és bedolgozása.",
-    path: "public/data/partner_submissions.json",
+    path: "",
     permissions: { view: ["events:view_all"] },
     isCustomManager: true,
   },
