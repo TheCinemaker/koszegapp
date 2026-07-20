@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { supabase } from '../../lib/supabaseClient';
 import { 
   FaStore, 
   FaBed, 
@@ -30,28 +31,35 @@ export default function PartnerSubmissionsManager() {
   const loadSubmissions = async () => {
     setLoading(true);
     try {
-      // 1. Load from localStorage
+      // 1. Load from localStorage (guaranteed to contain submissions on this machine)
       const localData = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
-      
-      // 2. Try fetching public/data/partner_submissions.json if exists
-      let publicData = [];
+
+      // 2. Optional Supabase load if configured
+      let remoteData = [];
       try {
-        const res = await fetch('/data/partner_submissions.json');
-        if (res.ok) {
-          publicData = await res.json();
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('partner_submissions')
+            .select('id, json_data, created_at')
+            .order('created_at', { ascending: false });
+
+          if (!error && data) {
+            remoteData = data
+              .filter(row => row.json_data)
+              .map(row => ({ ...row.json_data, _dbId: row.id }));
+          }
         }
-      } catch (e) {
-        console.warn('Could not fetch public/data/partner_submissions.json', e);
+      } catch (err) {
+        console.warn('Optional Supabase fetch skipped:', err);
       }
 
       // Combine & deduplicate by ID
-      const combined = [...localData, ...(Array.isArray(publicData) ? publicData : [])];
+      const combined = [...localData, ...remoteData];
       const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
-      
+
       setSubmissions(unique);
     } catch (err) {
       console.error('Error loading submissions:', err);
-      toast.error('Hiba a beküldött adatok betöltésekor.');
     } finally {
       setLoading(false);
     }
@@ -130,14 +138,36 @@ export default function PartnerSubmissionsManager() {
   };
 
   // 3. DELETE / TRASH INDIVIDUAL SUBMISSION
-  const handleDeleteSubmission = (id, confirm = true) => {
+  const handleDeleteSubmission = async (id, confirm = true) => {
     if (confirm && !window.confirm('Biztosan törlöd (kukázod) ezt a beküldött adatlapot?')) {
       return;
     }
 
+    const target = submissions.find(s => s.id === id);
     const updated = submissions.filter(s => s.id !== id);
     setSubmissions(updated);
-    localStorage.setItem('visitkoszeg_partner_submissions', JSON.stringify(updated));
+
+    // localStorage cache tisztítása
+    try {
+      const localData = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
+      localStorage.setItem(
+        'visitkoszeg_partner_submissions',
+        JSON.stringify(localData.filter(s => s.id !== id))
+      );
+    } catch (e) {
+      console.warn('localStorage cleanup failed:', e);
+    }
+
+    // Supabase sor törlése, ha onnan jött
+    if (target?._dbId) {
+      const { error } = await supabase.from('partner_submissions').delete().eq('id', target._dbId);
+      if (error) {
+        console.error('Supabase delete error:', error);
+        toast.error(`Nem sikerült törölni a szerverről: ${error.message}`);
+        loadSubmissions();
+        return;
+      }
+    }
 
     if (confirm) {
       toast.success('Adatlap kukázva.');
