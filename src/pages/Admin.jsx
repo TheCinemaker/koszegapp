@@ -56,13 +56,6 @@ const MENU_ICONS = {
 };
 
 const EDITABLE_CONTENT = {
-  partner_submissions: {
-    name: "Partner Bekérők",
-    description: "Beérkezett partneri adatlapok átnézése és bedolgozása.",
-    path: "public/data/partner_submissions.json",
-    permissions: { view: ["events:view_all"] },
-    isCustomManager: true,
-  },
   events: {
     name: "Programok",
     description: "Városi programok és események kezelése.",
@@ -175,6 +168,13 @@ const EDITABLE_CONTENT = {
     },
     formComponent: ParkingMachineForm,
     previewComponent: GenericCard,
+  },
+  partner_submissions: {
+    name: "Partner Bekérők",
+    description: "Beérkezett partneri adatlapok átnézése és bedolgozása.",
+    path: "public/data/partner_submissions.json",
+    permissions: { view: ["events:view_all"] },
+    isCustomManager: true,
   },
 };
 
