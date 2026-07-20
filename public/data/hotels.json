@@ -1649,5 +1649,42 @@
     "open_all_year": true,
     "notes": "Újonnan felújított panzió a belvárosban, 2 felszerelt konyhával, ingyenes parkolással és biztonsági kamerákkal. Check-in: 14:00, Check-out: 10:00.",
     "description": "Kellemes környezetben, a belvárosban található panzió tiszta szobákkal, kényelmes ágyakkal és új berendezésekkel. Két színvonalasan felszerelt konyha, ingyenes wifi és parkolás az udvarban. Félpanzió vagy teljes ellátás igényelhető partnervendéglátóknál. Különleges ajánlatok: nyári akció ingyen éjszakával és strandbelépővel."
+  },
+  {
+    "id": 101,
+    "name": "Belvárosi Apartman Kőszeg",
+    "type": "apartman",
+    "tags": [
+      "apartman",
+      "szállás",
+      "belváros",
+      "családbarát"
+    ],
+    "address": "9730 Kőszeg, Szűk utca 1/A",
+    "coords": {
+      "lat": 47.3872008,
+      "lng": 16.5429777
+    },
+    "image": "belvarosi_apartman.jpg",
+    "gallery": [],
+    "amenities": [
+      "wifi",
+      "klíma",
+      "konyha",
+      "TV",
+      "törülköző/ágynemű",
+      "hűtő",
+      "belvárosi"
+    ],
+    "rating": 9.8,
+    "reviews_count": 12,
+    "price_from": 70,
+    "currency": "EUR",
+    "phone": "+36 20 918 5674",
+    "email": "info@apartmankoszeg.hu",
+    "website": "https://apartmankoszeg.hu/",
+    "open_all_year": true,
+    "notes": "Történelmi belvárosban, a Főtértől 2 perc sétára. Max. 5 fő elhelyezésére alkalmas apartman 2 hálószobával, felszerelt konyhával és légkondicionálóval.",
+    "description": "A Belvárosi Apartman Kőszeg történelmi belvárosában, a Főtértől mindössze 2 perc sétára várja vendégeit. Kiváló választás mindazok számára, akik szeretnék felfedezni a város hangulatos utcáit, történelmi látnivalóit, vagy aktív pihenésre vágynak a Kőszegi-hegységben. Az apartman legfeljebb 5 fő kényelmes elhelyezésére alkalmas. Két különálló hálószobával, felszerelt étkezős konyhával, külön zuhanyzós fürdőszobával és külön WC-vel rendelkezik, így ideális családoknak, pároknak és kisebb baráti társaságoknak is. A kellemes hőmérsékletről légkondicionáló gondoskodik, vendégeink számára ingyenes Wi-Fi, ágynemű és törölköző is biztosított."
   }
 ]
