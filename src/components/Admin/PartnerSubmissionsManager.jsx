@@ -103,8 +103,32 @@ export default function PartnerSubmissionsManager() {
       // Clean up metadata fields from submission object before merging
       const { target_database, status, submitted_at, has_logo, photos_count, _githubPath, _githubSha, _filename, ...cleanItem } = item;
       
-      // Append item
-      const updatedList = [...currentList, cleanItem];
+      // Check if item already exists by ID or by matching normalized Name
+      const cleanNameNormalized = (cleanItem.name || '').trim().toLowerCase();
+      const existingIndex = currentList.findIndex(x => 
+        (x.id && cleanItem.id && x.id.toString() === cleanItem.id.toString()) ||
+        (x.name && cleanNameNormalized && x.name.trim().toLowerCase() === cleanNameNormalized)
+      );
+
+      let updatedList;
+      let actionLabel = '';
+
+      if (existingIndex !== -1) {
+        // OVERWRITE / UPDATE existing entry preserving original ID
+        const existingItem = currentList[existingIndex];
+        const mergedItem = {
+          ...existingItem,
+          ...cleanItem,
+          id: existingItem.id || cleanItem.id
+        };
+        updatedList = [...currentList];
+        updatedList[existingIndex] = mergedItem;
+        actionLabel = `Frissítve a meglévő "${existingItem.name}" bejegyzés!`;
+      } else {
+        // APPEND new entry
+        updatedList = [...currentList, cleanItem];
+        actionLabel = `Hozzáadva mint új bejegyzés: "${cleanItem.name}"`;
+      }
 
       // Send to Github / Netlify save function if available
       try {
@@ -114,12 +138,12 @@ export default function PartnerSubmissionsManager() {
           body: JSON.stringify({ path: targetPath, content: updatedList })
         });
         if (saveRes.ok) {
-          toast.success(`Sikeresen bedolgozva a felhős ${dbName} állományba!`, { id: toastId });
+          toast.success(`Sikeresen mentve a felhőbe! (${actionLabel})`, { id: toastId });
         } else {
-          toast.success(`Bedolgozva! Ne felejtsd el elmenteni az adminban a ${dbName} ágat.`, { id: toastId });
+          toast.success(`${actionLabel} Ne felejtsd el elmenteni az adminban a ${dbName} ágat.`, { id: toastId });
         }
       } catch (err) {
-        toast.success(`Bedolgozási struktúra elkészült a(z) ${dbName} fájlhoz!`, { id: toastId });
+        toast.success(`${actionLabel} (Szerkezeti mentés megtörtént)`, { id: toastId });
       }
 
       // Remove from pending list and delete from GitHub submissions folder
