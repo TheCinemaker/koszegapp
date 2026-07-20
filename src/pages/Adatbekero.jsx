@@ -46,6 +46,7 @@ export default function Adatbekero() {
   // Form fields
   const [categoryType, setCategoryType] = useState('gastro'); // 'gastro' | 'hotel'
   const [subType, setSubType] = useState('étterem');
+  const [customSubType, setCustomSubType] = useState('');
   const [name, setName] = useState('');
   const [zipCity, setZipCity] = useState('9730 Kőszeg');
   const [address, setAddress] = useState('');
@@ -113,26 +114,33 @@ export default function Adatbekero() {
     }
   };
 
-  // Generate output JSON structure
+  // Generate output JSON structure for isolated partner_submissions.json
+  const timeId = Date.now().toString().slice(-6);
+  const nameSlug = (name || 'partner').toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_');
+  const finalType = subType.toLowerCase().includes('egyéb') && customSubType.trim() ? customSubType.trim() : subType;
+
   const generatedJson = {
-    id: categoryType === 'gastro' ? `gastro-${Date.now().toString().slice(-4)}` : Date.now(),
+    id: categoryType === 'gastro' ? `gastro-sub-${timeId}` : parseInt(timeId, 10),
+    target_database: categoryType === 'gastro' ? 'restaurants.json' : 'hotels.json',
     name: name || 'Vendéglátó / Szálláshely Neve',
-    type: subType,
-    tags: [subType, categoryType === 'gastro' ? 'vendéglátás' : 'szállás', ...selectedAmenities],
+    type: finalType,
+    tags: [finalType, categoryType === 'gastro' ? 'vendéglátás' : 'szállás', ...selectedAmenities],
     address: `${zipCity}, ${address}`.trim(),
     phone: phone || null,
     email: email || null,
     website: website || null,
     facebook: facebook || null,
     instagram: instagram || null,
+    image: logoPreview ? `partner_uploads/logo_${nameSlug}_${timeId}.png` : `${nameSlug}.jpg`,
+    logo: logoPreview ? `partner_uploads/logo_${nameSlug}_${timeId}.png` : null,
+    gallery: photoPreviews.map((_, idx) => `partner_uploads/photo_${nameSlug}_${timeId}_${idx + 1}.jpg`),
     amenities: selectedAmenities.map(id => AMENITY_OPTIONS.find(a => a.id === id)?.label || id),
     open_all_year: openingHours.toLowerCase().includes('egész évben'),
     notes: capacity ? `Férőhely: ${capacity}. Nyitvatartás: ${openingHours}` : openingHours,
     description: shortDesc,
     details: detailedDesc || shortDesc,
-    has_logo: !!logoPreview,
-    photos_count: photoPreviews.length,
-    submitted_at: new Date().toISOString()
+    submitted_at: new Date().toISOString(),
+    status: 'pending_review'
   };
 
   const handleSubmit = async (e) => {
@@ -186,11 +194,11 @@ export default function Adatbekero() {
               vK
             </div>
             <div>
-              <h1 className="font-bold text-lg leading-none text-white tracking-wide">visitKőszeg</h1>
-              <p className="text-xs text-indigo-400 font-medium">Partneri Adatbekerő 2026</p>
+              <h1 className="font-bold text-lg leading-none text-white tracking-wider uppercase">VISITKŐSZEG</h1>
+              <p className="text-xs text-indigo-400 font-medium">Partneri Adatbekérő 2026</p>
             </div>
           </div>
-          <span className="text-xs px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-medium">
+          <span className="text-xs px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-medium uppercase tracking-wide">
             🔒 Hivatalos Adatbekérő
           </span>
         </div>
@@ -214,7 +222,7 @@ export default function Adatbekero() {
                   <IoSparkles className="text-indigo-400" /> Adj tápot a turizmusnak Kőszegen!
                 </h2>
                 <p className="text-slate-300 text-sm leading-relaxed">
-                  Töltsd ki az alábbi űrlapot kb. 1 perc alatt, hogy helyed naprakészen és pontos adatokkal jelenjen meg a <strong>visitkoszeg.hu</strong> hivatalos turisztikai platformon és alkalmazásban.
+                  Töltsd ki az alábbi űrlapot kb. 1 perc alatt, hogy helyed naprakészen és pontos adatokkal jelenjen meg a <strong className="text-white font-bold">VISITKŐSZEG.HU</strong> hivatalos turisztikai platformon és alkalmazásban.
                 </p>
               </div>
 
@@ -279,8 +287,27 @@ export default function Adatbekero() {
                         <option key={type} value={type} className="bg-slate-900 text-white capitalize">
                           {type}
                         </option>
-                      ))}
                     </select>
+
+                    {subType.toLowerCase().includes('egyéb') && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="mt-3"
+                      >
+                        <label className="block text-xs text-indigo-300 mb-1 font-medium">
+                          Pontosítsd az egyedi típust (pl. Kemping, Hostel, Sátorhely, Bikepacker ágy, Street food kocsma...) *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="pl. Kemping / Sátorhely / Hostel / Bikepacker ágy"
+                          value={customSubType}
+                          onChange={(e) => setCustomSubType(e.target.value)}
+                          className="w-full bg-slate-900/90 border border-indigo-500/50 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400 transition"
+                        />
+                      </motion.div>
+                    )}
                   </div>
                 </div>
 
@@ -562,7 +589,7 @@ export default function Adatbekero() {
                   ) : (
                     <>
                       <IoCheckmarkCircle className="text-xl" />
-                      <span>Adatok Beküldése a visitKőszeg-re</span>
+                      <span>Adatok Beküldése a VISITKŐSZEG-re</span>
                     </>
                   )}
                 </button>
@@ -583,7 +610,7 @@ export default function Adatbekero() {
               <div>
                 <h2 className="text-2xl font-black text-white mb-2">Köszönjük! Az adataidat rögzítettük! 🎉</h2>
                 <p className="text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
-                  Az adataid sikeresen beérkeztek a <strong>visitkoszeg.hu</strong> adminisztrációjához. Rövid ellenőrzés után az adatlapod élesben is megjelenik a platformon!
+                  Az adataid sikeresen beérkeztek a <strong className="text-white font-bold">VISITKŐSZEG.HU</strong> adminisztrációjához. Rövid ellenőrzés után az adatlapod élesben is megjelenik a platformon!
                 </p>
               </div>
 
