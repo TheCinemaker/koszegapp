@@ -400,7 +400,7 @@ function MainAppContent() {
       <AmbientBackground weather={weather} upcoming={upcomingWeather} dark={dark} />
       <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
-          {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && (
+          {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && (
             <>
               <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
                 <div className="
@@ -529,7 +529,7 @@ function MainAppContent() {
 
               {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
-              {!isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && <FloatingNavbar />}
+              {!isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && <FloatingNavbar />}
               {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
               {!isKioskMode &&
                 !location.pathname.startsWith('/koszegieknek') &&
@@ -538,7 +538,8 @@ function MainAppContent() {
                 !location.pathname.startsWith('/eats') &&
                 !location.pathname.startsWith('/pass') &&
                 !location.pathname.startsWith('/scanner') &&
-                !location.pathname.startsWith('/buy-pass') && (
+                !location.pathname.startsWith('/buy-pass') &&
+                !location.pathname.startsWith('/adatbekero') && (
                   <SmartSpotlight appData={appData} />
                 )}
 

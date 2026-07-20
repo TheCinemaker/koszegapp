@@ -67,6 +67,7 @@ const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
 const Moments = lazyWithRetry(() => import('../pages/Moments'));
 const OstromPage = lazyWithRetry(() => import('../pages/OstromPage'));
 const KoszegChat = lazyWithRetry(() => import('../pages/KoszegChat'));
+const Adatbekero = lazyWithRetry(() => import('../pages/Adatbekero'));
 
 // QR Platform (Standalone – Digitális Pincér)
 const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
@@ -273,6 +274,9 @@ export default function AnimatedRoutes({ appData, weather }) {
 
           {/* Ephemeral Moments Feed */}
           <Route path="/moments" element={<PageWrapper><Moments /></PageWrapper>} />
+
+          {/* Adatbekerő (Standalone Partner Form) */}
+          <Route path="/adatbekero" element={<PageWrapper showFooter={false}><Adatbekero /></PageWrapper>} />
 
           {/* VisitPointer Standalone Apps */}
           <Route path="/remote" element={<VisitPointerPhone />} />
