@@ -49,7 +49,7 @@
     ],
     "address": "9730 Kőszeg, Várkör 44",
     "coords": {
-      "lat": 47.3890,
+      "lat": 47.389,
       "lng": 16.5377
     },
     "image": "harangtorony.png",
@@ -154,7 +154,7 @@
     ],
     "address": "9730 Kőszeg, Fő tér 7",
     "coords": {
-      "lat": 47.39010,
+      "lat": 47.3901,
       "lng": 16.53985
     },
     "image": "portre.png",
@@ -190,8 +190,8 @@
     ],
     "address": "9730 Kőszeg, Fő tér 9",
     "coords": {
-      "lat": 47.39000,
-      "lng": 16.53990
+      "lat": 47.39,
+      "lng": 16.5399
     },
     "image": "rapszodia.jpg",
     "gallery": [],
@@ -224,8 +224,8 @@
     ],
     "address": "9730 Kőszeg, Szabó-hegy",
     "coords": {
-      "lat": 47.39800,
-      "lng": 16.54500
+      "lat": 47.398,
+      "lng": 16.545
     },
     "image": "kucko.png",
     "gallery": [],
@@ -255,8 +255,8 @@
     ],
     "address": "9730 Kőszeg, Várkör 67",
     "coords": {
-      "lat": 47.38990,
-      "lng": 16.54000
+      "lat": 47.3899,
+      "lng": 16.54
     },
     "image": "gabriel.jpg",
     "gallery": [],
@@ -288,8 +288,8 @@
     ],
     "address": "9730 Kőszeg, Munkácsy Mihály utca 8-10.",
     "coords": {
-      "lat": 47.38950,
-      "lng": 16.53950
+      "lat": 47.3895,
+      "lng": 16.5395
     },
     "image": "centrum.jpg",
     "gallery": [],
@@ -304,7 +304,7 @@
       "klíma",
       "teherlift"
     ],
-    "rating": 10.0,
+    "rating": 10,
     "reviews_count": 50,
     "price_from": 75,
     "currency": "EUR",
@@ -326,7 +326,7 @@
     "address": "9730 Kőszeg, Mohás út 107",
     "coords": {
       "lat": 47.37872,
-      "lng": 16.55010
+      "lng": 16.5501
     },
     "image": "mohas.png",
     "gallery": [],
@@ -359,8 +359,8 @@
     ],
     "address": "9730 Kőszeg, Liszt Ferenc utca 14.",
     "coords": {
-      "lat": 47.38930,
-      "lng": 16.53880
+      "lat": 47.3893,
+      "lng": 16.5388
     },
     "image": "liszt.jpg",
     "gallery": [],
@@ -393,8 +393,8 @@
     ],
     "address": "9730 Kőszeg, Sziget utca 3.",
     "coords": {
-      "lat": 47.38780,
-      "lng": 16.53820
+      "lat": 47.3878,
+      "lng": 16.5382
     },
     "image": "sziget.jpg",
     "gallery": [],
@@ -427,8 +427,8 @@
     ],
     "address": "9730 Kőszeg, Szombathelyi út 8‑10",
     "coords": {
-      "lat": 47.39600,
-      "lng": 16.54000
+      "lat": 47.396,
+      "lng": 16.54
     },
     "image": "alpok.jpg",
     "gallery": [],
@@ -440,7 +440,7 @@
       "játszótér",
       "kerékpárkölcsönzés"
     ],
-    "rating": 8.0,
+    "rating": 8,
     "reviews_count": 1000,
     "price_from": 65,
     "currency": "EUR",
@@ -462,8 +462,8 @@
     ],
     "address": "9730 Kőszeg, Alsó körút 12",
     "coords": {
-      "lat": 47.38350,
-      "lng": 16.54300
+      "lat": 47.3835,
+      "lng": 16.543
     },
     "image": "csikar.jpg",
     "gallery": [],
@@ -497,8 +497,8 @@
     ],
     "address": "9730 Kőszeg, Tölgyes út 55",
     "coords": {
-      "lat": 47.40210,
-      "lng": 16.54650
+      "lat": 47.4021,
+      "lng": 16.5465
     },
     "image": "tolgyes.jpg",
     "gallery": [],
@@ -512,7 +512,7 @@
       "légkondicionálás",
       "mosogató"
     ],
-    "rating": 10.0,
+    "rating": 10,
     "reviews_count": 1,
     "price_from": 80,
     "currency": "EUR",
@@ -533,8 +533,8 @@
     ],
     "address": "9730 Kőszeg, Várkör 124",
     "coords": {
-      "lat": 47.39050,
-      "lng": 16.54050
+      "lat": 47.3905,
+      "lng": 16.5405
     },
     "image": "strucc.png",
     "gallery": [],
@@ -570,8 +570,8 @@
     ],
     "address": "9730 Kőszeg, Rákóczi Ferenc utca 22",
     "coords": {
-      "lat": 47.38980,
-      "lng": 16.54100
+      "lat": 47.3898,
+      "lng": 16.541
     },
     "image": "blues.jpg",
     "gallery": [],
@@ -608,8 +608,8 @@
     ],
     "address": "9730 Kőszeg, Puskapor utca 12.",
     "coords": {
-      "lat": 47.38100,
-      "lng": 16.54650
+      "lat": 47.381,
+      "lng": 16.5465
     },
     "image": "kokert.jpg",
     "gallery": [],
@@ -641,8 +641,8 @@
     ],
     "address": "9730 Kőszeg, Vasút utca 24.",
     "coords": {
-      "lat": 47.37900,
-      "lng": 16.55600
+      "lat": 47.379,
+      "lng": 16.556
     },
     "image": "alpokt.jpg",
     "gallery": [],
@@ -674,8 +674,8 @@
     ],
     "address": "9730 Kőszeg, Csőszház utca 12-14",
     "coords": {
-      "lat": 47.38300,
-      "lng": 16.55000
+      "lat": 47.383,
+      "lng": 16.55
     },
     "image": "monika.jpg",
     "gallery": [],
@@ -707,8 +707,8 @@
     ],
     "address": "9730 Kőszeg, Rohonci utca 24",
     "coords": {
-      "lat": 47.38720,
-      "lng": 16.54700
+      "lat": 47.3872,
+      "lng": 16.547
     },
     "image": "rohonci.jpg",
     "gallery": [],
@@ -729,40 +729,6 @@
     "open_all_year": true,
     "notes": "Csendes, kertkapcsolatos vendégház, 2025-ben is megbízható, jó értékelésekkel.",
     "description": "Hangulatos kúria jellegű vendégház kerttel és grillezőhellyel, ingyenes wifi és saját parkoló. Ideális nagyobb családoknak és baráti társaságoknak. (Forrás: szallas.hu, saját honlap)"
-  },
-  {
-    "id": 22,
-    "name": "Belvárosi Apartman",
-    "type": "apartman",
-    "tags": [
-      "apartman",
-      "szoba"
-    ],
-    "address": "9730 Kőszeg, Szűk utca 1/A",
-    "coords": {
-      "lat": 47.38960,
-      "lng": 16.54010
-    },
-    "image": "belv.jpg",
-    "gallery": [],
-    "amenities": [
-      "wifi",
-      "parkoló",
-      "konyha",
-      "mosógép",
-      "légkondicionálás",
-      "erkély"
-    ],
-    "rating": 9.7,
-    "reviews_count": 30,
-    "price_from": 75,
-    "currency": "EUR",
-    "phone": "+36 20 918 5674",
-    "email": "wachter.gyula@gmail.com",
-    "website": "https://apartmankoszeg.hu/",
-    "open_all_year": true,
-    "notes": "2025-ben is magas pontszámú belvárosi apartman, modern felszereltséggel.",
-    "description": "Centrumban elhelyezkedő apartman erkélyes kilátással, konyhával, mosógéppel és légkondicionálással. Ingyenes wifi és zárt parkoló biztosított. (Forrás: szallas.hu, booking.com)"
   },
   {
     "id": 23,
@@ -853,7 +819,7 @@
     ],
     "rating": 9.9,
     "reviews_count": 40,
-    "price_from": 46.000,
+    "price_from": 46,
     "currency": "HUF",
     "phone": "+36 30 986 6372",
     "email": "apartmankoszeg@gmail.com",
@@ -871,8 +837,8 @@
     ],
     "address": "9730 Kőszeg, Kastélykert lakópark 21/c",
     "coords": {
-      "lat": 47.38450,
-      "lng": 16.54710
+      "lat": 47.3845,
+      "lng": 16.5471
     },
     "image": "bak.webp",
     "gallery": [],
@@ -903,8 +869,8 @@
     ],
     "address": "9730 Kőszeg, Pékapart utca 25",
     "coords": {
-      "lat": 47.38680,
-      "lng": 16.54620
+      "lat": 47.3868,
+      "lng": 16.5462
     },
     "image": "pek.png",
     "gallery": [],
@@ -936,8 +902,8 @@
     ],
     "address": "9730 Kőszeg, Felsőerdő utca 19.",
     "coords": {
-      "lat": 47.38420,
-      "lng": 16.54580
+      "lat": 47.3842,
+      "lng": 16.5458
     },
     "image": "csucsok.png",
     "gallery": [],
@@ -968,8 +934,8 @@
     ],
     "address": "9730 Kőszeg, Sigray Jakab u.",
     "coords": {
-      "lat": 47.38390,
-      "lng": 16.54690
+      "lat": 47.3839,
+      "lng": 16.5469
     },
     "image": "kastelykert.jpg",
     "gallery": [],
@@ -1000,8 +966,8 @@
     ],
     "address": "9730 Kőszeg, Rőti Völgy u. 51-b",
     "coords": {
-      "lat": 47.38550,
-      "lng": 16.54730
+      "lat": 47.3855,
+      "lng": 16.5473
     },
     "image": "fortuna.png",
     "gallery": [],
@@ -1032,8 +998,8 @@
     ],
     "address": "9730 Kőszeg, Városház utca 3.",
     "coords": {
-      "lat": 47.38910,
-      "lng": 16.54080
+      "lat": 47.3891,
+      "lng": 16.5408
     },
     "image": "hosok.jpg",
     "gallery": [],
@@ -1064,8 +1030,8 @@
     ],
     "address": "9730 Kőszeg, Temető u. 2.",
     "coords": {
-      "lat": 47.39020,
-      "lng": 16.54030
+      "lat": 47.3902,
+      "lng": 16.5403
     },
     "image": "corner.jpg",
     "gallery": [],
@@ -1097,8 +1063,8 @@
     ],
     "address": "9730 Kőszeg, Bem József utca 3",
     "coords": {
-      "lat": 47.38790,
-      "lng": 16.54240
+      "lat": 47.3879,
+      "lng": 16.5424
     },
     "image": "bem.jpg",
     "gallery": [],
@@ -1130,8 +1096,8 @@
     ],
     "address": "9730 Kőszeg, Vadvirág utca 4",
     "coords": {
-      "lat": 47.38410,
-      "lng": 16.54670
+      "lat": 47.3841,
+      "lng": 16.5467
     },
     "image": "vadv.jpg",
     "gallery": [],
@@ -1163,8 +1129,8 @@
     ],
     "address": "9730 Kőszeg, Várkör 67.",
     "coords": {
-      "lat": 47.38490,
-      "lng": 16.54630
+      "lat": 47.3849,
+      "lng": 16.5463
     },
     "image": "dora.webp",
     "gallery": [],
@@ -1196,8 +1162,8 @@
     ],
     "address": "9730 Kőszeg, Chernel u. 3.",
     "coords": {
-      "lat": 47.38530,
-      "lng": 16.54690
+      "lat": 47.3853,
+      "lng": 16.5469
     },
     "image": "korde.jpg",
     "gallery": [],
@@ -1227,8 +1193,8 @@
     ],
     "address": "9730 Kőszeg,Rákóczi F. u. 14",
     "coords": {
-      "lat": 47.38460,
-      "lng": 16.54720
+      "lat": 47.3846,
+      "lng": 16.5472
     },
     "image": "csoki.jpg",
     "gallery": [],
@@ -1258,8 +1224,8 @@
     ],
     "address": "9730 Kőszeg, Rákóczi F. u. 14.",
     "coords": {
-      "lat": 47.38410,
-      "lng": 16.54750
+      "lat": 47.3841,
+      "lng": 16.5475
     },
     "image": "pisztacia.jpg",
     "gallery": [],
@@ -1291,8 +1257,8 @@
     ],
     "address": "9730 Kőszeg, Kalvaria u. 16.",
     "coords": {
-      "lat": 47.38600,
-      "lng": 16.54590
+      "lat": 47.386,
+      "lng": 16.5459
     },
     "image": "eitner.jpg",
     "gallery": [],
@@ -1323,8 +1289,8 @@
     ],
     "address": "9730 Kőszeg, Chernel u. 4.",
     "coords": {
-      "lat": 47.38570,
-      "lng": 16.54660
+      "lat": 47.3857,
+      "lng": 16.5466
     },
     "image": "matyas.webp",
     "gallery": [],
@@ -1354,8 +1320,8 @@
     ],
     "address": "9730 Kőszeg, Chernel u. 4.",
     "coords": {
-      "lat": 47.38570,
-      "lng": 16.54660
+      "lat": 47.3857,
+      "lng": 16.5466
     },
     "image": "matyas.webp",
     "gallery": [],
@@ -1420,8 +1386,8 @@
     ],
     "address": "9730 Kőszeg Királyvölgyi u. 26.",
     "coords": {
-      "lat": 47.38370,
-      "lng": 16.54790
+      "lat": 47.3837,
+      "lng": 16.5479
     },
     "image": "kasper.jpg",
     "gallery": [],
@@ -1485,8 +1451,8 @@
     ],
     "address": "9730 Kőszeg, Rákóczi F. u. 22.",
     "coords": {
-      "lat": 47.38380,
-      "lng": 16.54850
+      "lat": 47.3838,
+      "lng": 16.5485
     },
     "image": "hold.jpg",
     "gallery": [],
@@ -1518,8 +1484,8 @@
     ],
     "address": "9730 Kőszeg, Rákóczi Ferenc utca 22",
     "coords": {
-      "lat": 47.38980,
-      "lng": 16.54100
+      "lat": 47.3898,
+      "lng": 16.541
     },
     "image": "blues.jpg",
     "gallery": [],
@@ -1557,8 +1523,8 @@
     ],
     "address": "9730 Kőszeg, Malom utca 4.",
     "coords": {
-      "lat": 47.38630,
-      "lng": 16.54450
+      "lat": 47.3863,
+      "lng": 16.5445
     },
     "image": "topart.png",
     "gallery": [],
@@ -1592,8 +1558,8 @@
     ],
     "address": "9730 Kőszeg, Szabó hegy",
     "coords": {
-      "lat": 47.38790,
-      "lng": 16.54240
+      "lat": 47.3879,
+      "lng": 16.5424
     },
     "image": "kerkut.jpg",
     "gallery": [],
