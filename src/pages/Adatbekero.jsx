@@ -18,7 +18,7 @@ import {
   IoLogoFacebook,
   IoLogoInstagram
 } from 'react-icons/io5';
-import { supabase } from '../lib/supabaseClient';
+import { supabaseGuest } from '../lib/supabaseClient';
 
 const AMENITY_OPTIONS = [
   { id: 'bankkartya', label: 'Bankkártyás fizetés', icon: '💳' },
@@ -41,6 +41,7 @@ const HOTEL_TYPES = ['apartman', 'panzió', 'hotel / szálloda', 'vendégház', 
 export default function Adatbekero() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [copied, setCopied] = useState(false);
 
   // Form fields
@@ -148,33 +149,43 @@ export default function Adatbekero() {
     setSubmitting(true);
 
     try {
-      // 1. Try sending to Supabase if configured
-      if (supabase) {
-        await supabase.from('partner_submissions').insert([
-          {
-            name,
-            category_type: categoryType,
-            sub_type: subType,
-            address: `${zipCity}, ${address}`,
-            phone,
-            email,
-            website,
-            json_data: generatedJson,
-            created_at: new Date().toISOString()
-          }
-        ]).catch(() => {/* Ignore table missing error */});
+      // 1. Save to local storage cache so admin can review instantly
+      try {
+        const existing = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
+        const updated = [generatedJson, ...existing.filter(x => x.id !== generatedJson.id)];
+        localStorage.setItem('visitkoszeg_partner_submissions', JSON.stringify(updated));
+      } catch (e) {
+        console.warn('localStorage cache failed:', e);
       }
 
-      // 2. Save to local storage cache so admin can review
-      const existing = JSON.parse(localStorage.getItem('visitkoszeg_partner_submissions') || '[]');
-      existing.unshift(generatedJson);
-      localStorage.setItem('visitkoszeg_partner_submissions', JSON.stringify(existing));
+      // 2. Optional Supabase insert if table exists (non-blocking)
+      try {
+        if (supabaseGuest) {
+          await supabaseGuest.from('partner_submissions').insert([
+            {
+              name,
+              category_type: categoryType,
+              sub_type: subType,
+              address: `${zipCity}, ${address}`,
+              phone,
+              email,
+              website,
+              json_data: generatedJson,
+              status: 'pending_review'
+            }
+          ]);
+        }
+      } catch (err) {
+        console.warn('Optional Supabase sync skipped:', err);
+      }
 
+      setSubmitError(null);
+      setSubmitted(true);
     } catch (err) {
-      console.warn('Submission fallback handled:', err);
+      console.error('Partner submission error:', err);
+      setSubmitError(err.message || 'Ismeretlen hiba');
     } finally {
       setSubmitting(false);
-      setSubmitted(true);
     }
   };
 
@@ -578,6 +589,15 @@ export default function Adatbekero() {
                     </div>
                   </div>
                 </div>
+
+                {/* Hibaüzenet - ne nyeljük el némán a mentési hibát */}
+                {submitError && (
+                  <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm">
+                    <p className="font-bold mb-1">Nem sikerült elmenteni az adatokat!</p>
+                    <p className="text-red-400/80 text-xs font-mono">{submitError}</p>
+                    <p className="mt-2 text-xs">Kérjük próbáld újra, vagy másold ki a JSON-t és küldd el emailben.</p>
+                  </div>
+                )}
 
                 {/* Beküldés Gomb */}
                 <button
