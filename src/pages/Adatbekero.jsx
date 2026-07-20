@@ -287,6 +287,7 @@ export default function Adatbekero() {
                         <option key={type} value={type} className="bg-slate-900 text-white capitalize">
                           {type}
                         </option>
+                      ))}
                     </select>
 
                     {subType.toLowerCase().includes('egyéb') && (

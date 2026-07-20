@@ -7,8 +7,9 @@ import {
   FaBars, FaTimes, FaSignOutAlt, FaSave, FaPlus, FaSearch,
   FaCalendarAlt, FaMapMarkerAlt, FaImage, FaTrash, FaPen,
   FaUserCircle, FaInfoCircle, FaParking, FaTree, FaUtensils,
-  FaBed, FaLandmark, FaApple
+  FaBed, FaLandmark, FaApple, FaInbox
 } from 'react-icons/fa';
+import PartnerSubmissionsManager from '../components/Admin/PartnerSubmissionsManager';
 
 // ... (existing code) ...
 
@@ -51,9 +52,17 @@ const MENU_ICONS = {
   leisure: FaTree,
   info: FaInfoCircle,
   parking_machines: FaParking,
+  partner_submissions: FaInbox,
 };
 
 const EDITABLE_CONTENT = {
+  partner_submissions: {
+    name: "Partner Bekérők",
+    description: "Beérkezett partneri adatlapok átnézése és bedolgozása.",
+    path: "public/data/partner_submissions.json",
+    permissions: { view: ["events:view_all"] },
+    isCustomManager: true,
+  },
   events: {
     name: "Programok",
     description: "Városi programok és események kezelése.",
@@ -1673,7 +1682,9 @@ function AdminApp() {
 
         {/* CONTENT AREA */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
-          {isLoading ? (
+          {currentConfig?.isCustomManager ? (
+            <PartnerSubmissionsManager />
+          ) : isLoading ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-4">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
               <p>Adatok betöltése...</p>
