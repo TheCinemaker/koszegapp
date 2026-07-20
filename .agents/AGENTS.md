@@ -29,3 +29,12 @@ This file contains persistent workspace rules and historical context for AI agen
 - **Rule:** The user will not use the admin dashboard interface for new event creation for a week.
 - **Action:** Any new events sent by the user (images, flyers, descriptions) must be manually coded directly into `public/data/events.json` or `public/data/surrounding_events.json`. All uploaded flyers/images must be copied, staged, committed, and pushed directly to both `koszegapp3` and `main` branches by the agent. Do not ask the user to use the admin page.
 
+### 2. Partner Data Collection (/adatbekero) & Admin Integration Rules
+- **Standalone Form Route:** `/adatbekero` is a clean partner data collection page with zero navbar, header, or footer clutter. Branding must strictly use uppercase **VISITKŐSZEG** and **VISITKŐSZEG.HU**.
+- **Form Heading:** The hero heading must strictly say **ADATBEKÉRÉS** (do not use animal feed / "táp" phrases).
+- **File & Storage Strategy:**
+  - Partner submissions are saved directly to `localStorage` key `visitkoszeg_partner_submissions` and generated as `<name_slug>.json` download files.
+  - Submissions are 100% independent of Supabase (no mandatory Supabase tables required for form submission).
+- **Admin Management (/admin):**
+  - Integrated via `src/components/Admin/PartnerSubmissionsManager.jsx` under the `partner_submissions` tab ("📥 Partner Bekérők").
+  - `partner_submissions` entry in `EDITABLE_CONTENT` in `Admin.jsx` must be placed at the END of the object with `path: ""` and `isCustomManager: true` so it does not trigger Netlify JSON fetching functions or override the default "Programok" tab when opening Admin.
