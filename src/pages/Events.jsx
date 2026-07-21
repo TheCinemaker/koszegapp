@@ -309,32 +309,7 @@ export default function Events() {
     <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100">
       {/* Morph target must exist during loading too, or the shared-element has nothing to connect to */}
       <motion.div
-        layoutId="morph-events"
-        transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
-      >
-        <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
-          <FaArrowLeft className="text-lg" />
-        </Link>
-        <motion.div
-          layoutId="morph-events-icon"
-          transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100"
-        >
-          <IoCalendarOutline />
-        </motion.div>
-        <motion.h1
-          layoutId="morph-events-title"
-          transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-          className="text-xl font-bold tracking-tight text-gray-900 dark:text-white"
-        >
-          Programok
-        </motion.h1>
-      </motion.div>
-      <div className="flex justify-center mt-20">
-        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-2xl animate-spin"></div>
-      </div>
-    </div>
+    <LoadingSpinner fullScreen={true} label="Betöltés..." />
   );
   if (error) return <p className="text-red-500 p-8 text-center bg-red-50 m-4 rounded-xl">Hiba: {error}</p>;
 

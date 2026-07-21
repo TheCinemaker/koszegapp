@@ -131,7 +131,7 @@ export default function Home({ appData, weather }) {
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
                   className={`
-                        relative h-full rounded-[1.5rem] p-5 lg:p-6
+                        relative h-full rounded-2xl p-5 lg:p-6
                         ${sec.morphId
                           ? 'border border-white/50 dark:border-white/10'
                           : sec.label === 'KőszegPass'
@@ -146,7 +146,7 @@ export default function Home({ appData, weather }) {
                     `}
                 >
                   {sec.bgImage && (
-                    <div className="absolute top-0 right-0 bottom-0 w-[55%] pointer-events-none overflow-hidden select-none z-0 rounded-r-[1.5rem]">
+                    <div className="absolute top-0 right-0 bottom-0 w-[55%] pointer-events-none overflow-hidden select-none z-0 rounded-r-2xl">
                       <img 
                         src={sec.bgImage} 
                         alt="" 
@@ -160,7 +160,7 @@ export default function Home({ appData, weather }) {
                     <motion.div
                       layoutId={sec.morphId}
                       transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-                      className="absolute inset-0 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
+                      className="absolute inset-0 rounded-2xl bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
                     />
                   )}
 
@@ -169,7 +169,7 @@ export default function Home({ appData, weather }) {
                     layoutId={sec.morphId ? `${sec.morphId}-icon` : undefined}
                     transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
                     className={`
-                        relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-2xl mb-3
+                        relative z-10 w-10 h-10 rounded-lg flex items-center justify-center text-2xl mb-3
                         transition-colors duration-300 ease-out group-hover:scale-105
                         ${sec.label === 'KőszegPass'
                           ? 'bg-[#c8af64]/20 text-[#e4cc7d]'
@@ -206,7 +206,7 @@ export default function Home({ appData, weather }) {
 
                   {/* Coming Soon Lock Badge */}
                   {sec.comingSoon && (
-                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/30 dark:bg-black/50 backdrop-blur-[10px] rounded-[1.5rem]">
+                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/30 dark:bg-black/50 backdrop-blur-[10px] rounded-2xl">
                       <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/70 dark:bg-white/15 rounded-full">
                         <IoLockClosed className="text-white text-sm" />
                         <span className="text-white text-xs font-semibold tracking-wide">Hamarosan</span>
@@ -239,7 +239,7 @@ export default function Home({ appData, weather }) {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              className="relative w-full max-w-lg bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden z-10"
+              className="relative w-full max-w-lg bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden z-10"
             >
               {/* Header Banner - Sleek Dark Gradient representing Night */}
               <div className="relative h-48 bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 p-6 flex flex-col justify-end overflow-hidden">
@@ -278,7 +278,7 @@ export default function Home({ appData, weather }) {
                   vagy fedezd fel a Posta Múzeumot és a Boráriumot aperitivo üzemmódban!
                 </p>
                 
-                <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100/50 dark:border-indigo-900/20 mb-6">
+                <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-xl border border-indigo-100/50 dark:border-indigo-900/20 mb-6">
                   <p className="text-xs font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-2">
                     🏛️ 5 helyszínen, több mint 20 izgalmas programmal várunk!
                   </p>
@@ -288,7 +288,7 @@ export default function Home({ appData, weather }) {
                 <Link
                   to="/events"
                   onClick={closePromo}
-                  className="flex items-center justify-center w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-95 text-center"
+                  className="flex items-center justify-center w-full py-4 px-6 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-95 text-center"
                 >
                   Mutasd a programokat!
                 </Link>

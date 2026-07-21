@@ -4,6 +4,7 @@ import { parseISO, isSameDay, isBefore, isAfter, format, isValid, startOfDay, di
 import { hu } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { 
   IoArrowBack, 
   IoStarOutline, 
@@ -74,10 +75,10 @@ const blueIcon = new L.Icon({
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) {
   return (
     <div 
-      className={`p-5 rounded-[1.75rem] border-l-4 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md mb-4 flex flex-col justify-between
+      className={`p-5 rounded-2xl border-l-4 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md mb-4 flex flex-col justify-between
         ${isFavorite 
-          ? 'bg-amber-100/70 dark:bg-amber-950/20 border-amber-500 text-amber-950 dark:text-amber-100' 
-          : 'bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100'
+          ? 'bg-amber-50/80 dark:bg-amber-950/20 border-l-amber-500 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100' 
+          : 'bg-white dark:bg-zinc-900 border-l-indigo-500 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100'
         }
       `}
       onClick={() => onSelect(event)}
@@ -85,7 +86,7 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
       <div className="flex items-start justify-between">
         <div className="flex-1 pr-4">
           {event.kiemelt && (
-            <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400 mb-2.5 border border-red-200/50 dark:border-red-900/30">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-2.5 border border-rose-500/20">
               <IoFlashOutline className="text-xs" /> Kiemelt
             </span>
           )}
@@ -93,12 +94,12 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
           
           <div className="text-xs md:text-sm mt-3 space-y-2 opacity-90">
             <p className="flex items-center gap-2">
-              <IoLocation className="text-amber-700 dark:text-amber-500 text-sm flex-shrink-0" />
+              <IoLocation className="text-indigo-500 dark:text-indigo-400 text-sm flex-shrink-0" />
               <span className="font-medium">{event.helyszin.nev}</span>
             </p>
             <p className="flex items-center gap-2">
-              <IoTime className="text-amber-700 dark:text-amber-500 text-sm flex-shrink-0" />
-              <span className="font-semibold text-amber-900 dark:text-amber-400">
+              <IoTime className="text-indigo-500 dark:text-indigo-400 text-sm flex-shrink-0" />
+              <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}
               </span>
             </p>
@@ -122,12 +123,12 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
       </div>
 
       {userLocation && event.helyszin?.lat && (
-        <div className="mt-4 pt-3.5 border-t border-gray-200/50 dark:border-zinc-800/60 flex justify-between items-center">
+        <div className="mt-4 pt-3.5 border-t border-gray-100 dark:border-zinc-800 flex justify-between items-center">
           <a
             href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${event.helyszin.lat},${event.helyszin.lng}&travelmode=walking`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1.5"
+            className="text-xs font-bold text-indigo-500 dark:text-indigo-400 hover:opacity-90 flex items-center gap-1.5 transition-opacity"
             onClick={e => e.stopPropagation()}
           >
             <IoCompassOutline className="text-sm" /> Útvonalterv (Gyalog)
@@ -495,7 +496,7 @@ export default function OstromPage() {
             onClick={() => setView('today')} 
             className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
               ${view === 'today' 
-                ? 'bg-white dark:bg-zinc-800 shadow-md text-amber-800 dark:text-amber-400' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
@@ -505,7 +506,7 @@ export default function OstromPage() {
             onClick={() => setView('full')} 
             className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
               ${view === 'full' 
-                ? 'bg-white dark:bg-zinc-800 shadow-md text-amber-800 dark:text-amber-400' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
@@ -515,7 +516,7 @@ export default function OstromPage() {
             onClick={() => setView('favorites')} 
             className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
               ${view === 'favorites' 
-                ? 'bg-white dark:bg-zinc-800 shadow-md text-amber-800 dark:text-amber-400' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
@@ -525,9 +526,8 @@ export default function OstromPage() {
 
         {/* CONTENT SWITCH */}
         {isLoading ? (
-          <div className="flex-1 flex flex-col items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-amber-700"></div>
-            <p className="text-xs font-bold text-gray-400 tracking-wider uppercase mt-4">Programok betöltése...</p>
+          <div className="py-24 flex items-center justify-center">
+            <LoadingSpinner fullScreen={false} label="Programok betöltése..." />
           </div>
         ) : error ? (
           <div className="text-center py-12 bg-red-50 dark:bg-red-950/10 border border-red-200 dark:border-red-900/30 p-6 rounded-3xl">
@@ -746,7 +746,7 @@ export default function OstromPage() {
           onClick={() => setSelectedProgram(null)}
         >
           <div 
-            className="bg-white dark:bg-zinc-900 rounded-t-[2.2rem] sm:rounded-[2.2rem] shadow-2xl max-w-lg w-full p-6 relative border-t border-gray-200 dark:border-zinc-800 animate-slide-up max-h-[85vh] overflow-y-auto flex flex-col justify-between"
+            className="bg-white dark:bg-zinc-900 rounded-t-3xl sm:rounded-3xl shadow-2xl max-w-lg w-full p-6 relative border-t border-gray-200 dark:border-zinc-800 animate-slide-up max-h-[85vh] overflow-y-auto flex flex-col justify-between"
             onClick={e => e.stopPropagation()}
           >
             <div>
@@ -756,11 +756,11 @@ export default function OstromPage() {
               <div className="flex justify-between items-start mb-4">
                 <div className="pr-6">
                   {selectedProgram.kiemelt && (
-                    <span className="inline-block px-2.5 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400 mb-2.5 border border-red-200/30">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-2.5 border border-rose-500/20">
                       Kiemelt Program
                     </span>
                   )}
-                  <h3 className="text-lg md:text-xl font-black leading-tight tracking-tight text-amber-900 dark:text-amber-400">{selectedProgram.nev}</h3>
+                  <h3 className="text-lg md:text-xl font-black leading-tight tracking-tight text-gray-900 dark:text-white">{selectedProgram.nev}</h3>
                 </div>
                 <button 
                   onClick={() => setSelectedProgram(null)} 
@@ -772,21 +772,21 @@ export default function OstromPage() {
               </div>
 
               <div className="space-y-4 my-5 text-sm text-gray-800 dark:text-gray-200">
-                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-2xl border border-gray-200/50 dark:border-zinc-900/50">
-                  <IoLocation className="text-xl text-amber-700 dark:text-amber-500 flex-shrink-0" />
+                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-xl border border-gray-200/50 dark:border-zinc-900/50">
+                  <IoLocation className="text-xl text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
                   <div>
                     <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider">Helyszín</p>
                     <p className="font-extrabold text-gray-900 dark:text-white mt-0.5">{selectedProgram.helyszin.nev}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-2xl border border-gray-200/50 dark:border-zinc-900/50">
-                  <IoTime className="text-xl text-amber-700 dark:text-amber-500 flex-shrink-0" />
+                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-xl border border-gray-200/50 dark:border-zinc-900/50">
+                  <IoTime className="text-xl text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
                   <div>
                     <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider">Időpont</p>
                     <p className="font-bold text-gray-900 dark:text-white mt-0.5">
                       {format(selectedProgram.start, 'yyyy. MMMM d. (eeee)', { locale: hu })}<br/>
-                      <span className="text-amber-800 dark:text-amber-400 font-extrabold">
+                      <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">
                         {format(selectedProgram.start, 'HH:mm')} – {format(selectedProgram.end, 'HH:mm')}
                       </span>
                     </p>
@@ -794,7 +794,7 @@ export default function OstromPage() {
                 </div>
 
                 {selectedProgram.leiras && (
-                  <div className="p-5 bg-amber-600/[0.03] dark:bg-zinc-800/10 rounded-2xl border border-gray-200/50 dark:border-zinc-800/40 leading-relaxed text-gray-700 dark:text-gray-300">
+                  <div className="p-5 bg-gray-50 dark:bg-zinc-800/10 rounded-xl border border-gray-200/50 dark:border-zinc-800/40 leading-relaxed text-gray-700 dark:text-gray-300">
                     <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider mb-2">Program leírása</p>
                     <p className="whitespace-pre-line text-xs md:text-sm font-medium">{selectedProgram.leiras}</p>
                   </div>
@@ -802,7 +802,7 @@ export default function OstromPage() {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-855 flex gap-3">
+            <div className="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800 flex gap-3">
               <button 
                 onClick={() => {
                   toggleFavorite(selectedProgram.id);
@@ -832,7 +832,7 @@ export default function OstromPage() {
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${selectedProgram.helyszin.lat},${selectedProgram.helyszin.lng}&travelmode=walking`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 bg-amber-750 hover:bg-amber-800 text-white font-bold py-3.5 px-4 rounded-xl text-center text-xs transition shadow-md flex items-center justify-center gap-1.5 focus:outline-none"
+                  className="flex-1 bg-indigo-500 hover:opacity-90 text-white font-bold py-3.5 px-4 rounded-xl text-center text-xs transition-opacity shadow-md flex items-center justify-center gap-1.5 focus:outline-none"
                 >
                   <IoCompassOutline className="text-base" /> Indulás oda
                 </a>

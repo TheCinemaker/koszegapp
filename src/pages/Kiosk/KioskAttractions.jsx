@@ -68,9 +68,7 @@ export default function KioskAttractions({ attractions }) {
         {/* Attractions List */}
         <div className="flex flex-col gap-4">
           {sortedAttractions.length === 0 ? (
-            <div className="text-center py-16 text-zinc-400 text-sm font-semibold animate-pulse">
-              {t('attractions.loading')}
-            </div>
+            <div className="text-center py-16 text-zinc-400 text-xs font-medium">Betöltés...</div>
           ) : (
             sortedAttractions.map((attr) => (
               <div

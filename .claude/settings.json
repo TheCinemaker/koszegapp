@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -viE \"modelRouter|comment|//\")",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)"
+    ]
+  }
+}

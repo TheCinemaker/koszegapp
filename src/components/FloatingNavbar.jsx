@@ -39,7 +39,7 @@ export default function FloatingNavbar() {
         backdrop-blur-[25px] 
         backdrop-saturate-[1.8]
         backdrop-brightness-[1.1]
-        rounded-[1.5rem] 
+        rounded-2xl 
         border border-white/50 dark:border-white/20 
         shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
         transition-all duration-300
@@ -56,7 +56,7 @@ export default function FloatingNavbar() {
               transition-all duration-200 ease-out
               active:scale-90
               ${isActive
-                ? 'text-[#007AFF] dark:text-[#0A84FF]'
+                ? 'text-indigo-500 dark:text-indigo-400'
                 : 'text-[#1d1d1f] dark:text-gray-300 hover:text-black dark:hover:text-white'
               }
             `}

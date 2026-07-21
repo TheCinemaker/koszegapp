@@ -50,6 +50,14 @@
     ],
     "shops": [
         {
+            "name": "Lidl Áruház",
+            "address": "Cáki út 2.",
+            "hours": [
+                "Hétfő-Szombat: 06:30 – 21:00",
+                "Vasárnap: 07:00 – 19:00"
+            ]
+        },
+        {
             "name": "Tesco Szupermarket",
             "address": "Pogányi út 7.",
             "hours": [

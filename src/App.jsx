@@ -484,13 +484,13 @@ function MainAppContent() {
                         aria-label="Kedvencek megnyitása"
                       >
                         {favoritesCount > 0 ? (
-                          <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
+                          <IoHeart className="text-lg sm:text-xl text-indigo-500 dark:text-indigo-400 drop-shadow-sm" />
                         ) : (
-                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
+                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors" />
                         )}
 
                         {favoritesCount > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
+                          <span className="absolute -top-1 -right-1 bg-indigo-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
                             {favoritesCount}
                           </span>
                         )}

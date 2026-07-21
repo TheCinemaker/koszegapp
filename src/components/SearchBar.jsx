@@ -91,7 +91,7 @@ export default function SearchBar() { // Refreshed
           onChange={e => setQ(e.target.value)}
           onFocus={() => { if (q.trim().length > 1) setShowResults(true); }}
           placeholder={t('search.placeholder')}
-          className="flex-1 h-10 px-4 rounded-[1.25rem]
+          className="flex-1 h-11 px-4 rounded-2xl
                      bg-white/90 dark:bg-gray-800/90
                      backdrop-blur-md
                      border border-slate-300 dark:border-slate-600/50
@@ -103,7 +103,7 @@ export default function SearchBar() { // Refreshed
         />
         <button
           type="submit"
-          className="w-9 h-9 rounded-xl flex items-center justify-center
+          className="w-11 h-11 rounded-xl flex items-center justify-center
                      bg-gradient-to-br from-indigo-600 to-purple-800
                      text-white shadow-lg border border-indigo-500/20
                      hover:from-indigo-700 hover:to-purple-900
@@ -119,7 +119,7 @@ export default function SearchBar() { // Refreshed
         <div className="absolute z-[100] w-full max-h-80 overflow-auto mt-2
                          bg-white dark:bg-gray-800
                          border border-gray-200 dark:border-gray-700
-                         rounded-2xl shadow-xl">
+                         rounded-2xl shadow-xl p-2">
           {loading && <div className="p-4 text-gray-500 dark:text-gray-400">Keresés…</div>}
           {Object.keys(results).length === 0 && !loading && q.length > 1 && (
             <div className="p-4 text-gray-500 dark:text-gray-400">Nincs találat.</div>

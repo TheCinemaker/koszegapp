@@ -171,29 +171,21 @@ const NearbyDiscoveryCard = ({ appData }) => {
 
     return (
         <div className="mb-8 relative">
-            <AnimatePresence mode="wait">
-                {!location ? (
-                    <motion.div 
-                        key="searching"
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1 }} 
-                        exit={{ opacity: 0 }}
-                        className="bg-indigo-600/5 dark:bg-indigo-500/5 border border-indigo-500/10 rounded-3xl p-5 flex items-center justify-center gap-3"
-                    >
-                        <Navigation className="w-4 h-4 text-indigo-500 animate-spin" />
-                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">
-                            GPS jel keresése...
-                        </span>
-                    </motion.div>
-                ) : closestItem && (
-                    <motion.div
-                        key={`${mode}-${closestItem.id}`}
-                        initial={{ opacity: 0, x: mode === 'walking' ? 20 : -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="relative group"
-                    >
+            {!location ? (
+                <div 
+                    className="bg-white/70 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl p-5 flex items-center justify-center gap-3 backdrop-blur-[20px]"
+                >
+                    <Navigation className="w-4 h-4 text-indigo-500" />
+                    <span className="text-xs font-medium text-slate-500 dark:text-zinc-400 tracking-wide">
+                        GPS pozíció meghatározása...
+                    </span>
+                </div>
+            ) : closestItem && (
+                <div
+                    className="relative group"
+                >
                         {/* THE CARD CONTENT */}
-                        <div className="relative overflow-hidden rounded-[1.5rem] bg-white dark:bg-zinc-900 border border-indigo-500/10 dark:border-indigo-500/20 shadow-xl transition-all duration-500 group-hover:border-indigo-500/40">
+                        <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-indigo-500/10 dark:border-indigo-500/20 shadow-xl transition-all duration-500 group-hover:border-indigo-500/40">
                             
                             {/* Mode Toggle Button (Floating Bottom-Right) */}
                             <button 
@@ -216,7 +208,7 @@ const NearbyDiscoveryCard = ({ appData }) => {
                                 <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl opacity-50 transition-colors" />
 
                                 <div className="relative z-10 flex items-center gap-4 sm:gap-6">
-                                    <div className={`aspect-square w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-2xl sm:rounded-3xl shadow-lg transition-transform duration-500 group-hover:scale-110 ${mode === 'walking' ? 'bg-emerald-600 text-white shadow-emerald-600/20' : 'bg-indigo-600 text-white shadow-indigo-600/20'}`}>
+                                    <div className={`aspect-square w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-xl sm:rounded-2xl shadow-lg transition-transform duration-500 group-hover:scale-110 ${mode === 'walking' ? 'bg-emerald-600 text-white shadow-emerald-600/20' : 'bg-indigo-600 text-white shadow-indigo-600/20'}`}>
                                         <Icon className="w-6 h-6 sm:w-8 h-8" />
                                     </div>
                                     
@@ -237,15 +229,14 @@ const NearbyDiscoveryCard = ({ appData }) => {
                                         </div>
                                     </div>
 
-                                    <div className="hidden md:flex bg-slate-100 dark:bg-white/5 p-4 rounded-2xl text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                    <div className="hidden md:flex bg-slate-100 dark:bg-white/5 p-4 rounded-xl text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                                         <ArrowRight className="w-6 h-6" />
                                     </div>
                                 </div>
                             </Link>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                </div>
+            )}
         </div>
     );
 };

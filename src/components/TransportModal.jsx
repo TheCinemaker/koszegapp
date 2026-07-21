@@ -43,7 +43,7 @@ export default function TransportModal({ isOpen, onClose }) {
                     initial={{ scale: 0.9, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                    className="bg-white dark:bg-[#1a1c2e] rounded-[2rem] shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col"
+                    className="bg-white dark:bg-[#1a1c2e] rounded-3xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}

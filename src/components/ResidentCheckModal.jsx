@@ -19,7 +19,7 @@ export default function ResidentCheckModal({ onClose }) {
         toast('Jó nézelődést! 😊', {
             icon: '👋',
             style: {
-                borderRadius: '20px',
+                borderRadius: '16px',
                 background: '#333',
                 color: '#fff',
             },
@@ -47,9 +47,9 @@ export default function ResidentCheckModal({ onClose }) {
                     onClick={(e) => e.stopPropagation()}
                     className="
                         relative w-full max-w-[340px]
-                        bg-[rgba(255,255,255,0.85)] dark:bg-[rgba(30,30,30,0.85)]
+                        bg-white/90 dark:bg-zinc-900/90
                         backdrop-blur-3xl saturate-150
-                        rounded-[2rem]
+                        rounded-3xl
                         p-6 pt-8
                         shadow-2xl ring-1 ring-black/5
                         text-center
@@ -57,7 +57,7 @@ export default function ResidentCheckModal({ onClose }) {
                     "
                 >
                     {/* Decorative blurred blob behind */}
-                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-blue-500/20 rounded-full blur-[50px] pointer-events-none" />
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-indigo-500/20 rounded-full blur-[50px] pointer-events-none" />
 
                     {/* Close Button */}
                     <button
@@ -67,12 +67,9 @@ export default function ResidentCheckModal({ onClose }) {
                         <IoCloseCircleOutline className="text-xl" />
                     </button>
 
-                    {/* Icon - Squircle Shape */}
-                    <div className="relative mx-auto mb-6 w-20 h-20">
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-[1.2rem] shadow-lg shadow-blue-500/30"></div>
-                        <div className="absolute inset-0 flex items-center justify-center text-white">
-                            <IoHome className="text-3xl" />
-                        </div>
+                    {/* Icon - Solid Indigo-500 Squircle */}
+                    <div className="w-20 h-20 mx-auto mb-6 rounded-xl bg-indigo-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <IoHome className="text-3xl" />
                     </div>
 
                     <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-3 tracking-tight">
@@ -80,34 +77,34 @@ export default function ResidentCheckModal({ onClose }) {
                     </h2>
 
                     <p className="text-zinc-500 dark:text-zinc-400 mb-8 text-[15px] leading-relaxed font-medium">
-                        Ez a felület kifejezetten a helyi lakosoknak készült (hulladéknaptár, hírek).
+                        Ez a felület kifejezetten a helyi lakosoknak készült (hulladéknaptár, helyi szolgáltatások).
                     </p>
 
                     <div className="flex flex-col gap-3">
-                        {/* Primary Action - Apple Blue */}
+                        {/* Primary Action - Solid Indigo-500 (Hover: opacity-90) */}
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.96 }}
                             onClick={handleYes}
                             className="
                                 w-full h-12 rounded-xl
-                                bg-[#007AFF] hover:bg-[#006ee6]
+                                bg-indigo-500 hover:opacity-90
                                 text-white font-semibold text-[17px]
-                                shadow-lg shadow-blue-500/25
-                                transition-colors
+                                shadow-lg shadow-indigo-500/25
+                                transition-all duration-200
                             "
                         >
                             Igen, itt élek
                         </motion.button>
 
-                        {/* Secondary Action - Ghost/Gray */}
+                        {/* Secondary Action - Solid Indigo-500 Text */}
                         <motion.button
-                            whileHover={{ backgroundColor: 'rgba(128,128,128,0.1)' }}
+                            whileHover={{ backgroundColor: 'rgba(99,102,241,0.08)' }}
                             whileTap={{ scale: 0.98 }}
                             onClick={handleNo}
                             className="
                                 w-full h-12 rounded-xl
-                                text-[#007AFF] dark:text-[#3B9DFF]
+                                text-indigo-500 dark:text-indigo-400
                                 font-medium text-[17px]
                                 transition-colors
                             "

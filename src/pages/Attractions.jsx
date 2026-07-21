@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next'; // Added import
 import { fetchAttractions } from '../api';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 import AttractionsMap from '../components/AttractionsMap';
 import AttractionDetailModal from '../components/AttractionDetailModal';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
@@ -102,9 +103,7 @@ export default function Attractions() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
-    </div>
+    <LoadingSpinner fullScreen={true} label="Betöltés..." />
   );
 
   if (error) return <p className="text-red-500 p-4 text-center">Hiba: {error}</p>;

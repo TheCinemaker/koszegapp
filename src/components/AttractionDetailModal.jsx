@@ -46,7 +46,7 @@ export default function AttractionDetailModal({ attractionId, onClose, isFavorit
                   ${isShowing ? 'opacity-100' : 'opacity-0'}`}
     >
       <div
-        className={`bg-white/90 dark:bg-[#0f111a]/90 backdrop-blur-3xl rounded-t-[3rem] sm:rounded-[3rem] shadow-2xl border border-white/20 dark:border-white/5 w-full max-w-2xl max-h-[95vh] h-[90vh] sm:h-auto overflow-hidden relative transition-all duration-500 cubic-bezier(0.19, 1, 0.22, 1)
+        className={`bg-white/90 dark:bg-[#0f111a]/90 backdrop-blur-3xl rounded-t-3xl sm:rounded-3xl shadow-2xl border border-white/20 dark:border-white/5 w-full max-w-2xl max-h-[95vh] h-[90vh] sm:h-auto overflow-hidden relative transition-all duration-500 cubic-bezier(0.19, 1, 0.22, 1)
                     ${isShowing ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-full sm:translate-y-24 opacity-0 scale-90'}`}
       >
         {/* Floating Close Button (Glass Orb) */}

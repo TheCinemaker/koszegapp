@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; // Added import
 import GastroCard from '../components/GastroCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { FaSearch } from 'react-icons/fa';
 import { FadeUp } from '../components/AppleMotion';
@@ -65,9 +66,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-      </div>
+      <LoadingSpinner fullScreen={true} label="Betöltés..." />
     );
   }
 
