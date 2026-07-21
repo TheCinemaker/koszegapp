@@ -88,7 +88,7 @@ const LiveHero = ({ appData, weather }) => {
             className="relative w-full mb-8"
         >
             {/* Main Glass Card */}
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(31,38,135,0.15)] p-6 md:p-8">
+            <div className="relative overflow-hidden rounded-[1.5rem] bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/40 dark:border-white/10 shadow-[0_20px_50px_rgba(31,38,135,0.15)] p-6 md:p-8">
 
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full" />

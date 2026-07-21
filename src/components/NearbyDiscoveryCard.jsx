@@ -193,7 +193,7 @@ const NearbyDiscoveryCard = ({ appData }) => {
                         className="relative group"
                     >
                         {/* THE CARD CONTENT */}
-                        <div className="relative overflow-hidden rounded-[1.8rem] sm:rounded-[2.2rem] bg-white dark:bg-zinc-900 border border-indigo-500/10 dark:border-indigo-500/20 shadow-xl transition-all duration-500 group-hover:border-indigo-500/40">
+                        <div className="relative overflow-hidden rounded-[1.5rem] bg-white dark:bg-zinc-900 border border-indigo-500/10 dark:border-indigo-500/20 shadow-xl transition-all duration-500 group-hover:border-indigo-500/40">
                             
                             {/* Mode Toggle Button (Floating Bottom-Right) */}
                             <button 

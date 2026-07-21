@@ -91,7 +91,7 @@ export default function SearchBar() { // Refreshed
           onChange={e => setQ(e.target.value)}
           onFocus={() => { if (q.trim().length > 1) setShowResults(true); }}
           placeholder={t('search.placeholder')}
-          className="flex-1 h-9 px-4 rounded-xl
+          className="flex-1 h-10 px-4 rounded-[1.25rem]
                      bg-white/90 dark:bg-gray-800/90
                      backdrop-blur-md
                      border border-slate-300 dark:border-slate-600/50

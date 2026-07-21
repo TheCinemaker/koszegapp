@@ -39,7 +39,7 @@ export default function FloatingNavbar() {
         backdrop-blur-[25px] 
         backdrop-saturate-[1.8]
         backdrop-brightness-[1.1]
-        rounded-[30px] 
+        rounded-[1.5rem] 
         border border-white/50 dark:border-white/20 
         shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
         transition-all duration-300
