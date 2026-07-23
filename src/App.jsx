@@ -30,6 +30,7 @@ import SmartSpotlight from './components/SmartSpotlight';
 import LiveCityMap from './components/LiveCityMap';
 import ResidentCheckModal from './components/ResidentCheckModal';
 
+import AmbientBackground from './components/AmbientBackground';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import SettingsMenu from './components/SettingsMenu';
 import UserMessageRibbon from './components/UserMessageRibbon';
@@ -397,7 +398,10 @@ function MainAppContent() {
 
   return (
     <>
-      <div className="fixed inset-0 bg-slate-50 dark:bg-black -z-10 transition-colors duration-500" />
+      {/* Deepest fallback layer (also covers iOS rubber-band overscroll area) */}
+      <div className="fixed inset-0 bg-slate-50 dark:bg-black -z-50 transition-colors duration-500" />
+      {/* Live atmospheric sky — the colored surface the frosted UI blurs against */}
+      <AmbientBackground weather={weather} upcoming={upcomingWeather} dark={dark} />
       <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
           {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && (
@@ -408,8 +412,8 @@ function MainAppContent() {
                 w-full max-w-5xl
                 h-full
                 flex items-center justify-between px-3 sm:px-6
-                bg-white/30 dark:bg-white/10
-                backdrop-blur-[30px] backdrop-saturate-150
+                bg-white/5 dark:bg-white/5
+                backdrop-blur-[30px] backdrop-saturate-150 transform-gpu
                 rounded-[2rem]
                 border border-white/60 dark:border-white/10
                 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
@@ -514,7 +518,7 @@ function MainAppContent() {
             </>
           )}
 
-          <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
+          <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen ${isInGameMode ? '' : 'px-4 pt-4'}`}>
             {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
             <AnimatedRoutes appData={appData} weather={weather} />
           </main>
