@@ -96,7 +96,7 @@ export default function RestaurantDetail() {
         >
           <div className="flex flex-wrap gap-2 mb-3">
             {rest.type && (
-              <span className="px-4 py-1.5 rounded-full bg-gold/20 backdrop-blur-md text-gold-light text-xs font-semibold uppercase tracking-widest shadow-card border border-gold/40">
+              <span className="px-4 py-1.5 rounded-full bg-brand text-gold-light text-xs font-bold uppercase tracking-widest shadow-card border border-gold/40">
                 {rest.type}
               </span>
             )}

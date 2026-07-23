@@ -221,8 +221,8 @@ export default function Attractions() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-700" />
 
-                      {/* Category Badge */}
-                      <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-gold/20 backdrop-blur-md border border-gold/40 text-[10px] font-semibold uppercase tracking-widest text-gold-light">
+                      {/* Category Badge - Solid non-transparent background for high contrast */}
+                      <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-brand text-gold-light border border-gold/40 text-[10px] font-bold uppercase tracking-widest shadow-card z-20">
                         {item.category}
                       </div>
 

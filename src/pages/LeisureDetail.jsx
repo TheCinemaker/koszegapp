@@ -115,7 +115,7 @@ export default function LeisureDetail() {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex flex-wrap gap-2 mb-3">
-            <span className="px-4 py-1.5 rounded-full bg-gold/20 backdrop-blur-md text-gold-light text-xs font-semibold uppercase tracking-widest shadow-card border border-gold/40 flex items-center gap-1.5">
+            <span className="px-4 py-1.5 rounded-full bg-brand text-gold-light text-xs font-bold uppercase tracking-widest shadow-card border border-gold/40 flex items-center gap-1.5">
               {getTypeIcon(item.type, item.category)}
               {getTypeName(item.type, item.category)}
             </span>

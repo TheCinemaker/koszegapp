@@ -140,7 +140,7 @@ export default function AttractionDetail() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <span className="px-4 py-1.5 rounded-full bg-gold/20 backdrop-blur-xl text-gold-light text-[10px] font-semibold uppercase tracking-[0.2em] shadow-card border border-gold/40">
+              <span className="px-4 py-1.5 rounded-full bg-brand text-gold-light text-[10px] font-bold uppercase tracking-[0.2em] shadow-card border border-gold/40">
                 {attr.category || "Látnivaló"}
               </span>
               {attr.rainSafe && (

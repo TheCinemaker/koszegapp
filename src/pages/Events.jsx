@@ -131,7 +131,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
             {/* Tags / MultiDay Badge */}
             <div className="absolute bottom-3 left-3 flex gap-2 overflow-hidden max-w-[80%] z-20">
               {isMultiDay && (
-                <span className="px-2.5 py-0.5 rounded-full bg-gold/20 text-gold-text dark:text-gold-light text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-card border border-gold/30">
+                <span className="px-2.5 py-1 rounded-full bg-brand text-gold-light text-[10px] font-bold uppercase tracking-wider shadow-card border border-gold/40">
                   {t('multiDay')}
                 </span>
               )}
