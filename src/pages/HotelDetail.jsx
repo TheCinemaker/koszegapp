@@ -1,20 +1,74 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchHotels } from '../api';
+import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import {
   IoArrowBack,
   IoCallOutline,
   IoGlobeOutline,
-  IoMailOutline,
-  IoMapOutline,
   IoLocationOutline,
-  IoWifi,
-  IoBedOutline
+  IoCompassOutline,
+  IoShareSocialOutline,
+  IoBedOutline,
+  IoStar,
+  IoCloseOutline
 } from 'react-icons/io5';
-import { motion } from 'framer-motion';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import GhostImage from '../components/GhostImage';
-import { FadeUp, ParallaxImage } from '../components/AppleMotion';
+import { FadeUp } from '../components/AppleMotion';
 import LoadingSpinner from '../components/LoadingSpinner';
+
+const PAGE_BG = 'bg-surface-light dark:bg-surface-dark';
+const NOTCH_BG = 'bg-surface-light dark:bg-surface-dark';
+
+function Perforation() {
+  return (
+    <div className="relative py-1 flex items-center justify-center">
+      <div className={`absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full ${NOTCH_BG} border-r border-slate-200/80 dark:border-white/10`} />
+      <div className="w-full border-b-2 border-dashed border-slate-200/80 dark:border-white/10 mx-6" />
+      <div className={`absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full ${NOTCH_BG} border-l border-slate-200/80 dark:border-white/10`} />
+    </div>
+  );
+}
+
+function ImageModal({ src, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-6 right-6 text-white w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-2xl hover:bg-white/20 transition-colors"
+          aria-label="Bezárás"
+        >
+          <IoCloseOutline />
+        </button>
+        <motion.img
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          src={src}
+          alt="Nagyított kép"
+          className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-floating"
+          onClick={(e) => e.stopPropagation()}
+        />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
 
 export default function HotelDetail() {
   const { id } = useParams();
@@ -22,241 +76,285 @@ export default function HotelDetail() {
   const [hotel, setHotel] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     setLoading(true);
     fetchHotels()
       .then(data => {
         const found = data.find(h => String(h.id) === id);
-        if (!found) setError('Nem található ilyen szállás.');
+        if (!found) setError('Nem található ilyen szálláshely.');
         else setHotel(found);
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) {
-    return (
-      <LoadingSpinner fullScreen={true} label="Szállás betöltése..." />
-    );
-  }
+  const favorited = useMemo(() => hotel ? isFavorite(hotel.id) : false, [hotel, isFavorite]);
 
-  if (error || !hotel) {
-    return (
-      <div className="min-h-screen bg-surface-light dark:bg-surface-dark flex flex-col items-center justify-center p-6 text-center">
-        <p className="text-red-500 mb-6 text-lg font-medium">Hiba: {error || "A szállás nem található."}</p>
-        <button
-          onClick={() => navigate('/hotels')}
-          className="px-6 py-3 bg-brand text-gold-light rounded-control font-semibold shadow-card border border-gold/30 hover:opacity-90 transition-opacity"
-        >
-          Vissza a listához
-        </button>
-      </div>
-    );
-  }
-
-  const handleBooking = () => {
-    if (!hotel) return;
-    const baseUrl = "https://www.booking.com/searchresults.html";
-    const params = new URLSearchParams({
-      ss: hotel.name,
-      aid: "7885594",
-      label: `cj-7885594`,
-      utm_source: "cj",
-      utm_medium: "affiliate",
-      utm_campaign: "7885594",
-      utm_content: "hotel_detail"
-    });
-    window.open(`${baseUrl}?${params.toString()}`, "_blank", "noopener,noreferrer");
+  const handleShare = async () => {
+    if (navigator.share && hotel) {
+      try {
+        await navigator.share({
+          title: hotel.name,
+          text: hotel.description || hotel.shortDescription,
+          url: window.location.href,
+        });
+      } catch (e) {
+        console.log('Share skipped', e);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link másolva a vágólapra!');
+    }
   };
 
-  return (
-    <div className="min-h-screen bg-surface-light dark:bg-surface-dark overflow-x-hidden pb-10">
+  if (loading) return <LoadingSpinner fullScreen={true} label="Szálláshely betöltése..." />;
 
-      {/* --- HERO IMAGE SECTION --- */}
-      <div className="relative h-[65vh] w-full overflow-hidden">
-        {hotel.image ? (
-          <ParallaxImage
-            src={`/images/hotels/${hotel.image}`}
-            className="w-full h-full object-cover"
-            scale={1.05}
-          />
+  if (error || !hotel) return (
+    <div className={`min-h-screen flex flex-col items-center justify-center p-6 text-center ${PAGE_BG}`}>
+      <p className="text-red-500 mb-6 text-lg font-bold">Hiba: {error || "A szállás nem található."}</p>
+      <button
+        onClick={() => navigate('/hotels')}
+        className="px-6 py-3 bg-brand text-gold-light rounded-control font-semibold shadow-card border border-gold/30 hover:opacity-90 transition-opacity"
+      >
+        Vissza a szállásokhoz
+      </button>
+    </div>
+  );
+
+  const imgSrc = hotel.image ? `/images/hotels/${hotel.image}` : null;
+
+  return (
+    <div className={`min-h-screen pb-24 ${PAGE_BG}`}>
+      {showImageModal && imgSrc && <ImageModal src={imgSrc} onClose={() => setShowImageModal(false)} />}
+
+      {/* ================================================================ */}
+      {/* IMMERZÍV HERO                                                    */}
+      {/* ================================================================ */}
+      <div className="relative h-[34vh] min-h-[260px] max-h-[380px] overflow-hidden">
+        {imgSrc ? (
+          <>
+            <img
+              src={imgSrc}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60 dark:opacity-40"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-surface-light dark:to-surface-dark" />
+
+            <div className="absolute inset-0 flex items-center justify-center p-4 pt-14 pb-8">
+              <motion.img
+                initial={{ opacity: 0, y: 12 }}
+                animate={heroLoaded ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                src={imgSrc}
+                alt={hotel.name}
+                onLoad={() => setHeroLoaded(true)}
+                onClick={() => setShowImageModal(true)}
+                className="max-h-full max-w-[80%] object-contain rounded-xl shadow-2xl shadow-black/30 cursor-zoom-in"
+                draggable={false}
+              />
+            </div>
+          </>
         ) : (
-          <GhostImage className="w-full h-full" />
+          <div className="absolute inset-0 flex items-center justify-center p-6">
+            <GhostImage className="w-full h-full max-w-md rounded-xl opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-surface-light dark:to-surface-dark" />
+          </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 z-10" />
-
-        {/* --- NAVIGATION --- */}
-        <div className="absolute top-6 left-6 z-50">
+        {/* Lebegő gombok a hero fölött */}
+        <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
           <button
             onClick={() => navigate('/hotels')}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/40 backdrop-blur-xl border border-white/10 text-white shadow-floating hover:scale-105 active:scale-95 transition-all duration-300 group"
+            className="w-11 h-11 rounded-full bg-black/30 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-black/40 active:scale-95 transition-all"
+            aria-label="Vissza"
           >
-            <IoArrowBack className="text-xl group-hover:-translate-x-1 transition-transform" />
+            <IoArrowBack className="text-xl" />
+          </button>
+
+          <button
+            onClick={() => (favorited ? removeFavorite(hotel.id) : addFavorite(hotel.id))}
+            className="w-11 h-11 rounded-full bg-black/30 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-black/40 active:scale-95 transition-all"
+            aria-label={favorited ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
+          >
+            {favorited ? <FaHeart className="text-rose-400 text-lg" /> : <FaRegHeart className="text-lg" />}
           </button>
         </div>
-
-        {/* Hero Title */}
-        <motion.div
-          className="absolute bottom-12 left-6 right-6 z-20"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="flex flex-wrap gap-2 mb-3">
-            <span className="px-4 py-1.5 rounded-full bg-brand text-gold-light text-xs font-bold uppercase tracking-widest shadow-card border border-gold/40">
-              {hotel.type || "Szállás"}
-            </span>
-          </div>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white drop-shadow-2xl tracking-tight leading-tight max-w-4xl">
-            {hotel.name}
-          </h1>
-        </motion.div>
       </div>
 
-      {/* --- CONTENT SHEET --- */}
-      <div className="relative -mt-8 px-4 z-20 max-w-7xl mx-auto">
-        <FadeUp duration={1}>
-          <div className="
-              bg-surface-card dark:bg-surface-card-dark
-              backdrop-blur-md
-              rounded-card
-              border border-slate-200/80 dark:border-white/10
-              shadow-card
-              p-6 sm:p-10
-              min-h-[50vh]
-          ">
+      {/* ================================================================ */}
+      {/* KÁRTYA — rácsúszik a herora                                      */}
+      {/* ================================================================ */}
+      <div className="relative z-10 -mt-16 sm:-mt-20 px-4 max-w-2xl mx-auto">
+        <FadeUp>
+          <div className="bg-surface-card dark:bg-surface-card-dark rounded-card border border-slate-200/80 dark:border-white/10 shadow-card overflow-hidden">
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-              {/* LEFT COLUMN: Main Info */}
-              <div className="lg:col-span-8 space-y-6">
-
-                {/* Amenities */}
-                {hotel.amenities?.length > 0 && (
-                  <div className="flex flex-wrap gap-3">
-                    {hotel.amenities.map((a, i) => (
-                      <span key={i} className="bg-gold/15 text-gold-text dark:text-gold-light text-xs font-semibold px-4 py-2 rounded-full border border-gold/30 flex items-center gap-2">
-                        {a.toLowerCase().includes('wifi') && <IoWifi />}
-                        {a}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                  <IoBedOutline className="text-gold-text dark:text-gold-light" />
-                  Rövid leírás
-                </h2>
-
-                <div className="prose dark:prose-invert prose-lg max-w-none">
-                  <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-                    {hotel.description || "Nincs leírás megadva."}
-                  </p>
+            {/* --- Kártya fő része --- */}
+            <div className="p-6 sm:p-8">
+              <div className="flex flex-col gap-3">
+                {/* Eyebrow */}
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-zinc-500">
+                  <span className="px-3 py-1 rounded-full bg-brand text-gold-light border border-gold/40 shadow-card font-bold">
+                    {hotel.type || "Szállás"}
+                  </span>
+                  {hotel.stars && (
+                    <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-gold-text dark:text-gold-light border border-slate-200/60 dark:border-white/10 font-bold flex items-center gap-1">
+                      <IoStar /> {hotel.stars} csillag
+                    </span>
+                  )}
                 </div>
-              </div>
 
-              {/* RIGHT COLUMN: Sidebar */}
-              <div className="lg:col-span-4 space-y-6">
+                <h1 className="text-2xl sm:text-[28px] font-bold text-slate-900 dark:text-white leading-[1.15] tracking-tight mt-1">
+                  {hotel.name}
+                </h1>
 
-                {/* Address Card */}
-                <FadeUp delay={0.1}>
-                  <div className="bg-slate-100 dark:bg-white/5 p-6 rounded-control border border-slate-200/60 dark:border-white/5 space-y-6">
-                    <div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2.5 rounded-xl bg-gold/15 text-gold-text dark:text-gold-light border border-gold/30">
-                          <IoLocationOutline className="text-xl" />
-                        </div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Cím</h3>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-400 font-medium text-sm leading-relaxed">
-                        {hotel.address}
-                      </p>
+                {/* Metadata */}
+                <div className="space-y-1.5 text-sm font-medium text-slate-600 dark:text-zinc-400 pt-1">
+                  {hotel.address && (
+                    <div className="flex items-center gap-2">
+                      <IoLocationOutline className="text-base text-gold-text dark:text-gold-light flex-shrink-0" />
+                      <span className="truncate">{hotel.address}</span>
                     </div>
-                  </div>
-                </FadeUp>
-
-                {/* Contact Actions */}
-                <FadeUp delay={0.2}>
-                  <div className="grid grid-cols-1 gap-3">
-                    {/* Booking Button */}
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={handleBooking}
-                      className="bg-brand text-gold-light p-4 rounded-control flex items-center justify-start gap-4 shadow-card border border-gold/30 transition-all hover:opacity-90"
-                    >
-                      <div className="w-9 h-9 rounded-full bg-gold/20 flex items-center justify-center border border-gold/40">
-                        <IoBedOutline className="text-lg text-gold-light" />
-                      </div>
-                      <div className="text-left">
-                        <span className="block font-bold text-xs uppercase tracking-wider leading-none">Foglalás</span>
-                        <span className="text-[10px] opacity-80 font-medium uppercase tracking-wider">A Booking.com-on</span>
-                      </div>
-                    </motion.button>
-
-                    {hotel.website && (
-                      <a
-                        href={hotel.website}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="bg-slate-100 dark:bg-white/5 text-gray-900 dark:text-white p-4 rounded-control flex items-center justify-start gap-4 hover:bg-gold/10 transition-all border border-slate-200/60 dark:border-white/5"
-                      >
-                        <div className="w-9 h-9 rounded-full bg-gold/15 text-gold-text dark:text-gold-light flex items-center justify-center border border-gold/30"><IoGlobeOutline className="text-lg" /></div>
-                        <span className="font-semibold text-sm">Hivatalos Weboldal</span>
-                      </a>
-                    )}
-
-                    {hotel.phone && (
-                      <a
-                        href={`tel:${hotel.phone}`}
-                        className="bg-slate-100 dark:bg-white/5 text-gray-900 dark:text-white p-4 rounded-control flex items-center justify-start gap-4 hover:bg-gold/10 transition-all border border-slate-200/60 dark:border-white/5"
-                      >
-                        <div className="w-9 h-9 rounded-full bg-gold/15 text-gold-text dark:text-gold-light flex items-center justify-center border border-gold/30"><IoCallOutline className="text-lg" /></div>
-                        <span className="font-semibold text-sm">Hívás</span>
-                      </a>
-                    )}
-
-                    {hotel.email && (
-                      <a
-                        href={`mailto:${hotel.email}`}
-                        className="bg-slate-100 dark:bg-white/5 text-gray-900 dark:text-white p-4 rounded-control flex items-center justify-start gap-4 hover:bg-gold/10 transition-all border border-slate-200/60 dark:border-white/5"
-                      >
-                        <div className="w-9 h-9 rounded-full bg-gold/15 text-gold-text dark:text-gold-light flex items-center justify-center border border-gold/30"><IoMailOutline className="text-lg" /></div>
-                        <span className="font-semibold text-sm">Email</span>
-                      </a>
-                    )}
-                  </div>
-                </FadeUp>
-
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Map Section */}
-            {hotel.coords && (
-              <FadeUp delay={0.4} className="mt-12">
-                <div className="overflow-hidden rounded-card border border-slate-200/80 dark:border-white/10 shadow-card relative group h-80">
-                  <iframe
-                    title="Helyszín térképe"
-                    src={`https://www.google.com/maps?q=${hotel.coords.lat},${hotel.coords.lng}&z=16&output=embed`}
-                    className="w-full h-full border-0 transition-all duration-700"
-                    loading="lazy"
-                    allowFullScreen
-                  />
-                  <div className="absolute bottom-4 left-4 bg-white/80 dark:bg-black/80 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20 shadow-card">
-                    <span className="text-xs font-semibold text-gray-500 uppercase flex items-center gap-2">
-                      <IoMapOutline /> Pontos Helyszín
-                    </span>
-                  </div>
-                </div>
-              </FadeUp>
-            )}
+            {/* --- Perforáció --- */}
+            <Perforation />
 
+            {/* --- Gyorsakciók szelvény --- */}
+            <div className="p-5 sm:p-6 pt-4">
+              {/* Main Booking CTA */}
+              {hotel.bookingUrl && (
+                <a
+                  href={hotel.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 mb-3 bg-brand text-gold-light rounded-control font-semibold text-sm flex items-center justify-center gap-2 shadow-card border border-gold/30 hover:opacity-90 transition-opacity"
+                >
+                  <IoBedOutline className="text-lg" />
+                  Foglalás a Booking.com-on
+                </a>
+              )}
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                {hotel.coords && (
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${hotel.coords.lat},${hotel.coords.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                  >
+                    <IoCompassOutline className="text-base text-gold-text dark:text-gold-light" /> Útvonal
+                  </a>
+                )}
+
+                {hotel.phone && (
+                  <a
+                    href={`tel:${hotel.phone}`}
+                    className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                  >
+                    <IoCallOutline className="text-base text-gold-text dark:text-gold-light" /> Hívás
+                  </a>
+                )}
+
+                {hotel.website && (
+                  <a
+                    href={hotel.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                  >
+                    <IoGlobeOutline className="text-base text-gold-text dark:text-gold-light" /> Weboldal
+                  </a>
+                )}
+
+                <button
+                  onClick={handleShare}
+                  className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                >
+                  <IoShareSocialOutline className="text-base text-gold-text dark:text-gold-light" /> Megosztás
+                </button>
+              </div>
+            </div>
           </div>
         </FadeUp>
       </div>
 
+      {/* ================================================================ */}
+      {/* LEÍRÁS — nyugodt próza, nem kártyadobozban feszítve               */}
+      {/* ================================================================ */}
+      {(hotel.description || hotel.shortDescription) && (
+        <FadeUp delay={0.1}>
+          <div className="max-w-2xl mx-auto px-6 sm:px-8 mt-10">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-3">
+              A szállásról
+            </p>
+            <p className="text-slate-700 dark:text-zinc-300 leading-[1.75] text-[15px] sm:text-base whitespace-pre-wrap font-medium">
+              {hotel.description || hotel.shortDescription}
+            </p>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* Szolgáltatások / Amenities */}
+      {hotel.amenities && hotel.amenities.length > 0 && (
+        <FadeUp delay={0.15}>
+          <div className="max-w-2xl mx-auto px-4 mt-8">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-3 px-2">
+              Szolgáltatások
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {hotel.amenities.map((item, idx) => (
+                <span
+                  key={idx}
+                  className="px-3.5 py-1.5 rounded-full bg-surface-card dark:bg-surface-card-dark text-slate-700 dark:text-zinc-300 text-xs font-semibold border border-slate-200/80 dark:border-white/10 shadow-card"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* ================================================================ */}
+      {/* TÉRKÉP                                                           */}
+      {/* ================================================================ */}
+      {hotel.coords && (
+        <FadeUp delay={0.2}>
+          <div className="max-w-2xl mx-auto px-4 mt-10">
+            <div className="flex items-center justify-between mb-3 px-2">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 flex items-center gap-2">
+                <IoCompassOutline className="text-gold-text dark:text-gold-light text-sm" /> Helyszín
+              </p>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${hotel.coords.lat},${hotel.coords.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-gold-text dark:text-gold-light hover:opacity-80 transition-opacity"
+              >
+                Útvonalterv →
+              </a>
+            </div>
+            <div className="h-64 rounded-card overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-card">
+              <iframe
+                title="Térkép"
+                src={`https://www.google.com/maps?q=${hotel.coords.lat},${hotel.coords.lng}&z=16&output=embed`}
+                className="w-full h-full border-0"
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </FadeUp>
+      )}
     </div>
   );
 }

@@ -99,9 +99,9 @@ const LiveHero = ({ appData, weather }) => {
                     {/* Left Section: Greeting & Weather Button */}
                     <div className="flex-1 space-y-4">
                         <div>
-                            <div className="mb-2">
-                                <VisitKoszegLogo size="sm" showTagline={true} />
-                            </div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold-text dark:text-gold-light mb-1.5">
+                                visitKőszeg
+                            </p>
                             <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight mb-2">
                                 {greeting}
                             </h1>
