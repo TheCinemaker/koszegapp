@@ -318,7 +318,7 @@ const PageWrapper = ({ children, showFooter = true, morph = false }) => {
     exit="out"
     variants={morph ? morphVariants : pageVariants}
     transition={morph ? { duration: 0.25 } : pageTransition}
-    className="w-full bg-gray-50 dark:bg-zinc-900"
+    className="w-full bg-surface-light dark:bg-surface-dark"
     style={{
       position: 'absolute', // Critical for preventing layout jumps (flicker)
       width: '100%',

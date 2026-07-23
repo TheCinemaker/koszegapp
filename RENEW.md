@@ -37,6 +37,11 @@ Ez a projektnapló rögzíti a KőszegApp **RENEW** megújulási folyamata sorá
 
 ## 📝 VÁLTOZTATÁSI NAPLÓ ÉS ELŐZMÉNYEK
 
+### 2026-07-23 #013 - Gigaluxus Paletta & Apple Tipográfia (v5.0.6) [ELFOGADVA]
+- **Új Luxus Paletta:** Éjkék (`#0b2740` brand), Régi Arany (`#b3985e` gold), és meleg Pergamen háttér (`#f6f4ef` surface-light).
+- **Apple Retina-Éles Tipográfia:** Subpixel antialiasing helyett grayscale antialiasing (`index.css`), `-0.025em` display letter-spacing (`tailwind.config.cjs`), és csupa nagybetűs kártyacímek leváltása selymes `tracking-display font-semibold` normál kis/nagybetűs szövegekre.
+- **Díszítő Glow-Irtás:** Eltávolítottuk a zajos díszítő `blur-xl` foltokat a kereső mögül, és megemeltük a kártyák belső térközét (`p-6 lg:p-8`, `gap-4 md:gap-5`).
+
 ### 2026-07-23 #012 - Nyitóoldal (Home.jsx) Scroll-Scrubbing & Szín-Egységesítés [ELFOGADVA]
 - **Apple iOS Scroll-Scrubbing:** A `LiveHero` komponens görgetésre finoman zsugorodik (`scale: 0.94`), halványul (`opacity: 0.35`) és felúszik (`y: -28`), átadva a fókuszt a keresőnek.
 - **Élő Adat Badges (Live Badges):** A kártyák sarkában élő adatok jelennek meg (pl. *"34 szabad hely"* zöld élő pöttyel a parkolásnál, *"Ma 3 program"* az eseményeknél, *"15 nap múlva"* / *"Most zajlik"* az Ostromnapoknál).

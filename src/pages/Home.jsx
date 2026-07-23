@@ -182,10 +182,7 @@ export default function Home({ appData, weather }) {
         {/* --- SEARCH --- */}
         <div className="mb-8 relative z-50">
           <FadeUp delay={0.15}>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-indigo-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <SearchBar />
-            </div>
+            <SearchBar />
           </FadeUp>
         </div>
 
@@ -195,7 +192,7 @@ export default function Home({ appData, weather }) {
         </FadeUp>
 
         {/* --- BENTO GRID --- */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 auto-rows-fr">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-5 auto-rows-fr">
           {sections.map((sec) => (
             <SpringUp key={sec.to} delay={sec.delay + 0.1} className={sec.span}>
               <Link
@@ -216,13 +213,13 @@ export default function Home({ appData, weather }) {
                   whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
                   className={`
-                        relative h-full rounded-2xl p-5 lg:p-6
+                        relative h-full rounded-2xl p-6 lg:p-8
                         ${sec.morphId
-                          ? 'border border-white/50 dark:border-white/10'
+                          ? 'border border-slate-200/80 dark:border-white/10'
                           : sec.featured
-                            ? 'bg-indigo-500 border border-indigo-400/30 text-white shadow-md shadow-indigo-500/20'
-                            : 'bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] border border-white/60 dark:border-white/10'}
-                        shadow-sm hover:shadow-lg
+                            ? 'bg-brand dark:bg-brand-deep border border-gold/30 text-white shadow-card'
+                            : 'bg-surface-card dark:bg-surface-card-dark border border-slate-200/80 dark:border-white/10 shadow-card'}
+                        hover:shadow-floating
                         flex flex-col justify-between group
                         ${sec.morphId ? 'overflow-visible' : 'overflow-hidden'}
                         ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
@@ -235,7 +232,7 @@ export default function Home({ appData, weather }) {
                         alt=""
                         className="h-full w-auto object-cover object-right ml-auto"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-indigo-500/40 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-brand via-brand/40 to-transparent" />
                     </div>
                   )}
 
@@ -259,8 +256,8 @@ export default function Home({ appData, weather }) {
                         relative z-10 w-10 h-10 rounded-lg flex items-center justify-center text-2xl mb-3
                         transition-colors duration-300 ease-out group-hover:scale-105
                         ${sec.featured
-                          ? 'bg-white/20 text-white'
-                          : 'bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white'}
+                          ? 'bg-gold/20 text-gold-light'
+                          : 'bg-brand/10 text-brand dark:text-brand-light group-hover:bg-brand group-hover:text-white'}
                     `}>
                     <sec.icon />
                   </motion.div>
@@ -271,7 +268,7 @@ export default function Home({ appData, weather }) {
                       <motion.h3
                         layoutId={sec.morphId ? `${sec.morphId}-title` : undefined}
                         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-                        className={`text-base font-extrabold uppercase leading-none tracking-wider ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                        className={`text-base font-semibold tracking-display leading-none ${sec.featured ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                         {sec.label}
                       </motion.h3>
                       {!sec.comingSoon && (
@@ -279,7 +276,7 @@ export default function Home({ appData, weather }) {
                           className={`
                             text-sm transition-all duration-500
                             opacity-40 sm:opacity-0 sm:group-hover:opacity-100 sm:-translate-x-2 sm:group-hover:translate-x-0
-                            ${sec.featured ? 'text-white/80' : 'text-indigo-500 dark:text-indigo-400'}
+                            ${sec.featured ? 'text-white/80' : 'text-brand dark:text-brand-light'}
                           `}
                         />
                       )}
@@ -288,7 +285,7 @@ export default function Home({ appData, weather }) {
                       initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
                       animate={{ opacity: sec.featured ? 0.9 : 0.9, y: 0 }}
                       transition={{ delay: sec.delay + 0.25, duration: 0.5, ease: 'easeOut' }}
-                      className={`text-xs font-semibold leading-tight transition-colors duration-500 ${sec.featured ? 'text-white/90' : 'text-gray-500 dark:text-gray-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-400'}`}
+                      className={`text-xs font-semibold leading-tight transition-colors duration-500 ${sec.featured ? 'text-white/90' : 'text-gray-500 dark:text-gray-400 group-hover:text-brand dark:group-hover:text-brand-light'}`}
                     >
                       {sec.desc}
                     </motion.p>
