@@ -409,13 +409,11 @@ function MainAppContent() {
                 w-full max-w-5xl
                 h-full
                 flex items-center justify-between px-3 sm:px-6
-                bg-white/40 dark:bg-[#1a1c2e]/40 
-                backdrop-blur-[25px] 
-                backdrop-saturate-[1.8]
-                backdrop-brightness-[1.1]
+                bg-white/70 dark:bg-white/5 
+                backdrop-blur-[30px] 
                 rounded-[2rem] 
-                border border-white/50 dark:border-white/20 
-                shadow-[0_10px_40px_rgba(0,0,0,0.1)]
+                border border-white/60 dark:border-white/10 
+                shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                 relative
                 ">
                   {/* Subtle Gradient Accent (Top Lip) */}
