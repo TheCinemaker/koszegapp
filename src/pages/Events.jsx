@@ -45,6 +45,7 @@ const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug'
 import GhostImage from '../components/GhostImage'; // ADDED IMPORT
 import { FadeUp } from '../components/AppleMotion';
 import SEO from '../components/SEO';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 // --- Helper Logic (Same as before) ---
 function computeRange(evt) {
@@ -118,7 +119,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         whileHover={{ scale: 1.03, y: -2 }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
-        className="relative h-full bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg border border-white/60 dark:border-white/10"
+        className="relative h-full bg-white/80 dark:bg-zinc-900 border border-white/60 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
       >
         {/* Image Container — inset design, shows full flyer */}
         <div className="p-3 pb-0">
@@ -128,13 +129,13 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
                 <img
                   src={`/images/events/${evt.image}`}
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-110 pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 pointer-events-none"
                   loading="lazy"
                 />
                 <img
                   src={`/images/events/${evt.image}`}
                   alt={evt.name}
-                  className="relative max-w-full max-h-full object-contain z-10 transition-transform duration-700 group-hover:scale-[1.03]"
+                  className="relative max-w-full max-h-full object-contain z-10 transition-opacity duration-300 hover:opacity-95"
                   loading="lazy"
                   onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.previousSibling.style.display = 'none'; e.currentTarget.parentNode.querySelector('.fallback-ghost').style.display = 'block'; }}
                 />
@@ -149,7 +150,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
 
             {/* Floating Date Badge */}
             <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-lg border border-white/20 z-20">
-              <div className="text-[10px] font-bold uppercase text-[#0a97be] dark:text-[#0bc9f8] tracking-wider">{monthStr}</div>
+              <div className="text-[10px] font-bold uppercase text-indigo-500 dark:text-indigo-400 tracking-wider">{monthStr}</div>
               <div className="text-xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
             </div>
 
@@ -182,7 +183,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
           <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium">
             {evt.location && (
               <span className="flex items-center gap-1 truncate">
-                <FaMapMarkerAlt className="text-[#0a97be] shrink-0" />
+                <FaMapMarkerAlt className="text-indigo-500 dark:text-indigo-400 shrink-0" />
                 <span className="truncate">{evt.location}</span>
               </span>
             )}
@@ -192,8 +193,8 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
 
           {/* Részletek row — matching Home chevron pattern */}
           <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100 dark:border-white/5">
-            <span className="text-xs font-semibold text-[#0a97be] dark:text-[#0bc9f8]">Részletek</span>
-            <IoChevronForward className="text-[#0a97be] dark:text-[#0bc9f8] text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+            <span className="text-xs font-semibold text-indigo-500 dark:text-indigo-400">Részletek</span>
+            <IoChevronForward className="text-indigo-500 dark:text-indigo-400 text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
           </div>
         </div>
       </motion.div>
@@ -306,9 +307,6 @@ export default function Events() {
 
   // --- Render ---
   if (loading) return (
-    <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100">
-      {/* Morph target must exist during loading too, or the shared-element has nothing to connect to */}
-      <motion.div
     <LoadingSpinner fullScreen={true} label="Betöltés..." />
   );
   if (error) return <p className="text-red-500 p-8 text-center bg-red-50 m-4 rounded-xl">Hiba: {error}</p>;
@@ -328,7 +326,7 @@ export default function Events() {
       <motion.div
         layoutId="morph-events"
         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
+        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
       >
         <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
           <FaArrowLeft className="text-lg" />
@@ -336,7 +334,7 @@ export default function Events() {
         <motion.div
           layoutId="morph-events-icon"
           transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100"
+          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400"
         >
           <IoCalendarOutline />
         </motion.div>
@@ -353,28 +351,26 @@ export default function Events() {
 
         {/* 2. SEARCH (Compact & Native-like) */}
         <div className="mb-4">
-          <div className="flex gap-3 h-8">
+          <div className="flex gap-3 h-11">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t('searchPlaceholder')}
-              className="flex-1 h-full px-4 rounded-lg
-                         bg-white/60 dark:bg-gray-800/60
+              className="flex-1 h-full px-4 rounded-xl
+                         bg-white/80 dark:bg-zinc-800/80
                          backdrop-blur-md
-                         border border-white/40 dark:border-gray-700/50
+                         border border-gray-200 dark:border-white/10
                          text-xs font-medium text-gray-900 dark:text-gray-100
                          placeholder-gray-500 dark:placeholder-gray-400
-                         focus:outline-none focus:ring-2 focus:ring-cyan-400/50
-                         shadow-sm transition-all duration-300
-                         hover:bg-white/80 dark:hover:bg-gray-800/80"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500
+                         shadow-sm transition-all duration-300"
             />
             <button
-              className="w-8 h-8 rounded-lg flex items-center justify-center
-                         gradient-vibrant-primary text-white shadow-sm
-                         hover:shadow-md hover:scale-105
-                         transition-all duration-300
-                         active:scale-95"
+              aria-label="Keresés"
+              className="w-11 h-11 rounded-xl flex items-center justify-center
+                         bg-indigo-500 text-white shadow-sm
+                         hover:opacity-90 transition-opacity flex-shrink-0"
             >
               <FaSearch className="text-xs" />
             </button>

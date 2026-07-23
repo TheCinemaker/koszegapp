@@ -37,7 +37,7 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "SF Pro Display", "SF Pro Text", "SF Pro", "sans-serif"],
         zeyada: ['Zeyada', 'cursive'] 
       }
     }

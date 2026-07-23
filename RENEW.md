@@ -37,6 +37,29 @@ Ez a projektnapló rögzíti a KőszegApp **RENEW** megújulási folyamata sorá
 
 ## 📝 VÁLTOZTATÁSI NAPLÓ ÉS ELŐZMÉNYEK
 
+### 2026-07-23 #011 - Esemény Részletek "A Jegy" Koncepció (EventDetail.jsx) [ELFOGADVA]
+- **"A Jegy" Design Koncepció Élesítve:** Az esemény részletező oldal átállt a fizikai jegy élményét nyújtó egyedi dizájnra:
+  - Immerzív plakát-hero a lap tetején elmosott környezeti fényhatással.
+  - A fő jegytest rácsúszik a plakátra (`-mt-14`) szilárd `rounded-3xl` lekerekítéssel.
+  - Perforáció szalag (`<Perforation />`) szaggatott vonallal és kivágott félköríves oldal-bevágásokkal (`NOTCH_BG`).
+  - Nyomtatott hatású tipográfiai dátum kijelzés (`text-5xl font-extrabold`).
+  - Intelligens platform-detektálás a Wallet gombokhoz (iOS: Apple Wallet elöl, Android: Google Wallet elöl).
+  - A korábbi Bento Grid verziót biztonsági mentésként elmentettük a `src/pages/EventDetail_BentoBackup.jsx` fájlba.
+
+### 2026-07-23 #010 - Plakát és Esemény képek aránytartása és kilógás-védelme [ELFOGADVA]
+- **Szigorú képarány és keret védelem:** Az események plakátjai (`EventDetail.jsx`, `Events.jsx`) semmilyen körülmények között sem torzulhatnak vagy nyúlhatnak meg.
+- Beállítottuk az `object-contain` és `max-w-full max-h-full` szabályokat `overflow-hidden` konténeren belül.
+- Eltávolítottuk a képekre rakott `scale-*` méretező animációkat, így a képek 100%-ban a kijelölt kereten belül maradnak anélkül, hogy kilógnának vagy torzulnának.
+
+### 2026-07-23 #009 - Esemény Részletek (EventDetail.jsx) & Ostromnapok Átdolgozás [ELFOGADVA]
+- **EventDetail.jsx Teljes Áttervezése (Bento Grid Layout):** Megszüntettük a régi, átfedéses 65vh borítóképes modált. Helyette egy éles, csúcskategóriás Bento Grid elrendezést hoztunk létre:
+  - Fő Hero kártya: `rounded-2xl` keret, beágyazott plakátnézővel, éles környezeti elmosódással és beépített nagyítóval.
+  - Apple Naptár Badge: `bg-indigo-500 text-white rounded-xl` felületen megjelenített nap és hónap jelölés.
+  - Akciósáv: Apple Wallet (`.pkpass`), Google Wallet, naptár mentés (`.ics`), megosztás, jegyvásárlás és szállásfoglalás mind az egységes `indigo-500` / `hover:opacity-90` márkastílussal.
+  - Helyszínes Térkép Kártya: Leaflet Google Maps integráció gyalogos útvonaltervvel (`rounded-2xl`).
+- **Ostromnapok Hero & Visszaszámláló:** A Hero borítókép és a visszaszámláló az elsődleges `rounded-2xl` Bento kártya felületet kapták meg, a címsorok és a dátum felirat pedig sötét módban borostyán (`text-amber-300`), light módban pedig kontrasztos sötétszürke (`text-slate-700`) színt kaptak.
+- **Apple SF Pro Tipográfia Ellenőrzése:** Az alkalmazás teljes egészében a hivatalos Apple San Francisco és Inter betűkészletet használja (`font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01"`, `letter-spacing: -0.014em`), ami a `tailwind.config.cjs` és az `index.css` szintjén is globálisan be van kötve.
+
 ### 2026-07-21 #008 - Beállítások Modál (SettingsMenu.jsx) & Apple SF Pro Tipográfia [ELFOGADVA]
 - A Beállítások menü megszüntette az áttetszőséget, Letisztult, szilárd popover hátteret kapott (`bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 shadow-2xl rounded-3xl`).
 - A gombok, nyelvváltoztatók és gombkapcsolók az egységes `indigo-500` márkaszínt és `rounded-xl` / `rounded-3xl` rádiuszokat használják.

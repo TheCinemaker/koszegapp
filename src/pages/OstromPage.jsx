@@ -438,52 +438,56 @@ export default function OstromPage() {
       )}
 
       {/* STUNNING HERO HEADER (Mobile-first, high impact with user custom image) */}
-      <div className="relative h-56 sm:h-72 w-full overflow-hidden bg-zinc-900 shadow-md">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700"
-          style={{ backgroundImage: `url('/images/ostrom_2026/ostromhero.png')` }}
-        />
-        {/* Gradient Overlay for high-end text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-50 via-zinc-950/25 to-black/55 dark:from-zinc-950 dark:via-zinc-950/30 dark:to-black/60" />
-        
-        {/* Floating Actions on Top (Glassmorphic) */}
-        <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
-          <Link 
-            to="/" 
-            className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:bg-black/60 transition active:scale-90 border border-white/10"
-            aria-label="Vissza"
-          >
-            <IoArrowBack className="text-lg" />
-          </Link>
-          <button 
-            onClick={() => setShowHelpModal(true)} 
-            className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:bg-black/60 transition active:scale-90 border border-white/10" 
-            aria-label="Információ"
-          >
-            <IoInformationCircleOutline className="text-lg" />
-          </button>
-        </div>
+      <div className="max-w-3xl w-full mx-auto px-4 pt-4">
+        <div className="relative h-56 sm:h-72 w-full overflow-hidden rounded-2xl bg-zinc-900 shadow-md border border-white/60 dark:border-white/10">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700"
+            style={{ backgroundImage: `url('/images/ostrom_2026/ostromhero.png')` }}
+          />
+          {/* Gradient Overlay for high-end text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-50 via-zinc-950/25 to-black/55 dark:from-zinc-950 dark:via-zinc-950/30 dark:to-black/60" />
+          
+          {/* Floating Actions on Top (Glassmorphic) */}
+          <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
+            <Link 
+              to="/" 
+              className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:opacity-90 transition active:scale-90 border border-white/10"
+              aria-label="Vissza"
+            >
+              <IoArrowBack className="text-lg" />
+            </Link>
+            <button 
+              onClick={() => setShowHelpModal(true)} 
+              className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:opacity-90 transition active:scale-90 border border-white/10" 
+              aria-label="Információ"
+            >
+              <IoInformationCircleOutline className="text-lg" />
+            </button>
+          </div>
 
-        {/* Text Overlay at bottom of Hero */}
-        <div className="absolute bottom-5 left-5 right-5 text-white">
-          <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-600 border border-amber-500 text-[9px] font-black uppercase tracking-widest text-white shadow-sm">
-            Kiemelt rendezvény
-          </span>
-          <h1 className="text-2xl md:text-4xl font-black tracking-tight uppercase text-white drop-shadow-md mt-2">
-            XIX. Ostromnapok
-          </h1>
-          <p className="text-xs font-bold tracking-widest text-amber-300 drop-shadow-md mt-0.5">
-            2026. augusztus 7. – 9.
-          </p>
+          {/* Text Overlay at bottom of Hero */}
+          <div className="absolute bottom-5 left-5 right-5">
+            <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-600 border border-amber-500 text-[9px] font-black uppercase tracking-widest text-white shadow-sm">
+              Kiemelt rendezvény
+            </span>
+            <h1 className="text-2xl md:text-4xl font-black tracking-tight uppercase text-slate-900 dark:text-white mt-2">
+              XIX. Ostromnapok
+            </h1>
+            <p className="text-xs font-bold tracking-widest text-slate-700 dark:text-amber-300 mt-0.5">
+              2026. augusztus 7. – 9.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* COUNTDOWN BANNER (OFFICIAL COUNTDOWN ONLY) */}
       {!timeLeft.isOver && !isDemoMode && (
-        <div className="bg-amber-900/10 dark:bg-zinc-900/30 text-gray-800 dark:text-white text-center p-4 border-b border-gray-200 dark:border-zinc-900 z-10">
-          <p className="text-[10px] uppercase tracking-widest text-amber-800 dark:text-amber-400 mb-2 font-black">Kezdésig hátralévő idő</p>
-          <CountdownToNext targetDate={ostromStart} />
+        <div className="max-w-3xl w-full mx-auto px-4 mt-4">
+          <div className="bg-white dark:bg-zinc-900 text-gray-800 dark:text-white text-center p-5 rounded-2xl border border-white/60 dark:border-white/10 shadow-md">
+            <p className="text-[10px] uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-2 font-black">Kezdésig hátralévő idő</p>
+            <CountdownToNext targetDate={ostromStart} />
+          </div>
         </div>
       )}
 

@@ -16,18 +16,18 @@ import { AnimatePresence } from 'framer-motion';
 import SMSParkingCard from '../components/SMSParkingCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-  if (loading) {
-    return (
-      <LoadingSpinner fullScreen={true} label="Betöltés..." />
-    );
-  }
-
 export default function Parking() {
   const { t } = useTranslation('parking'); // Load namespace
   const navigate = useNavigate();
   const [parkingSpots, setParkingSpots] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  if (loading) {
+    return (
+      <LoadingSpinner fullScreen={true} label="Betöltés..." />
+    );
+  }
 
   useEffect(() => {
     setLoading(true);
