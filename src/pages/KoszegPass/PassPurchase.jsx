@@ -88,48 +88,48 @@ export default function PassPurchase() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0C234B] text-white flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+        <div className="min-h-screen text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden transition-colors duration-300">
             {/* Background effects */}
-            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-brand/5 blur-[100px] rounded-full pointer-events-none" />
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-lg bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 my-8"
+                className="w-full max-w-lg bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-lg z-10 my-8"
             >
                 {/* Back button */}
                 <button 
                     onClick={() => navigate(-1)} 
-                    className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors mb-6 flex items-center justify-center w-10 h-10"
+                    className="p-2 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-full transition-colors mb-6 flex items-center justify-center w-10 h-10 shadow-sm"
                 >
-                    <IoArrowBack size={20} />
+                    <IoArrowBack size={20} className="text-gray-600 dark:text-gray-300" />
                 </button>
 
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-black bg-gradient-to-r from-white via-[#C8AF64] to-white bg-clip-text text-transparent">
+                    <h1 className="text-2xl font-black text-brand dark:text-white">
                         KőszegPass Megrendelés
                     </h1>
-                    <p className="text-blue-200/60 text-xs mt-2">
+                    <p className="text-gray-500 dark:text-gray-400 text-xs mt-2">
                         Válaszd ki a kártya típusát és add meg a számlázási adataidat.
                     </p>
                 </div>
 
                 {/* Summary Box */}
-                <div className="bg-white/5 border border-white/5 rounded-2xl p-4 mb-6 text-xs space-y-2">
-                    <h3 className="font-bold uppercase tracking-wider text-blue-200/50 flex items-center gap-1.5 mb-2">
-                        <IoPerson size={12} className="text-[#C8AF64]" />
+                <div className="bg-white/50 dark:bg-white/5 border border-white/40 dark:border-white/10 shadow-sm rounded-2xl p-4 mb-6 text-xs space-y-2">
+                    <h3 className="font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5 mb-2">
+                        <IoPerson size={12} className="text-brand dark:text-brand-light" />
                         Regisztrált Adataid
                     </h3>
-                    <p><span className="text-blue-100/40">Név:</span> {regData.holderName}</p>
-                    <p><span className="text-blue-100/40">Email:</span> {regData.holderEmail}</p>
-                    {regData.phone && <p><span className="text-blue-100/40">Telefon:</span> {regData.phone}</p>}
+                    <p className="text-gray-900 dark:text-white"><span className="text-gray-500 dark:text-gray-400">Név:</span> {regData.holderName}</p>
+                    <p className="text-gray-900 dark:text-white"><span className="text-gray-500 dark:text-gray-400">Email:</span> {regData.holderEmail}</p>
+                    {regData.phone && <p className="text-gray-900 dark:text-white"><span className="text-gray-500 dark:text-gray-400">Telefon:</span> {regData.phone}</p>}
                 </div>
 
                 <form onSubmit={handleCheckout} className="space-y-6">
                     {/* Pass Type Selector */}
                     <div className="space-y-3">
-                        <label className="text-[10px] font-black uppercase text-blue-200/50 tracking-wider ml-1">Kártya Típusa</label>
+                        <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider ml-1">Kártya Típusa</label>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* Individual Pass */}
@@ -137,18 +137,18 @@ export default function PassPurchase() {
                                 onClick={() => setPassType('individual')}
                                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between h-28 relative ${
                                     passType === 'individual' 
-                                        ? 'bg-white/10 border-[#C8AF64] shadow-md shadow-[#C8AF64]/5' 
-                                        : 'bg-black/20 border-white/10 hover:bg-black/30'
+                                        ? 'bg-brand/5 border-brand dark:bg-indigo-500/10 dark:border-indigo-500 shadow-md shadow-brand/10' 
+                                        : 'bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-black/30'
                                 }`}
                             >
                                 <div>
-                                    <h4 className="font-bold text-sm text-white flex items-center justify-between">
+                                    <h4 className="font-bold text-sm text-gray-900 dark:text-white flex items-center justify-between">
                                         <span>Egyéni Pass</span>
-                                        {passType === 'individual' && <IoCheckmarkCircle className="text-[#C8AF64] text-lg" />}
+                                        {passType === 'individual' && <IoCheckmarkCircle className="text-brand dark:text-indigo-400 text-lg" />}
                                     </h4>
-                                    <p className="text-[10px] text-blue-100/50 mt-1">1 személy részére</p>
+                                    <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-1">1 személy részére</p>
                                 </div>
-                                <p className="text-xl font-black text-[#C8AF64]">4 000 Ft</p>
+                                <p className="text-xl font-black text-brand dark:text-brand-light">4 000 Ft</p>
                             </div>
 
                             {/* Family Pass */}
@@ -156,84 +156,93 @@ export default function PassPurchase() {
                                 onClick={() => setPassType('family')}
                                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between h-28 relative ${
                                     passType === 'family' 
-                                        ? 'bg-white/10 border-[#C8AF64] shadow-md shadow-[#C8AF64]/5' 
-                                        : 'bg-black/20 border-white/10 hover:bg-black/30'
+                                        ? 'bg-brand/5 border-brand dark:bg-indigo-500/10 dark:border-indigo-500 shadow-md shadow-brand/10' 
+                                        : 'bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 hover:bg-white/80 dark:hover:bg-black/30'
                                 }`}
                             >
-                                <div className="absolute top-0 right-0 bg-[#C8AF64] text-[#0C234B] text-[8px] font-black px-2 py-0.5 rounded-tr-xl rounded-bl-xl uppercase tracking-wider">
+                                <div className="absolute top-0 right-0 bg-brand dark:bg-indigo-500 text-white text-[8px] font-black px-2 py-0.5 rounded-tr-xl rounded-bl-xl uppercase tracking-wider">
                                     Családi
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-sm text-white flex items-center justify-between pr-8">
+                                    <h4 className="font-bold text-sm text-gray-900 dark:text-white flex items-center justify-between pr-8">
                                         <span>Családi Pass</span>
-                                        {passType === 'family' && <IoCheckmarkCircle className="text-[#C8AF64] text-lg" />}
+                                        {passType === 'family' && <IoCheckmarkCircle className="text-brand dark:text-indigo-400 text-lg" />}
                                     </h4>
-                                    <p className="text-[10px] text-blue-100/50 mt-1">2 felnőtt + gyerekek</p>
+                                    <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-1">2 felnőtt + gyerekek</p>
                                 </div>
-                                <p className="text-xl font-black text-[#C8AF64]">10 000 Ft</p>
+                                <p className="text-xl font-black text-brand dark:text-brand-light">10 000 Ft</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Billing Details (Mandatory for Invoicing) */}
                     <div className="space-y-3">
-                        <h3 className="text-[10px] font-black uppercase text-blue-200/50 tracking-wider ml-1 flex items-center gap-1.5">
-                            <IoBusiness size={12} className="text-[#C8AF64]" />
+                        <h3 className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider ml-1 flex items-center gap-1.5">
+                            <IoBusiness size={12} className="text-brand dark:text-brand-light" />
                             Számlázási Cím
                         </h3>
 
                         <div className="grid grid-cols-3 gap-3">
                             {/* Zip */}
                             <div className="col-span-1 space-y-1">
-                                <label className="text-[8px] font-bold uppercase text-blue-200/40 tracking-wider">Irányítószám</label>
+                                <label className="text-[8px] font-bold uppercase text-gray-500 dark:text-gray-400 tracking-wider">Irányítószám</label>
                                 <input
                                     type="text"
                                     required
                                     value={billing.zip}
                                     onChange={e => setBilling({ ...billing, zip: e.target.value })}
-                                    className="w-full h-11 bg-black/20 border border-white/10 rounded-xl px-3 outline-none text-xs text-white focus:border-[#C8AF64]/40"
+                                    className="w-full h-11 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl px-3 outline-none text-xs text-gray-900 dark:text-white focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500"
                                     placeholder="9700"
                                 />
                             </div>
 
                             {/* City */}
                             <div className="col-span-2 space-y-1">
-                                <label className="text-[8px] font-bold uppercase text-blue-200/40 tracking-wider">Település</label>
+                                <label className="text-[8px] font-bold uppercase text-gray-500 dark:text-gray-400 tracking-wider">Város</label>
                                 <input
                                     type="text"
                                     required
                                     value={billing.city}
                                     onChange={e => setBilling({ ...billing, city: e.target.value })}
-                                    className="w-full h-11 bg-black/20 border border-white/10 rounded-xl px-3 outline-none text-xs text-white focus:border-[#C8AF64]/40"
+                                    className="w-full h-11 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl px-3 outline-none text-xs text-gray-900 dark:text-white focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500"
                                     placeholder="Kőszeg"
                                 />
                             </div>
-                        </div>
 
-                        {/* Address (street, number) */}
-                        <div className="space-y-1">
-                            <label className="text-[8px] font-bold uppercase text-blue-200/40 tracking-wider">Cím (utca, házszám, emelet/ajtó)</label>
-                            <input
-                                type="text"
-                                required
-                                value={billing.address}
-                                onChange={e => setBilling({ ...billing, address: e.target.value })}
-                                className="w-full h-11 bg-black/20 border border-white/10 rounded-xl px-3 outline-none text-xs text-white focus:border-[#C8AF64]/40"
-                                placeholder="Jurisics tér 1."
-                            />
+                            {/* Address */}
+                            <div className="col-span-3 space-y-1">
+                                <label className="text-[8px] font-bold uppercase text-gray-500 dark:text-gray-400 tracking-wider">Utca, házszám</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={billing.address}
+                                    onChange={e => setBilling({ ...billing, address: e.target.value })}
+                                    className="w-full h-11 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl px-3 outline-none text-xs text-gray-900 dark:text-white focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500"
+                                    placeholder="Fő tér 1."
+                                />
+                            </div>
                         </div>
                     </div>
 
                     <button
                         type="submit"
                         disabled={purchasing}
-                        className="w-full h-14 bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] hover:scale-[1.02] active:scale-95 text-[#0C234B] font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 pt-1 disabled:opacity-50"
+                        className="w-full h-14 bg-brand dark:bg-indigo-500 hover:opacity-90 active:scale-95 text-white font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 pt-1 mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                        <IoCard size={18} />
-                        <span>{purchasing ? 'Kapcsolódás...' : 'Fizetés bankkártyával (Stripe)'}</span>
+                        {purchasing ? (
+                            <>
+                                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                                <span>Feldolgozás...</span>
+                            </>
+                        ) : (
+                            <>
+                                <IoCard size={20} />
+                                <span>Biztonságos Fizetés</span>
+                            </>
+                        )}
                     </button>
 
-                    <p className="text-center text-[10px] text-blue-200/30 leading-relaxed">
+                    <p className="text-center text-[10px] text-gray-400 dark:text-gray-500 leading-relaxed">
                         A fizetést a Stripe biztonságos felülete kezeli. A tranzakció sikere után a számlát a Billingo rendszere automatikusan megküldi a megadott email címre.
                     </p>
                 </form>

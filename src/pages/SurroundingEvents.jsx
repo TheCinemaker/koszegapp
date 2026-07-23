@@ -33,7 +33,6 @@ import { FadeUp } from '../components/AppleMotion';
 import SEO from '../components/SEO';
 
 const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
-const SETTLEMENTS = ["Összes", "Bozsok", "Cák", "Csepreg", "Horvátzsidány", "Kőszegdoroszló", "Kőszegpaty", "Kőszegszerdahely", "Lukácsháza", "Nemescsó", "Pusztacsó", "Tömörd", "Velem"];
 
 function computeRange(evt) {
   if (evt?.date) {
@@ -76,10 +75,10 @@ const SurroundingEventCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
       className={`group relative block w-full ${isPast ? 'grayscale opacity-70' : ''}`}
     >
       <motion.div
-        whileHover={{ scale: 1.03, y: -2 }}
-        whileTap={{ scale: 0.95 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
-        className="relative h-full bg-white/70 dark:bg-white/5 backdrop-blur-[20px] backdrop-saturate-[1.6] rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-lg border border-white/60 dark:border-white/10"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.3 }}
+        className="relative h-full bg-white/70 dark:bg-white/5 backdrop-blur-[30px] rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-white/60 dark:border-white/10 flex flex-col"
       >
         <div className="p-3 pb-0">
           <div className="relative aspect-[3/2] overflow-hidden rounded-xl isolate bg-gray-100 dark:bg-zinc-800 flex items-center justify-center">
@@ -110,8 +109,8 @@ const SurroundingEventCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
               <GhostImage className="w-full h-full" />
             </div>
 
-            <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-lg border border-white/20 z-20">
-              <div className="text-[10px] font-bold uppercase text-[#0a97be] dark:text-[#0bc9f8] tracking-wider">{monthStr}</div>
+            <div className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-xl p-1.5 min-w-[52px] text-center shadow-md border border-white/20 z-20">
+              <div className="text-[10px] font-bold uppercase text-brand dark:text-brand-light tracking-wider">{monthStr}</div>
               <div className="text-xl font-black text-gray-800 dark:text-white leading-none">{dayStr}</div>
             </div>
 
@@ -139,24 +138,26 @@ const SurroundingEventCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
           </div>
         </div>
 
-        <div className="p-4">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight line-clamp-2 leading-snug mb-2 min-h-[3rem]">
-            {evt.name}
-          </h3>
-          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium">
-            {evt.location && (
-              <span className="flex items-center gap-1 truncate">
-                <FaMapMarkerAlt className="text-[#0a97be] shrink-0" />
-                <span className="truncate">{evt.settlement ? `${evt.settlement}, ` : ''}{evt.location}</span>
-              </span>
-            )}
-            {evt.location && <span className="text-gray-300 dark:text-gray-600">•</span>}
-            <span className="shrink-0">{timeStr}</span>
+        <div className="p-4 flex-1 flex flex-col justify-between relative">
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight line-clamp-2 leading-snug mb-2 min-h-[3rem]">
+              {evt.name}
+            </h3>
+            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium">
+              {evt.location && (
+                <span className="flex items-center gap-1 truncate">
+                  <FaMapMarkerAlt className="text-brand dark:text-brand-light shrink-0" />
+                  <span className="truncate">{evt.settlement ? `${evt.settlement}, ` : ''}{evt.location}</span>
+                </span>
+              )}
+              {evt.location && <span className="text-gray-300 dark:text-gray-600">•</span>}
+              <span className="shrink-0">{timeStr}</span>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100 dark:border-white/5">
-            <span className="text-xs font-semibold text-[#0a97be] dark:text-[#0bc9f8]">Részletek</span>
-            <IoChevronForward className="text-[#0a97be] dark:text-[#0bc9f8] text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100 dark:border-white/10">
+            <span className="text-xs font-semibold text-brand dark:text-brand-light">Részletek</span>
+            <IoChevronForward className="text-brand dark:text-brand-light text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
           </div>
         </div>
       </motion.div>
@@ -173,7 +174,6 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
   const [filter, setFilter] = useState('all'); // date filter: all, week, month, byMonth
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [openPicker, setOpenPicker] = useState(false);
-  const [selectedSettlement, setSelectedSettlement] = useState('Összes');
   const [searchQuery, setSearchQuery] = useState('');
 
   const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
@@ -225,7 +225,6 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
         if (filter === 'byMonth') return evt._s && (evt._s.getMonth() + 1 === selectedMonth);
         return true;
       })
-      .filter(evt => selectedSettlement === 'Összes' || evt.settlement === selectedSettlement)
       .filter(evt => {
         const q = searchQuery.toLowerCase().trim();
         if (!q) return true;
@@ -234,7 +233,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
           (evt.settlement?.toLowerCase() || '').includes(q) ||
           (evt.location?.toLowerCase() || '').includes(q);
       });
-  }, [normalized, filter, wkStart, wkEnd, moStart, moEnd, selectedMonth, selectedSettlement, searchQuery]);
+  }, [normalized, filter, wkStart, wkEnd, moStart, moEnd, selectedMonth, searchQuery]);
 
   const upcoming = filtered.filter(evt => evt._e && evt._e >= now);
   const past = filtered.filter(evt => evt._e && evt._e < now);
@@ -244,10 +243,10 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
       <motion.div
         layoutId="morph-surrounding-events"
         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
+        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-sm"
       >
-        <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
-          <FaArrowLeft className="text-lg" />
+        <Link to="/" aria-label="Vissza" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+          <FaArrowLeft className="text-lg text-brand dark:text-white" />
         </Link>
         <motion.div
           layoutId="morph-surrounding-events-icon"
@@ -286,10 +285,10 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
       <motion.div
         layoutId="morph-surrounding-events"
         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-[1.5rem] bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-sm"
+        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-sm"
       >
-        <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
-          <FaArrowLeft className="text-lg" />
+        <Link to="/" aria-label="Vissza" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+          <FaArrowLeft className="text-lg text-brand dark:text-white" />
         </Link>
         <motion.div
           layoutId="morph-surrounding-events-icon"
@@ -338,25 +337,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
           </div>
         </div>
 
-        {/* 3. SETTLEMENT FILTER PILLS (Horizontal Scrollable) */}
-        <div className="mb-4 overflow-x-auto pb-2 scrollbar-hide flex gap-2">
-          {SETTLEMENTS.map((settlement) => {
-            const isActive = selectedSettlement === settlement;
-            return (
-              <button
-                key={settlement}
-                onClick={() => setSelectedSettlement(settlement)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300
-                  ${isActive
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-white/60 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-white/10'
-                  }`}
-              >
-                {settlement}
-              </button>
-            );
-          })}
-        </div>
+        {/* 3. SETTLEMENT FILTER PILLS (Removed) */}
 
         {/* 4. DATE FILTERS (iOS style control) */}
         <div className="mb-8 overflow-x-auto pb-2 scrollbar-hide">
@@ -415,7 +396,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">Nincs találat</h3>
             <p className="text-gray-500 dark:text-gray-400">Nincs a szűrésnek megfelelő program ebben az időszakban.</p>
             <button 
-              onClick={() => { setFilter('all'); setSelectedSettlement('Összes'); setSearchQuery('') }} 
+              onClick={() => { setFilter('all'); setSearchQuery('') }} 
               className="mt-4 px-6 py-2 bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 rounded-xl font-bold hover:bg-indigo-200 transition"
             >
               Szűrők törlése

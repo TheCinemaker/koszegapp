@@ -141,7 +141,7 @@ export default function SMSParkingCard() {
     const isStopDisabled = mode === 'stop' && isFreeZone;
 
     return (
-        <div className="relative w-full overflow-hidden rounded-[32px] bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-white/40 dark:border-white/5 shadow-2xl mb-8 transition-all duration-300">
+        <div className="relative w-full overflow-hidden rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-md mb-8 transition-all duration-300">
 
             {/* Header / Mode Switcher */}
             <div className="p-2 flex gap-2 bg-gray-100/50 dark:bg-black/20 m-2 rounded-[24px]">

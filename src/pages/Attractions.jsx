@@ -72,9 +72,9 @@ export default function Attractions() {
     .filter(item => {
       const query = searchQuery.toLowerCase().trim();
       if (query === '') return true;
-      const nameMatch = item.name.toLowerCase().includes(query);
-      const descriptionMatch = item.description.toLowerCase().includes(query);
-      const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
+      const nameMatch = (item.name || '').toLowerCase().includes(query);
+      const descriptionMatch = (item.description || '').toLowerCase().includes(query);
+      const tagsMatch = item.tags && item.tags.some(tag => (tag || '').toLowerCase().includes(query));
       return nameMatch || descriptionMatch || tagsMatch;
     });
 

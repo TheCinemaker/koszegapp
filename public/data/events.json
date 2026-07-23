@@ -1,5 +1,27 @@
 [
   {
+    "id": "kulturalis_orokseg_rajnis12_2026",
+    "name": "Kulturális Örökség Napjai: Történelmi alapokon álló ház",
+    "date": "2026-09-19",
+    "endDate": "2026-09-19",
+    "time": "09:00",
+    "location": "Kőszeg, Rajnis utca 12.",
+    "coords": {
+      "lat": 47.3898,
+      "lng": 16.5401
+    },
+    "description": "A kőszegi Rajnis utca 12. szám alatti ingatlan (jelenleg társasház) alapjai több történelmi emléken állnak, melyeket gránittáblák is jeleznek az utcában. A ház Várkör felőli oldala a Jurisich-Várba vezető hídon, a Poncichter (Jurisich-tér) felőli oldal a Bécsi kaput védő barbakánon áll. Ezek a mai ház pincéjében állnak. Épületvezetés nyelve: magyar, német, angol, orosz. Információs anyag nyelve: magyar, német.",
+    "tags": [
+      "örökség napjai",
+      "történelem",
+      "építészet"
+    ],
+    "image": "/images/koeszeg_logo_nobg.png",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
     "name": "Robin Hood",
     "date": "2026-07-20",
     "time": "18:00",

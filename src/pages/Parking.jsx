@@ -52,8 +52,8 @@ export default function Parking() {
 
         {/* 1. SIMPLE HEADER */}
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={() => navigate('/')} className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-card dark:bg-surface-card-dark backdrop-blur-md border border-slate-200/80 dark:border-white/10 hover:bg-gold/10 transition-colors shadow-card">
-            <IoArrowBack className="text-xl text-gray-900 dark:text-white" />
+          <button onClick={() => navigate('/')} className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+            <IoArrowBack className="text-xl text-brand dark:text-white" />
           </button>
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {t('title')}
@@ -67,7 +67,7 @@ export default function Parking() {
 
         {/* 2. MAP BUTTON */}
         <FadeUp delay={0.1} className="mb-6 flex justify-end">
-          <Link to="/parking-map" className="flex-shrink-0 relative group overflow-hidden rounded-control shadow-card hover:shadow-floating transition-all duration-300 hover:scale-[1.02] w-12 h-12 flex items-center justify-center border border-gold/30 bg-brand text-gold-light">
+          <Link to="/parking-map" className="flex-shrink-0 relative group overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] w-12 h-12 flex items-center justify-center border border-white/60 dark:border-white/10 bg-brand text-white">
             <IoMapOutline className="text-xl" />
           </Link>
         </FadeUp>
@@ -89,12 +89,10 @@ export default function Parking() {
                       to={`/parking/${spot.id}`}
                       className="
                             group relative block h-full
-                            bg-surface-card dark:bg-surface-card-dark
-                            backdrop-blur-md
-                            border border-slate-200/80 dark:border-white/10
-                            rounded-card overflow-hidden
-                            shadow-card hover:shadow-floating
-                            transition-all duration-500 hover:scale-[1.02] active:scale-[0.98]
+                            bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10
+                            rounded-2xl overflow-hidden
+                            shadow-sm hover:shadow-md
+                            transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
                             flex flex-col
                         "
                     >
@@ -127,8 +125,8 @@ export default function Parking() {
                         {/* Status Badge */}
                         <div className={`
                                     absolute top-4 right-4 px-3 py-1.5 rounded-full border border-white/20 
-                                    flex items-center gap-1.5 text-[10px] font-semibold text-white shadow-card uppercase tracking-wider
-                                    ${isPaid ? 'bg-rose-500/90' : 'bg-emerald-500/90'} backdrop-blur-xl
+                                    flex items-center gap-1.5 text-[10px] font-semibold text-white shadow-sm uppercase tracking-wider
+                                    ${isPaid ? 'bg-rose-500/90' : 'bg-emerald-500/90'} backdrop-blur-md
                                 `}>
                           <div className={`w-1.5 h-1.5 rounded-full ${isPaid ? 'bg-white' : 'bg-white animate-pulse'}`} />
                           {isPaid ? t('paid') : t('free')}
@@ -142,7 +140,7 @@ export default function Parking() {
                             {spot.name}
                           </h3>
                           <div className="flex items-start gap-2 text-gray-500 dark:text-gray-400 text-xs font-medium leading-relaxed">
-                            <IoLocationOutline className="shrink-0 text-base text-gold-text dark:text-gold-light" />
+                            <IoLocationOutline className="shrink-0 text-base text-brand dark:text-brand-light" />
                             <span className="line-clamp-2">{spot.address}</span>
                           </div>
                         </div>
@@ -151,7 +149,7 @@ export default function Parking() {
                           <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-widest">
                             {spot.capacity ? `${spot.capacity} ${t('spots')}` : ''}
                           </span>
-                          <span className="text-xs font-semibold text-gold-text dark:text-gold-light flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+                          <span className="text-xs font-semibold text-brand dark:text-brand-light flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
                             {t('details')} <IoArrowBack className="rotate-180" />
                           </span>
                         </div>
