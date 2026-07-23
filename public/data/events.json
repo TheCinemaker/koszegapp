@@ -32,13 +32,14 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Marius von Mayenburg: EX – Orlai produkció. Esőnap: július 24.",
+    "description": "Marius von Mayenburg: EX – Orlai produkció. Szereplők: Járó Zsuzsa, Péter Kata, Schruff Milán. Dramaturg/rendező: Dömötör András. Belépődíj: 7.000 Ft. Esőnap: július 24.",
     "tags": [
       "várszínház",
       "színház",
-      "előadás"
+      "előadás",
+      "dráma"
     ],
-    "image": "ex.jpg",
+    "image": "ex_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -55,13 +56,14 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Moravetz Levente: Jöhetsz drágám! – Hadart Színház. Esőnap: július 28.",
+    "description": "Moravetz Levente: Jöhetsz drágám! – Hadart Színház. Szereplők: Háda János, Mérai Kata, Szabó Máté, Bordás Mihály, Andrádi Zsanett, Zsigmond Réka, Végh Judit. Rendező: Háda János. Belépődíj: 7.000 Ft. Esőnap: július 28.",
     "tags": [
       "várszínház",
       "színház",
-      "előadás"
+      "előadás",
+      "vígjáték"
     ],
-    "image": "johetsz.jpg",
+    "image": "johetsz_dragam_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -102,14 +104,14 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Dés-Geszti-Békés: A dzsungel könyve – Roxinház előadása. Esőnap: augusztus 2.",
+    "description": "Dés László – Geszti Péter – Békés Pál: A dzsungel könyve – Roxínház musical előadása. 25 éves jubileumi est. Esőnap: augusztus 2.",
     "tags": [
       "várszínház",
       "színház",
       "előadás",
       "musical"
     ],
-    "image": "event_default.jpg",
+    "image": "dzsungel_konyve_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -126,13 +128,15 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Fabrice Roger-Lacan: A szomszéd ajtó – A Kőszegi Várszínház és a Kultkikötő bemutatója. Esőnap: augusztus 4.",
+    "description": "Fabrice Roger-Lacan: A szomszéd ajtó – romantikus vígjáték, magyarországi bemutató. A Kőszegi Várszínház és a Kultkikötő koprodukciója. Szereplők: Őze Áron (Férfi), Auksz Éva (Nő). Rendező: Naszlady Éva. Belépődíj: 5.000 Ft. Esőnap: augusztus 4.",
     "tags": [
       "várszínház",
       "színház",
-      "előadás"
+      "előadás",
+      "vígjáték",
+      "bemutató"
     ],
-    "image": "event_default.jpg",
+    "image": "szomszed_ajto_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
