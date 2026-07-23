@@ -1,0 +1,36 @@
+[
+  {
+    "id": "ostromnapok-2026",
+    "active": true,
+    "start_at": "2026-07-31T00:00:00+02:00",
+    "end_at": "2026-08-09T23:59:59+02:00",
+    "image_url": "/images/ostrom_2026/ostromhero.png",
+    "cta_route": "/ostrom",
+    "content": {
+      "hu": {
+        "badge": "Kiemelt rendezvény",
+        "title": "Ostromnapok 2026",
+        "subtitle": "2026. augusztus 7-9.",
+        "body": "Kőszeg legnagyobb rendezvénye: történelmi hagyományőrző programok, vásár és látványosságok a vár körül három napon át.",
+        "highlight": "3 nap, több tucat program a történelmi belvárosban!",
+        "cta": "Mutasd a részleteket"
+      },
+      "en": {
+        "badge": "Featured event",
+        "title": "Siege Days 2026",
+        "subtitle": "7-9 August 2026",
+        "body": "Kőszeg's biggest event: historical reenactments, a fair and spectacles around the castle for three days.",
+        "highlight": "3 days, dozens of programmes in the historic old town!",
+        "cta": "Show me the details"
+      },
+      "de": {
+        "badge": "Top-Veranstaltung",
+        "title": "Belagerungstage 2026",
+        "subtitle": "7.-9. August 2026",
+        "body": "Die größte Veranstaltung in Kőszeg: historische Darbietungen, Markt und Spektakel rund um die Burg, drei Tage lang.",
+        "highlight": "3 Tage, Dutzende Programme in der historischen Altstadt!",
+        "cta": "Details anzeigen"
+      }
+    }
+  }
+]

@@ -3,20 +3,15 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { IoCloseOutline, IoSparklesOutline } from 'react-icons/io5';
-import { supabase } from '../lib/supabaseClient';
 
 /**
- * Supabase-vezérelt promo modal.
+ * JSON-vezérelt promo modal.
  *
  * Működés:
- *  - Lekéri az épp aktív promót (RLS eleve csak azt adja vissza, ami él),
- *    priority szerint az elsőt.
- *  - sessionStorage-ben promónként jegyzi, hogy a user már látta,
- *    így session-önként max. egyszer ugrik fel.
- *  - A tartalom többnyelvű (content.hu / content.en / content.de),
- *    az i18n aktuális nyelvéhez igazodik, 'hu' fallbackkel.
- *
- * Használat a Home-ban:  <PromoModal />  — ennyi, semmi más nem kell.
+ *  - Lekéri a /data/promos.json fájlból az aktív promóciókat.
+ *  - Ellenőrzi a jelenlegi dátumot (start_at és end_at között).
+ *  - sessionStorage-ben promónként jegyzi, hogy a user már látta.
+ *  - A tartalom többnyelvű (content.hu / content.en / content.de), 'hu' fallbackkel.
  */
 export default function PromoModal() {
   const { i18n } = useTranslation();
@@ -28,26 +23,33 @@ export default function PromoModal() {
 
     const loadPromo = async () => {
       try {
-        const { data, error } = await supabase
-          .from('promos')
-          .select('*')
-          .order('priority', { ascending: true })
-          .limit(1)
-          .maybeSingle();
+        const res = await fetch('/data/promos.json');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0 || cancelled) return;
 
-        if (error || !data || cancelled) return;
+        const now = new Date();
 
-        const seen = sessionStorage.getItem(`promo_shown_${data.id}`) === 'true';
+        // Kiszűrjük az aktív és dátum szerint érvényes kampányokat
+        const activePromos = data.filter((item) => {
+          if (!item.active) return false;
+          const start = new Date(item.start_at);
+          const end = new Date(item.end_at);
+          return now >= start && now <= end;
+        });
+
+        if (activePromos.length === 0) return;
+
+        const selectedPromo = activePromos[0];
+        const seen = sessionStorage.getItem(`promo_shown_${selectedPromo.id}`) === 'true';
         if (seen) return;
 
-        setPromo(data);
-        // Kis késleltetés, hogy a Home betöltése után jelenjen meg
+        setPromo(selectedPromo);
         setTimeout(() => {
           if (!cancelled) setVisible(true);
         }, 800);
       } catch (err) {
-        // Promo hiba soha ne törje el a Home-ot
-        console.error('Promo load failed:', err);
+        console.error('Promo JSON load failed:', err);
       }
     };
 
@@ -66,7 +68,6 @@ export default function PromoModal() {
 
   if (!promo) return null;
 
-  // Nyelvi feloldás: aktuális nyelv -> hu fallback
   const lang = (i18n.language || 'hu').split('-')[0];
   const c = promo.content?.[lang] || promo.content?.hu;
   if (!c) return null;
