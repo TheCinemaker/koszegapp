@@ -119,15 +119,21 @@ export default function Home({ appData, weather }) {
   const prefersReducedMotion = useReducedMotion();
 
   // -------------------------------------------------------------------------
-  // SCROLL-SCRUB: a layout belső scroll-konténerét figyeljük (#app-scroll).
+  // SCROLL-SCRUB: A saját scrollozó ős-elemet keressük meg (PageWrapper), felfelé mászva
+  // a DOM-ban. Route-átmenet alatt két PageWrapper is élhet egyszerre,
+  // ezért globális querySelector helyett a saját fánkról indulunk.
   // -------------------------------------------------------------------------
+  const rootRef = useRef(null);
   const scrollContainerRef = useRef(null);
 
   useLayoutEffect(() => {
-    scrollContainerRef.current =
-      document.querySelector('#app-scroll') ||
-      document.querySelector('div.w-full.bg-gray-50.dark\\:bg-zinc-900') ||
-      document.querySelector('main');
+    let el = rootRef.current?.parentElement;
+    while (el) {
+      const oy = getComputedStyle(el).overflowY;
+      if (oy === 'auto' || oy === 'scroll') break;
+      el = el.parentElement;
+    }
+    scrollContainerRef.current = el || null;
   }, []);
 
   const { scrollY } = useScroll({ container: scrollContainerRef });
@@ -155,7 +161,7 @@ export default function Home({ appData, weather }) {
   ];
 
   return (
-    <div className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative">
+    <div ref={rootRef} className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative">
       <SEO
         title="Fedezd fel Kőszeg csodáit"
         description="Kőszeg digitális szuperappja: élő térkép, jegyvásárlás, ételrendelés, AR kalandjáték, KőszegReels és időpontfoglaló — mindezt egyetlen helyen, ingyen."

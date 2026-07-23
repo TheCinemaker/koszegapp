@@ -398,7 +398,7 @@ function MainAppContent() {
   return (
     <>
       <AmbientBackground weather={weather} upcoming={upcomingWeather} dark={dark} />
-      <div id="app-scroll" className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
+      <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
           {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && (
             <>
