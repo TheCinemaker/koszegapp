@@ -414,7 +414,7 @@ function MainAppContent() {
                 flex items-center justify-between px-3 sm:px-6
                 bg-white/0 dark:bg-black/10
                 backdrop-blur-lg transform-gpu
-                rounded-[2rem]
+                rounded-2xl
                 border border-white/60 dark:border-white/10
                 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                 relative
