@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import SearchBar from '../components/SearchBar';
@@ -119,14 +119,25 @@ export default function Home({ appData, weather }) {
   const prefersReducedMotion = useReducedMotion();
 
   // -------------------------------------------------------------------------
-  // SCROLL-SCRUB: a LiveHero görgetésre zsugorodik, halványul és felúszik.
+  // SCROLL-SCRUB: a layout belső scroll-konténerét figyeljük (#app-scroll).
   // -------------------------------------------------------------------------
-  const { scrollY } = useScroll();
-  const heroScale = useTransform(scrollY, [0, 220], [1, 0.82]);
-  const heroOpacity = useTransform(scrollY, [0, 220], [1, 0.2]);
-  const heroY = useTransform(scrollY, [0, 220], [0, -45]);
+  const scrollContainerRef = useRef(null);
 
-  const heroStyle = { scale: heroScale, opacity: heroOpacity, y: heroY };
+  useLayoutEffect(() => {
+    scrollContainerRef.current =
+      document.querySelector('#app-scroll') ||
+      document.querySelector('div.w-full.bg-gray-50.dark\\:bg-zinc-900') ||
+      document.querySelector('main');
+  }, []);
+
+  const { scrollY } = useScroll({ container: scrollContainerRef });
+  const heroScale = useTransform(scrollY, [0, 250], [1, 0.90]);
+  const heroOpacity = useTransform(scrollY, [0, 250], [1, 0.35]);
+  const heroY = useTransform(scrollY, [0, 250], [0, -35]);
+
+  const heroStyle = prefersReducedMotion
+    ? {}
+    : { scale: heroScale, opacity: heroOpacity, y: heroY };
 
   const liveBadges = useMemo(() => getLiveBadges(appData), [appData]);
 
