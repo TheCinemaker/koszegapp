@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next'; // Added import
+import { useTranslation } from 'react-i18next';
 import { fetchHotels } from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaArrowLeft, FaMapMarkerAlt, FaBed } from 'react-icons/fa';
@@ -9,7 +9,7 @@ import SEO from '../components/SEO';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Hotels() {
-  const { t } = useTranslation('hotels'); // Load namespace 
+  const { t } = useTranslation('hotels');
   const navigate = useNavigate();
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
@@ -27,7 +27,6 @@ export default function Hotels() {
 
   const types = useMemo(() => {
     const base = Array.from(new Set(hotels.map(h => h.type))).filter(Boolean);
-    // Capitalize first letter for display
     return ['Minden', ...base.map(t => t.charAt(0).toUpperCase() + t.slice(1))];
   }, [hotels]);
 
@@ -45,7 +44,7 @@ export default function Hotels() {
 
   if (loading) {
     return (
-      <LoadingSpinner fullScreen={true} label="Betöltés..." />
+      <LoadingSpinner fullScreen={true} label="Szállások betöltése..." />
     );
   }
 
@@ -53,13 +52,18 @@ export default function Hotels() {
 
   return (
     <div className="min-h-screen pb-24 pt-0 px-4">
-      {/* 1. HEADER section wrapper */}
+      <SEO
+          title="Szállások Kőszegen"
+          description="Kőszegi szálláshelyek listája: hotelek, panziók, vendégházak és apartmanok. Foglalj szállást közvetlenül Kőszegen."
+          url="/hotels"
+          keywords="Kőszeg szállás, Kőszeg hotel, Kőszeg panzió, Kőszeg vendégház"
+      />
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-4 pt-2">
-          <button onClick={() => navigate('/')} className="w-9 h-9 rounded-full bg-white/50 dark:bg-white/10 backdrop-blur-md flex items-center justify-center shadow-sm hover:scale-105 transition-transform">
+          <button onClick={() => navigate('/')} className="w-9 h-9 rounded-full bg-surface-card dark:bg-surface-card-dark backdrop-blur-md flex items-center justify-center shadow-card hover:scale-105 transition-transform border border-slate-200/80 dark:border-white/10">
             <FaArrowLeft className="text-sm text-gray-700 dark:text-white" />
           </button>
-          <h1 className="text-xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
             {t('title')}
           </h1>
           <div className="w-9" />
@@ -67,46 +71,44 @@ export default function Hotels() {
 
         {/* Search Bar */}
         <div className="mb-4">
-          <div className="flex gap-3 h-8">
+          <div className="flex gap-3 h-10">
             <input
               type="search"
               placeholder={t('searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 h-full px-4 rounded-lg
-                       bg-white/60 dark:bg-gray-800/60
+              className="flex-1 h-full px-4 rounded-control
+                       bg-surface-card dark:bg-surface-card-dark
                        backdrop-blur-md
-                       border border-white/40 dark:border-gray-700/50
+                       border border-slate-200/80 dark:border-white/10
                        text-xs font-medium text-gray-900 dark:text-gray-100
                        placeholder-gray-500 dark:placeholder-gray-400
-                       focus:outline-none focus:ring-2 focus:ring-violet-500/30
-                       shadow-sm transition-all duration-300
-                       hover:bg-white/80 dark:hover:bg-gray-800/80"
+                       focus:outline-none focus:ring-2 focus:ring-brand
+                       shadow-card transition-all duration-300"
             />
             <button
-              className="w-8 h-8 rounded-lg flex items-center justify-center
-                       bg-gradient-to-br from-violet-500 to-purple-600
-                       text-white shadow-sm
-                       hover:from-violet-600 hover:to-purple-700
-                       transition-all duration-300
-                       hover:scale-105 active:scale-95"
+              aria-label="Keresés"
+              className="w-10 h-10 rounded-control flex items-center justify-center
+                       bg-brand text-gold-light border border-gold/30 shadow-card
+                       hover:opacity-90 transition-all duration-300
+                       hover:scale-105 active:scale-95 flex-shrink-0"
             >
               <FaSearch className="text-xs" />
             </button>
           </div>
         </div>
 
-        {/* Horizontal Scrollable Filter Pills */}
+        {/* Filter Pills */}
         <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 flex-nowrap scrollbar-hide">
           {types.map(type => (
             <button
               key={type}
               onClick={() => setFilterType(type === 'Minden' ? 'all' : type)}
               className={`
-                 flex-shrink-0 px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wide transition-transform active:scale-95 border
+                 flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-transform active:scale-95 border
                  ${(filterType === type || (filterType === 'all' && type === 'Minden'))
-                  ? 'bg-violet-600 text-white border-transparent shadow-md'
-                  : 'bg-white/50 dark:bg-white/10 text-gray-600 dark:text-gray-400 border-white/40 dark:border-white/10 hover:bg-white/80'
+                  ? 'bg-brand dark:bg-brand text-gold-light border-gold/30 shadow-card'
+                  : 'bg-surface-card dark:bg-surface-card-dark text-gray-600 dark:text-gray-400 border-slate-200/80 dark:border-white/10 hover:bg-gold/10'
                 }
                `}
             >
@@ -120,46 +122,45 @@ export default function Hotels() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredHotels.length > 0 ? (
             filteredHotels.map((hotel, index) => (
-              <FadeUp key={`${hotel.id}-${index}`} delay={index * 0.15} duration={1.6}>
+              <FadeUp key={`${hotel.id}-${index}`} delay={index * 0.1} duration={1.2}>
                 <Link
                   to={`/hotels/${hotel.id}`}
-                  className="group relative bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl rounded-[2rem] border border-white/50 dark:border-white/10 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] flex flex-col h-72"
+                  className="group relative bg-surface-card dark:bg-surface-card-dark backdrop-blur-md rounded-card border border-slate-200/80 dark:border-white/10 overflow-hidden shadow-card hover:shadow-floating transition-all duration-300 hover:scale-[1.02] flex flex-col h-72"
                 >
                   {/* Image Section */}
-                  <div className="relative h-40 overflow-hidden z-10">
+                  <div className="relative h-44 overflow-hidden z-10">
                     {hotel.image ? (
                       <img
                         src={`/images/hotels/${hotel.image}`}
                         alt={hotel.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         onError={(e) => { e.target.onerror = null; e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
                       />
                     ) : null}
 
-                    {/* Fallback Ghost */}
-                    <div className={`${hotel.image ? 'hidden' : 'flex'} absolute inset-0 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-slate-800 dark:to-slate-900 items-center justify-center`}>
+                    <div className={`${hotel.image ? 'hidden' : 'flex'} absolute inset-0 bg-slate-800 items-center justify-center`}>
                       <GhostImage className="w-full h-full opacity-50" />
                     </div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
                     <div className="absolute bottom-3 left-4 right-4 text-white">
-                      <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider mb-1 opacity-90">
+                      <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider mb-1 text-gold-light">
                         <FaBed /> {hotel.type}
                       </div>
-                      <h3 className="text-xl font-bold leading-tight shadow-black drop-shadow-md">{hotel.name}</h3>
+                      <h3 className="text-lg font-bold leading-tight drop-shadow-md tracking-display">{hotel.name}</h3>
                     </div>
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-4 flex-1 flex flex-col justify-between relative bg-white/30 dark:bg-white/5">
+                  <div className="p-4 flex-1 flex flex-col justify-between relative bg-surface-card dark:bg-surface-card-dark">
                     <div className="flex items-start gap-2 text-gray-600 dark:text-gray-300 text-xs font-medium mb-3">
-                      <FaMapMarkerAlt className="shrink-0 mt-0.5 text-violet-500" />
+                      <FaMapMarkerAlt className="shrink-0 mt-0.5 text-gold-text dark:text-gold-light" />
                       <span className="line-clamp-2">{hotel.address}</span>
                     </div>
 
                     <div className="flex items-center justify-end">
-                      <span className="px-4 py-2 rounded-full bg-violet-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-violet-500/30 group-hover:bg-violet-500 transition-colors">
+                      <span className="px-4 py-1.5 rounded-full bg-brand text-gold-light text-[10px] font-semibold uppercase tracking-wider shadow-card border border-gold/30 group-hover:opacity-90 transition-opacity">
                         {t('view')}
                       </span>
                     </div>
@@ -169,8 +170,8 @@ export default function Hotels() {
             ))
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-60">
-              <p className="text-sm font-bold text-gray-500">{t('noResults')}</p>
-              <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-violet-500 text-xs font-bold hover:underline">
+              <p className="text-sm font-semibold text-gray-500">{t('noResults')}</p>
+              <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-gold-text dark:text-gold-light text-xs font-semibold hover:underline">
                 {t('clearFilters')}
               </button>
             </div>

@@ -36,8 +36,8 @@ import { useFavorites } from '../contexts/FavoritesContext';
 // - Perforált leszakítható szelvény ("stub") a cselekvésekkel
 // - A dátum nem badge, hanem tipográfiai elem, mint egy nyomtatott jegyen
 // ---------------------------------------------------------------------------
-const PAGE_BG = 'bg-[#f4f3f0] dark:bg-[#0c0c0e]';
-const NOTCH_BG = 'bg-[#f4f3f0] dark:bg-[#0c0c0e]';
+const PAGE_BG = 'bg-surface-light dark:bg-surface-dark';
+const NOTCH_BG = 'bg-surface-light dark:bg-surface-dark';
 
 // ---------------------------------------------------------------------------
 // Platform detektálás
@@ -594,7 +594,7 @@ export default function EventDetail() {
       {/* ================================================================ */}
       <div className="relative z-10 -mt-16 sm:-mt-20 px-4 max-w-2xl mx-auto">
         <FadeUp>
-          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/80 dark:border-white/10 shadow-xl shadow-black/5 dark:shadow-black/30 overflow-hidden">
+          <div className="bg-surface-card dark:bg-surface-card-dark rounded-card border border-slate-200/80 dark:border-white/10 shadow-card overflow-hidden">
 
             {/* --- Jegy fő része --- */}
             <div className="p-6 sm:p-8">
@@ -604,19 +604,19 @@ export default function EventDetail() {
                 <div className="flex-1 min-w-0">
                   {/* Eyebrow */}
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-zinc-500">
-                    {evt.settlement && <span className="text-indigo-500 dark:text-indigo-400">{evt.settlement}</span>}
+                    {evt.settlement && <span className="text-gold-text dark:text-gold-light">{evt.settlement}</span>}
                     {evt.settlement && (isMultiDay || weekday) && <span aria-hidden="true">·</span>}
                     {isMultiDay ? <span>Többnapos program</span> : weekday && <span>{weekday}</span>}
                   </div>
 
-                  <h1 className="text-2xl sm:text-[28px] font-extrabold text-slate-900 dark:text-white leading-[1.15] tracking-tight mb-4">
+                  <h1 className="text-2xl sm:text-[28px] font-bold text-slate-900 dark:text-white leading-[1.15] tracking-tight mb-4">
                     {evt.name}
                   </h1>
 
                   <div className="space-y-1.5 text-sm font-medium text-slate-600 dark:text-zinc-400">
                     {evt.location && (
                       <div className="flex items-center gap-2">
-                        <IoLocationOutline className="text-base text-slate-400 dark:text-zinc-500 flex-shrink-0" />
+                        <IoLocationOutline className="text-base text-gold-text dark:text-gold-light flex-shrink-0" />
                         <span className="truncate">
                           {evt.settlement ? `${evt.settlement}, ` : ''}
                           {evt.location}
@@ -625,20 +625,20 @@ export default function EventDetail() {
                     )}
                     {timeText && (
                       <div className="flex items-center gap-2">
-                        <IoTimeOutline className="text-base text-slate-400 dark:text-zinc-500 flex-shrink-0" />
+                        <IoTimeOutline className="text-base text-gold-text dark:text-gold-light flex-shrink-0" />
                         <span>{timeText}</span>
                       </div>
                     )}
                   </div>
                 </div>
 
-                {/* Tipográfiai dátum — mint egy nyomtatott jegyen */}
+                {/* Tipográfiai dátum */}
                 {dayNumber && (
                   <div className="flex-shrink-0 text-right border-l border-slate-100 dark:border-white/5 pl-5">
-                    <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-400 leading-none mb-1">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-text dark:text-gold-light leading-none mb-1">
                       {monthName}
                     </div>
-                    <div className="text-5xl font-extrabold tracking-tighter text-slate-900 dark:text-white leading-none tabular-nums">
+                    <div className="text-5xl font-bold tracking-tighter text-slate-900 dark:text-white leading-none tabular-nums">
                       {dayNumber}
                     </div>
                   </div>
@@ -655,7 +655,7 @@ export default function EventDetail() {
               {ticketEvent && (
                 <button
                   onClick={() => navigate('/tickets', { state: { directEventId: ticketEvent.id } })}
-                  className="w-full py-3.5 mb-3 bg-indigo-500 hover:opacity-90 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm shadow-indigo-500/20 transition-opacity"
+                  className="w-full py-3.5 mb-3 bg-brand text-gold-light rounded-control font-semibold text-sm flex items-center justify-center gap-2 shadow-card border border-gold/30 hover:opacity-90 transition-opacity"
                 >
                   <IoTicketOutline className="text-lg" />
                   Jegyvásárlás · {ticketEvent.price} Ft
@@ -669,16 +669,16 @@ export default function EventDetail() {
                 <a
                   href={`data:text/calendar;charset=utf8,${encodeURIComponent(evt ? toICS(evt, s, e) : '')}`}
                   download={`${(evt?.name || 'esemeny').replace(/\s+/g, '_')}.ics`}
-                  className="h-11 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-zinc-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                  className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
                 >
-                  <IoCalendarClearOutline className="text-base text-indigo-500 dark:text-indigo-400" /> Naptárba
+                  <IoCalendarClearOutline className="text-base text-gold-text dark:text-gold-light" /> Naptárba
                 </a>
 
                 <button
                   onClick={handleShare}
-                  className="h-11 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-zinc-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                  className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
                 >
-                  <IoShareSocialOutline className="text-base text-indigo-500 dark:text-indigo-400" /> Megosztás
+                  <IoShareSocialOutline className="text-base text-gold-text dark:text-gold-light" /> Megosztás
                 </button>
               </div>
 
@@ -690,7 +690,7 @@ export default function EventDetail() {
                       href={evt.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 h-11 rounded-xl text-indigo-500 dark:text-indigo-400 font-semibold text-xs flex items-center justify-center gap-1.5 hover:bg-indigo-500/5 transition-colors border border-indigo-500/20"
+                      className="flex-1 h-11 rounded-control text-gold-text dark:text-gold-light font-semibold text-xs flex items-center justify-center gap-1.5 hover:bg-gold/10 transition-colors border border-gold/30"
                     >
                       <IoGlobeOutline className="text-base" /> Hivatalos weboldal
                     </a>
@@ -698,7 +698,7 @@ export default function EventDetail() {
                   {location && getDistanceKm(location.lat, location.lng, 47.389, 16.54) > 100 && (
                     <button
                       onClick={handleBookingClick}
-                      className="flex-1 h-11 rounded-xl text-indigo-500 dark:text-indigo-400 font-semibold text-xs flex items-center justify-center gap-1.5 hover:bg-indigo-500/5 transition-colors border border-indigo-500/20"
+                      className="flex-1 h-11 rounded-control text-gold-text dark:text-gold-light font-semibold text-xs flex items-center justify-center gap-1.5 hover:bg-gold/10 transition-colors border border-gold/30"
                     >
                       <IoBedOutline className="text-base" /> Szállásfoglalás
                     </button>
