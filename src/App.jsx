@@ -425,10 +425,10 @@ function MainAppContent() {
                       onClick={handleSecretTap}
                       className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 group"
                     >
-                      <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
+                      <span className="text-xl sm:text-2xl font-medium text-slate-800 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
                         visit
                       </span>
-                      <span className="text-xl sm:text-2xl font-black text-gold-text dark:text-gold-light tracking-tighter uppercase text-readability-shadow">
+                      <span className="text-xl sm:text-2xl font-semibold text-gold-text dark:text-gold-light tracking-tighter uppercase text-readability-shadow">
                         Kőszeg
                       </span>
                     </div>
