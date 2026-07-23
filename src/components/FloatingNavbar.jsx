@@ -35,8 +35,8 @@ export default function FloatingNavbar() {
         pointer-events-auto
         flex items-center justify-around
         px-3 py-2
-        bg-white/20 dark:bg-white/5 
-        backdrop-blur-[25px] 
+        bg-white/10 dark:bg-white/5 
+        backdrop-blur-[30px] transform-gpu
         rounded-2xl 
         border border-white/60 dark:border-white/10 
         shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
