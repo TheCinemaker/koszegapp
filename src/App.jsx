@@ -514,11 +514,10 @@ function MainAppContent() {
                   </div>
                 </div>
               </header>
-              <div className="h-16" />
             </>
           )}
 
-          <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen ${isInGameMode ? '' : 'px-4 pt-4'}`}>
+          <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen ${isInGameMode ? '' : 'px-4'}`}>
             {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
             <AnimatedRoutes appData={appData} weather={weather} />
           </main>

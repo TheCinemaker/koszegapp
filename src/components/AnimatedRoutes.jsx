@@ -310,6 +310,16 @@ const morphVariants = {
 
 const PageWrapper = ({ children, showFooter = true, morph = false }) => {
   const direction = React.useContext(DirectionContext);
+  const location = useLocation();
+  
+  // Detemine if the current route has the global header (mirrors App.jsx logic)
+  const isKioskMode = localStorage.getItem('kiosk_mode') === 'true';
+  const hasHeader = !isKioskMode && 
+                    !location.pathname.startsWith('/eats') && 
+                    !location.pathname.startsWith('/scanner') && 
+                    !location.pathname.startsWith('/buy-pass') && 
+                    !location.pathname.startsWith('/adatbekero');
+
   return (
   <motion.div
     custom={direction}
@@ -329,7 +339,7 @@ const PageWrapper = ({ children, showFooter = true, morph = false }) => {
       overflowX: 'hidden'
     }}
   >
-    <div className="pt-4 min-h-screen flex flex-col">
+    <div className={`min-h-screen flex flex-col ${hasHeader ? 'pt-20' : 'pt-4'}`}>
       <div className="flex-1">
         {children}
       </div>

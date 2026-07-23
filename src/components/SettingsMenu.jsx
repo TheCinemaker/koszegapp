@@ -14,6 +14,8 @@ export default function SettingsMenu() {
     const { t, i18n } = useTranslation();
     const { dark, toggleDark } = useContext(DarkModeContext);
     const [isOpen, setIsOpen] = useState(false);
+    // Default ON — only off if the user explicitly disabled it.
+    const [ambientEnabled, setAmbientEnabled] = useState(localStorage.getItem('ambientMode') !== 'false');
     const menuRef = useRef(null);
 
     // Close on click outside
@@ -96,7 +98,35 @@ export default function SettingsMenu() {
                             </button>
                         </div>
 
-                        {/* Ambient Mode Toggle Removed */}
+                        {/* Ambient Mode Toggle */}
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
+                                <span className="text-lg">✨</span>
+                                <span className="font-semibold text-sm">Élő Háttér</span>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    const newValue = !ambientEnabled;
+                                    localStorage.setItem('ambientMode', newValue);
+                                    window.dispatchEvent(new Event('ambient-mode-change'));
+                                    setAmbientEnabled(newValue);
+                                }}
+                                className={`
+                                  relative w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none
+                                  ${ambientEnabled ? 'bg-indigo-500' : 'bg-gray-300 dark:bg-zinc-700'}
+                                `}
+                            >
+                                <motion.div
+                                    layout
+                                    className={`
+                                      absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm
+                                      ${ambientEnabled ? 'translate-x-6' : 'translate-x-0'}
+                                    `}
+                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                />
+                            </button>
+                        </div>
+
 
                         {/* Language Selector */}
                         <div className="flex flex-col gap-2">
