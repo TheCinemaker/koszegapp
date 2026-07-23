@@ -50,8 +50,8 @@
         "id": "ostrom_2026_aug6_3",
         "idopont": "2026-08-06T21:00:00",
         "veg_idopont": "2026-08-06T23:59:00",
-        "nev": "Dj Shepard",
-        "kiemelt": false,
+        "nev": "DJ Shepard",
+        "kiemelt": true,
         "helyszin": {
           "nev": "Fő tér",
           "lat": 47.3881,
