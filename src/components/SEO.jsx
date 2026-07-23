@@ -2,7 +2,8 @@ import { Helmet } from 'react-helmet-async';
 
 const BASE_URL = 'https://visitkoszeg.hu';
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.jpg`;
-const SITE_NAME = 'VisitKőszeg';
+const SITE_NAME = 'visitKőszeg';
+const BRAND_SLOGAN = 'Élmények. Élőben.';
 
 /**
  * Oldalankénti SEO meta tagek.
@@ -18,9 +19,9 @@ export default function SEO({
     noindex = false,
     keywords = '',
 }) {
-    const fullTitle = title
-        ? `${title} | ${SITE_NAME}`
-        : `${SITE_NAME} – Kőszeg digitális útitársa`;
+    const fullTitle = (title && title !== 'Fedezd fel Kőszeg csodáit')
+        ? `${title} · visitKőszeg – Élmények. Élőben.`
+        : `${SITE_NAME} – ${BRAND_SLOGAN}`;
     const canonicalUrl = `${BASE_URL}${url}`;
 
     return (

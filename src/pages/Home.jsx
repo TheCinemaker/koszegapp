@@ -163,10 +163,10 @@ export default function Home({ appData, weather }) {
   return (
     <div ref={rootRef} className="min-h-screen pb-32 pt-4 px-4 overflow-x-hidden selection:bg-indigo-500 selection:text-white relative">
       <SEO
-        title="Fedezd fel Kőszeg csodáit"
-        description="Kőszeg digitális szuperappja: élő térkép, jegyvásárlás, ételrendelés, AR kalandjáték, KőszegReels és időpontfoglaló — mindezt egyetlen helyen, ingyen."
+        title=""
+        description="visitKőszeg – Élmények. Élőben. Kőszeg digitális útitársa: élő térkép, rendezvények, látnivalók, vendéglátás és szállások egy helyen."
         url="/"
-        keywords="Kőszeg, VisitKőszeg, Kőszeg app, Kőszeg program, Kőszeg látnivalók"
+        keywords="visitKőszeg, Élmények. Élőben., Kőszeg, Kőszeg app, Kőszeg program, Kőszeg látnivalók"
       />
 
       {/* GLOBAL BACKGROUND NOISE (Subtle) */}

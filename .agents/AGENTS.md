@@ -49,6 +49,10 @@ This file contains persistent workspace rules and historical context for AI agen
 - **Base Version:** App version is bumped to **`5.0.0`** in `package.json`.
 - **Patch Bumps:** Every time a completed feature unit (e.g. Home page redesign, Events module) is finished, increment the patch version (e.g. `5.0.0` -> `5.0.1` -> `5.0.2`).
 
+### 7. Brand Title & Slogan Protection Rule ("Élmények. Élőben.")
+- **Official Slogan:** The official brand title & slogan is strictly **`visitKőszeg – Élmények. Élőben.`**.
+- **UNALTERABLE RULE:** UNDER NO CIRCUMSTANCES should this text ever be removed, rewritten, or altered in `index.html`, `SEO.jsx`, or default page headers. It is a core brand component.
+
 ## 🧠 SESSION MEMORY & ACTIVE RULES
 
 ### 1. Manual Event & JSON Management (Active until 2026-07-26)
