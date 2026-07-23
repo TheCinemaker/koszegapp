@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="28" fill="#0F3D6E" />
+  <g transform="translate(0, -6)">
+    <!-- Outer Contour: Castle Tower + Right Turret + Outer V-Mountain Base -->
+    <path
+      d="M 50 92 L 18 52 V 30 L 34 14 V 5 H 38 V 14 H 62 V 5 H 66 V 14 L 71 19 V 9 H 75 V 22 L 82 30 V 52 Z"
+      stroke="#D6A330"
+      stroke-width="4.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <!-- Inner V-Mountain Ridge -->
+    <path
+      d="M 30 56 L 50 77 L 70 56"
+      stroke="#D6A330"
+      stroke-width="4.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <!-- Center Tower Window -->
+    <rect
+      x="44"
+      y="26"
+      width="12"
+      height="10"
+      rx="1"
+      stroke="#D6A330"
+      stroke-width="3.5"
+      fill="none"
+    />
+  </g>
+</svg>
