@@ -408,10 +408,10 @@ function MainAppContent() {
                 w-full max-w-5xl
                 h-full
                 flex items-center justify-between px-3 sm:px-6
-                bg-white/10 dark:bg-white/5 
-                backdrop-blur-[30px] transform-gpu
-                rounded-[2rem] 
-                border border-white/60 dark:border-white/10 
+                bg-white/30 dark:bg-white/10
+                backdrop-blur-[30px] backdrop-saturate-150
+                rounded-[2rem]
+                border border-white/60 dark:border-white/10
                 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                 relative
                 ">

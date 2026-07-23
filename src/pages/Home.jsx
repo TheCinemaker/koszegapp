@@ -177,7 +177,7 @@ export default function Home({ appData, weather }) {
       <div className="max-w-4xl mx-auto relative z-10">
 
         {/* --- LIVE HERO: scroll-scrub wrapper --- */}
-        <motion.div style={heroStyle} className="origin-top will-change-transform">
+        <motion.div style={heroStyle} className="origin-top">
           <LiveHero appData={appData} weather={weather} />
         </motion.div>
 

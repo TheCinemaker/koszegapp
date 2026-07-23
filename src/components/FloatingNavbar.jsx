@@ -35,12 +35,12 @@ export default function FloatingNavbar() {
         pointer-events-auto
         flex items-center justify-around
         px-3 py-2
-        bg-white/10 dark:bg-white/5 
-        backdrop-blur-[30px] transform-gpu
-        rounded-2xl 
-        border border-white/60 dark:border-white/10 
-        shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
-        transition-all duration-300
+        bg-white/30 dark:bg-white/10
+        backdrop-blur-[30px] backdrop-saturate-150
+        rounded-2xl
+        border border-white/60 dark:border-white/10
+        shadow-[0_8px_30px_rgb(0,0,0,0.12)]
+        transition-colors duration-300
       ">
         {navItems.map((item) => (
           <NavLink
