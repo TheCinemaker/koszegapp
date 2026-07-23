@@ -16,8 +16,8 @@ import {
     Droplets,
     Mountain
 } from 'lucide-react';
-import { isAfter, isBefore, differenceInSeconds, format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import VisitKoszegLogo from './VisitKoszegLogo';
 
 const LiveHero = ({ appData, weather }) => {
     const { t, i18n } = useTranslation('home');
@@ -99,9 +99,9 @@ const LiveHero = ({ appData, weather }) => {
                     {/* Left Section: Greeting & Weather Button */}
                     <div className="flex-1 space-y-4">
                         <div>
-                            <p className="text-xs font-black uppercase tracking-[0.25em] text-gold-text dark:text-gold-light mb-1.5">
-                                visitKőszeg
-                            </p>
+                            <div className="mb-2">
+                                <VisitKoszegLogo size="sm" showTagline={true} />
+                            </div>
                             <h1 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight mb-2">
                                 {greeting}
                             </h1>

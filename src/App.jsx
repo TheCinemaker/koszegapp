@@ -33,6 +33,7 @@ import ResidentCheckModal from './components/ResidentCheckModal';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import SettingsMenu from './components/SettingsMenu';
 import UserMessageRibbon from './components/UserMessageRibbon';
+import VisitKoszegLogo from './components/VisitKoszegLogo';
 
 
 import { lazyWithRetry } from './utils/lazyWithRetry';
@@ -423,14 +424,9 @@ function MainAppContent() {
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                     <div
                       onClick={handleSecretTap}
-                      className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 group"
+                      className="cursor-pointer active:scale-95 transition-all duration-300 group"
                     >
-                      <span className="text-xl sm:text-2xl font-medium text-slate-800 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
-                        visit
-                      </span>
-                      <span className="text-xl sm:text-2xl font-semibold text-gold-text dark:text-gold-light tracking-tighter uppercase text-readability-shadow">
-                        Kőszeg
-                      </span>
+                      <VisitKoszegLogo size="md" />
                     </div>
                   </div>
 
