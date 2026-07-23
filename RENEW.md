@@ -37,6 +37,11 @@ Ez a projektnapló rögzíti a KőszegApp **RENEW** megújulási folyamata sorá
 
 ## 📝 VÁLTOZTATÁSI NAPLÓ ÉS ELŐZMÉNYEK
 
+### 2026-07-23 #012 - Nyitóoldal (Home.jsx) Scroll-Scrubbing & Szín-Egységesítés [ELFOGADVA]
+- **Apple iOS Scroll-Scrubbing:** A `LiveHero` komponens görgetésre finoman zsugorodik (`scale: 0.94`), halványul (`opacity: 0.35`) és felúszik (`y: -28`), átadva a fókuszt a keresőnek.
+- **Élő Adat Badges (Live Badges):** A kártyák sarkában élő adatok jelennek meg (pl. *"34 szabad hely"* zöld élő pöttyel a parkolásnál, *"Ma 3 program"* az eseményeknél, *"15 nap múlva"* / *"Most zajlik"* az Ostromnapoknál).
+- **100% Szigorú Szín-Egységesítés:** Kitisztítottuk a régi navy (`#123a57`) és cian (`#0a97be`) kóbor hex kódokat. Minden kiemelt kártya, ikon és gomb az egységes `bg-indigo-500` és `text-indigo-500` márka-tokent használja.
+
 ### 2026-07-23 #011 - Esemény Részletek "A Jegy" Koncepció (EventDetail.jsx) [ELFOGADVA]
 - **"A Jegy" Design Koncepció Élesítve:** Az esemény részletező oldal átállt a fizikai jegy élményét nyújtó egyedi dizájnra:
   - Immerzív plakát-hero a lap tetején elmosott környezeti fényhatással.
