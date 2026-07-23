@@ -104,8 +104,8 @@ function LiveBadge({ badge, featured }) {
         ${isLive
           ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25'
           : featured
-            ? 'bg-white/15 text-white border border-white/20'
-            : 'bg-indigo-500/10 dark:bg-indigo-400/10 text-indigo-500 dark:text-indigo-400 border border-indigo-500/20'}
+            ? 'bg-gold/20 text-gold-light border border-gold/40'
+            : 'bg-gold/15 text-gold-text dark:text-gold-light border border-gold/30'}
       `}
     >
       {isLive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
