@@ -5,6 +5,7 @@ export const LocationContext = createContext(null);
 export function LocationProvider({ children }) {
     const [location, setLocation] = useState(null);
     const watchId = useRef(null);
+    const watchCount = useRef(0);
 
     const startWatching = () => {
         if (!navigator.geolocation) {
@@ -12,6 +13,7 @@ export function LocationProvider({ children }) {
             return;
         }
 
+        watchCount.current += 1;
         if (watchId.current) return;
 
         // 1. AZONNALI FIX (Gyors, akár gyorstárazott és kisebb pontosságú is jó elsőre)
@@ -51,7 +53,8 @@ export function LocationProvider({ children }) {
     };
 
     const stopWatching = () => {
-        if (watchId.current) {
+        watchCount.current = Math.max(0, watchCount.current - 1);
+        if (watchCount.current === 0 && watchId.current) {
             navigator.geolocation.clearWatch(watchId.current);
             watchId.current = null;
         }
