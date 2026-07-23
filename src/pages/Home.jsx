@@ -122,9 +122,9 @@ export default function Home({ appData, weather }) {
   // SCROLL-SCRUB: a LiveHero görgetésre zsugorodik, halványul és felúszik.
   // -------------------------------------------------------------------------
   const { scrollY } = useScroll();
-  const heroScale = useTransform(scrollY, [0, 200], [1, 0.88]);
-  const heroOpacity = useTransform(scrollY, [0, 200], [1, 0.3]);
-  const heroY = useTransform(scrollY, [0, 200], [0, -35]);
+  const heroScale = useTransform(scrollY, [0, 220], [1, 0.82]);
+  const heroOpacity = useTransform(scrollY, [0, 220], [1, 0.2]);
+  const heroY = useTransform(scrollY, [0, 220], [0, -45]);
 
   const heroStyle = { scale: heroScale, opacity: heroOpacity, y: heroY };
 

@@ -16,15 +16,15 @@ This file contains persistent workspace rules and historical context for AI agen
 
 ### 3. Core Design System Standard
 - **Primary Design Mode:** All components, pages, and dialogs are designed for **Light Mode first** with perfect dark mode contrast fallback.
-- **Primary Brand Accent Color:** Strictly use **`bg-indigo-500`** (`#6366F1`) for primary icons, accent buttons, action badges, and key interactive highlights.
-- **Hover Accent State:** Strictly use **`hover:opacity-90`** on all `bg-indigo-500` interactive buttons and action elements for a smooth, premium hover feedback without color distortion.
-- **Accent Text Color:** Strictly use **`text-indigo-500 dark:text-indigo-400`**.
+- **Primary Brand Accent Color:** Strictly use **`bg-indigo-500`** / **`bg-brand`** (`#0e2f47`) for primary icons, accent buttons, action badges, and key interactive highlights.
+- **Hover Accent State:** Strictly use **`hover:opacity-90`** on all `bg-indigo-500` / `bg-brand` interactive buttons and action elements for a smooth, premium hover feedback without color distortion.
+- **Accent Text Color:** Strictly use **`text-indigo-500 dark:text-indigo-400`** / **`text-brand dark:text-brand-light`**.
 - **Primary Radius:** All main cards, LiveHero containers, NearbyDiscovery cards, Bento grid tiles, search containers, floating dropdowns, and the floating navigation bar MUST strictly share the unified **`rounded-2xl` (16px / `1rem`)** curvature token for an elegant, non-bubbly, professional look.
 - **Secondary Radius:** Interactive buttons, input fields inside cards, and inner preview cards use **`rounded-xl` (12px)**.
 - **Micro Radius:** Icon tiles use **`rounded-lg` (8px)**.
 - **Full Radius:** Category chips, badges, and pill buttons use **`rounded-full`**.
 - **Dialog Radius:** Modal dialog cards use **`rounded-3xl` (24px)**.
-- **No Random/Gold Accents:** Do not use custom gold borders (`#C8AF64`), gold text gradients, or sparkles icons unless explicitly requested for branding elements like the pass card itself. Standard text colors (`text-slate-900 dark:text-white`), bento card styles (`bg-white/70 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-[30px]`), and theme colors (indigo/blue `text-indigo-500 dark:text-indigo-400`, `bg-indigo-500`) must be used for buttons, links, and borders.
+- **No Random Accents:** Standard text colors (`text-slate-900 dark:text-white`), bento card styles (`bg-white/70 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-[30px]`), and theme colors (`text-brand`, `bg-brand`, `#0e2f47`) must be used for buttons, links, and borders.
 
 ### 4. Loading UI & Animation Policy ("NO PULSING / NO BLINKING")
 - **CRITICAL RULE - NO TEXT ANIMATION:** Under NO circumstances should any text, heading, or label be animated with `animate-pulse`, blinking, or pulsing effects ("NEM Villogtatunk semmit!").
