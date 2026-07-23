@@ -428,7 +428,7 @@ function MainAppContent() {
                       <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
                         visit
                       </span>
-                      <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent tracking-tighter uppercase text-readability-shadow">
+                      <span className="text-xl sm:text-2xl font-black text-gold-text dark:text-gold-light tracking-tighter uppercase text-readability-shadow">
                         Kőszeg
                       </span>
                     </div>
@@ -448,7 +448,7 @@ function MainAppContent() {
                                 transition-all duration-300 hover:scale-105 active:scale-95"
                       aria-label="Lakossági infók"
                     >
-                      <IoHomeOutline className="text-base sm:text-lg" />
+                      <IoHomeOutline className="text-base sm:text-lg text-gold-text dark:text-gold-light" />
                       <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
                     </button>
 
@@ -467,7 +467,7 @@ function MainAppContent() {
                                 transition-all duration-300 hover:scale-105 active:scale-95"
                       aria-label="Térkép"
                     >
-                      <IoMapOutline className="text-lg sm:text-xl" />
+                      <IoMapOutline className="text-lg sm:text-xl text-gold-text dark:text-gold-light" />
                     </Link>
 
                     {/* Favorites Button */}
@@ -484,13 +484,13 @@ function MainAppContent() {
                         aria-label="Kedvencek megnyitása"
                       >
                         {favoritesCount > 0 ? (
-                          <IoHeart className="text-lg sm:text-xl text-indigo-500 dark:text-indigo-400 drop-shadow-sm" />
+                          <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
                         ) : (
-                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors" />
+                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-gold-text dark:group-hover:text-gold-light transition-colors" />
                         )}
 
                         {favoritesCount > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-indigo-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
+                          <span className="absolute -top-1 -right-1 bg-brand text-gold-light text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
                             {favoritesCount}
                           </span>
                         )}

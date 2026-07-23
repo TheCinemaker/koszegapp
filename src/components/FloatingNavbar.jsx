@@ -56,7 +56,7 @@ export default function FloatingNavbar() {
               transition-all duration-200 ease-out
               active:scale-90
               ${isActive
-                ? 'text-indigo-500 dark:text-indigo-400'
+                ? 'text-gold-text dark:text-gold-light font-bold'
                 : 'text-[#1d1d1f] dark:text-gray-300 hover:text-black dark:hover:text-white'
               }
             `}

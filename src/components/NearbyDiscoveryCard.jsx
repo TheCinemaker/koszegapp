@@ -173,68 +173,63 @@ const NearbyDiscoveryCard = ({ appData }) => {
         <div className="mb-8 relative">
             {!location ? (
                 <div 
-                    className="bg-white/70 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl p-5 flex items-center justify-center gap-3 backdrop-blur-[20px]"
+                    className="bg-surface-card dark:bg-surface-card-dark border border-slate-200/80 dark:border-white/10 rounded-2xl p-5 flex items-center justify-center gap-3 backdrop-blur-[20px]"
                 >
-                    <Navigation className="w-4 h-4 text-indigo-500" />
+                    <Navigation className="w-4 h-4 text-gold-text dark:text-gold-light" />
                     <span className="text-xs font-medium text-slate-500 dark:text-zinc-400 tracking-wide">
                         GPS pozíció meghatározása...
                     </span>
                 </div>
             ) : closestItem && (
-                <div
-                    className="relative group"
-                >
-                        {/* THE CARD CONTENT */}
-                        <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-indigo-500/10 dark:border-indigo-500/20 shadow-xl transition-all duration-500 group-hover:border-indigo-500/40">
-                            
-                            {/* Mode Toggle Button (Floating Bottom-Right) */}
-                            <button 
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    setMode(mode === 'contextual' ? 'walking' : 'contextual');
-                                }}
-                                className="absolute bottom-3 right-3 z-20 flex items-center gap-1 px-3 py-1 rounded-full bg-white dark:bg-white/20 text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-white border border-indigo-500/20 shadow-md hover:bg-indigo-600 hover:text-white transition-all active:scale-95"
-                            >
-                                {mode === 'contextual' ? (
-                                    <><Footprints className="w-2.5 h-2.5" /> Csak sétálok</>
-                                ) : (
-                                    <><RotateCcw className="w-2.5 h-2.5" /> Gasztro</>
-                                )}
-                            </button>
+                <div className="relative group">
+                    {/* THE CARD CONTENT */}
+                    <div className="relative overflow-hidden rounded-2xl bg-surface-card dark:bg-surface-card-dark border border-gold/20 dark:border-gold/30 shadow-card transition-all duration-500 group-hover:border-gold/50">
+                        
+                        {/* Mode Toggle Button (Floating Bottom-Right) */}
+                        <button 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setMode(mode === 'contextual' ? 'walking' : 'contextual');
+                            }}
+                            className="absolute bottom-3 right-3 z-20 flex items-center gap-1 px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 text-[9px] font-semibold uppercase tracking-widest text-gold-text dark:text-gold-light border border-gold/30 shadow-card hover:bg-brand hover:text-white transition-all active:scale-95"
+                        >
+                            {mode === 'contextual' ? (
+                                <><Footprints className="w-2.5 h-2.5" /> Csak sétálok</>
+                            ) : (
+                                <><RotateCcw className="w-2.5 h-2.5" /> Gasztro</>
+                            )}
+                        </button>
 
-                            <Link to={closestItem.to} className="block p-3 sm:p-5 pb-8 sm:pb-5">
-                                {/* Background Decor */}
-                                <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl opacity-50 transition-colors" />
-
-                                <div className="relative z-10 flex items-center gap-4 sm:gap-6">
-                                    <div className={`aspect-square w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-xl sm:rounded-2xl shadow-lg transition-transform duration-500 group-hover:scale-110 ${mode === 'walking' ? 'bg-emerald-600 text-white shadow-emerald-600/20' : 'bg-indigo-600 text-white shadow-indigo-600/20'}`}>
-                                        <Icon className="w-6 h-6 sm:w-8 h-8" />
+                        <Link to={closestItem.to} className="block p-3 sm:p-5 pb-8 sm:pb-5">
+                            <div className="relative z-10 flex items-center gap-4 sm:gap-6">
+                                <div className={`aspect-square w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-xl sm:rounded-2xl shadow-card transition-transform duration-500 group-hover:scale-105 ${mode === 'walking' ? 'bg-emerald-600 text-white' : 'bg-brand text-gold-light'}`}>
+                                    <Icon className="w-6 h-6 sm:w-8 h-8" />
+                                </div>
+                                
+                                <div className="flex-1 min-w-0 mt-1">
+                                    <div className="flex items-center gap-1.5 mb-0.5">
+                                        <p className="text-[11px] sm:text-sm font-semibold tracking-display text-gold-text dark:text-gold-light leading-tight">
+                                            {closestItem.greeting}
+                                        </p>
                                     </div>
-                                    
-                                    <div className="flex-1 min-w-0 mt-1">
-                                        <div className="flex items-center gap-1.5 mb-0.5">
-                                            <p className="text-[11px] sm:text-sm font-bold text-indigo-600 dark:text-indigo-400 leading-tight">
-                                                {closestItem.greeting}
-                                            </p>
-                                        </div>
-                                        <h3 className="text-lg sm:text-2xl font-black text-slate-800 dark:text-white leading-tight mb-1 truncate">
-                                            {closestItem.name}
-                                        </h3>
-                                        <div className="flex items-center gap-1.5 text-slate-500 dark:text-zinc-400 line-clamp-1">
-                                            <MapPin className="w-3 h-3 sm:w-3.5 h-3.5" />
-                                            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide">
-                                                {closestItem.humanDist}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="hidden md:flex bg-slate-100 dark:bg-white/5 p-4 rounded-xl text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                                        <ArrowRight className="w-6 h-6" />
+                                    <h3 className="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white leading-tight mb-1 truncate">
+                                        {closestItem.name}
+                                    </h3>
+                                    <div className="flex items-center gap-1.5 text-slate-500 dark:text-zinc-400 line-clamp-1">
+                                        <MapPin className="w-3 h-3 sm:w-3.5 h-3.5" />
+                                        <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide">
+                                            {closestItem.humanDist}
+                                        </span>
                                     </div>
                                 </div>
-                            </Link>
-                        </div>
+
+                                <div className="hidden md:flex bg-slate-100 dark:bg-white/5 p-4 rounded-xl text-slate-400 group-hover:text-gold-text dark:group-hover:text-gold-light transition-colors">
+                                    <ArrowRight className="w-6 h-6" />
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             )}
         </div>

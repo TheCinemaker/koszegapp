@@ -97,19 +97,18 @@ export default function SearchBar() { // Refreshed
                      border border-slate-300 dark:border-slate-600/50
                      text-sm text-gray-900 dark:text-gray-100
                      placeholder-gray-500 dark:placeholder-gray-400
-                     focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                     focus:outline-none focus:ring-2 focus:ring-brand/30
                      transition-all duration-300
-                     shadow-sm"
+                     shadow-card"
         />
         <button
           type="submit"
           className="w-11 h-11 rounded-xl flex items-center justify-center
-                     bg-gradient-to-br from-indigo-600 to-purple-800
-                     text-white shadow-lg border border-indigo-500/20
-                     hover:from-indigo-700 hover:to-purple-900
+                     bg-brand text-gold-light shadow-card border border-gold/30
+                     hover:opacity-90
                      transition-all duration-300
                      hover:scale-105 active:scale-95
-                     focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                     focus:outline-none focus:ring-2 focus:ring-brand/50"
         >
           <FaSearch className="text-xs" />
         </button>
@@ -117,16 +116,16 @@ export default function SearchBar() { // Refreshed
 
       {showResults && (
         <div className="absolute z-[100] w-full max-h-80 overflow-auto mt-2
-                         bg-white dark:bg-gray-800
-                         border border-gray-200 dark:border-gray-700
-                         rounded-2xl shadow-xl p-2">
+                         bg-surface-card dark:bg-surface-card-dark
+                         border border-slate-200/80 dark:border-white/10
+                         rounded-2xl shadow-floating p-2">
           {loading && <div className="p-4 text-gray-500 dark:text-gray-400">Keresés…</div>}
           {Object.keys(results).length === 0 && !loading && q.length > 1 && (
             <div className="p-4 text-gray-500 dark:text-gray-400">Nincs találat.</div>
           )}
           {Object.entries(results).map(([cat, { label, items, route }]) => (
             <div key={cat}>
-              <div className="px-4 pt-3 pb-2 text-xs font-bold text-indigo-600 dark:text-indigo-400">
+              <div className="px-4 pt-3 pb-2 text-xs font-bold text-gold-text dark:text-gold-light">
                 {label}
               </div>
               <ul>
@@ -138,7 +137,7 @@ export default function SearchBar() { // Refreshed
                       className="w-full text-left px-4 py-3
                                  rounded-xl mx-2 my-1
                                  transition-all duration-200
-                                 hover:bg-indigo-50/80 dark:hover:bg-gray-700/80
+                                 hover:bg-gold/10
                                  text-gray-900 dark:text-gray-100"
                     >
                       <span className="font-semibold">{item.name}</span>
