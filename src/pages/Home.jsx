@@ -92,23 +92,27 @@ function getLiveBadges(appData) {
   return badges;
 }
 
-// Kis badge komponens a kártyák sarkába
+// Kis badge komponens a kártyák sarkába - Tömör, prémium nem-átlátszó megjelenés
 function LiveBadge({ badge, featured }) {
   if (!badge) return null;
   const isLive = badge.type === 'live';
+  const isCountdown = badge.type === 'countdown';
+
   return (
     <span
       className={`
-        absolute top-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full
-        text-[10px] font-semibold tracking-wide backdrop-blur-md
+        absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full
+        text-[10px] font-bold uppercase tracking-wider shadow-card border
         ${isLive
-          ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25'
-          : featured
-            ? 'bg-gold/20 text-gold-light border border-gold/40'
-            : 'bg-gold/15 text-gold-text dark:text-gold-light border border-gold/30'}
+          ? 'bg-emerald-600 text-white border-emerald-400/40'
+          : isCountdown
+            ? 'bg-brand text-gold-light border-gold/40'
+            : featured
+              ? 'bg-brand text-gold-light border-gold/40'
+              : 'bg-surface-card dark:bg-surface-card-dark text-gold-text dark:text-gold-light border-slate-200/80 dark:border-white/10'}
       `}
     >
-      {isLive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+      {isLive && <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />}
       {badge.text}
     </span>
   );
@@ -119,9 +123,7 @@ export default function Home({ appData, weather }) {
   const prefersReducedMotion = useReducedMotion();
 
   // -------------------------------------------------------------------------
-  // SCROLL-SCRUB: A saját scrollozó ős-elemet keressük meg (PageWrapper), felfelé mászva
-  // a DOM-ban. Route-átmenet alatt két PageWrapper is élhet egyszerre,
-  // ezért globális querySelector helyett a saját fánkról indulunk.
+  // SCROLL-SCRUB: A saját scrollozó ős-elemet keressük meg (PageWrapper)
   // -------------------------------------------------------------------------
   const rootRef = useRef(null);
   const scrollContainerRef = useRef(null);
@@ -210,8 +212,8 @@ export default function Home({ appData, weather }) {
               >
                 <motion.div
                   whileHover={prefersReducedMotion ? {} : { scale: 1.02, y: -2 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 17, mass: 0.8 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   className={`
                         relative h-full rounded-2xl p-6 lg:p-8
                         ${sec.morphId
@@ -243,7 +245,7 @@ export default function Home({ appData, weather }) {
                   {sec.morphId && (
                     <motion.div
                       layoutId={sec.morphId}
-                      transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+                      transition={{ layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
                       className="absolute inset-0 rounded-2xl bg-white/80 dark:bg-zinc-800/70 backdrop-blur-xl -z-0"
                     />
                   )}
@@ -251,7 +253,7 @@ export default function Home({ appData, weather }) {
                   {/* Icon */}
                   <motion.div
                     layoutId={sec.morphId ? `${sec.morphId}-icon` : undefined}
-                    transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
+                    transition={{ layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
                     className={`
                         relative z-10 w-10 h-10 rounded-lg flex items-center justify-center text-2xl mb-3
                         transition-colors duration-300 ease-out group-hover:scale-105

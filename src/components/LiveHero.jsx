@@ -137,15 +137,16 @@ const LiveHero = ({ appData, weather }) => {
                     {/* Right Section: Next Event / Magic CTA */}
                     {nextEvent && (
                         <motion.div
-                            initial={{ scale: 0.95 }}
-                            animate={{ scale: 1 }}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                             className="w-full md:w-auto min-w-[280px]"
                         >
                             <Link to={`/events/${nextEvent.id}`} className="block group">
-                                <div className="relative p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-500">
+                                <div className="relative p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300">
                                     <div className="flex items-start justify-between mb-3">
                                         <div className="flex items-center gap-2">
-                                            <div className={`p-2 rounded-lg ${isRunning ? 'bg-rose-500 animate-pulse' : 'bg-brand'} text-white`}>
+                                            <div className={`p-2 rounded-lg ${isRunning ? 'bg-rose-600' : 'bg-brand'} text-white shadow-card`}>
                                                 {isRunning ? <Clock className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
                                             </div>
                                             <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">

@@ -35,15 +35,12 @@ export const SpringUp = ({ children, delay = 0, className = "" }) => {
         <motion.div
             ref={ref}
             className={className}
-            initial={{ opacity: 0, y: 32, scale: 0.94 }}
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
             transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 18,
-                mass: 0.9,
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
                 delay,
-                opacity: { duration: 0.3, delay },
             }}
         >
             {children}
