@@ -14,7 +14,9 @@ import {
   IoBulbOutline,
   IoImagesOutline,
   IoCalendarOutline,
-  IoCloseOutline
+  IoCloseOutline,
+  IoTicketOutline,
+  IoInformationCircleOutline
 } from 'react-icons/io5';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -260,6 +262,48 @@ export default function AttractionDetail() {
                     </div>
                   )}
                 </div>
+
+                {/* Nyitvatartás részletezés */}
+                {attr.opening_hours && (
+                  <div className="mt-4 p-4 rounded-control bg-slate-50 dark:bg-white/5 border border-slate-200/60 dark:border-white/5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-zinc-500 mb-2">Részletes nyitvatartás</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs font-medium">
+                      {[['Hétfő','monday'],['Kedd','tuesday'],['Szerda','wednesday'],['Csütörtök','thursday'],['Péntek','friday'],['Szombat','saturday'],['Vasárnap','sunday']].map(([label, key]) => (
+                        <div key={key} className="flex justify-between">
+                          <span className="text-slate-500 dark:text-zinc-400">{label}</span>
+                          <span className={`font-semibold ${attr.opening_hours[key] === 'Zárva' ? 'text-red-500 dark:text-red-400' : 'text-slate-700 dark:text-zinc-200'}`}>{attr.opening_hours[key]}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Belépőjegy árak */}
+                {attr.ticket_prices && attr.ticket_prices.length > 0 && (
+                  <div className="mt-4 p-4 rounded-control bg-brand/5 dark:bg-brand/10 border border-gold/20">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gold-text dark:text-gold-light mb-2 flex items-center gap-1.5">
+                      <IoTicketOutline className="text-sm" /> Belépőjegy
+                    </p>
+                    <div className="space-y-1">
+                      {attr.ticket_prices.map((tp, i) => (
+                        <div key={i} className="flex justify-between items-center text-sm font-medium">
+                          <span className="text-slate-600 dark:text-zinc-300">{tp.type}</span>
+                          <span className="font-bold text-slate-900 dark:text-white">{tp.price.toLocaleString('hu-HU')} {tp.currency}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Látogatási megjegyzés */}
+                {attr.visit_note && (
+                  <div className="mt-4 p-4 rounded-control bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-amber-600 dark:text-amber-400 mb-1 flex items-center gap-1.5">
+                      <IoInformationCircleOutline className="text-sm" /> Fontos tudnivaló
+                    </p>
+                    <p className="text-xs text-amber-800 dark:text-amber-200 font-medium leading-relaxed">{attr.visit_note}</p>
+                  </div>
+                )}
               </div>
             </div>
 

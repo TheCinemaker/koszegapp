@@ -61,12 +61,17 @@
     "description": "A kilencszögletű bástya a városfal legkorábbi, 13. századi maradványa.",
     "details": "Tekintsd meg a város legépebben maradt védművét, a titokzatos kilencszögletű sarokbástyát, amely ma kulturális központként született újjá.",
     "history_full": "A Zwinger bástya a városfal délnyugati sarkán álló, kilencszögletű alaprajzú védmű. Bár gyökerei a 13. századig nyúlnak vissza, mai formáját valószínűleg a 15. században nyerte el. Története során volt raktár, éléskamra és börtön is. 2015-ben a KRAFT program keretében újult meg, ma a Felsőbbfokú Tanulmányok Intézete (iASK) használja előadásokra és kiállításokra.",
+    "hours": "Jelenleg csak alkalmanként, előzetes igény szerint látogatható",
+    "visit_note": "A Zwinger jelenleg nem rendelkezik állandó nyitvatartással. Csak egyedi megbeszélés alapján, csoportos látogatások vagy rendezvények alkalmával nyitják ki. Érdeklődés: iASK (iask.hu).",
+    "website": "https://iask.hu/hu/kultura-es-orokseg/koszeg-kraft-program/",
     "tags": [
       "bástya",
       "középkor",
       "kiállítás",
       "városfal",
-      "műemlék"
+      "műemlék",
+      "iASK",
+      "KRAFT"
     ],
     "coordinates": {
       "lat": 47.3881338,
@@ -193,11 +198,16 @@
     "category": "Történelem & építészet",
     "description": "Díszes sgrafitto‑technikával díszített reneszánsz polgárház a belvárosban.",
     "details": "Csodáld meg hazánk egyik legszebb reneszánsz polgárházát, melynek homlokzatát különleges karcolt technika és bibliai jelenetek díszítik.",
+    "hours": "Hétfő–Csütörtök: 9:00–16:00 | Péntek: 9:00–12:00 (irodaidőben, előzetes bejelentkezéssel)",
+    "visit_note": "Az épületben irodák működnek. Irodaidőben (hétfőtől csütörtökig 9–16, pénteken 9–12) a ház nyitva áll, de előzetes jelzést kérnek, ha csoport érkezik. Idegenvezetési igényt előre kell jelezni. A homlokzat az utcáról bármikor megtekinthető.",
+    "website": "https://iask.hu/hu/kultura-es-orokseg/koszeg-kraft-program/",
     "tags": [
       "sgrafitto",
       "homlokzat",
       "műemlék",
-      "reneszánsz"
+      "reneszánsz",
+      "iASK",
+      "KRAFT"
     ],
     "coordinates": {
       "lat": 47.3890864,
@@ -211,7 +221,7 @@
       "/images/sgraffito_haz.jpg",
       "/images/attractions/sgraffito_interior.jpg"
     ],
-    "accessibility": "A homlokzat az utcáról jól látható, a belső terek korlátozottan látogathatók."
+    "accessibility": "A homlokzat az utcáról jól látható, a belső terek korlátozottan, irodaidőben látogathatók."
   },
   {
     "id": "attraction-9",
@@ -370,17 +380,37 @@
     "category": "Templomok & vallás",
     "details": "Tekintsd meg a Schey Fülöp mecénás által alapított, gyönyörűen felújított romantikus zsinagógát, mely ma kulturális központként virágzik.",
     "history_full": "A zsinagógát 1859-ben avatták fel, Schey Fülöp, az első osztrák nemességet kapott zsidó kereskedő adományából. Romantikus stílusa és belső kupolafestése egyedülálló. A holokauszt során a 109 fős hitközségből csak 16-an maradtak életben, a hitközség 1951-ben megszűnt. Az épületet 2022-re teljesen felújították, ma kulturális és kutatóközpontként működik.",
+    "hours": "H–K, Cs–V: 10:00–13:00, 14:00–17:00 | Sze: Zárva",
+    "opening_hours": {
+      "monday": "10:00–13:00, 14:00–17:00",
+      "tuesday": "10:00–13:00, 14:00–17:00",
+      "wednesday": "Zárva",
+      "thursday": "10:00–13:00, 14:00–17:00",
+      "friday": "10:00–13:00, 14:00–17:00",
+      "saturday": "10:00–13:00, 14:00–17:00",
+      "sunday": "10:00–13:00, 14:00–17:00"
+    },
+    "ticket_prices": [
+      { "type": "Felnőtt", "price": 2000, "currency": "Ft" },
+      { "type": "Diák, nyugdíjas, gyerek, kőszegi lakos", "price": 1000, "currency": "Ft" }
+    ],
+    "visit_note": "Jelenleg a Zsinagóga az egyetlen iASK KRAFT épület, amely folyamatosan nyitva áll turisztikai célra, állandó nyitvatartással.",
+    "website": "https://iask.hu/hu/kultura-es-orokseg/koszeg-kraft-program/",
     "tags": [
       "zsinagóga",
       "romantikus",
       "felújított",
-      "kultúra"
+      "kultúra",
+      "iASK",
+      "KRAFT"
     ],
     "coordinates": {
       "lat": 47.3910882,
       "lng": 16.5417318
     },
     "image": "/images/attractions/zsinagoga.jpg",
+    "rainSafe": true,
+    "indoor": true,
     "gallery": [
       "/images/attractions/attraction-16/DSC07213.JPG"
     ]
@@ -730,5 +760,31 @@
       "lng": 16.5374214
     },
     "image": "/images/attractions/csoto.jpg"
+  },
+  {
+    "id": "attraction-kraft-festetics",
+    "name": "Festetics-palota",
+    "category": "Történelem & építészet",
+    "description": "A Chernel utcai klasszicista palota a Festetics család kőszegi rezidenciája volt, ma az iASK kutatóközpont székhelye.",
+    "details": "Fedezd fel a Festetics család egykori kőszegi rezidenciáját, amelyet a KRAFT program keretében újítottak fel, és ma a Felsőbbfokú Tanulmányok Intézetének (iASK) ad otthont.",
+    "history_full": "A Festetics-palota a Chernel utcában található klasszicista stílusú nemesi rezidencia, amelyet a gróf Festetics család építtetett. A palotát a KRAFT program keretében újították fel, és ma az iASK irodáinak, kutatótermeinek és rendezvényhelyszínének ad otthont.",
+    "hours": "Hétfő–Csütörtök: 9:00–16:00 | Péntek: 9:00–12:00 (irodaidőben, előzetes bejelentkezéssel)",
+    "visit_note": "Az épületben irodák működnek. Irodaidőben (hétfőtől csütörtökig 9–16, pénteken 9–12) a palota nyitva áll, de előzetes jelzést kérnek, ha csoport érkezik. Idegenvezetési igényt előre kell jelezni.",
+    "website": "https://iask.hu/hu/kultura-es-orokseg/koszeg-kraft-program/",
+    "tags": [
+      "palota",
+      "Festetics",
+      "klasszicista",
+      "iASK",
+      "KRAFT",
+      "műemlék"
+    ],
+    "coordinates": {
+      "lat": 47.3884,
+      "lng": 16.5405
+    },
+    "image": "/images/koeszeg_logo_nobg.png",
+    "rainSafe": true,
+    "indoor": true
   }
 ]
