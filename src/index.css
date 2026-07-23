@@ -10,16 +10,24 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    overscroll-behavior: none;
+    background-color: #f8fafc; /* match slate-50 */
   }
 
   body {
     @apply text-slate-900 transition-colors duration-300;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Outfit", system-ui, sans-serif;
     letter-spacing: -0.014em;
+    overscroll-behavior: none;
+    background-color: #f8fafc; /* match slate-50 */
   }
 
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.025em;
+  }
+
+  .dark html {
+    background-color: #000000;
   }
 
   .dark body {
