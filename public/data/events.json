@@ -1,5 +1,28 @@
 [
   {
+    "id": "ostromnapok_fofesztival_2026",
+    "name": "XIX. Kőszegi Ostromnapok",
+    "date": "2026-08-07",
+    "endDate": "2026-08-09",
+    "time": "15:00",
+    "location": "Kőszeg Belváros és Jurisics-vár",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5398
+    },
+    "description": "Háromnapos történelmi fesztivál az 1532-es török ostrom emlékére. Várostrom, fáklyás felvonulás, vásár, koncertek és hagyományőrző bemutatók! (A részletes program a dedikált Ostromnapok oldalon érhető el!)",
+    "tags": [
+      "ostromnapok",
+      "fesztivál",
+      "hagyományőrzés",
+      "család"
+    ],
+    "image": "/images/ostrom_2026/ostromhero.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Kiemelt Fesztivál"
+  },
+  {
     "id": "kulturalis_orokseg_rajnis12_2026",
     "name": "Kulturális Örökség Napjai: Történelmi alapokon álló ház",
     "date": "2026-09-19",
