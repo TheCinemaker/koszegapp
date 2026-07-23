@@ -419,8 +419,8 @@ function MainAppContent() {
                 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                 relative
                 ">
-                  {/* Subtle Gradient Accent (Top Lip) */}
-                  <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
+                  {/* Apple Glass Trick (Glossy Edge) */}
+                  <div className="apple-glass-border" />
 
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                     <div

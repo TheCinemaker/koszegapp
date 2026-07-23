@@ -42,6 +42,9 @@ export default function FloatingNavbar() {
         shadow-[0_8px_30px_rgb(0,0,0,0.12)]
         transition-all duration-300
       ">
+        {/* Apple Glass Trick (Glossy Edge) */}
+        <div className="apple-glass-border" />
+
         {navItems.map((item) => (
           <NavLink
             key={item.to}
