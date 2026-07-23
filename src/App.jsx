@@ -412,8 +412,8 @@ function MainAppContent() {
                 w-full max-w-5xl
                 h-full
                 flex items-center justify-between px-3 sm:px-6
-                bg-white/5 dark:bg-white/5
-                backdrop-blur-[30px] backdrop-saturate-150 transform-gpu
+                bg-white/0 dark:bg-black/10
+                backdrop-blur-lg transform-gpu
                 rounded-[2rem]
                 border border-white/60 dark:border-white/10
                 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
