@@ -397,6 +397,7 @@ function MainAppContent() {
 
   return (
     <>
+      <div className="fixed inset-0 bg-slate-50 dark:bg-black -z-10 transition-colors duration-500" />
       <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
           {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && (
@@ -407,8 +408,8 @@ function MainAppContent() {
                 w-full max-w-5xl
                 h-full
                 flex items-center justify-between px-3 sm:px-6
-                bg-white/70 dark:bg-white/5 
-                backdrop-blur-[30px] 
+                bg-white/20 dark:bg-white/5 
+                backdrop-blur-[25px] 
                 rounded-[2rem] 
                 border border-white/60 dark:border-white/10 
                 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
