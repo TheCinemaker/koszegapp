@@ -1,5 +1,30 @@
 [
   {
+    "id": "bass_piknik_2026",
+    "name": "🌊🔥 BASS PIKNIK 2026 – Tó-Part Kőszeg",
+    "date": "2026-07-25",
+    "endDate": "2026-07-25",
+    "time": "14:00",
+    "location": "Tó-Part Kőszeg",
+    "coords": {
+      "lat": 47.382,
+      "lng": 16.545
+    },
+    "description": "Egy nap a tóparton, ahol nem siet senki sehova… csak jó zenék, jó arcok, hideg italok és a nyár legjobb hangulata vár!\n\n☀️ Nappal: pihenés, napfény, közösségi vibe, beszélgetések.\n🌙 Este: brutál basszus, zene, tánc a csillagok alatt az Illegal Control DJ-ivel!\n\n🎶 Lineup:\n• Raul Young\n• Baluca\n• Somex\n• Seges\n• Berry\n• Gabriel Sanchoz\n\n👨‍👩‍👧‍👦🐾 Család- és kisállatbarát rendezvény!",
+    "tags": [
+      "bass piknik",
+      "koncert",
+      "buli",
+      "tópart",
+      "kiemelt"
+    ],
+    "image": "/images/events/bass.jpeg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🔥 KIEMELT TÓPARTI BULI",
+    "ticketUrl": "https://basspiknik.com/events/bass-piknik-2026-warmup-session"
+  },
+  {
     "id": "ostromnapok_fofesztival_2026",
     "name": "XIX. Kőszegi Ostromnapok",
     "date": "2026-08-07",

@@ -651,7 +651,7 @@ export default function EventDetail() {
 
             {/* --- A "szelvény": cselekvések --- */}
             <div className="p-5 sm:p-6 pt-4">
-              {/* Fő CTA */}
+              {/* Fő CTA - Local ticket system */}
               {ticketEvent && (
                 <button
                   onClick={() => navigate('/tickets', { state: { directEventId: ticketEvent.id } })}
@@ -659,6 +659,17 @@ export default function EventDetail() {
                 >
                   <IoTicketOutline className="text-lg" />
                   Jegyvásárlás · {ticketEvent.price} Ft
+                </button>
+              )}
+
+              {/* Fő CTA - External ticket link (In-App WebView) */}
+              {!ticketEvent && evt.ticketUrl && (
+                <button
+                  onClick={() => setShowTicketModal(true)}
+                  className="w-full py-3.5 mb-3 bg-brand text-gold-light rounded-control font-semibold text-sm flex items-center justify-center gap-2 shadow-card border border-gold/40 hover:opacity-90 transition-opacity"
+                >
+                  <IoTicketOutline className="text-lg" />
+                  🎟️ Jegyvásárlás helyben
                 </button>
               )}
 
