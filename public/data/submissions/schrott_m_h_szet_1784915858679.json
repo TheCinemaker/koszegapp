@@ -1,0 +1,30 @@
+{
+  "id": "gastro-sub-849577",
+  "target_database": "restaurants.json",
+  "name": "Schrott Méhészet",
+  "type": "Helyi termék",
+  "tags": [
+    "Helyi termék",
+    "vendéglátás"
+  ],
+  "address": "9730 Kőszeg, Vízmű utca 22",
+  "phone": "+36305653939",
+  "email": "aliz@schrott.hu",
+  "website": "https://www.schrottmeheszet.hu",
+  "facebook": "https://www.facebook.com/SchrottMeheszet",
+  "instagram": null,
+  "image": "partner_uploads/logo_schrott_m_h_szet_849577.png",
+  "logo": "partner_uploads/logo_schrott_m_h_szet_849577.png",
+  "gallery": [
+    "partner_uploads/photo_schrott_m_h_szet_849577_1.jpg"
+  ],
+  "amenities": [],
+  "open_all_year": true,
+  "notes": "Egész évben nyitva",
+  "description": "Kiváló kézműves mézek közvetlenül a termelőtől!",
+  "details": "Kiváló kézműves mézek közvetlenül a termelőtől!",
+  "submitted_at": "2026-07-24T17:57:29.577Z",
+  "status": "pending_review",
+  "_filename": "schrott_m_h_szet_1784915858679.json",
+  "_filePath": "public/data/submissions/schrott_m_h_szet_1784915858679.json"
+}
