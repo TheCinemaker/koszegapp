@@ -140,8 +140,9 @@
     "email": "info@irottko.hu",
     "website": "https://www.irottko.hu",
     "open_all_year": true,
-    "notes": "3‑csillagos superior hotel wellness-részleggel (infra- és finn szauna, jacuzzi), kerékpárkölcsönzéssel 2025-ben.",
-    "description": "Történelmi főtéri szálloda wellness-szolgáltatásokkal (szauna, pezsgőfürdő), étteremmel és saját kápolnával. Ideális kerékpárosoknak, túrázóknak és családoknak. :contentReference[oaicite:1]{index=1}"
+    "notes": "3‑csillagos superior hotel wellness-részleggel (infra- és finn szauna, jacuzzi) és helyszíni kerékpárkölcsönzéssel.",
+    "bike_rental_prices": "🚲 Kerékpár bérlés a Hotel Írottkőben: 4 óra – 2.500 Ft / db | 8 óra – 4.000 Ft / db (Tel: +36 94 360 373)",
+    "description": "Történelmi főtéri szálloda wellness-szolgáltatásokkal (szauna, pezsgőfürdő), étteremmel és saját kápolnával. Helyszíni kerékpárkölcsönzés elérhető (4 óra: 2.500 Ft / db, 8 óra: 4.000 Ft / db). Ideális kerékpárosoknak, túrázóknak és családoknak."
   },
   {
     "id": 5,

@@ -1,5 +1,24 @@
 [
   {
+    "id": "bass-piknik-2026",
+    "active": true,
+    "start_at": "2026-07-24T00:00:00+02:00",
+    "end_at": "2026-07-26T04:00:00+02:00",
+    "image_url": "/images/events/bass.jpeg",
+    "ticket_url": "https://basspiknik.com/events/bass-piknik-2026-warmup-session",
+    "cta_route": "/events",
+    "content": {
+      "hu": {
+        "badge": "🔥 KIEMELT PROGRAM – JÚLIUS 25.",
+        "title": "BASS PIKNIK 2026",
+        "subtitle": "Tó-Part Kőszeg · Egész napos élmény",
+        "body": "Nappal pihenés és napfény a tóparton, este brutál basszus és tánc a csillagok alatt! Line-up: Raul Young, Baluca, Somex, Seges, Berry, Gabriel Sanchoz.",
+        "highlight": "Család- és kisállatbarát tóparti fesztivál!",
+        "cta": "🎟️ Jegyek és részletek"
+      }
+    }
+  },
+  {
     "id": "ostromnapok-2026",
     "active": true,
     "start_at": "2026-07-31T00:00:00+02:00",

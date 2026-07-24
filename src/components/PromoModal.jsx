@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { IoCloseOutline, IoSparklesOutline } from 'react-icons/io5';
+import InAppTicketModal from './InAppTicketModal';
 
 /**
  * JSON-vezérelt promo modal.
@@ -17,6 +18,7 @@ export default function PromoModal() {
   const { i18n } = useTranslation();
   const [promo, setPromo] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [showTicketModal, setShowTicketModal] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -154,17 +156,44 @@ export default function PromoModal() {
                 </div>
               )}
 
-              <Link
-                to={promo.cta_route || '/events'}
-                onClick={close}
-                className="flex items-center justify-center w-full py-4 px-6 rounded-xl bg-indigo-500 hover:opacity-90 text-white text-sm font-bold shadow-sm shadow-indigo-500/20 transition-opacity text-center"
-              >
-                {c.cta || 'Mutasd'}
-              </Link>
+              {promo.ticket_url ? (
+                <div className="flex flex-col gap-2.5">
+                  <button
+                    onClick={() => setShowTicketModal(true)}
+                    className="flex items-center justify-center w-full py-4 px-6 rounded-xl bg-brand hover:opacity-90 border border-gold/40 text-gold-light text-sm font-bold shadow-md transition-all text-center gap-2"
+                  >
+                    {c.cta || '🎟️ Jegyvásárlás helyben'}
+                  </button>
+                  <Link
+                    to={promo.cta_route || '/events'}
+                    onClick={close}
+                    className="text-xs text-center font-medium text-slate-500 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-white py-1"
+                  >
+                    Megtekintés az események között
+                  </Link>
+                </div>
+              ) : (
+                <Link
+                  to={promo.cta_route || '/events'}
+                  onClick={close}
+                  className="flex items-center justify-center w-full py-4 px-6 rounded-xl bg-indigo-500 hover:opacity-90 text-white text-sm font-bold shadow-sm shadow-indigo-500/20 transition-opacity text-center"
+                >
+                  {c.cta || 'Mutasd'}
+                </Link>
+              )}
             </div>
           </motion.div>
         </div>
       )}
+      <InAppTicketModal
+        isOpen={showTicketModal}
+        onClose={() => {
+          setShowTicketModal(false);
+          close();
+        }}
+        url={promo.ticket_url}
+        title={c.title}
+      />
     </AnimatePresence>
   );
 }
