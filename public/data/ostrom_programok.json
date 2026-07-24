@@ -50,14 +50,14 @@
         "id": "ostrom_2026_aug6_3",
         "idopont": "2026-08-06T21:00:00",
         "veg_idopont": "2026-08-06T23:59:00",
-        "nev": "DJ Shepard",
+        "nev": "DJ Shepherd",
         "kiemelt": true,
         "helyszin": {
           "nev": "Fő tér",
           "lat": 47.3881,
           "lng": 16.5415
         },
-        "leiras": "Zenei program DJ Sheparddal a Fő téren."
+        "leiras": "Zenei program DJ Shepherddel a Fő téren."
       }
     ]
   },
@@ -237,7 +237,7 @@
         "id": "ostrom_2026_aug7_14",
         "idopont": "2026-08-07T20:00:00",
         "veg_idopont": "2026-08-07T22:00:00",
-        "nev": "DJ BÉRES",
+        "nev": "DJ BRS",
         "kiemelt": false,
         "helyszin": {
           "nev": "Fő tér",
