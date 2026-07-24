@@ -1,0 +1,45 @@
+{
+  "id": 808237,
+  "target_database": "hotels.json",
+  "name": "Centrum Apartman 2",
+  "type": "apartman",
+  "tags": [
+    "apartman",
+    "szállás",
+    "szep_kartya",
+    "wifi",
+    "klima",
+    "parkolo",
+    "csaladbarat"
+  ],
+  "address": "9730 Kőszeg, Munkácsy u. 8-10.",
+  "phone": "+36 20 3549312",
+  "email": "centrumkoszeg@gmail.com",
+  "website": "https://centrumkoszeg.hu",
+  "facebook": null,
+  "instagram": null,
+  "image": "partner_uploads/logo_centrum_apartman_2_808237.png",
+  "logo": "partner_uploads/logo_centrum_apartman_2_808237.png",
+  "gallery": [
+    "partner_uploads/photo_centrum_apartman_2_808237_1.jpg",
+    "partner_uploads/photo_centrum_apartman_2_808237_2.jpg",
+    "partner_uploads/photo_centrum_apartman_2_808237_3.jpg",
+    "partner_uploads/photo_centrum_apartman_2_808237_4.jpg",
+    "partner_uploads/photo_centrum_apartman_2_808237_5.jpg"
+  ],
+  "amenities": [
+    "SZÉP Kártya elfogadás (OTP, MBH, K&H)",
+    "Ingyenes Wi-Fi",
+    "Légkondicionáló (Klíma)",
+    "Saját / Díjmentes parkoló",
+    "Család- és gyermekbarát"
+  ],
+  "open_all_year": true,
+  "notes": "Férőhely: 1 hálószobás apartman. Nyitvatartás: Egész évben nyitva",
+  "description": "A Fő tértől 2 perces sétára található.",
+  "details": "A teljesen felújított, vadonatúj bútorokkal és eszközökkel berendezett, elsősorban párok számára kialakított apartman Kőszegen, a Fő tértől 3 perces sétára várja vendégeit. Az 54 nm-es lakásban 1 hálószoba található rendkívül kényelmes, 180 cm-es boxspring ággyal és ruhásszekrénnyel. A tágas amerikai konyhás nappaliban kihúzható kanapé áll rendelkezésre további 2 fő, elsősorban gyermek részére. A nappaliban 4 fős étkező és nagyméretű TV található, melyen 55 csatorna nézhető. A lakásban 100 megás wifi áll rendelkezésre. A teljesen felszerelt konyhában kerámialapos főzőlap, tűzhely, fagyasztós hűtő és mosogatógép található. A hálószoba és a nappali-konyha külön-külön, egyénileg szabályozható légkondicionálóval felszerelt.  Külön fürdőszoba és WC gondoskodik további kényelemről. A fürdőszobában walk-in zuhanyzó található, valamint törölköző, szappan és tusfürdő biztosított. A legkisebbeket külön kérésre, ingyenes babacsomag várja mobil babaággyal, hozzátartozó ágyneművel, etetőszékkel, fellépővel, WC szűkítővel, babatörölközővel és babatakaróval.\nAz apartman vendégei számára 1 db ingyenes, a ház zárt udvarában kialakított parkolóhely biztosított. A Centrum Apartman 2 közvetlen közelében több üzlet, pékség és szolgáltatás, a 3 perces sétára lévő Fő téren pedig számos étterem, vendéglátóhely, pékség stb. található.\nA Centrum Apartman 2 és a szomszédos Centrum Apartman azonos tulajdonossal és üzemeltetővel rendelkeznek. \nVonattal érkező vendégeink számára a vasútállomásról ingyenes fuvart biztosítunk.\nSzálláshelyünkön felár ellenében 2 személyes reggeli doboz igényelhető. A szolgáltatás előzetes egyeztetés esetén vehető igénybe.",
+  "submitted_at": "2026-07-24T17:06:48.237Z",
+  "status": "pending_review",
+  "_filename": "centrum_apartman_2_1784912819585.json",
+  "_filePath": "public/data/submissions/centrum_apartman_2_1784912819585.json"
+}
