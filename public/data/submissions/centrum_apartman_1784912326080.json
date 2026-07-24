@@ -1,0 +1,28 @@
+{
+  "id": 319229,
+  "target_database": "hotels.json",
+  "name": "Centrum Apartman",
+  "type": "apartman",
+  "tags": [
+    "apartman",
+    "szállás"
+  ],
+  "address": "9730 Kőszeg, Munkácsy u. 8-10.",
+  "phone": "+36 20 354 9312",
+  "email": "centrumkoszeg@gmail.com",
+  "website": "https://centrumkoszeg.hu",
+  "facebook": null,
+  "instagram": null,
+  "image": "centrum_apartman.jpg",
+  "logo": null,
+  "gallery": [],
+  "amenities": [],
+  "open_all_year": true,
+  "notes": "Egész évben nyitva",
+  "description": "",
+  "details": "",
+  "submitted_at": "2026-07-24T16:58:39.229Z",
+  "status": "pending_review",
+  "_filename": "centrum_apartman_1784912326080.json",
+  "_filePath": "public/data/submissions/centrum_apartman_1784912326080.json"
+}
