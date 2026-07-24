@@ -37,6 +37,13 @@ Ez a projektnapló rögzíti a KőszegApp **RENEW** megújulási folyamata sorá
 
 ## 📝 VÁLTOZTATÁSI NAPLÓ ÉS ELŐZMÉNYEK
 
+### 2026-07-24 #014 - Dimitryj (KőszegAI) Gigaluxus Chatbot & In-App Jegyvásárlás (v5.0.19) [ELFOGADVA]
+- **Dimitryj KőszegAI Csempe & Lebegő Gomb (AIFab.jsx):** Az új Dimitryj chatbot felülete (`KoszegChat.jsx`) átállt a Gigaluxus dizájnrendszerre (`bg-brand`, `gold`, `gold-light` tokenek, kerekített lebegő csempe kártya `rounded-3xl` elrendezéssel a navbars között). Létrehoztuk a globális lebegő akciógombot (`AIFab.jsx`) cukiságos robot SVG ikonnal a gyors megnyitáshoz.
+- **In-App Jegyvásárlási WebView Modal (`InAppTicketModal.jsx`):** A külső jegyértékesítő felületek (pl. Bass Piknik 2026) mostantól egy beépített lekerekített modal ablakban (`iframe`) nyílnak meg, így a látogatóknak nem kell elhagyniuk a visitKőszeg alkalmazást a jegyvásárláshoz.
+- **Bass Piknik 2026 & Hotel Írottkő Adatfrissítés:** Kiemelt promócióként és eseményként bekerült a Bass Piknik 2026 (`public/data/events.json`, `public/data/promos.json`), valamint frissült a Hotel Írottkő kerékpárbérlési árlistája (`hotels.json`).
+
+---
+
 ### 2026-07-23 #013 - Gigaluxus Paletta & Apple Tipográfia (v5.0.6) [ELFOGADVA]
 - **Új Luxus Paletta:** Éjkék (`#0b2740` brand), Régi Arany (`#b3985e` gold), és meleg Pergamen háttér (`#f6f4ef` surface-light).
 - **Apple Retina-Éles Tipográfia:** Subpixel antialiasing helyett grayscale antialiasing (`index.css`), `-0.025em` display letter-spacing (`tailwind.config.cjs`), és csupa nagybetűs kártyacímek leváltása selymes `tracking-display font-semibold` normál kis/nagybetűs szövegekre.

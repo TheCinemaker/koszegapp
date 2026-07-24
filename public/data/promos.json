@@ -3,7 +3,7 @@
     "id": "bass-piknik-2026",
     "active": true,
     "start_at": "2026-07-24T00:00:00+02:00",
-    "end_at": "2026-07-26T04:00:00+02:00",
+    "end_at": "2026-07-25T23:59:59+02:00",
     "image_url": "/images/events/bass.jpeg",
     "ticket_url": "https://basspiknik.com/events/bass-piknik-2026-warmup-session",
     "cta_route": "/events",
