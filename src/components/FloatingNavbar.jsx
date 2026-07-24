@@ -34,7 +34,7 @@ export default function FloatingNavbar() {
       <div className="
         pointer-events-auto
         flex items-center justify-around
-        px-3 py-2
+        px-3 py-1.5
         bg-white/0 dark:bg-black/10
         backdrop-blur-lg transform-gpu
         rounded-2xl
@@ -53,7 +53,7 @@ export default function FloatingNavbar() {
             onClick={() => triggerHaptic()}
             className={({ isActive }) => `
               relative group flex flex-col items-center justify-center flex-1
-              h-12 rounded-[1rem]
+              h-10 rounded-[1rem]
               transition-all duration-200 ease-out
               active:scale-90
               ${isActive
@@ -68,7 +68,7 @@ export default function FloatingNavbar() {
                 <>
                   {/* Icon */}
                   <Icon className={`
-                    text-[22px] mb-0.5 z-10 transition-transform duration-300
+                    text-[20px] mb-0.5 z-10 transition-transform duration-300
                     ${isActive ? 'scale-110 filter drop-shadow-sm' : 'group-hover:scale-110'}
                   `} />
 

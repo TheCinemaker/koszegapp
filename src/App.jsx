@@ -17,9 +17,8 @@ import {
   IoHomeOutline
 } from 'react-icons/io5';
 import { triggerHaptic, HapticType } from './utils/haptics';
-import AIAssistant from './components/AIAssistant';
+import AIFab from './components/AIFab';
 import { AIOrchestratorProvider } from './contexts/AIOrchestratorContext.jsx';
-import AISmartLayer from './components/AISmartLayer.jsx';
 import AIDebugPanel from './components/AIDebugPanel.jsx';
 import ProgramModal from './components/ProgramModal';
 
@@ -560,10 +559,8 @@ function MainAppContent() {
             </>
           )}
 
-          {/* AI Core System (Deactivated per user request) */}
-          {/* <AISmartLayer />
-          <AIAssistant /> */}
-
+          {/* Removed old AI Core System (AIAssistant) per user request */}
+          <AIFab />
           {/* AI Debug Panel (STILL DEV ONLY) */}
           {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>
