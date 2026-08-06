@@ -1,5 +1,57 @@
 [
   {
+    "id": "ostrombuli_meggie_toth_pinceszet_2026",
+    "name": "Ostrombuli – Horváth Meggie & Horváth Tamás",
+    "date": "2026-08-07",
+    "endDate": "2026-08-07",
+    "time": "20:00",
+    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
+    "coords": {
+      "lat": 47.3875,
+      "lng": 16.542
+    },
+    "description": "A nyár legnagyobb produkciójának számító kőszegi Ostromnapok péntekén Horváth Meggie és Horváth Tamás érkezik hozzánk a legismertebb slágerekkel.\n\nEreszd el a hajam buli egész éjjel.... Ha 1532-ben lett volna ilyen koncert, a török még ma is nálunk énekelne és bulizna!\n\nAsztalfoglalás javasolt!\nBelépő: 1500 Ft/fő\n\nHelyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\nTel: 94 364 128 | Email: info@tothpinceszet.hu",
+    "tags": [
+      "ostrombuli",
+      "koncert",
+      "buli",
+      "tóth pincészet",
+      "borház",
+      "zene",
+      "ostromnapok"
+    ],
+    "image": "/images/fo_ter.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍷 OSTROMBULI"
+  },
+  {
+    "id": "zsinagoganapok_2026",
+    "name": "Zsinagóganapok Kőszegen",
+    "date": "2026-09-07",
+    "endDate": "2026-09-08",
+    "time": "11:00",
+    "location": "Kőszegi Zsinagóga (Várkör 38, Kőszeg)",
+    "coords": {
+      "lat": 47.3888,
+      "lng": 16.5418
+    },
+    "description": "Szakmai és történeti előadások a Kőszegi Zsinagógában.\n\nSzeptember 7. Hétfő:\n• 11:00 Lucy álma c. film vetítése\n• 13:00 Judaika-kiállítás, tárlatvezetés\n• 15:00 Kőszeg zsidó emlékei, városi séta\n• 17:00 Vidéki gettók c. fotókiállítás megnyitója\n\nSzeptember 8. Kedd:\n• 10:00 - 14:00 „Határon innen és határon túl” Nemzetközi konferencia (A holokauszt emlékének fenntartása a fiatalok körében)\n  - 09:00-09:50 Regisztráció\n  - 09:50-10:00 Megnyitó\n  - 10:00-10:30 A holokauszt tanításának kihívásai a 21. században (Zima András - OR-ZSE, Holokauszt Emlékközpont)\n  - 10:30-11:00 „Szólj keveset és tégy sokat!” - Innovatív pedagógiai módszerek (Várnainé Balogh Beáta)\n  - 11:00-11:30 30 év tapasztalatai (Paszternák Tamás - Komárno)\n  - 11:30-12:00 Családi emlékezet (Frojimovics Kinga - VWI)\n  - 12:20-12:50 Az Ismeretlen Zsidó Mártír Emlékműve (Bányai Viktória - ELTE TKK)\n  - 12:50-13:20 A személyes történelem jelentősége (Szarka Lajos - SZPA)\n  - 13:20-14:00 Ötödik jelenlét: Jancsó Miklós dokumentumfilmjei (Király Mátyás & Som Balázs - MILEV)\n\n• 15:00 A kőszegi zsidó temető emlékei (Séta, Park u. 8.)\n• 18:00 Imák és dallamok – Jiddis dalok és héber imák a kőszegi zsinagógában az OR-ZSE hallgatóinak közreműködésével (Koncertbelépő: 3000 Ft, jegyek a helyszínen)",
+    "tags": [
+      "zsinagóga",
+      "előadás",
+      "kiállítás",
+      "konferencia",
+      "koncert",
+      "történelem",
+      "zsinagóganapok"
+    ],
+    "image": "/images/fo_ter.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "✡️ ZSINAGÓGANAPOK"
+  },
+  {
     "id": "bass_piknik_2026",
     "name": "🌊🔥 BASS PIKNIK 2026 – Tó-Part Kőszeg",
     "date": "2026-07-25",
