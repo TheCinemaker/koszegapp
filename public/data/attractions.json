@@ -786,5 +786,32 @@
     "image": "/images/koeszeg_logo_nobg.png",
     "rainSafe": true,
     "indoor": true
+  },
+  {
+    "id": "attraction-verbita-rendhaz",
+    "name": "Isteni Ige Társasága (Verbita rendház)",
+    "category": "Történelem & építészet",
+    "description": "Az Isteni Ige Társaságának (verbita missziós szerzetesrend) kőszegi missziósháza.",
+    "details": "Az Isteni Ige Társaságát Janssen Szent Arnold német pap alapította 1875-ben. A kőszegi rendház aktív szerzetesi közösség és missziós központ.",
+    "history_full": "Az Isteni Ige Társaságát Janssen Szent Arnold német pap alapította 1875. szeptember 8-án Hollandia egy kis falujában, Steylben, mely mindössze néhány km-re található a német határtól.\n\nA verbita missziós szerzetesek tagjait a hármas szerzetesi fogadalom (tisztaság, szegénység, engedelmesség) fűzi össze, melyben papok és testvérek egyaránt élnek és dolgoznak.\n\nA közösség sajátos karizmája, hogy hirdesse mindenkinek a Szeretet Istenének Országát, mint az emberiség egyetlen közös célját, amely felé tudatosan vagy tudattalanul haladunk. Főleg azokat igyekeznek megszólítani, akiknek még hiányos az ismereteik a világ Teremtőjéről és Gondviselőjéről, vagy egyáltalán nem ismerik Istent, más szóval keresésének útján járnak.\n\nA verbita misszionárius nem csak liturgikus és világnézeti, hanem kulturális, szociális, műszaki téren is apostolkodhat, melynek többek között fontos eszközei a különféle tudományágak és a média is. A közösségek egyik legnagyobb gazdagsága a nemzetköziség. Sokféle kultúrából származó szerzetesek élnek együtt a Missziósházakban, ezáltal igyekeznek tanúságot tenni arról, hogy a testvéri együttélésnek nem lehet akadálya a különbözőség, hanem éppen ennek kell sokszínűvé tennie életüket.\n\nA missziós küldetés a Szentháromságnak az emberek felé irányuló párbeszédéből indul ki: az Atya hív mindenkit, amely hivatás az Ige, vagyis a Fiú küldetésében teljesedik be, melynek megtartója a Szentlélek.\n\nAz Isteni Ige Társasága a világ egyik legnagyobb missziós szerzetesrendje, melynek létszáma folyamatosan növekszik!",
+    "address": "9730 Kőszeg, Park utca 1.",
+    "website": "https://verbita.hu",
+    "hours": "Miserend: Hétköznap 7:00 | Szombat, vasárnap és ünnepnapokon 8:00",
+    "tags": [
+      "verbita",
+      "rendház",
+      "szerzetesrend",
+      "missziósház",
+      "miserend",
+      "templom",
+      "Isteni Ige Társasága"
+    ],
+    "coordinates": {
+      "lat": 47.3822,
+      "lng": 16.5435
+    },
+    "image": "/images/verbita_rendhaz.png",
+    "rainSafe": true,
+    "indoor": true
   }
 ]

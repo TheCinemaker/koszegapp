@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { IoClose, IoLocationOutline, IoTimeOutline, IoInformationCircleOutline } from 'react-icons/io5';
+import { IoClose, IoLocationOutline, IoTimeOutline, IoInformationCircleOutline, IoGlobeOutline } from 'react-icons/io5';
 import massData from '../data/massSchedule.json';
 
 export default function MassScheduleModal({ isOpen, onClose }) {
@@ -40,7 +40,7 @@ export default function MassScheduleModal({ isOpen, onClose }) {
                         </div>
                         <div>
                             <h2 className="text-xl font-black text-zinc-900 dark:text-white leading-none">Miserend</h2>
-                            <p className="text-xs text-zinc-500 font-medium">Kőszegi templomok</p>
+                            <p className="text-xs text-zinc-500 font-medium">Kőszegi templomok & rendházak</p>
                         </div>
                     </div>
 
@@ -59,10 +59,35 @@ export default function MassScheduleModal({ isOpen, onClose }) {
                             transition={{ delay: i * 0.1 }}
                             className="bg-white dark:bg-zinc-800 rounded-3xl p-6 shadow-sm border border-zinc-100 dark:border-white/5"
                         >
-                            <h3 className="text-lg font-black text-zinc-900 dark:text-white mb-1">{church.name}</h3>
-                            <div className="flex items-center gap-1 text-xs text-zinc-500 mb-4">
-                                <IoLocationOutline />
-                                {church.address}
+                            <div className="flex gap-4 mb-4">
+                                {church.image && (
+                                    <img 
+                                        src={church.image} 
+                                        alt={church.name} 
+                                        className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl shrink-0 border border-zinc-100 dark:border-white/10"
+                                        onError={(e) => { e.target.style.display = 'none'; }}
+                                    />
+                                )}
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="text-lg font-black text-zinc-900 dark:text-white mb-1 leading-tight">{church.name}</h3>
+                                    <div className="flex flex-col gap-1 text-xs text-zinc-500">
+                                        <div className="flex items-center gap-1">
+                                            <IoLocationOutline className="shrink-0" />
+                                            <span>{church.address}</span>
+                                        </div>
+                                        {church.website && (
+                                            <a 
+                                                href={church.website.startsWith('http') ? church.website : `https://${church.website}`} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1 text-indigo-500 hover:underline font-semibold mt-0.5"
+                                            >
+                                                <IoGlobeOutline className="shrink-0" />
+                                                <span>{church.website.replace(/^https?:\/\//, '')}</span>
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Schedule Grid */}
