@@ -559,8 +559,8 @@ function MainAppContent() {
             </>
           )}
 
-          {/* Removed old AI Core System (AIAssistant) per user request */}
-          <AIFab />
+          {/* Removed old AI Core System (AIAssistant) and AIFab Chatbot per user request */}
+          {/* <AIFab /> */}
           {/* AI Debug Panel (STILL DEV ONLY) */}
           {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>

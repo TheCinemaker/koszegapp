@@ -151,7 +151,6 @@ export default function Home({ appData, weather }) {
 
   const sections = [
     { to: '/ostrom', label: 'Ostromnapok', desc: '2026.08.07. - 08.09. | Kőszeg kiemelt rendezvénye', icon: IoShieldOutline, featured: true, bgImage: '/images/ostrom_2026/ostromhero.png', span: 'col-span-2 sm:col-span-2', delay: 0.03 },
-    { to: '/varszinhaz', label: 'Várszínház', desc: 'Nyári színházi szezon', icon: IoStarOutline, featured: true, span: 'col-span-1 sm:col-span-1', delay: 0.05 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.09 },
