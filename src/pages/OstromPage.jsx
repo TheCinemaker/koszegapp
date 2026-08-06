@@ -19,7 +19,8 @@ import {
   IoCompassOutline,
   IoPulseOutline,
   IoPlayForwardOutline,
-  IoAlertCircleOutline
+  IoAlertCircleOutline,
+  IoOpenOutline
 } from 'react-icons/io5';
 
 // --- HELPER FUNCTIONS ---
@@ -494,11 +495,50 @@ export default function OstromPage() {
       {/* CORE CONTAINER */}
       <main className="flex-grow max-w-3xl w-full mx-auto p-4 flex flex-col justify-between">
         
+        {/* EVENTIGO MAP QUICK BANNER */}
+        <div className="mb-5 bg-gradient-to-r from-amber-600/90 to-indigo-600/90 p-0.5 rounded-2xl shadow-md border border-white/20">
+          <div className="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-[0.9rem] p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
+                🗺️
+              </div>
+              <div>
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-wider border border-emerald-500/20">
+                    Élő Térkép
+                  </span>
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Eventigo</span>
+                </div>
+                <h3 className="font-extrabold text-xs sm:text-sm text-gray-900 dark:text-white mt-0.5">
+                  Kőszegi Ostromnapok Hivatalos Térképe
+                </h3>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
+              <button 
+                onClick={() => setView('map')}
+                className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-indigo-500 hover:opacity-90 text-white font-extrabold text-xs transition shadow-sm flex items-center justify-center gap-1.5"
+              >
+                <IoMapOutline className="text-base" /> Térkép megnyitása
+              </button>
+              <a
+                href="https://koszegi-ostromnapok.eventigo.hu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-2 rounded-xl bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-700 font-bold text-xs transition flex items-center justify-center gap-1"
+                title="Megnyitás teljes képernyőn"
+              >
+                <IoOpenOutline className="text-base" />
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* VIEW NAVIGATION TABS (Premium pill selector) */}
         <div className="mb-6 flex bg-gray-200/60 dark:bg-zinc-900/50 p-1.5 rounded-2xl border border-gray-300/10">
           <button 
             onClick={() => setView('today')} 
-            className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
               ${view === 'today' 
                 ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
@@ -508,17 +548,27 @@ export default function OstromPage() {
           </button>
           <button 
             onClick={() => setView('full')} 
-            className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
               ${view === 'full' 
                 ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
-            <IoCalendarOutline className="text-base" /> Teljes Program
+            <IoCalendarOutline className="text-base" /> Programok
+          </button>
+          <button 
+            onClick={() => setView('map')} 
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
+              ${view === 'map' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
+                : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
+              }`}
+          >
+            <IoMapOutline className="text-base" /> Térkép
           </button>
           <button 
             onClick={() => setView('favorites')} 
-            className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
               ${view === 'favorites' 
                 ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
@@ -713,6 +763,37 @@ export default function OstromPage() {
                       </div>
                     ))
                 )}
+              </div>
+            )}
+
+            {/* EVENTIGO INTERACTIVE MAP TAB */}
+            {view === 'map' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between px-1">
+                  <div>
+                    <h3 className="text-sm font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
+                      <span>🗺️ Interaktív Ostromnapok Térkép</span>
+                    </h3>
+                    <p className="text-xs text-gray-500 font-medium">Hivatalos programhelyszínek & szektorok (Eventigo)</p>
+                  </div>
+                  <a 
+                    href="https://koszegi-ostromnapok.eventigo.hu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/20 font-bold text-xs transition flex items-center gap-1 shrink-0"
+                  >
+                    <IoOpenOutline className="text-sm" /> Teljes képernyő
+                  </a>
+                </div>
+
+                <div className="relative w-full h-[72vh] min-h-[480px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-zinc-800 bg-zinc-900">
+                  <iframe 
+                    src="https://koszegi-ostromnapok.eventigo.hu/"
+                    title="Kőszegi Ostromnapok Térkép"
+                    className="w-full h-full border-0"
+                    allow="geolocation"
+                  />
+                </div>
               </div>
             )}
 
