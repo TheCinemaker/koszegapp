@@ -13,7 +13,7 @@ import {
   IoChevronForward,
   IoStarOutline,
   IoLockClosed,
-  IoShieldOutline
+  IoWineOutline
 } from 'react-icons/io5';
 import {
   motion,
@@ -30,26 +30,6 @@ import PromoModal from '../components/PromoModal';
 import SEO from '../components/SEO';
 
 const MotionLink = motion(Link);
-
-// ---------------------------------------------------------------------------
-// OSTROMNAPOK IDŐABLAK — a countdown/élő badge ehhez igazodik.
-// ---------------------------------------------------------------------------
-const OSTROM_START = new Date(2026, 7, 7); // 2026. aug. 7.
-const OSTROM_END = new Date(2026, 7, 9, 23, 59, 59); // 2026. aug. 9.
-
-function getOstromBadge() {
-  const now = new Date();
-  if (now >= OSTROM_START && now <= OSTROM_END) {
-    return { type: 'live', text: 'Most zajlik' };
-  }
-  if (now < OSTROM_START) {
-    const days = Math.ceil((OSTROM_START - now) / (1000 * 60 * 60 * 24));
-    if (days <= 30) {
-      return { type: 'countdown', text: days === 1 ? 'Holnap kezdődik' : `${days} nap múlva` };
-    }
-  }
-  return null;
-}
 
 // ---------------------------------------------------------------------------
 // ÉLŐ ADAT BADGE-EK az appData-ból.
@@ -83,11 +63,8 @@ function getLiveBadges(appData) {
     badges['/gastronomy'] = { type: 'count', text: `${openNow} hely nyitva` };
   }
 
-  // Ostromnapok countdown / élő
-  const ostrom = getOstromBadge();
-  if (ostrom) {
-    badges['/ostrom'] = ostrom;
-  }
+  // Kőszegi Szüret (Programok hamarosan)
+  badges['/szuret'] = { type: 'comingSoon', text: 'Programok hamarosan' };
 
   return badges;
 }
@@ -97,6 +74,7 @@ function LiveBadge({ badge, featured }) {
   if (!badge) return null;
   const isLive = badge.type === 'live';
   const isCountdown = badge.type === 'countdown';
+  const isComingSoon = badge.type === 'comingSoon';
 
   return (
     <span
@@ -107,9 +85,11 @@ function LiveBadge({ badge, featured }) {
           ? 'bg-emerald-600 text-white border-emerald-400/40'
           : isCountdown
             ? 'bg-brand text-gold-light border-gold/40'
-            : featured
-              ? 'bg-brand text-gold-light border-gold/40'
-              : 'bg-surface-card dark:bg-surface-card-dark text-gold-text dark:text-gold-light border-slate-200/80 dark:border-white/10'}
+            : isComingSoon
+              ? 'bg-amber-500/90 text-white border-amber-300/40 backdrop-blur-md'
+              : featured
+                ? 'bg-brand text-gold-light border-gold/40'
+                : 'bg-surface-card dark:bg-surface-card-dark text-gold-text dark:text-gold-light border-slate-200/80 dark:border-white/10'}
       `}
     >
       {isLive && <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />}
@@ -150,7 +130,7 @@ export default function Home({ appData, weather }) {
   const liveBadges = useMemo(() => getLiveBadges(appData), [appData]);
 
   const sections = [
-    { to: '/ostrom', label: 'Ostromnapok', desc: '2026.08.07. - 08.09. | Kőszeg kiemelt rendezvénye', icon: IoShieldOutline, featured: true, bgImage: '/images/ostrom_2026/ostromhero.png', span: 'col-span-2 sm:col-span-2', delay: 0.03 },
+    { to: '/szuret', label: 'Kőszegi Szüret', desc: '2026.09.25. - 09.27. | Programok hamarosan', icon: IoWineOutline, featured: true, bgImage: '/images/szuret_hero.png', span: 'col-span-2 sm:col-span-2', comingSoon: true, delay: 0.03 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.09 },
@@ -201,13 +181,13 @@ export default function Home({ appData, weather }) {
                 onClick={(e) => {
                   if (sec.comingSoon) {
                     e.preventDefault();
-                    toast(t('comingSoonMessage'), { icon: '🚧' });
+                    toast('A Kőszegi Szüret részletes programjaival hamarosan jelentkezünk! 🍇', { icon: '🍇' });
                   } else if (sec.external) {
                     e.preventDefault();
                     window.open(sec.to, '_blank', 'noopener,noreferrer');
                   }
                 }}
-                className="block h-full cursor-pointer"
+                className={`block h-full ${sec.comingSoon ? 'cursor-default' : 'cursor-pointer'}`}
               >
                 <motion.div
                   whileHover={prefersReducedMotion ? {} : { scale: 1.02, y: -2 }}
@@ -223,7 +203,7 @@ export default function Home({ appData, weather }) {
                         hover:shadow-floating
                         flex flex-col justify-between group
                         ${sec.morphId ? 'overflow-visible' : 'overflow-hidden'}
-                        ${sec.comingSoon ? 'opacity-80 grayscale-[0.5]' : ''}
+                        ${sec.comingSoon && !sec.featured ? 'opacity-80 grayscale-[0.5]' : ''}
                     `}
                 >
                   {sec.bgImage && (
@@ -292,8 +272,8 @@ export default function Home({ appData, weather }) {
                     </motion.p>
                   </div>
 
-                  {/* Coming Soon Lock Badge */}
-                  {sec.comingSoon && (
+                  {/* Coming Soon Lock Badge (only for non-featured disabled tiles) */}
+                  {sec.comingSoon && !sec.featured && (
                     <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/30 dark:bg-black/50 backdrop-blur-[10px] rounded-2xl">
                       <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/70 dark:bg-white/15 rounded-full">
                         <IoLockClosed className="text-white text-sm" />
