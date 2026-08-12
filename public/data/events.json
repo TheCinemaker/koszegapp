@@ -1,5 +1,84 @@
 [
   {
+    "id": "koszeg_zenes_estek_madison_band_2026",
+    "name": "Kőszegi Zenés Estek – Madison Band",
+    "date": "2026-08-15",
+    "endDate": "2026-08-15",
+    "time": "19:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.15. Szombat 19:00 órától: Madison Band élő koncert.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
+    "tags": [
+      "kőszegi zenés estek",
+      "madison band",
+      "koncert",
+      "élőzene",
+      "fő tér",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS ESTEK"
+  },
+  {
+    "id": "koszeg_zenes_estek_nagy_csaba_2026",
+    "name": "Kőszegi Zenés Estek – Nagy Csaba",
+    "date": "2026-08-22",
+    "endDate": "2026-08-22",
+    "time": "19:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.22. Szombat 19:00 órától: Nagy Csaba élő műsora.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
+    "tags": [
+      "kőszegi zenés estek",
+      "nagy csaba",
+      "koncert",
+      "élőzene",
+      "fő tér",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS ESTEK"
+  },
+  {
+    "id": "koszeg_zenes_estek_rm_acoustic_2026",
+    "name": "Kőszegi Zenés Estek – RM Acoustic",
+    "date": "2026-08-29",
+    "endDate": "2026-08-29",
+    "time": "19:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.29. Szombat 19:00 órától: RM Acoustic akusztikus koncert.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
+    "tags": [
+      "kőszegi zenés estek",
+      "rm acoustic",
+      "koncert",
+      "akusztik",
+      "élőzene",
+      "fő tér",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS ESTEK"
+  },
+  {
     "id": "ostrombuli_meggie_toth_pinceszet_2026",
     "name": "Ostrombuli – Horváth Meggie & Horváth Tamás",
     "date": "2026-08-07",
