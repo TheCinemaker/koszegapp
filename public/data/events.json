@@ -1,5 +1,32 @@
 [
   {
+    "id": "meggie_tomsa_toth_pinceszet_2026",
+    "name": "Meggie & Tomsa – Tóth Pincészet Borház",
+    "date": "2026-08-21",
+    "endDate": "2026-08-21",
+    "time": "19:30",
+    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
+    "coords": {
+      "lat": 47.3875,
+      "lng": 16.542
+    },
+    "description": "Két fantasztikus kőszegi zenész barátunk, Meggie & Tomsa gondoskodik a megszokott fergeteges hangulatról augusztus 21-én péntek este 19:30-tól.\n\nBelépő: 1500 Ft/fő\nAsztalfoglalás ajánlott!\n2 fős foglalásoknál előfordulhat, hogy egy másik 2 fős társasággal közös asztalt tudunk biztosítani.\n\nHelyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\nTel: +36 94 364 128 | Email: info@tothpinceszet.hu | Web: www.tothpinceszet.hu",
+    "tags": [
+      "meggie",
+      "tomsa",
+      "koncert",
+      "buli",
+      "tóth pincészet",
+      "borház",
+      "zene",
+      "élőzene"
+    ],
+    "image": "/images/events/meggie_tomsa_toth_pinceszet_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍷 BORHÁZI EST"
+  },
+  {
     "id": "koszeg_zenes_estek_madison_band_2026",
     "name": "Kőszegi Zenés Estek – Madison Band",
     "date": "2026-08-15",
