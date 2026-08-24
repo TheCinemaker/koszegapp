@@ -543,10 +543,10 @@ function MainAppContent() {
                 )}
 
 
-              {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}
-              {/* {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />} */}
+              {/* Program Modal & Grape Icon */}
+              {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />}
 
-              {/* {isHome && !showProgramModal && (
+              {isHome && !showProgramModal && (
                 <button
                 onClick={() => setShowProgramModal(true)}
                 className="w-14 h-14 fixed bottom-20 right-4 bg-purple-700 text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-purple-800 transition transform hover:scale-110 z-50"
@@ -554,7 +554,7 @@ function MainAppContent() {
                 >
                 🍇
                 </button>
-            )} */}
+              )}
             </>
           )}
 

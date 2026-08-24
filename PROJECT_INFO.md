@@ -15,6 +15,12 @@ Ez a fájl tartalmazza a KőszegApp (visitKőszeg.hu) legfontosabb fejlesztési 
 
 ## ⚡ Aktuális Státusz & Fejlesztések
 
+* **Kőszegi Szüret 2026 & Program Modal**:
+  * Adatfájl: [programok.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/programok.json) (többnyelvű) és [programok_hun.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/programok_hun.json) (magyar).
+  * Leírás: Re-aktiváltuk a `ProgramModal` modult az `App.jsx`-ben a lebegő szőlő (🍇) gombbal. Feltöltöttük a 2026. szeptember 25-27. közötti Kőszegi Szüret és Nemzetközi Fúvószenekari Találkozó részletes, percre pontos, többnyelvű programjaival, helyszín-koordinátáival és visszaszámlálójával.
+* **Importált Rendezvények (Kőszeg.hu)**:
+  * Adatfájlok: [events.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/events.json) és [surrounding_events.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/surrounding_events.json).
+  * Leírás: Kézzel beillesztettük a koszeg.hu programajánlójából kiszedett legfrissebb kőszegi és hegyaljai 2026-os rendezvényeket (pl. Hip-Hop családi nap, VII. Concordia Kórusfesztivál, Zsinagóganapok, 43. História Futás, Oláh Dezső duó jazzkoncert, Nyitott Porta Napok) a hivatalos plakátjaikkal és leírásaikkal együtt.
 * **Hegyaljai programok (Surrounding Events)**:
   * Adatfájl: [surrounding_events.json](file:///Users/thecinemaker/.gemini/antigravity/playground/koszegapp/public/data/surrounding_events.json) (2026-os falunapok és rendezvények Bozsok, Cák, Velem, Lukácsháza, Kőszegszerdahely és Kőszegdoroszló településekről).
   * Elérés: `/surrounding-events` útvonalon, a főoldal "HEGYALJAI PROGRAMOK" bento csempéjéről vagy a keresőből.

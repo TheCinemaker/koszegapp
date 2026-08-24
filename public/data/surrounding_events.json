@@ -223,5 +223,81 @@
     "highlight": false,
     "highlightLabel": "",
     "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-koszegszerdahely-olah-dezso",
+    "name": "Oláh Dezső duó",
+    "settlement": "Kőszegszerdahely",
+    "date": "2026-08-29",
+    "time": "14:00",
+    "location": "Faluház, Kőszegszerdahely",
+    "coords": {
+      "lat": 47.3486,
+      "lng": 16.5059
+    },
+    "description": "Oláh Dezső duó hangulatos jazzkoncertje a kőszegszerdahelyi Faluházban az Asztalkő Fesztivál keretében.",
+    "tags": [
+      "koncert",
+      "jazz",
+      "zene",
+      "fesztivál"
+    ],
+    "image": "olah_dezso_duo_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-hegyalja-nyitott-porta",
+    "name": "Nyitott Porta Napok",
+    "settlement": "Kőszegszerdahely",
+    "date": "2026-09-19",
+    "end_date": "2026-09-20",
+    "time": "Egész napos",
+    "location": "Kőszeghegyalja nyitott portái",
+    "coords": {
+      "lat": 47.3486,
+      "lng": 16.5059
+    },
+    "description": "Nyitott Porta Napok a Kőszeghegyalján! Látogass el a hegyaljai termelőkhöz, kézművesekhez, kóstolj helyi finomságokat és ismerd meg a hagyományokat.",
+    "tags": [
+      "gasztro",
+      "családi",
+      "vásár",
+      "porta",
+      "hegyalja"
+    ],
+    "image": "nyitott_porta_napok_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Nyitott Porta Napok",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-velem-kerekpartura-20260829",
+    "name": "Kerékpártúra a Kőszegi-hegységben",
+    "settlement": "Velem",
+    "date": "2026-08-29",
+    "time": "10:00 és 14:00",
+    "location": "Rákóczi Ferenc utca 96., Velem",
+    "coords": {
+      "lat": 47.3456,
+      "lng": 16.4942
+    },
+    "description": "E-bike és hagyományos kerékpártúra Katona Szilveszter vezetésével a Kőszegi-hegységben délelőtt 10:00-tól és délután 14:00-tól.\nA túrákon maximum 10 főnek tudunk e-bike-ot biztosítani. Saját kerékpárral is lehet csatlakozni.\nA részvétel ingyenes, de mindkét program esetén előzetes regisztráció szükséges.",
+    "tags": [
+      "sport",
+      "túra",
+      "kerékpár",
+      "e-bike",
+      "természet",
+      "ingyenes"
+    ],
+    "image": "tekerj.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   }
 ]
