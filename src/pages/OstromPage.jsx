@@ -4,6 +4,7 @@ import { parseISO, isSameDay, isBefore, isAfter, format, isValid, startOfDay, di
 import { hu } from 'date-fns/locale';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { 
   IoArrowBack, 
   IoStarOutline, 
@@ -18,7 +19,8 @@ import {
   IoCompassOutline,
   IoPulseOutline,
   IoPlayForwardOutline,
-  IoAlertCircleOutline
+  IoAlertCircleOutline,
+  IoOpenOutline
 } from 'react-icons/io5';
 
 // --- HELPER FUNCTIONS ---
@@ -74,10 +76,10 @@ const blueIcon = new L.Icon({
 function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation }) {
   return (
     <div 
-      className={`p-5 rounded-[1.75rem] border-l-4 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md mb-4 flex flex-col justify-between
+      className={`p-5 rounded-2xl border-l-4 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md mb-4 flex flex-col justify-between
         ${isFavorite 
-          ? 'bg-amber-100/70 dark:bg-amber-950/20 border-amber-500 text-amber-950 dark:text-amber-100' 
-          : 'bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100'
+          ? 'bg-amber-50/80 dark:bg-amber-950/20 border-l-amber-500 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100' 
+          : 'bg-white dark:bg-zinc-900 border-l-indigo-500 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100'
         }
       `}
       onClick={() => onSelect(event)}
@@ -85,7 +87,7 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
       <div className="flex items-start justify-between">
         <div className="flex-1 pr-4">
           {event.kiemelt && (
-            <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400 mb-2.5 border border-red-200/50 dark:border-red-900/30">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-2.5 border border-rose-500/20">
               <IoFlashOutline className="text-xs" /> Kiemelt
             </span>
           )}
@@ -93,12 +95,12 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
           
           <div className="text-xs md:text-sm mt-3 space-y-2 opacity-90">
             <p className="flex items-center gap-2">
-              <IoLocation className="text-amber-700 dark:text-amber-500 text-sm flex-shrink-0" />
+              <IoLocation className="text-indigo-500 dark:text-indigo-400 text-sm flex-shrink-0" />
               <span className="font-medium">{event.helyszin.nev}</span>
             </p>
             <p className="flex items-center gap-2">
-              <IoTime className="text-amber-700 dark:text-amber-500 text-sm flex-shrink-0" />
-              <span className="font-semibold text-amber-900 dark:text-amber-400">
+              <IoTime className="text-indigo-500 dark:text-indigo-400 text-sm flex-shrink-0" />
+              <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                 {format(event.start, 'HH:mm')} – {format(event.end, 'HH:mm')}
               </span>
             </p>
@@ -122,12 +124,12 @@ function EventCard({ event, onSelect, isFavorite, onToggleFavorite, userLocation
       </div>
 
       {userLocation && event.helyszin?.lat && (
-        <div className="mt-4 pt-3.5 border-t border-gray-200/50 dark:border-zinc-800/60 flex justify-between items-center">
+        <div className="mt-4 pt-3.5 border-t border-gray-100 dark:border-zinc-800 flex justify-between items-center">
           <a
             href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${event.helyszin.lat},${event.helyszin.lng}&travelmode=walking`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline flex items-center gap-1.5"
+            className="text-xs font-bold text-indigo-500 dark:text-indigo-400 hover:opacity-90 flex items-center gap-1.5 transition-opacity"
             onClick={e => e.stopPropagation()}
           >
             <IoCompassOutline className="text-sm" /> Útvonalterv (Gyalog)
@@ -437,65 +439,101 @@ export default function OstromPage() {
       )}
 
       {/* STUNNING HERO HEADER (Mobile-first, high impact with user custom image) */}
-      <div className="relative h-56 sm:h-72 w-full overflow-hidden bg-zinc-900 shadow-md">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700"
-          style={{ backgroundImage: `url('/images/ostrom_2026/ostromhero.png')` }}
-        />
-        {/* Gradient Overlay for high-end text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-50 via-zinc-950/25 to-black/55 dark:from-zinc-950 dark:via-zinc-950/30 dark:to-black/60" />
-        
-        {/* Floating Actions on Top (Glassmorphic) */}
-        <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
-          <Link 
-            to="/" 
-            className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:bg-black/60 transition active:scale-90 border border-white/10"
-            aria-label="Vissza"
-          >
-            <IoArrowBack className="text-lg" />
-          </Link>
-          <button 
-            onClick={() => setShowHelpModal(true)} 
-            className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:bg-black/60 transition active:scale-90 border border-white/10" 
-            aria-label="Információ"
-          >
-            <IoInformationCircleOutline className="text-lg" />
-          </button>
-        </div>
+      <div className="max-w-3xl w-full mx-auto px-4 pt-4">
+        <div className="relative h-56 sm:h-72 w-full overflow-hidden rounded-2xl bg-zinc-900 shadow-md border border-white/60 dark:border-white/10">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700"
+            style={{ backgroundImage: `url('/images/ostrom_2026/ostromhero.png')` }}
+          />
+          {/* Gradient Overlay for high-end text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-50 via-zinc-950/25 to-black/55 dark:from-zinc-950 dark:via-zinc-950/30 dark:to-black/60" />
+          
+          {/* Floating Actions on Top (Glassmorphic) */}
+          <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
+            <Link 
+              to="/" 
+              className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:opacity-90 transition active:scale-90 border border-white/10"
+              aria-label="Vissza"
+            >
+              <IoArrowBack className="text-lg" />
+            </Link>
+            <button 
+              onClick={() => setShowHelpModal(true)} 
+              className="p-2.5 rounded-full bg-black/45 dark:bg-zinc-900/50 backdrop-blur-md text-white hover:opacity-90 transition active:scale-90 border border-white/10" 
+              aria-label="Információ"
+            >
+              <IoInformationCircleOutline className="text-lg" />
+            </button>
+          </div>
 
-        {/* Text Overlay at bottom of Hero */}
-        <div className="absolute bottom-5 left-5 right-5 text-white">
-          <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-600 border border-amber-500 text-[9px] font-black uppercase tracking-widest text-white shadow-sm">
-            Kiemelt rendezvény
-          </span>
-          <h1 className="text-2xl md:text-4xl font-black tracking-tight uppercase text-white drop-shadow-md mt-2">
-            XIX. Ostromnapok
-          </h1>
-          <p className="text-xs font-bold tracking-widest text-amber-300 drop-shadow-md mt-0.5">
-            2026. augusztus 7. – 9.
-          </p>
+          {/* Text Overlay at bottom of Hero */}
+          <div className="absolute bottom-5 left-5 right-5">
+            <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-600 border border-amber-500 text-[9px] font-black uppercase tracking-widest text-white shadow-sm">
+              Kiemelt rendezvény
+            </span>
+            <h1 className="text-2xl md:text-4xl font-black tracking-tight uppercase text-slate-900 dark:text-white mt-2">
+              XIX. Ostromnapok
+            </h1>
+            <p className="text-xs font-bold tracking-widest text-slate-700 dark:text-amber-300 mt-0.5">
+              2026. augusztus 7. – 9.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* COUNTDOWN BANNER (OFFICIAL COUNTDOWN ONLY) */}
       {!timeLeft.isOver && !isDemoMode && (
-        <div className="bg-amber-900/10 dark:bg-zinc-900/30 text-gray-800 dark:text-white text-center p-4 border-b border-gray-200 dark:border-zinc-900 z-10">
-          <p className="text-[10px] uppercase tracking-widest text-amber-800 dark:text-amber-400 mb-2 font-black">Kezdésig hátralévő idő</p>
-          <CountdownToNext targetDate={ostromStart} />
+        <div className="max-w-3xl w-full mx-auto px-4 mt-4">
+          <div className="bg-white dark:bg-zinc-900 text-gray-800 dark:text-white text-center p-5 rounded-2xl border border-white/60 dark:border-white/10 shadow-md">
+            <p className="text-[10px] uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-2 font-black">Kezdésig hátralévő idő</p>
+            <CountdownToNext targetDate={ostromStart} />
+          </div>
         </div>
       )}
 
       {/* CORE CONTAINER */}
       <main className="flex-grow max-w-3xl w-full mx-auto p-4 flex flex-col justify-between">
         
+        {/* EVENTIGO MAP QUICK BANNER */}
+        <div className="mb-5 bg-gradient-to-r from-amber-600/90 to-indigo-600/90 p-0.5 rounded-2xl shadow-md border border-white/20">
+          <div className="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-[0.9rem] p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3 text-center sm:text-left">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
+                🗺️
+              </div>
+              <div>
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-wider border border-emerald-500/20">
+                    Élő Térkép
+                  </span>
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Eventigo</span>
+                </div>
+                <h3 className="font-extrabold text-xs sm:text-sm text-gray-900 dark:text-white mt-0.5">
+                  Kőszegi Ostromnapok Hivatalos Térképe
+                </h3>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
+              <a 
+                href="https://koszegi-ostromnapok.eventigo.hu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-indigo-500 hover:opacity-90 text-white font-extrabold text-xs transition shadow-sm flex items-center justify-center gap-1.5"
+              >
+                <IoMapOutline className="text-base" /> Térkép megnyitása <IoOpenOutline className="text-sm" />
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* VIEW NAVIGATION TABS (Premium pill selector) */}
         <div className="mb-6 flex bg-gray-200/60 dark:bg-zinc-900/50 p-1.5 rounded-2xl border border-gray-300/10">
           <button 
             onClick={() => setView('today')} 
-            className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
               ${view === 'today' 
-                ? 'bg-white dark:bg-zinc-800 shadow-md text-amber-800 dark:text-amber-400' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
@@ -503,19 +541,29 @@ export default function OstromPage() {
           </button>
           <button 
             onClick={() => setView('full')} 
-            className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
               ${view === 'full' 
-                ? 'bg-white dark:bg-zinc-800 shadow-md text-amber-800 dark:text-amber-400' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
-            <IoCalendarOutline className="text-base" /> Teljes Program
+            <IoCalendarOutline className="text-base" /> Programok
+          </button>
+          <button 
+            onClick={() => setView('map')} 
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
+              ${view === 'map' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
+                : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
+              }`}
+          >
+            <IoMapOutline className="text-base" /> Térkép
           </button>
           <button 
             onClick={() => setView('favorites')} 
-            className={`flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1.5
+            className={`flex-1 py-2.5 px-2.5 rounded-xl text-xs md:text-sm font-extrabold tracking-wide transition duration-300 flex items-center justify-center gap-1
               ${view === 'favorites' 
-                ? 'bg-white dark:bg-zinc-800 shadow-md text-amber-800 dark:text-amber-400' 
+                ? 'bg-indigo-500 text-white shadow-md font-bold' 
                 : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-gray-100'
               }`}
           >
@@ -525,9 +573,8 @@ export default function OstromPage() {
 
         {/* CONTENT SWITCH */}
         {isLoading ? (
-          <div className="flex-1 flex flex-col items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-amber-700"></div>
-            <p className="text-xs font-bold text-gray-400 tracking-wider uppercase mt-4">Programok betöltése...</p>
+          <div className="py-24 flex items-center justify-center">
+            <LoadingSpinner fullScreen={false} label="Programok betöltése..." />
           </div>
         ) : error ? (
           <div className="text-center py-12 bg-red-50 dark:bg-red-950/10 border border-red-200 dark:border-red-900/30 p-6 rounded-3xl">
@@ -712,6 +759,31 @@ export default function OstromPage() {
               </div>
             )}
 
+            {/* EVENTIGO INTERACTIVE MAP TAB */}
+            {view === 'map' && (
+              <div className="bg-white dark:bg-zinc-900 rounded-[2rem] p-6 border border-gray-200/60 dark:border-zinc-800 text-center space-y-4 shadow-sm">
+                <div className="w-16 h-16 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-3xl mx-auto">
+                  🗺️
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-gray-900 dark:text-white">
+                    Kőszegi Ostromnapok Hivatalos Térkép
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto leading-relaxed">
+                    Koppints az alábbi gombra az Eventigo interaktív ostromtérképének megnyitásához a programhelyszínekkel, színpadokkal és parkolókkal!
+                  </p>
+                </div>
+                <a 
+                  href="https://koszegi-ostromnapok.eventigo.hu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-500 hover:opacity-90 text-white font-extrabold text-sm transition shadow-md w-full sm:w-auto"
+                >
+                  <IoMapOutline className="text-lg" /> Térkép megnyitása (Eventigo) <IoOpenOutline className="text-base" />
+                </a>
+              </div>
+            )}
+
             {/* FAVORITES TAB */}
             {view === 'favorites' && (
               <div className="space-y-4">
@@ -746,7 +818,7 @@ export default function OstromPage() {
           onClick={() => setSelectedProgram(null)}
         >
           <div 
-            className="bg-white dark:bg-zinc-900 rounded-t-[2.2rem] sm:rounded-[2.2rem] shadow-2xl max-w-lg w-full p-6 relative border-t border-gray-200 dark:border-zinc-800 animate-slide-up max-h-[85vh] overflow-y-auto flex flex-col justify-between"
+            className="bg-white dark:bg-zinc-900 rounded-t-3xl sm:rounded-3xl shadow-2xl max-w-lg w-full p-6 relative border-t border-gray-200 dark:border-zinc-800 animate-slide-up max-h-[85vh] overflow-y-auto flex flex-col justify-between"
             onClick={e => e.stopPropagation()}
           >
             <div>
@@ -756,11 +828,11 @@ export default function OstromPage() {
               <div className="flex justify-between items-start mb-4">
                 <div className="pr-6">
                   {selectedProgram.kiemelt && (
-                    <span className="inline-block px-2.5 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400 mb-2.5 border border-red-200/30">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-2.5 border border-rose-500/20">
                       Kiemelt Program
                     </span>
                   )}
-                  <h3 className="text-lg md:text-xl font-black leading-tight tracking-tight text-amber-900 dark:text-amber-400">{selectedProgram.nev}</h3>
+                  <h3 className="text-lg md:text-xl font-black leading-tight tracking-tight text-gray-900 dark:text-white">{selectedProgram.nev}</h3>
                 </div>
                 <button 
                   onClick={() => setSelectedProgram(null)} 
@@ -772,21 +844,21 @@ export default function OstromPage() {
               </div>
 
               <div className="space-y-4 my-5 text-sm text-gray-800 dark:text-gray-200">
-                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-2xl border border-gray-200/50 dark:border-zinc-900/50">
-                  <IoLocation className="text-xl text-amber-700 dark:text-amber-500 flex-shrink-0" />
+                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-xl border border-gray-200/50 dark:border-zinc-900/50">
+                  <IoLocation className="text-xl text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
                   <div>
                     <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider">Helyszín</p>
                     <p className="font-extrabold text-gray-900 dark:text-white mt-0.5">{selectedProgram.helyszin.nev}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-2xl border border-gray-200/50 dark:border-zinc-900/50">
-                  <IoTime className="text-xl text-amber-700 dark:text-amber-500 flex-shrink-0" />
+                <div className="flex items-center gap-3.5 p-4 bg-gray-50 dark:bg-zinc-950/30 rounded-xl border border-gray-200/50 dark:border-zinc-900/50">
+                  <IoTime className="text-xl text-indigo-500 dark:text-indigo-400 flex-shrink-0" />
                   <div>
                     <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider">Időpont</p>
                     <p className="font-bold text-gray-900 dark:text-white mt-0.5">
                       {format(selectedProgram.start, 'yyyy. MMMM d. (eeee)', { locale: hu })}<br/>
-                      <span className="text-amber-800 dark:text-amber-400 font-extrabold">
+                      <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">
                         {format(selectedProgram.start, 'HH:mm')} – {format(selectedProgram.end, 'HH:mm')}
                       </span>
                     </p>
@@ -794,7 +866,7 @@ export default function OstromPage() {
                 </div>
 
                 {selectedProgram.leiras && (
-                  <div className="p-5 bg-amber-600/[0.03] dark:bg-zinc-800/10 rounded-2xl border border-gray-200/50 dark:border-zinc-800/40 leading-relaxed text-gray-700 dark:text-gray-300">
+                  <div className="p-5 bg-gray-50 dark:bg-zinc-800/10 rounded-xl border border-gray-200/50 dark:border-zinc-800/40 leading-relaxed text-gray-700 dark:text-gray-300">
                     <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider mb-2">Program leírása</p>
                     <p className="whitespace-pre-line text-xs md:text-sm font-medium">{selectedProgram.leiras}</p>
                   </div>
@@ -802,7 +874,7 @@ export default function OstromPage() {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-855 flex gap-3">
+            <div className="mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800 flex gap-3">
               <button 
                 onClick={() => {
                   toggleFavorite(selectedProgram.id);
@@ -832,7 +904,7 @@ export default function OstromPage() {
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${selectedProgram.helyszin.lat},${selectedProgram.helyszin.lng}&travelmode=walking`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 bg-amber-750 hover:bg-amber-800 text-white font-bold py-3.5 px-4 rounded-xl text-center text-xs transition shadow-md flex items-center justify-center gap-1.5 focus:outline-none"
+                  className="flex-1 bg-indigo-500 hover:opacity-90 text-white font-bold py-3.5 px-4 rounded-xl text-center text-xs transition-opacity shadow-md flex items-center justify-center gap-1.5 focus:outline-none"
                 >
                   <IoCompassOutline className="text-base" /> Indulás oda
                 </a>

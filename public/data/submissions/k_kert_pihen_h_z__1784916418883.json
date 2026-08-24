@@ -1,0 +1,47 @@
+{
+  "id": 394348,
+  "target_database": "hotels.json",
+  "name": "Kőkert Pihenőház ",
+  "type": "vendégház",
+  "tags": [
+    "vendégház",
+    "szállás",
+    "bankkartya",
+    "szep_kartya",
+    "wifi",
+    "klima",
+    "terasz",
+    "parkolo",
+    "kutyabarat"
+  ],
+  "address": "9730 Kőszeg, Puskapor utca 12",
+  "phone": "+36307257950",
+  "email": "kokertpihenohaz@gmail.com",
+  "website": "https://kokert-pihenohaz.hu",
+  "facebook": null,
+  "instagram": null,
+  "image": "k_kert_pihen_h_z_.jpg",
+  "logo": null,
+  "gallery": [
+    "partner_uploads/photo_k_kert_pihen_h_z__394348_1.jpg",
+    "partner_uploads/photo_k_kert_pihen_h_z__394348_2.jpg",
+    "partner_uploads/photo_k_kert_pihen_h_z__394348_3.jpg"
+  ],
+  "amenities": [
+    "Bankkártyás fizetés",
+    "SZÉP Kártya elfogadás (OTP, MBH, K&H)",
+    "Ingyenes Wi-Fi",
+    "Légkondicionáló (Klíma)",
+    "Terasz / Kerthelyiség",
+    "Saját / Díjmentes parkoló",
+    "Kutyabarát / Háziállat bevihető"
+  ],
+  "open_all_year": true,
+  "notes": "Férőhely: 4 fő. Nyitvatartás: Egész évben nyitva",
+  "description": "Itt minden a pihenésről szól!\nInfraszaunával, jakuzzival, relaxszobával várjuk kedves vendégeinket. Kutyusokat is szívesen fogadunk.",
+  "details": "Itt minden a pihenésről szól!\nInfraszaunával, jakuzzival, relaxszobával várjuk kedves vendégeinket. Kutyusokat is szívesen fogadunk.",
+  "submitted_at": "2026-07-24T18:06:34.348Z",
+  "status": "pending_review",
+  "_filename": "k_kert_pihen_h_z__1784916418883.json",
+  "_filePath": "public/data/submissions/k_kert_pihen_h_z__1784916418883.json"
+}

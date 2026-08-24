@@ -140,6 +140,36 @@
                 }
             ],
             "info": "Iskolaidőben vasárnaponként gyermek-istentisztelet is van."
+        },
+        {
+            "id": "verbita-rendhaz",
+            "name": "Isteni Ige Társasága (Verbita rendház)",
+            "address": "Kőszeg, Park utca 1.",
+            "image": "/images/verbita_rendhaz.png",
+            "website": "https://verbita.hu",
+            "schedule": [
+                {
+                    "day": "Hétköznapok",
+                    "times": [
+                        {
+                            "time": "07:00",
+                            "note": "reggeli szentmise",
+                            "period": "all"
+                        }
+                    ]
+                },
+                {
+                    "day": "Szombat, vasárnap és ünnepnapok",
+                    "times": [
+                        {
+                            "time": "08:00",
+                            "note": "reggeli szentmise",
+                            "period": "all"
+                        }
+                    ]
+                }
+            ],
+            "info": "Az Isteni Ige Társasága (verbita missziós szerzetesrend) kőszegi missziósháza. Weboldal: verbita.hu"
         }
     ]
 }

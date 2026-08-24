@@ -100,10 +100,10 @@ export default function PassSuccess() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white">
+            <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-white transition-colors duration-300">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C8AF64] mx-auto mb-4"></div>
-                    <p className="text-blue-200/60 text-sm">Pass adatok lekérése...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand dark:border-white mx-auto mb-4"></div>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">Pass adatok lekérése...</p>
                 </div>
             </div>
         );
@@ -111,11 +111,11 @@ export default function PassSuccess() {
 
     if (!pass) {
         return (
-            <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white p-4 text-center">
+            <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-white p-4 text-center transition-colors duration-300">
                 <div>
-                    <h1 className="text-2xl font-black text-red-400 mb-4">Hiba történt ⚠️</h1>
-                    <p className="text-blue-200/60 mb-6 text-sm">Nem található KőszegPass ehhez a fizetési tranzakcióhoz.</p>
-                    <Link to="/pass" className="inline-block bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all text-sm">
+                    <h1 className="text-2xl font-black text-rose-500 mb-4">Hiba történt ⚠️</h1>
+                    <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm">Nem található KőszegPass ehhez a fizetési tranzakcióhoz.</p>
+                    <Link to="/pass" className="inline-block bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all text-sm">
                         Vissza a főoldalra
                     </Link>
                 </div>
@@ -124,36 +124,36 @@ export default function PassSuccess() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0C234B] text-white flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
+        <div className="min-h-screen text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden transition-colors duration-300">
             {/* Background effects */}
-            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-brand/5 blur-[100px] rounded-full pointer-events-none" />
 
             <div className="max-w-md w-full z-10">
-                <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-6 sm:p-8 text-center shadow-2xl">
+                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] rounded-3xl border border-white/60 dark:border-white/10 p-6 sm:p-8 text-center shadow-lg">
                     
                     {/* Success Icon */}
-                    <div className="w-20 h-20 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <IoCheckmarkCircle className="text-5xl text-green-400" />
+                    <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                        <IoCheckmarkCircle className="text-5xl text-emerald-400" />
                     </div>
 
-                    <h1 className="text-2xl font-black bg-gradient-to-r from-white via-[#C8AF64] to-white bg-clip-text text-transparent mb-2">
+                    <h1 className="text-2xl font-black text-brand dark:text-white mb-2">
                         {isKiosk ? 'Köszönjük a vásárlást! 🎉' : 'Sikeres Vásárlás! 🎉'}
                     </h1>
-                    <p className="text-blue-200/60 text-xs mb-8">
+                    <p className="text-gray-500 dark:text-gray-400 text-xs mb-8">
                         {isKiosk ? 'A KőszegPass kártya elkészült és aktív.' : 'KőszegPass kártyád elkészült és aktív.'}
                     </p>
 
                     {/* Kártya vagy Kiosk QR Kód */}
                     {isKiosk ? (
                         <div className="flex flex-col items-center mb-6">
-                            <div className="bg-white p-5 rounded-3xl inline-block mx-auto mb-4 border border-[#C8AF64]/30 shadow-2xl">
+                            <div className="bg-white p-5 rounded-3xl inline-block mx-auto mb-4 border border-gray-200 shadow-sm">
                                 <img src={qrCodeUrl} alt="KőszegPass QR kód" className="w-52 h-52 sm:w-60 sm:h-60 object-contain mx-auto" />
-                                <p className="text-[#0C234B] text-[10px] font-black uppercase tracking-wider mt-3">
+                                <p className="text-brand text-[10px] font-black uppercase tracking-wider mt-3">
                                     Szkennelje be telefonjával!
                                 </p>
                             </div>
-                            <div className="bg-yellow-500/10 border border-[#C8AF64]/30 rounded-2xl p-4 mb-6 text-center text-xs text-[#C8AF64] font-semibold leading-relaxed max-w-sm">
+                            <div className="bg-brand/10 border border-brand/20 dark:bg-indigo-500/10 dark:border-indigo-500/20 rounded-2xl p-4 mb-6 text-center text-xs text-brand dark:text-indigo-400 font-semibold leading-relaxed max-w-sm">
                                 📱 Szkennelje be ezt a QR-kódot a telefonja kamerájával a kártya letöltéséhez és telefonra mentéséhez!
                             </div>
                         </div>
@@ -175,8 +175,8 @@ export default function PassSuccess() {
 
                             {/* Flip hint */}
                             <div className="flex justify-center items-center gap-2 mb-8 pointer-events-none">
-                                <IoSwapHorizontal className="text-[#C8AF64] text-xs animate-pulse" />
-                                <span className="text-[10px] font-semibold text-blue-200/50 uppercase tracking-widest">
+                                <IoSwapHorizontal className="text-brand dark:text-brand-light text-xs animate-pulse" />
+                                <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
                                     Koppints a kártyára a QR-kódhoz!
                                 </span>
                             </div>

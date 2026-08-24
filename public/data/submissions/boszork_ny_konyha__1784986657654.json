@@ -1,0 +1,43 @@
+{
+  "id": "gastro-sub-643186",
+  "target_database": "restaurants.json",
+  "name": "Boszorkány Konyha ",
+  "type": "étterem",
+  "tags": [
+    "étterem",
+    "vendéglátás",
+    "bankkartya",
+    "szep_kartya",
+    "wifi"
+  ],
+  "address": "9730 Kőszeg, Jurisics tér 13",
+  "phone": "06205413003",
+  "email": "boszorkanykonyha.koszeg@gmail.com",
+  "website": "https://www.facebook.com/boszorkanykoszeg",
+  "facebook": "https://www.facebook.com/share/1EeD8qgsne/",
+  "instagram": null,
+  "image": "partner_uploads/logo_boszork_ny_konyha__643186.png",
+  "logo": "partner_uploads/logo_boszork_ny_konyha__643186.png",
+  "gallery": [
+    "partner_uploads/photo_boszork_ny_konyha__643186_1.jpg",
+    "partner_uploads/photo_boszork_ny_konyha__643186_2.jpg",
+    "partner_uploads/photo_boszork_ny_konyha__643186_3.jpg",
+    "partner_uploads/photo_boszork_ny_konyha__643186_4.jpg",
+    "partner_uploads/photo_boszork_ny_konyha__643186_5.jpg",
+    "partner_uploads/photo_boszork_ny_konyha__643186_6.jpg",
+    "partner_uploads/photo_boszork_ny_konyha__643186_7.jpg"
+  ],
+  "amenities": [
+    "Bankkártyás fizetés",
+    "SZÉP Kártya elfogadás (OTP, MBH, K&H)",
+    "Ingyenes Wi-Fi"
+  ],
+  "open_all_year": true,
+  "notes": "Férőhely: Étterem 24 fő,kapualj 45fő,különterem 55 fő. Nyitvatartás: Egész évben nyitva",
+  "description": "A Boszorkány Konyha Kőszegen várja vendégeit házias ízekkel, változatos napi menüvel és széles à la carte kínálattal. Fontos számunkra, hogy mindenki megtalálja a kedvére való fogást, ezért a hagyományos magyar ételek mellett gluténmentes, tejmentes és könnyedebb fogásokat is kínálunk.",
+  "details": "A Boszorkány Konyhában minden nap változatos menükínálattal várjuk vendégeinket: 2 féle levesből, 3 féle főételből és 1 desszertből lehet választani. Menüinket úgy állítjuk össze, hogy a gluténmentesen és tejmentesen étkezők is minden nap találjanak számukra megfelelő fogást.\nMenünk mellett à la carte étlapunk is széles választékot kínál. A hagyományos magyar ízek kedvelőit marhagulyással, szarvaspörkölttel dödöllével és pacalpörkölttel várjuk, míg a könnyedebb ételeket kedvelők halak, friss saláták és ízletes rizottók közül választhatnak.\nCélunk, hogy minden vendégünk megtalálja a kedvenc fogását, legyen szó hagyományos vagy modern, könnyű ételekről.",
+  "submitted_at": "2026-07-25T13:37:23.186Z",
+  "status": "pending_review",
+  "_filename": "boszork_ny_konyha__1784986657654.json",
+  "_filePath": "public/data/submissions/boszork_ny_konyha__1784986657654.json"
+}

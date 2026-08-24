@@ -20,7 +20,7 @@ import { searchData, AVAILABLE_DATASETS } from './koszeg-data.js';
 
 const client = new Anthropic(); // ANTHROPIC_API_KEY a környezetből
 
-const MODEL = 'claude-sonnet-5';
+const MODEL = 'claude-3-5-sonnet-20240620';
 const MAX_TOOL_ROUNDS = 4;
 
 // ── TOOL: vendégprofil ────────────────────────────────────────────────────────

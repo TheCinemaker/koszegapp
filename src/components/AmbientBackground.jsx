@@ -32,7 +32,9 @@ const PALETTES = {
 export default function AmbientBackground({ weather, upcoming = [], dark }) {
     const [sunData, setSunData] = useState(null);
     const [phase, setPhase] = useState('day');
-    const [enabled, setEnabled] = useState(localStorage.getItem('ambientMode') === 'true');
+    // Default ON — the ambient sky is the base atmosphere the frosted UI blurs against.
+    // Only disabled if the user explicitly turns it off in settings.
+    const [enabled, setEnabled] = useState(localStorage.getItem('ambientMode') !== 'false');
 
     // Update Ambient Toggle State
     useEffect(() => {
@@ -151,7 +153,7 @@ export default function AmbientBackground({ weather, upcoming = [], dark }) {
     if (!enabled) return null;
 
     return (
-        <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden select-none">
+        <div className="fixed inset-0 -z-40 pointer-events-none overflow-hidden select-none">
             {/* Base Atmosphere Layer */}
             <motion.div
                 className="absolute inset-0"

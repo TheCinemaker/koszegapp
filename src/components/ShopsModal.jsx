@@ -20,7 +20,7 @@ export default function ShopsModal({ isOpen, onClose }) {
                     initial={{ scale: 0.9, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                    className="bg-white dark:bg-[#1a1c2e] rounded-[2rem] shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col"
+                    className="bg-white dark:bg-[#1a1c2e] rounded-3xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
@@ -41,7 +41,7 @@ export default function ShopsModal({ isOpen, onClose }) {
                         {ServicesDataHasShops(servicesData) ? (
                             <div className="space-y-4">
                                 {servicesData.shops.map((shop, idx) => (
-                                    <div key={idx} className="p-5 rounded-2xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
+                                    <div key={idx} className="p-5 rounded-xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
                                         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{shop.name}</h3>
 
                                         <div className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300 mb-3">

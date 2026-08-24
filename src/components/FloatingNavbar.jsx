@@ -34,16 +34,17 @@ export default function FloatingNavbar() {
       <div className="
         pointer-events-auto
         flex items-center justify-around
-        px-3 py-2
-        bg-white/40 dark:bg-[#1a1c2e]/40 
-        backdrop-blur-[25px] 
-        backdrop-saturate-[1.8]
-        backdrop-brightness-[1.1]
-        rounded-[30px] 
-        border border-white/50 dark:border-white/20 
-        shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
+        px-3 py-1.5
+        bg-white/0 dark:bg-black/10
+        backdrop-blur-lg transform-gpu
+        rounded-2xl
+        border border-white/60 dark:border-white/10
+        shadow-[0_8px_30px_rgb(0,0,0,0.12)]
         transition-all duration-300
       ">
+        {/* Apple Glass Trick (Glossy Edge) */}
+        <div className="apple-glass-border" />
+
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -52,11 +53,11 @@ export default function FloatingNavbar() {
             onClick={() => triggerHaptic()}
             className={({ isActive }) => `
               relative group flex flex-col items-center justify-center flex-1
-              h-12 rounded-[1rem]
+              h-10 rounded-[1rem]
               transition-all duration-200 ease-out
               active:scale-90
               ${isActive
-                ? 'text-[#007AFF] dark:text-[#0A84FF]'
+                ? 'text-gold-text dark:text-gold-light font-bold'
                 : 'text-[#1d1d1f] dark:text-gray-300 hover:text-black dark:hover:text-white'
               }
             `}
@@ -67,7 +68,7 @@ export default function FloatingNavbar() {
                 <>
                   {/* Icon */}
                   <Icon className={`
-                    text-[22px] mb-0.5 z-10 transition-transform duration-300
+                    text-[20px] mb-0.5 z-10 transition-transform duration-300
                     ${isActive ? 'scale-110 filter drop-shadow-sm' : 'group-hover:scale-110'}
                   `} />
 

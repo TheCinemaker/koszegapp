@@ -99,9 +99,7 @@ export default function KioskEvents({ events }) {
         {/* Events Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {processedEvents.length === 0 ? (
-            <div className="col-span-2 text-center py-16 text-zinc-400 text-sm font-semibold animate-pulse">
-              {t('events.loading')}
-            </div>
+            <div className="col-span-2 text-center py-16 text-zinc-400 text-xs font-medium">Betöltés...</div>
           ) : (
             processedEvents.map((evt) => (
               <div

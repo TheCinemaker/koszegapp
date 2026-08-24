@@ -1,284 +1,231 @@
 [
   {
-    "name": "Tiszavirág",
-    "date": "2026-07-15",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Gyerekudvar - Barboncás Társulat előadása.",
-    "tags": [
-      "várszínház",
-      "gyerekudvar",
-      "előadás",
-      "gyerek"
-    ],
-    "image": "barabocas-1783504554769.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_9",
-    "endDate": "2026-07-15"
-  },
-  {
-    "name": "Fő téri zene – Korponay Zsófia és Bánó Zoltán",
-    "date": "2026-07-15",
-    "time": "19:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Korponay Zsófia és Bánó Zoltán zenei estje a Fő téren.",
-    "tags": [
-      "várszínház",
-      "zene",
-      "koncert",
-      "program"
-    ],
-    "image": "enek-1783504576344.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_10",
-    "endDate": "2026-07-15"
-  },
-  {
-    "name": "Deres Péter: A bábjátékos – Kemény Henrik emlékére",
-    "date": "2026-07-15",
-    "time": "20:30",
-    "location": "Kamaraudvar (Jurisich Gimnázium)",
-    "coords": {
-      "lat": 47.3912,
-      "lng": 16.5422
-    },
-    "description": "Deres Péter: A bábjátékos – Kemény Henrik emlékére. Esőnap: július 17.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás"
-    ],
-    "image": "babjatekos.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_11",
-    "endDate": "2026-07-15"
-  },
-  {
-    "name": "Stefan Vögel: Egy apró kérés",
-    "date": "2026-07-16",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Stefan Vögel: Egy apró kérés – A Kőszegi Várszínház előadása. Esőnap: július 17.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás"
-    ],
-    "image": "aprokeres-1783504651010.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_12",
-    "endDate": "2026-07-16"
-  },
-  {
-    "name": "Az igazmondó juhász",
-    "date": "2026-07-17",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Gyerekudvar - Ziránó Színház előadása.",
-    "tags": [
-      "várszínház",
-      "gyerekudvar",
-      "előadás",
-      "gyerek"
-    ],
-    "image": "zirano.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_13",
-    "endDate": "2026-07-17"
-  },
-  {
-    "name": "Prof. Dr. Kovács Péter előadása",
-    "date": "2026-07-17",
-    "time": "19:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.389582,
-      "lng": 16.538988
-    },
-    "description": "Prof. Dr. Kovács Péter: A Garai család felemelkedése a 15. században című tudományos előadás.",
-    "tags": [
-      "várszínház",
-      "előadás",
-      "történelem"
-    ],
-    "image": "prof.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_14",
-    "endDate": "2026-07-17"
-  },
-  {
-    "name": "Fő téri zene – Sons Left Behind",
-    "date": "2026-07-17",
-    "time": "19:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A Sons Left Behind zenekar élő koncertje a kőszegi Fő téren.",
-    "tags": [
-      "várszínház",
-      "zene",
-      "koncert",
-      "program"
-    ],
-    "image": "sons.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "varszinhaz_2026_15",
-    "endDate": "2026-07-17"
-  },
-  {
-    "name": "Borházi Zenés Estek",
-    "date": "2026-07-17",
+    "id": "meggie_tomsa_toth_pinceszet_2026",
+    "name": "Meggie & Tomsa – Tóth Pincészet Borház",
+    "date": "2026-08-21",
+    "endDate": "2026-08-21",
     "time": "19:30",
-    "location": "Tóth Pincészet",
+    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
     "coords": {
-      "lat": 0,
-      "lng": 0
+      "lat": 47.3875,
+      "lng": 16.542
     },
-    "description": "2026. július 17-én pénteken este Horváth Meggie, Svertsits Tamás és Domby Bertalan zenei válogatására bulizhattok.\n\nJó kőszegi borok a Tóth Pincészetből, friss sörök. Vannak mindenmentes üdítőink, remek vasi Buti Pálinka rengeteg féle ízben, röviditalok széles választékban, no meg persze zsíros kenyér 🙂\n\nBelépő: 1500.- Ft / fő\nAsztalfoglalás ajánlott.\n\n2 fős foglalásoknál előfordulhat, hogy egy másik 2 fős társasággal közös asztalt tudunk biztosítani.\nTóth Pincészet Borház\n\nKőszeg, Rákóczi utca 6.\nTel: +36 94 364 128",
+    "description": "Két fantasztikus kőszegi zenész barátunk, Meggie & Tomsa gondoskodik a megszokott fergeteges hangulatról augusztus 21-én péntek este 19:30-tól.\n\nBelépő: 1500 Ft/fő\nAsztalfoglalás ajánlott!\n2 fős foglalásoknál előfordulhat, hogy egy másik 2 fős társasággal közös asztalt tudunk biztosítani.\n\nHelyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\nTel: +36 94 364 128 | Email: info@tothpinceszet.hu | Web: www.tothpinceszet.hu",
     "tags": [
+      "meggie",
+      "tomsa",
+      "koncert",
+      "buli",
+      "tóth pincészet",
+      "borház",
+      "zene",
       "élőzene"
     ],
-    "image": "meggie10.jpg",
-    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "image": "/images/events/meggie_tomsa_toth_pinceszet_2026.png",
+    "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "event-2026-1784224774267"
+    "highlightLabel": "🍷 BORHÁZI EST"
   },
   {
-    "id": "varszinhaz_2026_16",
-    "name": "Operett-musical est",
-    "date": "2026-07-18",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Népszerű operett- és musicalslágerek csendülnek fel a csodás hangulatú nagyszínpadon. Esőnap: július 19.",
-    "tags": [
-      "várszínház",
-      "zene",
-      "operett",
-      "musical",
-      "előadás"
-    ],
-    "image": "operett.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "endDate": "2026-07-18"
-  },
-  {
-    "name": "Jon Fosse: Reggel és este",
-    "date": "2026-07-18",
-    "time": "20:30",
-    "location": "Kamaraudvar (Jurisich Gimnázium)",
-    "coords": {
-      "lat": 47.3912,
-      "lng": 16.5422
-    },
-    "description": "Jon Fosse: Reggel és este – Ördöghatlan Produkció. Esőnap: július 19.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás"
-    ],
-    "image": "rggel.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_17",
-    "endDate": "2026-07-18"
-  },
-  {
-    "name": "A zöldszakállú király",
-    "date": "2026-07-19",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Gyerekudvar - Ziránó Színház előadása.",
-    "tags": [
-      "várszínház",
-      "gyerekudvar",
-      "előadás",
-      "gyerek"
-    ],
-    "image": "zirano-1783505021473.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_18",
-    "endDate": "2026-07-19"
-  },
-  {
-    "name": "Harmonikával a világ körül Peltzer Gézával",
-    "date": "2026-07-19",
+    "id": "koszeg_zenes_estek_madison_band_2026",
+    "name": "Kőszegi Zenés Estek – Madison Band",
+    "date": "2026-08-15",
+    "endDate": "2026-08-15",
     "time": "19:00",
     "location": "Fő tér",
     "coords": {
       "lat": 47.3881,
       "lng": 16.5415
     },
-    "description": "Peltzer Géza harmonikaestje a Fő téren.",
+    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.15. Szombat 19:00 órától: Madison Band élő koncert.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
     "tags": [
-      "várszínház",
-      "zene",
-      "harmonika",
-      "koncert"
+      "kőszegi zenés estek",
+      "madison band",
+      "koncert",
+      "élőzene",
+      "fő tér",
+      "kőszeg",
+      "ingyenes"
     ],
-    "image": "peltzer.jpg",
+    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS ESTEK"
+  },
+  {
+    "id": "koszeg_zenes_estek_nagy_csaba_2026",
+    "name": "Kőszegi Zenés Estek – Nagy Csaba",
+    "date": "2026-08-22",
+    "endDate": "2026-08-22",
+    "time": "19:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.22. Szombat 19:00 órától: Nagy Csaba élő műsora.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
+    "tags": [
+      "kőszegi zenés estek",
+      "nagy csaba",
+      "koncert",
+      "élőzene",
+      "fő tér",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS ESTEK"
+  },
+  {
+    "id": "koszeg_zenes_estek_rm_acoustic_2026",
+    "name": "Kőszegi Zenés Estek – RM Acoustic",
+    "date": "2026-08-29",
+    "endDate": "2026-08-29",
+    "time": "19:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.29. Szombat 19:00 órától: RM Acoustic akusztikus koncert.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
+    "tags": [
+      "kőszegi zenés estek",
+      "rm acoustic",
+      "koncert",
+      "akusztik",
+      "élőzene",
+      "fő tér",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS ESTEK"
+  },
+  {
+    "id": "ostrombuli_meggie_toth_pinceszet_2026",
+    "name": "Ostrombuli – Horváth Meggie & Horváth Tamás",
+    "date": "2026-08-07",
+    "endDate": "2026-08-07",
+    "time": "20:00",
+    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
+    "coords": {
+      "lat": 47.3875,
+      "lng": 16.542
+    },
+    "description": "A nyár legnagyobb produkciójának számító kőszegi Ostromnapok péntekén Horváth Meggie és Horváth Tamás érkezik hozzánk a legismertebb slágerekkel.\n\nEreszd el a hajam buli egész éjjel.... Ha 1532-ben lett volna ilyen koncert, a török még ma is nálunk énekelne és bulizna!\n\nAsztalfoglalás javasolt!\nBelépő: 1500 Ft/fő\n\nHelyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\nTel: 94 364 128 | Email: info@tothpinceszet.hu",
+    "tags": [
+      "ostrombuli",
+      "koncert",
+      "buli",
+      "tóth pincészet",
+      "borház",
+      "zene",
+      "ostromnapok"
+    ],
+    "image": "/images/fo_ter.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍷 OSTROMBULI"
+  },
+  {
+    "id": "zsinagoganapok_2026",
+    "name": "Zsinagóganapok Kőszegen",
+    "date": "2026-09-07",
+    "endDate": "2026-09-08",
+    "time": "11:00",
+    "location": "Kőszegi Zsinagóga (Várkör 38, Kőszeg)",
+    "coords": {
+      "lat": 47.3888,
+      "lng": 16.5418
+    },
+    "description": "Szakmai és történeti előadások a Kőszegi Zsinagógában.\n\nSzeptember 7. Hétfő:\n• 11:00 Lucy álma c. film vetítése\n• 13:00 Judaika-kiállítás, tárlatvezetés\n• 15:00 Kőszeg zsidó emlékei, városi séta\n• 17:00 Vidéki gettók c. fotókiállítás megnyitója\n\nSzeptember 8. Kedd:\n• 10:00 - 14:00 „Határon innen és határon túl” Nemzetközi konferencia (A holokauszt emlékének fenntartása a fiatalok körében)\n  - 09:00-09:50 Regisztráció\n  - 09:50-10:00 Megnyitó\n  - 10:00-10:30 A holokauszt tanításának kihívásai a 21. században (Zima András - OR-ZSE, Holokauszt Emlékközpont)\n  - 10:30-11:00 „Szólj keveset és tégy sokat!” - Innovatív pedagógiai módszerek (Várnainé Balogh Beáta)\n  - 11:00-11:30 30 év tapasztalatai (Paszternák Tamás - Komárno)\n  - 11:30-12:00 Családi emlékezet (Frojimovics Kinga - VWI)\n  - 12:20-12:50 Az Ismeretlen Zsidó Mártír Emlékműve (Bányai Viktória - ELTE TKK)\n  - 12:50-13:20 A személyes történelem jelentősége (Szarka Lajos - SZPA)\n  - 13:20-14:00 Ötödik jelenlét: Jancsó Miklós dokumentumfilmjei (Király Mátyás & Som Balázs - MILEV)\n\n• 15:00 A kőszegi zsidó temető emlékei (Séta, Park u. 8.)\n• 18:00 Imák és dallamok – Jiddis dalok és héber imák a kőszegi zsinagógában az OR-ZSE hallgatóinak közreműködésével (Koncertbelépő: 3000 Ft, jegyek a helyszínen)",
+    "tags": [
+      "zsinagóga",
+      "előadás",
+      "kiállítás",
+      "konferencia",
+      "koncert",
+      "történelem",
+      "zsinagóganapok"
+    ],
+    "image": "/images/fo_ter.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "✡️ ZSINAGÓGANAPOK"
+  },
+  {
+    "id": "bass_piknik_2026",
+    "name": "🌊🔥 BASS PIKNIK 2026 – Tó-Part Kőszeg",
+    "date": "2026-07-25",
+    "endDate": "2026-07-25",
+    "time": "14:00",
+    "location": "Tó-Part Kőszeg",
+    "coords": {
+      "lat": 47.382,
+      "lng": 16.545
+    },
+    "description": "Egy nap a tóparton, ahol nem siet senki sehova… csak jó zenék, jó arcok, hideg italok és a nyár legjobb hangulata vár!\n\n☀️ Nappal: pihenés, napfény, közösségi vibe, beszélgetések.\n🌙 Este: brutál basszus, zene, tánc a csillagok alatt az Illegal Control DJ-ivel!\n\n🎶 Lineup:\n• Raul Young\n• Baluca\n• Somex\n• Seges\n• Berry\n• Gabriel Sanchoz\n\n👨‍👩‍👧‍👦🐾 Család- és kisállatbarát rendezvény!",
+    "tags": [
+      "bass piknik",
+      "koncert",
+      "buli",
+      "tópart",
+      "kiemelt"
+    ],
+    "image": "/images/events/bass.jpeg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🔥 KIEMELT TÓPARTI BULI",
+    "ticketUrl": "https://basspiknik.com/events/bass-piknik-2026-warmup-session"
+  },
+  {
+    "id": "ostromnapok_fofesztival_2026",
+    "name": "XIX. Kőszegi Ostromnapok",
+    "date": "2026-08-07",
+    "endDate": "2026-08-09",
+    "time": "15:00",
+    "location": "Kőszeg Belváros és Jurisics-vár",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5398
+    },
+    "description": "Háromnapos történelmi fesztivál az 1532-es török ostrom emlékére. Várostrom, fáklyás felvonulás, vásár, koncertek és hagyományőrző bemutatók! (A részletes program a dedikált Ostromnapok oldalon érhető el!)",
+    "tags": [
+      "ostromnapok",
+      "fesztivál",
+      "hagyományőrzés",
+      "család"
+    ],
+    "image": "/images/ostrom_2026/ostromhero.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Kiemelt Fesztivál"
+  },
+  {
+    "id": "kulturalis_orokseg_rajnis12_2026",
+    "name": "Kulturális Örökség Napjai: Történelmi alapokon álló ház",
+    "date": "2026-09-19",
+    "endDate": "2026-09-19",
+    "time": "09:00",
+    "location": "Kőszeg, Rajnis utca 12.",
+    "coords": {
+      "lat": 47.3898,
+      "lng": 16.5401
+    },
+    "description": "A kőszegi Rajnis utca 12. szám alatti ingatlan (jelenleg társasház) alapjai több történelmi emléken állnak, melyeket gránittáblák is jeleznek az utcában. A ház Várkör felőli oldala a Jurisich-Várba vezető hídon, a Poncichter (Jurisich-tér) felőli oldal a Bécsi kaput védő barbakánon áll. Ezek a mai ház pincéjében állnak. Épületvezetés nyelve: magyar, német, angol, orosz. Információs anyag nyelve: magyar, német.",
+    "tags": [
+      "örökség napjai",
+      "történelem",
+      "építészet"
+    ],
+    "image": "/images/koeszeg_logo_nobg.png",
     "createdBy": "admin",
     "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "id": "varszinhaz_2026_19",
-    "endDate": "2026-07-19"
+    "highlightLabel": ""
   },
   {
     "name": "Robin Hood",
@@ -313,13 +260,14 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Marius von Mayenburg: EX – Orlai produkció. Esőnap: július 24.",
+    "description": "Marius von Mayenburg: EX – Orlai produkció. Szereplők: Járó Zsuzsa, Péter Kata, Schruff Milán. Dramaturg/rendező: Dömötör András. Belépődíj: 7.000 Ft. Esőnap: július 24.",
     "tags": [
       "várszínház",
       "színház",
-      "előadás"
+      "előadás",
+      "dráma"
     ],
-    "image": "ex.jpg",
+    "image": "ex_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -336,13 +284,14 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Moravetz Levente: Jöhetsz drágám! – Hadart Színház. Esőnap: július 28.",
+    "description": "Moravetz Levente: Jöhetsz drágám! – Hadart Színház. Szereplők: Háda János, Mérai Kata, Szabó Máté, Bordás Mihály, Andrádi Zsanett, Zsigmond Réka, Végh Judit. Rendező: Háda János. Belépődíj: 7.000 Ft. Esőnap: július 28.",
     "tags": [
       "várszínház",
       "színház",
-      "előadás"
+      "előadás",
+      "vígjáték"
     ],
-    "image": "johetsz.jpg",
+    "image": "johetsz_dragam_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -383,14 +332,14 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Dés-Geszti-Békés: A dzsungel könyve – Roxinház előadása. Esőnap: augusztus 2.",
+    "description": "Dés László – Geszti Péter – Békés Pál: A dzsungel könyve – Roxínház musical előadása. 25 éves jubileumi est. Esőnap: augusztus 2.",
     "tags": [
       "várszínház",
       "színház",
       "előadás",
       "musical"
     ],
-    "image": "event_default.jpg",
+    "image": "dzsungel_konyve_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -407,13 +356,15 @@
       "lat": 47.3896,
       "lng": 16.5404
     },
-    "description": "Fabrice Roger-Lacan: A szomszéd ajtó – A Kőszegi Várszínház és a Kultkikötő bemutatója. Esőnap: augusztus 4.",
+    "description": "Fabrice Roger-Lacan: A szomszéd ajtó – romantikus vígjáték, magyarországi bemutató. A Kőszegi Várszínház és a Kultkikötő koprodukciója. Szereplők: Őze Áron (Férfi), Auksz Éva (Nő). Rendező: Naszlady Éva. Belépődíj: 5.000 Ft. Esőnap: augusztus 4.",
     "tags": [
       "várszínház",
       "színház",
-      "előadás"
+      "előadás",
+      "vígjáték",
+      "bemutató"
     ],
-    "image": "event_default.jpg",
+    "image": "szomszed_ajto_official.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",

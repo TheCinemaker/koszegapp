@@ -96,6 +96,7 @@ export default function KoszegChat() {
             if (data.profile) setProfile(data.profile);
             if (data.ended) setEnded(true);
         } catch (err) {
+            console.error('[KoszegChat] Hiba történt:', err);
             setMessages((prev) => [
                 ...prev,
                 { role: 'assistant', content: 'Elnézést, épp nem érem el a szolgáltatást. Kérlek, próbáld meg kicsit később.' }
@@ -115,22 +116,22 @@ export default function KoszegChat() {
     };
 
     return (
-        <div className="-mt-4 h-[100dvh] flex flex-col overflow-hidden bg-[#0C234B] text-white">
+        <div className="h-[calc(100dvh-170px)] mt-2 mx-3 flex flex-col overflow-hidden bg-brand text-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.4)] border border-gold/30">
             {/* Fejléc */}
-            <header className="shrink-0 border-b border-white/10 bg-[#0C234B]/95 backdrop-blur-xl">
+            <header className="shrink-0 border-b border-gold/20 bg-brand/95 backdrop-blur-xl">
                 <div className="max-w-2xl mx-auto px-4 h-16 flex items-center gap-3">
                     <Link to="/" className="p-2 -ml-2 rounded-full hover:bg-white/10 transition-colors" aria-label="Vissza">
                         <IoArrowBack size={20} />
                     </Link>
-                    <div className="w-10 h-10 rounded-full bg-[#C8AF64]/15 border border-[#C8AF64]/30 flex items-center justify-center text-xl">
+                    <div className="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-xl">
                         🎩
                     </div>
                     <div className="min-w-0">
-                        <h1 className="font-black text-sm tracking-wide leading-tight">Dimitryj</h1>
-                        <p className="text-[11px] text-blue-200/60 leading-tight">Kőszeg kalauza · béta</p>
+                        <h1 className="font-black text-sm tracking-wide leading-tight text-gold-light">Dimitryj</h1>
+                        <p className="text-[11px] text-gold-light/60 leading-tight">Kőszeg kalauza · béta</p>
                     </div>
                     {coords && (
-                        <span className="ml-auto flex items-center gap-1 text-[10px] text-[#C8AF64]/70" title="Helyzet ismert">
+                        <span className="ml-auto flex items-center gap-1 text-[10px] text-gold-light/70" title="Helyzet ismert">
                             <IoLocateOutline size={12} /> helyzet ismert
                         </span>
                     )}
@@ -143,15 +144,15 @@ export default function KoszegChat() {
                     {messages.map((m, i) => (
                         <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             {m.role === 'assistant' && (
-                                <div className="w-8 h-8 shrink-0 rounded-full bg-[#C8AF64]/15 border border-[#C8AF64]/25 flex items-center justify-center text-sm mr-2 mt-0.5">
+                                <div className="w-8 h-8 shrink-0 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-sm mr-2 mt-0.5">
                                     🎩
                                 </div>
                             )}
                             <div
                                 className={
                                     m.role === 'user'
-                                        ? 'max-w-[80%] bg-[#C8AF64] text-[#0C234B] font-medium rounded-2xl rounded-br-md px-4 py-2.5 text-sm whitespace-pre-line'
-                                        : 'max-w-[85%] bg-white/5 border border-white/10 rounded-2xl rounded-bl-md px-4 py-2.5 text-sm whitespace-pre-line text-blue-50/90 leading-relaxed'
+                                        ? 'max-w-[80%] bg-brand border border-gold/40 text-white font-medium rounded-[18px] rounded-br-[4px] px-4 py-2.5 text-sm whitespace-pre-line shadow-card'
+                                        : 'max-w-[85%] bg-white/10 border border-white/20 rounded-[18px] rounded-bl-[4px] px-4 py-2.5 text-sm whitespace-pre-line text-white leading-relaxed shadow-sm'
                                 }
                             >
                                 {m.content}
@@ -161,14 +162,14 @@ export default function KoszegChat() {
 
                     {loading && (
                         <div className="flex justify-start">
-                            <div className="w-8 h-8 shrink-0 rounded-full bg-[#C8AF64]/15 border border-[#C8AF64]/25 flex items-center justify-center text-sm mr-2">
+                            <div className="w-8 h-8 shrink-0 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-sm mr-2">
                                 🎩
                             </div>
-                            <div className="bg-white/5 border border-white/10 rounded-2xl rounded-bl-md px-4 py-3">
+                            <div className="bg-white/10 border border-white/20 rounded-[18px] rounded-bl-[4px] px-4 py-3 shadow-sm">
                                 <div className="flex gap-1">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#C8AF64]/70 animate-bounce" style={{ animationDelay: '0ms' }} />
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#C8AF64]/70 animate-bounce" style={{ animationDelay: '150ms' }} />
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#C8AF64]/70 animate-bounce" style={{ animationDelay: '300ms' }} />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{ animationDelay: '0ms' }} />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{ animationDelay: '150ms' }} />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{ animationDelay: '300ms' }} />
                                 </div>
                             </div>
                         </div>
@@ -176,12 +177,12 @@ export default function KoszegChat() {
                 </div>
             </div>
 
-            {/* Bemenet / lezárás – alul hagyunk helyet a lebegő FloatingNavbar-nak (~72px) */}
-            <div className="shrink-0 border-t border-white/10 bg-[#0C234B]/95 backdrop-blur-xl pb-[calc(84px+env(safe-area-inset-bottom))]">
+            {/* Bemenet / lezárás */}
+            <div className="shrink-0 border-t border-gold/20 bg-brand/95 backdrop-blur-xl pb-3">
                 <div className="max-w-2xl mx-auto px-4 pt-3">
                     {ended ? (
                         <div className="text-center py-2">
-                            <p className="text-xs text-blue-200/60 mb-3">A beszélgetést lezártuk.</p>
+                            <p className="text-xs text-gold-light/60 mb-3">A beszélgetést lezártuk.</p>
                             <button
                                 onClick={() => {
                                     setMessages([GREETING]);
@@ -189,7 +190,7 @@ export default function KoszegChat() {
                                     setProfile(null);
                                     try { localStorage.removeItem(LS_MESSAGES); localStorage.removeItem(LS_PROFILE); } catch { /* ignore */ }
                                 }}
-                                className="inline-flex items-center gap-2 bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] font-bold px-5 py-2.5 rounded-xl text-sm transition-colors"
+                                className="inline-flex items-center gap-2 bg-brand border border-gold/40 hover:bg-gold/20 text-gold-light font-bold px-5 py-2.5 rounded-[18px] text-sm transition-colors shadow-card"
                             >
                                 <IoSparkles size={16} /> Új beszélgetés
                             </button>
@@ -203,19 +204,19 @@ export default function KoszegChat() {
                                 onKeyDown={onKeyDown}
                                 rows={1}
                                 placeholder="Írjon nekem… pl. esős napon, gyerekekkel, mit ajánl?"
-                                className="flex-1 resize-none max-h-32 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white placeholder-blue-200/40 focus:outline-none focus:border-[#C8AF64]/40 transition-colors"
+                                className="flex-1 resize-none max-h-32 bg-white/10 border border-gold/30 rounded-[18px] px-4 py-3 text-sm text-white placeholder-gold-light/40 focus:outline-none focus:border-gold/60 transition-colors shadow-inner"
                             />
                             <button
                                 onClick={send}
                                 disabled={!input.trim() || loading}
-                                className="shrink-0 w-12 h-12 rounded-2xl bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                className="shrink-0 w-12 h-12 rounded-full bg-brand border border-gold/40 hover:bg-gold/20 text-gold-light flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-card"
                                 aria-label="Küldés"
                             >
                                 <IoSend size={18} />
                             </button>
                         </div>
                     )}
-                    <p className="text-[10px] text-blue-200/35 text-center mt-2">
+                    <p className="text-[10px] text-gold-light/40 text-center mt-2">
                         Dimitryj hibázhat — fontos részleteket érdemes ellenőrizni.
                     </p>
                 </div>

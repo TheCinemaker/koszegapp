@@ -1,0 +1,44 @@
+{
+  "id": 412664,
+  "target_database": "hotels.json",
+  "name": "Saffron’s Kőszeg",
+  "type": "vendégház",
+  "tags": [
+    "vendégház",
+    "szállás",
+    "szep_kartya",
+    "wifi",
+    "klima",
+    "terasz",
+    "parkolo"
+  ],
+  "address": "9730 Kőszeg, Mohás út 51.",
+  "phone": "+36304348354",
+  "email": "safranyattila74@gmail.com",
+  "website": "https://linktr.ee/saffrons_koszeg?utm_source=linktree_profile_share&ltsid=50da4bd9-9e68-427b-a574-cea90d803c42",
+  "facebook": "https://www.facebook.com/share/1J2u7YjgEj/?mibextid=wwXIfr",
+  "instagram": "https://www.instagram.com/saffrons_koszeg?igsh=dDdhdGowcWlycGV6",
+  "image": "partner_uploads/logo_saffron_s_k_szeg_412664.png",
+  "logo": "partner_uploads/logo_saffron_s_k_szeg_412664.png",
+  "gallery": [
+    "partner_uploads/photo_saffron_s_k_szeg_412664_1.jpg",
+    "partner_uploads/photo_saffron_s_k_szeg_412664_2.jpg",
+    "partner_uploads/photo_saffron_s_k_szeg_412664_3.jpg",
+    "partner_uploads/photo_saffron_s_k_szeg_412664_4.jpg"
+  ],
+  "amenities": [
+    "SZÉP Kártya elfogadás (OTP, MBH, K&H)",
+    "Ingyenes Wi-Fi",
+    "Légkondicionáló (Klíma)",
+    "Terasz / Kerthelyiség",
+    "Saját / Díjmentes parkoló"
+  ],
+  "open_all_year": true,
+  "notes": "Férőhely: 2+1. Nyitvatartás: Egész évben nyitva",
+  "description": "A Saffron’s egy mesés kis vendégház Kőszegen, a csendes Mohás-völgyben.\nÖnálló apartman, mely tökéletes helyszín a feltöltődésre és a pihenésre.",
+  "details": "Csendes, ámde könnyem megközelíthető helyen van egy kis faház, mely a slowturisták kedvence! \nA faház teljesen szeparált, mindennel felszerelt oázis a pihenni vágyóknak. \nA kertben őzek legelésznek, mókusok szaladgálnak és madarak zenélnek. \nRemek helyszín annak, aki szeretne elvonulni, túrázni és friss levegőn lenni.\nKét fő számára ideális, de egy harmadik hely is van, ha többen lennétek.\nSaját parkoló van, melytől egy rövid kis lépcső vezet fel a házhoz.\nA konyha felszerelt, hűtőgép, kávéfőző, mikró, vízforraló, kenyérpirító és mobil főző lap is van, illetve a tűzgyújtási tilalomra való tekintettel elektromos grill is rendelkezésre áll. \nBár wi-fi van, de TV nincs, hogy a kikapcsolódás garantált legyen!\nVárunk szeretettel! ",
+  "submitted_at": "2026-08-01T09:10:12.664Z",
+  "status": "pending_review",
+  "_filename": "saffron_s_k_szeg_1785575419431.json",
+  "_filePath": "public/data/submissions/saffron_s_k_szeg_1785575419431.json"
+}

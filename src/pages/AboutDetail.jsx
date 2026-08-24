@@ -1,49 +1,34 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  IoArrowBack,
-  IoRocket,
-  IoSunny,
-  IoMap,
-  IoWater,
-  IoDiamond,
-  IoGlobeOutline,
-  IoConstructOutline,
-  IoChevronForward
-} from 'react-icons/io5';
-
+import { IoArrowBack, IoChevronForward } from 'react-icons/io5';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 
-// --- COMPONENTS FOR APPLE-STYLE SCROLLING ---
+// --- APPLE-STYLE ANIMATION COMPONENTS ---
 
-/**
- * Standard Cinematic FadeUp
- * Slower duration default (1.5s) for that "heavy", premium feel.
- */
-const FadeUp = ({ children, delay = 0, duration = 1.6, className = "" }) => {
+const FadeUp = ({ children, delay = 0, duration = 1.2, className = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-5% 0px -5% 0px" });
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 60, filter: 'blur(10px)' }}
-      animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-      transition={{ duration: duration, ease: [0.16, 1, 0.3, 1], delay: delay }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: duration, ease: [0.25, 0.1, 0.25, 1], delay: delay }}
     >
       {children}
     </motion.div>
   );
 };
 
-const ParallaxImage = ({ src, className, speed = 1 }) => {
+const ParallaxImage = ({ src, className, speed = 0.3 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
-  const y = useTransform(scrollYProgress, [0, 1], [`-${15 * speed}%`, `${15 * speed}%`]);
+  const y = useTransform(scrollYProgress, [0, 1], [`-${10 * speed}%`, `${10 * speed}%`]);
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
@@ -51,403 +36,340 @@ const ParallaxImage = ({ src, className, speed = 1 }) => {
         style={{ y }}
         src={src}
         alt=""
-        className="w-full h-full object-cover scale-110"
+        className="w-full h-full object-cover scale-105"
       />
     </div>
   );
 };
 
+// Apple-style Bento Card
+const BentoCard = ({ children, className = "", span = "col-span-1", delay = 0 }) => (
+  <FadeUp delay={delay}>
+    <div className={`${span} rounded-[2rem] bg-[#1c1c1e] border border-white/[0.06] overflow-hidden ${className}`}>
+      {children}
+    </div>
+  </FadeUp>
+);
+
 export default function AboutDetail() {
   const navigate = useNavigate();
   const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 20 });
-  const bgOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0]);
-  const heroScale = useTransform(smoothProgress, [0, 0.2], [1, 0.95]);
-  const heroOpacity = useTransform(smoothProgress, [0, 0.2], [1, 0]);
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+  const heroOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
+  const heroY = useTransform(smoothProgress, [0, 0.15], [0, -60]);
 
   return (
-    <div className="bg-[#000000] text-[#f5f5f7] font-sans antialiased overflow-x-hidden selection:bg-indigo-500 selection:text-white pb-32">
+    <div className="bg-black text-white font-sans antialiased overflow-x-hidden selection:bg-white selection:text-black">
 
-      {/* GLOBAL ATMOSPHERE */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <motion.div style={{ opacity: bgOpacity }} className="absolute inset-0 bg-black" />
-        {/* Subtle Ambient Orbs */}
-        <div className="absolute top-[-10%] right-[-10%] w-[80vw] h-[80vw] bg-indigo-900/10 rounded-full blur-[150px] mix-blend-screen" />
-        <div className="absolute bottom-[10%] left-[-20%] w-[60vw] h-[60vw] bg-blue-900/10 rounded-full blur-[150px] mix-blend-screen" />
-        <div className="absolute inset-0 opacity-[0.07] bg-[url('/noise.svg')] mix-blend-overlay"></div>
-      </div>
-
-      {/* --- FLOATING NAV --- */}
-      <div className="fixed top-6 left-6 z-50">
+      {/* --- GLOBAL NAV --- */}
+      <div className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center justify-between bg-black/80 backdrop-blur-xl border-b border-white/[0.06]">
         <button
           onClick={() => navigate('/info')}
-          className="group flex items-center justify-center w-14 h-14 rounded-full bg-[#1c1c1e]/40 backdrop-blur-xl border border-white/10 hover:bg-[#2c2c2e] hover:scale-105 active:scale-95 transition-all duration-500 shadow-2xl"
+          className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors duration-300"
         >
-          <IoArrowBack className="text-2xl text-white group-hover:-translate-x-0.5 transition-transform" />
+          <IoArrowBack className="text-lg" />
+          <span className="hidden sm:inline">Back</span>
         </button>
+        <span className="text-sm font-semibold tracking-wide">About</span>
+        <div className="w-16" /> {/* Spacer for balance */}
       </div>
 
-      <main className="relative z-10 text-center md:text-left">
+      <main>
 
-        {/* --- [SECTION 1] HERO --- */}
-        <section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden pt-20">
-          <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="text-center w-full max-w-[90rem] relative z-10">
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, delay: 0.2 }}
-              className="mb-8 flex justify-center"
-            >
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                <span className="relative text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-gray-300 border border-white/10 px-6 py-2 rounded-full backdrop-blur-md bg-black/50">
-                  The Ultimate City Experience
-                </span>
-              </div>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.95, filter: 'blur(30px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[14vw] sm:text-[160px] leading-[0.85] font-bold tracking-tighter text-white mb-10 drop-shadow-2xl"
-            >
-              Kőszeg<span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500">APP</span>
-            </motion.h1>
-
+        {/* --- HERO --- */}
+        <section className="min-h-[90vh] flex flex-col items-center justify-center px-6 relative">
+          <motion.div
+            style={{ opacity: heroOpacity, y: heroY }}
+            className="text-center max-w-5xl"
+          >
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 2, delay: 0.8 }}
-              className="text-2xl md:text-4xl font-medium text-gray-400 max-w-3xl mx-auto tracking-tight leading-snug"
+              transition={{ duration: 1, delay: 0.3 }}
+              className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 mb-8"
             >
-              Ahol a történelem találkozik<br />
-              <span className="text-white">a digitális jövővel.</span>
+              Kőszeg
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.4, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-[12vw] sm:text-[140px] leading-[0.9] font-semibold tracking-tighter text-white mb-8"
+            >
+              The city,<br />
+              <span className="text-white/30">reimagined.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.2, delay: 1 }}
+              className="text-xl md:text-2xl text-white/50 max-w-xl mx-auto font-medium leading-relaxed"
+            >
+              Discover Kőszeg through a lens built for the modern explorer.
             </motion.p>
           </motion.div>
 
-          {/* Corrected Gradient Direction for smoother bottom blend */}
-          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black to-transparent z-0 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
         </section>
 
 
-        {/* --- [SECTION 2] FEATURES & EXPERIENCE --- */}
-        <section className="py-40 px-6 max-w-[100rem] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        {/* --- BENTO GRID: EXPERIENCE --- */}
+        <section className="py-32 px-6 max-w-[1400px] mx-auto">
+          <FadeUp>
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 mb-4">Experience</p>
+            <h2 className="text-5xl md:text-7xl font-semibold tracking-tight text-white mb-20 leading-[1.1]">
+              More than<br />a guide.
+            </h2>
+          </FadeUp>
 
-            <div className="relative">
-              {/* Visual for City Life */}
-              <FadeUp>
-                <div className="aspect-square rounded-[3rem] overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-white/10 relative shadow-2xl">
-                  {/* Image: Beautiful Kőszeg street or abstract city representation */}
-                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2064&auto=format&fit=crop')] bg-cover bg-center opacity-50 mix-blend-overlay"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[400px]">
 
-                  {/* Floating UI Elements Simulation */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 space-y-4">
-                    <motion.div
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      className="p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center gap-4 shadow-lg shadow-black/20"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-orange-500/80 flex items-center justify-center text-white text-xl shadow-lg"><IoSunny /></div>
-                      <div className="flex-1">
-                        <div className="h-2 w-24 bg-white/40 rounded-full mb-2"></div>
-                        <div className="h-2 w-16 bg-white/20 rounded-full"></div>
-                      </div>
-                    </motion.div>
-                    <motion.div
-                      animate={{ y: [0, -15, 0] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                      className="p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center gap-4 translate-x-12 shadow-lg shadow-black/20"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-indigo-500/80 flex items-center justify-center text-white text-xl shadow-lg"><IoMap /></div>
-                      <div className="flex-1">
-                        <div className="h-2 w-32 bg-white/40 rounded-full mb-2"></div>
-                        <div className="h-2 w-20 bg-white/20 rounded-full"></div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </FadeUp>
-            </div>
-
-            <div className="space-y-16">
-              <FadeUp delay={0.2}>
-                <span className="text-sm font-bold uppercase tracking-[0.3em] text-blue-500 mb-6 block">Élmény mindenkinek</span>
-                <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white leading-tight mb-8">
-                  Több, mint<br />
-                  <span className="text-gray-500">útikönyv.</span>
-                </h2>
-                <div className="space-y-8 text-xl text-gray-400 leading-relaxed font-medium">
-                  <p>
-                    A visitkoszeg nem egyszerűen felsorolja a látnivalókat. <b className="text-white">Érzi a város lüktetését.</b> Valós idejű adatokkal, interaktív térképekkel és személyre szabott ajánlókkal segít felfedezni az ékszerdoboz minden rejtett kincsét.
-                  </p>
-                  <p>
-                    Legyen szó egy hirtelen jött zivatar előli menekülésről, a legközelebbi szabad parkoló megtalálásáról vagy az esti koncert programjáról – minden válasz ott lapul a zsebedben.
-                  </p>
-                </div>
-              </FadeUp>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <FadeUp delay={0.3}>
-                  <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors duration-300">
-                    <IoGlobeOutline className="text-3xl text-indigo-400 mb-4" />
-                    <h3 className="text-white font-bold text-lg mb-2">Parkolás Élőben</h3>
-                    <p className="text-sm text-gray-500">
-                      Ne körözz feleslegesen. Látod, hol van hely, még mielőtt odaérnél.
-                    </p>
-                  </div>
-                </FadeUp>
-                <FadeUp delay={0.4}>
-                  <div className="p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors duration-300">
-                    <IoConstructOutline className="text-3xl text-emerald-400 mb-4" />
-                    <h3 className="text-white font-bold text-lg mb-2">Offline Mód</h3>
-                    <p className="text-sm text-gray-500">
-                      Nincs térerő a hegyekben? Nem gond. A térkép és az infók internet nélkül is veled vannak.
-                    </p>
-                  </div>
-                </FadeUp>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-
-        {/* --- [SECTION 3] THE ORIGIN STORY --- */}
-        <section className="py-40 px-6">
-          <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
-
-            {/* Visual Side */}
-            <div className="lg:col-span-7 h-[85vh] rounded-[3rem] overflow-hidden bg-[#0a0a0a] relative border border-white/5 shadow-2xl order-last lg:order-first">
-              <ParallaxImage
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop"
-                className="w-full h-full opacity-60 block"
-                speed={0.5}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-
-              <div className="absolute bottom-10 left-10 p-8 glass-panel rounded-3xl border border-white/10 backdrop-blur-xl bg-black/40 max-w-sm">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-inner">AS</div>
-                  <div>
-                    <h4 className="text-white font-bold text-lg leading-none">Avar Szilveszter</h4>
-                    <span className="text-indigo-300 text-xs font-mono uppercase tracking-wider">Dreamer & Creator</span>
-                  </div>
-                </div>
-                <p className="text-gray-400 text-sm leading-relaxed italic">
-                  "Nem egy újabb szoftvert akartam írni. Egy olyan társat akartam adni a turisták és a helyiek kezébe, ami méltó ehhez a gyönyörű városhoz."
+            {/* Large Feature Card */}
+            <BentoCard span="md:col-span-2 md:row-span-2" delay={0.1} className="relative group">
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2064&auto=format&fit=crop')] bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="relative h-full flex flex-col justify-end p-10">
+                <h3 className="text-3xl md:text-4xl font-semibold text-white mb-3">Live. Breathe. Explore.</h3>
+                <p className="text-white/50 text-lg max-w-md leading-relaxed">
+                  Real-time insights, interactive maps, and personalized recommendations that feel like second nature.
                 </p>
               </div>
-            </div>
+            </BentoCard>
 
-            {/* Text Side */}
-            <div className="lg:col-span-5">
+            {/* Parking Card */}
+            <BentoCard delay={0.2} className="p-8 flex flex-col justify-between group hover:bg-[#252528] transition-colors duration-500">
+              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center">
+                <svg className="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold text-white mb-2">Smart Parking</h3>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  See available spots before you arrive. No circling. No stress.
+                </p>
+              </div>
+            </BentoCard>
+
+            {/* Offline Card */}
+            <BentoCard delay={0.3} className="p-8 flex flex-col justify-between group hover:bg-[#252528] transition-colors duration-500">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold text-white mb-2">Offline First</h3>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  Maps and info work without signal. The mountains won't stop you.
+                </p>
+              </div>
+            </BentoCard>
+
+          </div>
+        </section>
+
+
+        {/* --- FULL-WIDTH STORY SECTION --- */}
+        <section className="py-32 relative overflow-hidden">
+          <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center px-6">
+
+            <div className="order-2 lg:order-1">
               <FadeUp>
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="h-px w-10 bg-purple-500"></div>
-                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-purple-400">Passion Project</span>
-                </div>
-                <h2 className="text-5xl md:text-6xl font-semibold tracking-tight mb-10 text-white leading-[1.1]">
-                  Szívvel. Lélekkel.<br />Kóddal.
+                <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 mb-6">Origin</p>
+                <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-white mb-10 leading-[1.1]">
+                  Built with<br />purpose.
                 </h2>
               </FadeUp>
-              <div className="space-y-10 text-lg md:text-xl text-gray-400 font-medium leading-relaxed">
-                <FadeUp delay={0.1}>
-                  <p>
-                    Ez az alkalmazás nem egy multinacionális cég futószalagján készült. Ez egy <b className="text-white">szerelemprojekt</b>. Minden pixelt, minden animációt és minden sort azért írtunk meg, hogy Kőszeg digitális élménye felérjen a történelmi belváros hangulatához.
-                  </p>
-                </FadeUp>
-                <FadeUp delay={0.2}>
-                  <p>
-                    A célunk egyszerű volt: elfeledtetni veled, hogy egy gépet tartasz a kezedben. Az alkalmazás nem eszköz, hanem egy ablak a városra. Gyors, gyönyörű és láthatatlan.
-                  </p>
-                </FadeUp>
+              <FadeUp delay={0.15}>
+                <p className="text-xl text-white/50 leading-relaxed mb-8">
+                  This is not another app. It is a love letter to a city that deserves a digital experience as rich as its history.
+                </p>
+                <p className="text-xl text-white/50 leading-relaxed">
+                  Every pixel, every animation, every line of code exists to make Kőszeg feel closer. Intuitive. Invisible.
+                </p>
+              </FadeUp>
+            </div>
+
+            <div className="order-1 lg:order-2 h-[70vh] rounded-[2.5rem] overflow-hidden relative">
+              <ParallaxImage
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop"
+                className="w-full h-full opacity-70"
+                speed={0.4}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+
+              <div className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10">
+                <p className="text-white/70 text-sm italic leading-relaxed">
+                  "I wanted to create something that feels less like software and more like a window into the city."
+                </p>
+                <p className="text-white/40 text-xs mt-3 font-medium">— Avar Szilveszter, Creator</p>
               </div>
             </div>
-          </div>
-        </section>
-
-
-        {/* --- [SECTION 4] TECH MEETS ART --- */}
-        <section className="py-40 bg-[#050505] relative overflow-hidden border-t border-white/5">
-          {/* Decorative Background */}
-          <div className="absolute top-[20%] left-[-10%] w-[100vw] h-[100vw] bg-purple-900/5 rounded-full blur-[200px] pointer-events-none" />
-
-          <div className="max-w-[90vw] mx-auto text-center lg:text-left lg:px-20 mb-32">
-            <FadeUp>
-              <h2 className="text-7xl md:text-[120px] font-bold tracking-tighter text-white mb-6 leading-[0.9]">
-                Művészet.
-              </h2>
-              <p className="text-2xl text-gray-500 max-w-2xl font-medium">
-                Amikor a mérnöki precizitás találkozik a designnal.
-              </p>
-            </FadeUp>
-          </div>
-
-          <div className="max-w-[95vw] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
-
-            {/* Card 1 */}
-            <FadeUp delay={0.1}>
-              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500 group">
-                <div className="w-16 h-16 rounded-full bg-cyan-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <IoWater className="text-4xl text-cyan-400" />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-4">60 FPS Flow</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    Nincs akadozás. Nincs várakozás. Az app úgy mozog, mint a folyadék. Fizikai rugók (spring physics) vezérelnek minden mozdulatot, hogy az élmény természetes legyen, ne digitális.
-                  </p>
-                </div>
-              </div>
-            </FadeUp>
-
-            {/* Card 2 */}
-            <FadeUp delay={0.2}>
-              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500 group">
-                <div className="w-16 h-16 rounded-full bg-purple-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <IoDiamond className="text-4xl text-purple-400" />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-4">Liquid Ház</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    A <b>Hidalmási Erik</b> által megálmodott design nem csak szép, hanem funkcionális. A "Liquid Glass" esztétika nem takarja ki a tartalmat, hanem keretbe foglalja azt.
-                  </p>
-                </div>
-              </div>
-            </FadeUp>
-
-            {/* Card 3 */}
-            <FadeUp delay={0.3}>
-              <div className="aspect-[3/4] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 p-10 flex flex-col justify-between hover:bg-[#111] transition-colors duration-500 group">
-                <div className="w-16 h-16 rounded-full bg-orange-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <IoRocket className="text-4xl text-orange-400" />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-4">Azonnali Szinkron</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    A háttérben a Supabase Realtime motorja dolgozik, hogy ha valahol felszabadul egy parkolóhely, vagy változik egy program, Te azonnal tudd.
-                  </p>
-                </div>
-              </div>
-            </FadeUp>
 
           </div>
         </section>
 
-        {/* --- [SECTION 4.5] PARTNERS --- */}
-        <section className="py-40 px-6 relative overflow-hidden bg-zinc-950/50">
-          <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-20">
-            <div className="flex-1">
+
+        {/* --- BENTO GRID: DESIGN --- */}
+        <section className="py-32 px-6 max-w-[1400px] mx-auto">
+          <FadeUp>
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 mb-4">Design</p>
+            <h2 className="text-5xl md:text-7xl font-semibold tracking-tight text-white mb-20 leading-[1.1]">
+              Crafted to<br />perfection.
+            </h2>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[350px]">
+
+            {/* Performance Card */}
+            <BentoCard delay={0.1} className="p-10 flex flex-col justify-between group hover:bg-[#252528] transition-colors duration-500">
+              <div className="w-14 h-14 rounded-full bg-cyan-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                <svg className="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold text-white mb-3">Silky Smooth</h3>
+                <p className="text-white/40 leading-relaxed">
+                  Spring physics power every interaction. No stutter. No lag. Just fluid motion.
+                </p>
+              </div>
+            </BentoCard>
+
+            {/* Visual Card - Large */}
+            <BentoCard span="md:col-span-2" delay={0.2} className="relative group overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
+              <div className="relative h-full flex flex-col justify-end p-10">
+                <h3 className="text-2xl font-semibold text-white mb-2">Liquid Glass</h3>
+                <p className="text-white/40 max-w-sm">
+                  An interface that frames content without hiding it. Transparency, depth, and light.
+                </p>
+              </div>
+              {/* Decorative orb */}
+              <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
+            </BentoCard>
+
+            {/* Realtime Card */}
+            <BentoCard span="md:col-span-3" delay={0.3} className="relative group overflow-hidden min-h-[300px]">
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-900/10 via-transparent to-indigo-900/10" />
+              <div className="relative h-full flex flex-col md:flex-row items-center justify-between p-10 gap-8">
+                <div className="max-w-lg">
+                  <h3 className="text-2xl font-semibold text-white mb-2">Always in Sync</h3>
+                  <p className="text-white/40">
+                    Events, parking, weather — everything updates in real time. You just explore.
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-xs text-white/30 font-mono uppercase tracking-wider">Live</span>
+                </div>
+              </div>
+            </BentoCard>
+
+          </div>
+        </section>
+
+
+        {/* --- PARTNERS SECTION --- */}
+        <section className="py-32 px-6 bg-[#0a0a0a]">
+          <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+            <div>
               <FadeUp>
-                <div className="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-8">
-                  <span className="text-xs font-bold uppercase tracking-widest text-orange-400">Együttműködés</span>
-                </div>
-                <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-8">
-                  Legyél a mi<br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-600">partnerünk.</span>
+                <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 mb-6">Partners</p>
+                <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-white mb-10 leading-[1.1]">
+                  Grow with<br />us.
                 </h2>
-                <p className="text-xl text-zinc-400 leading-relaxed max-w-lg mb-12">
-                  Hirdesd meg eseményed Kőszeg digitális központjában, és hagyd, hogy mi elvégezzük a jegyértékesítési munkát helyetted. Neked az egészhez csak egy mobiltelefonra van szükséged!
+                <p className="text-xl text-white/50 leading-relaxed mb-12 max-w-lg">
+                  List your events in Kőszeg's digital hub. We handle ticketing. You focus on the experience.
                 </p>
                 <button
                   onClick={() => navigate('/partners')}
-                  className="px-12 py-6 rounded-full bg-white text-black font-bold text-xl hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center gap-3"
+                  className="group inline-flex items-center gap-2 text-white font-medium text-lg hover:gap-4 transition-all duration-300"
                 >
-                  Partneri Program <IoChevronForward />
+                  Learn more about partnering
+                  <IoChevronForward className="text-sm group-hover:translate-x-1 transition-transform" />
                 </button>
               </FadeUp>
             </div>
 
-            <div className="flex-1 grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="h-40 bg-zinc-900 rounded-3xl border border-white/5 p-6 flex flex-col justify-end">
-                  <span className="text-2xl font-bold text-orange-500">0 Ft</span>
-                  <span className="text-xs text-zinc-500 uppercase tracking-widest">Setup díj</span>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <FadeUp delay={0.1}>
+                <div className="aspect-square rounded-[2rem] bg-[#1c1c1e] border border-white/[0.06] p-8 flex flex-col justify-end">
+                  <span className="text-4xl md:text-5xl font-semibold text-white mb-2">0 Ft</span>
+                  <span className="text-xs text-white/30 uppercase tracking-wider">Setup fee</span>
                 </div>
-                <div className="h-60 bg-zinc-900 rounded-3xl border border-white/5 p-6 flex flex-col justify-end">
-                  <span className="text-2xl font-bold text-white">Any Device</span>
-                  <span className="text-xs text-zinc-500 uppercase tracking-widest">QR Szkenner</span>
+              </FadeUp>
+              <FadeUp delay={0.2}>
+                <div className="aspect-square rounded-[2rem] bg-[#1c1c1e] border border-white/[0.06] p-8 flex flex-col justify-end">
+                  <span className="text-4xl md:text-5xl font-semibold text-white mb-2">Any</span>
+                  <span className="text-xs text-white/30 uppercase tracking-wider">Device</span>
                 </div>
-              </div>
-              <div className="space-y-4 pt-8">
-                <div className="h-60 bg-indigo-900/20 rounded-3xl border border-indigo-500/20 p-6 flex flex-col justify-end">
-                  <span className="text-2xl font-bold text-indigo-400">100%</span>
-                  <span className="text-xs text-zinc-500 uppercase tracking-widest">Digitális</span>
+              </FadeUp>
+              <FadeUp delay={0.3}>
+                <div className="aspect-square rounded-[2rem] bg-[#1c1c1e] border border-white/[0.06] p-8 flex flex-col justify-end">
+                  <span className="text-4xl md:text-5xl font-semibold text-white mb-2">100%</span>
+                  <span className="text-xs text-white/30 uppercase tracking-wider">Digital</span>
                 </div>
-                <div className="h-40 bg-zinc-900 rounded-3xl border border-white/5 p-6 flex flex-col justify-end">
-                  <span className="text-2xl font-bold text-white">Apple</span>
-                  <span className="text-xs text-zinc-500 uppercase tracking-widest">Wallet</span>
+              </FadeUp>
+              <FadeUp delay={0.4}>
+                <div className="aspect-square rounded-[2rem] bg-[#1c1c1e] border border-white/[0.06] p-8 flex flex-col justify-end">
+                  <span className="text-4xl md:text-5xl font-semibold text-white mb-2">Wallet</span>
+                  <span className="text-xs text-white/30 uppercase tracking-wider">Ready</span>
                 </div>
-              </div>
+              </FadeUp>
             </div>
+
           </div>
         </section>
 
-        {/* --- [SECTION 5] CONTACT / CTA --- */}
 
-        <section className="min-h-screen flex flex-col items-center justify-center relative bg-black border-t border-white/5">
-          <div className="text-center z-10 px-6 max-w-5xl mx-auto">
-            <FadeUp>
-              <div className="mb-12 inline-block p-1 rounded-full bg-gradient-to-r from-gray-800 to-gray-900 border border-white/10">
-                <div className="px-6 py-2 rounded-full bg-black">
-                  <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 uppercase tracking-widest">
-                    Közösség & Jövő
-                  </span>
+        {/* --- CTA / FOOTER --- */}
+        <section className="min-h-[80vh] flex flex-col items-center justify-center px-6 text-center">
+          <FadeUp>
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 mb-8">What's next</p>
+            <h2 className="text-6xl md:text-8xl font-semibold tracking-tight text-white mb-8 leading-[1]">
+              This is just<br />the beginning.
+            </h2>
+            <p className="text-xl text-white/40 max-w-lg mx-auto mb-16 leading-relaxed">
+              We are constantly evolving. Have feedback or ideas? We would love to hear from you.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.2}>
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <a
+                href="mailto:admin@visitkoszeg.hu"
+                className="px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-white/90 transition-colors"
+              >
+                Contact us
+              </a>
+              <button
+                onClick={() => navigate('/')}
+                className="px-8 py-4 rounded-full bg-white/5 text-white border border-white/10 font-medium hover:bg-white/10 transition-colors"
+              >
+                Back to app
+              </button>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.4}>
+            <div className="mt-32 pt-8 w-full max-w-[1400px] border-t border-white/[0.06]">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-white/20 text-xs">
+                <div className="flex items-center gap-8">
+                  <span>SA Software</span>
+                  <span className="hidden md:inline">·</span>
+                  <span>Designed by Hidalmási Erik</span>
                 </div>
+                <span>© 2026 VisitKőszeg. All rights reserved.</span>
               </div>
-
-              <h2 className="text-6xl md:text-[90px] font-bold text-white mb-12 tracking-tighter leading-none">
-                Ez még csak<br />
-                a kezdet.
-              </h2>
-            </FadeUp>
-
-            <FadeUp delay={0.3}>
-              <p className="text-2xl text-gray-400 mb-20 max-w-2xl mx-auto font-medium leading-relaxed">
-                Folyamatosan fejlesztünk, és hallgatunk a visszajelzéseitekre. Ha van ötleted, vagy csak elmondanád a véleményed, írj nekünk!
-              </p>
-
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a
-                  href="mailto:koszegapp@gmail.com"
-                  className="px-12 py-6 rounded-full bg-white text-black font-bold text-xl hover:scale-105 transition-transform duration-300 shadow-[0_0_40px_rgba(255,255,255,0.3)]"
-                >
-                  Írj Nekünk
-                </a>
-                <button
-                  onClick={() => navigate('/')}
-                  className="px-12 py-6 rounded-full bg-[#1c1c1e] text-white border border-white/10 font-bold text-xl hover:bg-[#2c2c2e] transition-colors duration-300"
-                >
-                  Vissza a Főoldalra
-                </button>
-              </div>
-
-
-              <div className="mt-40 pt-10 w-full border-t border-white/5">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8 opacity-50 hover:opacity-100 transition-opacity duration-500">
-                  <div className="text-center md:text-left">
-                    <p className="text-[10px] text-gray-500 font-mono tracking-[0.3em] uppercase mb-2">Developed by</p>
-                    <div className="text-white font-bold tracking-widest uppercase text-lg">
-                      SA SOFTWARE
-                    </div>
-                  </div>
-
-                  <div className="hidden md:block h-8 w-[1px] bg-white/20"></div>
-
-                  <div className="text-center md:text-right">
-                    <p className="text-[10px] text-gray-500 font-mono tracking-[0.3em] uppercase mb-2">Designed by</p>
-                    <div className="text-white font-bold tracking-widest uppercase text-lg">
-                      HIDALMÁSI ERIK
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </FadeUp>
-          </div>
+            </div>
+          </FadeUp>
         </section>
 
       </main>

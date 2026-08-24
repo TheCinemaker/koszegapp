@@ -45,18 +45,18 @@ export default function PassLanding() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0C234B] text-white pb-32 pt-20 px-4 relative overflow-hidden">
+        <div className="min-h-screen pb-32 pt-20 px-4 relative overflow-hidden text-gray-900 dark:text-gray-100 transition-colors duration-300">
             {/* Background effects */}
-            <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-brand/5 blur-[120px] rounded-full pointer-events-none" />
 
             <div className="max-w-2xl mx-auto z-10 relative">
                 {/* Header */}
                 <header className="mb-8 text-center">
-                    <h1 className="text-4xl font-black bg-gradient-to-r from-white via-[#C8AF64] to-white bg-clip-text text-transparent mb-2 tracking-tight">
+                    <h1 className="text-4xl font-black text-brand dark:text-white mb-2 tracking-tight">
                         KőszegPass
                     </h1>
-                    <p className="text-blue-200/70 font-semibold tracking-wide text-sm uppercase">
+                    <p className="text-gray-500 dark:text-gray-400 font-semibold tracking-wide text-sm uppercase">
                         A Te személyes útmutatód és kedvezménykártyád
                     </p>
                 </header>
@@ -82,8 +82,8 @@ export default function PassLanding() {
                     </div>
                     
                     {/* Flip Hint */}
-                    <div className="flex justify-center items-center gap-1.5 mt-3 text-blue-200/40 pointer-events-none">
-                        <IoSwapHorizontal size={12} className="animate-pulse text-[#C8AF64]" />
+                    <div className="flex justify-center items-center gap-1.5 mt-3 text-gray-400 dark:text-gray-500 pointer-events-none">
+                        <IoSwapHorizontal size={12} className="animate-pulse text-indigo-500" />
                         <span className="text-[10px] font-bold uppercase tracking-wider">
                             Koppints a kártyára a bemutató forgatásához!
                         </span>
@@ -93,24 +93,25 @@ export default function PassLanding() {
                 {/* Main CTA */}
                 <FadeUp delay={0.2}>
                     <button
-                        onClick={handleStartRegister}
-                        className="w-full bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] hover:scale-[1.02] active:scale-95 text-[#0C234B] font-black text-lg py-4 px-6 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 mb-8"
+                        // onClick={handleStartRegister}
+                        disabled
+                        className="w-full bg-brand dark:bg-indigo-500 opacity-80 cursor-not-allowed text-white font-black text-lg py-4 px-6 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 mb-8"
                     >
-                        <span>Kártya igénylése</span>
-                        <IoArrowForward size={20} />
+                        <span>HAMAROSAN ELÉRHETŐ!</span>
+                        {/* <IoArrowForward size={20} /> */}
                     </button>
                 </FadeUp>
 
                 {/* Benefits */}
                 <div className="space-y-4 mb-8">
                     <FadeUp delay={0.3}>
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 rounded-2xl p-5 flex gap-4 shadow-sm hover:shadow-md transition-shadow">
+                            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
                                 <IoRibbonOutline size={24} />
                             </div>
                             <div>
-                                <h3 className="font-bold text-white text-lg mb-1">Azonnali Kedvezmények</h3>
-                                <p className="text-sm text-blue-100/60 leading-relaxed">
+                                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-1">Azonnali Kedvezmények</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                                     Vásárláskor mutasd fel a kártyát Kőszeg múzeumaiban, éttermeiben és helyi üzleteiben az azonnali kedvezményekért.
                                 </p>
                             </div>
@@ -118,13 +119,13 @@ export default function PassLanding() {
                     </FadeUp>
 
                     <FadeUp delay={0.4}>
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-400 shrink-0">
+                        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 rounded-2xl p-5 flex gap-4 shadow-sm hover:shadow-md transition-shadow">
+                            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
                                 <IoWalletOutline size={24} />
                             </div>
                             <div>
-                                <h3 className="font-bold text-white text-lg mb-1">Apple & Google Wallet támogatás</h3>
-                                <p className="text-sm text-blue-100/60 leading-relaxed">
+                                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-1">Apple & Google Wallet támogatás</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                                     Vásárlás után egy kattintással elmentheted a telefonod digitális tárcájába (Wallet). Nem kell külön applikációt letöltened!
                                 </p>
                             </div>
@@ -132,13 +133,13 @@ export default function PassLanding() {
                     </FadeUp>
 
                     <FadeUp delay={0.5}>
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 rounded-2xl p-5 flex gap-4 shadow-sm hover:shadow-md transition-shadow">
+                            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
                                 <IoCardOutline size={24} />
                             </div>
                             <div>
-                                <h3 className="font-bold text-white text-lg mb-1">Egy évig érvényes</h3>
-                                <p className="text-sm text-blue-100/60 leading-relaxed">
+                                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-1">Egy évig érvényes</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                                     A kártya a vásárlás napjától számítva pontosan 1 évig érvényes. Minden évben megújuló egyedi dizájnnal és kedvezményekkel vár.
                                 </p>
                             </div>
@@ -148,29 +149,29 @@ export default function PassLanding() {
 
                 {/* Plans / Pricing */}
                 <FadeUp delay={0.6}>
-                    <h3 className="text-xl font-black text-center text-[#C8AF64] mb-6">KőszegPass árak</h3>
+                    <h3 className="text-xl font-black text-center text-brand dark:text-white mb-6">KőszegPass árak</h3>
                     <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-center">
-                            <h4 className="font-bold text-white text-lg mb-1">Egyéni Pass</h4>
-                            <p className="text-xs text-blue-200/50 mb-4">Egy személy részére</p>
-                            <p className="text-3xl font-black text-[#C8AF64]">4 000 Ft</p>
-                            <p className="text-[10px] text-blue-100/40 mt-1">/ 1 év érvényesség</p>
+                        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 rounded-2xl p-6 text-center shadow-sm">
+                            <h4 className="font-bold text-gray-900 dark:text-white text-lg mb-1">Egyéni Pass</h4>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Egy személy részére</p>
+                            <p className="text-3xl font-black text-brand dark:text-brand-light blur-md select-none pointer-events-none">4 000 Ft</p>
+                            <p className="text-[10px] text-gray-400 mt-1">/ 1 év érvényesség</p>
                         </div>
-                        <div className="bg-white/5 backdrop-blur-xl border border-[#C8AF64]/30 rounded-2xl p-6 text-center relative overflow-hidden">
-                            <div className="absolute top-0 right-0 bg-[#C8AF64] text-[#0C234B] text-[9px] font-bold px-2 py-0.5 rounded-bl-lg">
+                        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-brand/30 dark:border-indigo-500/50 rounded-2xl p-6 text-center relative overflow-hidden shadow-sm">
+                            <div className="absolute top-0 right-0 bg-brand dark:bg-indigo-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-bl-lg">
                                 POPULÁRIS
                             </div>
-                            <h4 className="font-bold text-white text-lg mb-1">Családi Pass</h4>
-                            <p className="text-xs text-blue-200/50 mb-4">2 felnőtt + gyermekek részére</p>
-                            <p className="text-3xl font-black text-[#C8AF64]">10 000 Ft</p>
-                            <p className="text-[10px] text-blue-100/40 mt-1">/ 1 év érvényesség</p>
+                            <h4 className="font-bold text-gray-900 dark:text-white text-lg mb-1">Családi Pass</h4>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">2 felnőtt + gyermekek részére</p>
+                            <p className="text-3xl font-black text-brand dark:text-brand-light blur-md select-none pointer-events-none">10 000 Ft</p>
+                            <p className="text-[10px] text-gray-400 mt-1">/ 1 év érvényesség</p>
                         </div>
                     </div>
                 </FadeUp>
 
                 {hotel && (
-                    <p className="text-center text-xs text-blue-200/40 mt-8 italic">
-                        Kódot szkenneltél a szállásodon: <strong className="text-blue-200">{hotel}</strong>. 
+                    <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-8 italic">
+                        Kódot szkenneltél a szállásodon: <strong className="text-brand dark:text-brand-light">{hotel}</strong>. 
                         A regisztráció után a szálláshelyed automatikusan rögzítésre kerül.
                     </p>
                 )}
@@ -180,7 +181,7 @@ export default function PassLanding() {
                     <div className="text-center mt-8">
                         <button
                             onClick={() => navigate('/pass/megkeresem')}
-                            className="text-xs font-bold text-[#C8AF64]/80 hover:text-[#C8AF64] underline transition-colors"
+                            className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 underline transition-colors"
                         >
                             Már rendelkezel KőszegPass kártyával? Kártya megkeresése
                         </button>

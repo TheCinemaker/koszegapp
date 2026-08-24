@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next'; // Added import
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchParking } from '../api';
 import { isParkingPaidNow } from '../utils/parkingUtils';
 import {
-  IoSearchOutline,
   IoArrowBack,
   IoLocationOutline,
   IoMapOutline,
@@ -14,10 +13,11 @@ import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
 import { AnimatePresence } from 'framer-motion';
 import SMSParkingCard from '../components/SMSParkingCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 import SEO from '../components/SEO';
 
 export default function Parking() {
-  const { t } = useTranslation('parking'); // Load namespace
+  const { t } = useTranslation('parking');
   const navigate = useNavigate();
   const [parkingSpots, setParkingSpots] = useState([]);
   const [error, setError] = useState(null);
@@ -31,19 +31,9 @@ export default function Parking() {
       .finally(() => setLoading(false));
   }, []);
 
-
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-          <SEO
-              title="Parkolás Kőszegen – Zónák, díjak, helyek"
-              description="Kőszeg parkolóinak interaktív térképe: parkolási övezetek, aktuális díjak, szabad helyek és navigáció — naprakész információk az appon."
-              url="/parking"
-              keywords="Kőszeg parkolás, Kőszeg parkoló, Kőszeg parkolási zóna, Kőszeg P+R"
-          />
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-500"></div>
-      </div>
+      <LoadingSpinner fullScreen={true} label="Parkolási adatok betöltése..." />
     );
   }
 
@@ -51,34 +41,34 @@ export default function Parking() {
 
   return (
     <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
-
-      {/* GLOBAL BACKGROUND NOISE */}
-      <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
+      <SEO
+        title="Parkolás Kőszegen"
+        description="Parkolóhelyek, zónák, díjak és SMS parkolási információk Kőszegen."
+        url="/parking"
+        keywords="Kőszeg parkolás, Kőszeg parkoló, SMS parkolás Kőszeg"
+      />
 
       <div className="max-w-4xl mx-auto relative z-10">
 
-
-
         {/* 1. SIMPLE HEADER */}
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={() => navigate('/')} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/40 hover:bg-white/60 transition-colors shadow-sm">
-            <IoArrowBack className="text-xl text-gray-900 dark:text-white" />
+          <button onClick={() => navigate('/')} className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+            <IoArrowBack className="text-xl text-brand dark:text-white" />
           </button>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {t('title')}
           </h1>
         </div>
 
-        {/* NEW: SMS PARKING CARD */}
+        {/* SMS PARKING CARD */}
         <FadeUp delay={0.05}>
           <SMSParkingCard />
         </FadeUp>
 
         {/* 2. MAP BUTTON */}
         <FadeUp delay={0.1} className="mb-6 flex justify-end">
-          {/* Map Button - Compact iOS 26 Style */}
-          <Link to="/parking-map" className="flex-shrink-0 relative group overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] w-12 h-12 flex items-center justify-center border border-white/40 bg-white/50 dark:bg-black/30 backdrop-blur-md">
-            <IoMapOutline className="text-xl text-zinc-600 dark:text-zinc-400" />
+          <Link to="/parking-map" className="flex-shrink-0 relative group overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] w-12 h-12 flex items-center justify-center border border-white/60 dark:border-white/10 bg-brand text-white">
+            <IoMapOutline className="text-xl" />
           </Link>
         </FadeUp>
 
@@ -91,7 +81,7 @@ export default function Parking() {
                 return (
                   <FadeUp
                     key={`${spot.id}-${index}`}
-                    delay={index * 0.1}
+                    delay={index * 0.08}
                     duration={1}
                     className="h-full"
                   >
@@ -99,12 +89,10 @@ export default function Parking() {
                       to={`/parking/${spot.id}`}
                       className="
                             group relative block h-full
-                            bg-white/70 dark:bg-white/5 
-                            backdrop-blur-[20px] backdrop-saturate-[1.6]
-                            border border-white/60 dark:border-white/10
-                            rounded-[2rem] overflow-hidden
-                            shadow-sm hover:shadow-2xl hover:shadow-zinc-500/20
-                            transition-all duration-700 hover:scale-[1.02] active:scale-[0.98]
+                            bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10
+                            rounded-2xl overflow-hidden
+                            shadow-sm hover:shadow-md
+                            transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
                             flex flex-col
                         "
                     >
@@ -114,7 +102,7 @@ export default function Parking() {
                           <img
                             src={`/images/parking/${spot.image}`}
                             alt={spot.name}
-                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ease-out"
+                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 ease-out"
                             onError={(e) => {
                               e.target.onerror = null;
                               e.target.style.display = 'none';
@@ -127,7 +115,7 @@ export default function Parking() {
                           />
                         ) : null}
                         {/* Fallback Ghost */}
-                        <div className={`${spot.image ? 'hidden' : 'flex'} absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-white/5 dark:to-white/10 items-center justify-center`}>
+                        <div className={`${spot.image ? 'hidden' : 'flex'} absolute inset-0 bg-slate-800 items-center justify-center`}>
                           <GhostImage className="w-full h-full opacity-50" />
                           <IoCarSportOutline className="absolute text-5xl text-gray-400/50" />
                         </div>
@@ -137,8 +125,8 @@ export default function Parking() {
                         {/* Status Badge */}
                         <div className={`
                                     absolute top-4 right-4 px-3 py-1.5 rounded-full border border-white/20 
-                                    flex items-center gap-1.5 text-[10px] font-bold text-white shadow-lg uppercase tracking-wider
-                                    ${isPaid ? 'bg-rose-500/90' : 'bg-emerald-500/90'} backdrop-blur-xl
+                                    flex items-center gap-1.5 text-[10px] font-semibold text-white shadow-sm uppercase tracking-wider
+                                    ${isPaid ? 'bg-rose-500/90' : 'bg-emerald-500/90'} backdrop-blur-md
                                 `}>
                           <div className={`w-1.5 h-1.5 rounded-full ${isPaid ? 'bg-white' : 'bg-white animate-pulse'}`} />
                           {isPaid ? t('paid') : t('free')}
@@ -146,22 +134,22 @@ export default function Parking() {
                       </div>
 
                       {/* Content Section */}
-                      <div className="p-6 flex-1 flex flex-col justify-between relative bg-gradient-to-b from-white/10 to-transparent">
+                      <div className="p-6 flex-1 flex flex-col justify-between relative">
                         <div>
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight mb-2 group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors">
+                          <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-2 tracking-display">
                             {spot.name}
                           </h3>
                           <div className="flex items-start gap-2 text-gray-500 dark:text-gray-400 text-xs font-medium leading-relaxed">
-                            <IoLocationOutline className="shrink-0 text-base text-zinc-500" />
+                            <IoLocationOutline className="shrink-0 text-base text-brand dark:text-brand-light" />
                             <span className="line-clamp-2">{spot.address}</span>
                           </div>
                         </div>
 
                         <div className="flex items-center justify-between border-t border-gray-200/50 dark:border-white/10 pt-4 mt-6">
-                          <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                          <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-widest">
                             {spot.capacity ? `${spot.capacity} ${t('spots')}` : ''}
                           </span>
-                          <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
+                          <span className="text-xs font-semibold text-brand dark:text-brand-light flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
                             {t('details')} <IoArrowBack className="rotate-180" />
                           </span>
                         </div>
@@ -173,10 +161,7 @@ export default function Parking() {
             ) : (
               <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-40">
                 <IoCarSportOutline className="text-6xl text-gray-400 mb-4" />
-                <p className="text-lg font-bold text-gray-500">{t('noResults')}</p>
-                <button onClick={() => { setFilterType('all'); setSearchTerm('') }} className="mt-2 text-zinc-500 text-sm font-bold hover:underline">
-                  {t('clearFilters')}
-                </button>
+                <p className="text-lg font-semibold text-gray-500">{t('noResults')}</p>
               </div>
             )}
           </AnimatePresence>

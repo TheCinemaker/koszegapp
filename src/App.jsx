@@ -17,9 +17,8 @@ import {
   IoHomeOutline
 } from 'react-icons/io5';
 import { triggerHaptic, HapticType } from './utils/haptics';
-import AIAssistant from './components/AIAssistant';
+import AIFab from './components/AIFab';
 import { AIOrchestratorProvider } from './contexts/AIOrchestratorContext.jsx';
-import AISmartLayer from './components/AISmartLayer.jsx';
 import AIDebugPanel from './components/AIDebugPanel.jsx';
 import ProgramModal from './components/ProgramModal';
 
@@ -30,9 +29,11 @@ import SmartSpotlight from './components/SmartSpotlight';
 import LiveCityMap from './components/LiveCityMap';
 import ResidentCheckModal from './components/ResidentCheckModal';
 
+import AmbientBackground from './components/AmbientBackground';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import SettingsMenu from './components/SettingsMenu';
 import UserMessageRibbon from './components/UserMessageRibbon';
+import VisitKoszegLogo from './components/VisitKoszegLogo';
 
 
 import { lazyWithRetry } from './utils/lazyWithRetry';
@@ -56,7 +57,6 @@ export default function App() {
   );
 }
 
-import AmbientBackground from './components/AmbientBackground';
 import { fetchCurrentWeather, fetchUpcomingWeather } from './api/weather';
 
 // ... (imports remain)
@@ -397,10 +397,13 @@ function MainAppContent() {
 
   return (
     <>
+      {/* Deepest fallback layer (also covers iOS rubber-band overscroll area) */}
+      <div className="fixed inset-0 bg-slate-50 dark:bg-black -z-50 transition-colors duration-500" />
+      {/* Live atmospheric sky — the colored surface the frosted UI blurs against */}
       <AmbientBackground weather={weather} upcoming={upcomingWeather} dark={dark} />
       <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
-          {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && (
+          {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && (
             <>
               <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
                 <div className="
@@ -408,27 +411,25 @@ function MainAppContent() {
                 w-full max-w-5xl
                 h-full
                 flex items-center justify-between px-3 sm:px-6
-                bg-white/40 dark:bg-[#1a1c2e]/40 
-                backdrop-blur-[25px] 
-                backdrop-saturate-[1.8]
-                backdrop-brightness-[1.1]
-                rounded-[2rem] 
-                border border-white/50 dark:border-white/20 
-                shadow-[0_10px_40px_rgba(0,0,0,0.1)]
+                bg-white/0 dark:bg-black/10
+                backdrop-blur-lg transform-gpu
+                rounded-2xl
+                border border-white/60 dark:border-white/10
+                shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                 relative
                 ">
-                  {/* Subtle Gradient Accent (Top Lip) */}
-                  <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-70" />
+                  {/* Apple Glass Trick (Glossy Edge) */}
+                  <div className="apple-glass-border" />
 
                   <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                     <div
                       onClick={handleSecretTap}
                       className="flex items-center cursor-pointer whitespace-nowrap select-none active:scale-95 transition-all duration-300 group"
                     >
-                      <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
+                      <span className="text-xl sm:text-2xl font-medium text-slate-800 dark:text-white items-center tracking-tight uppercase text-readability-shadow">
                         visit
                       </span>
-                      <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-indigo-700 to-indigo-900 bg-clip-text text-transparent tracking-tighter uppercase text-readability-shadow">
+                      <span className="text-xl sm:text-2xl font-semibold text-gold-text dark:text-gold-light tracking-tighter uppercase text-readability-shadow">
                         Kőszeg
                       </span>
                     </div>
@@ -448,7 +449,7 @@ function MainAppContent() {
                                 transition-all duration-300 hover:scale-105 active:scale-95"
                       aria-label="Lakossági infók"
                     >
-                      <IoHomeOutline className="text-base sm:text-lg" />
+                      <IoHomeOutline className="text-base sm:text-lg text-gold-text dark:text-gold-light" />
                       <span className="text-[10px] sm:text-xs font-bold hidden md:inline">Helyi</span>
                     </button>
 
@@ -467,7 +468,7 @@ function MainAppContent() {
                                 transition-all duration-300 hover:scale-105 active:scale-95"
                       aria-label="Térkép"
                     >
-                      <IoMapOutline className="text-lg sm:text-xl" />
+                      <IoMapOutline className="text-lg sm:text-xl text-gold-text dark:text-gold-light" />
                     </Link>
 
                     {/* Favorites Button */}
@@ -486,11 +487,11 @@ function MainAppContent() {
                         {favoritesCount > 0 ? (
                           <IoHeart className="text-lg sm:text-xl text-rose-500 drop-shadow-sm" />
                         ) : (
-                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-rose-500 transition-colors" />
+                          <IoHeartOutline className="text-lg sm:text-xl group-hover:text-gold-text dark:group-hover:text-gold-light transition-colors" />
                         )}
 
                         {favoritesCount > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
+                          <span className="absolute -top-1 -right-1 bg-brand text-gold-light text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
                             {favoritesCount}
                           </span>
                         )}
@@ -512,11 +513,10 @@ function MainAppContent() {
                   </div>
                 </div>
               </header>
-              <div className="h-16" />
             </>
           )}
 
-          <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen overflow-hidden ${isInGameMode ? '' : 'px-4 pt-4'}`}>
+          <main className={`flex-1 container mx-auto relative w-full h-full min-h-screen ${isInGameMode ? '' : 'px-4'}`}>
             {/* <Routes> (Moved to AnimatedRoutes) </Routes> */}
             <AnimatedRoutes appData={appData} weather={weather} />
           </main>
@@ -529,7 +529,7 @@ function MainAppContent() {
 
               {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
-              {!isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && <FloatingNavbar />}
+              {!isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && <FloatingNavbar />}
               {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
               {!isKioskMode &&
                 !location.pathname.startsWith('/koszegieknek') &&
@@ -538,7 +538,8 @@ function MainAppContent() {
                 !location.pathname.startsWith('/eats') &&
                 !location.pathname.startsWith('/pass') &&
                 !location.pathname.startsWith('/scanner') &&
-                !location.pathname.startsWith('/buy-pass') && (
+                !location.pathname.startsWith('/buy-pass') &&
+                !location.pathname.startsWith('/adatbekero') && (
                   <SmartSpotlight appData={appData} />
                 )}
 
@@ -558,10 +559,8 @@ function MainAppContent() {
             </>
           )}
 
-          {/* AI Core System (Deactivated per user request) */}
-          {/* <AISmartLayer />
-          <AIAssistant /> */}
-
+          {/* Removed old AI Core System (AIAssistant) and AIFab Chatbot per user request */}
+          {/* <AIFab /> */}
           {/* AI Debug Panel (STILL DEV ONLY) */}
           {devMode && <AIDebugPanel />}
         </AIOrchestratorProvider>

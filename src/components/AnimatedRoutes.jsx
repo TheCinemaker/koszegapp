@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, useNavigationType, Navigate } from 'react-r
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 
 import { lazyWithRetry } from '../utils/lazyWithRetry';
+import LoadingSpinner from './LoadingSpinner';
 import KioskInnerRoutes from './Kiosk/KioskInnerRoutes';
 
 // Importing Pages
@@ -67,6 +68,7 @@ const EatsLanding = lazyWithRetry(() => import('../pages/EatsLanding'));
 const Moments = lazyWithRetry(() => import('../pages/Moments'));
 const OstromPage = lazyWithRetry(() => import('../pages/OstromPage'));
 const KoszegChat = lazyWithRetry(() => import('../pages/KoszegChat'));
+const Adatbekero = lazyWithRetry(() => import('../pages/Adatbekero'));
 
 // QR Platform (Standalone – Digitális Pincér)
 const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
@@ -134,14 +136,7 @@ export default function AnimatedRoutes({ appData, weather }) {
 
   return (
     <DirectionContext.Provider value={direction}>
-      <Suspense fallback={
-        <div className="flex h-screen w-full items-center justify-center bg-zinc-50 dark:bg-zinc-900">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-zinc-500 font-medium text-sm animate-pulse">Betöltés...</p>
-          </div>
-        </div>
-      }>
+      <Suspense fallback={<LoadingSpinner fullScreen={true} label="Betöltés..." />}>
         <LayoutGroup>
         <AnimatePresence custom={direction} initial={false}>
           <Routes location={location} key={location.pathname}>
@@ -274,6 +269,9 @@ export default function AnimatedRoutes({ appData, weather }) {
           {/* Ephemeral Moments Feed */}
           <Route path="/moments" element={<PageWrapper><Moments /></PageWrapper>} />
 
+          {/* Adatbekerő (Standalone Partner Form) */}
+          <Route path="/adatbekero" element={<PageWrapper showFooter={false}><Adatbekero /></PageWrapper>} />
+
           {/* VisitPointer Standalone Apps */}
           <Route path="/remote" element={<VisitPointerPhone />} />
           <Route path="/pointer-display" element={<VisitPointerDisplay appData={appData} />} />
@@ -312,6 +310,16 @@ const morphVariants = {
 
 const PageWrapper = ({ children, showFooter = true, morph = false }) => {
   const direction = React.useContext(DirectionContext);
+  const location = useLocation();
+  
+  // Detemine if the current route has the global header (mirrors App.jsx logic)
+  const isKioskMode = localStorage.getItem('kiosk_mode') === 'true';
+  const hasHeader = !isKioskMode && 
+                    !location.pathname.startsWith('/eats') && 
+                    !location.pathname.startsWith('/scanner') && 
+                    !location.pathname.startsWith('/buy-pass') && 
+                    !location.pathname.startsWith('/adatbekero');
+
   return (
   <motion.div
     custom={direction}
@@ -320,7 +328,7 @@ const PageWrapper = ({ children, showFooter = true, morph = false }) => {
     exit="out"
     variants={morph ? morphVariants : pageVariants}
     transition={morph ? { duration: 0.25 } : pageTransition}
-    className="w-full bg-gray-50 dark:bg-zinc-900"
+    className="w-full bg-surface-light dark:bg-surface-dark"
     style={{
       position: 'absolute', // Critical for preventing layout jumps (flicker)
       width: '100%',
@@ -331,7 +339,7 @@ const PageWrapper = ({ children, showFooter = true, morph = false }) => {
       overflowX: 'hidden'
     }}
   >
-    <div className="pt-4 min-h-screen flex flex-col">
+    <div className={`min-h-screen flex flex-col ${hasHeader ? 'pt-20' : 'pt-4'}`}>
       <div className="flex-1">
         {children}
       </div>

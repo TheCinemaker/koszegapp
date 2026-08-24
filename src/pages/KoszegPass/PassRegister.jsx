@@ -63,35 +63,35 @@ export default function PassRegister() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0C234B] text-white flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+        <div className="min-h-screen text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden transition-colors duration-300">
             {/* Background effects */}
-            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-brand/5 blur-[100px] rounded-full pointer-events-none" />
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl z-10"
+                className="w-full max-w-md bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-lg z-10"
             >
                 {/* Back button */}
                 <button 
                     onClick={() => navigate(localStorage.getItem('kiosk_mode') === 'true' ? '/buy-pass' : '/pass')} 
-                    className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors mb-6 flex items-center justify-center w-10 h-10"
+                    className="p-2 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-full transition-colors mb-6 flex items-center justify-center w-10 h-10 shadow-sm"
                 >
-                    <IoArrowBack size={20} />
+                    <IoArrowBack size={20} className="text-gray-600 dark:text-gray-300" />
                 </button>
 
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-black bg-gradient-to-r from-white via-[#C8AF64] to-white bg-clip-text text-transparent">
+                    <h1 className="text-2xl font-black text-brand dark:text-white">
                         Turisztikai Regisztráció
                     </h1>
-                    <p className="text-blue-200/60 text-xs mt-2 leading-relaxed">
+                    <p className="text-gray-500 dark:text-gray-400 text-xs mt-2 leading-relaxed">
                         Kérjük, add meg az adataidat a KőszegPass kiállításához és statisztikai elemzésekhez.
                     </p>
                 </div>
 
                 {form.hotelSource && (
-                    <div className="bg-yellow-500/10 border border-[#C8AF64]/30 rounded-xl p-3 mb-6 text-center text-xs text-[#C8AF64] font-semibold">
+                    <div className="bg-brand/10 dark:bg-indigo-500/10 border border-brand/20 dark:border-indigo-500/20 rounded-xl p-3 mb-6 text-center text-xs text-brand dark:text-indigo-400 font-semibold">
                         📍 Szálláshelyed: {form.hotelSource.toUpperCase()}
                     </div>
                 )}
@@ -99,15 +99,15 @@ export default function PassRegister() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Holder Name */}
                     <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase text-blue-200/50 tracking-wider ml-1">Kártyatulajdonos Neve *</label>
+                        <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider ml-1">Kártyatulajdonos Neve *</label>
                         <div className="relative">
-                            <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-200/50" />
+                            <IoPerson className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="text"
                                 required
                                 value={form.holderName}
                                 onChange={e => setForm({ ...form, holderName: e.target.value })}
-                                className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:border-[#C8AF64]/50 focus:ring-1 focus:ring-[#C8AF64]/50 outline-none transition-all placeholder:text-blue-100/30 text-white text-sm"
+                                className="w-full h-12 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl pl-12 pr-4 focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-400 text-gray-900 dark:text-white text-sm"
                                 placeholder="Pl. Kovács István"
                             />
                         </div>
@@ -115,15 +115,15 @@ export default function PassRegister() {
 
                     {/* Email */}
                     <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase text-blue-200/50 tracking-wider ml-1">Email cím (pass kézbesítéséhez) *</label>
+                        <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider ml-1">Email cím (pass kézbesítéséhez) *</label>
                         <div className="relative">
-                            <IoMail className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-200/50" />
+                            <IoMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="email"
                                 required
                                 value={form.holderEmail}
                                 onChange={e => setForm({ ...form, holderEmail: e.target.value })}
-                                className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:border-[#C8AF64]/50 focus:ring-1 focus:ring-[#C8AF64]/50 outline-none transition-all placeholder:text-blue-100/30 text-white text-sm"
+                                className="w-full h-12 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl pl-12 pr-4 focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-400 text-gray-900 dark:text-white text-sm"
                                 placeholder="kovacs.istvan@gmail.com"
                             />
                         </div>
@@ -131,15 +131,15 @@ export default function PassRegister() {
 
                     {/* Origin Zip Code */}
                     <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase text-blue-200/50 tracking-wider ml-1">Honnan érkeztél? (Irányítószám)</label>
+                        <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider ml-1">Honnan érkeztél? (Irányítószám)</label>
                         <div className="relative">
-                            <IoMap className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-200/50" />
+                            <IoMap className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="text"
                                 maxLength={8}
                                 value={form.originZip}
                                 onChange={e => setForm({ ...form, originZip: e.target.value })}
-                                className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:border-[#C8AF64]/50 focus:ring-1 focus:ring-[#C8AF64]/50 outline-none transition-all placeholder:text-blue-100/30 text-white text-sm"
+                                className="w-full h-12 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl pl-12 pr-4 focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-400 text-gray-900 dark:text-white text-sm"
                                 placeholder="Pl. 9700"
                             />
                         </div>
@@ -147,14 +147,14 @@ export default function PassRegister() {
 
                     {/* Phone Number */}
                     <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase text-blue-200/50 tracking-wider ml-1">Telefonszám (Opcionális)</label>
+                        <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider ml-1">Telefonszám (Opcionális)</label>
                         <div className="relative">
-                            <IoPhonePortrait className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-200/50" />
+                            <IoPhonePortrait className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="tel"
                                 value={form.phone}
                                 onChange={e => setForm({ ...form, phone: e.target.value })}
-                                className="w-full h-12 bg-black/20 border border-white/10 rounded-xl pl-12 pr-4 focus:border-[#C8AF64]/50 focus:ring-1 focus:ring-[#C8AF64]/50 outline-none transition-all placeholder:text-blue-100/30 text-white text-sm"
+                                className="w-full h-12 bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 rounded-xl pl-12 pr-4 focus:border-brand dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand dark:focus:ring-indigo-500 outline-none transition-all placeholder:text-gray-400 text-gray-900 dark:text-white text-sm"
                                 placeholder="+36 30 123 4567"
                             />
                         </div>
@@ -163,37 +163,37 @@ export default function PassRegister() {
                     {/* Stat fields */}
                     <div className="grid grid-cols-2 gap-4 pt-2">
                         <div className="space-y-1">
-                            <label className="text-[9px] font-black uppercase text-blue-200/40 tracking-wider">Hány napra jöttél?</label>
+                            <label className="text-[9px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider">Hány napra jöttél?</label>
                             <select
                                 value={stayDuration}
                                 onChange={e => setStayDuration(e.target.value)}
-                                className="w-full h-11 bg-black/30 border border-white/10 rounded-xl px-3 outline-none text-xs text-white focus:border-[#C8AF64]/40"
+                                className="w-full h-11 bg-white/50 dark:bg-black/30 border border-white/40 dark:border-white/10 rounded-xl px-3 outline-none text-xs text-gray-900 dark:text-white focus:border-brand dark:focus:border-indigo-500"
                             >
-                                <option className="bg-[#0C234B]" value="1">1 nap (átutazó)</option>
-                                <option className="bg-[#0C234B]" value="2-3">2-3 nap (hétvége)</option>
-                                <option className="bg-[#0C234B]" value="4-7">4-7 nap</option>
-                                <option className="bg-[#0C234B]" value="8+">Több mint egy hét</option>
+                                <option className="bg-white dark:bg-zinc-800" value="1">1 nap (átutazó)</option>
+                                <option className="bg-white dark:bg-zinc-800" value="2-3">2-3 nap (hétvége)</option>
+                                <option className="bg-white dark:bg-zinc-800" value="4-7">4-7 nap</option>
+                                <option className="bg-white dark:bg-zinc-800" value="8+">Több mint egy hét</option>
                             </select>
                         </div>
 
                         <div className="space-y-1">
-                            <label className="text-[9px] font-black uppercase text-blue-200/40 tracking-wider">Utazási mód</label>
+                            <label className="text-[9px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-wider">Utazási mód</label>
                             <select
                                 value={travelMethod}
                                 onChange={e => setTravelMethod(e.target.value)}
-                                className="w-full h-11 bg-black/30 border border-white/10 rounded-xl px-3 outline-none text-xs text-white focus:border-[#C8AF64]/40"
+                                className="w-full h-11 bg-white/50 dark:bg-black/30 border border-white/40 dark:border-white/10 rounded-xl px-3 outline-none text-xs text-gray-900 dark:text-white focus:border-brand dark:focus:border-indigo-500"
                             >
-                                <option className="bg-[#0C234B]" value="auto">Autó</option>
-                                <option className="bg-[#0C234B]" value="vonat">Vonat / Busz</option>
-                                <option className="bg-[#0C234B]" value="kerekpar">Kerékpár</option>
-                                <option className="bg-[#0C234B]" value="egyeb">Egyéb</option>
+                                <option className="bg-white dark:bg-zinc-800" value="auto">Autó</option>
+                                <option className="bg-white dark:bg-zinc-800" value="vonat">Vonat / Busz</option>
+                                <option className="bg-white dark:bg-zinc-800" value="kerekpar">Kerékpár</option>
+                                <option className="bg-white dark:bg-zinc-800" value="egyeb">Egyéb</option>
                             </select>
                         </div>
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full h-14 bg-gradient-to-r from-[#C8AF64] to-[#e4cc7d] hover:scale-[1.02] active:scale-95 text-[#0C234B] font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 pt-1"
+                        className="w-full h-14 bg-brand dark:bg-indigo-500 hover:opacity-90 active:scale-95 text-white font-black rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 pt-1 mt-4"
                     >
                         <span>Tovább a vásárláshoz</span>
                         <IoArrowForward size={18} />

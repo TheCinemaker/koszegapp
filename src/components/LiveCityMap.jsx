@@ -1,6 +1,7 @@
 // src/components/LiveCityMap.jsx
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SEO from './SEO';
 import {
   MapContainer,
   TileLayer,
@@ -118,6 +119,7 @@ export default function LiveCityMap({
   const [show, setShow] = useState({ events: true, attractions: true, leisure: true, restaurants: true });
   const [userPos, setUserPos] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false); // Default closed as requested
+  const [searchTerm, setSearchTerm] = useState('');
 
   // --- Geolocation ---
   useEffect(() => {
@@ -172,8 +174,15 @@ export default function LiveCityMap({
       today: group.items.some(item => isEventToday(item)),
     }));
 
+    const filterSearch = (list) => {
+      if (!Array.isArray(list)) return [];
+      if (!searchTerm || searchTerm.trim().length < 2) return list;
+      const term = searchTerm.toLowerCase();
+      return list.filter(item => (item.name || item.title || '').toLowerCase().includes(term));
+    };
+
     // Helper for other categories
-    const mapItems = (items, prefix) => (Array.isArray(items) ? items : []).flatMap(item =>
+    const mapItems = (items, prefix) => filterSearch(items).flatMap(item =>
       pickLocations(item).map((pos, idx) => ({
         key: `${prefix}-${item.id || 'no-id'}-${pos.lat.toFixed(5)}-${pos.lng.toFixed(5)}-${idx}`,
         item,
@@ -187,14 +196,18 @@ export default function LiveCityMap({
       leisure: mapItems(leisure, 'leis'),
       restaurants: mapItems(restaurants, 'rest'),
     };
-  }, [monthlyEvents, attractions, leisure, restaurants]);
+  }, [monthlyEvents, attractions, leisure, restaurants, searchTerm]);
 
   const tile = TILE_STYLES[tileKey] || TILE_STYLES.CartoLight;
   const currentYear = new Date().getFullYear();
   const availableYears = [currentYear, currentYear + 1, currentYear + 2];
 
   return (
-    <div className="fixed inset-0 z-[100] bg-gray-50 dark:bg-gray-900 overflow-hidden">
+    <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] text-zinc-900 dark:text-white pt-4 pb-28 px-4 sm:px-6">
+      <SEO title="Élő Városi Térkép - Kőszeg" description="Interaktív térkép Kőszeg látnivalóival, eseményeivel, éttermeivel és szabadidős helyszíneivel." url="/live-map" />
+
+      {/* Bento Card Container (CSEMPE - rounded-2xl, border, overflow-hidden) */}
+      <div className="max-w-6xl mx-auto relative rounded-2xl overflow-hidden border border-white/60 dark:border-white/10 shadow-2xl bg-white dark:bg-[#151515] h-[calc(100vh-180px)] min-h-[500px]">
 
       {/* Global CSS for Popups */}
       <style>{`
@@ -216,24 +229,26 @@ export default function LiveCityMap({
 
       {/* --- HEADER --- */}
       {/* Search Bar / Back Button Combo */}
-      <div className="absolute top-0 left-0 right-0 p-4 z-[900] pointer-events-none flex gap-3 safe-area-top">
+      <div className="absolute top-0 left-0 right-0 p-4 z-[900] pointer-events-none flex items-center justify-between gap-3 safe-area-top">
         <button
-          onClick={() => navigate(-1)}
-          className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 backdrop-blur-xl shadow-lg shadow-black/5 border border-black/5 flex items-center justify-center text-black active:scale-90 transition-transform"
+          onClick={() => navigate('/')}
+          className="pointer-events-auto shrink-0 w-11 h-11 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-xl shadow-md border border-white/40 dark:border-white/10 flex items-center justify-center text-zinc-800 dark:text-white cursor-pointer active:scale-95 transition-transform"
         >
-          <FaArrowLeft className="text-lg opacity-70" />
+          <FaArrowLeft className="text-base" />
         </button>
 
-        <div className="flex-1 pointer-events-auto max-w-md mx-auto shadow-[0_8px_20px_rgba(0,0,0,0.08)] rounded-full bg-white/90 backdrop-blur-xl border border-black/5 flex items-center px-4 h-12 gap-3 transition-all hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)]">
-          <IoSearchOutline className="text-xl opacity-40" />
+        <div className="flex-1 pointer-events-auto max-w-md shadow-md rounded-xl bg-white/90 dark:bg-zinc-800/90 backdrop-blur-xl border border-white/40 dark:border-white/10 flex items-center px-3.5 h-11 gap-2.5 transition-all">
+          <IoSearchOutline className="text-lg opacity-50 text-zinc-600 dark:text-zinc-300" />
           <input
             type="text"
             placeholder="Keress helyeket..."
-            className="flex-1 bg-transparent border-none outline-none text-base font-medium placeholder-gray-400"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-1 bg-transparent border-none outline-none text-sm font-medium placeholder-zinc-400 text-zinc-900 dark:text-white"
           />
         </div>
 
-        <div className="w-12 h-12" /> {/* Spacer for symmetry if needed, or Profile button */}
+        <div className="w-11 shrink-0" /> {/* Spacer for symmetry */}
       </div>
 
 
@@ -241,7 +256,7 @@ export default function LiveCityMap({
       <div
         className={`absolute bottom-0 left-0 right-0 z-[1000] transition-transform duration-500 cubic-bezier(0.32, 0.72, 0, 1) ${isPanelOpen ? 'translate-y-0' : 'translate-y-[calc(100%-60px)]'}`}
       >
-        <div className="mx-auto max-w-lg md:max-w-md w-full md:mr-4 md:mb-4 bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-2xl rounded-t-[32px] md:rounded-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-white/20 overflow-hidden flex flex-col max-h-[60vh]">
+        <div className="mx-auto max-w-lg md:max-w-md w-full md:mr-4 md:mb-4 bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-2xl rounded-t-3xl md:rounded-3xl shadow-2xl border-t border-white/30 dark:border-white/10 overflow-hidden flex flex-col max-h-[60vh]">
 
           {/* Grab Handle */}
           <div
@@ -250,7 +265,7 @@ export default function LiveCityMap({
           >
             <div className="w-12 h-1.5 bg-gray-300 dark:bg-white/20 rounded-full mb-1" />
             {!isPanelOpen && (
-              <FaChevronUp className="text-gray-400 text-xs animate-bounce opacity-70" />
+              <FaChevronUp className="text-gray-400 text-xs opacity-70" />
             )}
           </div>
 
@@ -262,14 +277,14 @@ export default function LiveCityMap({
             <div className="grid grid-cols-2 gap-3 mb-6">
               {[
                 { id: 'events', label: 'Események', icon: <FaCalendarAlt />, color: 'bg-pink-500', activeBg: 'bg-pink-500/10 text-pink-600' },
-                { id: 'attractions', label: 'Látnivalók', icon: <FaStar />, color: 'bg-blue-500', activeBg: 'bg-blue-500/10 text-blue-600' },
-                { id: 'leisure', label: 'Szabadidő', icon: <FaWalking />, color: 'bg-green-500', activeBg: 'bg-green-500/10 text-green-600' },
-                { id: 'restaurants', label: 'Gasztro', icon: <FaUtensils />, color: 'bg-orange-500', activeBg: 'bg-orange-500/10 text-orange-600' },
+                { id: 'attractions', label: 'Látnivalók', icon: <FaStar />, color: 'bg-indigo-500', activeBg: 'bg-indigo-500/10 text-indigo-500' },
+                { id: 'leisure', label: 'Szabadidő', icon: <FaWalking />, color: 'bg-emerald-500', activeBg: 'bg-emerald-500/10 text-emerald-600' },
+                { id: 'restaurants', label: 'Gasztro', icon: <FaUtensils />, color: 'bg-amber-500', activeBg: 'bg-amber-500/10 text-amber-600' },
               ].map(layer => (
                 <button
                   key={layer.id}
                   onClick={() => setShow(s => ({ ...s, [layer.id]: !s[layer.id] }))}
-                  className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-200 border border-transparent ${show[layer.id] ? `${layer.activeBg} ring-1 ring-inset ring-black/5` : 'bg-gray-100 dark:bg-white/5 opacity-60 grayscale'}`}
+                  className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 border border-transparent ${show[layer.id] ? `${layer.activeBg} ring-1 ring-inset ring-black/5` : 'bg-gray-100 dark:bg-white/5 opacity-60 grayscale'}`}
                 >
                   <div className={`w-8 h-8 rounded-full ${layer.color} text-white flex items-center justify-center text-xs shadow-sm`}>
                     {layer.icon}
@@ -280,7 +295,7 @@ export default function LiveCityMap({
             </div>
 
             {/* Filters */}
-            <div className="bg-gray-100 dark:bg-white/5 rounded-2xl p-4 mb-4">
+            <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 mb-4">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-bold uppercase tracking-wider opacity-50">Időszak</span>
                 <FaCalendarAlt className="opacity-30" />
@@ -334,7 +349,7 @@ export default function LiveCityMap({
                       <div className="text-[10px] font-bold text-pink-500 uppercase tracking-wider mb-1">Esemény</div>
                       <h3 className="font-bold text-base leading-tight mb-1">{item.name}</h3>
                       <p className="text-xs text-gray-500 mb-2">{formatEventWhen(item)}</p>
-                      <button onClick={() => navigate(`/events/${item.id}`)} className="w-full py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-xs font-bold transition-colors">Megnyitás</button>
+                      <button onClick={() => navigate(`/events/${item.id}`)} className="w-full py-1.5 rounded-xl bg-indigo-500 hover:opacity-90 text-white text-xs font-bold transition-opacity">Megnyitás</button>
                     </div>
                   ))}
                 </div>
@@ -350,7 +365,7 @@ export default function LiveCityMap({
                     <h3 className="font-bold text-base leading-tight mb-2">{item.name}</h3>
                     <button
                       onClick={() => navigate(`/${type === 'attractions' ? 'attractions' : type === 'restaurants' ? 'gastronomy' : 'leisure'}/${item.id}`)}
-                      className="text-xs font-bold text-blue-600 hover:underline"
+                      className="text-xs font-bold text-indigo-500 hover:underline"
                     >
                       Adatlap megnyitása
                     </button>
@@ -363,5 +378,6 @@ export default function LiveCityMap({
         </MapContainer>
       </div>
     </div>
+  </div>
   );
 }

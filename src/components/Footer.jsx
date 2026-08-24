@@ -11,12 +11,12 @@ export default function Footer() {
     if (isInGameMode) return null;
 
     return (
-        <footer className="mt-auto bg-white/10 dark:bg-gray-900/10 backdrop-blur-3xl border-t border-white/10 dark:border-gray-700/10 text-center py-4 sm:py-5 z-40 transition-all duration-300">
+        <footer className="mt-auto bg-white/10 dark:bg-gray-900/10 backdrop-blur-3xl border-t-2 border-indigo-500 text-center py-4 sm:py-5 z-40 transition-all duration-300 relative">
             <div className="space-y-2">
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
                     © 2026
                     <a
-                        href="mailto:koszegapp@gmail.com"
+                        href="mailto:admin@visitkoszeg.hu"
                         className="font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
                     >
                         SA Software & Network Solutions
@@ -30,8 +30,9 @@ export default function Footer() {
                     <Link to="/adatvedelem" className="opacity-50 hover:opacity-100 transition-opacity hover:text-indigo-500">Adatvédelem</Link>
                     <span className="opacity-50">•</span>
                     <span className="opacity-70">AI with Antigravity</span>
-                    <span className="opacity-50">•</span>
-                    <span className="opacity-30">v4.0</span>
+                </p>
+                <p className="text-[10px] sm:text-xs font-bold text-indigo-500 dark:text-indigo-400 tracking-wider pt-1">
+                    v5.0.0
                 </p>
             </div>
             {/* Extra spacing for FloatingNavbar */}

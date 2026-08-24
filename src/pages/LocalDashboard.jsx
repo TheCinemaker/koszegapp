@@ -10,7 +10,6 @@ import { format, parseISO, isAfter, isSameDay, addDays, getDay, startOfDay } fro
 import { hu } from 'date-fns/locale';
 
 import scheduleData from '../data/wasteSchedule.json';
-import newsData from '../data/news.json';
 
 import DoctorsModal from '../components/DoctorsModal';
 import ProvidersModal from '../components/ProvidersModal';
@@ -42,7 +41,7 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay
             relative overflow-hidden
             bg-white/60 dark:bg-[#1a1c2e]/60 
             backdrop-blur-[30px] saturate-150
-            rounded-[2.5rem] 
+            rounded-2xl 
             border border-white/60 dark:border-white/10 
             shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]
             p-5
@@ -55,7 +54,7 @@ const FeatureCard = ({ title, subtitle, icon, colorFrom, colorTo, onClick, delay
         <div className={`absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br ${colorFrom} ${colorTo} opacity-20 blur-[50px] rounded-full group-hover:opacity-30 transition-opacity duration-500`} />
 
         <div className="relative z-10">
-            <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white text-2xl shadow-lg mb-3 transform group-hover:scale-110 transition-transform duration-500`}>
+            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white text-2xl shadow-lg mb-3 transform group-hover:scale-110 transition-transform duration-500`}>
                 {icon}
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight mb-1">
@@ -185,14 +184,7 @@ export default function LocalDashboard() {
                         </Link>
                         <div>
                             <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-white tracking-tight">Kőszegieknek</h1>
-                            {user ? (
-                                <p className="text-indigo-600 dark:text-indigo-400 font-bold flex flex-wrap items-center gap-1 leading-tight">
-                                    <span>Szia, {user.user_metadata?.nickname || user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('.')[1]?.split('@')[0] || 'Vendég'}! 👋</span>
-                                    <span className="text-zinc-500 font-normal dark:text-zinc-400 text-sm">Jó, hogy itt vagy!</span>
-                                </p>
-                            ) : (
-                                <p className="text-zinc-500 dark:text-zinc-400 font-medium">Helyi információk és szolgáltatások</p>
-                            )}
+                            <p className="text-zinc-500 dark:text-zinc-400 font-medium">Helyi információk és szolgáltatások</p>
                         </div>
                     </div>
 
@@ -225,7 +217,7 @@ export default function LocalDashboard() {
                         className="
                             relative overflow-hidden
                             bg-white dark:bg-[#151515]
-                            rounded-[2.5rem]
+                            rounded-2xl
                             border border-zinc-100 dark:border-white/10
                             shadow-2xl shadow-zinc-200/50 dark:shadow-black/50
                         "
@@ -239,12 +231,11 @@ export default function LocalDashboard() {
                                 {/* Left: Search & Info */}
                                 <div className="flex-1 space-y-6">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 rounded-2xl bg-orange-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-orange-500/30">
+                                        <div className="w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-orange-500/30">
                                             ♻️
                                         </div>
                                         <div>
                                             <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Hulladéknaptár</h2>
-                                            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Intelligens értesítő rendszer</p>
                                         </div>
                                     </div>
 
@@ -257,7 +248,7 @@ export default function LocalDashboard() {
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             className="
-                                                w-full h-14 pl-12 pr-4 rounded-2xl
+                                                w-full h-14 pl-12 pr-4 rounded-xl
                                                 bg-zinc-100 dark:bg-zinc-800/50
                                                 border-2 border-transparent focus:border-orange-500/50
                                                 text-zinc-900 dark:text-white font-medium
@@ -270,7 +261,7 @@ export default function LocalDashboard() {
 
                                     {/* Quick Status / Global Info */}
                                     {!searchTerm && (
-                                        <div className="bg-zinc-50 dark:bg-zinc-800/30 rounded-2xl p-5 border border-zinc-100 dark:border-white/5">
+                                        <div className="bg-zinc-50 dark:bg-zinc-800/30 rounded-xl p-5 border border-zinc-100 dark:border-white/5">
                                             <div className="flex items-center gap-2 mb-3">
                                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                                                 <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Holnapi körkép</span>
@@ -379,8 +370,8 @@ export default function LocalDashboard() {
                 {/* --- SERVICES GRID --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    {/* KőszegPass Card (Enabled) */}
-                    <FeatureCard
+                    {/* KőszegPass Card (Disabled for now) */}
+                    {/* <FeatureCard
                         title="KőszegPass"
                         subtitle="Digitális városkártya, kedvezmények és pontgyűjtés"
                         icon={<IoQrCode />}
@@ -388,11 +379,10 @@ export default function LocalDashboard() {
                         colorTo="to-purple-600"
                         delay={0.1}
                         onClick={() => navigate('/pass')}
-                    />
+                    /> */}
 
-                    {/* NEW: Booking Card moved to grid */}
-                    {/* Booking Card - COMING SOON */}
-                    <FeatureCard
+                    {/* Booking Card - Disabled */}
+                    {/* <FeatureCard
                         title="Időpontfoglaló"
                         subtitle="Közeli szakemberek és foglalás"
                         icon={<span>📅</span>}
@@ -400,7 +390,7 @@ export default function LocalDashboard() {
                         colorTo="to-indigo-600"
                         delay={0.15}
                         onClick={() => navigate('/idopontfoglalas')}
-                    />
+                    /> */}
 
                     <FeatureCard
                         title="Orvosi Rendelők"
@@ -453,42 +443,6 @@ export default function LocalDashboard() {
                         onClick={() => setShowTransportModal(true)}
                     />
                 </div>
-
-                {/* --- NEWS FEED --- */}
-                <FadeUp delay={0.6} className="pb-8">
-                    <motion.div
-                        className="bg-white/40 dark:bg-[#1a1c2e]/40 backdrop-blur-xl rounded-[2.5rem] border border-white/50 dark:border-white/10 p-8 shadow-xl"
-                    >
-                        <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center dark:bg-blue-400/10 dark:text-blue-400">
-                                    <IoInformationCircleOutline className="text-2xl" />
-                                </div>
-                                <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Friss Hírek</h2>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {newsData && newsData.items ? newsData.items.slice(0, 3).map((item, idx) => (
-                                <a
-                                    key={idx}
-                                    href={item.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="block group bg-white dark:bg-black/20 rounded-2xl p-5 border border-zinc-100 dark:border-white/5 hover:border-blue-500/30 transition-colors"
-                                >
-                                    <span className="text-[10px] font-bold text-blue-500 mb-2 block">{item.date}</span>
-                                    <h3 className="font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-blue-500 transition-colors line-clamp-2">
-                                        {item.title}
-                                    </h3>
-                                </a>
-                            )) : (
-                                <p className="text-zinc-500 text-sm">Nincsenek friss hírek.</p>
-                            )}
-                        </div>
-                    </motion.div>
-                </FadeUp>
-
             </div>
 
             {/* Modals */}

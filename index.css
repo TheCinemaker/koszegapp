@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===== GIGALUXUS bázis-tipográfia ===== */
+
+html {
+  /* Subpixel helyett grayscale antialias — Apple-eszközökön ez az éles */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  font-optical-sizing: auto;
+}
+
+/* Nagy címek: az élesség fele a tight tracking + a súly fegyelme */
+h1, h2 {
+  letter-spacing: -0.025em;
+  font-weight: 650;
+}
+
+/* Számok (árak, dátumok, statisztikák) mindig tabular — nem ugrál semmi */
+.tabular, [data-numeric] {
+  font-variant-numeric: tabular-nums;
+}

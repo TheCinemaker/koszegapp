@@ -1,25 +1,79 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchAttractionById, fetchEvents } from '../api';
+import { useFavorites } from '../contexts/FavoritesContext.jsx';
 import {
   IoArrowBack,
   IoTimeOutline,
-  IoWalletOutline,
   IoCallOutline,
   IoGlobeOutline,
-  IoMapOutline,
-  IoDiamond,
-  IoCalendarOutline,
-  IoImagesOutline,
+  IoCompassOutline,
+  IoLocationOutline,
+  IoShareSocialOutline,
+  IoSparklesOutline,
   IoBulbOutline,
-  IoInformationCircleOutline,
-  IoAccessibilityOutline,
-  IoSparklesOutline
+  IoImagesOutline,
+  IoCalendarOutline,
+  IoCloseOutline,
+  IoTicketOutline,
+  IoInformationCircleOutline
 } from 'react-icons/io5';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import GhostImage from '../components/GhostImage';
-import { FadeUp, ParallaxImage } from '../components/AppleMotion';
+import { FadeUp } from '../components/AppleMotion';
+import LoadingSpinner from '../components/LoadingSpinner';
+
+const PAGE_BG = 'bg-surface-light dark:bg-surface-dark';
+const NOTCH_BG = 'bg-surface-light dark:bg-surface-dark';
+
+function Perforation() {
+  return (
+    <div className="relative py-1 flex items-center justify-center">
+      <div className={`absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full ${NOTCH_BG} border-r border-slate-200/80 dark:border-white/10`} />
+      <div className="w-full border-b-2 border-dashed border-slate-200/80 dark:border-white/10 mx-6" />
+      <div className={`absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full ${NOTCH_BG} border-l border-slate-200/80 dark:border-white/10`} />
+    </div>
+  );
+}
+
+function ImageModal({ src, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-6 right-6 text-white w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-2xl hover:bg-white/20 transition-colors"
+          aria-label="Bezárás"
+        >
+          <IoCloseOutline />
+        </button>
+        <motion.img
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          src={src}
+          alt="Nagyított kép"
+          className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-floating"
+          onClick={(e) => e.stopPropagation()}
+        />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
 
 export default function AttractionDetail() {
   const { id } = useParams();
@@ -28,13 +82,10 @@ export default function AttractionDetail() {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
 
-  // Scroll animations for Hero
-  const containerRef = useRef(null);
-  const { scrollY } = useScroll();
-  const heroScale = useTransform(scrollY, [0, 500], [1.1, 1.0]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0.5]);
-  const backBtnBlur = useTransform(scrollY, [0, 100], [0, 10]);
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,11 +98,9 @@ export default function AttractionDetail() {
         if (attrData) {
           setAttr(attrData);
 
-          // --- ROBUST EVENT FILTERING ---
-          // Normalize names to handle: Jurisics-vár vs Jurisics vár vs Jurisics‑vár (special hyphen)
           const normalize = (str) => (str || '').toLowerCase()
-            .replace(/[‑]/g, '-') // Non-breaking hyphen korrekció
-            .replace(/[^a-z0-9áéíóöőúüű]/gi, ' ') // Csak betűk és számok maradjanak (magyar ékezetekkel)
+            .replace(/[‑]/g, '-')
+            .replace(/[^a-z0-9áéíóöőúüű]/gi, ' ')
             .replace(/\s+/g, ' ')
             .trim();
 
@@ -61,8 +110,6 @@ export default function AttractionDetail() {
           const related = allEvents.filter(ev => {
             if (!ev.location) return false;
             const locNorm = normalize(ev.location);
-
-            // Egyezés keresése névben vagy helyszínben
             return locNorm.includes(attrNameNorm) ||
               attrNameNorm.includes(locNorm) ||
               (attrId && ev.attractionId === attrId);
@@ -80,318 +127,363 @@ export default function AttractionDetail() {
     loadData();
   }, [id]);
 
-  if (loading) return (
-    <div className="min-h-screen bg-[#f5f5f7] dark:bg-black flex items-center justify-center">
-      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full" />
-    </div>
-  );
+  const favorited = useMemo(() => attr ? isFavorite(attr.id) : false, [attr, isFavorite]);
+
+  const handleShare = async () => {
+    if (navigator.share && attr) {
+      try {
+        await navigator.share({
+          title: attr.name,
+          text: attr.description || attr.details,
+          url: window.location.href,
+        });
+      } catch (e) {
+        console.log('Share skipped', e);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link másolva a vágólapra!');
+    }
+  };
+
+  if (loading) return <LoadingSpinner fullScreen={true} label="Látnivaló betöltése..." />;
 
   if (error || !attr) return (
-    <div className="min-h-screen bg-[#f5f5f7] dark:bg-black flex items-center justify-center p-8">
-      <div className="text-center">
-        <h2 className="text-4xl font-black mb-4">Látnivaló nem található.</h2>
-        <button onClick={() => navigate('/attractions')} className="px-8 py-3 bg-indigo-600 text-white rounded-2xl font-bold">Vissza a listához</button>
-      </div>
+    <div className={`min-h-screen flex flex-col items-center justify-center p-6 text-center ${PAGE_BG}`}>
+      <p className="text-red-500 mb-6 text-lg font-bold">Hiba: {error || "A látnivaló nem található."}</p>
+      <button
+        onClick={() => navigate('/attractions')}
+        className="px-6 py-3 bg-brand text-gold-light rounded-control font-semibold shadow-card border border-gold/30 hover:opacity-90 transition-opacity"
+      >
+        Vissza a látnivalókhoz
+      </button>
     </div>
   );
 
+  const imgSrc = attr.image || '/images/koeszeg_logo_nobg.png';
+
   return (
-    <div ref={containerRef} className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000] overflow-x-hidden pb-20 selection:bg-indigo-500 selection:text-white relative">
+    <div className={`min-h-screen pb-24 ${PAGE_BG}`}>
+      {showImageModal && <ImageModal src={imgSrc} onClose={() => setShowImageModal(false)} />}
 
-      {/* --- NAVIGATION (FLOATING APPLE STYLE) --- */}
-      <motion.div
-        style={{ backdropFilter: `blur(${backBtnBlur}px)` }}
-        className="fixed top-24 left-8 z-[100]"
-      >
-        <button
-          onClick={() => navigate('/attractions')}
-          className="w-14 h-14 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/20 text-gray-900 dark:text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group"
-        >
-          <IoArrowBack className="text-2xl group-hover:-translate-x-1 transition-transform" />
-        </button>
-      </motion.div>
+      {/* ================================================================ */}
+      {/* IMMERZÍV HERO                                                    */}
+      {/* ================================================================ */}
+      <div className="relative h-[34vh] min-h-[260px] max-h-[380px] overflow-hidden">
+        {attr.image ? (
+          <>
+            <img
+              src={imgSrc}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60 dark:opacity-40"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-surface-light dark:to-surface-dark" />
 
-      {/* --- HERO IMAGE SECTION (SCALE DOWN ON SCROLL) --- */}
-      <div className="relative h-[85vh] w-full overflow-hidden bg-black">
-        <motion.div
-          style={{ scale: heroScale, opacity: heroOpacity }}
-          className="w-full h-full relative"
-        >
-          {attr.image ? (
-            <>
-              {/* Blurred background layer to prevent "empty" bars */}
-              <img
-                src={attr.image}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110"
-              />
-              {/* Main "No-Crop" Hero Image */}
-              <img
-                src={attr.image}
+            <div className="absolute inset-0 flex items-center justify-center p-4 pt-14 pb-8">
+              <motion.img
+                initial={{ opacity: 0, y: 12 }}
+                animate={heroLoaded ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                src={imgSrc}
                 alt={attr.name}
-                className="relative w-full h-full object-contain z-10"
+                onLoad={() => setHeroLoaded(true)}
+                onClick={() => setShowImageModal(true)}
+                className="max-h-full max-w-[80%] object-contain rounded-xl shadow-2xl shadow-black/30 cursor-zoom-in"
+                draggable={false}
               />
-            </>
-          ) : (
-            <GhostImage className="w-full h-full" />
-          )}
-        </motion.div>
+            </div>
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center p-6">
+            <GhostImage className="w-full h-full max-w-md rounded-xl opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-surface-light dark:to-surface-dark" />
+          </div>
+        )}
 
-        {/* Cinematic Gradient Overlays */}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#f5f5f7] dark:from-[#000000] via-transparent to-transparent z-20" />
-        <div className="absolute inset-0 bg-black/10 z-0" />
-
-        {/* Hero Title Container */}
-        <div className="absolute bottom-24 left-8 right-8 z-20 max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        {/* Lebegő gombok a hero fölött */}
+        <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
+          <button
+            onClick={() => navigate('/attractions')}
+            className="w-11 h-11 rounded-full bg-black/30 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-black/40 active:scale-95 transition-all"
+            aria-label="Vissza"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-xl text-white text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl border border-white/10">
-                {attr.category || "Látnivaló"}
-              </span>
-              {attr.rainSafe && (
-                <span className="p-2 rounded-full bg-blue-500/20 backdrop-blur-xl text-blue-200 border border-blue-500/30">
-                  <IoSparklesOutline className="text-sm" />
-                </span>
-              )}
-            </div>
-            <h1 className="text-6xl md:text-9xl font-black text-white dark:text-white drop-shadow-2xl tracking-tighter leading-[0.9] max-w-5xl">
-              {attr.name}
-            </h1>
-          </motion.div>
+            <IoArrowBack className="text-xl" />
+          </button>
+
+          <button
+            onClick={() => (favorited ? removeFavorite(attr.id) : addFavorite(attr.id))}
+            className="w-11 h-11 rounded-full bg-black/30 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-black/40 active:scale-95 transition-all"
+            aria-label={favorited ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
+          >
+            {favorited ? <FaHeart className="text-rose-400 text-lg" /> : <FaRegHeart className="text-lg" />}
+          </button>
         </div>
       </div>
 
-      {/* --- BENTO CONTENT SHEET --- */}
-      <div className="relative z-30 px-6 -mt-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* ================================================================ */}
+      {/* KÁRTYA — rácsúszik a herora                                      */}
+      {/* ================================================================ */}
+      <div className="relative z-10 -mt-16 sm:-mt-20 px-4 max-w-2xl mx-auto">
+        <FadeUp>
+          <div className="bg-surface-card dark:bg-surface-card-dark rounded-card border border-slate-200/80 dark:border-white/10 shadow-card overflow-hidden">
 
-          {/* Main Content Column */}
-          <div className="lg:col-span-8 space-y-8">
-
-            {/* 1. Description Card (The "Story") */}
-            <FadeUp>
-              <div className="bg-white dark:bg-[#1c1c1e] rounded-[3rem] p-10 shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                <h2 className="text-sm font-black text-indigo-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-                  <IoInformationCircleOutline className="text-lg" /> Ismerd meg
-                </h2>
-                <p className="text-2xl md:text-3xl text-gray-900 dark:text-gray-100 font-bold leading-snug tracking-tight">
-                  {attr.details || attr.description}
-                </p>
-              </div>
-            </FadeUp>
-
-            {/* 2. History & Details (Extended) */}
-            {attr.history_full && (
-              <FadeUp delay={0.1}>
-                <div className="bg-white dark:bg-[#1c1c1e] rounded-[3rem] p-10 shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                  <h2 className="text-sm font-black text-indigo-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <IoDiamond className="text-lg" /> Történelem
-                  </h2>
-                  <div className="prose dark:prose-invert max-w-none">
-                    <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
-                      {attr.history_full}
-                    </p>
-                  </div>
+            {/* --- Kártya fő része --- */}
+            <div className="p-6 sm:p-8">
+              <div className="flex flex-col gap-3">
+                {/* Eyebrow */}
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-zinc-500">
+                  <span className="px-3 py-1 rounded-full bg-brand text-gold-light border border-gold/40 shadow-card font-bold">
+                    {attr.category || "Látnivaló"}
+                  </span>
+                  {attr.rainSafe && (
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 font-bold flex items-center gap-1">
+                      <IoSparklesOutline /> Esőbiztos
+                    </span>
+                  )}
                 </div>
-              </FadeUp>
-            )}
 
-            {/* 3. Near Events (The Interactive part) */}
-            {events.length > 0 && (
-              <FadeUp delay={0.2}>
-                <div className="bg-white dark:bg-[#1c1c1e] rounded-[3rem] p-10 shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                  <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-sm font-black text-indigo-500 uppercase tracking-widest flex items-center gap-2">
-                      <IoCalendarOutline className="text-lg" /> Közelgő Programok
-                    </h2>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {events.map((ev, i) => (
-                      <motion.div
-                        key={i}
-                        whileHover={{ scale: 1.02 }}
-                        className="p-6 rounded-[2rem] bg-[#f5f5f7] dark:bg-black/40 border border-black/[0.02] dark:border-white/[0.02]"
-                      >
-                        <div className="flex flex-col h-full justify-between">
-                          <div>
-                            <span className="text-[10px] font-black text-indigo-500 uppercase mb-2 block">{ev.date} • {ev.time}</span>
-                            <h3 className="text-lg font-black dark:text-white leading-tight mb-2 leading-none">{ev.name}</h3>
-                          </div>
-                          <Link
-                            to={`/events/${ev.id}`}
-                            state={{ fromAttraction: { id, name: attr.name } }}
-                            className="text-xs font-bold text-gray-400 hover:text-indigo-500 transition-colors"
-                          >
-                            Részletek →
-                          </Link>
+                <h1 className="text-2xl sm:text-[28px] font-bold text-slate-900 dark:text-white leading-[1.15] tracking-tight mt-1">
+                  {attr.name}
+                </h1>
+
+                {/* Metadata */}
+                <div className="space-y-1.5 text-sm font-medium text-slate-600 dark:text-zinc-400 pt-1">
+                  {attr.location && (
+                    <div className="flex items-center gap-2">
+                      <IoLocationOutline className="text-base text-gold-text dark:text-gold-light flex-shrink-0" />
+                      <span className="truncate">{attr.location}</span>
+                    </div>
+                  )}
+                  {attr.hours && (
+                    <div className="flex items-center gap-2">
+                      <IoTimeOutline className="text-base text-gold-text dark:text-gold-light flex-shrink-0" />
+                      <span>{attr.hours}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Nyitvatartás részletezés */}
+                {attr.opening_hours && (
+                  <div className="mt-4 p-4 rounded-control bg-slate-50 dark:bg-white/5 border border-slate-200/60 dark:border-white/5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-zinc-500 mb-2">Részletes nyitvatartás</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs font-medium">
+                      {[['Hétfő','monday'],['Kedd','tuesday'],['Szerda','wednesday'],['Csütörtök','thursday'],['Péntek','friday'],['Szombat','saturday'],['Vasárnap','sunday']].map(([label, key]) => (
+                        <div key={key} className="flex justify-between">
+                          <span className="text-slate-500 dark:text-zinc-400">{label}</span>
+                          <span className={`font-semibold ${attr.opening_hours[key] === 'Zárva' ? 'text-red-500 dark:text-red-400' : 'text-slate-700 dark:text-zinc-200'}`}>{attr.opening_hours[key]}</span>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </FadeUp>
-            )}
-
-            {/* 4. Gallery Section (Premium Slider) */}
-            {attr.gallery && attr.gallery.length > 0 && (
-              <FadeUp delay={0.3}>
-                <div className="bg-white dark:bg-[#1c1c1e] rounded-[3rem] p-10 shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                  <h2 className="text-sm font-black text-indigo-500 uppercase tracking-widest mb-8 flex items-center gap-2">
-                    <IoImagesOutline className="text-lg" /> Galéria
-                  </h2>
-
-                  <div className="relative group">
-                    <div className="flex overflow-x-auto gap-6 no-scrollbar pb-6 snap-x snap-mandatory px-4">
-                      {attr.gallery.map((img, idx) => (
-                        <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          className="min-w-[70vw] md:min-w-[400px] aspect-[3/4] rounded-[2.5rem] overflow-hidden snap-center relative shadow-2xl border border-white/10"
-                        >
-                          <div className="absolute inset-0 bg-black/10 dark:bg-white/5" />
-                          <img
-                            src={img}
-                            alt=""
-                            className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-30 scale-110"
-                          />
-                          <img
-                            src={img}
-                            alt={`${attr.name} galléria kép ${idx + 1}`}
-                            className="relative w-full h-full object-contain z-10"
-                          />
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    {/* Visual Indicators */}
-                    <div className="flex justify-center gap-2 mt-4">
-                      {attr.gallery.map((_, idx) => (
-                        <div key={idx} className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700" />
                       ))}
                     </div>
                   </div>
-                </div>
-              </FadeUp>
-            )}
-          </div>
+                )}
 
-          {/* Sidebar Column (Bento Cards) */}
-          <div className="lg:col-span-4 space-y-6">
-
-            {/* Info Card: Hours */}
-            <FadeUp delay={0.1}>
-              <div className="bg-white dark:bg-[#1c1c1e] p-8 rounded-[2.5rem] shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
-                    <IoTimeOutline className="text-xl" />
+                {/* Belépőjegy árak */}
+                {attr.ticket_prices && attr.ticket_prices.length > 0 && (
+                  <div className="mt-4 p-4 rounded-control bg-brand/5 dark:bg-brand/10 border border-gold/20">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gold-text dark:text-gold-light mb-2 flex items-center gap-1.5">
+                      <IoTicketOutline className="text-sm" /> Belépőjegy
+                    </p>
+                    <div className="space-y-1">
+                      {attr.ticket_prices.map((tp, i) => (
+                        <div key={i} className="flex justify-between items-center text-sm font-medium">
+                          <span className="text-slate-600 dark:text-zinc-300">{tp.type}</span>
+                          <span className="font-bold text-slate-900 dark:text-white">{tp.price.toLocaleString('hu-HU')} {tp.currency}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <h3 className="font-black text-gray-900 dark:text-white uppercase text-xs tracking-widest">Nyitvatartás</h3>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 font-bold whitespace-pre-line leading-relaxed">
-                  {attr.hours || "Nincs adat"}
-                </p>
+                )}
+
+                {/* Látogatási megjegyzés */}
+                {attr.visit_note && (
+                  <div className="mt-4 p-4 rounded-control bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-amber-600 dark:text-amber-400 mb-1 flex items-center gap-1.5">
+                      <IoInformationCircleOutline className="text-sm" /> Fontos tudnivaló
+                    </p>
+                    <p className="text-xs text-amber-800 dark:text-amber-200 font-medium leading-relaxed">{attr.visit_note}</p>
+                  </div>
+                )}
               </div>
-            </FadeUp>
-
-            {/* Info Card: Tips (Interactive Bulb) */}
-            {attr.tips && (
-              <FadeUp delay={0.2}>
-                <div className="bg-indigo-600 p-8 rounded-[2.5rem] shadow-xl text-white">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center">
-                      <IoBulbOutline className="text-xl" />
-                    </div>
-                    <h3 className="font-black uppercase text-xs tracking-widest">Tipp neked</h3>
-                  </div>
-                  <p className="font-bold text-lg leading-snug">
-                    "{attr.tips}"
-                  </p>
-                </div>
-              </FadeUp>
-            )}
-
-            {/* Info Card: Fun Fact */}
-            {attr.fun_fact && (
-              <FadeUp delay={0.3}>
-                <div className="bg-white dark:bg-[#1c1c1e] p-8 rounded-[2.5rem] shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
-                      <IoSparklesOutline className="text-xl" />
-                    </div>
-                    <h3 className="font-black text-gray-900 dark:text-white uppercase text-xs tracking-widest">Tudtad?</h3>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-400 font-bold leading-relaxed italic">
-                    {attr.fun_fact}
-                  </p>
-                </div>
-              </FadeUp>
-            )}
-
-            {/* Accessibility Card */}
-            {attr.accessibility && (
-              <FadeUp delay={0.4}>
-                <div className="bg-gray-100 dark:bg-black p-8 rounded-[2.5rem] shadow-sm border border-black/[0.03] dark:border-white/[0.03]">
-                  <div className="flex items-center gap-4 mb-4 text-gray-900 dark:text-white">
-                    <IoAccessibilityOutline className="text-xl" />
-                    <h3 className="font-black uppercase text-xs tracking-widest">Akadálymentesség</h3>
-                  </div>
-                  <p className="text-gray-500 dark:text-gray-500 font-medium text-sm">
-                    {attr.accessibility}
-                  </p>
-                </div>
-              </FadeUp>
-            )}
-
-            {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-4">
-              {attr.phone && (
-                <motion.a
-                  whileHover={{ y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  href={`tel:${attr.phone}`}
-                  className="bg-white dark:bg-[#1c1c1e] p-6 rounded-[2rem] flex flex-col items-center justify-center gap-2 border border-black/[0.03] dark:border-white/[0.03] shadow-sm"
-                >
-                  <IoCallOutline className="text-2xl text-indigo-500" />
-                  <span className="text-[10px] font-black uppercase tracking-widest dark:text-white">Hívás</span>
-                </motion.a>
-              )}
-              {attr.website && (
-                <motion.a
-                  whileHover={{ y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  href={attr.website}
-                  target="_blank"
-                  className="bg-white dark:bg-[#1c1c1e] p-6 rounded-[2rem] flex flex-col items-center justify-center gap-2 border border-black/[0.03] dark:border-white/[0.03] shadow-sm"
-                >
-                  <IoGlobeOutline className="text-2xl text-indigo-500" />
-                  <span className="text-[10px] font-black uppercase tracking-widest dark:text-white">Web</span>
-                </motion.a>
-              )}
             </div>
 
-            {/* Sidebar Map */}
-            <FadeUp delay={0.5}>
-              <div className="rounded-[2.5rem] overflow-hidden h-64 border border-black/[0.03] dark:border-white/[0.03] shadow-lg relative group">
-                <iframe
-                  src={`https://www.google.com/maps?q=${attr.coordinates.lat},${attr.coordinates.lng}&z=16&output=embed`}
-                  className="w-full h-full border-0 transition-all duration-700"
-                  loading="lazy"
-                />
-                <div className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-black/80 backdrop-blur-md rounded-xl text-xs font-black uppercase tracking-widest dark:text-white">
-                  <IoMapOutline className="inline mr-1" /> Térkép
-                </div>
-              </div>
-            </FadeUp>
+            {/* --- Perforáció --- */}
+            <Perforation />
 
+            {/* --- Gyorsakciók szelvény --- */}
+            <div className="p-5 sm:p-6 pt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                {attr.coordinates && (
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${attr.coordinates.lat},${attr.coordinates.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 rounded-control bg-brand text-gold-light font-semibold text-xs flex items-center justify-center gap-1.5 shadow-card border border-gold/30 hover:opacity-90 transition-opacity"
+                  >
+                    <IoCompassOutline className="text-base" /> Útvonal
+                  </a>
+                )}
+
+                {attr.phone && (
+                  <a
+                    href={`tel:${attr.phone}`}
+                    className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                  >
+                    <IoCallOutline className="text-base text-gold-text dark:text-gold-light" /> Hívás
+                  </a>
+                )}
+
+                {attr.website && (
+                  <a
+                    href={attr.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                  >
+                    <IoGlobeOutline className="text-base text-gold-text dark:text-gold-light" /> Weboldal
+                  </a>
+                )}
+
+                <button
+                  onClick={handleShare}
+                  className="h-11 rounded-control bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-gold/10 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 dark:border-white/5"
+                >
+                  <IoShareSocialOutline className="text-base text-gold-text dark:text-gold-light" /> Megosztás
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </FadeUp>
       </div>
+
+      {/* ================================================================ */}
+      {/* ISMERD MEG — nyugodt próza, nem kártyadobozban feszítve           */}
+      {/* ================================================================ */}
+      {(attr.details || attr.description) && (
+        <FadeUp delay={0.1}>
+          <div className="max-w-2xl mx-auto px-6 sm:px-8 mt-10">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-3">
+              Ismerd meg
+            </p>
+            <p className="text-slate-700 dark:text-zinc-300 leading-[1.75] text-[15px] sm:text-base whitespace-pre-wrap font-medium">
+              {attr.details || attr.description}
+            </p>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* Történelem */}
+      {attr.history_full && (
+        <FadeUp delay={0.15}>
+          <div className="max-w-2xl mx-auto px-6 sm:px-8 mt-10">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-3">
+              Történelem
+            </p>
+            <p className="text-slate-700 dark:text-zinc-300 leading-[1.75] text-[15px] sm:text-base whitespace-pre-wrap font-medium">
+              {attr.history_full}
+            </p>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* Tipp neked */}
+      {attr.tips && (
+        <FadeUp delay={0.2}>
+          <div className="max-w-2xl mx-auto px-4 mt-8">
+            <div className="bg-brand p-6 rounded-card shadow-card text-gold-light border border-gold/30 flex items-start gap-4">
+              <IoBulbOutline className="text-2xl text-gold-light shrink-0 mt-0.5" />
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-light/80 mb-1">Tipp neked</p>
+                <p className="text-white font-semibold text-sm sm:text-base leading-snug">"{attr.tips}"</p>
+              </div>
+            </div>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* Közelgő programok */}
+      {events.length > 0 && (
+        <FadeUp delay={0.25}>
+          <div className="max-w-2xl mx-auto px-4 mt-10">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-4 px-2 flex items-center gap-2">
+              <IoCalendarOutline className="text-gold-text dark:text-gold-light text-sm" /> Közelgő Programok
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {events.map((ev, i) => (
+                <div
+                  key={i}
+                  className="p-4 rounded-control bg-surface-card dark:bg-surface-card-dark border border-slate-200/80 dark:border-white/10 shadow-card flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-[10px] font-semibold text-gold-text dark:text-gold-light uppercase mb-1 block">{ev.date} • {ev.time}</span>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight mb-3">{ev.name}</h3>
+                  </div>
+                  <button
+                    onClick={() => navigate(`/events/${ev.id}`)}
+                    className="text-xs font-bold text-gold-text dark:text-gold-light hover:underline self-start"
+                  >
+                    Részletek →
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* Galéria */}
+      {attr.gallery && attr.gallery.length > 0 && (
+        <FadeUp delay={0.3}>
+          <div className="max-w-2xl mx-auto px-4 mt-10">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-4 px-2 flex items-center gap-2">
+              <IoImagesOutline className="text-gold-text dark:text-gold-light text-sm" /> Galéria
+            </p>
+            <div className="flex overflow-x-auto gap-3 pb-2 scrollbar-hide snap-x snap-mandatory">
+              {attr.gallery.map((img, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => setShowImageModal(true)}
+                  className="min-w-[200px] h-32 rounded-control overflow-hidden snap-center relative shadow-card border border-slate-200/60 dark:border-white/10 shrink-0 cursor-zoom-in"
+                >
+                  <img src={img} alt={`${attr.name} kép ${idx + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* ================================================================ */}
+      {/* TÉRKÉP                                                           */}
+      {/* ================================================================ */}
+      {attr.coordinates && (
+        <FadeUp delay={0.35}>
+          <div className="max-w-2xl mx-auto px-4 mt-10">
+            <div className="flex items-center justify-between mb-3 px-2">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 flex items-center gap-2">
+                <IoCompassOutline className="text-gold-text dark:text-gold-light text-sm" /> Helyszín
+              </p>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${attr.coordinates.lat},${attr.coordinates.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-gold-text dark:text-gold-light hover:opacity-80 transition-opacity"
+              >
+                Útvonalterv →
+              </a>
+            </div>
+            <div className="h-64 rounded-card overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-card">
+              <iframe
+                title="Térkép"
+                src={`https://www.google.com/maps?q=${attr.coordinates.lat},${attr.coordinates.lng}&z=16&output=embed`}
+                className="w-full h-full border-0"
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </FadeUp>
+      )}
     </div>
   );
 }

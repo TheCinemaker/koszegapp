@@ -121,8 +121,8 @@ export default function Adatvedelem() {
               <p className="text-sm text-center">
                 Adatkezeléssel kapcsolatos kérdés, kérés vagy törlési igény esetén írjon nekünk:
                 <br />
-                <a href="mailto:koszegapp@gmail.com" className="inline-block mt-2 text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-                  koszegapp@gmail.com
+                <a href="mailto:admin@visitkoszeg.hu" className="inline-block mt-2 text-indigo-500 dark:text-indigo-400 font-bold hover:underline">
+                  admin@visitkoszeg.hu
                 </a>
               </p>
             </section>

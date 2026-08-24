@@ -54,7 +54,7 @@ export default function PassCard({
             >
                 {/* ---- ELŐLAP ---- */}
                 <div
-                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl border border-white/10 overflow-hidden bg-gradient-to-br from-[#1a237e] via-[#0d47a1] to-[#311b92] flex flex-col justify-between"
+                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl border border-white/20 overflow-hidden bg-gradient-to-br from-[#0e2f47] via-indigo-900 to-[#081b2e] flex flex-col justify-between"
                     style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                 >
                     <div className="absolute inset-0 opacity-[0.15] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none" />
@@ -70,13 +70,13 @@ export default function PassCard({
                                 alt="Kőszeg Logo" 
                                 className="h-6 w-auto object-contain brightness-0 invert" 
                             />
-                            <span className="text-[13px] font-black tracking-wider text-[#e6cf8a]">
+                            <span className="text-[13px] font-black tracking-wider text-white drop-shadow-md">
                                 KőszegPASS
                             </span>
                         </div>
                         <span
                             className={`text-[7px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow-lg ${
-                                isExpired ? 'bg-red-500 text-white' : 'bg-[#C8AF64] text-[#0C234B]'
+                                isExpired ? 'bg-rose-500 text-white' : 'bg-indigo-500 text-white'
                             }`}
                         >
                             {isExpired ? 'Lejárt' : typeLabel}
@@ -106,14 +106,14 @@ export default function PassCard({
                             <p className="text-[7px] uppercase tracking-[0.14em] text-blue-200/50 font-bold">
                                 Érvényes
                             </p>
-                            <p className="font-mono text-xs font-bold text-[#e6cf8a] mt-0.5">{expiryShort}</p>
+                            <p className="font-mono text-xs font-bold text-indigo-300 mt-0.5">{expiryShort}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* ---- HÁTLAP: QR + KőszegPASS ---- */}
                 <div
-                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl overflow-hidden bg-white flex flex-col items-center justify-center gap-1.5"
+                    className="absolute inset-0 rounded-2xl p-5 shadow-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 flex flex-col items-center justify-center gap-1.5"
                     style={{
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
@@ -122,15 +122,15 @@ export default function PassCard({
                 >
                     {!isExpired && qrCodeUrl ? (
                         <>
-                            <div className="bg-white p-1 rounded-xl">
+                            <div className="bg-white p-1 rounded-xl shadow-sm">
                                 <img src={qrCodeUrl} alt="KőszegPass QR" className="w-28 h-28 object-contain" />
                             </div>
-                            <span className="text-[10px] font-black tracking-wider text-[#0C234B]">
+                            <span className="text-[10px] font-black tracking-wider text-brand dark:text-white mt-2">
                                 KőszegPASS
                             </span>
                         </>
                     ) : (
-                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl p-4 font-bold text-[10px] text-center">
+                        <div className="bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-xl p-4 font-bold text-[10px] text-center">
                             ⚠️ A kártya érvényessége lejárt, a QR-kód letiltva.
                         </div>
                     )}

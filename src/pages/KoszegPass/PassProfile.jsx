@@ -103,10 +103,10 @@ export default function PassProfile() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white">
+            <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-white transition-colors duration-300">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C8AF64] mx-auto mb-4"></div>
-                    <p className="text-blue-200/60 text-sm">Kártya lekérése...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand dark:border-white mx-auto mb-4"></div>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm font-semibold">Kártya lekérése...</p>
                 </div>
             </div>
         );
@@ -114,17 +114,17 @@ export default function PassProfile() {
 
     if (!pass) {
         return (
-            <div className="min-h-screen bg-[#0C234B] flex items-center justify-center text-white p-4 text-center">
+            <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-white p-4 text-center transition-colors duration-300">
                 <div className="max-w-sm">
-                    <h1 className="text-2xl font-black text-red-400 mb-4">Érvénytelen Kártya ⚠️</h1>
-                    <p className="text-blue-200/60 mb-6 text-sm">
+                    <h1 className="text-2xl font-black text-rose-500 mb-4">Érvénytelen Kártya ⚠️</h1>
+                    <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm font-medium">
                         A link hiányos vagy érvénytelen. Ha elvesztetted a kártyád linkjét, e-mailben újra elküldjük.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                        <Link to="/pass/megkeresem" className="inline-block bg-[#C8AF64] hover:bg-[#d8bf74] text-[#0C234B] px-6 py-3 rounded-xl font-bold transition-all text-sm">
+                        <Link to="/pass/megkeresem" className="inline-block bg-brand dark:bg-indigo-500 hover:opacity-90 text-white px-6 py-3 rounded-xl font-bold transition-all text-sm shadow-md">
                             Kártyám megkeresése
                         </Link>
-                        <Link to="/pass" className="inline-block bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all text-sm">
+                        <Link to="/pass" className="inline-block bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all text-sm">
                             Vissza a kezdőlapra
                         </Link>
                     </div>
@@ -141,31 +141,31 @@ export default function PassProfile() {
     const isExpired = new Date() > new Date(pass.expires_at);
 
     return (
-        <div className="min-h-screen bg-[#0C234B] text-white flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+        <div className="min-h-screen text-gray-900 dark:text-white flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden transition-colors duration-300">
             {/* Background effects */}
-            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-brand/5 blur-[100px] rounded-full pointer-events-none" />
 
             <div className="max-w-md w-full z-10 my-6">
-                <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-6 sm:p-8 text-center shadow-2xl">
+                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-[30px] rounded-3xl border border-white/60 dark:border-white/10 p-6 sm:p-8 text-center shadow-lg">
                     
                     {/* Header */}
                     <div className="flex justify-between items-center mb-6">
                         <Link 
                             to="/pass" 
-                            className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors flex items-center justify-center w-10 h-10"
+                            className="p-2 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-full transition-colors flex items-center justify-center w-10 h-10 shadow-sm"
                         >
-                            <IoArrowBack size={20} />
+                            <IoArrowBack size={20} className="text-gray-600 dark:text-gray-300" />
                         </Link>
-                        <h2 className="text-[#C8AF64] font-black text-sm uppercase tracking-widest flex items-center gap-1.5 justify-center">
-                            <IoSparkles className="text-yellow-400" /> Személyes Pass
+                        <h2 className="text-brand dark:text-brand-light font-black text-sm uppercase tracking-widest flex items-center gap-1.5 justify-center">
+                            <IoSparkles className="text-amber-400" /> Személyes Pass
                         </h2>
                         <button 
                             onClick={handleLogout}
-                            className="p-2 bg-white/5 hover:bg-red-500/10 hover:text-red-400 rounded-full transition-colors flex items-center justify-center w-10 h-10"
+                            className="p-2 bg-white/50 dark:bg-white/5 hover:bg-rose-50 dark:hover:bg-rose-500/10 hover:text-rose-500 rounded-full transition-colors flex items-center justify-center w-10 h-10 shadow-sm group"
                             title="Kártya eltávolítása"
                         >
-                            <IoLogOutOutline size={20} />
+                            <IoLogOutOutline size={20} className="text-gray-600 dark:text-gray-300 group-hover:text-rose-500 transition-colors" />
                         </button>
                     </div>
 
@@ -185,25 +185,25 @@ export default function PassProfile() {
 
                     {/* Card Flip Hint */}
                     <div className="flex justify-center items-center gap-2 mb-6 pointer-events-none">
-                        <IoSwapHorizontal className="text-[#C8AF64] text-xs animate-pulse" />
-                        <span className="text-[10px] font-semibold text-blue-200/50 uppercase tracking-widest">
+                        <IoSwapHorizontal className="text-brand dark:text-brand-light text-xs animate-pulse" />
+                        <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
                             Koppints a kártyára a QR-kódhoz!
                         </span>
                     </div>
 
                     {/* Info list */}
-                    <div className="space-y-3 text-xs text-left mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <div className="space-y-3 text-xs text-left mb-6 bg-white/50 dark:bg-white/5 p-4 rounded-2xl border border-white/40 dark:border-white/10 shadow-sm">
                         <div className="flex items-center gap-2">
-                            <IoShieldCheckmark className="text-[#C8AF64] text-base" />
-                            <span>Státusz: <strong className={isExpired ? 'text-red-400' : 'text-green-400'}>{isExpired ? 'Lejárt' : 'Aktív'}</strong></span>
+                            <IoShieldCheckmark className="text-brand dark:text-brand-light text-base" />
+                            <span className="text-gray-600 dark:text-gray-400 font-medium">Státusz: <strong className={isExpired ? 'text-rose-500' : 'text-emerald-500'}>{isExpired ? 'Lejárt' : 'Aktív'}</strong></span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <IoCalendar className="text-[#C8AF64] text-base" />
-                            <span>Lejárat dátuma: <strong className="text-white">{formatHu(pass.expires_at)}</strong></span>
+                            <IoCalendar className="text-brand dark:text-brand-light text-base" />
+                            <span className="text-gray-600 dark:text-gray-400 font-medium">Lejárat dátuma: <strong className="text-gray-900 dark:text-white">{formatHu(pass.expires_at)}</strong></span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <IoInformationCircleOutline className="text-[#C8AF64] text-base" />
-                            <span>Típus: <strong className="text-white">{pass.pass_type === 'family' ? 'Családi kártya' : 'Egyéni kártya'}</strong></span>
+                            <IoInformationCircleOutline className="text-brand dark:text-brand-light text-base" />
+                            <span className="text-gray-600 dark:text-gray-400 font-medium">Típus: <strong className="text-gray-900 dark:text-white">{pass.pass_type === 'family' ? 'Családi kártya' : 'Egyéni kártya'}</strong></span>
                         </div>
                     </div>
 

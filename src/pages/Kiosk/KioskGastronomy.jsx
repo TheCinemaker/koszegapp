@@ -63,9 +63,7 @@ export default function KioskGastronomy() {
         {/* Restaurants List */}
         <div className="flex flex-col gap-4">
           {loading ? (
-            <div className="text-center py-16 text-zinc-400 text-sm font-semibold animate-pulse">
-              {t('gastronomy.loading')}
-            </div>
+            <div className="text-center py-16 text-zinc-400 text-xs font-medium">Betöltés...</div>
           ) : sortedRestaurants.length === 0 ? (
             <div className="text-center py-16 text-zinc-400 text-sm font-semibold">
               {t('gastronomy.empty')}
