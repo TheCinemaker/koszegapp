@@ -1,5 +1,33 @@
 [
   {
+    "id": "vitezi_varmustra_2026",
+    "name": "Vitézi Vármustra – Hagyományőrző Vitézek Vezetésével",
+    "date": "2026-09-08",
+    "endDate": "2026-12-31",
+    "time": "Igény szerint (előzetes bejelentkezéssel)",
+    "location": "Jurisics-vár (9730 Kőszeg, Rajnis utca 9.)",
+    "attractionId": "attraction-1",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Fedezzétek fel a Jurisics-várat igazi korhű ruhás hagyományőrző vitézek társaságában!\n\nProgramfelelősök és látnivalók:\n• Korhű vitéz kalauzolja a látogatókat a vár legendás helyszínein\n• Puskatűz és kardcsörtetés interaktív fegyverbemutató\n• Forintos Mátyás tüzér mester ágyúöntési és tüzérségi fortélyai\n• Földesúri asztal és konyha bemutatója\n• Lovagterem és vártörténeti élmények\n\nIdőtartam: kb. 1,5 óra (90 perc)\nRészvételi díj: 18.000 Ft / csoport (+ várbeli belépőjegy)\nLétszám: maximum 30 fős csoportok részére\n\nElőzetes bejelentkezés legalább 1 héttel a látogatás előtt:\n📧 Email: jurisics@koszeg.hu\n📞 Telefon: +36 94 561-667",
+    "tags": [
+      "Jurisics-vár",
+      "hagyományőrzés",
+      "tárlatvezetés",
+      "vitézek",
+      "ostrom1532",
+      "családi",
+      "iskolai csoport",
+      "élmény"
+    ],
+    "image": "/images/events/vitezi_varmustra_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "⚔️ VÁRMUSTRA ÉLMÉNY"
+  },
+  {
     "id": "zsinagoganapok_2026",
     "name": "Zsinagóganapok Kőszegen",
     "date": "2026-09-07",
