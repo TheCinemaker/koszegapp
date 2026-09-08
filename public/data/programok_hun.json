@@ -1,155 +1,164 @@
 [
   {
-    "datum": "2025-09-26",
+    "datum": "2026-09-25",
     "esemenyek": [
       {
         "id": 101,
         "nev": "Kőszeg Város Ifjúsági Fúvószenekara",
-        "leiras": "A fesztivál nyitókoncertje Kőszeg Város Ifjúsági Fúvószenekarának előadásában.",
-        "idopont": "2025-09-26T17:00:00",
-        "veg_idopont": "2025-09-26T17:45:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
+        "leiras": "Koncert a rendezvénysátorban a jubileumi évad előtt tisztelegve.",
+        "idopont": "2026-09-25T17:00:00",
+        "veg_idopont": "2026-09-25T17:30:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
       },
       {
         "id": 102,
-        "nev": "Hivatalos megnyitó",
+        "nev": "Hivatalos megnyitó és Város Bora eredményhirdetés",
         "leiras": "Az első hordó bor csapra verése, Város Bora eredményhirdetése, közreműködnek a Kőszegi Tornyosok.",
-        "idopont": "2025-09-26T17:45:00",
-        "veg_idopont": "2025-09-26T19:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
+        "idopont": "2026-09-25T17:30:00",
+        "veg_idopont": "2026-09-25T18:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
       },
       {
         "id": 103,
-        "nev": "Fúvós Szerenád",
-        "leiras": "Rázene Városi Fúvószenekar és Kőszeg Város Koncert Fúvószenekara ad szerenádot a Fő téren.",
-        "idopont": "2025-09-26T19:00:00",
-        "veg_idopont": "2025-09-26T20:30:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér" }
+        "nev": "Szüreti koncert",
+        "leiras": "Ünnepi koncert a rendezvénysátorban.",
+        "idopont": "2026-09-25T18:00:00",
+        "veg_idopont": "2026-09-25T19:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
       },
       {
         "id": 104,
-        "nev": "Lángok és fátylak éjszakája",
-        "leiras": "Be-Jó Tűztánc és Silverbirds Bellydance látványos előadása.",
-        "idopont": "2025-09-26T21:00:00",
-        "veg_idopont": "2025-09-26T21:30:00",
+        "nev": "Fúvós Szerenád – Sárvár Város Fúvószenekara",
+        "leiras": "Sárvár Város Fúvószenekarának esti szerenádja a Fő téren.",
+        "idopont": "2026-09-25T19:00:00",
+        "veg_idopont": "2026-09-25T20:30:00",
+        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér" }
+      },
+      {
+        "id": 105,
+        "nev": "Lángok és fátylak éjszakája – Be-Jó Tűztánc & Silverbirds Bellydance",
+        "leiras": "Látványos tűztánc és hastánc bemutató a Fő téren.",
+        "idopont": "2026-09-25T20:30:00",
+        "veg_idopont": "2026-09-25T21:30:00",
         "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér" },
         "kiemelt": true
       },
       {
-        "id": 105,
-        "nev": "SOULWAVE koncert",
-        "leiras": "Élő koncert a rendezvénysátorban a nap zárásaként.",
-        "idopont": "2025-09-26T21:30:00",
-        "veg_idopont": "2025-09-26T23:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
+        "id": 106,
+        "nev": "Kőszeg Város Fúvószenekara és a BIKINI közös koncertje",
+        "leiras": "A legendás Bikini együttes és Kőszeg Város Fúvószenekarának fúziós koncertje a rendezvénysátorban.",
+        "idopont": "2026-09-25T21:30:00",
+        "veg_idopont": "2026-09-25T23:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" },
+        "kiemelt": true
       }
     ]
   },
   {
-    "datum": "2025-09-27",
+    "datum": "2026-09-26",
     "esemenyek": [
       {
         "id": 201,
         "nev": "Vendégzenekarok zenés fogadása",
-        "leiras": "A nemzetközi fúvószenekari találkozó vendégeinek fogadása zenével.",
-        "idopont": "2025-09-27T10:00:00",
-        "veg_idopont": "2025-09-27T12:00:00",
+        "leiras": "A nemzetközi találkozóra érkező fúvószenekarok zenés köszöntése a Fő téren.",
+        "idopont": "2026-09-26T10:00:00",
+        "veg_idopont": "2026-09-26T11:30:00",
         "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér" }
       },
       {
         "id": 202,
-        "nev": "Jó ebédhez szól a ... fúvószene",
-        "leiras": "Fúvószene a város különböző éttermeiben az ebédidő alatt.",
-        "idopont": "2025-09-27T12:00:00",
-        "veg_idopont": "2025-09-27T14:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Kőszeg éttermei" }
+        "nev": "Jó ebédhez szól a... fúvószene",
+        "leiras": "Hangulatos fúvószene a rendezvénysátorban az ebédidő alatt.",
+        "idopont": "2026-09-26T11:30:00",
+        "veg_idopont": "2026-09-26T13:15:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
       },
       {
         "id": 203,
-        "nev": "Szüreti Karnevál",
-        "leiras": "Hagyományos szüreti felvonulás a város utcáin.",
-        "idopont": "2025-09-27T14:00:00",
-        "veg_idopont": "2025-09-27T16:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "A város utcái (indulás a Fő térről)" },
-        "kiemelt": true
+        "nev": "Fúvószenekarok felvonulása",
+        "leiras": "Zenés vonulás a karnevál helyszínére (Károly Róbert tér - Országzászló - Kossuth u. - Rákóczi u. útvonalon).",
+        "idopont": "2026-09-26T13:15:00",
+        "veg_idopont": "2026-09-26T14:00:00",
+        "helyszin": { "lat": 47.3881, "lng": 16.5416, "nev": "A város utcái" }
       },
       {
         "id": 204,
-        "nev": "Fúvós térzenék",
-        "leiras": "Különböző fúvószenekarok adnak térzenét a város terein.",
-        "idopont": "2025-09-27T16:00:00",
-        "veg_idopont": "2025-09-27T18:00:00",
-        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér, Jurisics tér" }
+        "nev": "Szüreti Karnevál",
+        "leiras": "A fesztivál fő látványossága: hatalmas jelmezes szüreti felvonulás a város utcáin.",
+        "idopont": "2026-09-26T14:00:00",
+        "veg_idopont": "2026-09-26T16:00:00",
+        "helyszin": { "lat": 47.3881, "lng": 16.5416, "nev": "A város utcái" },
+        "kiemelt": true
       },
       {
         "id": 205,
-        "nev": "Táncbemutatók",
-        "leiras": "A Blumenkranz Bezi Német Nemzetiségi Tánccsoport bemutatója.",
-        "idopont": "2025-09-27T16:00:00",
-        "veg_idopont": "2025-09-27T17:30:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
+        "nev": "Fúvós térzenék és táncbemutatók",
+        "leiras": "Térzenék a Fő téren és a Jurisics téren, táncbemutatók a rendezvénysátorban.",
+        "idopont": "2026-09-26T16:00:00",
+        "veg_idopont": "2026-09-26T17:30:00",
+        "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér és Jurisics tér" }
       },
       {
         "id": 206,
         "nev": "Fúvós-show",
-        "leiras": "Kőszeg Város Fúvószenekarának látványos show-műsora.",
-        "idopont": "2025-09-27T17:30:00",
-        "veg_idopont": "2025-09-27T19:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
+        "leiras": "Látványos és szórakoztató fúvószenekari show-műsor a sátorban.",
+        "idopont": "2026-09-26T17:30:00",
+        "veg_idopont": "2026-09-26T18:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
       },
       {
         "id": 207,
-        "nev": "Prokofjev, Korponay Zsófi és Bánó Zoltán koncert",
-        "leiras": "Könnyűzenei koncert a Fő téren (csak jó idő esetén).",
-        "idopont": "2025-09-27T18:00:00",
-        "veg_idopont": "2025-09-27T20:00:00",
+        "nev": "Prokofjev koncert",
+        "leiras": "Szabadtéri koncert a Fő téren (csak jó idő esetén).",
+        "idopont": "2026-09-26T18:00:00",
+        "veg_idopont": "2026-09-26T20:00:00",
         "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér" }
       },
       {
         "id": 208,
-        "nev": "Szüreti Bál - Fáraó",
-        "leiras": "Zenés-táncos mulatság a Fáraó zenekarral.",
-        "idopont": "2025-09-27T21:00:00",
-        "veg_idopont": "2025-09-28T02:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" },
+        "nev": "Szüreti Bál – Fáraó",
+        "leiras": "Hagyományos szüreti bál és fergeteges táncmulatság a Fáraó zenekarral.",
+        "idopont": "2026-09-26T21:00:00",
+        "veg_idopont": "2026-09-27T02:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" },
         "kiemelt": true
       }
     ]
   },
   {
-    "datum": "2025-09-28",
+    "datum": "2026-09-27",
     "esemenyek": [
       {
         "id": 301,
-        "nev": "Westside TSE táncbemutató",
-        "leiras": "A Westside Táncsport Egyesület bemutatója.",
-        "idopont": "2025-09-28T14:00:00",
-        "veg_idopont": "2025-09-28T15:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
+        "nev": "Ifjúsági Fúvószenekarok Találkozója",
+        "leiras": "Fiatal fúvós tehetségek bemutatkozó hangversenye a rendezvénysátorban.",
+        "idopont": "2026-09-27T14:00:00",
+        "veg_idopont": "2026-09-27T15:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
       },
       {
         "id": 302,
-        "nev": "Néptánc és népzene",
-        "leiras": "Fellép a Hajnalcsillag Néptáncegyüttes, a Kőszegi Cimborák és a Boglya zenekar.",
-        "idopont": "2025-09-28T15:00:00",
-        "veg_idopont": "2025-09-28T17:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" }
-      },
-      {
-        "id": 303,
-        "nev": "Yahamo Brass Band és zenei programok",
-        "leiras": "Szórakoztató zenei programok a Fő téren.",
-        "idopont": "2025-09-28T15:00:00",
-        "veg_idopont": "2025-09-28T18:00:00",
+        "nev": "Srumli térzene",
+        "leiras": "Hangulatos sramli és rezes térzene a Fő téren.",
+        "idopont": "2026-09-27T15:00:00",
+        "veg_idopont": "2026-09-27T17:00:00",
         "helyszin": { "lat": 47.388158390426874, "lng": 16.54166130330387, "nev": "Fő tér" }
       },
       {
+        "id": 303,
+        "nev": "Néptánc gála: Hajnalcsillag, Kőszegi Cimborák & Boglya",
+        "leiras": "Hagyományőrző népzenei és néptánc előadás a rendezvénysátorban.",
+        "idopont": "2026-09-27T17:00:00",
+        "veg_idopont": "2026-09-27T19:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" }
+      },
+      {
         "id": 304,
-        "nev": "SING SING és ZORALL koncert",
-        "leiras": "A fesztivált záró nagykoncertek a rendezvénysátorban.",
-        "idopont": "2025-09-28T18:00:00",
-        "veg_idopont": "2025-09-28T22:00:00",
-        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev":  "Rendezvénysátor (Károly Róbert tér)" },
+        "nev": "Culture Cuvée koncert",
+        "leiras": "A fesztivált záró Culture Cuvée koncert a rendezvénysátorban.",
+        "idopont": "2026-09-27T19:00:00",
+        "veg_idopont": "2026-09-27T21:00:00",
+        "helyszin": { "lat": 47.39017284724587, "lng": 16.538364686501225, "nev": "Rendezvénysátor (Károly Róbert tér)" },
         "kiemelt": true
       }
     ]

@@ -197,6 +197,32 @@
     "isVarszinhaz": false
   },
   {
+    "id": "surrounding-event-hegyalja-nyitott-porta",
+    "name": "Nyitott Porta Napok",
+    "settlement": "Kőszegszerdahely",
+    "date": "2026-09-19",
+    "end_date": "2026-09-20",
+    "time": "Egész napos",
+    "location": "Kőszeghegyalja nyitott portái",
+    "coords": {
+      "lat": 47.3486,
+      "lng": 16.5059
+    },
+    "description": "Nyitott Porta Napok a Kőszeghegyalján! Látogass el a hegyaljai termelőkhöz, kézművesekhez, kóstolj helyi finomságokat és ismerd meg a hagyományokat.",
+    "tags": [
+      "gasztro",
+      "családi",
+      "vásár",
+      "porta",
+      "hegyalja"
+    ],
+    "image": "nyitott_porta_napok_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "Nyitott Porta Napok",
+    "isVarszinhaz": false
+  },
+  {
     "id": "surrounding-event-velem-20261010",
     "name": "Velemi Gesztenyenapok",
     "settlement": "Velem",

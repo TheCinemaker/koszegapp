@@ -141,6 +141,7 @@ export default function AnimatedRoutes({ appData, weather }) {
         <AnimatePresence custom={direction} initial={false}>
           <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageWrapper morph><Home appData={appData} weather={weather} /></PageWrapper>} />
+          <Route path="/szuret" element={<PageWrapper morph><Home appData={appData} weather={weather} /></PageWrapper>} />
 
           <Route path="/attractions" element={<PageWrapper><Attractions attractions={appData.attractions} loading={appData.loading} /></PageWrapper>} />
           <Route path="/attractions/:id" element={<PageWrapper><AttractionDetail /></PageWrapper>} />

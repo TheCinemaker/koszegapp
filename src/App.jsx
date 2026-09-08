@@ -132,7 +132,7 @@ function MainAppContent() {
 
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const [showResidentModal, setShowResidentModal] = useState(false);
-  const isHome = location.pathname === '/';
+  const isHome = location.pathname === '/' || location.pathname === '/szuret';
   // Treat food-auth + QR Platform as "game mode" to hide the global header/UI
   const isInGameMode = location.pathname.startsWith('/game/') ||
     location.pathname.startsWith('/gem/') ||
@@ -544,10 +544,17 @@ function MainAppContent() {
                 )}
 
 
-              {/* TEMPORARILY DISABLED - Program Modal & Grape Icon */}
-              {/* {isHome && showProgramModal && <ProgramModal onClose={() => setShowProgramModal(false)} />} */}
+              {/* Program Modal & Grape Icon */}
+              {isHome && (showProgramModal || location.pathname === '/szuret') && (
+                <ProgramModal onClose={() => {
+                  setShowProgramModal(false);
+                  if (location.pathname === '/szuret') {
+                    navigate('/');
+                  }
+                }} />
+              )}
 
-              {/* {isHome && !showProgramModal && (
+              {isHome && !(showProgramModal || location.pathname === '/szuret') && (
                 <button
                 onClick={() => setShowProgramModal(true)}
                 className="w-14 h-14 fixed bottom-20 right-4 bg-purple-700 text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-purple-800 transition transform hover:scale-110 z-50"
@@ -555,7 +562,7 @@ function MainAppContent() {
                 >
                 🍇
                 </button>
-            )} */}
+              )}
             </>
           )}
 

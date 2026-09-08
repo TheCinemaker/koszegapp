@@ -1,460 +1,453 @@
 [
   {
-    "datum": "2025-10-24",
+    "datum": "2026-09-25",
     "esemenyek": [
       {
-        "id": 100,
-        "nev": {
-          "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál (nyitónap)",
-          "en": "Orsolya Fair – Flavours of the Nature Park (opening day)",
-          "de": "Ursula-Markt – Geschmack des Naturparks (Eröffnungstag)"
-        },
-        "leiras": {
-          "hu": "Kézműves vásár, szabadtéri főzés, főzőverseny a belvárosban.",
-          "en": "Craft fair, outdoor cooking and a cooking contest in the historic center.",
-          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb in der Altstadt."
-        },
-        "idopont": "2025-10-24T10:00:00",
-        "veg_idopont": "2025-10-24T18:00:00",
-        "helyszin": {
-          "lat": 47.38940716751321,
-          "lng": 16.53923636761531,
-          "nev": {
-            "hu": "Diáksétány",
-            "en": "Students' Promenade",
-            "de": "Studentenpromenade"
-          }
-        }
-      },
-      {
         "id": 101,
-        "nev": { "hu": "ATARU TAIKO", "en": "ATARU TAIKO", "de": "ATARU TAIKO" },
-        "leiras": {
-          "hu": "Japán dobshow a vásár nyitónapján.",
-          "en": "Japanese taiko drum show.",
-          "de": "Japanische Taiko-Trommelshow."
+        "nev": {
+          "hu": "Kőszeg Város Ifjúsági Fúvószenekara",
+          "en": "Youth Wind Band of Kőszeg",
+          "de": "Jugendblaskapelle von Güns"
         },
-        "idopont": "2025-10-24T14:00:00",
-        "veg_idopont": "2025-10-24T15:00:00",
+        "leiras": {
+          "hu": "Koncert a rendezvénysátorban a jubileumi évad előtt tisztelegve.",
+          "en": "Concert in the event tent honoring the jubilee season.",
+          "de": "Konzert im Festzelt zu Ehren der Jubiläumssaison."
+        },
+        "idopont": "2026-09-25T17:00:00",
+        "veg_idopont": "2026-09-25T17:30:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         }
       },
       {
         "id": 102,
         "nev": {
-          "hu": "Gulyás László Vándormuzsikus: Mátyás mesék",
-          "en": "László Gulyás the Wandering Musician: Tales of King Matthias",
-          "de": "László Gulyás der Wandermusikant: König-Matthias-Geschichten"
+          "hu": "Hivatalos megnyitó és Város Bora eredményhirdetés",
+          "en": "Official Opening & Wine of the Town Ceremony",
+          "de": "Offizielle Eröffnung & Wein der Stadt Siegerehrung"
         },
         "leiras": {
-          "hu": "Zenés-mesés műsor.",
-          "en": "Musical storytelling performance.",
-          "de": "Musikalisches Erzählprogramm."
+          "hu": "Az első hordó bor csapra verése, Város Bora eredményhirdetése, közreműködnek a Kőszegi Tornyosok.",
+          "en": "Tapping the first barrel of wine, announcement of the 'Wine of the Town', featuring the Kőszeg Tower Musicians.",
+          "de": "Anstich des ersten Weinfasses, Bekanntgabe des 'Weins der Stadt', unter Mitwirkung der Günser Turmbläser."
         },
-        "idopont": "2025-10-24T15:00:00",
-        "veg_idopont": "2025-10-24T15:30:00",
+        "idopont": "2026-09-25T17:30:00",
+        "veg_idopont": "2026-09-25T18:00:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         }
       },
       {
         "id": 103,
         "nev": {
-          "hu": "Félnótás Férfi Népdalkör (Gencsapáti)",
-          "en": "Félnótás Férfi Folk Choir (Gencsapáti)",
-          "de": "Félnótás Männer-Volkschor (Gencsapáti)"
+          "hu": "Szüreti koncert",
+          "en": "Harvest Concert",
+          "de": "Weinlese-Konzert"
         },
         "leiras": {
-          "hu": "Népdalcsokor.",
-          "en": "Selection of folk songs.",
-          "de": "Volkslieder-Programm."
+          "hu": "Ünnepi koncert a rendezvénysátorban.",
+          "en": "Festive concert in the event tent.",
+          "de": "Festliches Konzert im Veranstaltungszelt."
         },
-        "idopont": "2025-10-24T15:30:00",
-        "veg_idopont": "2025-10-24T16:00:00",
+        "idopont": "2026-09-25T18:00:00",
+        "veg_idopont": "2026-09-25T19:00:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         }
       },
       {
         "id": 104,
         "nev": {
-          "hu": "Langaléta Garabonciások – Horagus mester cirkusza",
-          "en": "Langaléta Garabonciások – Master Horagus' Circus",
-          "de": "Langaléta Garabonciások – Meister Horagus’ Zirkus"
+          "hu": "Fúvós Szerenád – Sárvár Város Fúvószenekara",
+          "en": "Wind Band Serenade – Sárvár Wind Band",
+          "de": "Blaskapellen-Serenade – Blaskapelle Sárvár"
         },
         "leiras": {
-          "hu": "Utcacirkusz, gólyalábas vásári attrakció.",
-          "en": "Street circus and stilt performance.",
-          "de": "Straßenzirkus und Stelzen-Show."
+          "hu": "Sárvár Város Fúvószenekarának esti szerenádja a Fő téren.",
+          "en": "Evening serenade by the Sárvár Wind Band on the Main Square.",
+          "de": "Abendserenade der Blaskapelle Sárvár auf dem Hauptplatz."
         },
-        "idopont": "2025-10-24T16:00:00",
-        "veg_idopont": "2025-10-24T16:45:00",
+        "idopont": "2026-09-25T19:00:00",
+        "veg_idopont": "2026-09-25T20:30:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.388158390426874,
+          "lng": 16.54166130330387,
+          "nev": {
+            "hu": "Fő tér",
+            "en": "Main Square",
+            "de": "Hauptplatz"
+          }
         }
       },
       {
         "id": 105,
-        "nev": { "hu": "Koprive koncert", "en": "Koprive – Concert", "de": "Koprive – Konzert" },
-        "leiras": {
-          "hu": "Koncert a Fő téren.",
-          "en": "Live concert on the Main Square.",
-          "de": "Konzert am Hauptplatz."
+        "nev": {
+          "hu": "Lángok és fátylak éjszakája – Be-Jó Tűztánc & Silverbirds Bellydance",
+          "en": "Night of Flames and Veils – Be-Jó Fire Dance & Silverbirds Bellydance",
+          "de": "Nacht der Flammen und Schleier – Be-Jó Feuertanz & Silverbirds Bauchtanz"
         },
-        "idopont": "2025-10-24T17:00:00",
-        "veg_idopont": "2025-10-24T18:00:00",
+        "leiras": {
+          "hu": "Látványos tűztánc és hastánc bemutató a Fő téren.",
+          "en": "Spectacular fire dance and belly dance show on the Main Square.",
+          "de": "Spektakuläre Feuertanz- und Bauchtanzshow auf dem Hauptplatz."
+        },
+        "idopont": "2026-09-25T20:30:00",
+        "veg_idopont": "2026-09-25T21:30:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
-        }
+          "lat": 47.388158390426874,
+          "lng": 16.54166130330387,
+          "nev": {
+            "hu": "Fő tér",
+            "en": "Main Square",
+            "de": "Hauptplatz"
+          }
+        },
+        "kiemelt": true
       },
       {
         "id": 106,
         "nev": {
-          "hu": "Židanske Zvijezdice – Gyermek- és Ifjúsági Csoport",
-          "en": "Židanske Zvijezdice – Children & Youth Ensemble",
-          "de": "Židanske Zvijezdice – Kinder- und Jugendgruppe"
+          "hu": "Kőszeg Város Fúvószenekara és a BIKINI közös koncertje",
+          "en": "Kőszeg Wind Band & BIKINI Joint Concert",
+          "de": "Gemeinsames Konzert der Günser Blaskapelle & BIKINI"
         },
         "leiras": {
-          "hu": "Népzenei és táncos műsor.",
-          "en": "Folk music and dance performance.",
-          "de": "Volksmusik- und Tanzdarbietung."
+          "hu": "A legendás Bikini együttes és Kőszeg Város Fúvószenekarának fúziós koncertje a rendezvénysátorban.",
+          "en": "Joint concert of the legendary Hungarian rock band Bikini and the Kőszeg Wind Band in the tent.",
+          "de": "Gemeinsames Konzert der legendären ungarischen Rockband Bikini und der Günser Blaskapelle im Zelt."
         },
-        "idopont": "2025-10-24T15:00:00",
-        "veg_idopont": "2025-10-24T16:00:00",
+        "idopont": "2026-09-25T21:30:00",
+        "veg_idopont": "2026-09-25T23:00:00",
         "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
-        }
-      },
-      {
-        "id": 107,
-        "nev": { "hu": "Vadrózsa Népdalkör", "en": "Vadrózsa Folk Choir", "de": "Vadrózsa Volkschor" },
-        "leiras": { "hu": "Népdalkoncert.", "en": "Folk choir concert.", "de": "Volkschor-Konzert." },
-        "idopont": "2025-10-24T16:00:00",
-        "veg_idopont": "2025-10-24T16:30:00",
-        "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
-        }
-      },
-      {
-        "id": 108,
-        "nev": {
-          "hu": "Hajnalcsillag & Buccsi Rezedák – kísér a Boglya",
-          "en": "Hajnalcsillag & Buccsi Rezedák – with Boglya Folk Band",
-          "de": "Hajnalcsillag & Buccsi Rezedák – mit Boglya Volksmusik"
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         },
-        "leiras": {
-          "hu": "Néptáncműsor a Boglya Népzenei Együttes kíséretével.",
-          "en": "Folk dance show accompanied by Boglya.",
-          "de": "Volkstanz mit Begleitung der Gruppe Boglya."
-        },
-        "idopont": "2025-10-24T16:30:00",
-        "veg_idopont": "2025-10-24T17:30:00",
-        "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
-        }
-      },
-      {
-        "id": 109,
-        "nev": { "hu": "Civil Főzőverseny – kóstoló", "en": "Civil Cooking Contest – tasting", "de": "Ziviler Kochwettbewerb – Verkostung" },
-        "leiras": {
-          "hu": "Délidőben kóstoló a Diáksétányon.",
-          "en": "Midday tasting at the Promenade.",
-          "de": "Mittägliche Verkostung an der Promenade."
-        },
-        "idopont": "2025-10-24T12:00:00",
-        "veg_idopont": "2025-10-24T13:00:00",
-        "helyszin": {
-          "lat": 47.38940716751321,
-          "lng": 16.53923636761531,
-          "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
-        }
+        "kiemelt": true
       }
     ]
   },
   {
-    "datum": "2025-10-25",
+    "datum": "2026-09-26",
     "esemenyek": [
-      {
-        "id": 200,
-        "nev": {
-          "hu": "Orsolya-napi Vásár – Natúrpark ízei Gasztronómiai Fesztivál",
-          "en": "Orsolya Fair – Flavours of the Nature Park",
-          "de": "Ursula-Markt – Geschmack des Naturparks"
-        },
-        "leiras": {
-          "hu": "Kézműves vásár, szabadtéri főzés és főzőverseny a belvárosban.",
-          "en": "Craft fair, outdoor cooking and cooking contest in the centre.",
-          "de": "Handwerksmarkt, Kochen im Freien und Kochwettbewerb im Zentrum."
-        },
-        "idopont": "2025-10-25T10:00:00",
-        "veg_idopont": "2025-10-25T18:30:00",
-        "helyszin": {
-          "lat": 47.38940716751321,
-          "lng": 16.53923636761531,
-          "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
-        }
-      },
       {
         "id": 201,
         "nev": {
-          "hu": "Gulyás László Vándormuzsikus: Egérparádé",
-          "en": "László Gulyás the Wandering Musician: Mouse Parade",
-          "de": "László Gulyás der Wandermusikant: Mäuseparade"
+          "hu": "Vendégzenekarok zenés fogadása",
+          "en": "Musical Welcome of Guest Bands",
+          "de": "Musikalischer Empfang der Gastkapellen"
         },
         "leiras": {
-          "hu": "Zenés-mesés családi műsor.",
-          "en": "Family musical storytelling.",
-          "de": "Musikalisches Familien-Erzählprogramm."
+          "hu": "A nemzetközi találkozóra érkező fúvószenekarok zenés köszöntése a Fő téren.",
+          "en": "Welcoming guest wind bands on the Main Square with music.",
+          "de": "Musikalischer Empfang der Gastblaskapellen auf dem Hauptplatz."
         },
-        "idopont": "2025-10-25T14:00:00",
-        "veg_idopont": "2025-10-25T15:00:00",
+        "idopont": "2026-09-26T10:00:00",
+        "veg_idopont": "2026-09-26T11:30:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.388158390426874,
+          "lng": 16.54166130330387,
+          "nev": {
+            "hu": "Fő tér",
+            "en": "Main Square",
+            "de": "Hauptplatz"
+          }
         }
       },
       {
         "id": 202,
         "nev": {
-          "hu": "Szélforgók Népzenei Együttes",
-          "en": "Szélforgók Folk Ensemble",
-          "de": "Szélforgók Volksmusik-Ensemble"
+          "hu": "Jó ebédhez szól a... fúvószene",
+          "en": "Wind Music for Lunch",
+          "de": "Blasmusik zum guten Mittagessen"
         },
-        "leiras": { "hu": "Népzene a Fő téren.", "en": "Folk music on the Main Square.", "de": "Volksmusik am Hauptplatz." },
-        "idopont": "2025-10-25T15:00:00",
-        "veg_idopont": "2025-10-25T16:00:00",
+        "leiras": {
+          "hu": "Hangulatos fúvószene a rendezvénysátorban az ebédidő alatt.",
+          "en": "Atmospheric wind band music during lunchtime in the event tent.",
+          "de": "Stimmungsvolle Blasmusik während der Mittagszeit im Festzelt."
+        },
+        "idopont": "2026-09-26T11:30:00",
+        "veg_idopont": "2026-09-26T13:15:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         }
       },
       {
         "id": 203,
         "nev": {
-          "hu": "Kőszegi Cimborák Tánccsoport",
-          "en": "Kőszegi Cimborák Dance Group",
-          "de": "Kőszegi Cimborák Tanzgruppe"
+          "hu": "Fúvószenekarok felvonulása",
+          "en": "Parade of Wind Bands",
+          "de": "Festumzug der Blaskapellen"
         },
-        "leiras": { "hu": "Táncbemutató.", "en": "Dance performance.", "de": "Tanzvorführung." },
-        "idopont": "2025-10-25T16:00:00",
-        "veg_idopont": "2025-10-25T17:00:00",
+        "leiras": {
+          "hu": "Zenés vonulás a karnevál helyszínére (Károly Róbert tér - Országzászló - Kossuth u. - Rákóczi u. útvonalon).",
+          "en": "Musical parade to the carnival site through the streets.",
+          "de": "Musikalischer Festzug zum Karnevalsort durch die Straßen der Stadt."
+        },
+        "idopont": "2026-09-26T13:15:00",
+        "veg_idopont": "2026-09-26T14:00:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
+          "lat": 47.3881,
+          "lng": 16.5416,
+          "nev": {
+            "hu": "A város utcái",
+            "en": "Town Streets",
+            "de": "Straßen der Stadt"
+          }
         }
       },
       {
         "id": 204,
-        "nev": { "hu": "Bujtás Ervin", "en": "Ervin Bujtás", "de": "Ervin Bujtás" },
-        "leiras": { "hu": "Élőzene.", "en": "Live music.", "de": "Live-Musik." },
-        "idopont": "2025-10-25T17:00:00",
-        "veg_idopont": "2025-10-25T18:00:00",
+        "nev": {
+          "hu": "Szüreti Karnevál",
+          "en": "Harvest Carnival Parade",
+          "de": "Weinlese-Karneval Umzug"
+        },
+        "leiras": {
+          "hu": "A fesztivál fő látványossága: hatalmas jelmezes szüreti felvonulás a város utcáin.",
+          "en": "The main highlight of the festival: a massive costumed parade through the historic streets.",
+          "de": "Der Hauptattraktion des Festivals: Riesiger Weinfestumzug mit historischen Kostümen durch die Altstadt."
+        },
+        "idopont": "2026-09-26T14:00:00",
+        "veg_idopont": "2026-09-26T16:00:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér", "en": "Main Square", "de": "Hauptplatz" }
-        }
+          "lat": 47.3881,
+          "lng": 16.5416,
+          "nev": {
+            "hu": "A város utcái",
+            "en": "Town Streets",
+            "de": "Straßen der Stadt"
+          }
+        },
+        "kiemelt": true
       },
       {
         "id": 205,
         "nev": {
-          "hu": "Langaléta Garabonciások vásári masírozása",
-          "en": "Langaléta Garabonciások – Fair Parade",
-          "de": "Langaléta Garabonciások – Marktumzug"
+          "hu": "Fúvós térzenék és táncbemutatók",
+          "en": "Wind Concerts & Dance Shows",
+          "de": "Platzkonzerte & Tanzvorführungen"
         },
         "leiras": {
-          "hu": "Vándor attrakció a Jurisics téren.",
-          "en": "Roaming parade performance.",
-          "de": "Wandernde Parade-Show."
+          "hu": "Térzenék a Fő téren és a Jurisics téren, táncbemutatók a rendezvénysátorban.",
+          "en": "Open-air wind band music on Main Square and Jurisics Square, dance performances in the tent.",
+          "de": "Platzkonzerte auf dem Hauptplatz und Jurisics-Platz, Tanzshows im Festzelt."
         },
-        "idopont": "2025-10-25T15:30:00",
-        "veg_idopont": "2025-10-25T16:15:00",
+        "idopont": "2026-09-26T16:00:00",
+        "veg_idopont": "2026-09-26T17:30:00",
         "helyszin": {
-          "lat": 47.3896,
-          "lng": 16.5432,
-          "nev": { "hu": "Jurisics tér", "en": "Jurisics Square", "de": "Jurisics-Platz" }
+          "lat": 47.388158390426874,
+          "lng": 16.54166130330387,
+          "nev": {
+            "hu": "Fő tér és Jurisics tér",
+            "en": "Main Square & Jurisics Square",
+            "de": "Hauptplatz & Jurisics-Platz"
+          }
         }
       },
       {
         "id": 206,
         "nev": {
-          "hu": "Borbarát Hölgyek Egyesülete",
-          "en": "Association of Wine-Loving Ladies",
-          "de": "Verein der weinliebenden Damen"
+          "hu": "Fúvós-show",
+          "en": "Wind Band Show",
+          "de": "Blasmusik-Show"
         },
-        "leiras": { "hu": "Bemutató a várban.", "en": "Presentation in the Castle.", "de": "Präsentation in der Burg." },
-        "idopont": "2025-10-25T14:00:00",
-        "veg_idopont": "2025-10-25T14:30:00",
+        "leiras": {
+          "hu": "Látványos és szórakoztató fúvószenekari show-műsor a sátorban.",
+          "en": "Spectacular and entertaining wind band show in the event tent.",
+          "de": "Spektakuläre und unterhaltsame Blasmusik-Show im Festzelt."
+        },
+        "idopont": "2026-09-26T17:30:00",
+        "veg_idopont": "2026-09-26T18:00:00",
         "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         }
       },
       {
         "id": 207,
         "nev": {
-          "hu": "Kőszegfalvi Német Nemzetiségi Kórus",
-          "en": "German Nationality Choir of Kőszegfalva",
-          "de": "Deutscher Nationalitätenchor Kőszegfalva"
+          "hu": "Prokofjev koncert",
+          "en": "Prokofjev Concert",
+          "de": "Prokofjev Konzert"
         },
-        "leiras": { "hu": "Kórusműsor.", "en": "Choir performance.", "de": "Chorauftritt." },
-        "idopont": "2025-10-25T14:30:00",
-        "veg_idopont": "2025-10-25T15:00:00",
+        "leiras": {
+          "hu": "Szabadtéri koncert a Fő téren (csak jó idő esetén).",
+          "en": "Outdoor concert on the Main Square (only in good weather).",
+          "de": "Open-Air-Konzert auf dem Hauptplatz (nur bei gutem Wetter)."
+        },
+        "idopont": "2026-09-26T18:00:00",
+        "veg_idopont": "2026-09-26T20:00:00",
         "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
+          "lat": 47.388158390426874,
+          "lng": 16.54166130330387,
+          "nev": {
+            "hu": "Fő tér",
+            "en": "Main Square",
+            "de": "Hauptplatz"
+          }
         }
       },
       {
         "id": 208,
-        "nev": { "hu": "Berecz András", "en": "András Berecz", "de": "András Berecz" },
-        "leiras": {
-          "hu": "Előadóest.",
-          "en": "Performance by András Berecz.",
-          "de": "Auftritt von András Berecz."
-        },
-        "idopont": "2025-10-25T15:00:00",
-        "veg_idopont": "2025-10-25T16:00:00",
-        "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
-        }
-      },
-      {
-        "id": 209,
-        "nev": { "hu": "Eredményhirdetés", "en": "Awards Ceremony", "de": "Siegerehrung" },
-        "leiras": {
-          "hu": "Civil és gasztro versenyek eredményei.",
-          "en": "Results of the civil & gastronomy contests.",
-          "de": "Ergebnisse der zivilen & Gastro-Wettbewerbe."
-        },
-        "idopont": "2025-10-25T16:00:00",
-        "veg_idopont": "2025-10-25T16:30:00",
-        "helyszin": {
-          "lat": 47.3901,
-          "lng": 16.5449,
-          "nev": { "hu": "Jurisics vár – belső udvar", "en": "Jurisics Castle – inner courtyard", "de": "Burg Jurisics – Innenhof" }
-        }
-      },
-      {
-        "id": 210,
         "nev": {
-          "hu": "Kőszeg Város Fúvószenekara",
-          "en": "Kőszeg Town Wind Orchestra",
-          "de": "Blasorchester der Stadt Kőszeg"
-        },
-        "leiras": { "hu": "Koncert.", "en": "Concert.", "de": "Konzert." },
-        "idopont": "2025-10-25T17:00:00",
-        "veg_idopont": "2025-10-25T18:00:00",
-        "helyszin": {
-          "lat": 47.3899,
-          "lng": 16.5445,
-          "nev": { "hu": "Jurisics vár", "en": "Jurisics Castle", "de": "Burg Jurisics" }
-        }
-      },
-      {
-        "id": 211,
-        "nev": {
-          "hu": "„Ízek az Alpokaljáról, Ízek az Írottkő Natúrparkban” – Nevezés",
-          "en": "Flavours of the Alpokalja – Registration",
-          "de": "Geschmäcker der Alpokalja – Anmeldung"
+          "hu": "Szüreti Bál – Fáraó",
+          "en": "Harvest Ball – Fáraó Band",
+          "de": "Weinlese-Ball – Fáraó Band"
         },
         "leiras": {
-          "hu": "Nevezés a KÖSZHÁZ-ban (Jurisics vár külső udvar).",
-          "en": "Registration at KÖSZHÁZ (outer courtyard).",
-          "de": "Anmeldung im KÖSZHÁZ (äußerer Burghof)."
+          "hu": "Hagyományos szüreti bál és fergeteges táncmulatság a Fáraó zenekarral.",
+          "en": "Traditional harvest ball and dance party with the Fáraó band in the tent.",
+          "de": "Traditioneller Weinlese-Ball und Tanzabend mit der Fáraó Band im Festzelt."
         },
-        "idopont": "2025-10-25T10:00:00",
-        "veg_idopont": "2025-10-25T12:00:00",
+        "idopont": "2026-09-26T21:00:00",
+        "veg_idopont": "2026-09-27T02:00:00",
         "helyszin": {
-          "lat": 47.3903,
-          "lng": 16.545,
-          "nev": { "hu": "KÖSZHÁZ", "en": "KÖSZHÁZ", "de": "KÖSZHÁZ" }
-        }
-      },
-      {
-        "id": 212,
-        "nev": {
-          "hu": "Kóstoló – támogatói jeggyel",
-          "en": "Tasting – with supporter ticket",
-          "de": "Verkostung – mit Unterstützer-Ticket"
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         },
-        "leiras": {
-          "hu": "Kóstoló az Írottkő Natúrpark standjánál (külső várudvar).",
-          "en": "Tasting at the Írottkő Nature Park stand (outer courtyard).",
-          "de": "Verkostung am Stand des Írottkő-Naturparks (äußerer Burghof)."
-        },
-        "idopont": "2025-10-25T14:00:00",
-        "veg_idopont": "2025-10-25T16:00:00",
-        "helyszin": {
-          "lat": 47.39,
-          "lng": 16.5447,
-          "nev": { "hu": "Jurisics vár – külső udvar", "en": "Jurisics Castle – outer courtyard", "de": "Burg Jurisics – äußerer Hof" }
-        }
-      },
-      {
-        "id": 213,
-        "nev": { "hu": "Civil Főzőverseny – kóstoló", "en": "Civil Cooking Contest – tasting", "de": "Ziviler Kochwettbewerb – Verkostung" },
-        "leiras": {
-          "hu": "Délidőben kóstoló a Diáksétányon.",
-          "en": "Midday tasting at the Promenade.",
-          "de": "Mittägliche Verkostung an der Promenade."
-        },
-        "idopont": "2025-10-25T12:00:00",
-        "veg_idopont": "2025-10-25T13:00:00",
-        "helyszin": {
-          "lat": 47.38940716751321,
-          "lng": 16.53923636761531,
-          "nev": { "hu": "Diáksétány", "en": "Students' Promenade", "de": "Studentenpromenade" }
-        }
+        "kiemelt": true
       }
     ]
   },
   {
-    "datum": "2025-10-26",
+    "datum": "2026-09-27",
     "esemenyek": [
       {
-        "id": 300,
+        "id": 301,
         "nev": {
-          "hu": "Kézműves vásár – nyitva",
-          "en": "Craft fair – open",
-          "de": "Handwerksmarkt – geöffnet"
+          "hu": "Ifjúsági Fúvószenekarok Találkozója",
+          "en": "Meeting of Youth Wind Bands",
+          "de": "Treffen der Jugendblaskapellen"
         },
         "leiras": {
-          "hu": "A vásár október 26-án is nyitva.",
-          "en": "The fair is open on Sunday, 26 October as well.",
-          "de": "Der Markt ist auch am Sonntag, 26. Oktober geöffnet."
+          "hu": "Fiatal fúvós tehetségek bemutatkozó hangversenye a rendezvénysátorban.",
+          "en": "Concerts by young talented wind bands in the event tent.",
+          "de": "Konzerte junger talentierter Blaskapellen im Festzelt."
         },
-        "idopont": "2025-10-26T09:00:00",
-        "veg_idopont": "2025-10-26T18:00:00",
+        "idopont": "2026-09-27T14:00:00",
+        "veg_idopont": "2026-09-27T15:00:00",
         "helyszin": {
-          "lat": 47.3891,
-          "lng": 16.542,
-          "nev": { "hu": "Fő tér és környéke", "en": "Main Square & area", "de": "Hauptplatz & Umgebung" }
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
         }
+      },
+      {
+        "id": 302,
+        "nev": {
+          "hu": "Srumli térzene",
+          "en": "Srumli Street Music",
+          "de": "Srumli Platzkonzert"
+        },
+        "leiras": {
+          "hu": "Hangulatos sramli és rezes térzene a Fő téren.",
+          "en": "Atmospheric street music on the Main Square.",
+          "de": "Stimmungsvolle Platzmusik auf dem Hauptplatz."
+        },
+        "idopont": "2026-09-27T15:00:00",
+        "veg_idopont": "2026-09-27T17:00:00",
+        "helyszin": {
+          "lat": 47.388158390426874,
+          "lng": 16.54166130330387,
+          "nev": {
+            "hu": "Fő tér",
+            "en": "Main Square",
+            "de": "Hauptplatz"
+          }
+        }
+      },
+      {
+        "id": 303,
+        "nev": {
+          "hu": "Néptánc gála: Hajnalcsillag, Kőszegi Cimborák & Boglya",
+          "en": "Folk Dance Gala: Hajnalcsillag, Kőszegi Cimborák & Boglya Band",
+          "de": "Volkstanz-Gala: Hajnalcsillag, Kőszegi Cimborák & Boglya Band"
+        },
+        "leiras": {
+          "hu": "Hagyományőrző népzenei és néptánc előadás a rendezvénysátorban.",
+          "en": "Traditional folk music and dance performances in the event tent.",
+          "de": "Traditionelle Volksmusik- und Tanzaufführungen im Festzelt."
+        },
+        "idopont": "2026-09-27T17:00:00",
+        "veg_idopont": "2026-09-27T19:00:00",
+        "helyszin": {
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
+        }
+      },
+      {
+        "id": 304,
+        "nev": {
+          "hu": "Culture Cuvée koncert",
+          "en": "Culture Cuvée Concert",
+          "de": "Culture Cuvée Konzert"
+        },
+        "leiras": {
+          "hu": "A fesztivált záró Culture Cuvée koncert a rendezvénysátorban.",
+          "en": "Closing concert of the festival by Culture Cuvée in the tent.",
+          "de": "Abschlusskonzert des Festivals von Culture Cuvée im Festzelt."
+        },
+        "idopont": "2026-09-27T19:00:00",
+        "veg_idopont": "2026-09-27T21:00:00",
+        "helyszin": {
+          "lat": 47.39017284724587,
+          "lng": 16.538364686501225,
+          "nev": {
+            "hu": "Rendezvénysátor (Károly Róbert tér)",
+            "en": "Event Tent (Károly Róbert Square)",
+            "de": "Festzelt (Károly-Róbert-Platz)"
+          }
+        },
+        "kiemelt": true
       }
     ]
   }
