@@ -63,12 +63,8 @@ function getLiveBadges(appData) {
     badges['/gastronomy'] = { type: 'count', text: `${openNow} hely nyitva` };
   }
 
-<<<<<<< HEAD
   // Kőszegi Szüret (Fúvószenekari Találkozó & Karnevál)
   badges['/szuret'] = { type: 'countdown', text: 'Sze. 25-27.' };
-
-=======
->>>>>>> 6a1d15bc27d0edab701ced5280da2d5415b2bff9
   return badges;
 }
 
@@ -133,11 +129,7 @@ export default function Home({ appData, weather }) {
   const liveBadges = useMemo(() => getLiveBadges(appData), [appData]);
 
   const sections = [
-<<<<<<< HEAD
     { to: '/events', label: 'Kőszegi Szüret', desc: '2026.09.25. - 09.27. | Fúvószenekari Találkozó & Karnevál', icon: IoWineOutline, featured: true, bgImage: '/images/szuret_hero.png', span: 'col-span-2 sm:col-span-2', comingSoon: false, delay: 0.03 },
-=======
-    { to: '/szuret', label: 'Kőszegi Szüret', desc: '2026.09.25. - 09.27.', icon: IoWineOutline, featured: true, bgImage: '/images/szuret_hero.png', span: 'col-span-2 sm:col-span-2', delay: 0.03 },
->>>>>>> 6a1d15bc27d0edab701ced5280da2d5415b2bff9
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.09 },
