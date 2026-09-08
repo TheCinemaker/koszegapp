@@ -1,137 +1,5 @@
 [
   {
-    "id": "meggie_tomsa_toth_pinceszet_2026",
-    "name": "Meggie & Tomsa – Tóth Pincészet Borház",
-    "date": "2026-08-21",
-    "endDate": "2026-08-21",
-    "time": "19:30",
-    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
-    "coords": {
-      "lat": 47.3875,
-      "lng": 16.542
-    },
-    "description": "Két fantasztikus kőszegi zenész barátunk, Meggie & Tomsa gondoskodik a megszokott fergeteges hangulatról augusztus 21-én péntek este 19:30-tól.\n\nBelépő: 1500 Ft/fő\nAsztalfoglalás ajánlott!\n2 fős foglalásoknál előfordulhat, hogy egy másik 2 fős társasággal közös asztalt tudunk biztosítani.\n\nHelyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\nTel: +36 94 364 128 | Email: info@tothpinceszet.hu | Web: www.tothpinceszet.hu",
-    "tags": [
-      "meggie",
-      "tomsa",
-      "koncert",
-      "buli",
-      "tóth pincészet",
-      "borház",
-      "zene",
-      "élőzene"
-    ],
-    "image": "/images/events/meggie_tomsa_toth_pinceszet_2026.png",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🍷 BORHÁZI EST"
-  },
-  {
-    "id": "koszeg_zenes_estek_madison_band_2026",
-    "name": "Kőszegi Zenés Estek – Madison Band",
-    "date": "2026-08-15",
-    "endDate": "2026-08-15",
-    "time": "19:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.15. Szombat 19:00 órától: Madison Band élő koncert.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
-    "tags": [
-      "kőszegi zenés estek",
-      "madison band",
-      "koncert",
-      "élőzene",
-      "fő tér",
-      "kőszeg",
-      "ingyenes"
-    ],
-    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🎵 ZENÉS ESTEK"
-  },
-  {
-    "id": "koszeg_zenes_estek_nagy_csaba_2026",
-    "name": "Kőszegi Zenés Estek – Nagy Csaba",
-    "date": "2026-08-22",
-    "endDate": "2026-08-22",
-    "time": "19:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.22. Szombat 19:00 órától: Nagy Csaba élő műsora.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
-    "tags": [
-      "kőszegi zenés estek",
-      "nagy csaba",
-      "koncert",
-      "élőzene",
-      "fő tér",
-      "kőszeg",
-      "ingyenes"
-    ],
-    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🎵 ZENÉS ESTEK"
-  },
-  {
-    "id": "koszeg_zenes_estek_rm_acoustic_2026",
-    "name": "Kőszegi Zenés Estek – RM Acoustic",
-    "date": "2026-08-29",
-    "endDate": "2026-08-29",
-    "time": "19:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Kőszegi Zenés Estek augusztusban a Fő téren!\n\n08.29. Szombat 19:00 órától: RM Acoustic akusztikus koncert.\n\nHelyszín: Fő tér, Kőszeg\n\nA zenés estek a Kőszegi Turisztikai Szövetség szervezésében valósulnak meg.\nA programváltoztatás jogát fenntartják!",
-    "tags": [
-      "kőszegi zenés estek",
-      "rm acoustic",
-      "koncert",
-      "akusztik",
-      "élőzene",
-      "fő tér",
-      "kőszeg",
-      "ingyenes"
-    ],
-    "image": "/images/events/koszeg_zenes_estek_augusztus_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🎵 ZENÉS ESTEK"
-  },
-  {
-    "id": "ostrombuli_meggie_toth_pinceszet_2026",
-    "name": "Ostrombuli – Horváth Meggie & Horváth Tamás",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "20:00",
-    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
-    "coords": {
-      "lat": 47.3875,
-      "lng": 16.542
-    },
-    "description": "A nyár legnagyobb produkciójának számító kőszegi Ostromnapok péntekén Horváth Meggie és Horváth Tamás érkezik hozzánk a legismertebb slágerekkel.\n\nEreszd el a hajam buli egész éjjel.... Ha 1532-ben lett volna ilyen koncert, a török még ma is nálunk énekelne és bulizna!\n\nAsztalfoglalás javasolt!\nBelépő: 1500 Ft/fő\n\nHelyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\nTel: 94 364 128 | Email: info@tothpinceszet.hu",
-    "tags": [
-      "ostrombuli",
-      "koncert",
-      "buli",
-      "tóth pincészet",
-      "borház",
-      "zene",
-      "ostromnapok"
-    ],
-    "image": "/images/fo_ter.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🍷 OSTROMBULI"
-  },
-  {
     "id": "zsinagoganapok_2026",
     "name": "Zsinagóganapok Kőszegen",
     "date": "2026-09-07",
@@ -158,52 +26,170 @@
     "highlightLabel": "✡️ ZSINAGÓGANAPOK"
   },
   {
-    "id": "bass_piknik_2026",
-    "name": "🌊🔥 BASS PIKNIK 2026 – Tó-Part Kőszeg",
-    "date": "2026-07-25",
-    "endDate": "2026-07-25",
-    "time": "14:00",
-    "location": "Tó-Part Kőszeg",
+    "id": "tiny_house_nyilt_nap_2026",
+    "name": "Tiny House Gyártási Nyílt Nap a Nemezgyárban",
+    "date": "2026-09-10",
+    "endDate": "2026-09-10",
+    "time": "10:45",
+    "location": "9730 Kőszeg, Rőti völgy u. 3. (Kőszegi Nemezgyár)",
     "coords": {
-      "lat": 47.382,
-      "lng": 16.545
+      "lat": 47.40162848950506,
+      "lng": 16.532097047219857
     },
-    "description": "Egy nap a tóparton, ahol nem siet senki sehova… csak jó zenék, jó arcok, hideg italok és a nyár legjobb hangulata vár!\n\n☀️ Nappal: pihenés, napfény, közösségi vibe, beszélgetések.\n🌙 Este: brutál basszus, zene, tánc a csillagok alatt az Illegal Control DJ-ivel!\n\n🎶 Lineup:\n• Raul Young\n• Baluca\n• Somex\n• Seges\n• Berry\n• Gabriel Sanchoz\n\n👨‍👩‍👧‍👦🐾 Család- és kisállatbarát rendezvény!",
+    "description": "Tudod mi az a tiny house? Egy kerekeken guruló miniház, amit magaddal tudsz vinni, mint a csiga a házát. Kicsi. Csak annyi, amennyi szükséges, vagy a szükségesnél kicsit több, tehát elegendő. Ha kíváncsi vagy rá, hogy készül egy ilyen miniház, gyere el a gyártási nyílt napra!\n\nBemutatkozik az Interreg Austria-Hungary program támogatásával, a fenntarthatóság szellemében, térségi szakemberek bevonásával készülő natúrparki Tiny House: egyedi tervek alapján, újrahasznosított anyagok felhasználásával.\n\n📍 Helyszín: 9730 Kőszeg, Rőti völgy u. 3. (Kőszegi Nemezgyár és környéke)\n🗓 Dátum: 2026. szeptember 10. (csütörtök)\n\nPROGRAM:\n• 10:45 – 11:15: Sajtótájékoztató\n• 11:15 – 17:30: Tiny House bemutatása szakvezetéssel\n\nSzakmai bemutatónk a készülő miniház műhelytitkaiba enged betekintést: a gyártás során felmerülő gyakorlati megoldásokat osztjuk meg. Közelről megismerhető a napelemes energiaellátás, a szürkevíz-hasznosítás és a vízmentes komposztwc működése. A KEVESEBB ZÖLDEBB!\n\n🎟 A lakossági nyílt nap látogatása INGYENES!\n📝 Regisztráció: Kérjük, küldj egy e-mailt a hello@naturpark.hu címre (írd meg hányan jönnétek és kb. mikor). (Ha elfelejtenél regisztrálni, természetesen akkor is eljöhetsz!)\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | TinyGreen Project",
     "tags": [
-      "bass piknik",
-      "koncert",
-      "buli",
-      "tópart",
-      "kiemelt"
+      "tiny house",
+      "nemezgyár",
+      "írottkő natúrpark",
+      "nyílt nap",
+      "fenntarthatóság",
+      "ingyenes",
+      "kőszeg",
+      "bemutató",
+      "zöld"
     ],
-    "image": "/images/events/bass.jpeg",
+    "image": "/images/events/tiny_house_nyilt_nap_2026.png",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "🔥 KIEMELT TÓPARTI BULI",
-    "ticketUrl": "https://basspiknik.com/events/bass-piknik-2026-warmup-session"
+    "highlightLabel": "🏡 TINY HOUSE NYÍLT NAP"
   },
   {
-    "id": "ostromnapok_fofesztival_2026",
-    "name": "XIX. Kőszegi Ostromnapok",
-    "date": "2026-08-07",
-    "endDate": "2026-08-09",
-    "time": "15:00",
-    "location": "Kőszeg Belváros és Jurisics-vár",
+    "id": "madartani_seta_abert_to_2026",
+    "name": "Madártani séta az Abért-tónál – Illés Péterrel",
+    "date": "2026-09-12",
+    "endDate": "2026-09-12",
+    "time": "09:00",
+    "location": "Abért-tó (Déli tó parkolója), Kőszeg",
+    "coords": {
+      "lat": 47.36156317354757,
+      "lng": 16.566743107289145
+    },
+    "description": "Tanulj velünk a natúrparki zöldülő programok keretében!\n\nIllés Péter biológiatanár, natúrparki munkatárs és egyben a natúrpark természetvédelmi alelnöke ízig-vérig madarász. Mindent (is) tud a madarakról és jó humora van :). Szakvezetett sétáin biztosan jól fogod magad érezni!\n\n📍 Találkozó: Abért-tó, a déli tó parkolója (Kőszeg)\n🗓 Dátum: 2026. szeptember 12. (szombat) • 09:00 – 11:00\n📏 Távolság / Időtartam: kb. 2-3 km, kb. 2 óra\n\n🎟 A program INGYENES!\n📞 Jelentkezés Péternél a következő telefonszámon: +36 20 526-4300\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
+    "tags": [
+      "madártani séta",
+      "abért-tó",
+      "illés péter",
+      "natúrpark",
+      "természetvédelem",
+      "túra",
+      "séta",
+      "ingyenes",
+      "kőszeg",
+      "családi"
+    ],
+    "image": "/images/events/madartani_seta_abert_to_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🦆 NATÚRPARKI SÉTA"
+  },
+  {
+    "id": "eg_es_fold_kozott_kiallitas_2026",
+    "name": "Ég és föld között – Nagy Gabriella & Huszár Gábor kiállítása",
+    "date": "2026-09-12",
+    "endDate": "2026-10-16",
+    "time": "17:00",
+    "location": "Hotel Írottkő (Fő tér 4., Kőszeg)",
+    "coords": {
+      "lat": 47.3888,
+      "lng": 16.5414
+    },
+    "description": "Sok szeretettel várjuk Önt és kedves Családját Nagy Gabriella és Huszár Gábor Ég és föld között című kiállítására a Hotel Írottkőben!\n\n📍 Helyszín: Hotel Írottkő (9730 Kőszeg, Fő tér 4.)\n🗓 Megnyitó: 2026. szeptember 12. (szombat) 17:00\n🖼 A kiállítás megtekinthető: 2026. október 16-ig.\n\nMEGNYITÓ PROGRAM:\n• Köszöntőt mond: Jencsky Beatrix\n• A kiállítást megnyitja: Básthy Béla\n• Közreműködik: Dance Jam tánccsoport, Földesi Csilla vezetésével\n\n🎟 A belépés INGYENES!\nℹ️ Szervező: Csók István Művészkör Egyesület Kőszeg",
+    "tags": [
+      "kiállítás",
+      "művészet",
+      "hotel írottkő",
+      "nagy gabriella",
+      "huszár gábor",
+      "csók istván művészkör",
+      "dance jam",
+      "ingyenes",
+      "kőszeg"
+    ],
+    "image": "/images/events/eg_es_fold_kozott_kiallitas_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎨 MŰVÉSZETI KIÁLLÍTÁS"
+  },
+  {
+    "id": "historia_futas_2026",
+    "name": "43. História Futás",
+    "date": "2026-09-13",
+    "endDate": "2026-09-13",
+    "time": "13:15",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Idén immár 43. alkalommal kerül megrendezésre az 1532. évi ostrom emlékére létrejött verseny. Több korcsoportban és távokon mérhetik össze tudásukat a futók. Az Expressz Üdülőközpont munkatársai hívták életre Tompa István ötlete és elnevezése alapján 1984-ben a versenyt, mely a mai napig lelkes sportbarátok munkája révén valósul meg a Jurisics-vár Művelődési Központ és Várszínház intézményi hátterével.\n\n📍 Helyszín: Fő tér, Kőszeg (Rajt és Cél)\n🗓 Dátum: 2026. szeptember 13. (vasárnap)\n\nPROGRAM ÉS RAJTIDŐPONTOK:\n\n🏃 II. kategória (300-500-1250-2500 m-es táv):\n• 13:15 – OVIS (Pici): régi Mentőállomás\n• 13:30 – I. kcs. lány és fiú (Pék u. kereszteződés)\n• 13:45 – II. kcs. lány és fiú (Fő tér)\n• 14:00 – III. kcs. lány és fiú (Fő tér)\n• 14:15 – IV. kcs. lány és fiú (Fő tér)\n• 14:30 – V.-VI. kcs. lány és fiú (Fő tér)\nNevezési díj: 500 Ft\n\n🏃 I. kategória – 1532 m-es tömegverseny:\n• 15:00 – Rajt a Fő térről (bárki indulhat, igazolt versenyző versenyszerűen nem teljesítheti!)\nNevezési díj: 500 Ft\n\n🏃 III. kategória – 9.000 m-es utcai futóverseny:\n• 15:30 – Rajt a Fő térről (szintidő: 1 óra 20 perc!)\nNevezési díj: 4.000 Ft (csapat nevezés: 10.000 Ft/csapat)\n\n🏆 Eredményhirdetés: várhatóan 18:00 órakor a Fő téren!\n\n📝 Nevezés: A Jurisics-várban szeptember 8–10. között, illetve a verseny napján 10:00-tól 14:00-ig.\nA II. kategóriában nevezett futók tombolasorsoláson vesznek részt az eredményhirdetés után!\n\n⚠️ Közlekedési információ: A futóverseny ideje alatt a Volánbusz járatai a Liszt Ferenc utcából indulva a Rákóczi út érintésével hagyják el a várost.\n\nℹ️ Részletek és előnevezés: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis utca 9. | Tel: 94/360-113 | Email: jurisics@koszeg.hu | Web: koszeg.hu)",
+    "tags": [
+      "história futás",
+      "futás",
+      "sport",
+      "fő tér",
+      "kőszeg",
+      "jurisics vár",
+      "ostrom",
+      "hagyomány",
+      "verseny"
+    ],
+    "image": "/images/events/historia_futas_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🏃 SPORT & HAGYOMÁNY"
+  },
+  {
+    "id": "hadisebesultek_gorbe_tukorben_2026",
+    "name": "Keppel Csilla: Hadisebesültek görbe tükörben",
+    "date": "2026-09-17",
+    "endDate": "2026-09-17",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Rajnis u. 9., Kőszeg)",
     "coords": {
       "lat": 47.3892,
       "lng": 16.5398
     },
-    "description": "Háromnapos történelmi fesztivál az 1532-es török ostrom emlékére. Várostrom, fáklyás felvonulás, vásár, koncertek és hagyományőrző bemutatók! (A részletes program a dedikált Ostromnapok oldalon érhető el!)",
+    "description": "Keppel Csilla előadása: 'Hadisebesültek görbe tükörben' a Kőszegi Városi Múzeum, Könyvtár és Levéltár szervezésében.\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (9730 Kőszeg, Rajnis utca 9.)\n🗓 Dátum: 2026. szeptember 17. (csütörtök), 17:00\n\n🎟 A belépés INGYENES!\nℹ️ Minden érdeklődőt szeretettel várnak a szervezők!",
     "tags": [
-      "ostromnapok",
-      "fesztivál",
-      "hagyományőrzés",
-      "család"
+      "előadás",
+      "történelem",
+      "keppel csilla",
+      "városi múzeum",
+      "könyvtár",
+      "levéltár",
+      "ingyenes",
+      "kőszeg"
     ],
-    "image": "/images/ostrom_2026/ostromhero.png",
+    "image": "/images/events/varszinhaz_default.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": ""
+  },
+  {
+    "id": "idovagta_lovasszinhaz_2026",
+    "name": "Idővágta – A ló szerepe a magyar történelemben (Lovasszínház)",
+    "date": "2026-09-18",
+    "endDate": "2026-09-18",
+    "time": "17:00",
+    "location": "Teki Tangazdaság (Szombathelyi út 7., Kőszeg)",
+    "coords": {
+      "lat": 47.3785,
+      "lng": 16.5512
+    },
+    "description": "A Kőszegi Evangélikus Középiskola tanulói, tanárai és lovai szeretettel várnak minden érdeklődőt az iskola tangazdaságába (Kőszeg, Szombathelyi út 7.) 2026. szeptember 18-án pénteken 17 órára egy különleges lovasszínházi előadásra!\n\nAz 'Idővágta – A ló szerepe a magyar történelemben' című produkciót tekinthetik meg, amelyet a Tehetségközelben pályázat keretében állítottak színpadra.\n\n📍 Helyszín: Kőszegi Evangélikus Középiskola Tangazdasága (9730 Kőszeg, Szombathelyi út 7.)\n🗓 Dátum: 2026. szeptember 18. (péntek), 17:00\n\nALKOTÓK ÉS ELŐADÓK:\n• Projektvezető: Fazekasné Marton Mónika tanárnő\n• Írta és rendezte: Gergáczné Varga Andrea tanárnő\n• Előadják: A Kőszegi Evangélikus Középiskola tanulói, tanárai és lovai\n• Vendégszereplők: Simonka Ferenc és Marton-Szállás lovasai\n\n🎟 Belépés támogatói jeggyel a helyszínen!",
+    "tags": [
+      "idővágta",
+      "lovasszínház",
+      "evangélikus középiskola",
+      "teki tangazdaság",
+      "lovas előadás",
+      "történelem",
+      "kőszeg"
+    ],
+    "image": "/images/events/idovagta_lovasszinhaz_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "Kiemelt Fesztivál"
+    "highlightLabel": "🐎 LOVASSZÍNHÁZ"
   },
   {
     "id": "kulturalis_orokseg_rajnis12_2026",
@@ -228,1417 +214,229 @@
     "highlightLabel": ""
   },
   {
-    "name": "Robin Hood",
-    "date": "2026-07-20",
-    "time": "18:00",
-    "location": "Jurisics Vár, Toronyudvar",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Gyerekudvar - Robin Hood bábos vásári játék, Illaberek Bábszínház előadása.",
-    "tags": [
-      "várszínház",
-      "gyerekudvar",
-      "bábszínház",
-      "gyerek"
-    ],
-    "image": "robinhood-1783505047214.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_20",
-    "endDate": "2026-07-20"
-  },
-  {
-    "name": "Marius von Mayenburg: EX",
-    "date": "2026-07-23",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Marius von Mayenburg: EX – Orlai produkció. Szereplők: Járó Zsuzsa, Péter Kata, Schruff Milán. Dramaturg/rendező: Dömötör András. Belépődíj: 7.000 Ft. Esőnap: július 24.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás",
-      "dráma"
-    ],
-    "image": "ex_official.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_22",
-    "endDate": "2026-07-23"
-  },
-  {
-    "name": "Moravetz Levente: Jöhetsz drágám!",
-    "date": "2026-07-27",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Moravetz Levente: Jöhetsz drágám! – Hadart Színház. Szereplők: Háda János, Mérai Kata, Szabó Máté, Bordás Mihály, Andrádi Zsanett, Zsigmond Réka, Végh Judit. Rendező: Háda János. Belépődíj: 7.000 Ft. Esőnap: július 28.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás",
-      "vígjáték"
-    ],
-    "image": "johetsz_dragam_official.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_24",
-    "endDate": "2026-07-27"
-  },
-  {
-    "name": "Dan Goggin: Apácák",
-    "date": "2026-07-30",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Dan Goggin: Apácák – Karinthy Színház musical-vígjátéka. Esőnap: július 31.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás",
-      "musical"
-    ],
-    "image": "apacak.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_25",
-    "endDate": "2026-07-30"
-  },
-  {
-    "name": "Dés-Geszti-Békés: A dzsungel könyve",
-    "date": "2026-08-01",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Dés László – Geszti Péter – Békés Pál: A dzsungel könyve – Roxínház musical előadása. 25 éves jubileumi est. Esőnap: augusztus 2.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás",
-      "musical"
-    ],
-    "image": "dzsungel_konyve_official.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_26",
-    "endDate": "2026-08-01"
-  },
-  {
-    "name": "Fabrice Roger-Lacan: A szomszéd ajtó",
-    "date": "2026-08-03",
-    "time": "20:30",
-    "location": "Jurisics Vár, Nagyszínpad",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Fabrice Roger-Lacan: A szomszéd ajtó – romantikus vígjáték, magyarországi bemutató. A Kőszegi Várszínház és a Kultkikötő koprodukciója. Szereplők: Őze Áron (Férfi), Auksz Éva (Nő). Rendező: Naszlady Éva. Belépődíj: 5.000 Ft. Esőnap: augusztus 4.",
-    "tags": [
-      "várszínház",
-      "színház",
-      "előadás",
-      "vígjáték",
-      "bemutató"
-    ],
-    "image": "szomszed_ajto_official.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": true,
-    "id": "varszinhaz_2026_27",
-    "endDate": "2026-08-03"
-  },
-  {
-    "id": "ostrom_2026_1",
-    "name": "18. Ostrom Kupa - Nemzetközi ökölvívó verseny",
-    "date": "2026-08-05",
-    "endDate": "2026-08-07",
-    "time": "Egész nap",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "XIX. Kőszegi Ostromnapok felvezető ökölvívó versenye. Kiemelt esemény: U15-ös magyar válogatott megmérkőzik a szerb válogatottal. A rendezvény ideje alatt gyűjtést szervezünk a Myrtill Alapítvány közreműködésével két rászoruló kisgyermek, Hanna és Julcsi javára. Rossz idő esetén: Balog Iskola tornacsarnok.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "sport",
-      "ökölvívás",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Ostrom Kupa",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_2",
-    "name": "Honvédelmi Sportnap - Önvédelmi bemutató & megemlékezés",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
+    "id": "kulturalis_orokseg_napjai_2026",
+    "name": "Kulturális Örökség Napjai Kőszegen",
+    "date": "2026-09-19",
+    "endDate": "2026-09-20",
     "time": "10:00",
-    "location": "Fő tér",
+    "location": "Jurisics tér és belvárosi helyszínek, Kőszeg",
     "coords": {
       "lat": 47.3881,
       "lng": 16.5415
     },
-    "description": "Honvédelmi Sportnap ökölvívó önvédelmi bemutatóval a Főtéren, hagyományőrző bemutatókkal, majd koszorúzás és megemlékezés Jurisics Miklós szobránál.",
+    "description": "A Kőszegi Városi Múzeum, Könyvtár és Levéltár szeretettel vár mindenkit a Kulturális Örökség Napjai Kőszegen című kétnapos rendezvényre 2026. szeptember 19–20. között! Idén a központi témánk: a Jurisics tér – a kulisszák mögött és a burkolat alatt.\n\n📍 Helyszín: Jurisics tér és Kőszeg belvárosi épületei\n🗓 Dátum: 2026. szeptember 19–20. (Szombat–Vasárnap)\n\nSZOMBATI PROGRAMOK (Sze. 19.):\n• 10:00–10:30: A Jurisics tér története (B. Benkhard Lilla régész szabadtéri előadása, találkozó a zenélő kútnál)\n• 10:30–12:30: A Jurisics tér a kulisszák mögött 1. – vezetett épületbejárások a tér páros oldalán (Tábornokház, Városháza, Plébánia, magánházak udvarai). Találkozó a Tábornokház előtt (Jurisics tér 6.)\n• 14:00–17:00: A Jurisics tér a kulisszák mögött 2. – vezetett épületbejárások a tér páratlan oldalán (Sgrafittós ház, Arany Egyszarvú Patikamúzeum, Lábasház/Levéltár). Találkozó a Levéltár előtt\n(Épületbejárást vezeti: B. Benkhard Lilla régész és Mentényi Klára művészettörténész. Regisztráció garantált helyekhez 09.17-ig: leveltar@kvmkl.hu)\n• 18:00–19:00: Időrétegek a Jurisics tér burkolata alatt (Pap Ildikó Katalin régész előadása az Arany Egyszarvú Patikamúzeum drogpadlásán)\n• 10:00–14:00: Festetich palota (Chernel u. 10.) és Zwinger (Chernel u. 16.) nyitvatartása\n• 14:30 és 15:30: Toronyélmény vezetés Baranyay Csaba esperes-lelkésszel az evangélikus templomtoronyban (Várkör 44.)\n• 15:00–17:00: Postamúzeum (Rajnis u. 3.) nyitvatartása és tárlatvezetései óránként Horváth György Tiborral\n\nVASÁRNAPI PROGRAMOK (Sze. 20.):\n• 14:00–16:00: Hajdan volt kőszegiek nyomában 5. rész (Lovassy Klára vezetésével a régi városi temetőben, találkozó a nagykapunál, Temető u. 30.)\n• 17:00–18:00: 'Ora et labora' – kőszegi bencések élete a XX. században (Lovassy Klára vezetésével a Hotel Benedict épületében, Rajnis u. 2. Regisztráció 09.17-ig: leveltar@kvmkl.hu)\n• 10:00–14:00: Sgrafittós ház (Jurisics tér 7.) nyitvatartása\n\n🎟 A programok díjmentesen látogathatóak!",
     "tags": [
-      "ostrom",
-      "ostromnapok",
-      "sport",
-      "honvédelem",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_3",
-    "name": "Honvédelmi Sportnap - Íjászat és akadálypálya",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "11:15",
-    "location": "Diáksétány",
-    "coords": {
-      "lat": 47.3898,
-      "lng": 16.5413
-    },
-    "description": "Íjászprogram, lézerlövészet, paintball lövészet, akadálypálya álcahálóval és bójákkal a Diáksétányon.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "sport",
-      "honvédelem",
-      "gyerek",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_5",
-    "name": "XIX. Kőszegi Ostromnapokat megnyitó puskalövések",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "15:32",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "XIX. Kőszegi Ostromnapok hivatalos megnyitása hagyományőrző puskalövésekkel a Hősök tornyánál.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "megnyitó",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_6",
-    "name": "Ostrom kupa „megtámadása”",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "16:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Az Ostrom Kupa jelképes, játékos megtámadása a Főtéren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "ökölvívás",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_7",
-    "name": "Kőszegi Vonósok Koncert",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "16:30",
-    "location": "Tábornokház loggia",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "A Kőszegi Vonósok hangulatos szabadtéri hangversenye a Tábornokház loggiájáról.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "koncert"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_8",
-    "name": "BE-JÓ Történelmi Táncegyüttes bemutatója",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "17:20",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "Történelmi és reneszánsz táncok bemutatója a Jurisics téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "tánc",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_9",
-    "name": "Kőszegi Tornyosok zenéje",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "17:50",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "Toronyzene a Hősök tornyából a Kőszegi Tornyosok előadásában.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_10",
-    "name": "Ostromállapot kihirdetése",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "18:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "A város ostromállapotának ünnepélyes kihirdetése és a török ultimátum felolvasása.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
+      "kulturális örökség napjai",
+      "jurisics tér",
+      "épületbejárás",
+      "múzeum",
+      "levéltár",
+      "ingyenes",
+      "kőszeg",
       "történelem",
-      "program"
+      "tárlatvezetés"
     ],
-    "image": "ostromhero.png",
+    "image": "/images/events/kulturalis_orokseg_napjai_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "Ostromállapot",
-    "isOstrom": true
+    "highlightLabel": "🏛️ ÖRÖKSÉG NAPJAI"
   },
   {
-    "id": "ostrom_2026_11",
-    "name": "Német táncház – Pornóapáti Néptáncegyüttes",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "19:00",
-    "location": "Jurisics tér",
+    "id": "kulturalis_orokseg_napjai_iask_2026",
+    "name": "Kulturális Örökség Napjai – iASK épületek",
+    "date": "2026-09-19",
+    "endDate": "2026-09-20",
+    "time": "10:00",
+    "location": "Zwinger, Festetics Palota, Sgraffitós-ház (Kőszeg)",
     "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
+      "lat": 47.3885,
+      "lng": 16.5405
     },
-    "description": "Népzenei koncert és táncház a Pornóapáti Néptáncegyüttessel.",
+    "description": "Szeptember 19-20-án a Kulturális Örökség Napjai alkalmából az iASK több ikonikus épülete is megnyílik a látogatók előtt! Egy hétvége, három különleges helyszín, évszázadok története.\n\n📍 HELYSZÍNEK ÉS NYITVATARTÁS:\n\n🏛️ ZWINGER (Chernel utca 16.)\n• Szeptember 19. (Szombat) 10:00–14:00\nA kilencszögletű bástya a város védelmi rendszerének legkorábbi része (13. század). A Kraft-program keretében felújított műemlék épület alsó szintjén egy 1778-as bálványos szőlőprés is megtekinthető.\n\n🏰 FESTETICS-PALOTA (Chernel utca 10.)\n• Szeptember 19. (Szombat) 10:00–14:00\nRestaurált barokk-rokokó falfestések (1766-67), Hankiss Archívum és kiállítótér a korábbi istálló helyén.\n\n🏠 SGRAFFITÓS-HÁZ (Jurisics tér 9.)\n• Szeptember 20. (Vasárnap) 10:00–14:00\nA 16. századi reneszánsz homlokzatú épület sgraffito díszítéssel és Szent Pál idézettel.\n\n🎟 Az épületek megtekintése INGYENES!",
     "tags": [
-      "ostrom",
-      "ostromnapok",
-      "tánc",
-      "táncház",
-      "zene"
+      "iask",
+      "zwinger",
+      "festetics palota",
+      "sgraffitós-ház",
+      "kulturális örökség napjai",
+      "ingyenes",
+      "kőszeg",
+      "műemlék"
     ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_12",
-    "name": "„Ég a város, ég a ház is” - tüzes török támadás",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "20:00",
-    "location": "Lépcsős várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Látványos tüzes show és csatajelenet a Lépcsős vároroknál a török csapatok ostromának emlékére.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "csata",
-      "tűzshow",
-      "program"
-    ],
-    "image": "ostromhero.png",
+    "image": "/images/events/kulturalis_orokseg_napjai_iask_2026.png",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "Tüzes Támadás",
-    "isOstrom": true
+    "highlightLabel": "🏛️ iASK ÖRÖKSÉG NAPJAI"
   },
   {
-    "id": "ostrom_2026_13",
-    "name": "Kutyán Budavásár Koncert",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "20:30",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A Kutyán Budavásár zenekar nyáresti koncertje a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "koncert"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_14",
-    "name": "Fáklyás felvonulás a Jurisics térre",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "21:05",
-    "location": "Várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Hangulatos fáklyás menet a vároroktól a Jurisics térre a hagyományőrző csapatok részvételével.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "felvonulás",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_15",
-    "name": "„Török lesen” jelmezes túra",
-    "date": "2026-08-07",
-    "endDate": "2026-08-07",
-    "time": "21:30",
-    "location": "Tourinform iroda",
-    "coords": {
-      "lat": 47.3882,
-      "lng": 16.5417
-    },
-    "description": "Jelmezes éjszakai túra és nyomozás a belvárosban. Találkozó a Fő téri Tourinform irodánál.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "túra",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_4",
-    "name": "V. Ostrom Várvédő Jótékonysági Futóverseny",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
+    "id": "gerinctura_koszegi_hegyseg_2026",
+    "name": "Gerinctúra – A vadregényes Kőszegi-hegység (Geológus vezetéssel)",
+    "date": "2026-09-19",
+    "endDate": "2026-09-19",
     "time": "09:00",
-    "location": "Kőszeg, Fő tér",
+    "location": "Kőszeg, Szabó-hegy, Okmányos parkoló (Kincs-pihenő)",
     "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
+      "lat": 47.382,
+      "lng": 16.518
     },
-    "description": "Sziasztok futótársak! Idén jubileum! 5. alkalommal rendezzük meg a jótékonysági futásunkat! A dátum Augusztus 8. 9:00 óra, helyszín Kőszeg, Fő tér. Fuss egy jó ügyért! Távok: 1,5 km gyermekfutam, valamint 7 km, 14 km és 21,5 km. Online nevezés: e-nevezes.hu, helyszíni nevezés 7:00 - 8:30. A nevezések teljes bevételét a Myrtill Alapítványon keresztül két kisgyermek - Hanna és Julcsi - támogatására ajánlják fel.",
+    "description": "Natúrparki zöldülő programjainkon élményekkel és tartalmas-hiteles információkkal gazdagodhatsz. Tarts velünk!\n\nHorváth Csaba geológus közérthetően mesél a Kőszegi-hegységről és bátran kérdezhetsz tőle más természetbúvár témákban is. A gerinctúrán páratlan kilátású helyszíneken járunk!\n\n📍 Találkozás: Kőszeg, Szabó-hegy, Okmányos parkoló (Kincs-pihenő)\n🗓 Dátum: 2026. szeptember 19. (szombat) • 09:00\n📏 Táv: kb. 14 km, kb. 6 óra (Nehezebb túra, tapasztaltabb túrázóknak!)\n👟 Felszerelés: Zárt cipő, hosszú nadrág\n\n🎟 A program INGYENES!\n📞 Jelentkezés Csabánál: +36 30 919-0688 vagy +36 20 231-3554 | Email: horvathcsaba@naturpark.hu\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg TinyGreen Project",
     "tags": [
-      "ostrom",
-      "ostromnapok",
-      "sport",
-      "futás",
-      "jótékonyság",
-      "program"
-    ],
-    "image": "ostrom_varvedo_jotekonysagi_futas.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Jótékonysági Futás",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_16",
-    "name": "Éjszakai patronok kilövése",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "09:00",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "Ébresztő lövések a Hősök tornyánál, indítva az ostromhétvége szombati napját.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_17",
-    "name": "Kőszeg védművei – Történelmi séta",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "09:15",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "Tematikus vár- és várostörténeti séta az ostrom kulcsfontosságú pontjain. Vezeti: Révész József múzeumigazgató.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
+      "gerinctúra",
+      "kőszegi-hegység",
+      "geológia",
+      "horváth csaba",
+      "natúrpark",
       "túra",
-      "történelem",
-      "előadás"
+      "kincs-pihenő",
+      "ingyenes",
+      "kőszeg"
     ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_18",
-    "name": "A török sereg sétája a belvárosban",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "10:00",
-    "location": "Várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "A török katonák bevonulása és hangos portyája a kőszegi történelmi utcákon.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "hagyományőrzés",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_19",
-    "name": "Ifjú vitézek próba",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "10:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Vitézi próbák, játékos kiképzés gyermekek részére a várudvarban (12-13 óra között szünetel).",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "gyerek",
-      "játék",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_20",
-    "name": "Gyermek ostrom",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "10:30",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "gyerek",
-      "játék"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_21",
-    "name": "Vadászkutyabemutató",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "11:00",
-    "location": "Várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Különleges vadászkutya engedelmességi és ügyességi bemutató a várárokban.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "kutyabemutató",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_22",
-    "name": "Várvédő mustra",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "11:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "A várvédő katonai csapatok felsorakozása, fegyvermustrája a Jurisics téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "hagyományőrzés",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_23",
-    "name": "Szablyatánc – Czenki Hársfa Néptáncegyüttes",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "11:30",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "Hagyományos szablyatánc-bemutató és néptánc előadás.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "tánc",
-      "zene"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_24",
-    "name": "Vásárütés",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "13:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "A török portyázó csapatok rajtaütése a történelmi belváros kézműves vásárán.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "hagyományőrzés",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_25",
-    "name": "Tárlatvezetés a Jurisics vár kiállításában",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "13:00",
-    "location": "Jurisics vár lovagterem",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Vezetett történelmi séta a Jurisics vár állandó kiállításában. Érvényes várbelépő vagy Múzeumostrom bérlet szükséges.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "kiállítás",
-      "történelem",
-      "túra"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_26",
-    "name": "Berecz Mátyás: Fegyvert s vitézt éneklek",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "14:00",
-    "location": "Jurisics vár lovagterem",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Berecz Mátyás előadása: Fegyvert s vitézt éneklek – A török elleni harcok és az európai hadügyi forradalom.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "történelem",
-      "előadás"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_27",
-    "name": "Batthyány Lovas Bandérium és a Vitézlő Rend lovasbemutatója",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "14:30",
-    "location": "Lépcsős várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Középkori fegyveres lovasbemutató a Batthyány Lovas Bandérium és a Nyugati Vármegye Vitézlő Rendje előadásában.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "lovasbemutató",
-      "hagyományőrzés",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_28",
-    "name": "Gyermek ostrom",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "15:30",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel (második menet).",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "gyerek",
-      "játék"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_29",
-    "name": "SilverBirds Bellydance Egyesület hastánc",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "15:30",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A SilverBirds Bellydance Egyesület látványos keleti táncbemutatója a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "tánc",
-      "hastánc"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_30",
-    "name": "Ostrom felvonulás",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "16:30",
-    "location": "Jurisics vár - Diáksétány",
-    "coords": {
-      "lat": 47.3898,
-      "lng": 16.5413
-    },
-    "description": "A hagyományőrző gyalogos és lovas sereg díszes menete a Várparktól a Diáksétányig.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "felvonulás",
-      "program"
-    ],
-    "image": "ostromhero.png",
+    "image": "/images/events/gerinctura_koszegi_hegyseg_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "Ostrom Felvonulás",
-    "isOstrom": true
+    "highlightLabel": "🥾 GERINCTÚRA GEOLÓGUSSAL"
   },
   {
-    "id": "ostrom_2026_31",
-    "name": "Kőszegi Tornyosok zenéje",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "18:00",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "Toronyzene a Hősök tornyából az ostrom szombati zárásaként.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_32",
-    "name": "VÁROSTROM",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "18:30",
-    "location": "Várfal, Diáksétány",
-    "coords": {
-      "lat": 47.3898,
-      "lng": 16.5413
-    },
-    "description": "A Kőszegi Ostromnapok fő attrakciója: a kőszegi vár ostromának látványos élő csatarekonstrukciója puskaporral, ágyúkkal és vitézi küzdelmekkel a Diáksétánynál. Belépés támogatói jeggyel.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "csata",
-      "várostrom",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Várostrom",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_33",
-    "name": "SOMNIUM Koncert",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "19:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A SOMNIUM zenekar pop-rock koncertje a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "koncert"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_34",
-    "name": "Kőszeg Város Koncert Fúvószenekara",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "20:00",
-    "location": "Jurisics tér",
-    "coords": {
-      "lat": 47.3888,
-      "lng": 16.5411
-    },
-    "description": "Fúvószenei koncert a Jurisics téren Kőszeg Város Koncert Fúvószenekara előadásában.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "fúvószene"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_35",
-    "name": "Szelindek - Régi Világzenék koncert",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "21:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Középkori ihletésű energikus világzene a Szelindek együttes tolmácsolásában.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "koncert"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_36",
-    "name": "Ostrom Retro disco",
-    "date": "2026-08-08",
-    "endDate": "2026-08-08",
-    "time": "22:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Nyáresti szabadtéri retro buli és tánc a Fő téren késő éjszakáig.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "disco",
-      "zene",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_37",
-    "name": "Ostromtúra a Szulejmán-kilátóhoz",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "09:00",
-    "location": "Tourinform iroda",
-    "coords": {
-      "lat": 47.3882,
-      "lng": 16.5417
-    },
-    "description": "Gyalogos emléktúra a Szulejmán-kilátóhoz a Tourinform irodától indulva. Táv: 8 km.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "túra",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_38",
-    "name": "Kézműves foglalkozások a Csók István Művészkörrel",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "10:00",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Családi kézműves foglalkozás, agyagozás és rajzolás a vár udvarán.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "gyerek",
-      "kézműves",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_39",
-    "name": "„Harangszóig” csatazajos megemlékezés",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "10:30",
-    "location": "Diáksétány",
-    "coords": {
-      "lat": 47.3898,
-      "lng": 16.5413
-    },
-    "description": "Megemlékezés az ostrom sikeres befejezéséről a történelmi 11 órás harangszó kíséretében, puskalövésekkel a Diáksétánynál.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "megemlékezés",
-      "történelem",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Harangszó csata",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_40",
-    "name": "ESŐNAP - Szombati rossz idő esetén Várostrom",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "11:00",
-    "location": "Várfal, Diáksétány",
-    "coords": {
-      "lat": 47.3898,
-      "lng": 16.5413
-    },
-    "description": "Esőnap a szombati Várostrom esetleges pótlására a Diáksétánynál.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "esőnap",
-      "várostrom"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_41",
-    "name": "Gyermek ostrom",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "11:30",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel a vasárnapi napon.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "gyerek",
-      "játék"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_42",
-    "name": "Tárlatvezetés a Tábornokházban és a Hősök tornyában",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "11:30",
-    "location": "Hősök tornya",
-    "coords": {
-      "lat": 47.3887,
-      "lng": 16.5416
-    },
-    "description": "Vezetett történelmi séta a múzeum állandó kiállításaiban. Érvényes belépő vagy Múzeumostrom bérlet szükséges.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "túra",
-      "történelem",
-      "kiállítás"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_43",
-    "name": "Kőszegi Borkereskedelem - Jurisics Bandérium",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "13:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Kőszegi borászati hagyományok bemutatása a Jurisics Bandérium katonai kíséretében a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "bor",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_44",
-    "name": "Gyulaffy Bandérium viselet- és fegyverbemutató",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "14:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A Gyulaffy Bandérium végvári vitézi viselet- és fegyverzeti bemutatója a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "fegyverbemutató",
-      "hagyományőrzés"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_45",
-    "name": "Gyermek ostrom",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "14:30",
-    "location": "Jurisics vár",
-    "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
-    },
-    "description": "Várostrom-játék 5-14 év közötti gyermekeknek szivacsfegyverekkel (délutáni menet).",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "gyerek",
-      "játék"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_46",
-    "name": "SilverBirds Bellydance hastáncbemutató",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "15:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A SilverBirds Bellydance Egyesület keleti hastánc előadása a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "tánc",
-      "hastánc"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_47",
-    "name": "Barátkozás Marton-Szállás lovaival",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "15:00",
-    "location": "Várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Családi és gyerekprogram: simogatás és barátkozás a hagyományőrző lovakkal a várárokban.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "lovaglás",
-      "gyerek",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_48",
-    "name": "Hagyományőrző csapatok koszorúzása",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "15:32",
-    "location": "Lépcsős várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "A XIX. Kőszegi Ostromnapok végvári katonai egységeinek ünnepélyes koszorúzási szertartása a vároroknál.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "koszorúzás",
-      "történelem",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_49",
-    "name": "Gyermek-felnőtt közös ostrom",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "16:00",
-    "location": "Lépcsős várorok",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5401
-    },
-    "description": "Közös, játékos záróostrom ifjú vitézek és felnőtt hagyományőrzők részvételével a Lépcsős vároroknál.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "játék",
-      "program"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_50",
-    "name": "Boglya Népzenei Együttes koncert és táncház",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
-    "time": "16:00",
-    "location": "Fő tér",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "A Boglya Népzenei Együttes népzenei koncertje és vidám táncháza a Fő téren.",
-    "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "népzene",
-      "táncház"
-    ],
-    "image": "ostromhero.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isOstrom": true
-  },
-  {
-    "id": "ostrom_2026_51",
-    "name": "Marton-Szállás lovas íjász bemutató",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
+    "id": "szechenyi_emleknap_2026",
+    "name": "Széchenyi emléknap",
+    "date": "2026-09-21",
+    "endDate": "2026-09-21",
     "time": "17:30",
-    "location": "Jurisics vár",
+    "location": "Széchenyi Park, Jurisics vár KÖSZHÁZ (Kőszeg)",
     "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
+      "lat": 47.3892,
+      "lng": 16.5398
     },
-    "description": "Marton-Szállás lovas íjászainak látványos, ügyességi bemutatója a Jurisics vár udvarán.",
+    "description": "Széchenyi emléknap Kőszegen a Széchenyi Parkban és a Jurisics vár KÖSZHÁZ-ban.\n\n📍 Helyszín: Széchenyi Park / Jurisics vár KÖSZHÁZ (9730 Kőszeg, Rajnis utca 9.)\n🗓 Dátum: 2026. szeptember 21. (hétfő), 17:30\n\n🎟 A belépés INGYENES!\nℹ️ Minden érdeklődőt szeretettel várnak a szervezők!",
     "tags": [
-      "ostrom",
-      "ostromnapok",
-      "lovasíjászat",
-      "hagyományőrzés",
-      "program"
+      "széchenyi emléknap",
+      "széchenyi park",
+      "jurisics vár",
+      "köszház",
+      "történelem",
+      "ingyenes",
+      "kőszeg"
     ],
-    "image": "ostromhero.png",
+    "image": "/images/events/varszinhaz_default.jpg",
     "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "Lovas íjászat",
-    "isOstrom": true
+    "highlight": false,
+    "highlightLabel": ""
   },
   {
-    "id": "ostrom_2026_52",
-    "name": "20. Jubileum Várkoncert – Ataru Taiko",
-    "date": "2026-08-09",
-    "endDate": "2026-08-09",
+    "id": "meggie_szureti_est_toth_pinceszet_2026",
+    "name": "Szüreti Zenés Est – Meggie, Svertsits Tamás & Domby Bertalan",
+    "date": "2026-09-25",
+    "endDate": "2026-09-25",
     "time": "19:30",
-    "location": "Jurisics vár, Kőszeg",
+    "location": "Tóth Pincészet Borház (Rákóczi Ferenc utca 6, Kőszeg)",
     "coords": {
-      "lat": 47.3896,
-      "lng": 16.5404
+      "lat": 47.3875,
+      "lng": 16.542
     },
-    "description": "✨🎶 FÉNYEK. TŰZ. ZENE. ÜNNEP. 🎶 ✨\n20 évvel ezelőtt egy álom indult útjára. Most pedig elérkezett az idő, hogy ezt a rendkívüli jubileumot méltó módon ünnepeljük meg – ott, ahol minden elkezdődött.\n\nSzülővárosunkban, Kőszegen egy látványos jubileumi koncerttel készülünk a XIX. Ostromnapok keretein belül, amelyet különleges pirotechnikai elemek, fényhatások és felejthetetlen színpadi látvány tesz igazán egyedivé.\nLángok és fények. Lélegzetelállító pirotechnikai show. Egy este, amelyre sokáig emlékezni fogunk.\n\nEz nem csupán egy koncert lesz, hanem egy közös ünnep mindazokkal, akik az elmúlt 20 év során velünk voltak és támogattak minket!\n\nA belépés díjtalan!",
+    "description": "Hagyományos szüret péntek esti zenés estünk elmaradhatatlan szereplője Horváth Meggie, Svertsits Tamás és Domby Bertalan.\n\nEreszd el a hajam buli egész éjjel... Várunk finom borokkal, forralt borral, friss musttal és jókedvvel!\n\n🎟 Belépő: 1500 Ft / fő\n🍷 Asztalfoglalás javasolt! Az előzetesen lefoglalt asztalokat 20:00 óráig tartjuk fenn!\n\n📍 Helyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\n📞 Tel: +36 94 364 128 | Email: info@tothpinceszet.hu | Web: www.tothpinceszet.hu",
     "tags": [
-      "ostrom",
-      "ostromnapok",
-      "zene",
-      "dob",
+      "meggie",
+      "svertsits tamás",
+      "domby bertalan",
+      "szüret",
       "koncert",
-      "pirotechnika",
-      "látványos"
+      "buli",
+      "tóth pincészet",
+      "borház",
+      "zene",
+      "élőzene",
+      "kőszeg"
     ],
-    "image": "ataru_taiko_20_jubileum.jpg",
+    "image": "/images/events/meggie_svertsits_domby_toth_pinceszet_2026.png",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "20. Jubileumi Koncert",
-    "isOstrom": true
+    "highlightLabel": "🍷 SZÜRETI BORHÁZI EST"
+  },
+  {
+    "id": "koszegi_szuret_2026",
+    "name": "Kőszegi Szüret 2026 – Fúvószenekari Találkozó",
+    "date": "2026-09-25",
+    "endDate": "2026-09-27",
+    "time": "17:00",
+    "location": "Károly Róbert tér (Rendezvénysátor), Fő tér, Jurisics tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kőszegi Szüret 2026 – Fúvószenekari Találkozó a 160 éves Kőszeg Város Fúvószenekara jubileumi évada előtt tisztelegve!\n2026. szeptember 25–27.\nA Nyugat-Dunántúl Kiemelt Rendezvénye! Jó minősítésű Gasztronómiai Fesztivál!\n\nSZEPTEMBER 25. PÉNTEK:\n• 17:00 Rendezvénysátor (Károly Róbert tér) – Kőszeg Város Ifjúsági Fúvószenekara\n• 17:30 Rendezvénysátor – Hivatalos megnyitó, az első hordó bor csapra verése, Város Bora eredményhirdetése (közreműködnek a Kőszegi Tornyosok)\n• 18:00 Rendezvénysátor – VASTAG CSABA AKUSZTIK\n• 19:00 Fő tér – Fúvós Szerenád: Sárvár Város Fúvószenekara\n• 20:30 Fő tér – Silverbirds Bellydance: LED Show\n• 21:30 Rendezvénysátor – KŐSZEG VÁROS FÚVÓSZONEKARA ÉS BIKINI KÖZÖS KONCERTJE\n\nSZEPTEMBER 26. SZOMBAT:\n• 10:00 Fő tér – Vendégzenekarok zenés fogadása\n• 11:30 Rendezvénysátor – Jó ebédhez szól a... fúvószene\n• 13:15 Fúvószenekarok zenés felvonulása a karnevál helyszínére (Károly Róbert tér–Országzászló–Kossuth utca–Rákóczi utca útvonalon)\n• 14:00 A város utcáin – SZÜRETI KARNEVÁL\n• 16:00 Fő tér – Fúvós térzenék: Csepreg Város Fúvószenekara, MOFÉM Fúvószenekar\n• 16:00 Jurisics tér – Fúvós térzenék: Szentgotthárd Város Fúvószenekara, Szombathely Város Fúvószenekara\n• 16:00 Rendezvénysátor – Táncbemutatók\n• 17:30 Rendezvénysátor – Fúvós-show: Téti Ifjúsági Fúvószenekar, Kőszeg Város Fúvószenekara\n• 18:00 Fő tér – Prokofjev, Kvarc (csak jó idő esetén!)\n• 21:00 Rendezvénysátor – SZÜRETI BÁL – Fáraó\n\nSZEPTEMBER 27. VASÁRNAP:\n• 14:00 Rendezvénysátor – Ifjúsági Fúvószenekarok Találkozója\n• 15:00 Fő tér – Srumli Zenekar\n• 16:30 Fő tér – Radiogram\n• 17:00 Rendezvénysátor – Hajnalcsillag Néptáncegyüttes, Kőszegi Cimborák és a Boglya zenekar\n• 18:00 Fő tér – Sons Left Behind\n• 19:00 Rendezvénysátor – CULTURE CUVÉE KONCERT\n\n🎡 A rendezvény ideje alatt a Károly Róbert téren Vidámpark, ételkülönlegességek, bor és pálinka stand várja a kedves látogatókat! A Fő téren és a Jurisics téren kirakodóvásár!\n🎟 A BELÉPÉS INGYENES!",
+    "tags": [
+      "kőszegi szüret",
+      "fúvószenekar",
+      "bikini",
+      "vastag csaba",
+      "szüreti karnevál",
+      "fáraó",
+      "culture cuvee",
+      "fő tér",
+      "károly róbert tér",
+      "ingyenes",
+      "kőszeg",
+      "buli"
+    ],
+    "image": "/images/events/koszegi_szuret_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍇 KŐSZEGI SZÜRET 2026"
+  },
+  {
+    "id": "ordogarok_kalvaria_seta_2026",
+    "name": "Natúrparki zöldülő séta – Ördögárok-Napos-tető-Kálvária",
+    "date": "2026-09-26",
+    "endDate": "2026-09-26",
+    "time": "09:00",
+    "location": "Kőszeg, Kálvária utca, Koronaőrző bunker előtti parkoló",
+    "coords": {
+      "lat": 47.3912,
+      "lng": 16.5325
+    },
+    "description": "Natúrparki zöldülő séta – Kőszeg Ördögárok-Napos-tető-Kálvária természetismereti séta, kultúrával fűszerezve Illés Péter biológiatanárral!\n\nIllés Péter biológiatanár, natúrparki munkatárs és a natúrpark természetvédelmi alelnöke szemléletes és izgalmas tudásátadással vár e látnivalókban gazdag város széli sétán! Tarts velünk!\n\n📍 Találkozó: Kőszeg, Kálvária utca, Koronaőrző bunker előtt\n🗓 Dátum: 2026. szeptember 26. (szombat) • 09:00\n📏 Távolság / Időtartam: kb. 3,5 km, kb. 1,5 óra\n👟 Felszerelés: Zárt cipő\n\n🎟 A program INGYENES!\n📞 Jelentkezés Péternél a 06 20 526-4300 telefonszámon.\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg TinyGreen Project",
+    "tags": [
+      "natúrparki séta",
+      "ördögárok",
+      "napos-tető",
+      "kálvária",
+      "illés péter",
+      "koronaőrző bunker",
+      "túra",
+      "ingyenes",
+      "kőszeg"
+    ],
+    "image": "/images/events/ordogarok_kalvaria_seta_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🌿 NATÚRPARKI SÉTA"
+  },
+  {
+    "id": "gesztenye_tura_2026",
+    "name": "Gesztenye túra",
+    "date": "2026-10-03",
+    "endDate": "2026-10-03",
+    "time": "08:00",
+    "location": "Kőszeg, Rákóczi út 25. (Gyülekező)",
+    "coords": {
+      "lat": 47.3872,
+      "lng": 16.5435
+    },
+    "description": "Őszi Gesztenye túra Kőszegen!\n\n📍 Találkozó: Kőszeg, Rákóczi út 25. • 08:00\n🗓 Dátum: 2026. október 3. (szombat)\n🗺 Útvonal: Óriás Platán – Ottlik sétány – Csónakázó-tó – Hideg-völgy – Napostető – Saint Germain Kereszt – Merengő – Királyvölgy – Kőszeg\n📏 Táv: 10 km\n🥾 Túravezető: Németh Lászlóné (+36 70 368 5084)\n\n🎟 A program INGYENES!\nℹ️ Szervező: Írottkő Natúrparkért Egyesület",
+    "tags": [
+      "gesztenye túra",
+      "túra",
+      "kőszegi-hegység",
+      "ottlik sétány",
+      "csónakázó-tó",
+      "királyvölgy",
+      "ingyenes",
+      "kőszeg",
+      "őszi túra"
+    ],
+    "image": "/images/events/gesztenye_tura_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🌰 GESZTENYE TÚRA"
   }
 ]

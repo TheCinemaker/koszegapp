@@ -1,152 +1,31 @@
 [
   {
-    "id": "surrounding-event-cak-20260718",
-    "name": "Cáki Falunap",
-    "settlement": "Cák",
-    "date": "2026-07-18",
-    "time": "13:00 - 23:59",
-    "location": "Sportpálya és Könyvtár",
+    "id": "surrounding-event-bozsok-szuret-20260912",
+    "name": "Bozsoki Szüreti Felvonulás és Falunap",
+    "settlement": "Bozsok",
+    "date": "2026-09-12",
+    "time": "14:30 - 23:59",
+    "location": "Tekepálya és Sportpálya, Bozsok",
     "coords": {
-      "lat": 47.3578,
-      "lng": 16.5074
+      "lat": 47.3197,
+      "lng": 16.4883
     },
-    "description": "Programok:\n\n13.00 – Ebéd\n14.00 – Operett műsor Simon Katával\n15.00 – Mollini bűvész show\n15.45 – Polgármesteri köszöntő\n16.00 – White Tiger RRC – Akrobatikus rock and roll bemutató\n16.30 – Regös–Foki Veronika – nyári slágerek\n17.30 – ApróCák – Mi vagyunk a Grund!\n18.00 – Tombola\n19.00 – Decsi fivérek – Retro koncert\n20.00 – BÁL, zenél: TIM TOM (Németh Tamás)\n\nEgész napos programok:\n- Kuglóf sütő verseny a könyvtárban\n- „Parasztházak kincsei” címmel kiállítás a Bartalos család felajánlott tárgyaiból\n- Retro játék kiállítás Horváth Csaba gyűjteményéből\n- ugrálóvár\n\nTovábbi információk:\nSütemény, tombolatárgy és egyéb felajánlásokat szívesen fogadunk!\nFehér Csabáné Kati 📞 +36 20 246 0180\n🌐 www.cak.hu\n✉️ onkormanyzat.cak@gmail.com\n\nFülepp BÜFÉ\nÉvaZoli\n\nA műsorváltoztatás jogát fenntartjuk! Várunk mindenkit szeretettel!",
+    "description": "Bozsoki Szüreti Felvonulás és Falunap 2026. szeptember 12-én (szombaton)!\n\n📍 Helyszín: Bozsok (Tekepálya és Sportpálya)\n🗓 Dátum: 2026. szeptember 12. (szombat) • 14:30-tól\n\nPROGRAM:\n• 14:30 – Gyülekező a Tekepálya mellett\n• 15:00 – Jelmezes felvonulás\n• 17:15 – Ünnepélyes megnyitó a Sportpályán (vele párhuzamosan 17:00-tól Ifjúsági labdarúgó mérkőzés)\n• 17:30 – 19:00 – Vendégszereplők fellépése\n• 18:00-tól – Vacsora\n• 19:00 – Meggie és Tomsa koncert (vele párhuzamosan 19:00-tól Felnőtt labdarúgó mérkőzés)\n• 19:45 körül – Tombola\n• 20:30-tól – Zenél a Nem Véletlen Zenekar\n• Mulatság hajnalig!\n\n🎟 A BELÉPÉS INGYENES!\nℹ️ A szervezők a programváltoztatás jogát fenntartják.",
     "tags": [
+      "szüret",
+      "felvonulás",
+      "bozsok",
       "falunap",
       "koncert",
-      "bál",
-      "családi"
+      "meggie és tomsa",
+      "nem véletlen zenekar",
+      "ingyenes",
+      "buli"
     ],
-    "image": "cak_falunap_2026.jpg",
+    "image": "bozsoki_szureti_felvonulas_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "✨ Cáki Falunap",
-    "isVarszinhaz": false
-  },
-  {
-    "id": "surrounding-event-koszegfalva-20260725",
-    "name": "Kertmozi - Top Gun",
-    "settlement": "Kőszegfalva",
-    "date": "2026-07-25",
-    "time": "21:00 - 23:30",
-    "location": "Almafa Rendezvényház, HRSZ 096/10",
-    "coords": {
-      "lat": 47.37202383622611,
-      "lng": 16.579753442335512
-    },
-    "description": "Egy jó társaság, egy hideg ital és valami, amiért érdemes kicsit tovább fennmaradni...\nNa, valami ilyesmit szeretnénk július 25-én az Almáfában.\nTop Gun a vásznon, nyári este a csillagok alatt.\n\nNem fesztivál. Nem tömeg. Nem kötelező program.\nCsak egy jó este.\n\nA belépés ingyenes (az étel és ital nem). Film 21:00-tól naplemente után.",
-    "tags": [
-      "kertmozi",
-      "mozi",
-      "filmnap",
-      "szórakozás"
-    ],
-    "image": "kertmozi_top_gun.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
-    "id": "surrounding-event-velem-20260805",
-    "name": "11. Kaptár Tábor",
-    "settlement": "Velem",
-    "date": "2026-08-05",
-    "end_date": "2026-08-09",
-    "time": "Egész napos",
-    "location": "Novákfalva Üdülőfalu, Velem",
-    "coords": {
-      "lat": 47.3468,
-      "lng": 16.4912
-    },
-    "description": "Szeretettel várunk Téged a legnagyobb szlovákiai magyar katolikus táborba, a Kaptárba!\nEnnyi jelzővel elsőre kicsit ijesztőnek tűnhet a dolog, de ha már voltál, tudhatod, hogy ettől derűsebb, kellemesebb helyen nem is lehetnél - tele vagyunk zenével, játékkal, tánccal, nevetéssel.\n\nHa hitedet megélő, Istennel való kapcsolatát ápoló ember vagy, lehetőséged lesz elmélyíteni azt az előadások, beszélgetések által. Ha nem tartod magad hívőnek, vagy hited elgyengült, segítünk, hogy itt rátalálhass Istenre.\n\nIdén augusztus 5-9. között találkozunk a 11. alkalommal szervezett Kaptár táborban, idén harmadik alkalommal a csodás Velem - Novákfalva üdülőfaluban!\n\nKapcsolat:\n🌐 kaptar.sk\nFacebook: Kaptár\nInstagram: kaptar_official",
-    "tags": [
-      "tábor",
-      "közösség",
-      "katolikus",
-      "fiatalok",
-      "zene",
-      "program"
-    ],
-    "image": "kaptar_tabor_2026.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
-    "id": "surrounding-event-koszegdoroszlo-20260822",
-    "name": "Sons Left Behind koncert",
-    "settlement": "Kőszegdoroszló",
-    "date": "2026-08-22",
-    "time": "18:00 - 21:00",
-    "location": "Alasz Pince – Panoráma kóstoló",
-    "coords": {
-      "lat": 47.3718,
-      "lng": 16.5162
-    },
-    "description": "Élő rock/metál koncert az Alasz Pincénél, panorámás borkóstolással egybekötve Kőszegdoroszlón.",
-    "tags": [
-      "koncert",
-      "zene",
-      "bor",
-      "szórakozás"
-    ],
-    "image": "sons_left_behind.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
-    "id": "surrounding-event-koszegszerdahely-20260827",
-    "name": "Asztalkő Fesztivál",
-    "settlement": "Kőszegszerdahely",
-    "date": "2026-08-27",
-    "end_date": "2026-08-30",
-    "time": "10:00 - 22:00",
-    "location": "Bozsok, Cák, Kőszegdoroszló, Kőszegszerdahely, Velem",
-    "coords": {
-      "lat": 47.3486,
-      "lng": 16.5059
-    },
-    "description": "A Kőszeghegyalja nyárzáró összművészeti és gasztronómiai fesztiválja. Zenei fellépők, kiállítások, borkóstolók, színházi előadások és családi programok öt hegyaljai településen.",
-    "tags": [
-      "fesztivál",
-      "zene",
-      "gasztro",
-      "művészet"
-    ],
-    "image": "asztalko_fesztival.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
-    "id": "surrounding-event-horvatzsidany-20260829",
-    "name": "A Madeus Mozart – Rákász Gergely orgonakoncertje",
-    "settlement": "Horvátzsidány",
-    "date": "2026-08-29",
-    "time": "20:30 - 22:00",
-    "location": "Marton-Szállás, Horvátzsidány",
-    "coords": {
-      "lat": 47.3969487,
-      "lng": 16.6156606
-    },
-    "description": "Marton-Szállás (Horvátzsidány, 0132/26, 9733 Magyarország)\nEsőnap: 2026. augusztus 30. - 20:30\n\nMozart mellett még két évforduló körül fordul meg a 2026-os műsor.\n\nMohács 500 megidézi a reneszánsz királyok udvari hangulatát, olasz, magyar és német dalnokok részvételével ahová már távolról beszűrődnek az oszmán-török birodalom muzsikájának hangjai. A gyűjtés lenyűgöző hangulatot ad a korszakból pláne orgonán, amely élethűen eleveníti meg úgy a harsogó harci trombitákat, mint a reneszánsz lakoma után, a függöny mögül kiszűrődő utolsó józan muzsikus kötelességtudó regál játékát.\n\nMásodik otthonom - emlékezetes tanulmányaim és első külföldi sikereim hazája - Amerika 250 éve kiáltotta ki függetlenségét, ez tehát történetének kezdete. Innen hozom többek között az első “igazi” amerikai klasszikus zenész Aaron Copland dallamait.\n\nÉs végül Mozart! A magamfajta súlyosan túlgondolkozó ember számára el kellett teljen lassan az életem fele, mire kapisgálni kezdtem az Univerzum, ha úgy tetszik Isten másik kezét, amely a fantasztikus rendet egy játékos szimfónián keresztül vonja körénk, amelyben nem kell gondolkozni, elemezni, hanem amelyre táncolni kell. Ez a tánc Mozart.\n\nSzeretettel várom! RG.",
-    "tags": [
-      "koncert",
-      "zene",
-      "klasszikus",
-      "orgona",
-      "kultúra",
-      "program"
-    ],
-    "image": "rg_mozart_koncert_2026.png",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
+    "highlightLabel": "🍇 BOZSOKI SZÜRET",
     "isVarszinhaz": false
   },
   {
@@ -174,6 +53,35 @@
     "isVarszinhaz": false
   },
   {
+    "id": "surrounding-event-csepreg-szuret-20260918",
+    "name": "Csepregi Szüret 2026",
+    "settlement": "Csepreg",
+    "date": "2026-09-18",
+    "time": "17:30",
+    "location": "Promenád (és rossz idő esetén a Művelődési Ház), Csepreg",
+    "coords": {
+      "lat": 47.3986,
+      "lng": 16.7028
+    },
+    "description": "Itt a szüret ideje! Csepregi Szüret 2026 – Két nap élmény, hagyomány és jókedv!\n\n📍 Helyszín: Csepreg, Promenád (Rossz idő esetén a Művelődési Házban)\n🗓 Dátum: 2026. szeptember 18-19. (Péntek-Szombat)\n\nSZEPTEMBER 18. PÉNTEK:\n• 17:30 – Megnyitó – Borpromenád (Néber-Tóth Pince, Répcementi Borpince, Vinora Borház, Iváni Dalkör, Csepregi Férfi Dalkör, Szintén Zenészek)\n• 20:00 – Komonyi Zsuzsi\n• 21:00 – Culture Cuvee\n\nSZEPTEMBER 19. SZOMBAT:\n• 13:00 – Borpromenád, Kézműves Vásár\n• 14:00 – Szüreti Felvonulás Kezdete (Útvonal: Deák u. - Kőszegi u. - Petőfi u. - Széchenyi tér - Bajcsy-Zs. u. - Ady u. - Szombathelyi u. - Kossuth u. - Széchenyi tér)\n• 16:00 – Polgármesteri köszöntő, Szüreti kosár átadása, Csepreg Város Fúvószenekara és Mazsorett Csoportjai, Sopron Városi Fúvószenekar, Rohrendorfi Ifjúsági Zenekar\n• 19:00 – New West Company (Hip-Hop Tánc)\n• 19:30 – Zsidányi Betyárok Csapata\n• 21:00 – Márió a Harmónikás\n• 22:00 – Batyi Fusion\n\n🎯 Kiegészítő programok: Pónilovaglás, Büfé (Csepregi Hús Bt., Ottó Kemping).\n🎟 A BELÉPÉS INGYENES!",
+    "tags": [
+      "csepreg",
+      "szüret",
+      "borpromenád",
+      "felvonulás",
+      "koncert",
+      "márió a harmonikás",
+      "komonyi zsuzsi",
+      "fúvószenekar",
+      "ingyenes"
+    ],
+    "image": "csepregi_szuret_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍇 CSEPREGI SZÜRET",
+    "isVarszinhaz": false
+  },
+  {
     "id": "surrounding-event-velem-20260918",
     "name": "I. Magyar Spórafesztivál",
     "settlement": "Velem",
@@ -197,6 +105,95 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-lukacshaza-szuret-20260919",
+    "name": "Szüreti felvonulás és bál Lukácsházán",
+    "settlement": "Lukácsháza",
+    "date": "2026-09-19",
+    "time": "12:30",
+    "location": "Nemzedékek Parkja (Gyülekező) és Lukácsháza – Gyöngyösfalu állomásai",
+    "coords": {
+      "lat": 47.3235,
+      "lng": 16.5862
+    },
+    "description": "Több mint harmincéves hagyomány: szüreti felvonulás és bál Lukácsházán és Gyöngyösfaluban!\n\nLovasok, feldíszített traktorok, kőszegi dottó, muzsika, tánc és terített asztalok – szeptember 19-én ismét együtt ünnepli a szüretet Lukácsháza és Gyöngyösfalu.\n\n📍 Gyülekező: Lukácsháza, Nemzedékek Parkja (posta előtti terület) • 12:30\n🚜 Indulás: 13:00\n\nMEGÁLLÓK ÉS RAJTIDŐPONTOK:\n• 13:15 – Horváth József utca\n• 14:00 – Kiscsömöte (Gyöngyös utca kereszteződése)\n• 14:45 – Nagycsömöte sarok (harangláb)\n• 15:30 – Gyöngyösfalu, tornacsarnok\n• 16:25 – Hörpintő, Seregélyháza\n• 17:10 – Pösei híd\n\nFELLÉPŐK ÉS PROGRAM:\n- Derű és Vigyorkák néptánccsoport\n- Gyöngyház Óvoda csoportja\n- Megállóknál kulturális műsor és terített asztal (Hozd magaddal a poharadat!)\n\n💃 19:00 • SZÜRETI BÁL a Lukácsháza Közösségi Házban! Zenél: Bakos Roli. Tombolasorsolás!\n\n🎟 A BELÉPÉS INGYENES!",
+    "tags": [
+      "lukácsháza",
+      "gyöngyösfalu",
+      "szüret",
+      "felvonulás",
+      "bál",
+      "bakos roli",
+      "dottó",
+      "hagyomány",
+      "ingyenes"
+    ],
+    "image": "lukacshazi_szureti_felvonulas_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍇 LUKÁCSHÁZI SZÜRET",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-koszeghegyalja-nyitott-porta-20260919",
+    "name": "Nyitott Porta Napok 2026 – Kőszeghegyalja és térsége",
+    "settlement": "Kőszeghegyalja",
+    "date": "2026-09-19",
+    "time": "10:00 - 18:00",
+    "location": "Kőszeghegyalja és térségének portái (Bozsok, Cák, Velem, Kőszegdoroszló stb.)",
+    "coords": {
+      "lat": 47.346,
+      "lng": 16.4902
+    },
+    "description": "Kóstolj bele tájról-tájra! 2026. szeptember 19-én és 20-án újra megnyílnak a vidéki családi gazdaságok, pincék és manufaktúrák kapui Kőszeghegyalján a Nyitott Porta Napok programsorozat keretében!\n\n📍 Helyszín: Kőszeghegyalja és térségének nyitott portái\n🗓 Dátum: 2026. szeptember 19–20. (Szombat–Vasárnap)\n\nIDEI CSATLAKOZÓ PARTNEREK ÉS PORTÁK:\n• Bozsok: Malomporta (Rákóczi u. 2.)\n• Cák: Mándli Borház (hrsz. 1038) és Stefanich Pincészet (Kőfejtő Lejtő 14.)\n• Velem: Stirling Villa (Rákóczi Ferenc u. 96.)\n• Kőszegdoroszló: Alasz Pince – Panoráma Kóstoló (Pogány völgy hrsz. 1060) és Alpokalja Farm (hrsz. 226/5)\n• Kőszeg: Schrott Méhészet (Külterület hrsz. 0186/63)\n• Balogunyom: Harmónia Ökokert (Margaréta u. 3.)\n• Bucsu: Biomalom Róza (Szent István u. 7.)\n• Gencsapáti: Vasi Xoda Szikvízüzem (Ipar u. 1.)\n• Gyöngyösfalu: Debreceni Családi Gazdaság (hrsz. 097/6) és Porta Mészásó (Pösei hegy 2405/2)\n• Szombathely: Nefelejcs Desszertműhely (Gyöngyösparti sétány 1. fsz/2.)\n\n🚴 A porták vezetett kerékpáros és gyalogtúrák keretében is látogathatók!\n🎟 A BELÉPÉS INGYENES!\nℹ️ Részletek: naturpark.hu és nyitottportanapok.hu",
+    "tags": [
+      "nyitott porta napok",
+      "kőszeghegyalja",
+      "bozsok",
+      "cák",
+      "velem",
+      "kőszegdoroszló",
+      "borászat",
+      "méhészet",
+      "kézműves",
+      "túra",
+      "ingyenes"
+    ],
+    "image": "nyitott_porta_napok_koszeghegyalja_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🏡 NYITOTT PORTA NAPOK",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-velem-nyitott-porta-20260919",
+    "name": "II. Nyitott Porta Napok Velemben",
+    "settlement": "Velem",
+    "date": "2026-09-19",
+    "time": "10:00 - 17:00",
+    "location": "Stirling-villa és udvara, Velem",
+    "coords": {
+      "lat": 47.34608885783179,
+      "lng": 16.490260825038025
+    },
+    "description": "Szeretettel várjuk az érdeklődőket a Stirling-villában és annak hangulatos udvarán egy különleges napra, ahol Velem helyi értékei, ízei, kézműves hagyományai és a pálinkakészítés fortélyai kerülnek a középpontba.\n\n📍 Központi helyszín: Stirling-villa és udvara, Velem\n🗓 Dátum: 2026. szeptember 19. (szombat) • 10:00–17:00\n\nPROGRAMOK:\n\n🏛️ 10:00–17:00 • Nyitott Porta a Stirling-villában\n• Horváth Ágota helyi népi iparművész: népi iparművészeti alkotások bemutatása, saját készítésű sütemények és finomságok\n• Szabó Tamás helyi méztermelő: helyi mézek bemutatása\n• Reményi Tibor helyi pálinkafőző: találkozás és beszélgetés a pálinkakészítés hagyományairól\n(A programoknak a Stirling-villa épülete és udvara ad otthont.)\n\n🥃 10:30 és 13:30 • Látogatás a 113 éves velemi pálinkafőzdében\n(📍 A program helyszíne a pálinkafőzde – a Stirling-villán kívül)\nA látogatás során:\n- Megismerhetjük a 113 éves pálinkafőzde történetét\n- Megtekinthetjük a gyümölcsfeldolgozás gépeit és a pálinkafőző berendezést\n- Betekintést kaphatunk a hagyományos pálinkakészítés folyamatába\n- 2 cl pálinkakóstoló ajándékba a felnőtt résztvevőknek\n• 1. csoport: 10:30 (15–20 fő)\n• 2. csoport: 13:30 (15–20 fő)\n👉 Előzetes regisztráció ajánlott!\n\n📜 16:00 • Pálinkabíráló tréning (Stirling-villa, max. 25 fő)\nA tréning során 4-féle csonthéjas gyümölcsből készült pálinkán (cseresznye, meggy, kajszibarack, szilva) keresztül ismerkedhetnek meg a résztvevők a pálinkák szakszerű kóstolásával és bírálatával. Kérdezz-felelek a cefrekészítésről és pálinkafőzésről!\n• A tréning tartalmazza: 4-féle pálinka kóstolása, 0,5 l ásványvíz, kifli, almakarikák.\n• Részvételi díj: 6.000 Ft/fő (Előzetes regisztráció szükséges!)\n\n✨ Velem helyi értékei egy helyen – Hagyomány • kézművesség • helyi ízek • találkozások",
+    "tags": [
+      "nyitott porta",
+      "velem",
+      "stirling villa",
+      "pálinka",
+      "kézműves",
+      "méz",
+      "hagyomány",
+      "kóstoló",
+      "kőszeghegyalja"
+    ],
+    "image": "nyitott_porta_velem_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "✨ Nyitott Porta Velemben",
     "isVarszinhaz": false
   },
   {

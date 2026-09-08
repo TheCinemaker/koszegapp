@@ -1,54 +1,35 @@
 [
   {
-    "id": "bass-piknik-2026",
+    "id": "koszegi-szuret-2026",
     "active": true,
-    "start_at": "2026-07-24T00:00:00+02:00",
-    "end_at": "2026-07-25T23:59:59+02:00",
-    "image_url": "/images/events/bass.jpeg",
-    "ticket_url": "https://basspiknik.com/events/bass-piknik-2026-warmup-session",
+    "start_at": "2026-09-08T00:00:00+02:00",
+    "end_at": "2026-09-27T23:59:59+02:00",
+    "image_url": "/images/events/koszegi_szuret_2026.jpg",
     "cta_route": "/events",
     "content": {
       "hu": {
-        "badge": "🔥 KIEMELT PROGRAM – JÚLIUS 25.",
-        "title": "BASS PIKNIK 2026",
-        "subtitle": "Tó-Part Kőszeg · Egész napos élmény",
-        "body": "Nappal pihenés és napfény a tóparton, este brutál basszus és tánc a csillagok alatt! Line-up: Raul Young, Baluca, Somex, Seges, Berry, Gabriel Sanchoz.",
-        "highlight": "Család- és kisállatbarát tóparti fesztivál!",
-        "cta": "🎟️ Jegyek és részletek"
-      }
-    }
-  },
-  {
-    "id": "ostromnapok-2026",
-    "active": true,
-    "start_at": "2026-07-31T00:00:00+02:00",
-    "end_at": "2026-08-09T23:59:59+02:00",
-    "image_url": "/images/ostrom_2026/ostromhero.png",
-    "cta_route": "/ostrom",
-    "content": {
-      "hu": {
-        "badge": "Kiemelt rendezvény",
-        "title": "Ostromnapok 2026",
-        "subtitle": "2026. augusztus 7-9.",
-        "body": "Kőszeg legnagyobb rendezvénye: történelmi hagyományőrző programok, vásár és látványosságok a vár körül három napon át.",
-        "highlight": "3 nap, több tucat program a történelmi belvárosban!",
-        "cta": "Mutasd a részleteket"
+        "badge": "🍇 KIEMELT RENDEZVÉNY – SZEPTEMBER 25–27.",
+        "title": "Kőszegi Szüret 2026",
+        "subtitle": "Fúvószenekari Találkozó · 160 éves Kőszeg Város Fúvószenekara",
+        "body": "A Nyugat-Dunántúl Kiemelt Rendezvénye! Szüreti karnevál, Fúvós-show, Vastag Csaba, Bikini és Culture Cuvée koncertek, Szüreti bál Fáraóval, Vidámpark és Kirakodóvásár!",
+        "highlight": "3 napos ingyenes gasztronómiai fesztivál és fúvósünnep Kőszegen!",
+        "cta": "Részletes program megtekintése"
       },
       "en": {
-        "badge": "Featured event",
-        "title": "Siege Days 2026",
-        "subtitle": "7-9 August 2026",
-        "body": "Kőszeg's biggest event: historical reenactments, a fair and spectacles around the castle for three days.",
-        "highlight": "3 days, dozens of programmes in the historic old town!",
-        "cta": "Show me the details"
+        "badge": "🍇 FEATURED EVENT – SEPT 25–27",
+        "title": "Kőszeg Vintage Festival 2026",
+        "subtitle": "Brass Band Festival · Kőszeg Brass Band 160th Anniversary",
+        "body": "The highlight event of Western Transdanubia! Vintage Carnival, Brass Show, concerts by Bikini, Vastag Csaba, Fáraó Ball and funfair!",
+        "highlight": "3-day free gastronomy festival in Kőszeg!",
+        "cta": "View Full Schedule"
       },
       "de": {
-        "badge": "Top-Veranstaltung",
-        "title": "Belagerungstage 2026",
-        "subtitle": "7.-9. August 2026",
-        "body": "Die größte Veranstaltung in Kőszeg: historische Darbietungen, Markt und Spektakel rund um die Burg, drei Tage lang.",
-        "highlight": "3 Tage, Dutzende Programme in der historischen Altstadt!",
-        "cta": "Details anzeigen"
+        "badge": "🍇 TOP-VERANSTALTUNG – 25.–27. SEPT.",
+        "title": "Kőszeger Lese-Fest 2026",
+        "subtitle": "Blasmusiktreffen · 160 Jahre Stadtkapelle Kőszeg",
+        "body": "Großes Erntefest und Blasmusikfestival in Kőszeg mit Festumzug, Konzerten, Vergnügungspark und Markt!",
+        "highlight": "3-Tage kostenloses Gastronomie- und Musikfestival!",
+        "cta": "Programm anzeigen"
       }
     }
   }
