@@ -22,7 +22,7 @@
       "iskolai csoport",
       "élmény"
     ],
-    "image": "/images/events/vitezi_varmustra_2026.jpg",
+    "image": "vitezi_varmustra_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "⚔️ VÁRMUSTRA ÉLMÉNY"
@@ -54,30 +54,6 @@
     "highlightLabel": "✡️ ZSINAGÓGANAPOK"
   },
   {
-    "id": "event_koszeg_2026_zsinagoganapok",
-    "name": "Zsinagóganapok",
-    "date": "2026-09-07",
-    "endDate": "2026-09-08",
-    "time": "11:00",
-    "location": "Kőszegi Zsinagóga",
-    "coords": {
-      "lat": 47.3898,
-      "lng": 16.5432
-    },
-    "description": "Zsinagóganapok a megújult kőszegi Zsinagógában: kulturális és művészeti programok, koncertek, előadások és zsidó örökség bemutató.",
-    "tags": [
-      "kiállítás",
-      "koncert",
-      "kultúra",
-      "zsinagóga"
-    ],
-    "image": "zsinagoganapok_2026.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
-  },
-  {
     "id": "tiny_house_nyilt_nap_2026",
     "name": "Tiny House Gyártási Nyílt Nap a Nemezgyárban",
     "date": "2026-09-10",
@@ -100,7 +76,7 @@
       "bemutató",
       "zöld"
     ],
-    "image": "/images/events/tiny_house_nyilt_nap_2026.png",
+    "image": "tiny_house_nyilt_nap_2026.png",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🏡 TINY HOUSE NYÍLT NAP"
@@ -129,7 +105,7 @@
       "kőszeg",
       "családi"
     ],
-    "image": "/images/events/madartani_seta_abert_to_2026.jpg",
+    "image": "madartani_seta_abert_to_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🦆 NATÚRPARKI SÉTA"
@@ -157,7 +133,7 @@
       "ingyenes",
       "kőszeg"
     ],
-    "image": "/images/events/eg_es_fold_kozott_kiallitas_2026.png",
+    "image": "eg_es_fold_kozott_kiallitas_2026.png",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🎨 MŰVÉSZETI KIÁLLÍTÁS"
@@ -185,34 +161,10 @@
       "hagyomány",
       "verseny"
     ],
-    "image": "/images/events/historia_futas_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🏃 SPORT & HAGYOMÁNY"
-  },
-  {
-    "id": "event_koszeg_2026_historia_futas",
-    "name": "43. História Futás",
-    "date": "2026-09-13",
-    "endDate": "2026-09-13",
-    "time": "Egész napos",
-    "location": "belváros, Kőszeg",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "43. História Futás Kőszegen! A nagy múltú utcai futóverseny az egykori ostrom emlékére hívja a sportolni vágyókat a történelmi macskaköveken. Különböző távok gyerekeknek és felnőtteknek.",
-    "tags": [
-      "sport",
-      "futás",
-      "verseny",
-      "családi"
-    ],
     "image": "historia_futas_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
-    "highlightLabel": "43. História Futás",
-    "isVarszinhaz": false
+    "highlightLabel": "🏃 SPORT & HAGYOMÁNY"
   },
   {
     "id": "hadisebesultek_gorbe_tukorben_2026",
@@ -236,34 +188,10 @@
       "ingyenes",
       "kőszeg"
     ],
-    "image": "/images/events/varszinhaz_default.jpg",
+    "image": "varszinhaz_default.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
-  },
-  {
-    "id": "event_koszeg_2026_keppel_csilla",
-    "name": "Keppel Csilla: Hadisebesültek görbe tükörben",
-    "date": "2026-09-17",
-    "endDate": "2026-09-17",
-    "time": "17:00",
-    "location": "Kőszegi Város Múzeum Könyvtár és Levéltár",
-    "coords": {
-      "lat": 47.3894,
-      "lng": 16.5392
-    },
-    "description": "Keppel Csilla előadása: Hadisebesültek görbe tükörben. Történelmi ismeretterjesztő előadás a múzeumban.",
-    "tags": [
-      "előadás",
-      "történelem",
-      "múzeum",
-      "kultúra"
-    ],
-    "image": "",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
   },
   {
     "id": "idovagta_lovasszinhaz_2026",
@@ -286,7 +214,7 @@
       "történelem",
       "kőszeg"
     ],
-    "image": "/images/events/idovagta_lovasszinhaz_2026.jpg",
+    "image": "idovagta_lovasszinhaz_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🐎 LOVASSZÍNHÁZ"
@@ -336,7 +264,7 @@
       "történelem",
       "tárlatvezetés"
     ],
-    "image": "/images/events/kulturalis_orokseg_napjai_2026.jpg",
+    "image": "kulturalis_orokseg_napjai_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🏛️ ÖRÖKSÉG NAPJAI"
@@ -363,7 +291,7 @@
       "kőszeg",
       "műemlék"
     ],
-    "image": "/images/events/kulturalis_orokseg_napjai_iask_2026.png",
+    "image": "kulturalis_orokseg_napjai_iask_2026.png",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🏛️ iASK ÖRÖKSÉG NAPJAI"
@@ -391,35 +319,10 @@
       "ingyenes",
       "kőszeg"
     ],
-    "image": "/images/events/gerinctura_koszegi_hegyseg_2026.jpg",
+    "image": "gerinctura_koszegi_hegyseg_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🥾 GERINCTÚRA GEOLÓGUSSAL"
-  },
-  {
-    "id": "event_koszeg_2026_kulturalis_orokseg_napjai",
-    "name": "KULTURÁLIS ÖRÖKSÉG NAPJAI",
-    "date": "2026-09-19",
-    "endDate": "2026-09-20",
-    "time": "Egész napos",
-    "location": "Kőszegi Város Múzeum Könyvtár és Levéltár",
-    "coords": {
-      "lat": 47.3894,
-      "lng": 16.5392
-    },
-    "description": "Kulturális Örökség Napjai: Rendkívüli nyitvatartás és tárlatvezetések a város legszebb műemlékeiben és múzeumaiban.",
-    "tags": [
-      "kiállítás",
-      "történelem",
-      "múzeum",
-      "kultúra",
-      "örökség"
-    ],
-    "image": "hagyomany.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false
   },
   {
     "id": "szechenyi_emleknap_2026",
@@ -442,7 +345,7 @@
       "ingyenes",
       "kőszeg"
     ],
-    "image": "/images/events/varszinhaz_default.jpg",
+    "image": "varszinhaz_default.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": ""
@@ -472,36 +375,10 @@
       "élőzene",
       "kőszeg"
     ],
-    "image": "/images/events/meggie_svertsits_domby_toth_pinceszet_2026.png",
+    "image": "meggie_svertsits_domby_toth_pinceszet_2026.png",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🍷 SZÜRETI BORHÁZI EST"
-  },
-  {
-    "id": "event_koszeg_2026_szuret",
-    "name": "Kőszegi Szüret – Nemzetközi Fúvószenekari Találkozó",
-    "date": "2026-09-25",
-    "endDate": "2026-09-27",
-    "time": "Egész napos",
-    "location": "Rendezvénysátor (Károly Róbert tér) és Kőszeg belvárosa",
-    "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
-    },
-    "description": "Kőszeg legnépszerűbb őszi rendezvénysorozata! Hatalmas szüreti karnevál és felvonulás, nemzetközi fúvószenekari találkozó, Be-Jó tűztánc és Silverbirds bellydance bemutatók, szüreti bál a Fáraó zenekarral, valamint a legendás Bikini együttes és Kőszeg Város Fúvószenekarának közös koncertje.",
-    "tags": [
-      "szüret",
-      "fesztivál",
-      "koncert",
-      "fúvószenekar",
-      "felvonulás",
-      "bál"
-    ],
-    "image": "szuret_2026_1.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🍷 Kőszegi Szüret 2026",
-    "isVarszinhaz": false
   },
   {
     "id": "event_koszeg_2026_szuret_p1",
@@ -649,32 +526,6 @@
     "isVarszinhaz": false
   },
   {
-    "id": "event-koszeg-2026-toth-pinceszet-szuret",
-    "name": "Szüret péntek a Tóth Pincészetben",
-    "date": "2026-09-25",
-    "endDate": "2026-09-25",
-    "time": "19:30",
-    "location": "Tóth Pincészet Borház, Kőszeg, Rákóczi utca 6.",
-    "coords": {
-      "lat": 47.38730961292117,
-      "lng": 16.541962978325973
-    },
-    "description": "Hagyományos szüret péntek esti zenés estünk elmaradhatatlan szereplője Horváth Meggie, Svertsits Tamás és Domby Bertalan.\nEreszd el a hajam buli egész éjjel.... Várunk finom borokkal, forralt borral, friss musttal és jókedvvel!\nAsztalfoglalás javasolt!\nAz előzetesen lefoglalt asztalokat 20:00 óráig tartjuk fenn!\nBelépő 1500 Ft / fő\n\nKapcsolat:\nTel: 94 364 128\nEmail: info@tothpinceszet.hu",
-    "tags": [
-      "szüret",
-      "koncert",
-      "zene",
-      "élőzene",
-      "borkóstoló",
-      "buli"
-    ],
-    "image": "toth_pinceszet_szuret_pentek_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🎵 Zenés Est Meggie-vel",
-    "isVarszinhaz": false
-  },
-  {
     "id": "koszegi_szuret_2026",
     "name": "Kőszegi Szüret 2026 – Fúvószenekari Találkozó",
     "date": "2026-09-25",
@@ -700,7 +551,7 @@
       "kőszeg",
       "buli"
     ],
-    "image": "/images/events/koszegi_szuret_2026.jpg",
+    "image": "koszegi_szuret_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🍇 KŐSZEGI SZÜRET 2026"
@@ -920,7 +771,7 @@
       "ingyenes",
       "kőszeg"
     ],
-    "image": "/images/events/ordogarok_kalvaria_seta_2026.jpg",
+    "image": "ordogarok_kalvaria_seta_2026.jpg",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🌿 NATÚRPARKI SÉTA"
@@ -1044,7 +895,7 @@
       "kőszeg",
       "őszi túra"
     ],
-    "image": "/images/events/gesztenye_tura_2026.png",
+    "image": "gesztenye_tura_2026.png",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🌰 GESZTENYE TÚRA"

@@ -90,21 +90,26 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
         <div className="p-3 pb-0">
           <div className="relative aspect-[3/2] overflow-hidden rounded-xl isolate bg-gray-100 dark:bg-zinc-800 flex items-center justify-center">
             {evt.image && evt.image !== 'balkep_default.jpg' ? (
-              <>
-                <img
-                  src={`/images/events/${evt.image}`}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 pointer-events-none"
-                  loading="lazy"
-                />
-                <img
-                  src={`/images/events/${evt.image}`}
-                  alt={evt.name}
-                  className="relative max-w-full max-h-full object-contain z-10 transition-opacity duration-300 hover:opacity-95"
-                  loading="lazy"
-                  onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.previousSibling.style.display = 'none'; e.currentTarget.parentNode.querySelector('.fallback-ghost').style.display = 'block'; }}
-                />
-              </>
+              (() => {
+                const eventImg = evt.image.startsWith('/') ? evt.image : `/images/events/${evt.image}`;
+                return (
+                  <>
+                    <img
+                      src={eventImg}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 pointer-events-none"
+                      loading="lazy"
+                    />
+                    <img
+                      src={eventImg}
+                      alt={evt.name}
+                      className="relative max-w-full max-h-full object-contain z-10 transition-opacity duration-300 hover:opacity-95"
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.previousSibling.style.display = 'none'; e.currentTarget.parentNode.querySelector('.fallback-ghost').style.display = 'block'; }}
+                    />
+                  </>
+                );
+              })()
             ) : (
               <GhostImage className="w-full h-full rounded-xl" />
             )}

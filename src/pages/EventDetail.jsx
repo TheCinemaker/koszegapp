@@ -523,8 +523,8 @@ export default function EventDetail() {
   }
 
   const favorited = isFavorite(evt.id);
-  const hasImage = evt.image && evt.image !== 'balkep_default.jpg';
-  const imgSrc = `/images/events/${evt.image}`;
+  const hasImage = Boolean(evt.image && evt.image !== 'balkep_default.jpg');
+  const imgSrc = evt.image ? (evt.image.startsWith('/') ? evt.image : `/images/events/${evt.image}`) : '';
 
   return (
     <div className={`min-h-screen pb-24 ${PAGE_BG} selection:bg-indigo-500 selection:text-white`}>
