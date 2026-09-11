@@ -45,7 +45,23 @@ export async function fetchCurrentWeather() {
       description
     };
   } catch (e) {
-    console.error("Failed to fetch Kőszeg weather station data:", e);
+    try {
+      const omRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.3888&longitude=16.5414&current_weather=true');
+      if (omRes.ok) {
+        const omData = await omRes.json();
+        const cw = omData.current_weather;
+        const temp = typeof cw?.temperature === 'number' ? Math.round(cw.temperature) : '--';
+        let icon = '01d';
+        let description = 'Kellemes idő';
+        const code = cw?.weathercode || 0;
+        if (code >= 61) { icon = '09d'; description = 'Eső'; }
+        else if (code >= 51) { icon = '10d'; description = 'Szemerkélő eső'; }
+        else if (code >= 1 && code <= 3) { icon = '03d'; description = 'Gomolyfelhős'; }
+        return { temp, icon, description };
+      }
+    } catch (fallbackErr) {
+      // quiet fallback
+    }
     return {
       temp: '--',
       icon: '01d',
