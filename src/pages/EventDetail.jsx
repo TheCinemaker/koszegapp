@@ -738,32 +738,89 @@ export default function EventDetail() {
       )}
 
       {/* ================================================================ */}
-      {/* TÉRKÉP                                                           */}
+      {/* TÉRKÉP ÉS HOZZÁTARTOZÓ POI-K / INTERAKTÍV TÉRKÉP                   */}
       {/* ================================================================ */}
-      {evt.coords && (
+      {(evt.coords || evt.mapEmbedUrl) && (
         <FadeUp delay={0.15}>
           <div className="max-w-2xl mx-auto px-4 mt-10">
             <div className="flex items-center justify-between mb-3 px-2">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 flex items-center gap-2">
-                <IoCompassOutline className="text-indigo-500 dark:text-indigo-400 text-sm" /> Helyszín
+                <IoCompassOutline className="text-indigo-500 dark:text-indigo-400 text-sm" /> Helyszín & Térkép
               </p>
               <a
-                href={`https://www.google.com/maps/dir/?api=1&destination=${evt.coords.lat},${evt.coords.lng}&travelmode=walking`}
+                href={
+                  evt.mapUrl ||
+                  (evt.coords
+                    ? `https://www.google.com/maps/dir/?api=1&destination=${evt.coords.lat},${evt.coords.lng}&travelmode=walking`
+                    : '#')
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-bold text-indigo-500 dark:text-indigo-400 hover:opacity-80 transition-opacity"
               >
-                Útvonalterv →
+                {evt.mapUrl ? 'Google Maps megnyitása →' : 'Útvonalterv →'}
               </a>
             </div>
-            <div className="h-64 rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-sm">
+            <div className="h-72 sm:h-96 rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-sm">
               <iframe
                 title="Térkép"
-                src={`https://www.google.com/maps?q=${evt.coords.lat},${evt.coords.lng}&z=16&output=embed`}
+                src={
+                  evt.mapEmbedUrl ||
+                  `https://www.google.com/maps?q=${evt.coords?.lat},${evt.coords?.lng}&z=16&output=embed`
+                }
                 className="w-full h-full border-0"
                 loading="lazy"
                 allowFullScreen
               />
+            </div>
+          </div>
+        </FadeUp>
+      )}
+
+      {/* ================================================================ */}
+      {/* CSATLAKOZÓ POI-K / PORTÁK LISTÁJA                                 */}
+      {/* ================================================================ */}
+      {evt.pois && evt.pois.length > 0 && (
+        <FadeUp delay={0.2}>
+          <div className="max-w-2xl mx-auto px-4 mt-8">
+            <div className="px-2 mb-4">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <IoLocationOutline className="text-indigo-500 text-base" /> Csatlakozó Helyszínek & Porták ({evt.pois.length} helyszín)
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
+                Kattints bármelyik helyszínre az azonnali Google Maps navigációhoz!
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {evt.pois.map((poi, idx) => (
+                <a
+                  key={idx}
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${poi.lat},${poi.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-white dark:bg-zinc-900 p-3.5 rounded-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-indigo-500/50 dark:hover:border-indigo-400/50 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-[11px] font-bold flex items-center justify-center shrink-0">
+                        {idx + 1}
+                      </span>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+                        {poi.name}
+                      </h4>
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 pl-7 line-clamp-2">
+                      {poi.address}
+                    </p>
+                  </div>
+                  <div className="mt-2.5 pl-7 flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 flex items-center gap-1">
+                      Útvonalterv <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+                    </span>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </FadeUp>

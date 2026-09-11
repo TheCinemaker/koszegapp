@@ -147,7 +147,9 @@
       "lat": 47.346,
       "lng": 16.4902
     },
-    "description": "Kóstolj bele tájról-tájra! 2026. szeptember 19-én és 20-án újra megnyílnak a vidéki családi gazdaságok, pincék és manufaktúrák kapui Kőszeghegyalján a Nyitott Porta Napok programsorozat keretében!\n\n📍 Helyszín: Kőszeghegyalja és térségének nyitott portái\n🗓 Dátum: 2026. szeptember 19–20. (Szombat–Vasárnap)\n\nIDEI CSATLAKOZÓ PARTNEREK ÉS PORTÁK:\n• Bozsok: Malomporta (Rákóczi u. 2.)\n• Cák: Mándli Borház (hrsz. 1038) és Stefanich Pincészet (Kőfejtő Lejtő 14.)\n• Velem: Stirling Villa (Rákóczi Ferenc u. 96.)\n• Kőszegdoroszló: Alasz Pince – Panoráma Kóstoló (Pogány völgy hrsz. 1060) és Alpokalja Farm (hrsz. 226/5)\n• Kőszeg: Schrott Méhészet (Külterület hrsz. 0186/63)\n• Balogunyom: Harmónia Ökokert (Margaréta u. 3.)\n• Bucsu: Biomalom Róza (Szent István u. 7.)\n• Gencsapáti: Vasi Xoda Szikvízüzem (Ipar u. 1.)\n• Gyöngyösfalu: Debreceni Családi Gazdaság (hrsz. 097/6) és Porta Mészásó (Pösei hegy 2405/2)\n• Szombathely: Nefelejcs Desszertműhely (Gyöngyösparti sétány 1. fsz/2.)\n\n🚴 A porták vezetett kerékpáros és gyalogtúrák keretében is látogathatók!\n🎟 A BELÉPÉS INGYENES!\nℹ️ Részletek: naturpark.hu és nyitottportanapok.hu",
+    "mapUrl": "https://www.google.com/maps/d/viewer?mid=12evqMeIi-MPRkdn1aM9TumTJS2V6br4",
+    "mapEmbedUrl": "https://www.google.com/maps/d/embed?mid=12evqMeIi-MPRkdn1aM9TumTJS2V6br4",
+    "description": "Kóstolj bele tájról-tájra! 2026. szeptember 19-én és 20-án újra megnyílnak a vidéki családi gazdaságok, pincék és manufaktúrák kapui Kőszeghegyalján a Nyitott Porta Napok programsorozat keretében!\n\n📍 Helyszín: Kőszeghegyalja és térségének nyitott portái\n🗓 Dátum: 2026. szeptember 19–20. (Szombat–Vasárnap)\n\nIDEI CSATLAKOZÓ PARTNEREK ÉS PORTÁK:\n• Bozsok: Malomporta (Rákóczi u. 2.)\n• Cák: Mándli Borház (hrsz. 1038) és Stefanich Pincészet (Kőfejtő Lejtő 14.)\n• Velem: Stirling Villa (Rákóczi Ferenc u. 96.)\n• Kőszegdoroszló: Alasz Pince – Panoráma Kóstoló (Pogány völgy hrsz. 1060) és Alpokalja Farm (hrsz. 226/5)\n• Kőszeg: Schrott Méhészet (Külterület hrsz. 0186/63)\n• Balogunyom: Harmónia Ökokert (Margaréta u. 3.)\n• Bucsu: Biomalom Róza (Szent István u. 7.)\n• Gencsapáti: Vasi Xoda Szikvízüzem (Ipar u. 1.)\n• Gyöngyösfalu: Debreceni Családi Gazdaság (hrsz. 097/6) és Porta Mészásó (Pösei hegy 2405/2)\n• Szombathely: Nefelejcs Desszertműhely (Gyöngyösparti sétány 1. fsz/2.)\n• Csepreg: Desits vendégasztal (Bene-hegy szőlőhegy hrsz. 3286)\n\n🚴 A porták vezetett kerékpáros és gyalogtúrák keretében is látogathatók!\n🎟 A BELÉPÉS INGYENES!\nℹ️ Részletek: naturpark.hu és nyitottportanapok.hu",
     "tags": [
       "nyitott porta napok",
       "kőszeghegyalja",
@@ -165,7 +167,93 @@
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🏡 NYITOTT PORTA NAPOK",
-    "isVarszinhaz": false
+    "isVarszinhaz": false,
+    "pois": [
+      {
+        "name": "Alasz pince - Panoráma kóstoló",
+        "address": "Kőszegdoroszló (Pogány völgy) HRSZ 1060",
+        "lat": 47.3695323,
+        "lng": 16.5153883
+      },
+      {
+        "name": "Debreceni családi gazdaság",
+        "address": "Gyöngyösfalu hrsz. 097/6 (Külterületi dűlőút)",
+        "lat": 47.3239501,
+        "lng": 16.5659516
+      },
+      {
+        "name": "Desits vendégasztal",
+        "address": "9735 Csepreg hrsz 3286 (Bene-hegy szőlőhegy)",
+        "lat": 47.397718,
+        "lng": 16.6797489
+      },
+      {
+        "name": "Biomalom Róza",
+        "address": "9792 Bucsu, Szent István u. 7.",
+        "lat": 47.2592108,
+        "lng": 16.5003562
+      },
+      {
+        "name": "Alpokalja Farm",
+        "address": "9725 Kőszegdoroszló hrsz. 226/5 (Fő utca vége)",
+        "lat": 47.3415244,
+        "lng": 16.5446091
+      },
+      {
+        "name": "Harmónia Ökokert",
+        "address": "9771 Balogunyom, Margaréta u. 3.",
+        "lat": 47.1611614,
+        "lng": 16.6386184
+      },
+      {
+        "name": "Porta Mészásó",
+        "address": "9723 Gyöngyösfalu, Pösei hegy 2405/2",
+        "lat": 47.3188651,
+        "lng": 16.5702247
+      },
+      {
+        "name": "Mándli borház",
+        "address": "9725 Cák hrsz. 1038",
+        "lat": 47.3584705,
+        "lng": 16.5188287
+      },
+      {
+        "name": "Malomporta",
+        "address": "9727 Bozsok, Rákóczi u. 2.",
+        "lat": 47.3288573,
+        "lng": 16.4914888
+      },
+      {
+        "name": "Schrott méhészet",
+        "address": "9730 Kőszeg Külterület hrsz. 0186/63",
+        "lat": 47.3742803,
+        "lng": 16.5479833
+      },
+      {
+        "name": "Stefanich pincészet",
+        "address": "9725 Cák, Kőfejtő Lejtő 14.",
+        "lat": 47.3622811,
+        "lng": 16.5208889
+      },
+      {
+        "name": "Xoda szikvíz üzem",
+        "address": "9721 Gencsapáti, Ipar u. 1",
+        "lat": 47.2865089,
+        "lng": 16.6009669
+      },
+      {
+        "name": "Nefelejcs Desszertműhely",
+        "address": "9700 Szombathely, Gyöngyösparti sétány 1. fsz/2.",
+        "lat": 47.232095,
+        "lng": 16.6256684
+      },
+      {
+        "name": "Stirling villa",
+        "address": "9726 Velem, Rákóczi Ferenc u. 96.",
+        "lat": 47.345861,
+        "lng": 16.494639
+      }
+    ]
   },
   {
     "id": "surrounding-event-velem-nyitott-porta-20260919",
