@@ -188,6 +188,26 @@
     "highlightLabel": "🥾 GERINCTÚRA GEOLÓGUSSAL"
   },
   {
+    "name": "Tekerj a zöldbe/nyitott porták gasztrotúra",
+    "date": "2026-09-19",
+    "time": "09:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "A Nyitott porta napokon az Írottkő Natúrpark termelői, kézművesei, borászai, szolgáltatói engednek betekintést a működésükbe és megismerhetitek a termékeiket.\nKerékpártúránkon végiglátogatjuk őket, lesz alkalom kóstolni és vásárolni egyaránt.\nTalálkozás: 8:30-tól Kőszeg város Fő terén\nIndulás: 9 órakor\nA túrára kifogástalan állapotú kerékpárral és fejvédővel érkezzetek!\nKözepesen nehéz túra, nagyrészt forgalommentes, mezei és erdészeti földútakon,minimális közútat érintve, kevesek által ismert gyönyörű tájakon.\nOrszágúti kerékpár kivételével bármilyen elektromos és hagyományos kerékpár alkalmas!\n14 év alatt csak minimum 26-os kerékpárral biztonságosan közlekedől gyermekeknek ajánlott.\nA túra teljes távja:30 km\nA túra útvonala:\n-Köszeg Fő tér\n-Schrott méhészet Kőszeg\n-Alpokalja farm Kőszegdoroszló\n-Debreceni családi gazdaság Gyöngyösfalú\n-Mészásó porta Gyöngyösfalú\n-Malom porta Bozsok\n-Stirling villa Velem\n-Mándl borház Cák\n-Stefanich pincészet Cák\n-Alasz pince-Panoráma kóstoló Pogányok\nA különböző porták programjairól az adott portákra rákeresve találtok részletes információt.\nA porták eseményei itt is megosztásra kerülnek majd az esemény beszélgetésében.\nA túra útvonala és a meglátogatott porták mennyisége az időjárás függvényében változhat, sár esetén aszfaltozott útakon közelítjük meg, amit lehet!\n\nAmi még fontos, hogy legyen nálad:\nÉrvényes személyi igazolvány,számodra megfelelő mennyiségű víz és élelem, az időjárási előrejelzéseknek megfelelő ruházat és cipő!\nAjánlott a saját bicajod kerékméretének megfelelő tartalék belső gumit hoznod, ha esetleg olyan defektet kapsz, ami a nálunk lévő gumijavító készlettel nem javítható.\n\nA túrán minden résztvevő a saját felelősségére vesz részt!\n\nA vezetett túra a Pogányokig tart, onnan egyénileg térhettek vissza a városba igény szerinti időpontokban.",
+    "tags": [
+      "túra"
+    ],
+    "image": "nyitottporta.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1789108241970"
+  },
+  {
     "id": "kulturalis_orokseg_napjai_2026",
     "name": "Kulturális Örökség Napjai Kőszegen",
     "date": "2026-09-19",
@@ -840,5 +860,23 @@
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🌰 GESZTENYE TÚRA"
+  },
+  {
+    "name": "Tekerj a zöldbe/Nyitott porta napok/ebéd a csepregi tónál/sajtkóstolás Répcevisen",
+    "date": "2026-10-03",
+    "time": "10:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.389025,
+      "lng": 16.541018
+    },
+    "description": "Ezen a túrán az Alpokalja-Fertő-táj nyitott porta programjának kettő, Kőszegről is könnyedén elérhető állomásait látogatjuk meg!\nTalálkozási pont és idő: Kőszeg város Fő tere 9:30\nIndulás: 10 órakor\nTúravezető: Katona Szilveszter\nTáv: 46km Szintemelkedés: 470m\nKözepesen nehéz túra.14 év alatt csak minimum 26-os kerékpárral biztonságosan közlekedől gyermekeknek ajánlott.\nAz útvonal jó minőségű, széles kavicsos erdészeti útakon, mezőgazdasági útakon és aszaltozott kerékpárútakon halad, minimális közútat érintve.\nA túrára kifogástalan állapotú kerékpárral és fejvédővel érkezz,mert első a biztonság!\n\nÚtvonal:\nA Kőszeg-Csepreg kerékpárúton 16km megtétele után érünk a Desits vendégasztal hangulatos tóparti portájához, ahol ebédelési lehetőség és egyéb programok várnak minket.\nA Csepregi horgásztótól a régi, Locsmánd - Csepreg közötti vasút nyomvonalán jutunk el 7km-t kerékpározva Répcevisre, ahol az Alpokalja sajtkészítő műhelyével ismerkedhettek meg, itt kóstolás és vásárlás is lehetséges a finomságokból.\nInnen a \"zöldhatáron\" csatlakozunk az ausztriai B43 majd az EV13 kerékpárútakra, amiken 21km-t haladva érünk vissza Kőszegre!\n\nAmi még fontos, hogy legyen nálad:\nÉrvényes személyi igazolvány,számodra megfelelő mennyiségű víz és élelem, az időjárási előrejelzéseknek megfelelő ruházat és cipő!\nAjánlott a saját bicajod kerékméretének megfelelő tartalék belső gumit hoznod, ha esetleg olyan defektet kapsz, ami a nálunk lévő gumijavító készlettel nem javítható.\n\nA túrán minden résztvevő a saját felelősségére vesz részt!\nA túra bármely állomásán csatlakozhatsz és leválhatsz, ha az időd vagy erőnléted úgy kívánja😊\nA porták részletes programja a beszélgetésekben lesz megosztva, amint összeáll a programjuk!",
+    "tags": [],
+    "image": "tekerj-1789108415000.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1789108420046"
   }
 ]
