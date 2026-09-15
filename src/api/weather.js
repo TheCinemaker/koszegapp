@@ -1,7 +1,7 @@
 // src/api/weather.js
 
 export async function fetchCurrentWeather() {
-  const CURRENT_URL = 'https://api2.smartmixin.io/api/stations/72461/?refresh=1';
+  const CURRENT_URL = '/api/smartmixin/stations/72461/?refresh=1';
   try {
     const res = await fetch(CURRENT_URL, {
       headers: {

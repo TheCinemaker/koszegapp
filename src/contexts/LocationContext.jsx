@@ -29,7 +29,9 @@ export function LocationProvider({ children }) {
                     });
                 }
             },
-            (err) => console.warn("Quick fix failed:", err),
+            (err) => {
+                // Silently handle quick fix denial/timeout
+            },
             { enableHighAccuracy: false, timeout: 3000, maximumAge: 60000 }
         );
 

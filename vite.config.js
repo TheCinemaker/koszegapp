@@ -18,6 +18,12 @@ export default defineConfig({
     host: true, // Listen on all addresses
     strictPort: true,
     proxy: {
+      '/api/smartmixin': {
+        target: 'https://api2.smartmixin.io',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api\/smartmixin/, '/api')
+      },
       '/.netlify/functions': {
         target: 'http://localhost:9999',
         changeOrigin: true,

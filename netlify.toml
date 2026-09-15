@@ -3,6 +3,12 @@
   publish = "dist"
 
 [[redirects]]
+  from = "/api/smartmixin/*"
+  to = "https://api2.smartmixin.io/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/v1/*"
   to = "/.netlify/functions/wallet-service"
   status = 200

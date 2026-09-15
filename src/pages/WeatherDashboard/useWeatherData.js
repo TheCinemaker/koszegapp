@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 
 const STATION_ID = 72461;
-const API_BASE = 'https://api2.smartmixin.io';
-const CURRENT_URL = `${API_BASE}/api/stations/${STATION_ID}/?refresh=1`;
-const HISTORY_URL = `${API_BASE}/api/measures/`;
+const API_BASE = '/api/smartmixin';
+const CURRENT_URL = `${API_BASE}/stations/${STATION_ID}/?refresh=1`;
+const HISTORY_URL = `${API_BASE}/measures/`;
 
 const CURRENT_HEADERS = {
   'Accept': 'application/json',
