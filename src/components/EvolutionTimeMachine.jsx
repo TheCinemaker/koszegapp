@@ -7,12 +7,10 @@ import {
   IoCheckmarkCircle,
   IoAlertCircleOutline,
   IoPhonePortraitOutline,
-  IoChevronForward,
   IoMapOutline,
   IoTicketOutline,
   IoRestaurantOutline,
-  IoSparkles,
-  IoConstructOutline
+  IoSparkles
 } from 'react-icons/io5';
 
 const ERAS = [
@@ -26,9 +24,9 @@ const ERAS = [
     headerBg: 'bg-slate-800 text-slate-200 border-b border-slate-700',
     appBg: 'bg-slate-900 text-slate-300 font-sans',
     title: 'Egyszerű Statikus Füzet',
-    desc: 'Első commit a Git-ben. 5-6 statikus füzetoldal (Látnivalók, Események), beégetett JSON adatokkal, minimális szürkés elrendezéssel.',
+    desc: 'Első commit a Git-ben. 5-6 statikus füzetoldal (Látnivalók, Események), beégetett adatokkal, minimális szürkés elrendezéssel.',
     features: ['4 Statikus POI adatlap', 'Egyszerű eseménylista', 'Beágyazott JPG parkoló-kép', 'Alapvető HTML/CSS elrendezés'],
-    missing: ['Nincs Okostérkép', 'Nincs KőszegPass Kioszk', 'Nincs Wallet (.pkpass) jegy', 'Nincs Kőszeg Eats / QR Pincér', 'Nincs B2B /adatbekero', 'Nincs AI Asszisztens'],
+    missing: ['Nincs Okostérkép', 'Nincs kiemet.hu Időjárás', 'Nincs KőszegPass Kioszk', 'Nincs Wallet (.pkpass) jegy', 'Nincs Kőszeg Eats', 'Nincs /adatbekero'],
     stats: { pages: '5 oldal', tech: 'React 18 + Tailwind v3', modules: '1 modul' },
     mockup: {
       type: 'v1',
@@ -50,8 +48,8 @@ const ERAS = [
     appBg: 'bg-slate-900 text-slate-200',
     title: 'Interaktív Térkép Integráció',
     desc: 'Megérkezett a Leaflet-alapú vektoros térkép az első gombostűs jelölőkkel és a geolokáció alapszintű kezelésével.',
-    features: ['Leaflet vektoros okostérkép', 'Jelölők a látnivalóknál', 'Parkolási zónák térképes nézete', 'Időjárási widget alapok'],
-    missing: ['Nincs Kioszk üzemmód', 'Nincs Digitális Jegy', 'Nincs QR pincér', 'Nincs önkitöltő form'],
+    features: ['Leaflet vektoros okostérkép', 'Jelölők a látnivalóknál', 'Parkolási zónák térképes nézete', 'Alapszintű OpenWeather widget'],
+    missing: ['Nincs Ráduly L. helyi mérés', 'Nincs Kioszk üzemmód', 'Nincs Digitális Jegy', 'Nincs QR pincér'],
     stats: { pages: '12 oldal', tech: 'Leaflet + OpenWeather', modules: '2 modul' },
     mockup: {
       type: 'v2',
@@ -71,36 +69,36 @@ const ERAS = [
     headerBg: 'bg-purple-950 text-purple-200 border-b border-purple-800',
     appBg: 'bg-[#0f172a] text-purple-100',
     title: 'Apple-stílusú Sötét Mód & Visszaszámlálók',
-    desc: 'Megjelent a sötét mód (Dark Mode), az Ostromnapok és Kőszegi Szüret visszaszámláló kártyái, valamint a helyi időjárási mérések.',
-    features: ['Automatikus Sötét / Világos mód', 'Fesztivál visszaszámláló modulok', 'Ráduly László & kiemet.hu időjárás integráció', 'Kedvencek mentése (Favorites)'],
-    missing: ['Nincs recepciós Kioszk', 'Nincs Wallet támogatás', 'Nincs ételrendelés'],
+    desc: 'Megjelent a sötét mód (Dark Mode), az Ostromnapok és Kőszegi Szüret visszaszámláló kártyái.',
+    features: ['Automatikus Sötét / Világos mód', 'Fesztivál visszaszámláló modulok', 'Kedvencek mentése (Favorites)', 'Finomított kártyás elrendezés'],
+    missing: ['Nincs Ráduly L. mérés (júniusban jött!)', 'Nincs recepciós Kioszk', 'Nincs Wallet támogatás'],
     stats: { pages: '20 oldal', tech: 'Framer Motion + DarkModeContext', modules: '3 modul' },
     mockup: {
       type: 'v3',
       items: [
         { name: '🌙 Dark Mode Váltó', desc: 'Subpixel éles Apple típusú felületek' },
         { name: '⏳ Ostromnapok Visszaszámláló', desc: 'Élő visszaszámláló kártyák' },
-        { name: '🌤️ kiemet.hu Időjárás', desc: 'Ráduly László méréseivel' },
       ],
     }
   },
   {
     id: 'v4',
     version: 'v4.0.0',
-    date: '2026. Május',
-    gitCommit: '#a51270c',
-    name: 'Recepciós Kioszk & B2B (v4.0)',
+    date: '2026. Június 18.',
+    gitCommit: '#8dc5f90',
+    name: 'Helyi Időjárás & Kioszk (v4.0)',
     themeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400',
     headerBg: 'bg-emerald-950 text-emerald-200 border-b border-emerald-800',
     appBg: 'bg-[#061814] text-emerald-100',
-    title: 'B2B Önkitöltő & Táblagépes Kioszk',
-    desc: 'Bevezetésre került a szállodai recepciós Kioszk felület (/buy-pass) és a helyi vállalkozók /adatbekero önkiszolgáló űrlapja.',
-    features: ['/buy-pass Recepciós Kioszk tabletek', '/adatbekero B2B partneri űrlap', 'KőszegPass digitális kártyaigénylés', 'Adminisztrációs dashboard bővítések'],
+    title: 'Ráduly László / kiemet.hu & B2B Kioszk',
+    desc: 'Git commit #8dc5f90 (2026.06.18.): Beépítésre került a Ráduly László és kiemet.hu kőszegi állomás alapú időjárás dashboardja, valamint a recepciós Kioszk (/buy-pass).',
+    features: ['🌤️ Ráduly László & kiemet.hu mérések', '/buy-pass Recepciós Kioszk tabletek', '/adatbekero B2B partneri űrlap', 'KőszegPass digitális kártyaigénylés'],
     missing: ['Nincs QR pincér rendelő', 'Nincs AR kincskereső', 'Nincs AI chatbot élesben'],
-    stats: { pages: '28 oldal', tech: 'Netlify Edge Functions + Supabase', modules: '4 modul' },
+    stats: { pages: '28 oldal', tech: 'SmartMixin API + Netlify Edge', modules: '4 modul' },
     mockup: {
       type: 'v4',
       items: [
+        { name: '🌤️ Ráduly László & kiemet.hu', desc: 'Pontos kőszegi helyi időjárás (Jun 18)' },
         { name: '🏨 /buy-pass Kioszk', desc: '10 mp-es digitális váriskártya recepciós tableten' },
         { name: '📝 /adatbekero Form', desc: 'Vállalkozói önkiszolgáló adatfrissítő' },
       ],
@@ -125,7 +123,7 @@ const ERAS = [
       items: [
         { name: '🎫 Wallet (.pkpass) Jegyek', desc: '0.2 mp vásárlás & kapus szkenner' },
         { name: '🍷 Kőszeg Eats QR Pincér', desc: 'Asztali megrendelő & konyhai nyomtatás' },
-        { name: '🗺️ Leaflet + kiemet.hu', desc: 'Ráduly László méréseivel' },
+        { name: '🌤️ Ráduly László & kiemet.hu', desc: 'Élő helyi időjárás dashboard' },
         { name: '💎 AR Kincskereső Játék', desc: 'Tartózkodási időt növelő gamifikáció' },
       ],
     }
@@ -147,7 +145,7 @@ export default function EvolutionTimeMachine() {
           Az App Szoftver-Evolúciója
         </h2>
         <p className="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto">
-          Kattints az 5 kiemelt mérföldkőre, és nézd meg élőben, hogyan alakult a kezelőfelület és a szoftver-fegyvertár az elmúlt 14 hónap során!
+          Kattints az 5 kiemelt mérföldkőre, és nézd meg élőben a Git commit történet alapján, hogyan alakult a kezelőfelület az elmúlt 14 hónap során!
         </p>
       </div>
 
@@ -225,7 +223,13 @@ export default function EvolutionTimeMachine() {
 
               {activeEra.id === 'v1' && (
                 <div className="mt-4 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-300 text-center">
-                  ⚠️ 2025 Július: Statikus felület okostérkép és jegyvásárlás nélkül.
+                  ⚠️ 2025 Július: Statikus felület helyi időjárási adatok nélkül.
+                </div>
+              )}
+
+              {activeEra.id === 'v4' && (
+                <div className="mt-4 p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-300 text-center">
+                  🌤️ 2026 Június 18. (Git #8dc5f90): Ráduly László & kiemet.hu helyi időjárás beépítve!
                 </div>
               )}
 
@@ -309,7 +313,7 @@ export default function EvolutionTimeMachine() {
           </div>
 
           <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-xs text-indigo-200 flex items-center justify-between">
-            <span>Tárgyalási tipp: Kattints az 5 verzió gombra a látványos kontraszthoz!</span>
+            <span>Tárgyalási tipp: Kattints a gombokra az evolúció látványos bemutatásához!</span>
             <IoSparkles className="text-indigo-400 shrink-0 text-base" />
           </div>
         </div>

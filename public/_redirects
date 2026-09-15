@@ -1,2 +1,3 @@
 /v1/*  /.netlify/functions/wallet-service  200
+/api/smartmixin/*  /.netlify/functions/smartmixin-proxy/:splat  200
 /*    /index.html   200
