@@ -69,6 +69,7 @@ const Moments = lazyWithRetry(() => import('../pages/Moments'));
 const OstromPage = lazyWithRetry(() => import('../pages/OstromPage'));
 const KoszegChat = lazyWithRetry(() => import('../pages/KoszegChat'));
 const Adatbekero = lazyWithRetry(() => import('../pages/Adatbekero'));
+const TimeMachinePage = lazyWithRetry(() => import('../pages/TimeMachinePage'));
 
 // QR Platform (Standalone – Digitális Pincér)
 const QRMenu = lazyWithRetry(() => import('../pages/QRPlatform/QRMenu'));
@@ -183,6 +184,8 @@ export default function AnimatedRoutes({ appData, weather }) {
           <Route path="/partners" element={<PageWrapper><Partners /></PageWrapper>} />
           <Route path="/terms-provider" element={<PageWrapper><TermsProvider /></PageWrapper>} />
           <Route path="/showcase" element={<PageWrapper showFooter={false}><FeatureShowcase /></PageWrapper>} />
+          <Route path="/timemachine" element={<PageWrapper showFooter={false}><TimeMachinePage /></PageWrapper>} />
+          <Route path="/timemaschine" element={<PageWrapper showFooter={false}><TimeMachinePage /></PageWrapper>} />
 
 
           <Route path="/gem/:id" element={<PageWrapper><GemDetail /></PageWrapper>} />

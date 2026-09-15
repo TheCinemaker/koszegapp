@@ -13,8 +13,7 @@ import {
   IoChevronForward,
   IoStarOutline,
   IoLockClosed,
-  IoWineOutline,
-  IoTimeOutline
+  IoWineOutline
 } from 'react-icons/io5';
 import {
   motion,
@@ -139,7 +138,6 @@ export default function Home({ appData, weather }) {
     { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, span: 'col-span-1 sm:col-span-1', delay: 0.12 },
     { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, span: 'col-span-1 sm:col-span-1', delay: 0.13 },
     { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, span: 'col-span-1 sm:col-span-1', delay: 0.14 },
-    { to: '/showcase', label: 'App Evolúció & Időgép', desc: '2025. július 17. ➔ 2026. szeptember | Honnan hova jutottunk?', icon: IoTimeOutline, span: 'col-span-2 sm:col-span-2', delay: 0.15 },
   ];
 
   return (

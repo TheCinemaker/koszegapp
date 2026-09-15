@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
 import SEO from '../components/SEO';
-import EvolutionTimeMachine from '../components/EvolutionTimeMachine';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -408,11 +407,6 @@ function FeatureShowcaseInner({ containerOpt }) {
                     </div>
                 </div>
             </div>
-
-            {/* ── EVOLUTION TIME MACHINE (2025 vs 2026) ────────────────── */}
-            <section className="relative z-30 px-4 sm:px-6 py-16 bg-[#060608]">
-                <EvolutionTimeMachine />
-            </section>
 
             {/* ── CTA ───────────────────────────────────────────────────────── */}
             <section className="relative z-30 min-h-screen flex flex-col items-center justify-center
