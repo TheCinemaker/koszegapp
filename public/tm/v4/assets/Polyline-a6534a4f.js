@@ -1,0 +1,1 @@
+import{bk as l,bl as s,bm as a,bn as r}from"./index-17ca14c8.js";const p=l(function({positions:t,...e},n){const o=new s.Polyline(t,e);return a(o,r(n,{overlayContainer:o}))},function(t,e,n){e.positions!==n.positions&&t.setLatLngs(e.positions)});export{p as P};

@@ -1,0 +1,1 @@
+import{ak as c,c0 as i,c1 as u,b$ as n}from"./index-49a3991d.js";function f(e,r,a){const t=c(e,a==null?void 0:a.in);return t.setTime(t.getTime()+r*i),t}function m(e,r,a){const[t,s]=u(a==null?void 0:a.in,e,r);return+n(t)==+n(s)}function D(e){return n(Date.now(),e)}export{f as a,m as i,D as s};

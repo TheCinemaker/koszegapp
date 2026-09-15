@@ -1,0 +1,1 @@
+import{aH as u}from"./index-17ca14c8.js";function c(n){return r=>{const t=(n?Math[n]:Math.trunc)(r);return t===0?0:t}}function d(n,r){return+u(n)-+u(r)}function a(n,r,e){const t=d(n,r)/1e3;return c(e==null?void 0:e.roundingMethod)(t)}export{d as a,a as d,c as g};

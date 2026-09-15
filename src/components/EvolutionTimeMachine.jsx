@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   IoTimeOutline,
@@ -20,6 +20,7 @@ const ERAS = [
     version: 'v1.0.0',
     date: '2025. Július 17.',
     gitCommit: '#4fab1cd',
+    liveUrl: '/tm/v1/',
     name: 'A Kezdetek (v1.0)',
     themeColor: 'border-amber-500/40 bg-amber-500/10 text-amber-400',
     headerBg: 'bg-slate-800 text-slate-200 border-b border-slate-700',
@@ -41,8 +42,9 @@ const ERAS = [
   {
     id: 'v2',
     version: 'v2.0.0',
-    date: '2025. Október',
-    gitCommit: '#92d3b7a',
+    date: '2025. Szeptember 29.',
+    gitCommit: '#21c4b2e',
+    liveUrl: '/tm/v2/',
     name: 'Az Első Okostérkép & Kőszeg Game 1.0 (v2.0)',
     themeColor: 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400',
     headerBg: 'bg-cyan-900 text-white border-b border-cyan-700',
@@ -64,8 +66,9 @@ const ERAS = [
   {
     id: 'v3',
     version: 'v3.0.0',
-    date: '2026. Január',
-    gitCommit: '#fe0518f',
+    date: '2026. Február 27.',
+    gitCommit: '#4a87b32',
+    liveUrl: '/tm/v3/',
     name: 'Sötét Mód, Kőszeg Eats & Wallet (v3.0)',
     themeColor: 'border-purple-500/40 bg-purple-500/10 text-purple-400',
     headerBg: 'bg-purple-950 text-purple-200 border-b border-purple-800',
@@ -88,7 +91,8 @@ const ERAS = [
     id: 'v4',
     version: 'v4.0.0',
     date: '2026. Június 18.',
-    gitCommit: '#8dc5f90',
+    gitCommit: '#4385534',
+    liveUrl: '/tm/v4/',
     name: 'Helyi Időjárás & Kioszk (v4.0)',
     themeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400',
     headerBg: 'bg-emerald-950 text-emerald-200 border-b border-emerald-800',
@@ -112,6 +116,7 @@ const ERAS = [
     version: 'v5.0.0',
     date: '2026. Szeptember (Ma)',
     gitCommit: '#7e30273',
+    liveUrl: '/',
     name: 'Smart City SuperApp (v5.0)',
     themeColor: 'border-indigo-500/50 bg-indigo-500/20 text-indigo-300 font-extrabold shadow-lg shadow-indigo-500/30',
     headerBg: 'bg-[#0b2740] text-white border-b border-indigo-500/30',
@@ -250,6 +255,112 @@ function EraLiveContent({ era }) {
   );
 }
 
+// Valódi, lebuildelt régi verziók iframe-ben. A /tm/vN/ alatti buildek a
+// tényleges régi commitokból készültek (git worktree + vite build --base),
+// tehát nem rekonstrukció: ez maga az akkori app fut a telefonkeretben.
+function LiveBuildModal({ era, onClose, onPrev, onNext, onSelect }) {
+  const [loading, setLoading] = useState(true);
+
+  // A prezenter-kattintó nyíl/space billentyűket küld: ezzel léptethető a demó.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); onNext(); }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); onPrev(); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose, onNext, onPrev]);
+
+  // Verzióváltásnál újra töltődik az iframe → újra kell a betöltés-jelző.
+  useEffect(() => { setLoading(true); }, [era.id]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center p-3 sm:p-6 overflow-y-auto"
+    >
+      {/* Fejléc: melyik commit fut éppen */}
+      <div className="w-full max-w-4xl flex items-center justify-between gap-3 mb-3 shrink-0">
+        <div className="min-w-0">
+          <div className="text-[10px] sm:text-xs font-mono text-indigo-400 font-bold uppercase tracking-wider flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            Valódi build · git {era.gitCommit}
+          </div>
+          <h3 className="text-base sm:text-2xl font-black text-white truncate">{era.name}</h3>
+          <p className="text-[10px] sm:text-xs text-slate-400">{era.date} · {era.stats.tech}</p>
+        </div>
+        <button
+          onClick={onClose}
+          className="shrink-0 text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded-full text-slate-200 font-bold"
+        >
+          Bezárás ✕
+        </button>
+      </div>
+
+      {/* Verzióváltó sáv — beszéd közben egy kattintás az ugrás */}
+      <div className="w-full max-w-4xl flex gap-1.5 mb-3 shrink-0 overflow-x-auto pb-1">
+        {ERAS.map((e) => (
+          <button
+            key={e.id}
+            onClick={() => onSelect(e.id)}
+            className={`px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap transition-all ${
+              e.id === era.id
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/40'
+                : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            {e.version} · {e.date}
+          </button>
+        ))}
+      </div>
+
+      {/* Telefonkeret a valódi régi appal */}
+      <div className="relative w-full max-w-[390px] flex-1 min-h-[480px] max-h-[75vh] rounded-[36px] border-[10px] border-slate-800 bg-black shadow-2xl overflow-hidden">
+        {loading && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950 gap-3">
+            <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
+            <div className="text-[11px] text-slate-400 font-mono">{era.gitCommit} betöltése…</div>
+          </div>
+        )}
+        <iframe
+          key={era.id}
+          src={era.liveUrl}
+          title={`visitKőszeg ${era.version}`}
+          onLoad={() => setLoading(false)}
+          className="w-full h-full border-0 bg-white"
+        />
+      </div>
+
+      {/* Léptetés + vésztartalék: új lapon is megnyitható, ha az iframe akadna */}
+      <div className="w-full max-w-4xl flex items-center justify-between gap-2 mt-3 shrink-0">
+        <button
+          onClick={onPrev}
+          className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-bold text-slate-200"
+        >
+          ← Korábbi
+        </button>
+        <a
+          href={era.liveUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="text-[10px] sm:text-xs text-slate-500 hover:text-indigo-400 font-mono underline underline-offset-4"
+        >
+          megnyitás új lapon
+        </a>
+        <button
+          onClick={onNext}
+          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-extrabold text-white shadow-lg shadow-indigo-600/30"
+        >
+          Következő →
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function EvolutionTimeMachine() {
   const [activeEraId, setActiveEraId] = useState('v5');
   const [showModal, setShowModal] = useState(false);
@@ -304,9 +415,10 @@ export default function EvolutionTimeMachine() {
             <span className="flex items-center gap-1.5"><IoPhonePortraitOutline className="text-indigo-400" /> Mobil Nézet ({activeEra.version})</span>
             <button
               onClick={() => setShowModal(true)}
-              className="text-[10px] font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20"
+              className="text-[10px] font-extrabold text-white flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 px-3 py-1 rounded-full border border-indigo-400/40 shadow-lg shadow-indigo-600/30"
             >
-              <IoSparkles /> Teljes Képernyős Modal
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ▶ Élő build futtatása
             </button>
           </div>
 
@@ -416,45 +528,22 @@ export default function EvolutionTimeMachine() {
 
       </div>
 
-      {/* FULL-SCREEN ERA MODAL */}
+      {/* FULL-SCREEN ÉLŐ BUILD MODAL — a valódi régi commitok futnak benne */}
       <AnimatePresence>
         {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4"
-          >
-            <div className="w-full max-w-lg bg-slate-900 rounded-3xl border border-white/20 p-6 text-white shadow-2xl relative">
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-4 right-4 text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-slate-300 font-bold"
-              >
-                Bezárás ✕
-              </button>
-
-              <div className="text-xs font-mono text-indigo-400 font-bold uppercase mb-1">
-                {activeEra.version} Git ({activeEra.gitCommit})
-              </div>
-              <h3 className="text-xl font-black mb-1">{activeEra.name}</h3>
-              <p className="text-xs text-slate-400 mb-4">{activeEra.date}</p>
-
-              <div className="p-4 rounded-2xl bg-slate-950 border border-white/10 mb-4">
-                <EraLiveContent era={activeEra} />
-              </div>
-
-              <div className="text-[11px] text-slate-400 leading-relaxed mb-4">
-                {activeEra.desc}
-              </div>
-
-              <button
-                onClick={() => setShowModal(false)}
-                className="w-full py-3 rounded-xl bg-indigo-600 font-extrabold text-xs text-white hover:bg-indigo-500 shadow-lg shadow-indigo-600/30"
-              >
-                Rendben, Vissza az Időgépbe
-              </button>
-            </div>
-          </motion.div>
+          <LiveBuildModal
+            era={activeEra}
+            onClose={() => setShowModal(false)}
+            onSelect={setActiveEraId}
+            onPrev={() => {
+              const i = ERAS.findIndex(e => e.id === activeEraId);
+              setActiveEraId(ERAS[(i - 1 + ERAS.length) % ERAS.length].id);
+            }}
+            onNext={() => {
+              const i = ERAS.findIndex(e => e.id === activeEraId);
+              setActiveEraId(ERAS[(i + 1) % ERAS.length].id);
+            }}
+          />
         )}
       </AnimatePresence>
     </div>

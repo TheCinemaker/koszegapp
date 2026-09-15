@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <link rel="icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Zeyada&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KőszegAPP</title>
+
+    <link rel="manifest" href="/Program%20Files/Git/tm/v2/site.webmanifest" />
+    <meta name="theme-color" content="#A16207">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0XMCLKMTC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-D0XMCLKMTC');
+    </script>
+    
+    <!-- Lazy képbetöltés -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function(){
+        document.querySelectorAll('img').forEach(function(img){
+          if(!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+      });
+    </script>
+
+    <script type="module" crossorigin src="/Program%20Files/Git/tm/v2/assets/index-fee54250.js"></script>
+    <link rel="stylesheet" href="/Program%20Files/Git/tm/v2/assets/index-89dcb6e0.css">
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <div id="root"></div>
+    
+  </body>
+</html>
