@@ -4,13 +4,18 @@
 
 [[redirects]]
   from = "/api/smartmixin/*"
-  to = "/.netlify/functions/smartmixin-proxy"
+  to = "/.netlify/functions/smartmixin-proxy/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/v1/*"
   to = "/.netlify/functions/wallet-service"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 [[edge_functions]]
