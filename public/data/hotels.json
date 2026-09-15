@@ -74,41 +74,6 @@
     "description": "Több száz értékelés alapján ’superb’ minősítésű családi panzió, központi, mégis nyugodt helyen. Komfortos szobák, konyha használati lehetőség és ingyenes parkolás. Ideális gyalogtúrázóknak és kerékpárosoknak. :contentReference[oaicite:3]{index=3}"
   },
   {
-    "id": 3,
-    "name": "Hotel Benedict",
-    "type": "hotel",
-    "tags": [
-      "hotel",
-      "szálloda"
-    ],
-    "address": "9730 Kőszeg, Rajnis utca 2",
-    "coords": {
-      "lat": 47.38998,
-      "lng": 16.54005
-    },
-    "image": "benedict.jpg",
-    "gallery": [],
-    "amenities": [
-      "wifi",
-      "parkoló",
-      "reggeli",
-      "bar",
-      "luggage storage",
-      "meeting room",
-      "lift"
-    ],
-    "rating": 8.7,
-    "reviews_count": 181,
-    "price_from": 95,
-    "currency": "EUR",
-    "phone": "+36 94 558 505",
-    "email": "benedict@hunguesthotels.hu",
-    "website": "https://www.hunguesthotels.hu/en/hotel/koszeg/hotel_benedict/",
-    "open_all_year": true,
-    "notes": "Régi jezsuita épület, 2020 óta üzemel hotelként, 35 szobával és rendezvényteremmel.",
-    "description": "Barokk kori egykori jezsuita és bencés kolostor, 2020 óta hotelként működik. Modern szobákkal (20-35 m²), lifttel, bárral, 24 órás recepcióval és tárgyalási lehetőséggel rendelkező elegáns szállás a belváros szívében. :contentReference[oaicite:4]{index=4}"
-  },
-  {
     "id": 4,
     "name": "Hotel Írottkő",
     "type": "hotel",
