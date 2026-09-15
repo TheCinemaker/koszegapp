@@ -52,25 +52,29 @@ export default function useWeatherData() {
 
   // Egyetlen ablak lekérése → { timestamps, results } vagy null
   const fetchWindow = useCallback(async (hours) => {
-    const now = Math.floor(Date.now() / 1000);
-    const body = {
-      series: [{
-        station: STATION_ID,
-        metrics: METRICS,
-        scale: 'max',
-        start: now - hours * 3600,
-        end: now,
-        sharp: true
-      }]
-    };
-    const res = await fetch(HISTORY_URL, {
-      method: 'POST',
-      headers: HISTORY_HEADERS,
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) throw new Error(`Előzmény API hiba: ${res.status}`);
-    const json = await res.json();
-    return Array.isArray(json) && hasPoints(json[0]) ? json[0] : null;
+    try {
+      const now = Math.floor(Date.now() / 1000);
+      const body = {
+        series: [{
+          station: STATION_ID,
+          metrics: METRICS,
+          scale: 'max',
+          start: now - hours * 3600,
+          end: now,
+          sharp: true
+        }]
+      };
+      const res = await fetch(HISTORY_URL, {
+        method: 'POST',
+        headers: HISTORY_HEADERS,
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) return null;
+      const json = await res.json();
+      return Array.isArray(json) && hasPoints(json[0]) ? json[0] : null;
+    } catch (e) {
+      return null;
+    }
   }, []);
 
   // Több ablakot lekér, és metrikánként a legtöbb (utolsó 24h-s) adattal rendelkezőt választja.

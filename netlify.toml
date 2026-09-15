@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/api/smartmixin/*"
-  to = "https://api2.smartmixin.io/api/:splat"
+  to = "/.netlify/functions/smartmixin-proxy"
   status = 200
   force = true
 
