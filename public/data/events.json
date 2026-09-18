@@ -385,6 +385,26 @@
     ]
   },
   {
+    "name": "Bube és Báró a portréban! ",
+    "date": "2026-09-19",
+    "time": "19:00",
+    "location": "Portré étterem",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "Szeretettel várunk egy igazi legendás kőszegi csapat koncertjéra a Portré étterembe szombaton (szeptember 19-én) 19:00 kezdettel. a hangszerek mögött Bube és Báró, vendégzenészként pedig Szántner László lép a színpadra! ",
+    "tags": [
+      "zene"
+    ],
+    "image": "794292757_3746612145492659_8672059759213086736_n.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1789725476621"
+  },
+  {
     "name": "PUMPart y Kőszeg",
     "date": "2026-09-20",
     "time": "12:30",
@@ -1020,5 +1040,23 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1789108420046"
+  },
+  {
+    "name": "Oktoberfest hangulatú büféebéd az Írottkőben! ",
+    "date": "2026-10-04",
+    "time": "11:30",
+    "location": "Írottkő Hotel",
+    "coords": {
+      "lat": 0,
+      "lng": 0
+    },
+    "description": "🍺🥨 Október 4-én bajor hangulat költözik Kőszeg szívébe! 💙🤍\nEgy igazán jó hangulatú Oktoberfestes vasárnapi ebéd finom bajor falatokkal, sörrel és élő zenével – családdal, barátokkal vagy akár egy nagyobb társasággal. 🍻🌭🎶\n📍 Hotel Írottkő, Kőszeg\n📅 Október 4. | 11:30–15:00\nHa egy tartalmas, vidám vasárnapi programot kerestek, ezt érdemes felírni! 🥨🍺",
+    "tags": [],
+    "image": "bufe.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1789725332083"
   }
 ]
