@@ -1000,5 +1000,151 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1789108420046"
+  },
+  {
+    "id": "geotop_nap_koszegi_hegyseg_2026",
+    "name": "Geotóp Nap – A Kőszegi-hegység kevésbé ismert geológiai feltárásai, érdekességei",
+    "date": "2026-10-03",
+    "endDate": "2026-10-03",
+    "time": "10:00",
+    "location": "Kőszeg, Mohás út eleje (Panoráma út találkozásánál)",
+    "coords": {
+      "lat": 47.37585069365997,
+      "lng": 16.529615680421664
+    },
+    "description": "Szakvezetett séták a natúrparkban a Geotóp Nap alkalmából!\n\nA Kőszegi-hegység kevésbé ismert geológiai feltárásai és érdekességei geológus szakvezetésével.\n\n📍 Találkozó: Kőszeg, Mohás út eleje (Panoráma út találkozásánál)\n🗓 Dátum: 2026. október 3. (szombat) • 10:00\n👨‍🏫 Vezető: Horváth Csaba geológus\n📏 Távolság / Időtartam: kb. 6 km, kb. 3 óra (könnyű, minden korosztálynak)\n🥾 Felszerelés: Zárt cipő, hosszú nadrág\n📞 Jelentkezés: +36 20 231-3554, +36 30 919-0688 | horvathcsaba@naturpark.hu\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project | www.geotopnap.hu",
+    "tags": [
+      "geotóp nap",
+      "geológia",
+      "horváth csaba",
+      "kőszegi-hegység",
+      "séta",
+      "túra",
+      "natúrpark",
+      "kőszeg",
+      "ingyenes",
+      "családi"
+    ],
+    "image": "geotop_nap_koszegi_hegyseg_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🌋 GEOTÓP NAP",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "termeszet_elmenytura_cakon_2026",
+    "name": "Látványos természet-élménytúra Cákon",
+    "date": "2026-10-07",
+    "endDate": "2026-10-07",
+    "time": "10:00",
+    "location": "Cák, Petőfi u., az egykori kőfejtő előtti játszótér",
+    "coords": {
+      "lat": 47.37585069365997,
+      "lng": 16.529615680421664
+    },
+    "description": "Szakvezetett túrák a natúrparkban!\n\nLátványos természet-élménytúra Cákon a Kőszegi-hegység varázslatos vidékén geológus szakvezetésével.\n\n📍 Találkozó: Cák, Petőfi u., az egykori kőfejtő előtti játszótér\n🗓 Dátum: 2026. október 7. (szerda) • 10:00\n👨‍🏫 Túravezető: Horváth Csaba geológus\n📏 Távolság / Időtartam: kb. 6,5 km, kb. 3 óra (könnyű)\n🥾 Felszerelés: Zárt cipő, hosszú nadrág, (esőkabát)\n📞 Jelentkezés: +36 30 919-0688 | horvathcsaba@naturpark.hu\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
+    "tags": [
+      "élménytúra",
+      "cák",
+      "horváth csaba",
+      "természet",
+      "túra",
+      "natúrpark",
+      "geológia",
+      "ingyenes",
+      "kőszegi-hegység"
+    ],
+    "image": "termeszet_elmenytura_cakon_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🥾 TERMÉSZET-ÉLMÉNYTÚRA",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "termeszetismereti_seta_koszegen_2026",
+    "name": "Természetismereti séta Kőszegen – az „iskola a határon” parkjában",
+    "date": "2026-10-13",
+    "endDate": "2026-10-13",
+    "time": "14:30",
+    "location": "Kőszeg, Fő tér 2. (Natúrparki Iroda előtt)",
+    "coords": {
+      "lat": 47.37585069365997,
+      "lng": 16.529615680421664
+    },
+    "description": "Szakvezetett séták a natúrparkban!\n\nKülönleges természetismereti séta Kőszegen, az „iskola a határon” parkjában biológiatanár vezetésével.\n\n📍 Találkozó: Kőszeg, Fő tér 2. (Natúrparki Iroda előtt)\n🗓 Dátum: 2026. október 13. (kedd) • 14:30\n👨‍🏫 Vezető: Illés Péter biológiatanár\n📏 Távolság / Időtartam: 1,5 km, kb. 2 óra\n📞 Jelentkezés: +36 20 526-4300\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
+    "tags": [
+      "természetismeret",
+      "séta",
+      "kőszeg",
+      "fő tér",
+      "iskola a határon",
+      "illés péter",
+      "natúrpark",
+      "ingyenes",
+      "családi"
+    ],
+    "image": "termeszetismereti_seta_koszegen_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍃 NATÚRPARKI SÉTA",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "komposztalas_eloadas_es_bemutato_2026",
+    "name": "Szemléletformáló előadás és gyakorlati bemutató: A „fekete arany”, avagy a komposztálás előnyei",
+    "date": "2026-10-15",
+    "endDate": "2026-10-15",
+    "time": "16:00",
+    "location": "Kőszegi Evangélikus Középiskola díszterme (Kőszeg, Árpád tér 1.)",
+    "coords": {
+      "lat": 47.37585069365997,
+      "lng": 16.529615680421664
+    },
+    "description": "Szemléletformáló előadás és gyakorlati bemutató a natúrparki zöldülő programok keretében!\n\nTémák:\n• A „fekete arany”, avagy a komposztálás előnyei\n• Hogyan komposztáljunk?\n• Komposztlakó élőlények bemutatása\n\n📍 Helyszín: Kőszegi Evangélikus Középiskola Kőszeg, Árpád tér 1. (Díszterem)\n🗓 Dátum: 2026. október 15. (csütörtök) • 16:00\n👨‍🏫 Előadó: Illés Péter biológiatanár\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
+    "tags": [
+      "előadás",
+      "komposztálás",
+      "gyakorlati bemutató",
+      "fekete arany",
+      "illés péter",
+      "evangélikus középiskola",
+      "kőszeg",
+      "natúrpark",
+      "ingyenes"
+    ],
+    "image": "komposztalas_eloadas_es_bemutato_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🌱 ZÖLDÜLŐ ELŐADÁS",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "madartani_seta_tomord_2026",
+    "name": "Madártani séta a „Chernel nyomában tanösvényen” – Tömörd",
+    "date": "2026-10-24",
+    "endDate": "2026-10-24",
+    "time": "09:00",
+    "location": "Tömörd, buszmegálló",
+    "coords": {
+      "lat": 47.37585069365997,
+      "lng": 16.529615680421664
+    },
+    "description": "Szakvezetett séták a natúrparkban!\n\nMadártani séta a „Chernel nyomában tanösvényen” Tömördön, madárgyűrűzési bemutatóval egybekötve.\n\n📍 Találkozó: Tömörd, buszmegálló\n🗓 Dátum: 2026. október 24. (szombat) • 09:00\n👨‍🏫 Vezető: Illés Péter biológiatanár\n📏 Távolság / Időtartam: kb. 3 km, kb. 2-3 óra\n🦅 Különprogram: Madárgyűrűzés bemutató\n📞 Jelentkezés: +36 20 526-4300\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
+    "tags": [
+      "madártani séta",
+      "madárgyűrűzés",
+      "tömörd",
+      "chernel nyomában",
+      "tanösvény",
+      "illés péter",
+      "natúrpark",
+      "ingyenes",
+      "családi"
+    ],
+    "image": "madartani_seta_tomord_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🦅 MADÁRTANI SÉTA",
+    "isVarszinhaz": false
   }
 ]
