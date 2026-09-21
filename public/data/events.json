@@ -474,6 +474,64 @@
     "highlightLabel": ""
   },
   {
+    "id": "koszegi_szureti_fesztival_dominik_pentek_2026",
+    "name": "Kőszegi Szüreti Fesztivál a Dominiknál – Sons Left Behind",
+    "date": "2026-09-25",
+    "endDate": "2026-09-25",
+    "time": "19:00",
+    "location": "Dominik Pizzéria & Étterem (Kőszeg)",
+    "coords": {
+      "lat": 47.38779463315562,
+      "lng": 16.539609126783354
+    },
+    "description": "Kőszegi Szüreti Fesztivál a Dominiknál!\n\nA szüreti forgatag mellé jól esik egy igazi olasz pizza és egy frissítő ital! A fesztivál idején újra elérhetők a Dominik sétáló pizzái: Margherita, Prosciutto Cotto, Salame Milano és Salame Piccante. Mindezt elvitelre kérhető fröccsökkel, limonádékkal és alkoholmentes frissítőkkel kísérhetitek.\n\n📍 Helyszín: Dominik Pizzéria & Étterem (9730 Kőszeg)\n🗓 Dátum: 2026. szeptember 25. (péntek)\n🎸 19:00-tól a hangulatról a Sons Left Behind gondoskodik!\n\nPizza, fröccs, élőzene és szüreti hangulat – találkozzunk Kőszegen!",
+    "tags": [
+      "dominik pizzéria",
+      "szüret",
+      "kőszegi szüret",
+      "sons left behind",
+      "élőzene",
+      "pizza",
+      "fröccs",
+      "kőszeg",
+      "koncert"
+    ],
+    "image": "koszegi_szureti_fesztival_dominik_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍕 SZÜRET A DOMINIKNÁL",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "koszegi_szureti_fesztival_dominik_szombat_2026",
+    "name": "Kőszegi Szüreti Fesztivál a Dominiknál – VáRosiDuo",
+    "date": "2026-09-26",
+    "endDate": "2026-09-26",
+    "time": "20:00",
+    "location": "Dominik Pizzéria & Étterem (Kőszeg)",
+    "coords": {
+      "lat": 47.38779463315562,
+      "lng": 16.539609126783354
+    },
+    "description": "Kőszegi Szüreti Fesztivál a Dominiknál!\n\nA szüreti forgatag mellé jól esik egy igazi olasz pizza és egy frissítő ital! A fesztivál idején újra elérhetők a Dominik sétáló pizzái: Margherita, Prosciutto Cotto, Salame Milano és Salame Piccante. Mindezt elvitelre kérhető fröccsökkel, limonádékkal és alkoholmentes frissítőkkel kísérhetitek.\n\n📍 Helyszín: Dominik Pizzéria & Étterem (9730 Kőszeg)\n🗓 Dátum: 2026. szeptember 26. (szombat)\n🎸 20:00-tól a hangulatról a VáRosiDuo gondoskodik!\n\nPizza, fröccs, élőzene és szüreti hangulat – találkozzunk Kőszegen!",
+    "tags": [
+      "dominik pizzéria",
+      "szüret",
+      "kőszegi szüret",
+      "városiduo",
+      "élőzene",
+      "pizza",
+      "fröccs",
+      "kőszeg",
+      "koncert"
+    ],
+    "image": "koszegi_szureti_fesztival_dominik_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍕 SZÜRET A DOMINIKNÁL",
+    "isVarszinhaz": false
+  },
+  {
     "id": "event_koszeg_2026_szuret_p1",
     "name": "Ifjúsági Fúvószenekari koncert – Kőszegi Szüret",
     "date": "2026-09-25",
