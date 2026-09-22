@@ -21,6 +21,7 @@
         "live": "Live",
         "fullProgram": "Gesamtprogramm",
         "favorites": "Meine Favoriten",
+        "trafficTab": "Verkehr",
         "currentlyRunning": "Läuft gerade",
         "nextEvent": "Nächstes Event",
         "festivalOver": "Das Festival ist vorbei, danke für die Teilnahme!",
@@ -35,7 +36,7 @@
         "nextDayTomorrow": "(Morgen, um {{time}} Uhr)",
         "nextDayInXDays": "(In {{count}} Tagen, am {{dayName}})",
         "favoritesEmptyTitle": "Du hast noch keine Favoriten markiert.",
-        "favoritesEmptySubtitle": "Klicke auf den Stern ☆ neben einer Veranstaltung!",
+        "favoritesEmptySubtitle": "Klicke auf den Stern neben einer Veranstaltung!",
         "timeUnits": {
             "day": "Tag",
             "hour": "Std",
@@ -49,14 +50,41 @@
             "second": "Sek"
         },
         "nowStarting": "Beginnt jetzt!",
-        "nowStartingInline": "Beginnt sofort!"
+        "nowStartingInline": "Beginnt sofort!",
+        "traffic": {
+            "title": "Verkehrsinformationen",
+            "intro": "Während des Weinlesefests gibt es in mehreren Straßen vorübergehende Verkehrsänderungen. Hier die wichtigsten Infos.",
+            "items": [
+                {
+                    "title": "Károly-Róbert-Platz – Veranstaltungszelt",
+                    "body": "Der Zeltaufbau beginnt am 23. September um 8 Uhr und nimmt einen Teil der Fahrbahn ein; der Abbau endet am 28. September um 19 Uhr. Der Verkehr der Pék utca wird über die Zrínyi utca umgeleitet, dort gilt in dieser Zeit Halteverbot."
+                },
+                {
+                    "title": "Várkör (vor der Bibliothek) – Tribünen",
+                    "body": "Ab 10 Uhr am 25. September werden Tribünen aufgebaut, der Abschnitt verengt sich vorübergehend."
+                },
+                {
+                    "title": "Várkör – Ecke Hunyadi utca",
+                    "body": "Wird zur Sackgasse, Einfahrt nur für Anwohner erlaubt. Hier parken die Busse der Gastkapellen."
+                },
+                {
+                    "title": "Weinlese-Umzug – Sa., 26. September",
+                    "body": "Von 13 bis ca. 16 Uhr zieht der Umzug entlang einer mit rund 40 Absperrungen gesicherten Route: Rákóczi utca – Rohonci utca – Velemi út – Rómer Flóris utca – Munkácsy utca – Kossuth utca (Fő tér) – Várkör – Károly Róbert tér. Treffpunkt ist zwischen der unteren Gyöngyös-Brücke (Penny-Market-Parkplatz) und der Kreuzung Rákóczi–Rohonci. In dieser Zeit dürfen nur Umzugsteilnehmer die Strecke nutzen."
+                },
+                {
+                    "title": "Fő tér & Jurisics tér – Markt",
+                    "body": "Vom 25. bis 27. September kann der Zugang zu Geschäften wegen des Marktes eingeschränkt sein."
+                }
+            ],
+            "footer": "Vielen Dank für Ihr Verständnis!"
+        }
     },
     "infoModal": {
         "title": "Wie benutzt man es?",
         "button": "Verstanden!",
         "item1": "<strong>Live-Ansicht:</strong> Hier sehen Sie, was gerade passiert und was als Nächstes kommt.",
         "item2": "<strong>Gesamtprogramm:</strong> Durchsuchen Sie alle Veranstaltungen des Festivals, nach Tagen sortiert.",
-        "item3": "<strong>Favoriten & Benachrichtigungen:</strong> Klicken Sie auf einen Stern (☆), um eine Veranstaltung zu Ihren Favoriten hinzuzufügen und eine Benachrichtigung zu erhalten!",
-        "item4": "<strong>Wenn Sie es schließen:</strong> Sie können den Programmführer jederzeit mit dem schwebenden Trauben-Symbol (🍇) auf der Hauptseite wieder öffnen."
+        "item3": "<strong>Favoriten & Benachrichtigungen:</strong> Klicken Sie auf einen Stern, um eine Veranstaltung zu Ihren Favoriten hinzuzufügen und eine Benachrichtigung zu erhalten!",
+        "item4": "<strong>Wenn Sie es schließen:</strong> Sie können den Programmführer jederzeit mit dem schwebenden Trauben-Symbol auf der Hauptseite wieder öffnen."
     }
 }

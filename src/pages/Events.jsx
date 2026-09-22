@@ -316,7 +316,7 @@ export default function Events() {
             {[
               { id: 'week', label: t('filters.week'), icon: FaCalendarWeek },
               { id: 'month', label: t('filters.month'), icon: FaCalendarPlus },
-              { id: 'byMonth', label: filter === 'byMonth' ? t('monthsShort.' + (selectedMonth - 1)) + '.' : t('filters.date'), icon: FaCalendarAlt, onClick: () => setOpenPicker(false) },
+              { id: 'byMonth', label: filter === 'byMonth' ? t('monthsShort.' + (selectedMonth - 1)) + '.' : t('filters.date'), icon: FaCalendarAlt, onClick: () => setOpenPicker(true) },
               { id: 'all', label: t('filters.all'), icon: FaList }
             ].map((tab) => {
               const isActive = filter === tab.id;

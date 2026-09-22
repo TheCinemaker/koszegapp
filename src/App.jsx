@@ -14,7 +14,8 @@ import {
   IoHeart,
   IoMoonOutline,
   IoSunnyOutline,
-  IoHomeOutline
+  IoHomeOutline,
+  IoWineOutline
 } from 'react-icons/io5';
 import { triggerHaptic, HapticType } from './utils/haptics';
 import AIFab from './components/AIFab';
@@ -557,10 +558,10 @@ function MainAppContent() {
               {isHome && !(showProgramModal || location.pathname === '/szuret') && (
                 <button
                 onClick={() => setShowProgramModal(true)}
-                className="w-14 h-14 fixed bottom-20 right-4 bg-purple-700 text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-purple-800 transition transform hover:scale-110 z-50"
+                className="w-14 h-14 fixed right-4 top-1/2 -translate-y-1/2 bg-brand text-gold-light rounded-full flex items-center justify-center border border-gold/40 shadow-floating hover:opacity-90 transition transform hover:scale-110 z-50"
                 aria-label="Programfüzet megnyitása"
                 >
-                🍇
+                <IoWineOutline className="text-2xl" />
                 </button>
               )}
             </>

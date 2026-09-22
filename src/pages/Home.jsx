@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useLayoutEffect } from 'react';
+import React, { useMemo, useRef, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import SearchBar from '../components/SearchBar';
@@ -13,7 +13,8 @@ import {
   IoChevronForward,
   IoStarOutline,
   IoLockClosed,
-  IoWineOutline
+  IoWineOutline,
+  IoCompassOutline
 } from 'react-icons/io5';
 import {
   motion,
@@ -26,8 +27,8 @@ import { useTranslation } from 'react-i18next';
 
 import LiveHero from '../components/LiveHero';
 import NearbyDiscoveryCard from '../components/NearbyDiscoveryCard';
-import PromoModal from '../components/PromoModal';
 import SEO from '../components/SEO';
+import ZahiraVideoModal from '../components/ZahiraVideoModal';
 
 const MotionLink = motion(Link);
 
@@ -100,6 +101,7 @@ function LiveBadge({ badge, featured }) {
 export default function Home({ appData, weather }) {
   const { t } = useTranslation('home');
   const prefersReducedMotion = useReducedMotion();
+  const [showZahiraVideo, setShowZahiraVideo] = useState(false);
 
   // -------------------------------------------------------------------------
   // SCROLL-SCRUB: A saját scrollozó ős-elemet keressük meg (PageWrapper)
@@ -130,6 +132,7 @@ export default function Home({ appData, weather }) {
 
   const sections = [
     { to: '/events', label: 'Kőszegi Szüret', desc: '2026.09.25. - 09.27. | Fúvószenekari Találkozó & Karnevál', icon: IoWineOutline, featured: true, bgImage: '/images/szuret_hero.png', span: 'col-span-2 sm:col-span-2', comingSoon: false, delay: 0.03 },
+    { to: '#', label: 'Szia, Zahira vagyok!', desc: 'A helyi idegenvezetőd — segítek eligazodni Kőszegen.', icon: IoCompassOutline, featured: true, bgImage: '/images/mascot/zahira-tile.jpg', span: 'col-span-2 sm:col-span-2', videoModal: true, delay: 0.05 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
     { to: '/attractions', label: t('sections.attractions.label'), desc: t('sections.attractions.desc'), icon: IoMapOutline, span: 'col-span-1 sm:col-span-1', delay: 0.09 },
@@ -174,13 +177,16 @@ export default function Home({ appData, weather }) {
         {/* --- BENTO GRID --- */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-5 auto-rows-fr">
           {sections.map((sec) => (
-            <SpringUp key={sec.to} delay={sec.delay + 0.1} className={sec.span}>
+            <SpringUp key={sec.label} delay={sec.delay + 0.1} className={sec.span}>
               <Link
-                to={sec.external || sec.comingSoon ? '#' : sec.to}
+                to={sec.external || sec.comingSoon || sec.videoModal ? '#' : sec.to}
                 onClick={(e) => {
-                  if (sec.comingSoon) {
+                  if (sec.videoModal) {
                     e.preventDefault();
-                    toast('A Kőszegi Szüret részletes programjaival hamarosan jelentkezünk! 🍇', { icon: '🍇' });
+                    setShowZahiraVideo(true);
+                  } else if (sec.comingSoon) {
+                    e.preventDefault();
+                    toast(sec.comingSoonMessage || 'A Kőszegi Szüret részletes programjaival hamarosan jelentkezünk!');
                   } else if (sec.external) {
                     e.preventDefault();
                     window.open(sec.to, '_blank', 'noopener,noreferrer');
@@ -287,8 +293,7 @@ export default function Home({ appData, weather }) {
         </div>
       </div>
 
-      {/* Supabase-vezérelt / JSON-vezérelt promo modal */}
-      <PromoModal />
+      {showZahiraVideo && <ZahiraVideoModal onClose={() => setShowZahiraVideo(false)} />}
     </div>
   );
 }

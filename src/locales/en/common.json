@@ -22,6 +22,7 @@
         "live": "Live",
         "fullProgram": "Full Program",
         "favorites": "My Favorites",
+        "trafficTab": "Traffic",
         "currentlyRunning": "Currently Running",
         "nextEvent": "Next Event",
         "festivalOver": "The festival is over, thank you for participating!",
@@ -36,7 +37,7 @@
         "nextDayTomorrow": "(Tomorrow, at {{time}})",
         "nextDayInXDays": "(In {{count}} days, on {{dayName}})",
         "favoritesEmptyTitle": "You haven't marked any favorites yet.",
-        "favoritesEmptySubtitle": "Click the star ☆ next to an event!",
+        "favoritesEmptySubtitle": "Click the star next to an event!",
         "timeUnits": {
             "day": "Day",
             "hour": "Hour",
@@ -50,14 +51,41 @@
             "second": "sec"
         },
         "nowStarting": "Starting now!",
-        "nowStartingInline": "Starts immediately!"
+        "nowStartingInline": "Starts immediately!",
+        "traffic": {
+            "title": "Traffic information",
+            "intro": "Several streets will have temporary traffic changes during the Grape Harvest Festival. Here's what you need to know.",
+            "items": [
+                {
+                    "title": "Károly Róbert Square – event tent",
+                    "body": "Tent construction starts at 8 AM on Sep 23 and covers part of the road; teardown finishes by 7 PM on Sep 28. Pék utca traffic will be diverted via Zrínyi utca, where stopping will be prohibited to keep traffic flowing."
+                },
+                {
+                    "title": "Várkör (in front of the library) – grandstands",
+                    "body": "Grandstands will be built from 10 AM on Sep 25, temporarily narrowing this section."
+                },
+                {
+                    "title": "Várkör – Hunyadi utca corner",
+                    "body": "This becomes a dead end, entry allowed only for residents. Guest bands' buses will park here."
+                },
+                {
+                    "title": "Grape Harvest Parade – Sat, Sep 26",
+                    "body": "From 1 PM to approx. 4 PM, the parade moves along a route secured by about 40 barriers: Rákóczi utca – Rohonci utca – Velemi út – Rómer Flóris utca – Munkácsy utca – Kossuth utca (Fő tér) – Várkör – Károly Róbert tér. The assembly point is between the lower Gyöngyös bridge (Penny Market car park) and the Rákóczi–Rohonci junction. Only parade participants may use this route during that time."
+                },
+                {
+                    "title": "Fő tér & Jurisics tér – street market",
+                    "body": "Access to shops and businesses may be limited on Sep 25–27 due to the market."
+                }
+            ],
+            "footer": "Thank you for your understanding!"
+        }
     },
     "infoModal": {
         "title": "How to use?",
         "button": "Got it!",
         "item1": "<strong>Live View:</strong> Here you can see what's happening right now and what's next.",
         "item2": "<strong>Full Program:</strong> Browse all events of the festival, sorted by day.",
-        "item3": "<strong>Favorites & Notifications:</strong> Click a star (☆) to add an event to your favorites and receive a notification!",
-        "item4": "<strong>If you close it:</strong> You can reopen the program guide anytime with the floating grape (🍇) icon on the main page."
+        "item3": "<strong>Favorites & Notifications:</strong> Click a star to add an event to your favorites and receive a notification!",
+        "item4": "<strong>If you close it:</strong> You can reopen the program guide anytime with the floating grape icon on the main page."
     }
 }

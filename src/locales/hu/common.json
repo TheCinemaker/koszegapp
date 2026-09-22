@@ -23,6 +23,7 @@
         "live": "Élő",
         "fullProgram": "Teljes Program",
         "favorites": "Kedvenceim",
+        "trafficTab": "Közlekedés",
         "currentlyRunning": "Jelenleg zajlik",
         "nextEvent": "Következő",
         "festivalOver": "A fesztiválnak vége, köszönjük a részvételt!",
@@ -37,7 +38,7 @@
         "nextDayTomorrow": "(Holnap, {{time}}-kor)",
         "nextDayInXDays": "({{count}} nap múlva, {{dayName}})",
         "favoritesEmptyTitle": "Még nem jelöltél meg kedvencet.",
-        "favoritesEmptySubtitle": "Kattints egy esemény melletti csillagra! ☆",
+        "favoritesEmptySubtitle": "Kattints egy esemény melletti csillagra!",
         "timeUnits": {
             "day": "Nap",
             "hour": "Óra",
@@ -51,14 +52,41 @@
             "second": "mp"
         },
         "nowStarting": "Most kezdődik!",
-        "nowStartingInline": "Azonnal kezdődik!"
+        "nowStartingInline": "Azonnal kezdődik!",
+        "traffic": {
+            "title": "Közlekedési tudnivalók",
+            "intro": "A Szüreti Fesztivál miatt több utcában ideiglenes forgalmi változás lesz. Íme a legfontosabb tudnivalók.",
+            "items": [
+                {
+                    "title": "Károly Róbert tér – rendezvénysátor",
+                    "body": "Szept. 23-án reggel 8 órától épül a sátor, mely az úttestet is elfoglalja; a bontás szept. 28-án 19 óráig tart. Emiatt a Pék utca forgalmát a Zrínyi utca felé tereljük, ahol a zavartalan közlekedés érdekében megállni tilos."
+                },
+                {
+                    "title": "Várkör (a könyvtár előtt) – lelátó",
+                    "body": "Szept. 25-én 10 órától lelátókat építünk, ez a szakasz átmenetileg leszűkül."
+                },
+                {
+                    "title": "Várkör – Hunyadi utca sarok",
+                    "body": "Zsákutcává válik, behajtani csak az ott lakóknak lehet. Itt parkolnak majd a vendégzenekarok buszai."
+                },
+                {
+                    "title": "Szüreti Felvonulás – szept. 26., szombat",
+                    "body": "13:00-tól kb. 16:00-ig kb. 40 kordonnal biztosított útvonalon vonul a menet: Rákóczi utca – Rohonci utca – Velemi út – Rómer Flóris utca – Munkácsy utca – Kossuth utca (Fő tér) – Várkör – Károly Róbert tér. Gyülekező az alsó Gyöngyös-hídtól (Penny Market parkoló) a Rákóczi–Rohonci kereszteződésig. Ezalatt az útvonalon kizárólag a felvonulók közlekedhetnek."
+                },
+                {
+                    "title": "Fő tér és Jurisics tér – kirakodóvásár",
+                    "body": "Szept. 25–27. között a kirakodóvásár miatt az üzletek és vállalkozások megközelíthetősége korlátozott lehet."
+                }
+            ],
+            "footer": "Megértésüket és türelmüket köszönjük!"
+        }
     },
     "infoModal": {
         "title": "Hogyan használd?",
         "button": "Értettem!",
         "item1": "<strong>Élő nézet:</strong> Itt látod, mi zajlik éppen, és mi lesz a következő program.",
         "item2": "<strong>Teljes Program:</strong> Böngészd a fesztivál összes eseményét napokra bontva.",
-        "item3": "<strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra (☆), hogy a kedvenceidhez add a programot és értesítőt kapj!",
-        "item4": "<strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő szőlő (🍇) ikonnal."
+        "item3": "<strong>Kedvencek & Értesítések:</strong> Kattints egy csillagra, hogy a kedvenceidhez add a programot és értesítőt kapj!",
+        "item4": "<strong>Ha bezártad:</strong> A programfüzetet bármikor újra megnyithatod a főoldalon lebegő szőlőfürt ikonnal."
     }
 }

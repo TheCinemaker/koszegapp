@@ -235,6 +235,34 @@
     "isVarszinhaz": false
   },
   {
+    "id": "event-koszeg-2026-toth-pinceszet-szuret",
+    "name": "Szüret péntek a Tóth Pincészetben – Horváth Meggie, Svertsits Tamás & Domby Bertalan",
+    "date": "2026-09-25",
+    "endDate": "2026-09-25",
+    "time": "19:30",
+    "location": "Tóth Pincészet Borház (Rákóczi utca 6., Kőszeg)",
+    "coords": {
+      "lat": 47.38730961292117,
+      "lng": 16.541962978325973
+    },
+    "description": "Hagyományos szüret péntek esti zenés estünk elmaradhatatlan szereplője Horváth Meggie, Svertsits Tamás és Domby Bertalan.\nEreszd el a hajam buli egész éjjel.... Várunk finom borokkal, forralt borral, friss musttal és jókedvvel!\nAsztalfoglalás javasolt!\nAz előzetesen lefoglalt asztalokat 20:00 óráig tartjuk fenn!\nBelépő 1500 Ft / fő\n\nKapcsolat:\nTel: 94 364 128\nEmail: info@tothpinceszet.hu",
+    "tags": [
+      "szüret",
+      "tóth pincészet",
+      "meggie",
+      "koncert",
+      "zene",
+      "élőzene",
+      "borkóstoló",
+      "buli"
+    ],
+    "image": "toth_pinceszet_szuret_pentek_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎵 ZENÉS EST MEGGIE-VEL",
+    "isVarszinhaz": false
+  },
+  {
     "id": "ordogarok_kalvaria_seta_2026",
     "name": "Natúrparki zöldülő séta – Ördögárok-Napos-tető-Kálvária",
     "date": "2026-09-26",
