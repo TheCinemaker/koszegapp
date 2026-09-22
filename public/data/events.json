@@ -235,8 +235,8 @@
     "isVarszinhaz": false
   },
   {
-    "id": "event-koszeg-2026-toth-pinceszet-szuret",
-    "name": "Szüret péntek a Tóth Pincészetben – Horváth Meggie, Svertsits Tamás & Domby Bertalan",
+    "id": "toth_pinceszet_szuret_pentek_2026",
+    "name": "Borházi Zenés Esték: Meggie / Svertsits Tamás / Domby Bertalan – Tóth Pincészet",
     "date": "2026-09-25",
     "endDate": "2026-09-25",
     "time": "19:30",
@@ -245,7 +245,7 @@
       "lat": 47.38730961292117,
       "lng": 16.541962978325973
     },
-    "description": "Hagyományos szüret péntek esti zenés estünk elmaradhatatlan szereplője Horváth Meggie, Svertsits Tamás és Domby Bertalan.\nEreszd el a hajam buli egész éjjel.... Várunk finom borokkal, forralt borral, friss musttal és jókedvvel!\nAsztalfoglalás javasolt!\nAz előzetesen lefoglalt asztalokat 20:00 óráig tartjuk fenn!\nBelépő 1500 Ft / fő\n\nKapcsolat:\nTel: 94 364 128\nEmail: info@tothpinceszet.hu",
+    "description": "Kőszegi Szüret a Tóth Pincészetben! Borházi Zenés Esték!\n\nPéntek esti zenés estünk elmaradhatatlan szereplői: Horváth Meggie, Svertsits Tamás és Domby Bertalan.\nEreszd el a hajam buli egész éjjel... Várunk finom borokkal, forralt borral, friss musttal és jókedvvel!\n\n📍 Helyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\n🗓 Dátum: 2026. szeptember 25. (péntek) 19:30\n🎟 Belépőjegy: 1500 Ft\n📞 Asztalfoglalás ajánlott: (06 94) 364 128 | info@tothpinceszet.hu\n(Az előzetesen lefoglalt asztalokat 20:00 óráig tartjuk fenn!)",
     "tags": [
       "szüret",
       "tóth pincészet",
@@ -256,10 +256,37 @@
       "borkóstoló",
       "buli"
     ],
-    "image": "toth_pinceszet_szuret_pentek_2026.jpg",
+    "image": "toth_pinceszet_szureti_borhazi_estek_2026.png",
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🎵 ZENÉS EST MEGGIE-VEL",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "toth_pinceszet_szuret_szombat_2026",
+    "name": "Borházi Zenés Esték: DJ Blazsew & Friends – Tóth Pincészet",
+    "date": "2026-09-26",
+    "endDate": "2026-09-26",
+    "time": "20:00",
+    "location": "Tóth Pincészet Borház (Rákóczi utca 6., Kőszeg)",
+    "coords": {
+      "lat": 47.38730961292117,
+      "lng": 16.541962978325973
+    },
+    "description": "Kőszegi Szüret a Tóth Pincészetben! Borházi Zenés Esték!\n\nSzombat este a pultok mögött és a hangulatról: DJ Blazsew & Friends!\nFelejthetetlen szüreti buli, borok, forralt bor és friss must!\n\n📍 Helyszín: Tóth Pincészet Borház (9730 Kőszeg, Rákóczi utca 6.)\n🗓 Dátum: 2026. szeptember 26. (szombat) 20:00\n🎟 Belépőjegy: 1500 Ft\n📞 Asztalfoglalás ajánlott: (06 94) 364 128 | info@tothpinceszet.hu\n(Az előzetesen lefoglalt asztalokat 20:30-ig tartjuk fenn!)",
+    "tags": [
+      "szüret",
+      "tóth pincészet",
+      "dj blazsew",
+      "koncert",
+      "zene",
+      "buli",
+      "borkóstoló"
+    ],
+    "image": "toth_pinceszet_szureti_borhazi_estek_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎧 DJ BLAZSEW & FRIENDS",
     "isVarszinhaz": false
   },
   {
