@@ -30,7 +30,7 @@ export default function ZahiraVideoModal({ onClose }) {
           transition={{ type: 'spring', duration: 0.5 }}
           role="dialog"
           aria-modal="true"
-          className="relative w-full max-w-md bg-surface-card dark:bg-surface-card-dark rounded-surface shadow-floating overflow-hidden z-10"
+          className="relative w-full max-w-md bg-surface-card dark:bg-surface-card-dark rounded-surface shadow-floating overflow-hidden z-10 glow-border"
         >
           <div className="flex items-center justify-between p-4 bg-brand dark:bg-brand-deep border-b border-gold/30">
             <div className="flex items-center gap-3">

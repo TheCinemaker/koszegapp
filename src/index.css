@@ -592,6 +592,19 @@
   }
 }
 
+/* ===== Visszafogott, lüktető "Siri-glow" a kártya körül (pl. Zahira modal) ===== */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 22px 2px rgba(179, 152, 94, 0.35), 0 0 46px 10px rgba(11, 39, 64, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 22px 2px rgba(143, 179, 209, 0.35), 0 0 46px 10px rgba(179, 152, 94, 0.2);
+  }
+}
+.glow-border {
+  animation: glow-pulse 4.5s ease-in-out infinite;
+}
+
 /* Film Grain - Cinematic Texture */
 .film-grain {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
