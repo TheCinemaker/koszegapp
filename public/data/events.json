@@ -366,6 +366,32 @@
     "isVarszinhaz": false
   },
   {
+    "id": "event_zahira_szuret_2026",
+    "name": "⭐ Találkozz Zahirával – A visitKőszeg Háziasszonya",
+    "date": "2026-09-26",
+    "endDate": "2026-09-26",
+    "time": "14:00",
+    "location": "Fő tér & Szüreti Karnevál (Kőszeg)",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Zahira, a visitKőszeg elegáns digitális háziasszonya is veletek tart a Kőszegi Szüreti Karnevál forgatagában! Keresd őt a városban és az appban, és fedezzétek fel Kőszeget együtt!",
+    "tags": [
+      "zahira",
+      "visitkoszeg",
+      "szüret",
+      "karnevál",
+      "háziasszony",
+      "élmény"
+    ],
+    "image": "zahira-tile.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "✨ DIGITÁLIS HÁZIASSZONY",
+    "isVarszinhaz": false
+  },
+  {
     "id": "event_koszeg_2026_szuret_s3",
     "name": "Fúvószenekarok felvonulása – Kőszegi Szüret",
     "date": "2026-09-26",
