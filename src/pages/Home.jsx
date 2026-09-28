@@ -64,8 +64,8 @@ function getLiveBadges(appData) {
     badges['/gastronomy'] = { type: 'count', text: `${openNow} hely nyitva` };
   }
 
-  // Kőszegi Szüret (Fúvószenekari Találkozó & Karnevál)
-  badges['/szuret'] = { type: 'countdown', text: 'Sze. 25-27.' };
+  // Kerékpártúra badge
+  badges['/events'] = { type: 'countdown', text: 'Okt. 17.' };
   return badges;
 }
 
@@ -131,7 +131,7 @@ export default function Home({ appData, weather }) {
   const liveBadges = useMemo(() => getLiveBadges(appData), [appData]);
 
   const sections = [
-    { to: '/events', label: 'Kőszegi Szüret', desc: '2026.09.25. - 09.27. | Fúvószenekari Találkozó & Karnevál', icon: IoWineOutline, featured: true, bgImage: '/images/szuret_hero.png', span: 'col-span-2 sm:col-span-2', comingSoon: false, delay: 0.03 },
+    { to: '/events', label: 'Herényiek Házától Kőszegig', desc: '2026.10.17. (Szombat) | Kerékpártúra Szombathelyről Kőszegre', icon: IoWalkOutline, featured: true, bgImage: '/images/events/herenyi_kerekpartura_2026.jpg', span: 'col-span-2 sm:col-span-2', comingSoon: false, delay: 0.03 },
     { to: '#', label: 'Szia, Zahira vagyok!', desc: 'A helyi idegenvezetőd — segítek eligazodni Kőszegen.', disclaimer: 'Fejlesztés alatt — nem valós személy', icon: IoCompassOutline, featured: true, bgImage: '/images/mascot/zahira-tile.jpg', span: 'col-span-2 sm:col-span-2', videoModal: true, delay: 0.05 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },

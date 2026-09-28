@@ -129,7 +129,7 @@ function MainAppContent() {
     loading: true
   });
   const [showFavorites, setShowFavorites] = useState(false);
-  const [showProgramModal, setShowProgramModal] = useState(true);
+  const [showProgramModal, setShowProgramModal] = useState(false);
 
   const [showOstromDrawer, setShowOstromDrawer] = useState(false);
   const [showResidentModal, setShowResidentModal] = useState(false);
@@ -545,7 +545,8 @@ function MainAppContent() {
                 )}
 
 
-              {/* Program Modal & Grape Icon */}
+              {/* Program Modal & Grape Icon (Szüreti Modal - kikommentelve) */}
+              {/*
               {isHome && (showProgramModal || location.pathname === '/szuret') && (
                 <ProgramModal onClose={() => {
                   setShowProgramModal(false);
@@ -564,6 +565,7 @@ function MainAppContent() {
                 <IoWineOutline className="text-2xl" />
                 </button>
               )}
+              */}
             </>
           )}
 

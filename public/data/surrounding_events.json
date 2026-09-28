@@ -23,5 +23,32 @@
     "highlight": false,
     "highlightLabel": "",
     "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-herenyi-kerekpartura-20261017",
+    "name": "Herényiek Házától Kőszegig – Kerékpártúra",
+    "settlement": "Szombathely / Kőszeg",
+    "date": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "08:30",
+    "location": "Herényiek Háza (Szombathely) – Kőszeg (Orsolya napi vásár)",
+    "coords": {
+      "lat": 47.2505,
+      "lng": 16.6212
+    },
+    "description": "Herényiek Házától Kőszegig Kerékpártúra – 2026. október 17. (szombat)\n\nSzervező: Herényi Kulturális és Sportegyesület\nTúravezető: Katona Szilveszter\n\n📍 Találkozás: Szombathely, Herényiek Háza (Béke tér 7.) 8:30 gyülekezés, 9:00 indulás.\n🚴 Táv: oda 20 km, vissza 18 km (szintemelkedés: 220 m).\n🗺 Útvonal: Szombathely – Gencsapáti – Szentkút – Perenye – Csömöte – Kőszegdoroszló – Pogányok – Kőszeg (Orsolya napi vásár).\nHazafelé: Kőszeg – Abért-tó – Lukácsháza – Gyöngyösfalu – Gencsapáti – Herény.\n\n🎟 Részvétel: INGYENES, de regisztrációhoz kötött!\nRegisztráció: info.herenyiek@gmail.com | 06303726969",
+    "tags": [
+      "kerékpártúra",
+      "herényiek háza",
+      "kőszeg",
+      "orsolya napi vásár",
+      "szombathely",
+      "ingyenes"
+    ],
+    "image": "herenyi_kerekpartura_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🚴 KERÉKPÁRTÚRA",
+    "isVarszinhaz": false
   }
 ]
