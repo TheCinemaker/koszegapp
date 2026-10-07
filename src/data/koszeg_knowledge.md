@@ -65,7 +65,7 @@ Kőszeg a Soproni borvidék része. A legfontosabb fajta a Kékfrankos, de jelen
 
 ### 3. Kőszegi Falatok
 - **Kőszegi Szelet**: Egy csokis-meggyes-rumos sütemény, ami a város egyik legkedveltebb desszertje.
-- **Gasztronómiai Események**: Az **Orsolya-napi Vásár** (október) a Natúrpark ízeivel, ahol mézek, gesztenyés finomságok és sült tök várja a látogatókat.
+- **Gasztronómiai Események**: Az **Orsolya-napi Vásár** (október 17-18.) a Natúrpark ízeivel, kézműves vásárral, a Vár melletti Diáksétányon a Civil Ízek Utcája főzőversennyel és kóstolóval, a Köszházban a Borbarát Hölgyek „Kőszegi Csemege” süteményversenyével, valamint a Fő téren és a Jurisics várban koncertekkel (Ataru Taiko, Srumli, Meggie és Tomsa, Bujtás Ervin, Kvarc, Kőszeg Város Fúvószenekara, néptánccsoportok).
 
 ---
 

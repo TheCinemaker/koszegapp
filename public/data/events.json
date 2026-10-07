@@ -900,5 +900,549 @@
     "highlight": true,
     "highlightLabel": "🚴 HERÉNYIEK HÁZÁTÓL KŐSZEGIG",
     "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_napi_vasar_2026",
+    "name": "Orsolya-napi Vásár 2026 – Gasztronómiai Fesztivál",
+    "date": "2026-10-17",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "09:00",
+    "location": "Fő tér, Jurisics vár és Diáksétány, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Orsolya-napi Vásár 2026 – Gasztronómiai Fesztivál Kőszegen!\n2026. október 17–18.\n\nKézműves vásár, szabadtéri főzés, főzőverseny és kulturális programok a kőszegi belvárosban!\n★ INGYENESEN LÁTOGATHATÓ RENDEZVÉNY! ★\n\n🍂 FOLYAMATOS & GASZTRONÓMIAI PROGRAMOK:\n• Október 17–18. – Civil Ízek Utcája (Vár melletti Diáksétány): Civil főzőverseny és mindkét nap délidőben kóstoló!\n• Október 17. (szombat) – Köszház (Jurisics vár külső udvar): „KŐSZEGI CSEMEGE” a Kőszegi Borbarát Hölgyek szervezésében. Nevezés a Köszházban 9:00–11:00 óra között, 12:30 órától kóstoló – támogatói jegy vásárlásával.\n• Eredményhirdetés mindkét verseny esetében: Vasárnap 16:00 órakor a belső várudvaron.\n\n🍁 OKTÓBER 17. SZOMBAT:\nFő tér:\n• 14:00 Kovács Géza – Vásártér (bábelőadás)\n• 14:30 Be-Jó Történelmi Táncegyüttes\n• 15:00 Kőszegi Cimborák\n• 17:00 Bujtás Ervin\n• 18:00 Kvarc\n\nJurisics vár:\n• 14:00 Alpensänger\n• 14:30 Kőszegfalvi Nemzetiségi Kórus\n• 15:00 Čakavci Tánccsoport és a Zsidányi Betyárok\n• 17:00 Kőszeg Város Fúvószenekara\n\n🍁 OKTÓBER 18. VASÁRNAP:\nFő tér:\n• 14:00 Ataru Taiko\n• 16:00 Srumli\n• 17:00 Meggie és Tomsa\n\nJurisics vár:\n• 14:00 Vadrózsa Népdalkör\n• 14:30 Hajnalcsillag Néptáncegyüttes és Boglya Népzenei Együttes\n• 16:00 A Kőszegi Csemege és a Civil Főzőverseny ünnepélyes eredményhirdetése\n\n🏛 Támogató: Kőszeg Város Önkormányzata\nℹ️ Információ: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis utca 9., tel: 94/360-113, jurisics@koszeg.hu)\n🌐 Facebook: https://www.facebook.com/orsolyanapivasar",
+    "tags": [
+      "orsolya-nap",
+      "vásár",
+      "gasztronómia",
+      "főzőverseny",
+      "kőszegi csemege",
+      "fő tér",
+      "jurisics vár",
+      "diáksétány",
+      "kézműves vásár",
+      "ingyenes",
+      "kőszeg",
+      "koncert",
+      "családi"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍂 ORSOLYA-NAPI VÁSÁR 2026",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_civil_izek_szombat",
+    "name": "Civil Ízek Utcája – Főzőverseny és kóstoló (Szombat)",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "10:00",
+    "location": "Civil Ízek Utcája (Vár melletti Diáksétány), Kőszeg",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5378
+    },
+    "description": "Október 17-én a Civil Ízek Utcájában (a Jurisics vár melletti Diáksétányon) a helyi civil szervezetek és baráti társaságok mérik össze főzőtudásukat a hagyományos Civil Főzőverseny keretében.\n\n🍲 Délidőben ínycsiklandó szabadtéri kóstoló várja a látogatókat!\n🏆 Ünnepélyes eredményhirdetés: vasárnap 16:00 órakor a belső várudvaron.\n\nA rendezvény ingyenesen látogatható!",
+    "tags": [
+      "orsolya-nap",
+      "civil ízek utcája",
+      "diáksétány",
+      "főzőverseny",
+      "gasztronómia",
+      "kóstoló",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_koszegi_csemege",
+    "name": "„Kőszegi Csemege” verseny és kóstoló – Kőszegi Borbarát Hölgyek",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "09:00",
+    "location": "Köszház (Jurisics vár külső udvar), Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "2026. október 17-én a Köszházban (Jurisics vár külső udvar) rendezik meg a hagyományos „KŐSZEGI CSEMEGE” édességversenyt a Kőszegi Borbarát Hölgyek szervezésében!\n\n🍰 09:00 – 11:00: Nevezés és a versenymunkák leadása a Köszházban.\n☕ 12:30-tól: Kóstoló a közönség számára – támogatói jegy vásárlásával!\n🏆 Ünnepélyes eredményhirdetés: vasárnap 16:00 órakor a belső várudvaron.",
+    "tags": [
+      "orsolya-nap",
+      "kőszegi csemege",
+      "sütemény",
+      "gasztronómia",
+      "kóstoló",
+      "borbarát hölgyek",
+      "köszház",
+      "jurisics vár",
+      "kőszeg"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_kovacs_geza_vasarter",
+    "name": "Kovács Géza: Vásártér (bábelőadás)",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "14:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Kovács Géza bábművész „Vásártér” című szórakoztató előadása a Fő téren. Vidám, vásári bábjáték gyerekeknek és családoknak az Orsolya-napi Vásár szombati napján. Ingyenesen látogatható!",
+    "tags": [
+      "orsolya-nap",
+      "kovács géza",
+      "bábelőadás",
+      "vásártér",
+      "gyerekprogram",
+      "családi",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_alpensanger",
+    "name": "Alpensänger koncert – Orsolya-napi Vásár",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "14:00",
+    "location": "Jurisics vár, Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Az Alpensänger fellépése a Jurisics vár udvarán az Orsolya-napi Vásár kulturális programjában. Hangulatos alpesi dallamok és népzene a várban. Ingyenes program!",
+    "tags": [
+      "orsolya-nap",
+      "alpensänger",
+      "koncert",
+      "zene",
+      "jurisics vár",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_be_jo_tanc",
+    "name": "Be-Jó Történelmi Táncegyüttes",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "14:30",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "A kőszegi Be-Jó Történelmi Táncegyüttes lenyűgöző reneszánsz és történelmi táncbemutatója a Fő téren, korhű viseletben az Orsolya-napi forgatagban.",
+    "tags": [
+      "orsolya-nap",
+      "be-jó",
+      "történelmi tánc",
+      "tánc",
+      "hagyományőrzés",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_koszegfalvi_korus",
+    "name": "Kőszegfalvi Nemzetiségi Kórus",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "14:30",
+    "location": "Jurisics vár, Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A Kőszegfalvi Nemzetiségi Kórus ünnepi fellépése a Jurisics várban. Hagyományőrző német nemzetiségi kórusművek és dallamok az Orsolya-napi Vásáron.",
+    "tags": [
+      "orsolya-nap",
+      "kórus",
+      "kőszegfalva",
+      "nemzetiségi kórus",
+      "népdal",
+      "jurisics vár",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_koszegi_cimborak",
+    "name": "Kőszegi Cimborák koncert",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "15:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "A Kőszegi Cimborák zenekar koncertje a kőszegi Fő téren! Vidám, népszerű dallamok és szórakoztató muzsika szombat délután a vásári forgatagban.",
+    "tags": [
+      "orsolya-nap",
+      "kőszegi cimborák",
+      "koncert",
+      "zene",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_cakavci_zsidanyi_betyarok",
+    "name": "Čakavci Tánccsoport és a Zsidányi Betyárok",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "15:00",
+    "location": "Jurisics vár, Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A Čakavci Tánccsoport és a Zsidányi Betyárok közös tánc- és zenei bemutatója a Jurisics vár udvarán. Gradistyei horvát néptánc, fergeteges ritmusok és hagyományőrzés!",
+    "tags": [
+      "orsolya-nap",
+      "csakavci",
+      "zsidányi betyárok",
+      "néptánc",
+      "horvát",
+      "folklór",
+      "jurisics vár",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_bujtas_ervin",
+    "name": "Bujtás Ervin akusztikus koncert",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "17:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Bujtás Ervin énekes-dalszerző élő akusztikus koncertje a kőszegi Fő téren. Érzelmes dallamok, saját számok és igényes feldolgozások az őszi délutánon.",
+    "tags": [
+      "orsolya-nap",
+      "bujtás ervin",
+      "koncert",
+      "akusztik",
+      "élőzene",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_fuvoszenekar",
+    "name": "Kőszeg Város Fúvószenekara",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "17:00",
+    "location": "Jurisics vár, Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A 160 éves jubileumi évadát ünneplő Kőszeg Város Fúvószenekarának ünnepi koncertje a Jurisics vár udvarán! Klasszikus indulók, filmzenék és népszerű slágerek fúvós hangszerelésben.",
+    "tags": [
+      "orsolya-nap",
+      "kőszeg város fúvószenekara",
+      "fúvószene",
+      "koncert",
+      "jurisics vár",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_kvarc",
+    "name": "Kvarc koncert – Orsolya-napi Vásár",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "18:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "A népszerű Kvarc zenekar szombat esti nagyszabású koncertje a kőszegi Fő téren! Pörgős rock és pop dalok a vásári nap esti bulijához. Ingyenes program!",
+    "tags": [
+      "orsolya-nap",
+      "kvarc",
+      "koncert",
+      "rock",
+      "pop",
+      "élőzene",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_civil_izek_vasarnap",
+    "name": "Civil Ízek Utcája – Főzőverseny és kóstoló (Vasárnap)",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "10:00",
+    "location": "Civil Ízek Utcája (Vár melletti Diáksétány), Kőszeg",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5378
+    },
+    "description": "Vasárnap is folytatódik a Civil Ízek Utcája a Jurisics vár melletti Diáksétányon! A Civil Főzőverseny második napján újra rotyognak a bográcsok, déltől kóstoló várja a közönséget.\n\n🏆 Ünnepélyes eredményhirdetés: 16:00 órakor a belső várudvaron!",
+    "tags": [
+      "orsolya-nap",
+      "civil ízek utcája",
+      "diáksétány",
+      "főzőverseny",
+      "gasztronómia",
+      "kóstoló",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_ataru_taiko",
+    "name": "Ataru Taiko ütőegyüttes dobsó",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "14:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Az Ataru Taiko japán dobegyüttes elementáris, elsöprő erejű dobműsora a Fő téren! Látványos japán dobok, ritmusok és lenyűgöző koreográfia.",
+    "tags": [
+      "orsolya-nap",
+      "ataru taiko",
+      "japán dob",
+      "ütősök",
+      "koncert",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_vadrozsa_nepdalkor",
+    "name": "Vadrózsa Népdalkör műsora",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "14:00",
+    "location": "Jurisics vár, Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A helyi Vadrózsa Népdalkör hagyományőrző énekes műsora a Jurisics vár udvarán. Szép magyar népdalok és őszi vásári hangulat. Ingyenes program!",
+    "tags": [
+      "orsolya-nap",
+      "vadrózsa népdalkör",
+      "népdal",
+      "folklór",
+      "jurisics vár",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_hajnalcsillag_boglya",
+    "name": "Hajnalcsillag Néptáncegyüttes és Boglya Népzenei Együttes",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "14:30",
+    "location": "Jurisics vár, Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A kőszegi Hajnalcsillag Néptáncegyüttes és a neves Boglya Népzenei Együttes közös nagyszabású műsora a Jurisics vár udvarán. Autentikus magyar néptáncok és élő vonós népzene!",
+    "tags": [
+      "orsolya-nap",
+      "hajnalcsillag",
+      "boglya népzene",
+      "néptánc",
+      "népzene",
+      "jurisics vár",
+      "hagyományőrzés",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_srumli",
+    "name": "Srumli Zenekar koncert",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "16:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "A népszerű Srumli zenekar sváb sramli koncertje a kőszegi Fő téren! Vidám dallamok, fúvós hangulat a vasárnap délutáni forgatagban.",
+    "tags": [
+      "orsolya-nap",
+      "srumli",
+      "sramli",
+      "koncert",
+      "zene",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_eredmenyhirdetes",
+    "name": "A Kőszegi Csemege és a Civil Főzőverseny eredményhirdetése",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "16:00",
+    "location": "Jurisics vár (Belső várudvar), Kőszeg",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Ünnepélyes díjátadó ceremónia a Jurisics-vár belső várudvarán!\n\nKihirdetésre kerülnek a Kőszegi Borbarát Hölgyek „KŐSZEGI CSEMEGE” süteményversenyének győztesei, valamint a Diáksétányon megrendezett Civil Főzőverseny díjazott csapatai és legfinomabb fogásai.",
+    "tags": [
+      "orsolya-nap",
+      "eredményhirdetés",
+      "díjátadó",
+      "kőszegi csemege",
+      "főzőverseny",
+      "civil ízek utcája",
+      "jurisics vár",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "orsolya_2026_meggie_tomsa",
+    "name": "Meggie és Tomsa koncert – Orsolya-napi Vásár",
+    "date": "2026-10-18",
+    "endDate": "2026-10-18",
+    "end_date": "2026-10-18",
+    "time": "17:00",
+    "location": "Fő tér, Kőszeg",
+    "coords": {
+      "lat": 47.3881,
+      "lng": 16.5415
+    },
+    "description": "Meggie és Tomsa hangulatos élő koncertje a kőszegi Fő téren! Sanzonok, jazz klasszikusok és lélekmelengető dalok az Orsolya-napi Vásár zárásaként.",
+    "tags": [
+      "orsolya-nap",
+      "meggie és tomsa",
+      "koncert",
+      "jazz",
+      "sanzon",
+      "élőzene",
+      "fő tér",
+      "ingyenes"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   }
 ]
