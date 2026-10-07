@@ -784,6 +784,67 @@
     "isVarszinhaz": false
   },
   {
+    "id": "keken_a_zoldben_2026",
+    "name": "KÉKEN a zöldben! – Natúrparki Zöldülő",
+    "date": "2026-10-10",
+    "endDate": "2026-10-10",
+    "time": "14:00",
+    "location": "Borostyán Erdőkert (Kőszeg, Kálvária-domb, a kék jelzés mentén)",
+    "coords": {
+      "lat": 47.3912,
+      "lng": 16.5325
+    },
+    "description": "A kéktúra napjához kapcsolódva hívunk egy kis beszélgetésre, ismerkedésre a zöldbe!\n\nMiért gyere el?\n• Mert a természetben levés többet ér bármilyen gyógyszernél.\n• Hogy olyan embereket ismerj meg, akikkel később is tudsz együttműködni, gondolkodni, tenni.\n• Tenni azért, hogy egy környezettudatosabb, igazságosabb, segítő és elfogadó világban éljünk, ahol teret hagyunk a természet többi tagjának is.\nMert az ember a természet része. Nem az ura, a része. Ebben a tudatban kellene léteznünk!\n\nFőbb témák és workshopok:\n🌱 Tudatos étkezés (Helyi, szezonális, bio)\n🔄 Újrahasználat (Javítás, kölcsönzés)\n🛍 Tudatos vásárlás & Csomagolásmentes megoldások (Házi lekvár, helyi kézműves termékek)\n🐌 Lassítás & Minimalizmus (Kevés tárgy, egyszerűség)\n🌍 Földbarát Élet – Mindig lehet többet tenni!\n\n📍 Helyszín: Borostyán Erdőkert (Kőszeg, Kálvária-domb, a kék jelzés mentén)\n🗓 Időpont: 2026. október 10. (szombat) 14:00–17:00\n📞 Információ: 06 30 6995 227\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen",
+    "tags": [
+      "kéktúra",
+      "kéken a zöldben",
+      "borostyán erdőkert",
+      "kálvária-domb",
+      "natúrparki zöldülő",
+      "környezetvédelem",
+      "fenntarthatóság",
+      "földbarát élet",
+      "kőszeg",
+      "ingyenes"
+    ],
+    "image": "keken_a_zoldben_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🌿 KÉKEN A ZÖLDBEN",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "alkormos_termeszetvedelmi_onkentes_akcio_2026",
+    "name": "Natúrparki természetvédelmi önkéntes akció – Segíts kiszedni!",
+    "date": "2026-10-11",
+    "endDate": "2026-10-11",
+    "time": "10:00",
+    "location": "Találkozó: Kőszeg, Tesco parkoló",
+    "coords": {
+      "lat": 47.3789,
+      "lng": 16.5512
+    },
+    "description": "Segítsünk a védett erdőknek! Natúrparki természetvédelmi önkéntes akció – Segíts kiszedni!\n\nAz alkörmös (vagy karmazsinbogyó) nem való védett területre. Az invazív fajok közé tartozik, olyan erőteljesen terjed, hogy kiszorítja az őshonos fajokat. Fogjunk össze és segítsünk megvédeni a kőszegi erdőket!\n\n🎓 Középsulis vagy? Hahó, az 50 óra közösségi szolgálatba beszámítható :)!\n🥖 Az akció végén a Stájerházaknál frissen sült kemencés langallóval várunk!\n\n📍 Találkozó: Kőszeg, Tesco parkoló\n🗓 Időpont: 2026. október 11. (vasárnap) 10:00\n📞 Jelentkezés: horvathcsaba@naturpark.hu | 06 20 2313-554\nℹ️ Szervező: Írottkő Natúrpark | Interreg Austria-Hungary TinyGreen",
+    "tags": [
+      "természetvédelem",
+      "önkéntes akció",
+      "alkörmös",
+      "közösségi szolgálat",
+      "stájerházak",
+      "langalló",
+      "kőszeg",
+      "tesco",
+      "natúrpark",
+      "ingyenes",
+      "tinygreen"
+    ],
+    "image": "termeszetvedelmi_onkentes_akcio_alkormos_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🌱 ÖNKÉNTES AKCIÓ",
+    "isVarszinhaz": false
+  },
+  {
     "id": "termeszetismereti_seta_koszegen_2026",
     "name": "Természetismereti séta Kőszegen – az „iskola a határon” parkjában",
     "date": "2026-10-13",
