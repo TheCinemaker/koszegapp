@@ -845,6 +845,37 @@
     "isVarszinhaz": false
   },
   {
+    "id": "kerekpartura_szombathely_koszegi_hegyseg_2026",
+    "name": "Kerékpártúra Szombathelyről a Kőszegi-hegységbe!",
+    "date": "2026-10-11",
+    "endDate": "2026-10-11",
+    "time": "10:00",
+    "location": "Szombathely, Emlékmű alatti parkoló",
+    "coords": {
+      "lat": 47.230474,
+      "lng": 16.603111
+    },
+    "description": "Kihívásra vágysz? Gyere el és tekerj fel a hegyre velünk, csodáld meg kerékpárról az őszi színeket a Kőszegi-hegységben!\n\n🗺️ TÚRAÚTVONAL:\nSzombathely – Bucsu – Bozsok – Kőszegszerdahely – Velem – Hörmann-forrás – Kőszeg (ebéd) – Abért-tó – Lukácsháza – Gyöngyösfalu – Gencsapáti – Szombathely\n(Kőszegen fakultatív ebédre lehetőség lesz.)\n\n📍 Indulás helyszíne: Szombathely, Emlékmű alatti parkoló (GPS: 47.230474, 16.603111)\n🗓️ Indulás időpontja: 2026. október 11. (vasárnap) 10:00\n📏 Távolság: 62 km\n🚴 Átlagos tempó: 18–20 km/h\n⛰️ Túra nehézsége: közepes\n👨‍🏫 Túravezető: Gergácz Péter\n🏢 Rendező: Sport és Ifjúsági Iroda\n\n🎟️ A túrán való részvétel INGYENES, de előzetes regisztráció szükséges!\n📅 Jelentkezési határidő: 2026. október 09.\n✉️ Regisztráció: peter.gergacz@gmail.com (kérjük, adja meg nevét, telefonszámát és e-mail címét!)\n📞 További információ: Gergácz Péter – mobil: +36 20 254 6820\n\n⚠️ Fontos tudnivalók:\nA kerékpártúrán mindenki csak saját felelősségére vesz részt, fejvédő viselése ajánlott. Kérjük, hogy a túrára előre átnézett és felkészített kerékpárral érkezzen. A túrán történt esetleges balesetek, rosszullétek vagy károk miatt a szervezők nem vállalnak felelősséget.",
+    "tags": [
+      "kerékpártúra",
+      "bringatúra",
+      "kőszegi-hegység",
+      "hörmann-forrás",
+      "velem",
+      "bozsok",
+      "szombathely",
+      "abért-tó",
+      "gergácz péter",
+      "ingyenes",
+      "sport"
+    ],
+    "image": "kerekpartura_szombathely_koszegi_hegyseg_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🚴 KERÉKPÁRTÚRA",
+    "isVarszinhaz": false
+  },
+  {
     "id": "termeszetismereti_seta_koszegen_2026",
     "name": "Természetismereti séta Kőszegen – az „iskola a határon” parkjában",
     "date": "2026-10-13",
