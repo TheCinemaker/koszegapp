@@ -5,23 +5,30 @@
     "settlement": "Velem",
     "date": "2026-10-10",
     "end_date": "2026-10-11",
-    "time": "10:00 - 18:00",
-    "location": "Velem, Rákóczi utca és környéke",
+    "time": "13:15",
+    "location": "Velem, Rendezvénytér és Fő utca",
     "coords": {
-      "lat": 47.3468,
-      "lng": 16.4912
+      "lat": 47.345697,
+      "lng": 16.490882
     },
-    "description": "A hagyományos Velemi Gesztenyenapok gesztenyesütéssel, kézműves vásárral, népművészeti bemutatókkal, zenei produkciókkal és gyermekprogramokkal várja az érdeklődőket.",
+    "description": "VELEMI GESZTENYENAPOK\nHAGYOMÁNY · ÍZEK · KÖZÖSSÉG\nTalálkozzunk Velemben! Gasztronómiai, hagyományőrző ünnep és vásár\n2026. október 10–11. • Velem\n\n🌰 OKTÓBER 10. – SZOMBAT\nSzínpad:\n• 13:15 – Ünnepélyes megnyitó\n  Beszédet mond: Szabó Zoltán, Velem polgármestere és Dr. Balázsy Péter, Vas vármegyei jegyző\n• 13:30 – Srumli zenekar\n• 14:30 – White Tiger Akrobatikus Csoport\n• 15:00 – Sons Left Behind koncert\n  (A színpadi átállás idején a Napsugár Egyesület bemutatkozó műsora a gyermekudvar mellett)\n• 17:30 – BACK II BLACK NAGYKONCERT\n\n🌰 OKTÓBER 11. – VASÁRNAP\nSzínpad:\n• 13:15 – Megnyitó\n• 13:30 – Hagyományőrző kulturális műsor:\n  – Flórián Tűzoltó Férfikar\n  – Vadrózsa Népdalkör\n  – Derű Néptáncegyüttes\n  – Csalafinták\n  – Vadhajtás Néptáncegyüttes\n  – Velemi Néptáncegyüttes\n  (A néptánccsoportokat a Boglya zenekar kíséri)\n• Táncház a Boglya zenekar közreműködésével\n• 17:00 – WEST RÉGIÓ ZENEKAR koncertje\n\n🎈 GYERMEK- ÉS KÍSÉRŐPROGRAMOK (mindkét napon):\n• Gyermekudvar\n• Civil szervezetek és egyesületek bemutatkozása\n• Mond-móka játékok\n• Kézműves bemutatók\n• Meséket mond: Becska Zsóka (Mesék kicsiknek és nagyoknak)\n\n🎟️ JEGYINFORMÁCIÓ:\n• Napijegy: 2 500 Ft/fő\n• Diák és nyugdíjas: 1 500 Ft/fő\n• Családi jegy: 6 000 Ft\n• 6 éves kor alatt a belépés INGYENES!\n\n📍 Helyszín: Velem (GPS: 47.345697, 16.490882)\nGesztenyés hétvége, felejthetetlen élmények!",
     "tags": [
-      "gasztro",
-      "fesztivál",
+      "velem",
+      "gesztenyenapok",
+      "gasztronómia",
+      "hagyományőrző",
+      "vásár",
+      "back ii black",
+      "boglya",
+      "srumli",
       "családi",
-      "hagyományőrző"
+      "koncert",
+      "hegyalja"
     ],
-    "image": "velem_gesztenyenapok.png",
+    "image": "velemi_gesztenyenapok_2026.jpg",
     "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
+    "highlight": true,
+    "highlightLabel": "🌰 VELEMI GESZTENYENAPOK",
     "isVarszinhaz": false
   },
   {

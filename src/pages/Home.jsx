@@ -131,6 +131,7 @@ export default function Home({ appData, weather }) {
   const liveBadges = useMemo(() => getLiveBadges(appData), [appData]);
 
   const sections = [
+    { to: '/surrounding-events/surrounding-event-velem-20261010', label: 'Velemi Gesztenyenapok', desc: '2026.10.10. – 10.11. | Gasztronómiai, hagyományőrző ünnep és vásár Velemben', icon: IoWineOutline, featured: true, bgImage: '/images/events/velemi_gesztenyenapok_2026.jpg', span: 'col-span-2 sm:col-span-2', comingSoon: false, delay: 0.03 },
     // { to: '#', label: 'Szia, Zahira vagyok!', desc: 'A helyi idegenvezetőd — segítek eligazodni Kőszegen.', disclaimer: 'Fejlesztés alatt — nem valós személy', icon: IoCompassOutline, featured: true, bgImage: '/images/mascot/zahira-tile.jpg', span: 'col-span-2 sm:col-span-2', videoModal: true, delay: 0.05 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
