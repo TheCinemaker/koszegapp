@@ -970,10 +970,10 @@
     "time": "08:30",
     "location": "Herényiek Háza (Szombathely, Béke tér 7.) – Kőszeg (Orsolya napi vásár)",
     "coords": {
-      "lat": 47.3881,
-      "lng": 16.5415
+      "lat": 47.262743,
+      "lng": 16.602333
     },
-    "description": "Herényiek Házától Kőszegig Kerékpártúra – 2026. október 17. (szombat)\n\nSzervező: Herényi Kulturális és Sportegyesület\nTúravezető: Katona Szilveszter\n\n📍 Találkozás helye és ideje:\nSzombathely, Herényiek Háza (Béke tér 7.)\n• 08:30 Gyülekezés\n• 09:00 Indulás\n\n🚴 Táv és szintemelkedés:\n• Táv: oda 20 km, vissza 18 km\n• Teljes szintemelkedés: 220 m\n\n🗺 Útvonal ODAFELÉ:\nHerényiek Háza – Gencsapáti – Szentkút – Perenye – Csömöte – Kőszegdoroszló – Pogányok – Kőszeg, ahol az Orsolya napi vásár közelében biztonságos, zárt helyen letesszük a bicajokat és a megbeszélt találkozási ideig egyénileg felfedezhetők a rendezvény ízei és látnivalói.\n\n🏡 Útvonal HAZAFELÉ:\nKőszeg – Abért-tó – Lukácsháza – Gyöngyösfalu – Gencsapáti – Herény\nVisszaérkezés késő délután várható!\n\n🎟 Részvételi tudnivalók:\nA túrán való részvétel INGYENES, de regisztrációhoz kötött!\nRegisztráció, jelentkezés:\n📧 Email: info.herenyiek@gmail.com\n📞 Tel.: 06303726969",
+    "description": "HERÉNYIEK HÁZÁTÓL KŐSZEGIG KERÉKPÁRTÚRA\n2026. OKTÓBER 17. (SZOMBAT)\nSzervező: Herényi Kulturális és Sportegyesület\n\n📍 Találkozás helye és ideje:\nSzombathely, Herényiek Háza (Béke tér 7.)\n• 08:30 Gyülekezés\n• 09:00 Indulás\n\n🚴 A táv és szintemelkedés:\n• Táv: oda 20 km és vissza 18 km\n• A túra teljes szintemelkedése: 220 m\n\n🗺️ Útvonal ODAFELÉ:\nHerényiek háza – Gencsapáti – Szentkút – Perenye – Csomóte – Kőszegdoroszló – Pogányok – Kőszeg, ahol az Orsolya napi vásár közelében biztonságos, zárt helyen letesszük a bicajokat és a megbeszélt találkozási ideig egyénileg felfedezhetőek a rendezvény ízei és látnivalói.\n\n🏡 Útvonal HAZAFELÉ:\nKőszeg – Abért tó – Lukácsháza – Gyöngyösfalu – Gencsapáti – Herény\n(Visszaérkezés késő délután várható!)\n\n👨‍🏫 Túravezető: Katona Szilveszter\n\n🎟️ A túrán való részvétel INGYENES, de regisztrációhoz kötött.\n✉️ Regisztráció, jelentkezés: info.herenyiek@gmail.com\n📞 Telefon: 06 30 372 6969",
     "tags": [
       "kerékpártúra",
       "herényiek háza",
@@ -982,6 +982,7 @@
       "biciklitúra",
       "szombathely",
       "gencsapáti",
+      "szentkút",
       "abért tó",
       "sport",
       "ingyenes",
