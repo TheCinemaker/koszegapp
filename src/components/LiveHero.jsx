@@ -75,11 +75,12 @@ const LiveHero = ({ appData, weather }) => {
         const diff = differenceInSeconds(nextEvent._s, now);
         if (diff < 0) return null;
 
-        const hours = Math.floor(diff / 3600);
+        const days = Math.floor(diff / 86400);
+        const hours = Math.floor((diff % 86400) / 3600);
         const minutes = Math.floor((diff % 3600) / 60);
         const seconds = diff % 60;
 
-        return { hours, minutes, seconds };
+        return { days, hours, minutes, seconds };
     }, [nextEvent, isRunning, now]);
 
     return (
@@ -169,16 +170,19 @@ const LiveHero = ({ appData, weather }) => {
                                     <div className="flex items-center gap-3">
                                         {timeToStart ? (
                                             <div className="flex items-baseline gap-1 font-mono text-xl font-black text-gold-text dark:text-gold-light">
-                                                {timeToStart.hours > 0 && (
-                                                    <><span className="text-2xl">{timeToStart.hours}</span><span className="text-xs uppercase mr-1">h</span></>
+                                                {timeToStart.days > 0 && (
+                                                    <><span className="text-2xl">{timeToStart.days}</span><span className="text-xs mr-1 font-bold">nap</span></>
                                                 )}
-                                                <span className="text-2xl">{String(timeToStart.minutes).padStart(2, '0')}</span><span className="text-xs uppercase mr-1">m</span>
-                                                <span className="text-2xl">{String(timeToStart.seconds).padStart(2, '0')}</span><span className="text-xs uppercase">s</span>
+                                                {(timeToStart.days > 0 || timeToStart.hours > 0) && (
+                                                    <><span className="text-2xl">{timeToStart.days > 0 ? String(timeToStart.hours).padStart(2, '0') : timeToStart.hours}</span><span className="text-xs mr-1 font-bold">ó</span></>
+                                                )}
+                                                <span className="text-2xl">{String(timeToStart.minutes).padStart(2, '0')}</span><span className="text-xs mr-1 font-bold">p</span>
+                                                <span className="text-2xl">{String(timeToStart.seconds).padStart(2, '0')}</span><span className="text-xs font-bold">mp</span>
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-1.5 text-rose-500 font-bold text-sm">
                                                 <TrendingUp className="w-4 h-4" />
-                                                <span>LIVE NOW</span>
+                                                <span>ÉLŐBEN</span>
                                             </div>
                                         )}
 
