@@ -4,10 +4,8 @@ This file contains persistent workspace rules and historical context for AI agen
 
 ## ⚠️ CRITICAL RULES
 
-### 1. Git Branching & Local Development Policy
-- **Branch Target:** ALL new feature developments, UI restyling, cleanups, and edits must be made strictly on the **`koszegapp3`** branch.
-- **Local-Only Working Rule:** ALL changes are kept strictly local on `koszegapp3`. **DO NOT git push** to GitHub/remote unless explicitly requested by the user!
-- Never commit or push directly to `main` unless explicitly instructed to fix a live production issue there.
+### 1. Git Branching Policy
+- **Branch Target:** Active development is on the **`main`** branch (or as explicitly directed by the user).
 - Keep commits atomic and descriptive.
 
 ### 2. Fast Design Iteration & Post-Approval RENEW Logging (`RENEW.md`)
@@ -67,3 +65,13 @@ This file contains persistent workspace rules and historical context for AI agen
   - Submissions do not require Supabase to function.
 - **Admin Management (/admin):**
   - Integrated via `src/components/Admin/PartnerSubmissionsManager.jsx` under the `partner_submissions` tab ("📥 Partner Bekérők").
+
+### 3. TODO: Live Voice Assistant Integration (Zahira / Puki AI Concept)
+- **Concept Reference:** `https://github.com/tonybrant1010/puki_ai`
+- **Goal:** Implement a real-time Gemini Live WebSocket audio chat (`gemini-3.1-flash-live-preview`) for Zahira / visitKőszeg assistant.
+- **Key Features:**
+  1. Low-latency bi-directional Hungarian voice conversation over WebSockets using `@google/genai` JS SDK.
+  2. Function calling: AI invokes app actions (e.g., `show_event(id)`, `open_place(id)`, `navigate_to(path)`).
+  3. Secure token backend: Serverless token proxy endpoint (`netlify/functions/gemini-token.js`) issuing 30-min single-use client tokens without leaking `GEMINI_API_KEY`.
+  4. Character visualization: Animated waveform / pulsing Zahira avatar modal or Rive (`@rive-app/canvas`) character animation (`zahira.riv`).
+
