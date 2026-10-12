@@ -14,7 +14,8 @@ import {
   IoStarOutline,
   IoLockClosed,
   IoWineOutline,
-  IoCompassOutline
+  IoCompassOutline,
+  IoOpenOutline
 } from 'react-icons/io5';
 import {
   motion,
@@ -65,8 +66,7 @@ function getLiveBadges(appData) {
   }
 
   // Kiemelt fesztivál badge-ek
-  badges['/events/orsolya_napi_vasar_2026'] = { type: 'countdown', text: 'Okt. 17–18.' };
-  badges['/surrounding-events/surrounding-event-velem-20261010'] = { type: 'countdown', text: 'Okt. 10–11.' };
+  badges['/events/orsolya_napi_vasar_2026'] = { type: 'countdown', text: 'Okt. 17–18. · OrsolyaApp' };
   return badges;
 }
 
@@ -132,8 +132,18 @@ export default function Home({ appData, weather }) {
   const liveBadges = useMemo(() => getLiveBadges(appData), [appData]);
 
   const sections = [
-    { to: '/events/orsolya_napi_vasar_2026', label: 'Orsolya-napi Vásár 2026', desc: '2026.10.17. – 10.18. | Kőszeg kiemelt gasztronómiai fesztiválja és kézműves vására', icon: IoWineOutline, featured: true, bgImage: '/images/events/orsolya_napi_vasar_2026.jpg', span: 'col-span-2 sm:col-span-2', comingSoon: false, delay: 0.02 },
-    { to: '/surrounding-events/surrounding-event-velem-20261010', label: 'Velemi Gesztenyenapok', desc: '2026.10.10. – 10.11. | Gasztronómiai, hagyományőrző ünnep és vásár Velemben', icon: IoWineOutline, featured: true, bgImage: '/images/events/velemi_gesztenyenapok_2026.jpg', span: 'col-span-2 sm:col-span-1', comingSoon: false, delay: 0.04 },
+    {
+      to: '/events/orsolya_napi_vasar_2026',
+      label: 'Orsolya-napi Vásár 2026',
+      desc: '2026.10.17. – 10.18. | Kőszeg kiemelt gasztronómiai fesztiválja és kézműves vására · Hivatalos webapp: orsolya.netlify.app',
+      icon: IoWineOutline,
+      featured: true,
+      bgImage: '/images/events/orsolya_napi_vasar_2026.jpg',
+      span: 'col-span-2 sm:col-span-3',
+      appUrl: 'https://orsolya.netlify.app',
+      comingSoon: false,
+      delay: 0.02
+    },
     // { to: '#', label: 'Szia, Zahira vagyok!', desc: 'A helyi idegenvezetőd — segítek eligazodni Kőszegen.', disclaimer: 'Fejlesztés alatt — nem valós személy', icon: IoCompassOutline, featured: true, bgImage: '/images/mascot/zahira-tile.jpg', span: 'col-span-2 sm:col-span-2', videoModal: true, delay: 0.05 },
     { to: '/events', label: t('sections.events.label'), desc: t('sections.events.desc'), icon: IoCalendarOutline, morphId: 'morph-events', span: 'col-span-2 sm:col-span-2', delay: 0.07 },
     { to: '/surrounding-events', label: t('sections.surroundingEvents.label') || 'Hegyaljai programok', desc: t('sections.surroundingEvents.desc') || 'Közeli települések rendezvényei', icon: IoCalendarOutline, span: 'col-span-1 sm:col-span-1', delay: 0.08 },
@@ -282,6 +292,24 @@ export default function Home({ appData, weather }) {
                         <IoInformationCircleOutline className="text-xs shrink-0" />
                         {sec.disclaimer}
                       </p>
+                    )}
+                    {sec.appUrl && (
+                      <div className="mt-3.5 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            window.open(sec.appUrl, '_blank', 'noopener,noreferrer');
+                          }}
+                          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gold/20 hover:bg-gold/30 text-gold-light border border-gold/40 text-xs font-bold shadow-sm transition-all active:scale-95 group/btn"
+                        >
+                          <span className="text-sm">📱</span>
+                          <span>OrsolyaApp megnyitása</span>
+                          <span className="text-[10px] text-gold-light/80 font-normal">orsolya.netlify.app</span>
+                          <IoOpenOutline className="text-xs ml-0.5 opacity-80 group-hover/btn:opacity-100" />
+                        </button>
+                      </div>
                     )}
                   </div>
 

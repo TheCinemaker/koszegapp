@@ -28,7 +28,7 @@ import {
   FaSearch,
   FaTimes
 } from 'react-icons/fa';
-import { IoCalendarOutline, IoChevronForward } from 'react-icons/io5';
+import { IoCalendarOutline, IoChevronForward, IoOpenOutline } from 'react-icons/io5';
 import { Toaster, toast } from 'react-hot-toast';
 import GhostImage from '../components/GhostImage';
 import { FadeUp } from '../components/AppleMotion';
@@ -77,6 +77,13 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
   const monthStr = evt._s ? format(evt._s, 'MMM', { locale: hu }).replace('.', '') : '';
   const dayStr = evt._s ? format(evt._s, 'd') : '';
   const timeStr = evt.time ? evt.time : evt._s ? format(evt._s, 'HH:mm') : '';
+
+  const isOrsolya = Boolean(
+    evt.app_url ||
+    evt.id?.toLowerCase().includes('orsolya') ||
+    evt.tags?.some(t => String(t).toLowerCase().includes('orsolya')) ||
+    evt.name?.toLowerCase().includes('orsolya')
+  );
 
   return (
     <Link to={`/events/${evt.id}`} className={`group relative block w-full ${isPast ? 'grayscale opacity-70' : ''}`}>
@@ -133,11 +140,16 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
               </button>
             )}
 
-            {/* Tags / MultiDay Badge */}
-            <div className="absolute bottom-3 left-3 flex gap-2 overflow-hidden max-w-[80%] z-20">
+            {/* Tags / MultiDay / Orsolya Badge */}
+            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 overflow-hidden max-w-[85%] z-20">
               {isMultiDay && (
                 <span className="px-2.5 py-1 rounded-full bg-brand text-gold-light text-[10px] font-bold uppercase tracking-wider shadow-card border border-gold/40">
                   {t('multiDay')}
+                </span>
+              )}
+              {isOrsolya && (
+                <span className="px-2.5 py-1 rounded-full bg-indigo-600/90 text-white text-[10px] font-bold uppercase tracking-wider shadow-card border border-indigo-400/40 backdrop-blur-md">
+                  📱 OrsolyaApp
                 </span>
               )}
             </div>
@@ -159,6 +171,18 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
             {evt.location && <span className="text-gray-300 dark:text-gray-600">•</span>}
             <span className="shrink-0">{timeStr}</span>
           </div>
+
+          {isOrsolya && (
+            <div className="mt-2.5 p-2 rounded-xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200/60 dark:border-indigo-800/60 flex items-center justify-between text-[11px]">
+              <span className="font-semibold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5 truncate">
+                <span>📱</span>
+                <span className="truncate">orsolya.netlify.app</span>
+              </span>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 shrink-0 ml-1">
+                Megnyitás ↗
+              </span>
+            </div>
+          )}
 
           <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100 dark:border-white/5">
             <span className="text-xs font-semibold text-gold-text dark:text-gold-light">Részletek</span>
@@ -282,6 +306,37 @@ export default function Events() {
       </motion.div>
 
       <div className="max-w-7xl mx-auto">
+        {/* ORSOLYA-APP VIP BANNER */}
+        <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/15 to-purple-500/10 border-2 border-indigo-500/30 dark:border-indigo-400/30 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-indigo-500 text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
+              📱
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-700 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-900/60 px-2 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700">
+                  Kiemelt Fesztivál · Okt. 17–18.
+                </span>
+              </div>
+              <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
+                Orsolya-napi Vásár 2026 · Elkészült az OrsolyaApp!
+              </h2>
+              <p className="text-xs text-slate-600 dark:text-zinc-400">
+                Rotyogó bográcsok, Civil Ízek Utcája adományok és vásári programok az új webappban.
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://orsolya.netlify.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-5 py-2.5 bg-indigo-500 hover:opacity-90 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-opacity shrink-0"
+          >
+            <span>OrsolyaApp megnyitása</span>
+            <span className="text-[10px] opacity-80">(orsolya.netlify.app ↗)</span>
+          </a>
+        </div>
+
         {/* 2. SEARCH */}
         <div className="mb-4">
           <div className="flex gap-3 h-11">
