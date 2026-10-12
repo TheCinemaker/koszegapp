@@ -66,7 +66,7 @@ function getLiveBadges(appData) {
   }
 
   // Kiemelt fesztivál badge-ek
-  badges['/events/orsolya_napi_vasar_2026'] = { type: 'countdown', text: 'Okt. 17–18. · OrsolyaApp' };
+  badges['/events/orsolya_napi_vasar_2026'] = { type: 'countdown', text: 'Okt. 17–18.' };
   return badges;
 }
 
@@ -135,7 +135,7 @@ export default function Home({ appData, weather }) {
     {
       to: '/events/orsolya_napi_vasar_2026',
       label: 'Orsolya-napi Vásár 2026',
-      desc: '2026.10.17. – 10.18. | Kőszeg kiemelt gasztronómiai fesztiválja és kézműves vására · Hivatalos webapp: orsolya.netlify.app',
+      desc: '2026.10.17. – 10.18. | Kőszeg kiemelt gasztronómiai fesztiválja és kézműves vására',
       icon: IoWineOutline,
       featured: true,
       bgImage: '/images/events/orsolya_napi_vasar_2026.jpg',
@@ -152,7 +152,7 @@ export default function Home({ appData, weather }) {
     { to: '/hotels', label: t('sections.hotels.label'), desc: t('sections.hotels.desc'), icon: IoBedOutline, span: 'col-span-1 sm:col-span-1', delay: 0.11 },
     { to: '/leisure', label: t('sections.leisure.label'), desc: t('sections.leisure.desc'), icon: IoWalkOutline, span: 'col-span-1 sm:col-span-1', delay: 0.12 },
     { to: '/parking', label: t('sections.parking.label'), desc: t('sections.parking.desc'), icon: IoCarSportOutline, span: 'col-span-1 sm:col-span-1', delay: 0.13 },
-    { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, span: 'col-span-1 sm:col-span-1', delay: 0.14 },
+    { to: '/info', label: t('sections.info.label'), desc: t('sections.info.desc'), icon: IoInformationCircleOutline, span: 'col-span-2 sm:col-span-1', delay: 0.14 },
   ];
 
   return (
@@ -187,7 +187,7 @@ export default function Home({ appData, weather }) {
         </FadeUp>
 
         {/* --- BENTO GRID --- */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-5 auto-rows-fr">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4 md:gap-5">
           {sections.map((sec) => (
             <SpringUp key={sec.label} delay={sec.delay + 0.1} className={sec.span}>
               <Link
@@ -211,7 +211,7 @@ export default function Home({ appData, weather }) {
                   whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   className={`
-                        relative h-full rounded-2xl p-6 lg:p-8
+                        relative h-full rounded-2xl p-4 sm:p-5 lg:p-7
                         ${sec.morphId
                           ? 'border border-slate-200/80 dark:border-white/10'
                           : sec.featured
@@ -261,7 +261,7 @@ export default function Home({ appData, weather }) {
                   </motion.div>
 
                   {/* Content */}
-                  <div className={`relative z-10 ${sec.bgImage ? 'max-w-[55%] sm:max-w-[65%]' : ''}`}>
+                  <div className={`relative z-10 ${sec.bgImage ? 'max-w-[70%] sm:max-w-[65%]' : ''}`}>
                     <div className="flex items-center justify-between mb-0.5">
                       <motion.h3
                         layoutId={sec.morphId ? `${sec.morphId}-title` : undefined}
@@ -294,7 +294,7 @@ export default function Home({ appData, weather }) {
                       </p>
                     )}
                     {sec.appUrl && (
-                      <div className="mt-3.5 flex flex-wrap items-center gap-2">
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
                         <button
                           type="button"
                           onClick={(e) => {
@@ -302,12 +302,11 @@ export default function Home({ appData, weather }) {
                             e.stopPropagation();
                             window.open(sec.appUrl, '_blank', 'noopener,noreferrer');
                           }}
-                          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gold/20 hover:bg-gold/30 text-gold-light border border-gold/40 text-xs font-bold shadow-sm transition-all active:scale-95 group/btn"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/30 hover:brightness-105 hover:scale-[1.02] active:scale-95 transition-all border border-amber-200"
                         >
                           <span className="text-sm">📱</span>
                           <span>OrsolyaApp megnyitása</span>
-                          <span className="text-[10px] text-gold-light/80 font-normal">orsolya.netlify.app</span>
-                          <IoOpenOutline className="text-xs ml-0.5 opacity-80 group-hover/btn:opacity-100" />
+                          <IoOpenOutline className="text-sm ml-0.5" />
                         </button>
                       </div>
                     )}
