@@ -15,6 +15,7 @@ import {
   IoCloseOutline,
   IoBedOutline,
   IoCompassOutline,
+  IoOpenOutline,
 } from 'react-icons/io5';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Toaster, toast } from 'react-hot-toast';
@@ -504,6 +505,15 @@ export default function EventDetail() {
     return format(s, 'HH:mm');
   }, [s, evt]);
 
+  const isOrsolya = useMemo(() => {
+    if (!evt) return false;
+    if (evt.app_url && evt.app_url.includes('orsolya')) return true;
+    const id = (evt.id || '').toLowerCase();
+    const name = (evt.name || '').toLowerCase();
+    const tags = (evt.tags || []).map(t => String(t).toLowerCase());
+    return id.includes('orsolya') || name.includes('orsolya') || tags.some(t => t.includes('orsolya'));
+  }, [evt]);
+
   if (loading) {
     return <LoadingSpinner fullScreen={true} label="Esemény betöltése..." />;
   }
@@ -651,6 +661,41 @@ export default function EventDetail() {
 
             {/* --- A "szelvény": cselekvések --- */}
             <div className="p-5 sm:p-6 pt-4">
+              {/* Kiemelt OrsolyaApp Banner */}
+              {isOrsolya && (
+                <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/15 via-indigo-500/15 to-purple-500/15 border-2 border-indigo-500/40 dark:border-indigo-400/40 shadow-card">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-11 h-11 rounded-xl bg-indigo-500 text-white flex items-center justify-center text-xl shrink-0 shadow-md">
+                        📱
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-700 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-900/60 px-2 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700">
+                            Hivatalos Fesztivál App
+                          </span>
+                        </div>
+                        <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-1">
+                          OrsolyaApp · orsolya.netlify.app
+                        </h4>
+                        <p className="text-xs text-slate-600 dark:text-zinc-400">
+                          Élő adagszámok, Civil Ízek Utcája bográcsok és vásári programok a zsebedben!
+                        </p>
+                      </div>
+                    </div>
+                    <a
+                      href="https://orsolya.netlify.app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 py-2.5 bg-indigo-500 hover:opacity-90 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-opacity shrink-0"
+                    >
+                      <span>Megnyitás az appban</span>
+                      <IoOpenOutline className="text-sm" />
+                    </a>
+                  </div>
+                </div>
+              )}
+
               {/* Fő CTA - Local ticket system */}
               {ticketEvent && (
                 <button
@@ -694,8 +739,18 @@ export default function EventDetail() {
               </div>
 
               {/* Másodlagos linkek */}
-              {(evt.link || (location && getDistanceKm(location.lat, location.lng, 47.389, 16.54) > 100)) && (
+              {(isOrsolya || evt.link || (location && getDistanceKm(location.lat, location.lng, 47.389, 16.54) > 100)) && (
                 <div className="flex flex-wrap gap-2.5 mt-2.5">
+                  {isOrsolya && (
+                    <a
+                      href="https://orsolya.netlify.app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 h-11 rounded-control bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-300 font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors border border-indigo-300/60 dark:border-indigo-700/60"
+                    >
+                      <span className="text-sm">📱</span> Hivatalos OrsolyaApp (orsolya.netlify.app)
+                    </a>
+                  )}
                   {evt.link && (
                     <a
                       href={evt.link}
@@ -730,6 +785,33 @@ export default function EventDetail() {
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-4">
               A programról
             </p>
+            {isOrsolya && (
+              <div className="mb-6 p-4 rounded-2xl bg-surface-card dark:bg-surface-card-dark border-2 border-indigo-500/30 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🍲</span>
+                  <div>
+                    <h5 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                      Kőszegi Orsolya-napi Vásár & Civil Ízek Utcája
+                    </h5>
+                    <p className="text-[11px] sm:text-xs text-slate-600 dark:text-zinc-400">
+                      Bográcsok, kóstolók, kézműves vásár és térkép elérhető az új webappban:{' '}
+                      <a href="https://orsolya.netlify.app" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 underline font-bold">
+                        orsolya.netlify.app
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href="https://orsolya.netlify.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-indigo-500 hover:opacity-90 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-opacity shrink-0"
+                >
+                  <span>Megnyitás</span>
+                  <IoOpenOutline className="text-xs" />
+                </a>
+              </div>
+            )}
             <p className="text-slate-700 dark:text-zinc-300 leading-[1.75] text-[15px] sm:text-base whitespace-pre-wrap">
               {evt.description}
             </p>
