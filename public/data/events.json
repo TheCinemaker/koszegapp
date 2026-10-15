@@ -934,35 +934,6 @@
     "isVarszinhaz": false
   },
   {
-    "id": "madartani_seta_tomord_2026",
-    "name": "Madártani séta a „Chernel nyomában tanösvényen” – Tömörd",
-    "date": "2026-10-24",
-    "endDate": "2026-10-24",
-    "time": "09:00",
-    "location": "Tömörd, buszmegálló",
-    "coords": {
-      "lat": 47.37585069365997,
-      "lng": 16.529615680421664
-    },
-    "description": "Szakvezetett séták a natúrparkban!\n\nMadártani séta a „Chernel nyomában tanösvényen” Tömördön, madárgyűrűzési bemutatóval egybekötve.\n\n📍 Találkozó: Tömörd, buszmegálló\n🗓 Dátum: 2026. október 24. (szombat) • 09:00\n👨‍🏫 Vezető: Illés Péter biológiatanár\n📏 Távolság / Időtartam: kb. 3 km, kb. 2-3 óra\n🦅 Különprogram: Madárgyűrűzés bemutató\n📞 Jelentkezés: +36 20 526-4300\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
-    "tags": [
-      "madártani séta",
-      "madárgyűrűzés",
-      "tömörd",
-      "chernel nyomában",
-      "tanösvény",
-      "illés péter",
-      "natúrpark",
-      "ingyenes",
-      "családi"
-    ],
-    "image": "madartani_seta_tomord_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "🦅 MADÁRTANI SÉTA",
-    "isVarszinhaz": false
-  },
-  {
     "id": "herenyi_kerekpartura_koszeg_2026",
     "name": "Herényiek Házától Kőszegig – Kerékpártúra",
     "date": "2026-10-17",
@@ -1033,37 +1004,6 @@
     "app_name": "OrsolyaApp"
   },
   {
-    "id": "orsolya_2026_civil_izek_szombat",
-    "name": "Civil Ízek Utcája – Főzőverseny és kóstoló (Szombat)",
-    "date": "2026-10-17",
-    "endDate": "2026-10-17",
-    "end_date": "2026-10-17",
-    "time": "10:00",
-    "location": "Civil Ízek Utcája (Vár melletti Diáksétány), Kőszeg",
-    "coords": {
-      "lat": 47.3892,
-      "lng": 16.5378
-    },
-    "description": "Október 17-én a Civil Ízek Utcájában (a Jurisics vár melletti Diáksétányon) a helyi civil szervezetek és baráti társaságok mérik össze főzőtudásukat a hagyományos Civil Főzőverseny keretében.\n\n🍲 Délidőben ínycsiklandó szabadtéri kóstoló várja a látogatókat!\n🏆 Ünnepélyes eredményhirdetés: vasárnap 16:00 órakor a belső várudvaron.\n\nA rendezvény ingyenesen látogatható!\n\n📱 Hivatalos fesztivál app: OrsolyaApp – https://orsolya.netlify.app\n(Élő adagszámok, Civil Ízek Utcája bográcsok és vásári programok a zsebedben!)",
-    "tags": [
-      "orsolya-nap",
-      "civil ízek utcája",
-      "diáksétány",
-      "főzőverseny",
-      "gasztronómia",
-      "kóstoló",
-      "kőszeg",
-      "ingyenes"
-    ],
-    "image": "orsolya_napi_vasar_2026.jpg",
-    "createdBy": "admin",
-    "highlight": false,
-    "highlightLabel": "",
-    "isVarszinhaz": false,
-    "app_url": "https://orsolya.netlify.app",
-    "app_name": "OrsolyaApp"
-  },
-  {
     "id": "orsolya_2026_koszegi_csemege",
     "name": "„Kőszegi Csemege” verseny és kóstoló – Kőszegi Borbarát Hölgyek",
     "date": "2026-10-17",
@@ -1086,6 +1026,37 @@
       "köszház",
       "jurisics vár",
       "kőszeg"
+    ],
+    "image": "orsolya_napi_vasar_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "app_url": "https://orsolya.netlify.app",
+    "app_name": "OrsolyaApp"
+  },
+  {
+    "id": "orsolya_2026_civil_izek_szombat",
+    "name": "Civil Ízek Utcája – Főzőverseny és kóstoló (Szombat)",
+    "date": "2026-10-17",
+    "endDate": "2026-10-17",
+    "end_date": "2026-10-17",
+    "time": "10:00",
+    "location": "Civil Ízek Utcája (Vár melletti Diáksétány), Kőszeg",
+    "coords": {
+      "lat": 47.3892,
+      "lng": 16.5378
+    },
+    "description": "Október 17-én a Civil Ízek Utcájában (a Jurisics vár melletti Diáksétányon) a helyi civil szervezetek és baráti társaságok mérik össze főzőtudásukat a hagyományos Civil Főzőverseny keretében.\n\n🍲 Délidőben ínycsiklandó szabadtéri kóstoló várja a látogatókat!\n🏆 Ünnepélyes eredményhirdetés: vasárnap 16:00 órakor a belső várudvaron.\n\nA rendezvény ingyenesen látogatható!\n\n📱 Hivatalos fesztivál app: OrsolyaApp – https://orsolya.netlify.app\n(Élő adagszámok, Civil Ízek Utcája bográcsok és vásári programok a zsebedben!)",
+    "tags": [
+      "orsolya-nap",
+      "civil ízek utcája",
+      "diáksétány",
+      "főzőverseny",
+      "gasztronómia",
+      "kóstoló",
+      "kőszeg",
+      "ingyenes"
     ],
     "image": "orsolya_napi_vasar_2026.jpg",
     "createdBy": "admin",
@@ -1366,6 +1337,28 @@
     "app_name": "OrsolyaApp"
   },
   {
+    "name": "Orsolya nap szombat - Blazsew & Raduly",
+    "date": "2026-10-17",
+    "time": "20:00",
+    "location": "Tóth Pincészet - Borház",
+    "coords": {
+      "lat": 47.387262593792435,
+      "lng": 16.541642698791957
+    },
+    "description": "Orsolya nap szombaton, ahogy az elmúlt években is a Dj-k veszik birtokba a Tóth Pincészet teraszát.\nLemezjátszók mögött Blazsew és Raduly '80 évektől napjaink slágereivel.\nVárunk finom italokkal, borokkal, forralt borral, friss musttal és jókedvvel!\nTóth Pincészet Borház\nKőszeg, Rákóczi utca 6.\nTel: 94 364 128\ninfo@tothpinceszet.hu\nwww.tothpinceszet.hu",
+    "tags": [
+      "disco",
+      "Blazsew",
+      "Raduly"
+    ],
+    "image": "toth.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1792049155087"
+  },
+  {
     "id": "orsolya_2026_civil_izek_vasarnap",
     "name": "Civil Ízek Utcája – Főzőverseny és kóstoló (Vasárnap)",
     "date": "2026-10-18",
@@ -1577,5 +1570,34 @@
     "isVarszinhaz": false,
     "app_url": "https://orsolya.netlify.app",
     "app_name": "OrsolyaApp"
+  },
+  {
+    "id": "madartani_seta_tomord_2026",
+    "name": "Madártani séta a „Chernel nyomában tanösvényen” – Tömörd",
+    "date": "2026-10-24",
+    "endDate": "2026-10-24",
+    "time": "09:00",
+    "location": "Tömörd, buszmegálló",
+    "coords": {
+      "lat": 47.37585069365997,
+      "lng": 16.529615680421664
+    },
+    "description": "Szakvezetett séták a natúrparkban!\n\nMadártani séta a „Chernel nyomában tanösvényen” Tömördön, madárgyűrűzési bemutatóval egybekötve.\n\n📍 Találkozó: Tömörd, buszmegálló\n🗓 Dátum: 2026. október 24. (szombat) • 09:00\n👨‍🏫 Vezető: Illés Péter biológiatanár\n📏 Távolság / Időtartam: kb. 3 km, kb. 2-3 óra\n🦅 Különprogram: Madárgyűrűzés bemutató\n📞 Jelentkezés: +36 20 526-4300\n\nℹ️ Szervező: Írottkő Natúrparkért Egyesület | Interreg Austria-Hungary TinyGreen Project",
+    "tags": [
+      "madártani séta",
+      "madárgyűrűzés",
+      "tömörd",
+      "chernel nyomában",
+      "tanösvény",
+      "illés péter",
+      "natúrpark",
+      "ingyenes",
+      "családi"
+    ],
+    "image": "madartani_seta_tomord_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🦅 MADÁRTANI SÉTA",
+    "isVarszinhaz": false
   }
 ]
