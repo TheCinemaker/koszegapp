@@ -80,6 +80,30 @@
     "id": "event-2026-1792398067617"
   },
   {
+    "name": "Boxing Show & Party",
+    "date": "2026-12-05",
+    "time": "17:00",
+    "location": "Balog iskola sportcsarnok",
+    "coords": {
+      "lat": 47.38174016173808,
+      "lng": 16.546131110515965
+    },
+    "description": "🥊🔥 BOXING NIGHT & PARTY 🔥🥊\n\n💥 Ahol a ringben az erő, a színpadon a zene, a tánctéren pedig a bulié a főszerep!\n\nKészülj fel az év egyik legütősebb sport- és szórakoztató eseményére!\n\nEgy este, ahol a profi ökölvívás, a K1, a látványos küzdelmek, a sztárfellépő és a fergeteges buli találkozik!\n\n🥊 5 PROFI ÖKÖLVÍVÓ-MÉRKŐZÉS\n\nMagyarország ismert ökölvívói lépnek szorítóba, hogy parádés, izgalmas és kőkemény összecsapásokkal kápráztassák el a közönséget!\n\n🔥 K1 – KEMÉNY ÜTÉSEK, LÁTVÁNYOS KÜZDELMEK!\n\nA K1 szerelmesei sem maradnak izgalmak nélkül! Dinamikus összecsapások, hatalmas ütések és adrenalinban gazdag pillanatok várják a nézőket!\n\n🏆 12 MÉRKŐZÉSES REGIONÁLIS CSAPATBAJNOKSÁG\n\nÉSZAK-DUNÁNTÚL 🆚 ÉSZAK-MAGYARORSZÁG\n\nKét régió, két elszánt csapat, 12 parázs összecsapás! A tét a presztízs, a büszkeség és a győzelem! Igazi küzdősportcsemegék várják a sportág szerelmeseit!\n\n🎤 AZ EST SZTÁRVENDÉGE: CURTIS!\n\nA népszerű rapper egy fantasztikus fellépéssel fokozza tovább a hangulatot! Hatalmas slágerek, elképesztő energia és felejthetetlen koncertélmény!\n\n🎧 BOXING AFTER PARTY – DJ SHEPARD!\n\nA gála után sem áll meg az élet! A ring izgalmait egy fergeteges after party követi, ahol DJ SHEPARD egészen hajnali 3 óráig gondoskodik a legjobb zenékről és a felejthetetlen bulihangulatról!\n\n🔥 EGY ESTE – PROFI BOX – K1 – REGIONÁLIS CSAPATBAJNOKSÁG – CURTIS – DJ SHEPARD! 🔥\n\nEz több mint egy sportgála!\n\nEz egy különleges, nagyszabású sport- és szórakoztató esemény, ahol az adrenalin, a küzdelem, a zene és a buli egyetlen felejthetetlen estében egyesül!\n\n🥊🔥 BOXING NIGHT & PARTY – AHOL AZ ÜTÉSEK UTÁN A RITMUS VESZI ÁT A FŐSZEREPET! 🔥🥊\n\nJEGYEK ONLINE KAPHATÓK a PLAKÁTON LÉVŐ QR-KÓDON ÁT,LIMITÁLT LÉTSZÁMBA!!!\n\nNE MARADJ LE – LÉGY RÉSZESE TE IS AZ ÉLMÉNYNEK!",
+    "tags": [
+      "box",
+      "disco",
+      "party",
+      "hámori",
+      "curtis"
+    ],
+    "image": "boxingshow.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1792404151219"
+  },
+  {
     "name": "Szilveszter az Írottkő Hotelben",
     "date": "2026-12-31",
     "time": "18:00",
