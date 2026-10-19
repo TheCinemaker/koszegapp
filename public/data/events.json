@@ -78,5 +78,25 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792398067617"
+  },
+  {
+    "name": "Szilveszter az Írottkő Hotelben",
+    "date": "2026-12-31",
+    "time": "18:00",
+    "location": "Írottkő hotel",
+    "coords": {
+      "lat": 47.38818699780327,
+      "lng": 16.54257481347287
+    },
+    "description": " Ha idén máshogy búcsúztatnátok az évet…már most eláruljuk, hol érdemes🫶 ✨\nHa idén nem otthon töltenétek a szilvesztert, hanem egy hangulatos évzárásra vágytok Kőszegen, ezt az ajánlatot érdemes eltenni. ❤️\n🎶 Svédasztalos gálavacsora\n🎵 Élő tánczene a Kócos Ördögök zenekarral\n⭐ Sztárfellépő: Balázs Pali – „Érzések Időutazása”\n🥂 Éjféli pezsgős koccintás, tombola és hajnalig tartó mulatozás\nA szilveszteri csomagban a pihenésről is gondoskodunk: wellness, szauna, reggeli és ünnepi programok várnak. ✨\n📅 2026. december 30. – 2027. január 3.\n🛏️ Minimum 3 éjszaka, igény esetén 2 éjszakára is foglalható.\nAz év vége még odébb van, de a jó programokat nem baj időben kinézni. 😉\nA programváltoztatás jogát fenntartjuk.",
+    "tags": [
+      "szilveszter"
+    ],
+    "image": "irottko.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1792398515505"
   }
 ]
