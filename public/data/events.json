@@ -667,6 +667,37 @@
     "app_name": "OrsolyaApp"
   },
   {
+    "id": "textil_es_ido_kiallitas_2026",
+    "name": "Textil és Idő – A Kortárs Textilművészeti Alkotóház kiállítása",
+    "date": "2026-10-23",
+    "endDate": "2026-11-30",
+    "end_date": "2026-11-30",
+    "time": "14:00",
+    "location": "Írottkő Natúrpark (Kőszeg, Fő tér 2.)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "A Kortárs Textilművészeti Alkotóház szeretettel meghívja Önt és barátait a TEXTIL ÉS IDŐ című kiállítására!\n\n🧵 Kiállításmegnyitó: 2026. október 23. (péntek) • 14:00\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🗓 A kiállítás megtekinthető: 2026. november 30-ig\n\nA Kortárs Textilművészeti Alkotócsoport a textilben rejlő kreatív lehetőségeket kutatja a slow fashion és a fenntarthatóság jegyében.\n\nKörnyezettudatos, természetes és újrahasznosított anyagokból készítenek kortárs textilműalkotásokat, miközben új formákkal és technikákkal kísérleteznek.",
+    "tags": [
+      "kiállítás",
+      "textilművészet",
+      "kortárs művészet",
+      "slow fashion",
+      "fenntarthatóság",
+      "újrahasznosítás",
+      "kiállításmegnyitó",
+      "írottkő natúrpark",
+      "fő tér",
+      "kőszeg"
+    ],
+    "image": "textil_es_ido_kiallitas_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🧵 KIÁLLÍTÁS – NOV. 30-IG",
+    "isVarszinhaz": false
+  },
+  {
     "id": "madartani_seta_tomord_2026",
     "name": "Madártani séta a „Chernel nyomában tanösvényen” – Tömörd",
     "date": "2026-10-24",
