@@ -1,5 +1,5 @@
 // src/pages/Admin/index.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabaseClient";
 import { Toaster, toast } from 'react-hot-toast';
@@ -7,7 +7,7 @@ import {
   FaBars, FaTimes, FaSignOutAlt, FaSave, FaPlus, FaSearch,
   FaCalendarAlt, FaMapMarkerAlt, FaImage, FaTrash, FaPen,
   FaUserCircle, FaInfoCircle, FaParking, FaTree, FaUtensils,
-  FaBed, FaLandmark, FaApple, FaInbox
+  FaBed, FaLandmark, FaApple, FaInbox, FaChevronDown
 } from 'react-icons/fa';
 import PartnerSubmissionsManager from '../components/Admin/PartnerSubmissionsManager';
 
@@ -216,7 +216,7 @@ const FormField = ({ label, children, span = 1 }) => (
   </div>
 );
 
-const inputClasses = "w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2.5 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all placeholder-gray-400";
+const inputClasses = "w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2.5 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-gold/50 focus:border-gold outline-none transition-all placeholder-gray-400";
 const checkClasses = "w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer";
 
 const TextInput = (props) => <input type="text" {...props} className={inputClasses} />;
@@ -424,6 +424,132 @@ const PREDEFINED_LOCATIONS = {
   "Szent Vid-kápolna": { lat: 47.3688, lng: 16.4867 }
 };
 
+// Az előre felvitt helyszínek + a korábbi eseményeknél már használt helyszínek
+// összefésülése — így amint valaki egyszer beírja az "Írottkő Hotel"-t, az
+// onnantól mindenkinél megjelenik a javaslatok közt, nem kell state-ben
+// kézzel karbantartani a listát.
+function useKnownLocations(existingItems) {
+  return useMemo(() => {
+    const map = { ...PREDEFINED_LOCATIONS };
+    (existingItems || []).forEach((item) => {
+      const name = item?.location?.trim();
+      if (!name || map[name]) return;
+      const c = item.coords;
+      map[name] = c && (c.lat || c.lng) ? { lat: c.lat, lng: c.lng } : null;
+    });
+    return map;
+  }, [existingItems]);
+}
+
+// Kereshető helyszín-mező: gépelés közben szűrt javaslatok, de szabad
+// szöveg is elfogadott (új helyszín felvételéhez nem kell kódot módosítani).
+function LocationCombobox({ value, onChange, onPickCoords, knownLocations }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const names = useMemo(
+    () => Object.keys(knownLocations || {}).sort((a, b) => a.localeCompare(b, "hu")),
+    [knownLocations]
+  );
+  const q = (value || "").trim().toLowerCase();
+  const suggestions = (q ? names.filter((n) => n.toLowerCase().includes(q)) : names).slice(0, 30);
+
+  const pick = (name) => {
+    onChange(name);
+    const coords = knownLocations?.[name];
+    if (coords && typeof onPickCoords === "function") onPickCoords(coords);
+    setOpen(false);
+  };
+
+  return (
+    <div className="relative" ref={wrapRef}>
+      <TextInput
+        value={value}
+        onChange={(e) => { onChange(e.target.value); setOpen(true); }}
+        onFocus={() => setOpen(true)}
+        placeholder="Kezdj el gépelni, vagy válassz korábbi helyszínt..."
+        autoComplete="off"
+      />
+      {open && suggestions.length > 0 && (
+        <div className="absolute z-20 mt-1.5 w-full max-h-56 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl">
+          {suggestions.map((name) => (
+            <button
+              key={name}
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => pick(name)}
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gold/10 transition-colors flex items-center justify-between gap-2"
+            >
+              <span className="truncate">{name}</span>
+              {!knownLocations[name] && (
+                <span className="shrink-0 text-[9px] font-bold uppercase tracking-wide text-gray-400">
+                  nincs koordináta
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Összevont "Megjelenítés" blokk: Smart Spotlight kiemelés + Várszínház jelölő.
+// Alapból becsukva, kivéve ha a szerkesztett elemen már be van állítva valami.
+function DisplayOptionsBlock({ v, setV, open, setOpen, showVarszinhaz = true }) {
+  return (
+    <div className="bg-gold/5 dark:bg-gold/10 border border-gold/25 rounded-xl overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((s) => !s)}
+        className="w-full flex items-center justify-between px-4 py-3 text-left"
+      >
+        <span className="text-xs font-semibold uppercase tracking-wider text-gold-text dark:text-gold-light">
+          Megjelenítés {(v.highlight || v.isVarszinhaz) && <span className="normal-case font-normal text-gray-400">(beállítva)</span>}
+        </span>
+        <FaChevronDown className={`text-gold-text dark:text-gold-light text-xs transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && (
+        <div className="px-4 pb-4 pt-1 space-y-4 border-t border-gold/20">
+          <FormField label="Kiemelés a főoldalon (Smart Spotlight)">
+            <Checkbox
+              label="Megjelenjen kiemelt bannerként a főoldalon?"
+              checked={v.highlight || false}
+              onChange={(e) => setV({ ...v, highlight: e.target.checked })}
+            />
+          </FormField>
+          {v.highlight && (
+            <FormField label="Kiemelés szövege (pl. '✨ Újévi Koncert')">
+              <TextInput
+                value={v.highlightLabel || ""}
+                onChange={(e) => setV({ ...v, highlightLabel: e.target.value })}
+                placeholder="Ha üres, az alapértelmezett szöveg jelenik meg."
+              />
+            </FormField>
+          )}
+          {showVarszinhaz && (
+            <FormField label="Kőszegi Várszínház">
+              <Checkbox
+                label="Ez egy Várszínház produkció"
+                checked={v.isVarszinhaz || false}
+                onChange={(e) => setV({ ...v, isVarszinhaz: e.target.checked })}
+              />
+            </FormField>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ---- KÁRTYA KOMPONENSEK ----
 // Update to support delete button inside card
 const CardBase = ({ children, onClick }) => (
@@ -528,7 +654,7 @@ function ImageCard({ item, onClick, imagePath, onDelete, canDelete }) {
 
 // ... GenericCard and ImageCard can remain as is or be updated similarly if needed ...
 
-function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
+function EventCard({ item: ev, onClick, onDelete, canDelete }) {
   const img = ev.image ? `${IMG_FUNC_BASE}${encodeURIComponent("public/images/events/" + ev.image)}` : "";
   const dateClass = new Date(ev.date) < new Date() ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700";
 
@@ -549,18 +675,6 @@ function EventCard({ item: ev, onClick, onDelete, canDelete, onGeneratePass }) {
             <FaTrash size={14} />
           </button>
         )}
-
-        {/* Apple Wallet Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onGeneratePass(ev);
-          }}
-          className="p-2.5 bg-black text-white rounded-full shadow-lg hover:bg-gray-800 transition-colors border border-gray-700"
-          title="Apple Wallet Jegy Generálása"
-        >
-          <FaApple size={16} />
-        </button>
       </div>
 
       {/* ID Badge (Top Left - below date if space, or absolute) */}
@@ -664,9 +778,10 @@ function SurroundingEventCard({ item: ev, onClick, onDelete, canDelete }) {
 // ---- ŰRLAPOK (MODERNIZED) ----
 // (A form logika ugyanaz, csak a kinézet változott a FormModal/Fields miatt)
 
-function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate }) {
+function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate, existingItems }) {
   const { user, token, hasPermission } = useAuth();
   const empty = { name: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "", isVarszinhaz: false };
+  const knownLocations = useKnownLocations(existingItems);
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
 
   const [v, setV] = useState({ ...empty, ...initial });
@@ -676,6 +791,7 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState("");
   const [coordsInput, setCoordsInput] = useState("");
+  const [showDisplay, setShowDisplay] = useState(Boolean(initial?.highlight || initial?.isVarszinhaz));
 
   useEffect(() => {
     setV({ ...empty, ...initial, createdBy: initial?.createdBy || user.id });
@@ -683,6 +799,7 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
     setErr(""); setUploadMsg("");
     const c = initial?.coords;
     setCoordsInput(c && (c.lat !== 0 || c.lng !== 0) ? `${c.lat}, ${c.lng}` : "");
+    setShowDisplay(Boolean(initial?.highlight || initial?.isVarszinhaz));
   }, [initial, user.id]);
 
   const handleCoordsChange = (e) => {
@@ -695,19 +812,9 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
     }
   };
 
-  const handleLocationSelect = (e) => {
-    const locName = e.target.value;
-    if (!locName) return;
-
-    // If it's a predefined location, auto-fill coords
-    if (PREDEFINED_LOCATIONS[locName]) {
-      const coords = PREDEFINED_LOCATIONS[locName];
-      setV(prev => ({ ...prev, location: locName, coords: coords }));
-      setCoordsInput(`${coords.lat}, ${coords.lng}`);
-    } else {
-      // Custom text entered
-      setV(prev => ({ ...prev, location: locName }));
-    }
+  const handlePickLocationCoords = (coords) => {
+    setV((prev) => ({ ...prev, coords }));
+    setCoordsInput(`${coords.lat}, ${coords.lng}`);
   };
 
   const validate = () => {
@@ -789,38 +896,7 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
             <FormField label="Név"><TextInput value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></FormField>
           </FormRow>
 
-          {/* --- SMART SPOTLIGHT BEÁLLÍTÁSOK --- */}
-          <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-xl border border-indigo-100 dark:border-indigo-500/30">
-            <FormField label="Smart Spotlight (Kiemelés)">
-              <Checkbox
-                label="Megjelenjen kiemeltként a főoldalon?"
-                checked={v.highlight || false}
-                onChange={(e) => setV({ ...v, highlight: e.target.checked })}
-              />
-            </FormField>
-            {v.highlight && (
-              <div className="mt-3 animate-in fade-in slide-in-from-top-2">
-                <FormField label="Kiemelés Címkéje (pl. '✨ Újévi Koncert')">
-                  <TextInput
-                    value={v.highlightLabel || ""}
-                    onChange={(e) => setV({ ...v, highlightLabel: e.target.value })}
-                    placeholder="Ha üres, az alapértelmezett szöveg jelenik meg."
-                  />
-                </FormField>
-              </div>
-            )}
-          </div>
-
-          {/* --- VÁRSZÍNHÁZ BEÁLLÍTÁS --- */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-200 dark:border-amber-500/30">
-            <FormField label="Kőszegi Várszínház">
-              <Checkbox
-                label="Ez egy Várszínház produkció"
-                checked={v.isVarszinhaz || false}
-                onChange={(e) => setV({ ...v, isVarszinhaz: e.target.checked })}
-              />
-            </FormField>
-          </div>
+          <DisplayOptionsBlock v={v} setV={setV} open={showDisplay} setOpen={setShowDisplay} />
 
           <FormRow>
             <FormField label="Dátum"><input type="date" value={v.date} onChange={(e) => setV({ ...v, date: e.target.value })} className={inputClasses} /></FormField>
@@ -829,23 +905,12 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
 
           <FormRow>
             <FormField label="Helyszín">
-              <div className="flex flex-col gap-2">
-                <select
-                  onChange={handleLocationSelect}
-                  className={inputClasses}
-                  value={PREDEFINED_LOCATIONS[v.location] ? v.location : ""}
-                >
-                  <option value="">-- Válassz gyorsan --</option>
-                  {Object.keys(PREDEFINED_LOCATIONS).sort().map(k => (
-                    <option key={k} value={k}>{k}</option>
-                  ))}
-                </select>
-                <TextInput
-                  placeholder="Vagy írd be kézzel..."
-                  value={v.location}
-                  onChange={(e) => setV({ ...v, location: e.target.value })}
-                />
-              </div>
+              <LocationCombobox
+                value={v.location}
+                onChange={(val) => setV((prev) => ({ ...prev, location: val }))}
+                onPickCoords={handlePickLocationCoords}
+                knownLocations={knownLocations}
+              />
             </FormField>
             <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
           </FormRow>
@@ -890,9 +955,10 @@ function EventForm({ initial, onCancel, onSave, onDelete, onTriggerPassUpdate })
   );
 }
 
-function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
+function SurroundingEventForm({ initial, onCancel, onSave, onDelete, existingItems }) {
   const { user, token, hasPermission } = useAuth();
   const empty = { name: "", settlement: "", date: "", time: "", location: "", coords: { lat: 0, lng: 0 }, description: "", tags: [], image: "", createdBy: user.id, highlight: false, highlightLabel: "" };
+  const knownLocations = useKnownLocations(existingItems);
   const canDelete = hasPermission("events:delete") || (hasPermission("events:delete_own") && initial.createdBy === user.id);
 
   const [v, setV] = useState({ ...empty, ...initial });
@@ -902,6 +968,7 @@ function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState("");
   const [coordsInput, setCoordsInput] = useState("");
+  const [showDisplay, setShowDisplay] = useState(Boolean(initial?.highlight));
 
   useEffect(() => {
     setV({ ...empty, ...initial, createdBy: initial?.createdBy || user.id });
@@ -909,6 +976,7 @@ function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
     setErr(""); setUploadMsg("");
     const c = initial?.coords;
     setCoordsInput(c && (c.lat !== 0 || c.lng !== 0) ? `${c.lat}, ${c.lng}` : "");
+    setShowDisplay(Boolean(initial?.highlight));
   }, [initial, user.id]);
 
   const handleCoordsChange = (e) => {
@@ -921,17 +989,9 @@ function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
     }
   };
 
-  const handleLocationSelect = (e) => {
-    const locName = e.target.value;
-    if (!locName) return;
-
-    if (PREDEFINED_LOCATIONS[locName]) {
-      const coords = PREDEFINED_LOCATIONS[locName];
-      setV(prev => ({ ...prev, location: locName, coords: coords }));
-      setCoordsInput(`${coords.lat}, ${coords.lng}`);
-    } else {
-      setV(prev => ({ ...prev, location: locName }));
-    }
+  const handlePickLocationCoords = (coords) => {
+    setV((prev) => ({ ...prev, coords }));
+    setCoordsInput(`${coords.lat}, ${coords.lng}`);
   };
 
   const submit = (e) => {
@@ -1018,27 +1078,7 @@ function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
             <FormField label="Egyedi település (ha nincs a listában)"><TextInput value={v.settlement} onChange={(e) => setV({ ...v, settlement: e.target.value })} /></FormField>
           </FormRow>
 
-          {/* Smart Spotlight */}
-          <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-xl border border-indigo-100 dark:border-indigo-500/30">
-            <FormField label="Smart Spotlight (Kiemelés)">
-              <Checkbox
-                label="Megjelenjen kiemeltként a főoldalon?"
-                checked={v.highlight || false}
-                onChange={(e) => setV({ ...v, highlight: e.target.checked })}
-              />
-            </FormField>
-            {v.highlight && (
-              <div className="mt-3 animate-in fade-in slide-in-from-top-2">
-                <FormField label="Kiemelés Címkéje (pl. '✨ Cáki Falunap')">
-                  <TextInput
-                    value={v.highlightLabel || ""}
-                    onChange={(e) => setV({ ...v, highlightLabel: e.target.value })}
-                    placeholder="Ha üres, az alapértelmezett szöveg jelenik meg."
-                  />
-                </FormField>
-              </div>
-            )}
-          </div>
+          <DisplayOptionsBlock v={v} setV={setV} open={showDisplay} setOpen={setShowDisplay} showVarszinhaz={false} />
 
           <FormRow>
             <FormField label="Dátum"><input type="date" value={v.date} onChange={(e) => setV({ ...v, date: e.target.value })} className={inputClasses} /></FormField>
@@ -1047,23 +1087,12 @@ function SurroundingEventForm({ initial, onCancel, onSave, onDelete }) {
 
           <FormRow>
             <FormField label="Helyszín">
-              <div className="flex flex-col gap-2">
-                <select
-                  onChange={handleLocationSelect}
-                  className={inputClasses}
-                  value={PREDEFINED_LOCATIONS[v.location] ? v.location : ""}
-                >
-                  <option value="">-- Válassz gyorsan --</option>
-                  {Object.keys(PREDEFINED_LOCATIONS).sort().map(k => (
-                    <option key={k} value={k}>{k}</option>
-                  ))}
-                </select>
-                <TextInput
-                  placeholder="Vagy írd be kézzel..."
-                  value={v.location}
-                  onChange={(e) => setV({ ...v, location: e.target.value })}
-                />
-              </div>
+              <LocationCombobox
+                value={v.location}
+                onChange={(val) => setV((prev) => ({ ...prev, location: val }))}
+                onPickCoords={handlePickLocationCoords}
+                knownLocations={knownLocations}
+              />
             </FormField>
             <FormField label="Koordináták (lat, lng)"><CoordsInput value={coordsInput} onChange={handleCoordsChange} /></FormField>
           </FormRow>
@@ -1454,37 +1483,6 @@ function AdminApp() {
     return false;
   };
 
-  const handleGeneratePass = async (eventItem) => {
-    const toastId = toast.loading("Jegy generálása...");
-    try {
-      const res = await fetch('/.netlify/functions/create-event-pass', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(eventItem),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Generálási hiba');
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `event-${eventItem.id}.pkpass`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-
-      toast.success("Jegy letöltve!", { id: toastId });
-    } catch (e) {
-      console.error(e);
-      toast.error(`Hiba: ${e.message}`, { id: toastId });
-    }
-  };
-
   const handleTriggerPassUpdate = async (eventId) => {
     const toastId = toast.loading("Pass frissítés triggerelése...");
     try {
@@ -1735,6 +1733,7 @@ function AdminApp() {
         {editingItem && (
           <FormComponent
             initial={editingItem}
+            existingItems={contentData}
             onCancel={() => setEditingItem(null)}
             onSave={(val) => {
               setContentData(prev => {

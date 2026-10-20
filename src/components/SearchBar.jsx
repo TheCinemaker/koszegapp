@@ -43,7 +43,8 @@ export default function SearchBar() { // Refreshed
           const resp = await fetch(src.url);
           const data = await resp.json();
           const list = data.filter(item =>
-            (item.name && item.name.toLowerCase().includes(q.toLowerCase())) ||
+            ((item.name || item.title) && (item.name || item.title).toLowerCase().includes(q.toLowerCase())) ||
+            (item.content && item.content.toLowerCase().includes(q.toLowerCase())) ||
             (item.tags && item.tags.join(" ").toLowerCase().includes(q.toLowerCase()))
           );
           if (list.length) found[src.key] = { label: src.label, items: list, route: src.route };
@@ -140,7 +141,7 @@ export default function SearchBar() { // Refreshed
                                  hover:bg-gold/10
                                  text-gray-900 dark:text-gray-100"
                     >
-                      <span className="font-semibold">{item.name}</span>
+                      <span className="font-semibold">{item.name || item.title}</span>
                       {item.tags && (
                         <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
                           {item.tags.join(", ")}

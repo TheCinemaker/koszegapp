@@ -33,7 +33,7 @@ export default function Partners() {
             icon: IoRocketOutline,
             title: 'Rugalmas Beléptetés',
             desc: 'Használd a saját mobilod a szkenneléshez, vagy bérelj tőlünk professzionális eszközöket a helyszíni jegykezeléshez – mi mindenre tudunk megoldást.',
-            color: 'bg-indigo-500'
+            color: 'bg-brand'
         },
         {
             icon: IoFlashOutline,
@@ -58,15 +58,15 @@ export default function Partners() {
                         <IoArrowBack className="text-xl" />
                     </button>
 
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 mb-6">
-                        <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                    <div className="inline-block px-4 py-1.5 rounded-full bg-gold/15 dark:bg-gold/20 border border-gold/30 mb-6">
+                        <span className="text-xs font-bold uppercase tracking-widest text-gold-text dark:text-gold-light">
                             Partnerségi Program
                         </span>
                     </div>
 
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-[0.9]">
                         A rendezvényed a <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">város zsebében.</span>
+                        <span className="text-brand dark:text-gold-light">város zsebében.</span>
                     </h1>
 
                     <p className="text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
@@ -79,7 +79,7 @@ export default function Partners() {
             <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 mb-32">
                 {benefits.map((benefit, idx) => (
                     <FadeUp key={idx} delay={idx * 0.1}>
-                        <div className="h-full p-8 rounded-[2.5rem] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all group">
+                        <div className="h-full p-8 rounded-[2.5rem] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:shadow-gold/10 transition-all group">
                             <div className={`w-14 h-14 rounded-2xl ${benefit.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-lg`}>
                                 <benefit.icon className="text-2xl" />
                             </div>
@@ -96,7 +96,7 @@ export default function Partners() {
             <section className="max-w-4xl mx-auto px-6 mb-32">
                 <FadeUp className="relative overflow-hidden rounded-[3rem] bg-zinc-900 text-white p-12 md:p-20 text-center">
                     {/* Abstract background */}
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-indigo-500/20 to-transparent"></div>
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gold/20 to-transparent"></div>
 
                     <div className="relative z-10">
                         <h2 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Korszerű technika, <br />zéró nehézség.</h2>
@@ -106,7 +106,7 @@ export default function Partners() {
 
                         <div className="flex flex-wrap justify-center gap-4">
                             <div className="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
-                                <IoPeopleOutline className="text-xl text-indigo-400" />
+                                <IoPeopleOutline className="text-xl text-gold-light" />
                                 <span className="text-sm font-semibold text-zinc-300">Korlátlan terhelhetőség, 1mp-es validáció</span>
                             </div>
                             <div className="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
@@ -133,7 +133,7 @@ export default function Partners() {
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                         <a
                             href="mailto:koszegapp@gmail.com?subject=Partneri jelentkezés"
-                            className="px-10 py-5 rounded-full bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 hover:scale-105 transition-all shadow-xl shadow-indigo-500/25 flex items-center gap-2"
+                            className="px-10 py-5 rounded-full bg-brand text-gold-light font-bold text-lg border border-gold/30 hover:opacity-90 hover:scale-105 transition-all shadow-xl shadow-gold/25 flex items-center gap-2"
                         >
                             <IoMailOutline className="text-xl" />
                             Kapcsolatfelvétel

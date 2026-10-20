@@ -1,6 +1,7 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useRef, useState, useCallback } from 'react';
 import { Routes, Route, useLocation, useNavigationType, Navigate } from 'react-router-dom';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { IoArrowUp } from 'react-icons/io5';
 
 import { lazyWithRetry } from '../utils/lazyWithRetry';
 import LoadingSpinner from './LoadingSpinner';
@@ -169,7 +170,7 @@ export default function AnimatedRoutes({ appData, weather }) {
 
 
           <Route path="/admin/*" element={
-            <PageWrapper>
+            <PageWrapper showFooter={false}>
               <Admin />
             </PageWrapper>
           } />
@@ -315,17 +316,30 @@ const morphVariants = {
 const PageWrapper = ({ children, showFooter = true, morph = false }) => {
   const direction = React.useContext(DirectionContext);
   const location = useLocation();
-  
+  const scrollRef = useRef(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
   // Detemine if the current route has the global header (mirrors App.jsx logic)
   const isKioskMode = localStorage.getItem('kiosk_mode') === 'true';
-  const hasHeader = !isKioskMode && 
-                    !location.pathname.startsWith('/eats') && 
-                    !location.pathname.startsWith('/scanner') && 
-                    !location.pathname.startsWith('/buy-pass') && 
-                    !location.pathname.startsWith('/adatbekero');
+  const hasHeader = !isKioskMode &&
+                    !location.pathname.startsWith('/eats') &&
+                    !location.pathname.startsWith('/scanner') &&
+                    !location.pathname.startsWith('/buy-pass') &&
+                    !location.pathname.startsWith('/adatbekero') &&
+                    !location.pathname.startsWith('/admin');
+
+  const handleScroll = useCallback((e) => {
+    setShowScrollTop(e.currentTarget.scrollTop > 400);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   return (
   <motion.div
+    ref={scrollRef}
+    onScroll={handleScroll}
     custom={direction}
     initial="initial"
     animate="in"
@@ -349,6 +363,22 @@ const PageWrapper = ({ children, showFooter = true, morph = false }) => {
       </div>
       {showFooter && <Footer />}
     </div>
+
+    <AnimatePresence>
+      {showScrollTop && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: 10 }}
+          transition={{ duration: 0.2 }}
+          onClick={scrollToTop}
+          aria-label="Vissza a tetejére"
+          className="fixed bottom-24 right-4 z-[60] w-11 h-11 rounded-full bg-brand text-gold-light border border-gold/30 shadow-floating flex items-center justify-center hover:opacity-90 active:scale-95 transition-all"
+        >
+          <IoArrowUp className="text-lg" />
+        </motion.button>
+      )}
+    </AnimatePresence>
   </motion.div>
   );
 };

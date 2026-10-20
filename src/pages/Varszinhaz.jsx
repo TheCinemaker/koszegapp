@@ -49,8 +49,11 @@ import SEO from '../components/SEO';
 function computeRange(evt) {
   if (evt?.date) {
     const sBase = parseISO(evt.date);
-    const eBase = parseISO(evt.end_date || evt.date);
-    if (evt.time && typeof evt.time === 'string') {
+    const endDateStr = evt.end_date || evt.date;
+    const eBase = parseISO(endDateStr);
+    const isMultiDay = endDateStr !== evt.date;
+
+    if (evt.time && typeof evt.time === 'string' && !isMultiDay) {
       const t = evt.time.replace(/\s/g, '');
       if (/^\d{2}:\d{2}-\d{2}:\d{2}$/.test(t)) {
         const [ts, te] = t.split('-');
@@ -67,7 +70,12 @@ function computeRange(evt) {
         return { _s: s, _e: e };
       }
     }
-    const s = new Date(sBase); s.setHours(0, 0, 0, 0);
+
+    // Többnapos esemény: a kezdő nap kapja a megadott időpontot, a vég az utolsó nap végéig tart.
+    const s = new Date(sBase);
+    const timeMatch = evt.time && typeof evt.time === 'string' ? evt.time.replace(/\s/g, '').match(/^(\d{2}):(\d{2})/) : null;
+    if (timeMatch) s.setHours(parseInt(timeMatch[1], 10), parseInt(timeMatch[2], 10), 0, 0);
+    else s.setHours(0, 0, 0, 0);
     const e = new Date(eBase); e.setHours(23, 59, 59, 999);
     return { _s: s, _e: e };
   }
@@ -143,7 +151,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
 
         {/* Floating Date Badge (iOS Style) */}
         <div className="absolute top-5 left-5 bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-2xl p-2.5 min-w-[55px] text-center shadow-sm border border-white/20 z-20">
-          <div className="text-[10px] font-black uppercase text-indigo-600 dark:text-indigo-400 tracking-tighter leading-none mb-0.5">{monthStr}</div>
+          <div className="text-[10px] font-black uppercase text-gold-text dark:text-gold-light tracking-tighter leading-none mb-0.5">{monthStr}</div>
           <div className="text-xl font-black text-gray-900 dark:text-white leading-none">{dayStr}</div>
         </div>
 
@@ -163,7 +171,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
         {/* Location Info (Overlayed on image for cleaner look) */}
         <div className="absolute bottom-5 left-5 right-5 text-white z-20 pointer-events-none">
           <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest opacity-90 mb-1">
-            <FaMapMarkerAlt className="text-indigo-400" />
+            <FaMapMarkerAlt className="text-gold-light" />
             <span className="truncate">{evt.location}</span>
           </div>
           <h3 className="text-xl font-black leading-tight drop-shadow-md line-clamp-2">
@@ -181,7 +189,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
           </div>
           <div className="flex flex-col items-end">
              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Jegyár</span>
-             <span className="font-black text-indigo-600 dark:text-indigo-400">{displayPrice}{displayPrice !== 'Helyszínen' ? ' Ft' : ''}</span>
+             <span className="font-black text-gold-text dark:text-gold-light">{displayPrice}{displayPrice !== 'Helyszínen' ? ' Ft' : ''}</span>
           </div>
         </div>
 
@@ -212,7 +220,7 @@ const GigatrendyCard = ({ evt, isFavorite, toggleFavorite, isPast, onGeneratePas
           </Link>
           <button
             onClick={() => toast('Hamarosan elérhető a digitális foglalás!', { icon: '🎟️' })}
-            className="py-3.5 rounded-2xl bg-indigo-600 text-white font-black text-center text-xs uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all active:scale-[0.98]"
+            className="py-3.5 rounded-2xl bg-brand text-gold-light font-black text-center text-xs uppercase tracking-widest shadow-lg shadow-gold/20 hover:opacity-90 transition-all active:scale-[0.98]"
           >
             Foglalás
           </button>
@@ -336,32 +344,21 @@ export default function Varszinhaz() {
 
   // CLEAN MINIMAL BACKGROUND (DASHBOARD STYLE)
   return (
-    <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Toaster position="top-right" />
 
-      <div className="max-w-7xl mx-auto mb-8 pt-4 px-2 flex flex-col gap-4">
-        <div className="flex items-center">
-          <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-            <FaArrowLeft className="text-xl text-gray-900 dark:text-white" />
+      <div className="max-w-4xl mx-auto mb-6">
+        <div className="flex items-center gap-4">
+          <Link to="/" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+            <FaArrowLeft className="text-sm text-brand dark:text-white" />
           </Link>
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Várszínház
+          </h1>
         </div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden w-full aspect-[2.3/1] sm:h-[350px] shadow-2xl border border-zinc-200/30 dark:border-zinc-800/50 bg-slate-950"
-        >
-          <img 
-            src="/images/varszinhaz_hero.png" 
-            alt="Kőszegi Várszínház Szezon" 
-            className="w-full h-full object-cover transition-all duration-1000 hover:scale-102"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
-        </motion.div>
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
 
         {/* 2. SEARCH (Compact & Native-like) */}
         <div className="mb-4">
@@ -377,14 +374,14 @@ export default function Varszinhaz() {
                          border border-white/40 dark:border-gray-700/50
                          text-xs font-medium text-gray-900 dark:text-gray-100
                          placeholder-gray-500 dark:placeholder-gray-400
-                         focus:outline-none focus:ring-2 focus:ring-cyan-400/50
+                         focus:outline-none focus:ring-2 focus:ring-brand/30
                          shadow-sm transition-all duration-300
                          hover:bg-white/80 dark:hover:bg-gray-800/80"
             />
             <button
               className="w-8 h-8 rounded-lg flex items-center justify-center
-                         gradient-vibrant-primary text-white shadow-sm
-                         hover:shadow-md hover:scale-105
+                         bg-brand text-gold-light shadow-sm border border-gold/30
+                         hover:opacity-90 hover:scale-105
                          transition-all duration-300
                          active:scale-95"
             >
@@ -455,7 +452,7 @@ export default function Varszinhaz() {
               <div className="text-6xl mb-4 grayscale opacity-30">📅</div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('noResults.title')}</h3>
               <p className="text-gray-500 dark:text-gray-400">{t('noResults.desc')}</p>
-              <button onClick={() => { setFilter('all'); setSelectedTag(null); setSearchQuery('') }} className="mt-4 px-6 py-2 bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 rounded-xl font-bold hover:bg-indigo-200 transition">
+              <button onClick={() => { setFilter('all'); setSelectedTag(null); setSearchQuery('') }} className="mt-4 px-6 py-2 bg-gold/15 text-gold-text dark:bg-gold/20 dark:text-gold-light rounded-xl font-bold hover:bg-gold/25 transition">
                 {t('noResults.clearFilters')}
               </button>
             </div>
@@ -482,12 +479,12 @@ export default function Varszinhaz() {
       </div>
 
       {/* 5. TICKET INFO SECTION (Apple Card Style) */}
-      <div className="max-w-7xl mx-auto mt-20 mb-12">
+      <div className="max-w-4xl mx-auto mt-20 mb-12">
         <FadeUp>
           <div className="bg-white dark:bg-gray-800/50 backdrop-blur-xl rounded-[40px] p-8 sm:p-12 border border-gray-100 dark:border-gray-700/50 shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
             <div className="max-w-3xl mx-auto space-y-10">
               <div className="text-center space-y-2">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gold/15 dark:bg-gold/20 text-gold-text dark:text-gold-light mb-4">
                   <FaTicketAlt className="text-xl" />
                 </div>
                 <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Információ és jegyrendelés</h2>
@@ -497,23 +494,23 @@ export default function Varszinhaz() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Contact Info */}
                 <div className="space-y-6">
-                  <h4 className="text-xs font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">Elérhetőség</h4>
+                  <h4 className="text-xs font-black uppercase tracking-[0.2em] text-gold-text dark:text-gold-light">Elérhetőség</h4>
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 group">
-                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 transition-colors">
-                        <FaMapMarkerAlt className="text-gray-400 group-hover:text-indigo-500" />
+                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-gold/15 dark:group-hover:bg-gold/20 transition-colors">
+                        <FaMapMarkerAlt className="text-gray-400 group-hover:text-gold-text dark:group-hover:text-gold-light" />
                       </div>
                       <span className="text-sm font-bold text-gray-700 dark:text-gray-300">9730 Kőszeg, Rajnis utca 9.</span>
                     </div>
                     <div className="flex items-center gap-4 group">
-                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 transition-colors">
-                        <FaPhoneAlt className="text-gray-400 group-hover:text-indigo-500" />
+                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-gold/15 dark:group-hover:bg-gold/20 transition-colors">
+                        <FaPhoneAlt className="text-gray-400 group-hover:text-gold-text dark:group-hover:text-gold-light" />
                       </div>
                       <span className="text-sm font-bold text-gray-700 dark:text-gray-300">94/360-113</span>
                     </div>
                     <div className="flex items-center gap-4 group">
-                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/30 transition-colors">
-                        <FaEnvelope className="text-gray-400 group-hover:text-indigo-500" />
+                      <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-gold/15 dark:group-hover:bg-gold/20 transition-colors">
+                        <FaEnvelope className="text-gray-400 group-hover:text-gold-text dark:group-hover:text-gold-light" />
                       </div>
                       <span className="text-sm font-bold text-gray-700 dark:text-gray-300">info@koszegivarszinhaz.hu</span>
                     </div>
@@ -522,7 +519,7 @@ export default function Varszinhaz() {
 
                 {/* Bank Info */}
                 <div className="space-y-6">
-                  <h4 className="text-xs font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">Átutalási adatok</h4>
+                  <h4 className="text-xs font-black uppercase tracking-[0.2em] text-gold-text dark:text-gold-light">Átutalási adatok</h4>
                   <div className="p-5 rounded-3xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 space-y-3">
                     <div className="flex items-start gap-3">
                       <FaUniversity className="mt-1 text-gray-400" />
@@ -541,7 +538,7 @@ export default function Varszinhaz() {
               {/* Opening Hours & Rules */}
               <div className="pt-10 border-t border-gray-100 dark:border-gray-700 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex items-start gap-3">
-                  <FaClock className="text-indigo-500 mt-1" />
+                  <FaClock className="text-gold-text dark:text-gold-light mt-1" />
                   <div>
                     <div className="text-[10px] font-bold text-gray-400 uppercase mb-1">Nyitvatartás</div>
                     <div className="text-xs font-bold text-gray-700 dark:text-gray-300">H-P: 08:00 - 16:00</div>
@@ -585,8 +582,8 @@ export default function Varszinhaz() {
                   key={short}
                   onClick={() => { setSelectedMonth(idx + 1); setFilter('byMonth'); setOpenPicker(false); }}
                   className={`py-3 rounded-xl text-sm font-bold transition-all ${selectedMonth === idx + 1
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-600 hover:text-indigo-600'
+                    ? 'bg-brand text-gold-light shadow-md'
+                    : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gold/10 dark:hover:bg-gray-600 hover:text-gold-text'
                     }`}
                 >
                   {t('monthsShort.' + idx)}

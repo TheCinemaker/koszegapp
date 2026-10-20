@@ -108,7 +108,7 @@ const getContextualSettings = (mode) => {
 };
 
 const NearbyDiscoveryCard = ({ appData }) => {
-    const { location, startWatching, stopWatching } = useContext(LocationContext);
+    const { location, locationError, requestLocation, startWatching, stopWatching } = useContext(LocationContext);
     const [greetingIndex, setGreetingIndex] = useState(0);
     const [mode, setMode] = useState('contextual'); // 'contextual' or 'walking'
 
@@ -171,8 +171,27 @@ const NearbyDiscoveryCard = ({ appData }) => {
 
     return (
         <div className="mb-8 relative">
-            {!location ? (
-                <div 
+            {!location && locationError ? (
+                <div
+                    className="bg-surface-card dark:bg-surface-card-dark border border-slate-200/80 dark:border-white/10 rounded-2xl p-5 flex items-center justify-between gap-3 backdrop-blur-[20px]"
+                >
+                    <div className="flex items-center gap-3 min-w-0">
+                        <Navigation className="w-4 h-4 text-gold-text dark:text-gold-light shrink-0" />
+                        <span className="text-xs font-medium text-slate-500 dark:text-zinc-400 tracking-wide">
+                            {locationError === 'denied'
+                                ? 'Nincs engedély a helymeghatározáshoz.'
+                                : 'Nem sikerült meghatározni a pozíciódat.'}
+                        </span>
+                    </div>
+                    <button
+                        onClick={requestLocation}
+                        className="shrink-0 px-3 py-1.5 rounded-full bg-gold/15 dark:bg-gold/20 text-gold-text dark:text-gold-light text-[11px] font-bold uppercase tracking-wide hover:bg-gold/25 transition-colors"
+                    >
+                        Újra
+                    </button>
+                </div>
+            ) : !location ? (
+                <div
                     className="bg-surface-card dark:bg-surface-card-dark border border-slate-200/80 dark:border-white/10 rounded-2xl p-5 flex items-center justify-center gap-3 backdrop-blur-[20px]"
                 >
                     <Navigation className="w-4 h-4 text-gold-text dark:text-gold-light" />
@@ -204,7 +223,7 @@ const NearbyDiscoveryCard = ({ appData }) => {
                         <Link to={closestItem.to} className="block p-3 sm:p-5 pb-8 sm:pb-5">
                             <div className="relative z-10 flex items-center gap-4 sm:gap-6">
                                 <div className={`aspect-square w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center rounded-xl sm:rounded-2xl shadow-card transition-transform duration-500 group-hover:scale-105 ${mode === 'walking' ? 'bg-emerald-600 text-white' : 'bg-brand text-gold-light'}`}>
-                                    <Icon className="w-6 h-6 sm:w-8 h-8" />
+                                    <Icon className="w-6 h-6 sm:w-8 sm:h-8" />
                                 </div>
                                 
                                 <div className="flex-1 min-w-0 mt-1">

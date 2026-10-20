@@ -4,12 +4,13 @@ export const LocationContext = createContext(null);
 
 export function LocationProvider({ children }) {
     const [location, setLocation] = useState(null);
+    const [locationError, setLocationError] = useState(null);
     const watchId = useRef(null);
     const watchCount = useRef(0);
 
     const startWatching = () => {
         if (!navigator.geolocation) {
-            console.warn("Geolocation not supported by this browser.");
+            setLocationError('unsupported');
             return;
         }
 
@@ -19,6 +20,7 @@ export function LocationProvider({ children }) {
         // 1. AZONNALI FIX (Gyors, akár gyorstárazott és kisebb pontosságú is jó elsőre)
         navigator.geolocation.getCurrentPosition(
             (pos) => {
+                setLocationError(null);
                 if (!location) { // Csak ha még nincs meg a helyzet
                     setLocation({
                         lat: pos.coords.latitude,
@@ -30,7 +32,7 @@ export function LocationProvider({ children }) {
                 }
             },
             (err) => {
-                // Silently handle quick fix denial/timeout
+                if (err.code === err.PERMISSION_DENIED) setLocationError('denied');
             },
             { enableHighAccuracy: false, timeout: 3000, maximumAge: 60000 }
         );
@@ -38,6 +40,7 @@ export function LocationProvider({ children }) {
         // 2. FOLYAMATOS PONTOS KÖVETÉS (Ez lassabb, de háttérben fut)
         watchId.current = navigator.geolocation.watchPosition(
             (pos) => {
+                setLocationError(null);
                 setLocation({
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude,
@@ -45,9 +48,10 @@ export function LocationProvider({ children }) {
                     timestamp: Date.now(),
                     isQuickFix: false
                 });
-                console.log("📍 High-accuracy location updated");
             },
             (err) => {
+                if (err.code === err.PERMISSION_DENIED) setLocationError('denied');
+                else if (!location) setLocationError('unavailable');
                 console.warn("Location watch error:", err);
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
@@ -63,16 +67,23 @@ export function LocationProvider({ children }) {
     };
 
     const requestLocation = () => {
-        if (!navigator.geolocation) return;
+        if (!navigator.geolocation) {
+            setLocationError('unsupported');
+            return;
+        }
         navigator.geolocation.getCurrentPosition(
             (pos) => {
+                setLocationError(null);
                 setLocation({
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude,
                     timestamp: Date.now()
                 });
             },
-            (err) => console.warn(err),
+            (err) => {
+                setLocationError(err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable');
+                console.warn(err);
+            },
             { enableHighAccuracy: true }
         );
     };
@@ -83,7 +94,7 @@ export function LocationProvider({ children }) {
     }, []);
 
     return (
-        <LocationContext.Provider value={{ location, requestLocation, startWatching, stopWatching }}>
+        <LocationContext.Provider value={{ location, locationError, requestLocation, startWatching, stopWatching }}>
             {children}
         </LocationContext.Provider>
     );

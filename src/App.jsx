@@ -25,7 +25,6 @@ import ProgramModal from './components/ProgramModal';
 
 import FavoritesDashboard from './components/FavoritesDashboard.jsx';
 import FloatingNavbar from './components/FloatingNavbar';
-import FloatingButtons from './components/FloatingButtons';
 import SmartSpotlight from './components/SmartSpotlight';
 import LiveCityMap from './components/LiveCityMap';
 import ResidentCheckModal from './components/ResidentCheckModal';
@@ -262,16 +261,21 @@ function MainAppContent() {
           try { return parseISO(base); } catch { return null; }
         };
 
+        let isMultiDay = false;
+
         if (evt.startDate) {
           s = parseLocal(evt.startDate);
-          e = evt.endDate ? parseLocal(evt.endDate) : s;
+          isMultiDay = Boolean(evt.endDate && evt.endDate !== evt.startDate);
+          e = evt.endDate ? parseLocal(evt.endDate) : (s ? new Date(s) : null);
         } else if (evt.date?.includes('/')) {
           const p = evt.date.split('/');
           s = parseLocal(p[0]);
           e = parseLocal(p[1] || p[0]);
+          isMultiDay = Boolean(p[1] && p[1] !== p[0]);
         } else {
           s = parseLocal(evt.date);
-          e = evt.end_date ? parseLocal(evt.end_date) : s;
+          isMultiDay = Boolean(evt.end_date && evt.end_date !== evt.date);
+          e = evt.end_date ? parseLocal(evt.end_date) : (s ? new Date(s) : null);
         }
 
         if (evt.time && s) {
@@ -281,6 +285,21 @@ function MainAppContent() {
             s.setHours(parseInt(h, 10), parseInt(m, 10), 0, 0);
           }
         }
+
+        // Többnapos esemény az utolsó napja végéig tart, ne tűnjön el reggel.
+        // Egynapos, időponttal rendelkező esemény egy ésszerű (3 órás) ablakot kap,
+        // hogy a "most zajlik" állapot is tudjon érvényesülni.
+        if (e) {
+          if (isMultiDay) {
+            e.setHours(23, 59, 59, 999);
+          } else if (evt.time && s) {
+            e.setTime(s.getTime());
+            e.setHours(e.getHours() + 3);
+          } else {
+            e.setHours(23, 59, 59, 999);
+          }
+        }
+
         return { ...evt, _s: s, _e: e };
       };
 
@@ -404,7 +423,7 @@ function MainAppContent() {
       <AmbientBackground weather={weather} upcoming={upcomingWeather} dark={dark} />
       <div className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 relative">
         <AIOrchestratorProvider appData={appData} weather={weather}>
-          {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && (
+          {!isInGameMode && !isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && !location.pathname.startsWith('/admin') && (
             <>
               <header className="fixed top-2 left-2 right-2 sm:top-10 sm:left-4 sm:right-4 h-12 sm:h-16 z-50 transition-all duration-300 pointer-events-none flex justify-center">
                 <div className="
@@ -530,7 +549,7 @@ function MainAppContent() {
 
               {/* Footer moved to PageWrapper in AnimatedRoutes to support Transitions */}
 
-              {!isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && <FloatingNavbar />}
+              {!isKioskMode && !location.pathname.startsWith('/eats') && !location.pathname.startsWith('/scanner') && !location.pathname.startsWith('/buy-pass') && !location.pathname.startsWith('/adatbekero') && !location.pathname.startsWith('/admin') && <FloatingNavbar />}
               {/* Hide SmartSpotlight on Dashboards, Auth & Pass Pages */}
               {!isKioskMode &&
                 !location.pathname.startsWith('/koszegieknek') &&
@@ -540,7 +559,8 @@ function MainAppContent() {
                 !location.pathname.startsWith('/pass') &&
                 !location.pathname.startsWith('/scanner') &&
                 !location.pathname.startsWith('/buy-pass') &&
-                !location.pathname.startsWith('/adatbekero') && (
+                !location.pathname.startsWith('/adatbekero') &&
+                !location.pathname.startsWith('/admin') && (
                   <SmartSpotlight appData={appData} />
                 )}
 

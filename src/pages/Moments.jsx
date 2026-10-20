@@ -169,7 +169,7 @@ export default function Moments() {
           </div>
           <button
             onClick={() => setShowPost(true)}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm shadow-lg shadow-indigo-500/20 active:scale-95 transition-all"
+            className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-brand hover:opacity-90 text-gold-light font-black text-sm shadow-lg shadow-gold/20 border border-gold/30 active:scale-95 transition-all"
           >
             <IoCameraOutline className="text-lg" />
             Posztolj!
@@ -194,7 +194,7 @@ export default function Moments() {
             </p>
             <button
               onClick={() => setShowPost(true)}
-              className="px-6 py-3 rounded-2xl bg-indigo-600 text-white font-black text-sm shadow-lg active:scale-95 transition-all"
+              className="px-6 py-3 rounded-2xl bg-brand text-gold-light font-black text-sm shadow-lg border border-gold/30 active:scale-95 transition-all"
             >
               Posztolj most!
             </button>
@@ -221,7 +221,7 @@ export default function Moments() {
 
                 {/* Location badge */}
                 {m.lat && m.lng && (
-                  <div className="absolute top-2 left-2 p-1.5 rounded-full bg-black/50 backdrop-blur-sm text-indigo-300">
+                  <div className="absolute top-2 left-2 p-1.5 rounded-full bg-black/50 backdrop-blur-sm text-gold-light">
                     <IoLocationOutline className="text-xs" />
                   </div>
                 )}
@@ -268,8 +268,8 @@ export default function Moments() {
                   </div>
                 </div>
               ) : (
-                <div className="rounded-2xl border-2 border-dashed border-indigo-500/30 dark:border-indigo-400/20 aspect-[4/3] flex flex-col items-center justify-center gap-3 text-zinc-400 hover:border-indigo-500 hover:text-indigo-500 bg-zinc-50/50 dark:bg-zinc-950/20 transition-all duration-300">
-                  <div className="w-16 h-16 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                <div className="rounded-2xl border-2 border-dashed border-gold/40 dark:border-gold/30 aspect-[4/3] flex flex-col items-center justify-center gap-3 text-zinc-400 hover:border-gold hover:text-gold-text bg-zinc-50/50 dark:bg-zinc-950/20 transition-all duration-300">
+                  <div className="w-16 h-16 rounded-full bg-gold/15 dark:bg-gold/20 flex items-center justify-center text-gold-text dark:text-gold-light">
                     <IoCameraOutline className="text-3xl" />
                   </div>
                   <div className="text-center px-4">
@@ -287,7 +287,7 @@ export default function Moments() {
               value={caption}
               onChange={e => { setCaption(e.target.value.slice(0, 120)); setPostError(''); }}
               placeholder="Rövid felirat... (opcionális)"
-              className="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-gray-900 dark:text-white text-sm font-semibold placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+              className="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-gray-900 dark:text-white text-sm font-semibold placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-brand/30"
             />
 
             {/* Location toggle */}
@@ -295,7 +295,7 @@ export default function Moments() {
               onClick={handleLocationToggle}
               className={`flex items-center gap-2 px-4 py-3 rounded-2xl border text-sm font-bold transition-all ${
                 useLocation
-                  ? 'bg-indigo-50 dark:bg-indigo-950/40 border-indigo-500/40 text-indigo-600 dark:text-indigo-400'
+                  ? 'bg-gold/15 dark:bg-gold/20 border-gold/40 text-gold-text dark:text-gold-light'
                   : 'border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400'
               }`}
             >
@@ -310,7 +310,7 @@ export default function Moments() {
             <button
               onClick={handlePost}
               disabled={!file || posting}
-              className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-black text-sm shadow-lg shadow-indigo-500/20 active:scale-95 transition-all"
+              className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-brand hover:opacity-90 disabled:opacity-40 text-gold-light font-black text-sm shadow-lg shadow-gold/20 border border-gold/30 active:scale-95 transition-all"
             >
               {posting ? (
                 <span className="animate-pulse">Feltöltés...</span>

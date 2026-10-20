@@ -37,8 +37,11 @@ const MONTH_SHORT = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug'
 function computeRange(evt) {
   if (evt?.date) {
     const sBase = parseISO(evt.date);
-    const eBase = parseISO(evt.end_date || evt.date);
-    if (evt.time && typeof evt.time === 'string') {
+    const endDateStr = evt.end_date || evt.date;
+    const eBase = parseISO(endDateStr);
+    const isMultiDay = endDateStr !== evt.date;
+
+    if (evt.time && typeof evt.time === 'string' && !isMultiDay) {
       const t = evt.time.replace(/\s/g, '');
       if (/^\d{2}:\d{2}-\d{2}:\d{2}$/.test(t)) {
         const [ts, te] = t.split('-');
@@ -55,7 +58,12 @@ function computeRange(evt) {
         return { _s: s, _e: e };
       }
     }
-    const s = new Date(sBase); s.setHours(0, 0, 0, 0);
+
+    // Többnapos esemény: a kezdő nap kapja a megadott időpontot, a vég az utolsó nap végéig tart.
+    const s = new Date(sBase);
+    const timeMatch = evt.time && typeof evt.time === 'string' ? evt.time.replace(/\s/g, '').match(/^(\d{2}):(\d{2})/) : null;
+    if (timeMatch) s.setHours(parseInt(timeMatch[1], 10), parseInt(timeMatch[2], 10), 0, 0);
+    else s.setHours(0, 0, 0, 0);
     const e = new Date(eBase); e.setHours(23, 59, 59, 999);
     return { _s: s, _e: e };
   }

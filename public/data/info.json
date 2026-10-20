@@ -53,7 +53,7 @@
     "category": "tourism",
     "icon": "FaInfoCircle",
     "title": "Tourinform Kőszeg",
-    "content": "Fő tér 2. JELENLEG ZÁRVA! (Tel: +3694563120)"
+    "content": "Fő tér 2. Tel: +3694563120"
   },
   {
     "id": "info-9",
@@ -61,13 +61,6 @@
     "icon": "FaRestroom",
     "title": "Nyilvános WC",
     "content": "Piac, Károly Róbert tér."
-  },
-  {
-    "id": "info-10",
-    "category": "tourism",
-    "icon": "FaParking",
-    "title": "Parkolás",
-    "content": "Díjfizetős zónák a belvárosban. Részletek a Parkolás menüpontban."
   },
   {
     "id": "info-99",

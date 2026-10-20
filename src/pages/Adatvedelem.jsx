@@ -1,14 +1,24 @@
 import React from 'react';
-import { IoShieldCheckmarkOutline, IoLockClosedOutline, IoPersonOutline, IoServerOutline, IoWarningOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { IoArrowBack, IoShieldCheckmarkOutline, IoLockClosedOutline, IoPersonOutline, IoServerOutline, IoWarningOutline } from 'react-icons/io5';
 
 export default function Adatvedelem() {
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-[#f5f5f7] dark:bg-black pt-24 pb-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#f5f5f7] dark:bg-black pt-4 pb-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={() => navigate('/')} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+            <IoArrowBack className="text-xl text-brand dark:text-white" />
+          </button>
+          <h1 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Adatvédelem
+          </h1>
+        </div>
         <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 sm:p-12 shadow-xl border border-zinc-100 dark:border-zinc-800">
 
           <div className="text-center mb-12">
-            <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg shadow-indigo-500/20">
+            <div className="w-16 h-16 bg-gold/15 dark:bg-gold/20 text-gold-text dark:text-gold-light rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg shadow-gold/20">
               <IoShieldCheckmarkOutline />
             </div>
             <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-white mb-2 tracking-tight">
@@ -35,7 +45,7 @@ export default function Adatvedelem() {
 
             <section>
               <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
-                <IoPersonOutline className="text-indigo-500" />
+                <IoPersonOutline className="text-gold-text dark:text-gold-light" />
                 1. Milyen adatokat kezelünk?
               </h2>
               <p className="mb-4 text-sm">
@@ -52,7 +62,7 @@ export default function Adatvedelem() {
 
             <section>
               <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
-                <IoServerOutline className="text-indigo-500" />
+                <IoServerOutline className="text-gold-text dark:text-gold-light" />
                 2. Hol és hogyan tároljuk az adatokat?
               </h2>
               <p className="mb-4 text-sm">
@@ -78,7 +88,7 @@ export default function Adatvedelem() {
 
             <section>
               <h2 className="text-xl font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
-                <IoLockClosedOutline className="text-indigo-500" />
+                <IoLockClosedOutline className="text-gold-text dark:text-gold-light" />
                 3. Adattovábbítás és Harmadik felek
               </h2>
               <div className="bg-zinc-50 dark:bg-zinc-800/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700">
@@ -121,7 +131,7 @@ export default function Adatvedelem() {
               <p className="text-sm text-center">
                 Adatkezeléssel kapcsolatos kérdés, kérés vagy törlési igény esetén írjon nekünk:
                 <br />
-                <a href="mailto:admin@visitkoszeg.hu" className="inline-block mt-2 text-indigo-500 dark:text-indigo-400 font-bold hover:underline">
+                <a href="mailto:admin@visitkoszeg.hu" className="inline-block mt-2 text-gold-text dark:text-gold-light font-bold hover:underline">
                   admin@visitkoszeg.hu
                 </a>
               </p>

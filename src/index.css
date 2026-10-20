@@ -43,6 +43,19 @@
     @apply text-lg font-semibold mb-3 pb-2 border-b-2;
   }
 
+  /* Admin felület gombjai (Admin.jsx) */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-brand text-gold-light font-semibold text-sm border border-gold/30 shadow-sm hover:opacity-90 active:scale-[0.97] transition-all disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold text-sm border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-[0.97] transition-all;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-rose-600 text-white font-semibold text-sm hover:bg-rose-700 active:scale-[0.97] transition-all;
+  }
+
   .flip-card-container {
     perspective: 1500px;
   }

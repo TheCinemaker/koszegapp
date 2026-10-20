@@ -11,13 +11,13 @@ export default function Footer() {
     if (isInGameMode) return null;
 
     return (
-        <footer className="mt-auto bg-white/10 dark:bg-gray-900/10 backdrop-blur-3xl border-t-2 border-indigo-500 text-center py-4 sm:py-5 z-40 transition-all duration-300 relative">
+        <footer className="mt-auto bg-white/10 dark:bg-gray-900/10 backdrop-blur-3xl border-t-2 border-gold/40 text-center py-4 sm:py-5 z-40 transition-all duration-300 relative">
             <div className="space-y-2">
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
                     © 2026
                     <a
                         href="mailto:admin@visitkoszeg.hu"
-                        className="font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+                        className="font-bold text-brand dark:text-gold-light hover:opacity-80 transition-opacity"
                     >
                         SA Software & Network Solutions
                     </a>
@@ -27,11 +27,11 @@ export default function Footer() {
                     <span className="opacity-50">•</span>
                     <span>Pictures: Varga Zoltán</span>
                     <span className="opacity-50">•</span>
-                    <Link to="/adatvedelem" className="opacity-50 hover:opacity-100 transition-opacity hover:text-indigo-500">Adatvédelem</Link>
+                    <Link to="/adatvedelem" className="opacity-50 hover:opacity-100 transition-opacity hover:text-gold-text dark:hover:text-gold-light">Adatvédelem</Link>
                     <span className="opacity-50">•</span>
                     <span className="opacity-70">AI with Antigravity</span>
                 </p>
-                <p className="text-[10px] sm:text-xs font-bold text-indigo-500 dark:text-indigo-400 tracking-wider pt-1">
+                <p className="text-[10px] sm:text-xs font-bold text-gold-text dark:text-gold-light tracking-wider pt-1">
                     v5.0.0
                 </p>
             </div>

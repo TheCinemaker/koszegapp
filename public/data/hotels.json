@@ -730,39 +730,6 @@
     "description": "Hangulatos vendégház saját kerttel, játszótérrel és szalonnasütő hellyel. Ingyenes wifi, parkolás, és önellátásra alkalmas konyha is rendelkezésre áll. (Forrás: szallas.hu, saját honlap)"
   },
   {
-    "id": 23,
-    "name": "Akácos Vendégház",
-    "type": "vendégház",
-    "tags": [
-      "vendégház",
-      "pihenőház"
-    ],
-    "address": "9730 Kőszeg, Pogányok",
-    "coords": {
-      "lat": 47.3691353,
-      "lng": 16.5243788
-    },
-    "image": "akacos.png",
-    "gallery": [],
-    "amenities": [
-      "wifi",
-      "parkoló",
-      "kert",
-      "játszótér",
-      "szalonnasütő"
-    ],
-    "rating": 9.8,
-    "reviews_count": 25,
-    "price_from": 70,
-    "currency": "EUR",
-    "phone": "+36 30 4633186",
-    "email": "akacosvendeghaz@gmail.com",
-    "website": "www.akacosvendeghaz.hu",
-    "open_all_year": true,
-    "notes": "Családbarát vendégház játszótérrel és szalonnasütő hellyel – 2025-ös vendégértékelés: 9,8.",
-    "description": "Hangulatos vendégház saját kerttel, játszótérrel és szalonnasütő hellyel. Ingyenes wifi, parkolás, és önellátásra alkalmas konyha is rendelkezésre áll. (Forrás: szallas.hu, saját honlap)"
-  },
-  {
     "id": 25,
     "name": "Kőszeg Levendula Apartmanház",
     "type": "apartmanház",
@@ -1248,37 +1215,6 @@
   },
   {
     "id": 41,
-    "name": "Komló Apartman Mátyás",
-    "type": "apartman",
-    "tags": [
-      "apartman"
-    ],
-    "address": "9730 Kőszeg, Chernel u. 4.",
-    "coords": {
-      "lat": 47.3857,
-      "lng": 16.5466
-    },
-    "image": "matyas.webp",
-    "gallery": [],
-    "amenities": [
-      "wifi",
-      "parkoló",
-      "konyha",
-      "kert"
-    ],
-    "rating": 9.7,
-    "reviews_count": 20,
-    "price_from": 72,
-    "currency": "EUR",
-    "phone": "+36 30 999 7788",
-    "email": "info@komloapartman.hu",
-    "website": "https://komloapartman.hu",
-    "open_all_year": true,
-    "notes": "Barátságos apartman zöld környezetben, 2025-ben is népszerű vendégei körében.",
-    "description": "Jól felszerelt apartman kerttel és saját parkolóval. Ideális nyugodt kikapcsolódáshoz, wifi ingyenesen elérhető. (Forrás: szallas.hu, booking.com)"
-  },
-  {
-    "id": 42,
     "name": "Komló Apartman Mátyás",
     "type": "apartman",
     "tags": [
