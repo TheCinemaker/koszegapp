@@ -60,6 +60,27 @@
     "isVarszinhaz": false
   },
   {
+    "name": "Ingyenes városvezetés",
+    "date": "2026-10-24",
+    "time": "15:00",
+    "location": "Hotel Írottkő",
+    "coords": {
+      "lat": 47.38816032229208,
+      "lng": 16.542552814414474
+    },
+    "description": "A Kőszegi Turisztikai Szövetség október 24-én ingyenes, vezetett városnéző sétát szervez.\n\nCélunk, hogy a városunkba látogató vendégek számára tartalmas, ingyenesen elérhető programot kínáljunk, amelynek keretében közelebbről is megismerhetik Kőszeg történelmét, értékeit és különleges hangulatát.",
+    "tags": [
+      "városvezetés",
+      "séta"
+    ],
+    "image": "whatsapp-image-2026-10-19-at-20.21.18.jpeg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1792477206236"
+  },
+  {
     "name": "Burger madness",
     "date": "2026-10-30",
     "time": "18:00",
