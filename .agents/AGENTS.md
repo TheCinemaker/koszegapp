@@ -51,6 +51,21 @@ This file contains persistent workspace rules and historical context for AI agen
 - **Official Slogan:** The official brand title & slogan is strictly **`visitKőszeg – Élmények. Élőben.`**.
 - **UNALTERABLE RULE:** UNDER NO CIRCUMSTANCES should this text ever be removed, rewritten, or altered in `index.html`, `SEO.jsx`, or default page headers. It is a core brand component.
 
+### 8. Supabase New Tables & Data API Explicit GRANTs (Oct 30+ Breaking Change)
+- **Supabase Policy Change:** Starting October 30, Supabase discontinues automatic Data API access for new tables created in the `public` schema. Without explicit `GRANT` statements in the migration or SQL script, `supabase-js`, PostgREST, and GraphQL will fail with a `permission denied` error.
+- **Mandatory SQL Standard:** EVERY migration or script creating a new table (`CREATE TABLE public.<table_name>`) MUST explicitly include the required role permissions in the same migration file:
+  ```sql
+  -- Anon / Public read (if intended for unauthenticated / public access):
+  GRANT SELECT ON public.<table_name> TO anon;
+
+  -- Authenticated users (adjust operations per table requirements):
+  GRANT SELECT, INSERT, UPDATE, DELETE ON public.<table_name> TO authenticated;
+
+  -- Service role / Edge functions / backend:
+  GRANT SELECT, INSERT, UPDATE, DELETE ON public.<table_name> TO service_role;
+  ```
+- **RLS Reminder:** Always enable RLS (`ALTER TABLE public.<table_name> ENABLE ROW LEVEL SECURITY;`) and define explicit policies in addition to the role GRANTs.
+
 ## 🧠 SESSION MEMORY & ACTIVE RULES
 
 ### 1. Manual Event & JSON Management (Active until 2026-07-26)

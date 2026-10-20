@@ -1,6 +1,6 @@
 {
   "name": "koeszegapp",
-  "version": "5.0.38",
+  "version": "5.0.39",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
