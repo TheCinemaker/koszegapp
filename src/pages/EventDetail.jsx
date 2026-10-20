@@ -15,7 +15,6 @@ import {
   IoCloseOutline,
   IoBedOutline,
   IoCompassOutline,
-  IoOpenOutline,
 } from 'react-icons/io5';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Toaster, toast } from 'react-hot-toast';
@@ -505,15 +504,6 @@ export default function EventDetail() {
     return format(s, 'HH:mm');
   }, [s, evt]);
 
-  const isOrsolya = useMemo(() => {
-    if (!evt) return false;
-    if (evt.app_url && evt.app_url.includes('orsolya')) return true;
-    const id = (evt.id || '').toLowerCase();
-    const name = (evt.name || '').toLowerCase();
-    const tags = (evt.tags || []).map(t => String(t).toLowerCase());
-    return id.includes('orsolya') || name.includes('orsolya') || tags.some(t => t.includes('orsolya'));
-  }, [evt]);
-
   if (loading) {
     return <LoadingSpinner fullScreen={true} label="Esemény betöltése..." />;
   }
@@ -524,7 +514,7 @@ export default function EventDetail() {
         <p className="text-red-500 mb-6 text-lg font-bold">Hiba: {error || 'Az esemény nem található.'}</p>
         <button
           onClick={() => navigate('/events')}
-          className="px-6 py-3 bg-indigo-500 hover:opacity-90 text-white rounded-xl font-bold shadow-sm transition-opacity"
+          className="px-6 py-3 bg-brand hover:opacity-90 text-gold-light rounded-xl font-bold shadow-sm transition-opacity"
         >
           Vissza az eseményekhez
         </button>
@@ -661,41 +651,6 @@ export default function EventDetail() {
 
             {/* --- A "szelvény": cselekvések --- */}
             <div className="p-5 sm:p-6 pt-4">
-              {/* Kiemelt OrsolyaApp Banner */}
-              {isOrsolya && (
-                <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/15 via-indigo-500/15 to-purple-500/15 border-2 border-indigo-500/40 dark:border-indigo-400/40 shadow-card">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-xl bg-indigo-500 text-white flex items-center justify-center text-xl shrink-0 shadow-md">
-                        📱
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-700 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-900/60 px-2 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700">
-                            Hivatalos Fesztivál App
-                          </span>
-                        </div>
-                        <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white mt-1">
-                          OrsolyaApp · orsolya.netlify.app
-                        </h4>
-                        <p className="text-xs text-slate-600 dark:text-zinc-400">
-                          Élő adagszámok, Civil Ízek Utcája bográcsok és vásári programok a zsebedben!
-                        </p>
-                      </div>
-                    </div>
-                    <a
-                      href="https://orsolya.netlify.app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full sm:w-auto px-4 py-2.5 bg-indigo-500 hover:opacity-90 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-opacity shrink-0"
-                    >
-                      <span>Megnyitás az appban</span>
-                      <IoOpenOutline className="text-sm" />
-                    </a>
-                  </div>
-                </div>
-              )}
-
               {/* Fő CTA - Local ticket system */}
               {ticketEvent && (
                 <button
@@ -739,18 +694,8 @@ export default function EventDetail() {
               </div>
 
               {/* Másodlagos linkek */}
-              {(isOrsolya || evt.link || (location && getDistanceKm(location.lat, location.lng, 47.389, 16.54) > 100)) && (
+              {(evt.link || (location && getDistanceKm(location.lat, location.lng, 47.389, 16.54) > 100)) && (
                 <div className="flex flex-wrap gap-2.5 mt-2.5">
-                  {isOrsolya && (
-                    <a
-                      href="https://orsolya.netlify.app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 h-11 rounded-control bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-300 font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors border border-indigo-300/60 dark:border-indigo-700/60"
-                    >
-                      <span className="text-sm">📱</span> Hivatalos OrsolyaApp (orsolya.netlify.app)
-                    </a>
-                  )}
                   {evt.link && (
                     <a
                       href={evt.link}
@@ -785,33 +730,6 @@ export default function EventDetail() {
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 mb-4">
               A programról
             </p>
-            {isOrsolya && (
-              <div className="mb-6 p-4 rounded-2xl bg-surface-card dark:bg-surface-card-dark border-2 border-indigo-500/30 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🍲</span>
-                  <div>
-                    <h5 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                      Kőszegi Orsolya-napi Vásár & Civil Ízek Utcája
-                    </h5>
-                    <p className="text-[11px] sm:text-xs text-slate-600 dark:text-zinc-400">
-                      Bográcsok, kóstolók, kézműves vásár és térkép elérhető az új webappban:{' '}
-                      <a href="https://orsolya.netlify.app" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 underline font-bold">
-                        orsolya.netlify.app
-                      </a>
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href="https://orsolya.netlify.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-indigo-500 hover:opacity-90 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-opacity shrink-0"
-                >
-                  <span>Megnyitás</span>
-                  <IoOpenOutline className="text-xs" />
-                </a>
-              </div>
-            )}
             <p className="text-slate-700 dark:text-zinc-300 leading-[1.75] text-[15px] sm:text-base whitespace-pre-wrap">
               {evt.description}
             </p>
@@ -827,7 +745,7 @@ export default function EventDetail() {
           <div className="max-w-2xl mx-auto px-4 mt-10">
             <div className="flex items-center justify-between mb-3 px-2">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 flex items-center gap-2">
-                <IoCompassOutline className="text-indigo-500 dark:text-indigo-400 text-sm" /> Helyszín & Térkép
+                <IoCompassOutline className="text-gold-text dark:text-gold-light text-sm" /> Helyszín & Térkép
               </p>
               <a
                 href={
@@ -838,7 +756,7 @@ export default function EventDetail() {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-indigo-500 dark:text-indigo-400 hover:opacity-80 transition-opacity"
+                className="text-xs font-bold text-gold-text dark:text-gold-light hover:opacity-80 transition-opacity"
               >
                 {evt.mapUrl ? 'Google Maps megnyitása →' : 'Útvonalterv →'}
               </a>
@@ -867,7 +785,7 @@ export default function EventDetail() {
           <div className="max-w-2xl mx-auto px-4 mt-8">
             <div className="px-2 mb-4">
               <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <IoLocationOutline className="text-indigo-500 text-base" /> Csatlakozó Helyszínek & Porták ({evt.pois.length} helyszín)
+                <IoLocationOutline className="text-gold-text dark:text-gold-light text-base" /> Csatlakozó Helyszínek & Porták ({evt.pois.length} helyszín)
               </h3>
               <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
                 Kattints bármelyik helyszínre az azonnali Google Maps navigációhoz!
@@ -881,14 +799,14 @@ export default function EventDetail() {
                   href={`https://www.google.com/maps/dir/?api=1&destination=${poi.lat},${poi.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group bg-white dark:bg-zinc-900 p-3.5 rounded-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-indigo-500/50 dark:hover:border-indigo-400/50 transition-all flex flex-col justify-between"
+                  className="group bg-white dark:bg-zinc-900 p-3.5 rounded-xl border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-gold/50 dark:hover:border-gold/50 transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-[11px] font-bold flex items-center justify-center shrink-0">
+                      <span className="w-5 h-5 rounded-full bg-gold/15 dark:bg-gold/20 text-gold-text dark:text-gold-light text-[11px] font-bold flex items-center justify-center shrink-0">
                         {idx + 1}
                       </span>
-                      <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-gold-text dark:group-hover:text-gold-light transition-colors line-clamp-1">
                         {poi.name}
                       </h4>
                     </div>
@@ -897,7 +815,7 @@ export default function EventDetail() {
                     </p>
                   </div>
                   <div className="mt-2.5 pl-7 flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 flex items-center gap-1">
+                    <span className="text-[10px] font-bold text-gold-text dark:text-gold-light flex items-center gap-1">
                       Útvonalterv <span className="group-hover:translate-x-0.5 transition-transform">→</span>
                     </span>
                   </div>
@@ -920,7 +838,7 @@ export default function EventDetail() {
             className="fixed bottom-24 left-4 right-4 z-[100] sm:left-auto sm:right-6 sm:w-80"
           >
             <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 p-5 rounded-2xl shadow-2xl flex items-center gap-4 relative overflow-hidden">
-              <div className="w-12 h-12 bg-indigo-500 text-white rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-12 h-12 bg-brand text-gold-light rounded-xl flex items-center justify-center shrink-0 shadow-sm">
                 <IoBedOutline className="text-2xl" />
               </div>
 
@@ -933,7 +851,7 @@ export default function EventDetail() {
                 </p>
                 <button
                   onClick={handleBookingClick}
-                  className="mt-2 text-xs font-bold text-indigo-500 dark:text-indigo-400 flex items-center gap-1 hover:opacity-90 transition-opacity"
+                  className="mt-2 text-xs font-bold text-gold-text dark:text-gold-light flex items-center gap-1 hover:opacity-90 transition-opacity"
                 >
                   {t('bubbleBtn')} <span>→</span>
                 </button>

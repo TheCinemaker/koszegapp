@@ -43,7 +43,7 @@ const linkifyPhones = (text) => {
         <a
           key={i}
           href={`tel:${part.replace(/\s/g, '')} `}
-          className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:bg-indigo-100 dark:hover:bg-indigo-500/30 mt-2 border border-indigo-200 dark:border-indigo-500/30"
+          className="inline-flex items-center gap-1.5 bg-gold/15 dark:bg-gold/20 text-gold-text dark:text-gold-light px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:bg-gold/25 mt-2 border border-gold/30"
         >
           <IoCallOutline className="text-sm" />
           {part}
@@ -87,7 +87,7 @@ export default function Info() {
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand dark:border-gold"></div>
     </div>
   );
 
@@ -105,12 +105,12 @@ export default function Info() {
       {/* GLOBAL BACKGROUND NOISE */}
       <div className="fixed inset-0 opacity-[0.03] bg-[url('/noise.svg')] mix-blend-overlay pointer-events-none z-0"></div>
 
-      <div className="max-w-3xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10">
 
         {/* 1. SIMPLE HEADER */}
         <FadeUp className="flex items-center gap-4 mb-8">
-          <Link to="/" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/40 hover:bg-white/60 transition-colors shadow-sm">
-            <IoArrowBack className="text-xl text-gray-900 dark:text-white" />
+          <Link to="/" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+            <IoArrowBack className="text-xl text-brand dark:text-white" />
           </Link>
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white leading-none">
@@ -153,12 +153,12 @@ export default function Info() {
                             className="
                                     relative overflow-hidden group block
                                     bg-gradient-to-br from-[#1c1c1e] to-[#2c2c1e] dark:from-black dark:to-[#1c1c1e]
-                                    rounded-[2rem] p-8 text-white shadow-2xl hover:shadow-indigo-500/20
+                                    rounded-[2rem] p-8 text-white shadow-2xl hover:shadow-gold/20
                                     transition-all duration-700 hover:scale-[1.01]
                                 "
                           >
                             {/* Abstract Background */}
-                            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-indigo-500/30 to-purple-500/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 group-hover:scale-110 transition-transform duration-1000"></div>
+                            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-gold/30 to-brand-light/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 group-hover:scale-110 transition-transform duration-1000"></div>
 
                             <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-6">
                               <div className="w-20 h-20 rounded-[1.5rem] bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-transform duration-700">
@@ -222,7 +222,7 @@ export default function Info() {
                             bg-white/70 dark:bg-white/5 
                             backdrop-blur-[20px] backdrop-saturate-[1.6]
                             border border-white/60 dark:border-white/10
-                            rounded-[1.8rem] p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10
+                            rounded-[1.8rem] p-6 shadow-sm hover:shadow-xl hover:shadow-gold/10
                             transition-all duration-500 hover:scale-[1.02] active:scale-[0.98]
                             flex flex-col
                             ">

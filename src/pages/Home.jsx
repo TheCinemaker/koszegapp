@@ -11,11 +11,7 @@ import {
   IoCarSportOutline,
   IoInformationCircleOutline,
   IoChevronForward,
-  IoStarOutline,
-  IoLockClosed,
-  IoWineOutline,
-  IoCompassOutline,
-  IoOpenOutline
+  IoLockClosed
 } from 'react-icons/io5';
 import {
   motion,
@@ -278,23 +274,6 @@ export default function Home({ appData, weather }) {
                         <IoInformationCircleOutline className="text-xs shrink-0" />
                         {sec.disclaimer}
                       </p>
-                    )}
-                    {sec.appUrl && (
-                      <div className="mt-3 flex flex-wrap items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            window.open(sec.appUrl, '_blank', 'noopener,noreferrer');
-                          }}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/30 hover:brightness-105 hover:scale-[1.02] active:scale-95 transition-all border border-amber-200"
-                        >
-                          <span className="text-sm">📱</span>
-                          <span>OrsolyaApp megnyitása</span>
-                          <IoOpenOutline className="text-sm ml-0.5" />
-                        </button>
-                      </div>
                     )}
                   </div>
 

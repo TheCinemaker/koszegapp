@@ -1,5 +1,33 @@
 [
   {
+    "id": "nemzeti_unnep_2026",
+    "name": "Nemzeti Ünnep – 1956-os megemlékezés",
+    "date": "2026-10-22",
+    "endDate": "2026-10-22",
+    "end_date": "2026-10-22",
+    "time": "16:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Kőszeg Város Önkormányzata szeretettel várja a lakosokat az 1956-os forradalom és szabadságharc 70. évfordulója, valamint a Magyar Köztársaság kikiáltásának 37. évfordulója alkalmából tartott megemlékezésre!\n\n🕯 17:00 – Koszorúzás a Tornay Endre András '56-os emlékoszlopnál (Kethelyi út), Kőszeg Város Fúvószenekarának közreműködésével\n🎖 Ünnepi megemlékezés a Jurisics-vár lovagtermében a Concordia-Barátság Énekegyesület és Prikazovics Ferenc közreműködésével\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszeg Város Önkormányzata | Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "nemzeti ünnep",
+      "1956",
+      "koszorúzás",
+      "lovagterem",
+      "jurisics vár",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "nemzeti_unnep_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎗️ NEMZETI ÜNNEP – OKT. 22.",
+    "isVarszinhaz": true
+  },
+  {
     "id": "textil_es_ido_kiallitas_2026",
     "name": "Textil és Idő – A Kortárs Textilművészeti Alkotóház kiállítása",
     "date": "2026-10-23",
@@ -31,6 +59,34 @@
     "isVarszinhaz": false
   },
   {
+    "id": "kezmuves_foglalkozas_2026",
+    "name": "Kézműves foglalkozás a nemzeti ünnepen",
+    "date": "2026-10-23",
+    "endDate": "2026-10-23",
+    "end_date": "2026-10-23",
+    "time": "10:00-16:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A nemzeti ünnep alkalmából kézműves foglalkozás várja a látogatókat a várban!\n\n🎨 Minden jegyvásárlónak vagy Várkártya-tulajdonosnak elérhető program.\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "kézműves foglalkozás",
+      "nemzeti ünnep",
+      "jurisics vár",
+      "várkártya",
+      "ingyenes",
+      "családi",
+      "várszínház"
+    ],
+    "image": "kezmuves_foglalkozas_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
     "id": "madartani_seta_tomord_2026",
     "name": "Madártani séta a „Chernel nyomában tanösvényen” – Tömörd",
     "date": "2026-10-24",
@@ -60,17 +116,21 @@
     "isVarszinhaz": false
   },
   {
-    "name": "Ingyenes városvezetés",
+    "name": "Városnéző séta – Ingyenes vezetett séta",
     "date": "2026-10-24",
     "time": "15:00",
-    "location": "Hotel Írottkő",
+    "location": "Fő tér, Hotel Írottkő előtt",
     "coords": {
       "lat": 47.38816032229208,
       "lng": 16.542552814414474
     },
     "description": "A Kőszegi Turisztikai Szövetség október 24-én ingyenes, vezetett városnéző sétát szervez.\n\nCélunk, hogy a városunkba látogató vendégek számára tartalmas, ingyenesen elérhető programot kínáljunk, amelynek keretében közelebbről is megismerhetik Kőszeg történelmét, értékeit és különleges hangulatát.",
     "tags": [
+      "városnéző séta",
       "városvezetés",
+      "fő tér",
+      "tourinform",
+      "ingyenes",
       "séta"
     ],
     "image": "whatsapp-image-2026-10-19-at-20.21.18.jpeg",
@@ -79,6 +139,58 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792477206236"
+  },
+  {
+    "id": "agota_kristof_emleknap_2026",
+    "name": "Agota Kristof emléknap",
+    "date": "2026-10-27",
+    "endDate": "2026-10-27",
+    "end_date": "2026-10-27",
+    "time": "14:00",
+    "location": "Festetics Palota (Kőszeg, Chernel u. 10.)",
+    "coords": {
+      "lat": 47.388838,
+      "lng": 16.53938
+    },
+    "description": "Megemlékezés a Kőszegen élt írónő, Agota Kristof 91. születésnapja alkalmából.\n\n📍 Helyszín: Festetics Palota, Kőszeg, Chernel u. 10.\n\n★ A megemlékezés ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "agota kristof",
+      "emléknap",
+      "festetics palota",
+      "irodalom",
+      "ingyenes"
+    ],
+    "image": "agota_kristof_emleknap_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "lovass_tibor_forgatokonyvtol_filmig_2026",
+    "name": "Lovass Tibor: A forgatókönyvtől a filmig",
+    "date": "2026-10-29",
+    "endDate": "2026-10-29",
+    "end_date": "2026-10-29",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Lovass Tibor előadása: „A forgatókönyvtől a filmig”.\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár\n\n★ Az előadás ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "lovass tibor",
+      "előadás",
+      "film",
+      "múzeum",
+      "könyvtár",
+      "ingyenes"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   },
   {
     "name": "Burger madness",
@@ -99,6 +211,227 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792398067617"
+  },
+  {
+    "id": "hedry_maria_borbala_2026",
+    "name": "Hedry Mária: Borbála",
+    "date": "2026-11-05",
+    "endDate": "2026-11-05",
+    "end_date": "2026-11-05",
+    "time": "19:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Hedry Mária: Borbála – életrajzi színházi előadás (70 perc)\n\n🎭 Szereplők: Gajdó Delinke (Borcsi) és Nádasdy Borbála (Borbála)\n🎬 Rendező: Petneházy Attila\n📖 Alapja: Hedry Mária írónő gróf Nádasdy Borbála naplóregény-trilógiája\n\nBorbála 17 évesen, 1957-ben egyedül menekült Ausztriába, életét kockáztatva. Az előadás a családja üldöztetésétől a kényszerű emigráció fájdalmán és a hontalanság magányán át vezet az idegenben megtalált hivatás örömééig, majd a hazatérés megnyugvásáig – a 20. századi magyar történelmet személyes sorson keresztül bemutatva.\n\n★ Az előadás ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "hedry mária",
+      "borbála",
+      "színház",
+      "előadás",
+      "nádasdy borbála",
+      "lovagterem",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "hedry_maria_borbala_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎭 SZÍNHÁZ – BORBÁLA",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "marton_napi_ujbor_bemutato_2026",
+    "name": "Márton-napi Újbor bemutató",
+    "date": "2026-11-06",
+    "endDate": "2026-11-06",
+    "end_date": "2026-11-06",
+    "time": "16:45",
+    "location": "Jurisics vár – KÖSZHÁZ",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A Kőszegi Borászok Egyesülete szervezésében újbor-bemutató és kóstoló várja a látogatókat!\n\n🍷 A helyi borászok újborait mutatják be és kóstoltatják meg – ezek még fejlődésben lévő, nem kész borok, a kóstoló a jelenlegi állapotukat tükrözi.\n🗣 A borászok beszélnek az idei évjárat sajátosságairól és nehézségeiről.\n⛪ Bences Martin diakónus előadást tart Szent Mártonról.\n🥨 A borok mellé a Kőszegi Borbarát Hölgyek Egyesülete apró harapnivalókat készít.\n\n👥 Ültetett kóstoló, legfeljebb 60 fős létszámmal.\n\n🎟️ Belépő:\n• Előzetes regisztrációval: 2 500 Ft/fő\n• Regisztráció nélkül, a szabad helyek függvényében: 3 000 Ft/fő\n(A jegy ára a helyszínen, készpénzben fizetendő.)\n\n📝 Regisztráció: www.koszegibor.hu | Telefon: +36 30 989 0841",
+    "tags": [
+      "márton nap",
+      "újbor",
+      "borkóstoló",
+      "köszház",
+      "kőszegi borászok",
+      "regisztráció",
+      "várszínház"
+    ],
+    "image": "marton_napi_ujbor_bemutato_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍷 MÁRTON-NAPI ÚJBOR",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "kiralyi_varosnap_2026",
+    "name": "Királyi Városnap",
+    "date": "2026-11-06",
+    "endDate": "2026-11-06",
+    "end_date": "2026-11-06",
+    "time": "09:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Királyi Városnap – egész napos városi ünnepi program!\n\n📚 09:00 – „Időfürkész” országos döntő (műveltségi diákvetélkedő), Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvényterme\n🕯 13:30 – Koszorúzás a kőszegi díszpolgárok sírjainál (Temető)\n🏆 15:00 – Ünnepi képviselő-testületi ülés a Jurisics vár lovagtermében, „Jó tanuló, jó sportoló” díjak átadása\n🎓 17:00 – Ünnepi képviselő-testületi ülés a lovagtermében: előadás Dr. Szigetváry Ferencről (előadók: Károlyi Márton és Dr. Csaba Miklós), majd a városi kitüntetések átadása\n\n★ A program ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszeg Város Önkormányzata | Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "királyi városnap",
+      "díszpolgár",
+      "önkormányzat",
+      "ünnepség",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "kiralyi_varosnap_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "👑 KIRÁLYI VÁROSNAP",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "fordulopont_2026",
+    "name": "FORDULÓPONT – előadássorozat szülőknek",
+    "date": "2026-11-07",
+    "endDate": "2026-11-07",
+    "end_date": "2026-11-07",
+    "time": "10:00-16:00",
+    "location": "Jurisics vár – KÖSZHÁZ",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A NOE Kőszeg és Kőszeghegyalja Nagycsaládos Csoport (Családjainkért Alapítvány) szervezésében előadássorozat szülőknek a tiédzserkorról.\n\n💬 Témák:\n• A tinédzserek jobb megértése\n• Hogyan kezeljük a dühkitöréseket – a sajátunkat és a gyerekünkét is\n• Hogyan oldjunk meg közösen konfliktusokat\n• Tinédzserek az online térben – veszélyek és lehetőségek\n\n★ A rendezvény ingyenes, előzetes regisztrációhoz kötött! ★\n\nℹ️ Szervező: NOE Kőszeg és Kőszeghegyalja Nagycsaládos Csoport | Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "fordulópont",
+      "nagycsaládosok",
+      "tinédzser",
+      "előadás",
+      "regisztráció",
+      "várszínház"
+    ],
+    "image": "fordulopont_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "simon_zsofia_a_hoher_pallosa_2026",
+    "name": "Simon Zsófia: A hóhér pallosa",
+    "date": "2026-11-10",
+    "endDate": "2026-11-10",
+    "end_date": "2026-11-10",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Simon Zsófia: A hóhér pallosa – előadás.\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár\n\n★ Az előadás ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "simon zsófia",
+      "előadás",
+      "hóhér pallosa",
+      "múzeum",
+      "könyvtár",
+      "ingyenes"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "jurisics_miklos_koszeg_ostroma_1532_2026",
+    "name": "Jurisics Miklós – Kőszeg ostroma 1532 (filmvetítés)",
+    "date": "2026-11-11",
+    "endDate": "2026-11-11",
+    "end_date": "2026-11-11",
+    "time": "18:00",
+    "location": "Jurisics vár – KÖSZHÁZ",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Dokumentumfilm-vetítés: Jurisics Miklós – Kőszeg ostroma 1532.\n\n🎬 A Magyar Történelmi és Műfaji Film Alapítvány dokumentumfilmje Kőszeg 1532-es, legendás ostromáról.\n\n★ A vetítés ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "jurisics miklós",
+      "1532",
+      "ostrom",
+      "dokumentumfilm",
+      "köszház",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "jurisics_miklos_koszeg_ostroma_1532_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🏰 OSTROM 1532 – DOKUMENTUMFILM",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "bogyo_es_baboca_2026",
+    "name": "Bogyó és Babóca – Mesék a Pöttyös házból (óvodásoknak)",
+    "date": "2026-11-13",
+    "endDate": "2026-11-13",
+    "end_date": "2026-11-13",
+    "time": "10:00",
+    "location": "Városi Könyvtár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "XII. Országos Rajzfilmünnep a könyvtárban: „Mesék a Pöttyös házból” (Bogyó és Babóca)\n\n🎈 Program:\n1. Bartos Erika Bogyó és Babóca bábkiállításának zárása\n2. A 7. évad egész estés filmjének (71 perc) vetítése\n\n👶 Figyelem: a program kifejezetten óvodai csoportoknak szól, előzetes regisztrációhoz kötött!\n📝 Regisztráció: programszervezes@kvmkl.hu (óvoda neve, csoport, gyereklétszám megadásával) – kapcsolattartó: Czagány Tünde\n\n★ A program díjmentes! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár | KEDD Animációs Stúdió",
+    "tags": [
+      "bogyó és babóca",
+      "rajzfilm",
+      "gyerekprogram",
+      "óvodások",
+      "könyvtár",
+      "regisztráció"
+    ],
+    "image": "bogyo_es_baboca_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "xii_orszagos_rajzfilmunnep_vuk_2026",
+    "name": "XII. Országos Rajzfilmünnep – VUK",
+    "date": "2026-11-14",
+    "endDate": "2026-11-14",
+    "end_date": "2026-11-14",
+    "time": "16:00",
+    "location": "Jurisics vár – KÖSZHÁZ",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A XII. Országos Rajzfilmünnep keretében a VUK című klasszikus magyar rajzfilm vetítése gyerekeknek!\n\n🦊 VUK (1981) – Fekete István azonos című regénye alapján\n🎬 Rendező: Dargay Attila | Producerek: Budai György, Imre István | Forgatókönyv: Dargay Attila, Imre István, Tarbay Ede | Zene: Wolf Péter\n\nVuk, a kis róka, egy rókacsalád legkíváncsibb kölyke. Amikor visszatér odújától, szüleit és testvéreit már elpusztította a vadász és kutyája. Nagybátyja, Karak neveli fel. Felnőttként Vuk bosszút áll a vadászon, elviszi baromfiait, és egy rókalányt szabadít ki, akivel családot alapít.\n\n★ A vetítés ingyenesen látogatható! ★\n\nℹ️ Szervező: KEDD Animációs Stúdió | Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "rajzfilmünnep",
+      "vuk",
+      "gyerekprogram",
+      "animáció",
+      "köszház",
+      "ingyenes",
+      "családi",
+      "várszínház"
+    ],
+    "image": "xii_orszagos_rajzfilmunnep_vuk_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🦊 VUK – RAJZFILMÜNNEP",
+    "isVarszinhaz": true
   },
   {
     "name": "Jumpplus Mikulás Kupa",

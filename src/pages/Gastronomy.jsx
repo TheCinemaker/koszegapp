@@ -4,6 +4,7 @@ import GastroCard from '../components/GastroCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { FaSearch } from 'react-icons/fa';
+import { IoArrowBack } from 'react-icons/io5';
 import { FadeUp } from '../components/AppleMotion';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
@@ -68,22 +69,21 @@ export default function Gastronomy({ restaurants = [], loading }) {
   }
 
   return (
-    <div className="min-h-screen pb-24 pt-0 px-4">
+    <div className="min-h-screen pb-32 pt-4 px-4">
       <SEO
           title="Éttermek és gasztronómia Kőszegen"
           description="Kőszeg legjobb éttermeinek, borozóinak és kávézóinak listája. Helyi specialitások, Kőszegi bor, asztalfoglalás és ételrendelés egy helyen."
           url="/gastronomy"
           keywords="Kőszeg étterem, Kőszeg bor, kőszegi gasztronómia, Kőszeg kávézó, Kőszeg borozó"
       />
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-4 pt-2">
-          <button onClick={() => navigate('/')} className="w-9 h-9 rounded-full bg-surface-card dark:bg-surface-card-dark backdrop-blur-md flex items-center justify-center shadow-card hover:scale-105 transition-transform border border-slate-200/80 dark:border-white/10">
-            <svg className="w-5 h-5 text-gray-700 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={() => navigate('/')} className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+            <IoArrowBack className="text-xl text-brand dark:text-white" />
           </button>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {t('title')}
           </h1>
-          <div className="w-9" />
         </div>
 
         {/* Search Bar */}
@@ -135,7 +135,7 @@ export default function Gastronomy({ restaurants = [], loading }) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {finalList.length > 0 ? (
             finalList.map((restaurant, index) => (

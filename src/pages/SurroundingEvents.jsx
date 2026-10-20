@@ -130,7 +130,7 @@ const SurroundingEventCard = ({ evt, isFavorite, toggleFavorite, isPast }) => {
                 </span>
               )}
               {evt.settlement && (
-                <span className="px-2.5 py-0.5 rounded-full bg-indigo-500 text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm">
+                <span className="px-2.5 py-0.5 rounded-full bg-brand text-gold-light text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm shadow-sm">
                   {evt.settlement}
                 </span>
               )}
@@ -239,11 +239,11 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
   const past = filtered.filter(evt => evt._e && evt._e < now);
 
   if (loading) return (
-    <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100">
       <motion.div
         layoutId="morph-surrounding-events"
         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-sm"
+        className="max-w-4xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-sm"
       >
         <Link to="/" aria-label="Vissza" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
           <FaArrowLeft className="text-lg text-brand dark:text-white" />
@@ -251,7 +251,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
         <motion.div
           layoutId="morph-surrounding-events-icon"
           transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100"
+          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gold/15 text-gold-text dark:text-gold-light border border-gold/30"
         >
           <IoCalendarOutline />
         </motion.div>
@@ -264,7 +264,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
         </motion.h1>
       </motion.div>
       <div className="flex justify-center mt-20">
-        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-2xl animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-brand dark:border-gold border-t-transparent rounded-2xl animate-spin"></div>
       </div>
     </div>
   );
@@ -272,7 +272,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
   if (error) return <p className="text-red-500 p-8 text-center bg-red-50 m-4 rounded-xl">Hiba: {error}</p>;
 
   return (
-    <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <SEO
         title="Hegyaljai programok és rendezvények"
         description="Rendezvények és programok a Kőszeg-hegyaljai településeken: Cák, Velem, Bozsok, Lukácsháza és egyéb falvak eseménynaptára."
@@ -285,7 +285,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
       <motion.div
         layoutId="morph-surrounding-events"
         transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-        className="max-w-7xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-sm"
+        className="max-w-4xl mx-auto flex items-center gap-4 mb-6 mt-2 px-4 py-4 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 shadow-sm"
       >
         <Link to="/" aria-label="Vissza" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
           <FaArrowLeft className="text-lg text-brand dark:text-white" />
@@ -293,7 +293,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
         <motion.div
           layoutId="morph-surrounding-events-icon"
           transition={{ layout: { type: 'spring', stiffness: 90, damping: 18, mass: 1 } }}
-          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gray-900/[0.06] dark:bg-white/10 text-gray-800 dark:text-gray-100"
+          className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl bg-gold/15 text-gold-text dark:text-gold-light border border-gold/30"
         >
           <IoCalendarOutline />
         </motion.div>
@@ -306,7 +306,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
         </motion.h1>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* 2. SEARCH */}
         <div className="mb-4">
           <div className="flex gap-3 h-8">
@@ -321,14 +321,14 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
                          border border-white/40 dark:border-gray-700/50
                          text-xs font-medium text-gray-900 dark:text-gray-100
                          placeholder-gray-500 dark:placeholder-gray-400
-                         focus:outline-none focus:ring-2 focus:ring-indigo-400/50
+                         focus:outline-none focus:ring-2 focus:ring-brand/30
                          shadow-sm transition-all duration-300
                          hover:bg-white/80 dark:hover:bg-gray-800/80"
             />
             <button
               className="w-8 h-8 rounded-lg flex items-center justify-center
-                         bg-indigo-600 text-white shadow-sm
-                         hover:bg-indigo-700 hover:scale-105
+                         bg-brand text-gold-light shadow-sm border border-gold/30
+                         hover:opacity-90 hover:scale-105
                          transition-all duration-300
                          active:scale-95"
             >
@@ -397,7 +397,7 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
             <p className="text-gray-500 dark:text-gray-400">Nincs a szűrésnek megfelelő program ebben az időszakban.</p>
             <button 
               onClick={() => { setFilter('all'); setSearchQuery('') }} 
-              className="mt-4 px-6 py-2 bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 rounded-xl font-bold hover:bg-indigo-200 transition"
+              className="mt-4 px-6 py-2 bg-gold/15 text-gold-text dark:bg-gold/20 dark:text-gold-light rounded-xl font-bold hover:bg-gold/25 transition"
             >
               Szűrők törlése
             </button>
@@ -441,8 +441,8 @@ export default function SurroundingEvents({ events: propEvents, loading: propLoa
                   key={short}
                   onClick={() => { setSelectedMonth(idx + 1); setFilter('byMonth'); setOpenPicker(false); }}
                   className={`py-3 rounded-xl text-sm font-bold transition-all ${selectedMonth === idx + 1
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-600 hover:text-indigo-600'
+                    ? 'bg-brand text-gold-light shadow-md'
+                    : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gold/10 dark:hover:bg-gray-600 hover:text-gold-text'
                     }`}
                 >
                   {short}.

@@ -105,7 +105,7 @@ export default function Attractions() {
   if (error) return <p className="text-red-500 p-8 text-center bg-red-50 m-4 rounded-xl">Hiba: {error}</p>;
 
   return (
-    <div className="min-h-screen pb-20 pt-0 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="min-h-screen pb-32 pt-4 px-4 relative text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <SEO
         title="Kőszeg látnivalói és nevezetességei"
         description="Felfedeznivalók Kőszegen: Jurisics-vár, Hősök kapuja, Fő tér, Chernel-kert, Óház-kilátó. Interaktív térkép és részletes leírások."
@@ -113,13 +113,13 @@ export default function Attractions() {
         keywords="Kőszeg látnivalók, Kőszeg vár, Kőszeg Fő tér, Kőszeg nevezetességek"
       />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Top Controls Area */}
         <FadeUp delay={0.1} className="mb-8">
           {/* Header Title with Back Button */}
           <div className="flex items-center gap-4 mb-6 mt-2">
-            <Link to="/" aria-label="Vissza" className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
-              <IoArrowBack className="text-lg" />
+            <Link to="/" aria-label="Vissza" className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-[30px] border border-white/60 dark:border-white/10 hover:opacity-90 transition-opacity">
+              <IoArrowBack className="text-xl text-brand dark:text-white" />
             </Link>
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {t('title')}
