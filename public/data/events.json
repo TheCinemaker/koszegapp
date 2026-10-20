@@ -28,6 +28,34 @@
     "isVarszinhaz": true
   },
   {
+    "id": "kezmuves_foglalkozas_2026",
+    "name": "Kézműves foglalkozás a nemzeti ünnepen",
+    "date": "2026-10-23",
+    "endDate": "2026-10-23",
+    "end_date": "2026-10-23",
+    "time": "10:00-16:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A nemzeti ünnep alkalmából kézműves foglalkozás várja a látogatókat a várban!\n\n🎨 Minden jegyvásárlónak vagy Várkártya-tulajdonosnak elérhető program.\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "kézműves foglalkozás",
+      "nemzeti ünnep",
+      "jurisics vár",
+      "várkártya",
+      "ingyenes",
+      "családi",
+      "várszínház"
+    ],
+    "image": "kezmuves_foglalkozas_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
     "id": "textil_es_ido_kiallitas_2026",
     "name": "Textil és Idő – A Kortárs Textilművészeti Alkotóház kiállítása",
     "date": "2026-10-23",
@@ -59,32 +87,24 @@
     "isVarszinhaz": false
   },
   {
-    "id": "kezmuves_foglalkozas_2026",
-    "name": "Kézműves foglalkozás a nemzeti ünnepen",
+    "name": "Meggie és Tomsa a Dominik Pizzeriában",
     "date": "2026-10-23",
-    "endDate": "2026-10-23",
-    "end_date": "2026-10-23",
-    "time": "10:00-16:00",
-    "location": "Jurisics vár",
+    "time": "20:00",
+    "location": "Dominik Pizzeria",
     "coords": {
-      "lat": 47.389692,
-      "lng": 16.538482
+      "lat": 47.38781700069535,
+      "lng": 16.539601530152304
     },
-    "description": "A nemzeti ünnep alkalmából kézműves foglalkozás várja a látogatókat a várban!\n\n🎨 Minden jegyvásárlónak vagy Várkártya-tulajdonosnak elérhető program.\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "description": "🎶✨ RETRÓ AZ EGÉSZ VILÁG ✨🎶\nElőzenés est pénteken! 🥳🥃\nMagyar és nemzetközi tánc- és pop-rock zene a ’60-as évektől a ’90-es évekig!\nEgy este a legnagyobb slágerekkel, nosztalgikus hangulattal és igazi retro életérzéssel. 🕺💃\n📍 Dominik Pizzéria & Étterem\n🕗 2026.10.23. 20:00\n🍕 Finom pizzák, ételek, italok és felejthetetlen hangulat egész este!\n📞Asztalfoglalás ajánlott!",
     "tags": [
-      "kézműves foglalkozás",
-      "nemzeti ünnep",
-      "jurisics vár",
-      "várkártya",
-      "ingyenes",
-      "családi",
-      "várszínház"
+      "élőzene"
     ],
-    "image": "kezmuves_foglalkozas_2026.jpg",
-    "createdBy": "admin",
+    "image": "meggi.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": false,
+    "id": "event-2026-1792493940484"
   },
   {
     "id": "madartani_seta_tomord_2026",
@@ -242,6 +262,33 @@
     "isVarszinhaz": true
   },
   {
+    "id": "kiralyi_varosnap_2026",
+    "name": "Királyi Városnap",
+    "date": "2026-11-06",
+    "endDate": "2026-11-06",
+    "end_date": "2026-11-06",
+    "time": "09:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Királyi Városnap – egész napos városi ünnepi program!\n\n📚 09:00 – „Időfürkész” országos döntő (műveltségi diákvetélkedő), Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvényterme\n🕯 13:30 – Koszorúzás a kőszegi díszpolgárok sírjainál (Temető)\n🏆 15:00 – Ünnepi képviselő-testületi ülés a Jurisics vár lovagtermében, „Jó tanuló, jó sportoló” díjak átadása\n🎓 17:00 – Ünnepi képviselő-testületi ülés a lovagtermében: előadás Dr. Szigetváry Ferencről (előadók: Károlyi Márton és Dr. Csaba Miklós), majd a városi kitüntetések átadása\n\n★ A program ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszeg Város Önkormányzata | Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "királyi városnap",
+      "díszpolgár",
+      "önkormányzat",
+      "ünnepség",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "kiralyi_varosnap_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "👑 KIRÁLYI VÁROSNAP",
+    "isVarszinhaz": true
+  },
+  {
     "id": "marton_napi_ujbor_bemutato_2026",
     "name": "Márton-napi Újbor bemutató",
     "date": "2026-11-06",
@@ -267,33 +314,6 @@
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🍷 MÁRTON-NAPI ÚJBOR",
-    "isVarszinhaz": true
-  },
-  {
-    "id": "kiralyi_varosnap_2026",
-    "name": "Királyi Városnap",
-    "date": "2026-11-06",
-    "endDate": "2026-11-06",
-    "end_date": "2026-11-06",
-    "time": "09:00",
-    "location": "Jurisics vár, lovagterem",
-    "coords": {
-      "lat": 47.389692,
-      "lng": 16.538482
-    },
-    "description": "Királyi Városnap – egész napos városi ünnepi program!\n\n📚 09:00 – „Időfürkész” országos döntő (műveltségi diákvetélkedő), Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvényterme\n🕯 13:30 – Koszorúzás a kőszegi díszpolgárok sírjainál (Temető)\n🏆 15:00 – Ünnepi képviselő-testületi ülés a Jurisics vár lovagtermében, „Jó tanuló, jó sportoló” díjak átadása\n🎓 17:00 – Ünnepi képviselő-testületi ülés a lovagtermében: előadás Dr. Szigetváry Ferencről (előadók: Károlyi Márton és Dr. Csaba Miklós), majd a városi kitüntetések átadása\n\n★ A program ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszeg Város Önkormányzata | Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
-    "tags": [
-      "királyi városnap",
-      "díszpolgár",
-      "önkormányzat",
-      "ünnepség",
-      "ingyenes",
-      "várszínház"
-    ],
-    "image": "kiralyi_varosnap_2026.jpg",
-    "createdBy": "admin",
-    "highlight": true,
-    "highlightLabel": "👑 KIRÁLYI VÁROSNAP",
     "isVarszinhaz": true
   },
   {
