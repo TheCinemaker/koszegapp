@@ -516,5 +516,28 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792398515505"
+  },
+  {
+    "name": "Szilveszteri bál a Csikar csárdában",
+    "date": "2026-12-31",
+    "time": "19:00",
+    "location": "Csikar csárda",
+    "coords": {
+      "lat": 47.38632875949127,
+      "lng": 16.554245987543354
+    },
+    "description": "✨ Kedves Vendégeink! ✨\nA tavalyi nagysikerű bál után idén is megrendezzük SZILVESZTERI BÁLUNKAT! 🥂\nZene: Czene Zoltán, https://zenezoli.hu\nVárjuk szeretettel telefonos és személyes foglalásaikat!\n+36309279242\nTöltsük együtt, jó hangulatban az év utolsó estéjét!",
+    "tags": [
+      "buli",
+      "szilveszter",
+      "zene",
+      "tánc"
+    ],
+    "image": "szilvesztercsikar.jpg",
+    "createdBy": "62f9e01c-5b83-4ee0-af4f-5b15110a0163",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "id": "event-2026-1792572027673"
   }
 ]
