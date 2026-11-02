@@ -233,6 +233,34 @@
     "id": "event-2026-1792398067617"
   },
   {
+    "id": "quizard_kupa_x_fordulo_20261104",
+    "name": "Quizard kupa X. forduló – Tóth Pincészet",
+    "date": "2026-11-04",
+    "endDate": "2026-11-04",
+    "end_date": "2026-11-04",
+    "time": "18:00",
+    "location": "Tóth Pincészet (Kőszeg)",
+    "coords": {
+      "lat": 47.38636326581153,
+      "lng": 16.54237953006961
+    },
+    "description": "QUIZARD KUPA X. FORDULÓ – TÓTH PINCÉSZET 💡🍷\n\n2026. augusztusának végén már a tizenegyedik Országos Bajnokságunk vette kezdetét.\n\nGyertek el maximum 7 fős csapatotokkal egy hamisítatlan pubkvízre, ahol nem kevesebb, mint 60 kérdés vár rátok 10 különböző játékblokkban, melyet az adott héten az ország hozzávetőlegesen 200 másik csapatával együtt játszhattok le és mérhetitek velük össze a tudásotokat, amellett, hogy minőségi időt töltötök együtt a barátaitokkal.\n\nMiközben mi a kérdéseinkkel szórakoztatunk benneteket, Ti nyugodtan meg tudtok inni néhány kiváló kőszegi bort, italt, vagy elfogyasztani a vacsorátokat.\n\nA bajnokságunkba szezon közben is nyugodtan becsatlakozhattok, akár 1-1 fordulóra is eljöhettek, ehhez semmi plusz regisztráció nem szükséges a részetekről.\nA részvétel országos hálózatként ingyenes, de egy nagyjából 3 000 forintos minimális fejenkénti fogyasztást a játék alatt a partnerhelyszínnel együtt elvárunk.\n\n🏆 A győztes csapat nyereményéről a Tóth Pincészet gondoskodik!\n\n📍 Helyszín: Tóth Pincészet (Kőszeg)\n📅 Időpont: 2026. november 4. (szerda) • 18:00\n\nGyertek el, próbáljátok ki, hiszen nálunk egyedül a szórakozás nem kérdés! 🙂",
+    "tags": [
+      "quizard",
+      "pubkvíz",
+      "kvíz",
+      "tóth pincészet",
+      "bor",
+      "szórakozás",
+      "bajnokság"
+    ],
+    "image": "quizard_kupa_toth_pinceszet_20261104.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "💡 QUIZARD KUPA",
+    "isVarszinhaz": false
+  },
+  {
     "id": "hedry_maria_borbala_2026",
     "name": "Hedry Mária: Borbála",
     "date": "2026-11-05",
@@ -287,6 +315,36 @@
     "highlight": true,
     "highlightLabel": "👑 KIRÁLYI VÁROSNAP",
     "isVarszinhaz": true
+  },
+  {
+    "id": "toltott_kaposzta_libacomb_fesztival_2026",
+    "name": "III. Töltött Káposzta és Libacomb Fesztivál",
+    "date": "2026-11-06",
+    "endDate": "2026-11-08",
+    "end_date": "2026-11-08",
+    "time": "10:00",
+    "location": "Kőszeg, Fő tér",
+    "coords": {
+      "lat": 47.38814796063487,
+      "lng": 16.541829874959696
+    },
+    "description": "KŐSZEGRE ÉRKEZIK A III. TÖLTÖTT KÁPOSZTA ÉS LIBACOMB FESZTIVÁL! 🔥🍂\n\n📍 Helyszín: Kőszeg, Fő tér\n📅 Időpont: 2026. november 6–8.\n\n★ A BELÉPÉS INGYENES! ★\n\n🥬🍗 November 6–8. között megtelik a Kőszegi Fő tér mennyei illatokkal, ínycsiklandó fogásokkal és fergeteges fesztiválhangulattal!\nHa szereted a magyaros ízeket, a finom falatokat és az igazi őszi programokat, ezt az eseményt neked találtuk ki! ❤️\n\n🍽️ Amivel várunk benneteket:\n🥬 Sokféle káposztás finomság és ízletes töltött káposzta\n🍗 Mennyei, ropogós libacomb\n🍷 Finom borok és hideg sörök\n🎠 Vidám gyerekprogramok az egész családnak\n🎁 Egyedi kézműves vásár és különleges portékák\n\n✨ Isteni ízek, jó hangulat, családi élmények és hamisítatlan magyaros vendégszeretet!\n👨‍👩‍👧‍👦 Hívd a családot, szólj a barátoknak, és gyertek el együtt egy felejthetetlen őszi hétvégére!",
+    "tags": [
+      "töltött káposzta",
+      "libacomb",
+      "gasztronómia",
+      "fesztivál",
+      "fő tér",
+      "kézműves vásár",
+      "ingyenes",
+      "családi",
+      "grill feszt"
+    ],
+    "image": "toltott_kaposzta_libacomb_fesztival_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🥬🍗 TÖLTÖTT KÁPOSZTA & LIBACOMB FESZTIVÁL",
+    "isVarszinhaz": false
   },
   {
     "id": "marton_napi_ujbor_bemutato_2026",
@@ -344,6 +402,36 @@
     "isVarszinhaz": true
   },
   {
+    "id": "idoanyo_babos_nepzenei_mesekoncert_2026",
+    "name": "Időanyó – bábos népzenei mesekoncert",
+    "date": "2026-11-10",
+    "endDate": "2026-11-10",
+    "end_date": "2026-11-10",
+    "time": "10:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "IDŐANYÓ – BÁBOS NÉPZENEI MESEKONCERT 🎭🎶\n\nMikszáth Kálmán meséje és népmesei motívumok alapján írta és rendezte: Somogyi Tamás.\n\nMese, zene, bábok és egy nagy kaland várja a gyerekeket Lovászi Edina Időanyó című bábos népzenei mesekoncertjén! Misi, a kíváncsi fiú útra kel, hogy megtalálja, ki a legerősebb a világon. Útja során különleges helyekre és szereplőkre talál, míg végül eljut Időanyóhoz, aki az időjárás felett őrködik.\n\nA népmesei motívumokra épülő, játékos előadásban élő zene, bábos elemek, közös éneklés és interaktív pillanatok várják a kicsiket – így a mese nemcsak a színpadon, hanem velük együtt születik meg.\n\n🎭 Előadók:\n• Lovászi Edina (mese, ének)\n• Gyulai Csaba (sok-sok hangszer)\n\n📍 Helyszín: Jurisics vár, lovagterem\n📅 Időpont: 2026. november 10. (kedd) • 10:00 (és 13:30)\n🎟️ Belépőjegy: 2 500 Ft\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "időanyó",
+      "mesekoncert",
+      "bábjáték",
+      "népzene",
+      "gyerekprogram",
+      "családi",
+      "lovagterem",
+      "jurisics vár",
+      "várszínház"
+    ],
+    "image": "idoanyo_mesekoncert_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎭 IDŐANYÓ MESEKONCERT",
+    "isVarszinhaz": true
+  },
+  {
     "id": "simon_zsofia_a_hoher_pallosa_2026",
     "name": "Simon Zsófia: A hóhér pallosa",
     "date": "2026-11-10",
@@ -398,6 +486,35 @@
     "isVarszinhaz": true
   },
   {
+    "id": "makovecz_90_templomok_es_angyalok_2026",
+    "name": "Makovecz 90 – Templomok és Angyalok kiállítás",
+    "date": "2026-11-12",
+    "endDate": "2027-01-10",
+    "end_date": "2027-01-10",
+    "time": "17:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Makovecz Imre Kossuth-díjas építész 90. születési évfordulója alkalmából rendezett emlékkiállítás: „Templomok és Angyalok”.\n\n🏛️ Ünnepélyes megnyitó: 2026. november 12. (csütörtök) • 17:00\n📍 Helyszín: Jurisics vár, lovagterem\n🗓 A kiállítás megtekinthető: 2026. november 12. – 2027. január 10. között a Jurisics vár nyitvatartási idejében.\n\nA kiállítás Makovecz Imre szakrális építészetét, ikonikus templomait és angyalmotívumait mutatja be látványos tablókon, fotókon és terveken keresztül.\n\n★ A megnyitó és a kiállítás ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "makovecz imre",
+      "kiállítás",
+      "építészet",
+      "templomok és angyalok",
+      "jurisics vár",
+      "lovagterem",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "makovecz_90_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🏛️ MAKOVECZ 90 KIÁLLÍTÁS",
+    "isVarszinhaz": true
+  },
+  {
     "id": "bogyo_es_baboca_2026",
     "name": "Bogyó és Babóca – Mesék a Pöttyös házból (óvodásoknak)",
     "date": "2026-11-13",
@@ -422,6 +539,61 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "xii_orszagos_rajzfilmunnep_atjaro_masvarosba_2026",
+    "name": "XII. Országos Rajzfilmünnep a könyvtárban! – Átjáró Másvárosba",
+    "date": "2026-11-13",
+    "endDate": "2026-11-13",
+    "end_date": "2026-11-13",
+    "time": "14:00",
+    "location": "Városi Könyvtár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Tisztelt Pedagógusok! Ünnepeljünk együtt!\n\nIntézményünk idén is csatlakozott a 2026. november 12–15. között megrendezésre kerülő Országos Rajzfilmünnephez!\n\nHozzák el iskolai osztályaikat, napközis csoportjaikat előzetes regisztrációval 2026. november 13-án pénteken délután 14:00 órára a Városi Könyvtár 2. emeleti rendezvénytermébe!\n\nKisiskolásoknak vetítjük Magyari Andrea „Átjáró Másvárosba” című 97 perces meséjét, egy titokzatos nyomozás történetét, számítógépes animációs kalandfilmsorozatot! A rajzfilm két részből áll (46+51 perc), rövid szünet beiktatásával kerül bemutatásra.\n\n★ A program díjmentes! ★\n\n📝 Előzetes regisztráció szükséges: iskola, osztály és létszámadatok megadásával Czagány Tündénél a programszervezes@kvmkl.hu e-mail címen.\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár | KEDD Animációs Stúdió",
+    "tags": [
+      "rajzfilmünnep",
+      "átjáró másvárosba",
+      "gyerekprogram",
+      "animáció",
+      "könyvtár",
+      "ingyenes",
+      "regisztráció"
+    ],
+    "image": "rajzfilmunnep_atjaro_masvarosba_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "magyar_snapszer_kupa_2026",
+    "name": "2026 Magyar Snapszer Kupa",
+    "date": "2026-11-14",
+    "endDate": "2026-11-15",
+    "end_date": "2026-11-15",
+    "time": "09:00",
+    "location": "Corner Söröző (Kőszeg)",
+    "coords": {
+      "lat": 47.387247780500125,
+      "lng": 16.544164472120965
+    },
+    "description": "2026 MAGYAR SNAPSZER KUPA 🃏🏆\n\nEgy kis kihagyás után újra életre keltjük a Magyar Kupát, amely korábban már szerepelt a versenynaptárban. Ismét lehetőségetek lesz megküzdeni a kupáért egy izgalmas, fordulatos verseny keretében!\n\n📍 Helyszín: Kőszeg, Corner Söröző\n📅 Időpont: 2026. november 14. (09:00) – november 15. (19:00)\n\nLebonyolítás:\n• Minden játékos 3 élettel kezdi a versenyt.\n• Minden fordulóban véletlenszerű sorsolás alapján kapnak ellenfelet a játékosok.\n• A mérkőzések 33 pontig tartanak.\n• A verseny győztese az a játékos lesz, aki utolsóként marad életben.\n\nVajon ki bírja legtovább, és ki hódítja el a Magyar Kupát? Várunk minden kártyabarátot és szurkolót szeretettel!",
+    "tags": [
+      "snapszer",
+      "magyar kupa",
+      "kártyajáték",
+      "corner söröző",
+      "verseny",
+      "kocsmasport"
+    ],
+    "image": "magyar_snapszer_kupa_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🃏 MAGYAR SNAPSZER KUPA",
     "isVarszinhaz": false
   },
   {
@@ -454,6 +626,211 @@
     "isVarszinhaz": true
   },
   {
+    "id": "xxi_koszegi_borbal_2026",
+    "name": "XXI. Kőszegi Borbál",
+    "date": "2026-11-14",
+    "endDate": "2026-11-14",
+    "end_date": "2026-11-14",
+    "time": "18:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Hagyományos jótékonysági bál a Kőszegi Borbarát Hölgyek Egyesülete szervezésében!\n\n🍷 Időpont: 2026. november 14. (szombat) • 18:00\n📍 Helyszín: Jurisics vár, lovagterem\n\nKiváló kőszegi borok, ünnepi vacsora, zene és mulatság a borászat hagyományainak tiszteletére.\n\n📞 Asztalfoglalás és információ: +36 30 458 7222\n\nℹ️ Szervező: Kőszegi Borbarát Hölgyek Egyesülete | Jurisics-vár Művelődési Központ és Várszínház",
+    "tags": [
+      "borbál",
+      "kőszegi borbarát hölgyek",
+      "bál",
+      "jótékonyság",
+      "bor",
+      "gasztronómia",
+      "jurisics vár",
+      "lovagterem",
+      "várszínház"
+    ],
+    "image": "xxi_koszegi_borbal_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍷 XXI. KŐSZEGI BORBÁL",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "nemzetkozi_specialis_filmfesztival_2026",
+    "name": "12. SPEFI Nemzetközi Speciális Filmfesztivál",
+    "date": "2026-11-19",
+    "endDate": "2026-11-19",
+    "end_date": "2026-11-19",
+    "time": "16:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvényterme",
+    "coords": {
+      "lat": 47.389604958320525,
+      "lng": 16.54251068079756
+    },
+    "description": "12. SPEFI NEMZETKÖZI SPECIÁLIS FILMFESZTIVÁL 🎬✨\n\nSzeretettel meghívjuk Önöket az Intézményünk által szervezett Téli Filmklub exkluzív eseményére, amely a társadalmi felelősségvállalás, a személyes küzdelmek és a megújító művészi erő köré épül. A Téli Filmklub nemcsak a filmnézésről szól, hanem az értékteremtő beszélgetésekről és az érzékenyítésről is, amely Intézményünk egyik legfontosabb küldetése. Ezúttal a 12. SPEFI Nemzetközi Speciális Filmfesztivál legjavából válogatunk, bepillantást engedve olyan alkotásokba, amelyek Magyarországon kizárólag ezen a fesztiválon láthatók.\n\nA 44 országból beérkezett több mint 200 pályaműből egy feszes, 60 perces válogatást vetítünk le. Kísérleti táncfilmek, elgondolkodtató dokumentumfilmek és animációk váltják egymást, melyek közös vonása, hogy a fogyatékossággal élő alkotók belső világát és páratlan kreativitását helyezik a középpontba. Az alkotások nemcsak a nehézségeket mutatják be, hanem azt is, miként válhat az eltérő adottság és megélt tapasztalat egy önálló, megújító erőforrássá az egyetemes filmnyelvben.\n\nA nemzetközi versenyprogram igazi filmritkaságokat vonultat fel: a vásznon megelevenedik egy kerekesszékhez kötött kazah kisfiú és egy marsjáró robot találkozása, egy ágyhoz kötött török testvérpár küzdelme, valamint egy amerikai tinédzser újrakezdése is. A hazai mezőnyből kiemelkedik a látássérült dobos 100 km/h feletti vezetését megörökítő Jóravalók, a Veszprémi Petőfi Színház esélyegyenlőségi közösségét bemutató Lélektől lélekig, valamint Pálfai Károly Blue Sunbeam című dokumentumfilmje, amely egy autista kislány és egy integrált karate program felemelő történetét tárja elénk.\n\n🎤 A vetítés után személyes találkozóra és közönségtalálkozóra kerül sor Fábián Gáborral, a SPEFI Nemzetközi Speciális Filmfesztivál igazgatójával és a Magyar Speciális Mozgókép Egyesület elnökével!\n\n★ Az előadás ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár | Magyar Speciális Mozgókép Egyesület",
+    "tags": [
+      "spefi",
+      "filmfesztivál",
+      "filmklub",
+      "fábián gábor",
+      "érzékenyítés",
+      "múzeum",
+      "könyvtár",
+      "ingyenes"
+    ],
+    "image": "nemzetkozi_specialis_filmfesztival_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎬 SPEFI FILMFESZTIVÁL",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "adventi_perdulo_hajnalcsillag_2026",
+    "name": "Adventi perdülő a Hajnalcsillag Néptáncegyüttessel",
+    "date": "2026-11-28",
+    "endDate": "2026-11-28",
+    "end_date": "2026-11-28",
+    "time": "10:00",
+    "location": "Kőszegi Városi Könyvtár rendezvényterme (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.38962086833743,
+      "lng": 16.542520264667385
+    },
+    "description": "ADVENTI PERDÜLŐ A HAJNALCSILLAG NÉPTÁNCEGYÜTTESSEL 🕯️💃\n\nSzeretettel várjuk az óvodásokat és kisiskolásokat családjukkal a Hajnalcsillag Néptáncegyüttes télcsalogató játékos, mondókás, táncos és kézműves foglalkozására Horváth Júlia vezetésével a rendezvényterembe!\n\n📍 Helyszín: Kőszegi Városi Könyvtár rendezvényterme (Jurisics tér 6.)\n🗓 Időpont: 2026. november 28. (szombat) • 10:00\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár | Hajnalcsillag Néptáncegyüttes",
+    "tags": [
+      "hajnalcsillag",
+      "adventi perdülő",
+      "néptánc",
+      "kézműves foglalkozás",
+      "gyerekprogram",
+      "könyvtár",
+      "ingyenes",
+      "családi"
+    ],
+    "image": "adventi_perdulo_hajnalcsillag_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "💃 ADVENTI PERDÜLŐ",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "advent_var_2026",
+    "name": "Advent Vár – Jótékonysági Adventi Vásár és Rendezvények",
+    "date": "2026-11-28",
+    "endDate": "2026-11-29",
+    "end_date": "2026-11-29",
+    "time": "10:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Jótékonysági Adventi Vásár és zenés-táncos ráhangolódás várja a látogatókat szombaton és vasárnap Kőszeg Város Fúvószenekara, a Concordia-Barátság Énekegyesület és a Hajnalcsillag Néptáncegyüttes közösségeivel!\n\n🔥 A várudvaron pattogó tűz mellett forró finomságok és ünnepi műsorok,\n🏰 a lovagteremben pedig hamisítatlan kézműves adventi vásár és meghitt hangulat!\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "advent",
+      "advent vár",
+      "karácsonyi vásár",
+      "jótékonyság",
+      "fúvószenekar",
+      "concordia",
+      "hajnalcsillag",
+      "jurisics vár",
+      "ingyenes",
+      "családi",
+      "várszínház"
+    ],
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎄 ADVENT VÁR",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "pulcinella_kerteszkedik_2026",
+    "name": "Pulcinella kertészkedik – bábjáték élő zenével",
+    "date": "2026-12-01",
+    "endDate": "2026-12-01",
+    "end_date": "2026-12-01",
+    "time": "10:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Pulcinella nem más, mint Vitéz László itáliai testvére. Legjobban enni, inni és aludni szeret, s emiatt gyakran pórul jár. Nem csak azért, mert felesége, a bűbájos Rosetta folyton veszekszik vele, hanem azért is, mert legédesebb álma közben egy ravasz és mindenre elszánt nyúl dézsmálja meg kertjük gyümölcseit.\n\nFergeteges humorú bábjáték, élő zenével kísérve.\n\n🎬 Rendezte: Kovács Géza (Blattner-díjas)\n🎨 Tervezte és készítette: Boráros Szilárd\n🎭 Játszók: Pfeifer Zsófia, Varga Péter Róbert (Ziránó Színház)\n\n🎟️ Belépőjegy: 2 500 Ft\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "pulcinella",
+      "ziránó színház",
+      "bábjáték",
+      "gyerekprogram",
+      "családi",
+      "színház",
+      "jurisics vár",
+      "lovagterem",
+      "várszínház"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "a_zoldszakallu_kiraly_2026",
+    "name": "A zöldszakállú király – bábjáték",
+    "date": "2026-12-01",
+    "endDate": "2026-12-01",
+    "end_date": "2026-12-01",
+    "time": "13:30",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A Ziránó Színház és a Mesebolt Bábszínház közös előadása a magyar népmesekincs egyik különleges darabját meséli el, a tőle megszokott játékkedvvel, színesen és sok humorral.\n\nA nyughatatlanul vándorló zöldszakállú király felelőtlen ígéretet tesz a szakállát el nem eresztő ördögkirálynak; átengedi neki azt, amiről nem tud a birodalmában. Igen ám, de nem is sejti, hogy míg ő úton volt, otthon született egy fia… A fordulatokban, izgalmakban gazdag történet során aggódhatunk a királyfiért, megcsodálhatjuk a szerelmes királylány furfangjait, szurkolhatunk a szerelmesek boldogságáért.\n\n🎬 Írta és rendezte: Veres András (Blattner-díjas)\n🎨 Tervezte és készítette: Grosschmid Erik (Blattner-díjas)\n🎵 Zenéjét szerezte: Takács Dániel\n🎭 Játszók: Pfeifer Zsófia, Varga Péter Róbert\n\n🎟️ Belépőjegy: 2 500 Ft\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "zöldszakállú király",
+      "ziránó színház",
+      "mesebolt bábszínház",
+      "bábjáték",
+      "gyerekprogram",
+      "családi",
+      "színház",
+      "jurisics vár",
+      "lovagterem",
+      "várszínház"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "boros_ferenc_magyar_zenes_filmek_2026",
+    "name": "Boros Ferenc: Magyar zenés filmek",
+    "date": "2026-12-03",
+    "endDate": "2026-12-03",
+    "end_date": "2026-12-03",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Boros Ferenc előadása: „Magyar zenés filmek” a Kőszegi Városi Múzeumban.\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)\n🗓 Időpont: 2026. december 3. (csütörtök) • 17:00\n\n★ Az előadás ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "boros ferenc",
+      "film",
+      "magyar zenés filmek",
+      "előadás",
+      "múzeum",
+      "könyvtár",
+      "ingyenes"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "name": "Jumpplus Mikulás Kupa",
     "date": "2026-12-05",
     "time": "09:00",
@@ -472,6 +849,35 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792409386885"
+  },
+  {
+    "id": "diohej_teli_koncert_koszegi_vonosok_2026",
+    "name": "„Dióhéj” – téli koncert a Kőszegi Vonósokkal",
+    "date": "2026-12-05",
+    "endDate": "2026-12-05",
+    "end_date": "2026-12-05",
+    "time": "10:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "„Dióhéj” – ünnepi téli hangverseny a Kőszegi Vonósokkal a Városi Múzeumban!\n\n🎻 Hangulatos téli és klasszikus zenei dallamok az adventi időszakban a Kőszegi Vonósok tolmácsolásában.\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)\n🗓 Időpont: 2026. december 5. (szombat) • 10:00\n\n★ A koncert ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár | Kőszegi Vonósok",
+    "tags": [
+      "dióhéj",
+      "kőszegi vonósok",
+      "koncert",
+      "komolyzene",
+      "advent",
+      "múzeum",
+      "könyvtár",
+      "ingyenes"
+    ],
+    "image": "diohej.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   },
   {
     "name": "Boxing Show & Party",
@@ -496,6 +902,172 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792404151219"
+  },
+  {
+    "id": "csiki_istvan_szent_korona_koszegen_2026",
+    "name": "Csiki István: A Szent Korona Kőszegen",
+    "date": "2026-12-08",
+    "endDate": "2026-12-08",
+    "end_date": "2026-12-08",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Csiki István előadása: „A Szent Korona Kőszegen”.\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)\n🗓 Időpont: 2026. december 8. (kedd) • 17:00\n\nTörténelmi előadás a Szent Korona kőszegi őrzéséről és a városhoz fűződő sorsfordító eseményekről.\n\n★ Az előadás ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "csiki istván",
+      "szent korona",
+      "történelem",
+      "előadás",
+      "múzeum",
+      "könyvtár",
+      "ingyenes"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "bringadvent_biego_2026",
+    "name": "BringAdvent Biegonál",
+    "date": "2026-12-11",
+    "endDate": "2026-12-11",
+    "end_date": "2026-12-11",
+    "time": "17:00",
+    "location": "Biego (Kőszeg)",
+    "coords": {
+      "lat": 47.38834198998653,
+      "lng": 16.54185503688309
+    },
+    "description": "BRINGADVENT BIEGONÁL! 🚲✨🎄\n\nDíszítsd, gurulj, legyünk együtt!\n\n📍 Helyszín: Biego, Kőszeg\n📅 Időpont: 2026. december 11. (péntek) • 17:00\n\nHangulatos, fényfüzérekkel és díszekkel kivilágított kerékpáros adventi gurulás és közösségi együttlét a Biegonál. Részletek az adventi időszak előtti hetekben!\n\nVárunk mindenkit szeretettel ünnepi díszbe öltöztetett bringákkal!",
+    "tags": [
+      "bringadvent",
+      "biego",
+      "kerékpár",
+      "advent",
+      "fények",
+      "családi",
+      "fő tér"
+    ],
+    "image": "bringadvent_biego_2026.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🚲 BRINGADVENT BIEGONÁL",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "lucazas_2026",
+    "name": "Lucázás – hagyományőrző rendezvény",
+    "date": "2026-12-12",
+    "endDate": "2026-12-12",
+    "end_date": "2026-12-12",
+    "time": "10:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Lucázás – hagyományőrző népi szokások felelevenítése a Kőszegi Városi Múzeumban!\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)\n🗓 Időpont: 2026. december 12. (szombat) • 10:00\n\nLuca-napi kotyolás, népi jóslások, szokások és kézműves hangulat várja a családokat és az érdeklődőket.\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "lucázás",
+      "luca nap",
+      "hagyományőrzés",
+      "népszokás",
+      "múzeum",
+      "könyvtár",
+      "ingyenes",
+      "családi"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "burger_madness_panci_20261213",
+    "name": "Burger madness – Grund x Panci",
+    "date": "2026-12-13",
+    "endDate": "2026-12-13",
+    "end_date": "2026-12-13",
+    "time": "12:00",
+    "location": "Panci (Várkör 54.)",
+    "coords": {
+      "lat": 47.390645616322864,
+      "lng": 16.539241415802554
+    },
+    "description": "🔥 A nagy sikerre való tekintettel: újra Panci! 🔥\nAz első alkalom hatalmas érdeklődése után ismét útra kelünk Kőszegre, és újra a Panciban sütögetünk! 🍔🔥\nAz előző alkalom alapján most is nagy érdeklődésre számítunk, így az asztalok várhatóan gyorsan betelnek.\n\n📅 2026. december 13. • 12:00\n📍 Panci, Kőszeg (Várkör 54.)\n🍔 Grund burgerek\n🍻 Jó hangulat, kaja, pia, megint egy este, amit kár lenne kihagyni.\n\nHa jönnél, írd be december 13-at a naptárba, mert érdemes időben asztalt foglalni.\nVárunk mindenkit szeretettel! ❤️",
+    "tags": [
+      "burger",
+      "grund",
+      "panci",
+      "gasztronómia",
+      "mulatság",
+      "várkör"
+    ],
+    "image": "burger_madness_panci_20261213.png",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🍔 BURGER MADNESS – DEC. 13.",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "karacsonyi_musor_2026",
+    "name": "Karácsonyi műsor",
+    "date": "2026-12-18",
+    "endDate": "2026-12-18",
+    "end_date": "2026-12-18",
+    "time": "17:00",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Ünnepi Karácsonyi műsor a Kőszegi Városi Múzeumban!\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)\n🗓 Időpont: 2026. december 18. (péntek) • 17:00\n\nKözös karácsonyi ráhangolódás, zenés és irodalmi ünnepi műsor a szeretet ünnepe alkalmából.\n\n★ A műsor ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "karácsony",
+      "ünnepi műsor",
+      "advent",
+      "múzeum",
+      "könyvtár",
+      "ingyenes",
+      "családi"
+    ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "stellatus_adventi_koncert_2026",
+    "name": "Stellatus Adventi koncert",
+    "date": "2026-12-19",
+    "endDate": "2026-12-19",
+    "end_date": "2026-12-19",
+    "time": "18:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Stellatus Adventi koncert a Jurisics-vár lovagtermében!\n\n🎶 A koncerten a Karácsonyhoz kapcsolódó középkori énekek-zenék, népzenei feldolgozások és versmegzenésítések hallhatók majd a Stellatus együttes tolmácsolásában.\n\n📍 Helyszín: Jurisics vár, lovagterem\n🗓 Időpont: 2026. december 19. (szombat) • 18:00\n\n★ A koncert ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "stellatus",
+      "adventi koncert",
+      "középkori zene",
+      "népzene",
+      "karácsony",
+      "lovagterem",
+      "jurisics vár",
+      "ingyenes",
+      "várszínház"
+    ],
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎶 STELLATUS ADVENT",
+    "isVarszinhaz": true
   },
   {
     "name": "Szilveszter az Írottkő Hotelben",
@@ -539,5 +1111,33 @@
     "highlightLabel": "",
     "isVarszinhaz": false,
     "id": "event-2026-1792572027673"
+  },
+  {
+    "id": "kommunizmus_aldozatainak_emleknapja_2027",
+    "name": "A kommunizmus áldozatainak emléknapja",
+    "date": "2027-02-25",
+    "endDate": "2027-02-25",
+    "end_date": "2027-02-25",
+    "time": "17:30",
+    "location": "Jurisics tér – Temető – KÖSZHÁZ",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Kőszeg Város Önkormányzata, a Jurisics-vár Művelődési Központ és Várszínház, illetve a Kőszegi Polgári Kaszinó tisztelettel meghívja Önt és kedves családját a 2027. február 25-én tartandó megemlékezésre és koszorúzásra.\n\nA rendezvény programja:\n• 17:30 – Felvonulás a Jurisics térről a temető falán elhelyezett emléktáblához, ahol beszédet mond Dr. Horváth Attila alkotmánybíró.\n• kb. 18:30 – A Jurisics várban (KÖSZHÁZ) a Kőszegi Polgári Kaszinó szervezésében az „Embernek farkasa” című film vetítésére kerül sor, mely után beszélgetés lesz a film rendezőjével, Faragó Annamáriával.\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszeg Város Önkormányzata | Jurisics-vár Művelődési Központ és Várszínház | Kőszegi Polgári Kaszinó",
+    "tags": [
+      "kommunizmus áldozatai",
+      "emléknap",
+      "koszorúzás",
+      "filmvetítés",
+      "köszház",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "kommunizmus_aldozatainak_emleknapja_2027.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
   }
 ]
