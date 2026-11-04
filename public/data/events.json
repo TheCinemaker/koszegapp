@@ -904,6 +904,33 @@
     "id": "event-2026-1792404151219"
   },
   {
+    "id": "sons_left_behind_irottko_20261205",
+    "name": "Sons Left Behind koncert – Írottkő Hotel Drink Bár",
+    "date": "2026-12-05",
+    "endDate": "2026-12-05",
+    "end_date": "2026-12-05",
+    "time": "19:00",
+    "location": "Írottkő Hotel – Drink Bár",
+    "coords": {
+      "lat": 47.38818699780327,
+      "lng": 16.54257481347287
+    },
+    "description": "Meghívunk egy szuper zenés estre szállodánk hangulatos drink bárjába!\nDecember 5-én a Sons Left Behind veszi birtokba a helyet, hogy egy igazán ütős koncerttel töltse meg az estét! 🤘\nHa szereted az élő zenét, a jó hangulatot és az igazi koncertélményt, itt a helyed!\n\n📅 Időpont: 2026. december 5. (szombat)\n🕖 Kezdés: 19:00\n📍 Helyszín: Írottkő Hotel – Drink Bár\n\nHívd a barátaidat, hangolódjatok rá az estére, és találkozzunk egy közös zenei élményre!\n\n🎉 Mit kínálunk?\n• Élő zene, ami garantáltan magával ragad\n• Italakciók, hogy még jobb legyen az este\n• Egyedi hangulat, amit nem érdemes kihagyni!\n\n💺 Foglalj előre!\nHa nem akarsz lemaradni vagy biztos helyet szeretnél a barátaidnak, foglald le asztalodat még ma!\nEz az este nem csak a szállóvendégeinknek szól – bárki csatlakozhat, aki szeretne egy különleges, zenével fűszerezett estét eltölteni!\n\n📞 Foglalás és további információ:\n+36 30 843 0331\n\nOtt találkozunk! 🤘🎶",
+    "tags": [
+      "sons left behind",
+      "koncert",
+      "élőzene",
+      "írottkő hotel",
+      "drink bár",
+      "zene"
+    ],
+    "image": "sons_left_behind_irottko_20261205.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "id": "csiki_istvan_szent_korona_koszegen_2026",
     "name": "Csiki István: A Szent Korona Kőszegen",
     "date": "2026-12-08",
