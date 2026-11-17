@@ -656,6 +656,34 @@
     "isVarszinhaz": true
   },
   {
+    "id": "quizard_kupa_xii_fordulo_20261118",
+    "name": "Quizard Kupa XII. Forduló – Tóth Pincészet Kőszeg",
+    "date": "2026-11-18",
+    "endDate": "2026-11-18",
+    "end_date": "2026-11-18",
+    "time": "19:00-21:30",
+    "location": "Tóth Pincészet (Kőszeg)",
+    "coords": {
+      "lat": 47.38636326581153,
+      "lng": 16.54237953006961
+    },
+    "description": "QUIZARD KUPA XII. FORDULÓ – TÓTH PINCÉSZET KŐSZEG (SZERDA, max. 8 csapat) 💡🍷\n\n2026. augusztusának végén már a tizenegyedik Országos Bajnokságunk vette kezdetét.\n\nGyertek el maximum 7 fős csapatotokkal egy hamisítatlan pubkvízre, ahol nem kevesebb, mint 60 kérdés vár rátok 10 különböző játékblokkban, melyet az adott héten az ország hozzávetőlegesen 200 másik csapatával együtt játszhattok le és mérhetitek velük össze a tudásotokat, amellett, hogy minőségi időt töltötök együtt a barátaitokkal.\n\nMiközben mi a kérdéseinkkel szórakoztatunk benneteket, Ti nyugodtan meg tudtok inni néhány italt, vagy elfogyasztani a vacsorátokat.\n\nA bajnokságunkba szezon közben is nyugodtan becsatlakozhattok, akár 1-1 fordulóra is eljöhettek, ehhez semmi plusz regisztráció nem szükséges a részetekről.\nA részvétel továbbra is és országos hálózatként egyedüliként ingyenes, de egy nagyjából 3 000 forintos minimális fejenkénti fogyasztást a játék alatt a partnerhelyszíneinkkel együtt elvárunk.\n\n🏆 A győztes csapat továbbra sem távozik egy kvíz után üres kézzel, a nyereményről az adott kvízhelyszín gondoskodik! 🙂\n\n📝 Jelentkezni a Facebook-eseménynél tudtok külön posztban, csapatnév és a várható létszám megadásával (max. 8 csapat). A hetedik fő felett 3 pont levonásban részesültök.\n\n📍 Helyszín: Tóth Pincészet (Kőszeg)\n📅 Időpont: 2026. november 18. (szerda) • 19:00–21:30\n\nGyertek el, próbáljátok ki, hiszen nálunk egyedül a szórakozás nem kérdés! 🙂",
+    "tags": [
+      "quizard",
+      "pubkvíz",
+      "kvíz",
+      "tóth pincészet",
+      "bor",
+      "szórakozás",
+      "bajnokság"
+    ],
+    "image": "quizard_kupa_xii_toth_pinceszet_20261118.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "💡 QUIZARD KUPA – NOV. 18.",
+    "isVarszinhaz": false
+  },
+  {
     "id": "nemzetkozi_specialis_filmfesztival_2026",
     "name": "12. SPEFI Nemzetközi Speciális Filmfesztivál",
     "date": "2026-11-19",
@@ -683,6 +711,95 @@
     "highlight": true,
     "highlightLabel": "🎬 SPEFI FILMFESZTIVÁL",
     "isVarszinhaz": false
+  },
+  {
+    "id": "advent_a_naturparkban_2026",
+    "name": "Advent a Natúrparkban – Ahogy mi szeretjük...",
+    "date": "2026-11-20",
+    "endDate": "2026-12-23",
+    "end_date": "2026-12-23",
+    "time": "10:00-18:00",
+    "location": "Bakos Virágudvar – Műhelygaléria",
+    "coords": {
+      "lat": 47.38945,
+      "lng": 16.53985
+    },
+    "description": "ADVENT A NATÚRPARKBAN – AHOGY MI SZERETJÜK... 🎄✨\n34. Kiállítás és vásár az Írottkő Natúrpark kézműveseinek termékeiből.\n\n🎉 Ünnepélyes megnyitó: 2026. november 20. • 17:30\n🗓 Megtekinthető: 2026. december 23-ig, naponta 10:00–18:00 óra között\n📍 Helyszín: Bakos Virágudvar – Műhelygaléria (Kőszeg)\n\nEgyedi, helyi kézműves alkotások, ünnepi díszek és ajándékötletek az Írottkő Natúrpark alkotóitól.",
+    "tags": [
+      "advent",
+      "natúrpark",
+      "kézműves vásár",
+      "kiállítás",
+      "bakos virágudvar",
+      "kőszegi advent"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎄 ADVENT A NATÚRPARKBAN",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "naturparki_puszedliportya_20261121",
+    "name": "Kincskereső Játék – Natúrparki Puszedliportya (Ingyenes családi program)",
+    "date": "2026-11-21",
+    "endDate": "2026-11-27",
+    "end_date": "2026-11-27",
+    "time": "09:00-20:00",
+    "location": "Kőszeg, Natúrparki kirakatok (Bem József utca, Várkör felőli rész)",
+    "coords": {
+      "lat": 47.38865,
+      "lng": 16.54315
+    },
+    "description": "KINCSKERESŐ JÁTÉK 🔍👀 Natúrparki Puszedliportya – Egyénileg, családilag teljesíthető pecsétgyűjtő játék Kőszeg történelmi belvárosában!\n\n🗓 Mikor teljesíthető? 2026. november 21–27. között bármikor!\n📍 Induló állomás: Kőszeg, Natúrparki kirakatok (Bem József utca Várkör felőli részén, a Várkör 39. szám alatt található Cerka Bt. papírbolt melletti kis utcában)\n⏱ A játék hossza: kb. 1–2 óra\n🎟️ A részvétel INGYENES!\n\n🌱 Idén is részt veszünk az Európai Hulladékcsökkentési Héten a KisKöszi hét akciónkkal!\nNovember 21. és 27. között izgalmas nyomozós kalandjátékra hívunk titeket Kőszeg történelmi belvárosába, a Várkörre. Négy állomás rejtőzik a régi házak, kapualjak és kirakatok között, mindegyiken egy feladat vár, a megoldások mellé pedig aranyos pecséteket kell gyűjtenetek menetleveletekbe.\n\n📬 A játékszabályt és a válaszlapot a natúrparki kirakatoknál találjátok a Bem József utcában. A kitöltött lapot ugyanitt, a natúrparki postaládába dobhatjátok be, a beküldőket pedig meglepetés várja!\nCsaláddal, barátokkal vagy csapatban is nekivághattok, és a játékhéten bármikor, a saját tempótokban teljesíthetitek.\nA játék a natúrparki (nem)vetélkedő családi kategóriájának is része!\n\n🍪 A kaland zárásaként november 28-án közös puszedlizésre várunk titeket a TÉRben (Fő tér 2.) a KisKöszi Napon!\n\n🔗 További infó: https://naturpark.hu/hu/turizmus/programnaptar/?pid=4960\nTinyGreen – A kevesebb zöldebb! | Interreg Programme Austria–Hungary",
+    "tags": [
+      "kincskereső",
+      "puszedliportya",
+      "pecsétgyűjtő",
+      "kisköszi",
+      "írottkő natúrpark",
+      "családi",
+      "gyerekprogram",
+      "ingyenes",
+      "kalandjáték"
+    ],
+    "image": "naturparki_puszedliportya_20261121.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🔍 KINCSKERESŐ PUSZEDLIPORTYA",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "szonyi_ferenc_transcanada_ultra_20261124",
+    "name": "TransCanada Ultra – Filmvetítés, könyvbemutató és közönségtalálkozó Szőnyi Ferenccel",
+    "date": "2026-11-24",
+    "endDate": "2026-11-24",
+    "end_date": "2026-11-24",
+    "time": "18:00",
+    "location": "Jurisics vár (Kőszeg, Rajnis u. 9.)",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "TransCanada Ultra – Exkluzív filmvetítés, könyvbemutató és közönségtalálkozó Szőnyi Ferenccel! 🚴‍♂️🎬📖\n\n📍 Helyszín: Kőszegi Vár (9730 Kőszeg, Rajnis utca 9.)\n📅 Időpont: 2026. november 24. (kedd)\n🕕 Kezdés: 18:00 (Kapunyitás: kb. 17:30-tól)\n🔞 Korhatár: 16 év\n🎥 Trailer: https://youtu.be/2_mJa7n68Gs\n🎟️ Részvétel: Díjmentes (a helyszínen becsületkasszán keresztül lehet támogatást elhelyezni a világbajnok következő ausztráliai kalandjához)\n\n🌍 Világrekord a vásznon – Új, 80 perces verzióban!\nÉld át a komáromi Vasember, Szőnyi Ferenc felfoghatatlan, 12 500 km-es kanadai küldetését! A film a Yukon zord hegyeitől az Atlanti-óceánig kíséri végig a 45 napos, világrekordot jelentő emberfeletti küzdelmet.\nA film nemzetközileg is bizonyított: a rangos AIPS Sportfotó és Filmfesztiválon 1987 nevezett alkotás közül a 8. helyezést érte el!\n\n📖 EXKLUZÍV KÖNYVBEMUTATÓ & KÖZÖNSÉGTALÁLKOZÓ\nAz esemény egyben Szőnyi Ferenc legújabb könyvének bemutatója is, amely most még kizárólag a mozikban kapható!\nA vetítés után Feri személyesen mesél a kulisszatitkokról, a fizikai és mentális mélypontokról, és arról, mit tanít 12 500 kilométernyi küzdelem.\n\n✨ A vetítés után:\n• Exkluzív dedikálási lehetőség a legújabb könyvhöz\n• Kérdezz-felelek és kötetlen beszélgetés\n• Közös fotó a Vasemberrel\n• Megvásárolható lesz támogatói póló, pulóver és az új könyv\n\nGyere el, és inspirálódj egy történetből, ahol a kitartás és a hit nem ismer határokat!\n\nℹ️ A film a MindfreeK Productions közreműködésével készült.\nExecutive producer: Sárospataki Albert | Producer: Makrai Balázs | Rendező: Haris Péter (2025)",
+    "tags": [
+      "szőnyi ferenc",
+      "vasember",
+      "transcanada ultra",
+      "filmvetítés",
+      "könyvbemutató",
+      "közönségtalálkozó",
+      "kerékpár",
+      "sport",
+      "jurisics vár",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "szonyi_ferenc_transcanada_ultra_20261124.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🚴‍♂️ SZŐNYI FERENC – NOV. 24.",
+    "isVarszinhaz": true
   },
   {
     "id": "adventi_perdulo_hajnalcsillag_2026",
@@ -714,23 +831,52 @@
     "isVarszinhaz": false
   },
   {
+    "id": "a_ter_kincskereso_kiskoszi_20261128",
+    "name": "„A TÉR” – Kincskereső játék, natúrparki puszedli party és Kisköszi nap",
+    "date": "2026-11-28",
+    "endDate": "2026-11-28",
+    "end_date": "2026-11-28",
+    "time": "10:00-16:00",
+    "location": "Írottkő Natúrpark, Fő tér 2. („A TÉR”)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "Adventi közösségi és családi programok „A TÉR” közösségi térben!\n\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🕙 Időpont: 2026. november 28. (szombat) • 10:00–16:00\n\n🌟 Programok:\n• Kincskereső játék\n• Natúrparki puszedli party\n• Kisköszi nap: KisKözösségi Szívességtár",
+    "tags": [
+      "advent",
+      "a tér",
+      "írottkő natúrpark",
+      "kincskereső",
+      "puszedli",
+      "kisköszi",
+      "családi"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "id": "advent_var_2026",
     "name": "Advent Vár – Jótékonysági Adventi Vásár és Rendezvények",
     "date": "2026-11-28",
     "endDate": "2026-11-29",
     "end_date": "2026-11-29",
-    "time": "10:00",
+    "time": "14:00-20:00",
     "location": "Jurisics vár",
     "coords": {
       "lat": 47.389692,
       "lng": 16.538482
     },
-    "description": "Jótékonysági Adventi Vásár és zenés-táncos ráhangolódás várja a látogatókat szombaton és vasárnap Kőszeg Város Fúvószenekara, a Concordia-Barátság Énekegyesület és a Hajnalcsillag Néptáncegyüttes közösségeivel!\n\n🔥 A várudvaron pattogó tűz mellett forró finomságok és ünnepi műsorok,\n🏰 a lovagteremben pedig hamisítatlan kézműves adventi vásár és meghitt hangulat!\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (9730 Kőszeg, Rajnis u. 9., tel: 94/360-113, jurisics@koszeg.hu)",
+    "description": "ADVENT VÁR – Jótékonysági Adventi Vásár és zenés-táncos ráhangolódás a Jurisics várban! 🎄🏰✨\n\n📅 NOVEMBER 28. (SZOMBAT)\n🎨 14:00–16:00 – Kézműves foglalkozások a lovagteremben (részvételi díj: 500 Ft/fő):\n• Kőszegi Mézeskalács Szakkör: mézeskalács díszítés\n• Concordia-Barátság Énekegyesület: adventi naptár papírtányérból, papírcsengettyű és angyalkás adventi képek vegyes technikával\n\n🎶 Belső várudvar:\n• 15:00 – Fúvós kisegyüttes „megnyitója”\n• 16:30 – Szívmelengető – Gyermek táncház a Hajnalcsillag Néptáncegyüttessel\n• 17:30 – Concordia-Barátság Énekegyesület adventi minikoncertje\n• 18:30 – Kőszeg Város Fúvószenekara adventi minikoncertje\n• 19:00 – Fény-show a belső várudvaron\n🛍️ 14:00–20:00 között kézműves vásár a lovagteremben\n\n📅 NOVEMBER 29. (VASÁRNAP)\n🎨 14:00–16:00 – Kézműves foglalkozások a lovagteremben (részvételi díj: 500 Ft/fő):\n• Szabóhegyért Közösen Egyesület és a Jurisics-vár Művelődési Központ: Adventi koszorú és ajtókopogtató készítés természetes anyagokból\n• Hajnalcsillag Néptáncegyüttes: Filcbe bújt karácsony (karácsonyfa díszek filc alapon)\n\n🎶 Belső várudvar:\n• 15:00 – Kőszeg Város Ifjúsági Fúvószenekara adventi minikoncertje\n• Óránként közös éneklés a Concordia-Barátság Énekegyesülettel és Fúvós kisegyüttesek műsora\n• 16:00 – Lélekhangoló – Felcsíki táncok és táncház a Hajnalcsillag Néptáncegyüttessel\n• 17:30 – Adventi Gyertyagyújtás a Jurisics téren\n• 19:00 – Fény-show a belső várudvaron\n🛍️ 14:00–20:00 között kézműves vásár a lovagteremben\n\n🔥 Sötétedés után fényfestés a belső várudvaron, ahol nyitvatartási időben pattogó tűz, eszem-iszom, dínom-dánom… Kőszeg Város Fúvószenekara, a Concordia-Barátság Énekegyesület és a Hajnalcsillag Néptáncegyüttes kínálatában.\n\nℹ️ Információ: Jurisics-vár Művelődési Központ és Várszínház, 9730 Kőszeg, Rajnis utca 9., tel: 94/360-113, jurisics@koszeg.hu, jurisicsvar.hu",
     "tags": [
       "advent",
       "advent vár",
       "karácsonyi vásár",
       "jótékonyság",
+      "fény-show",
       "fúvószenekar",
       "concordia",
       "hajnalcsillag",
@@ -742,7 +888,35 @@
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🎄 ADVENT VÁR",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "image": "advent_var_2026.jpg"
+  },
+  {
+    "id": "adventi_gyertyagyujtas_1_20261129",
+    "name": "I. Adventi gyertyagyújtás a Jurisics téren",
+    "date": "2026-11-29",
+    "endDate": "2026-11-29",
+    "end_date": "2026-11-29",
+    "time": "17:30",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38922,
+      "lng": 16.54112
+    },
+    "description": "Ünnepi első adventi gyertyagyújtás Kőszegen, a Jurisics téren! 🕯️✨\n\n📍 Helyszín: Jurisics tér\n🕠 Időpont: 2026. november 29. (vasárnap) • 17:30\n\n🎶 Közreműködik az Evangélikus Gyülekezet és Kőszeg Város Fúvószenekarának tagjai.\n\n★ A rendezvény ingyenesen látogatható! ★",
+    "tags": [
+      "advent",
+      "gyertyagyújtás",
+      "jurisics tér",
+      "fúvószenekar",
+      "evangélikus gyülekezet",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🕯️ I. ADVENTI GYERTYAGYÚJTÁS",
+    "isVarszinhaz": false
   },
   {
     "id": "pulcinella_kerteszkedik_2026",
@@ -771,7 +945,8 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "image": "koszegi_advent_2026.jpg"
   },
   {
     "id": "a_zoldszakallu_kiraly_2026",
@@ -801,11 +976,40 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": true
+    "isVarszinhaz": true,
+    "image": "koszegi_advent_2026.jpg"
+  },
+  {
+    "id": "adventi_ablakdiszites_2026",
+    "name": "Adventi ablakdíszítés a belvárosban",
+    "date": "2026-12-01",
+    "endDate": "2026-12-24",
+    "end_date": "2026-12-24",
+    "time": "16:30",
+    "location": "Kőszeg belvárosa",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Adventi ablakdíszítés a belvárosban december 1. és 24. között! 🪟✨🕯️\n\nA Kőszegi Városi Múzeum, Könyvtár és Levéltár szervezésében december 1-jétől szentestéig minden nap újabb ünnepi díszbe öltöztetett, kivilágított adventi ablak gyúl ki Kőszeg történelmi belvárosában.\n\n📍 Helyszín: Kőszeg belvárosa\n🗓 Időszak: 2026. december 1–24.\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "tags": [
+      "advent",
+      "adventi ablakok",
+      "belváros",
+      "séta",
+      "kőszeg",
+      "ingyenes",
+      "családi"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   },
   {
     "id": "boros_ferenc_magyar_zenes_filmek_2026",
-    "name": "Boros Ferenc: Magyar zenés filmek",
+    "name": "Téli Filmklub – Boros Ferenc: Magyar zenés filmek",
     "date": "2026-12-03",
     "endDate": "2026-12-03",
     "end_date": "2026-12-03",
@@ -825,6 +1029,35 @@
       "könyvtár",
       "ingyenes"
     ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "image": "koszegi_advent_2026.jpg"
+  },
+  {
+    "id": "a_ter_mikulas_keszites_20261204",
+    "name": "„A TÉR” – Helyi termékek árusítása és Mikulás-készítés Földes Szilviával",
+    "date": "2026-12-04",
+    "endDate": "2026-12-04",
+    "end_date": "2026-12-04",
+    "time": "17:00-20:00",
+    "location": "Írottkő Natúrpark, Fő tér 2. („A TÉR”)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "Adventi készülődés és kézműves foglalkozás „A TÉR” közösségi térben! 🎅✨\n\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🕔 Időpont: 2026. december 4. (péntek) • 17:00–20:00\n\n• Helyi termékek árusítása\n• Mikulás-készítés Földes Szilviával",
+    "tags": [
+      "advent",
+      "mikulás",
+      "kézműves",
+      "helyi termékek",
+      "a tér",
+      "írottkő natúrpark",
+      "családi"
+    ],
+    "image": "koszegi_advent_2026.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -880,6 +1113,116 @@
     "isVarszinhaz": false
   },
   {
+    "id": "varnyuvadaszok_ijaszverseny_20261205",
+    "name": "Varnyúvadászok a Jurisics várban – Történelmi íjászverseny",
+    "date": "2026-12-05",
+    "endDate": "2026-12-05",
+    "end_date": "2026-12-05",
+    "time": "10:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Varnyúvadászok a Jurisics várban – Történelmi íjászverseny! 🏹🏰\n\n📍 Helyszín: Jurisics vár\n🗓 Időpont: 2026. december 5. (szombat)\n\nLátványos történelmi íjászverseny a kőszegi Jurisics vár falai között.\n\nℹ️ Információ: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "íjászverseny",
+      "varnyúvadászok",
+      "történelmi",
+      "jurisics vár",
+      "advent",
+      "várszínház"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "a_ter_mezeskalacs_20261205",
+    "name": "„A TÉR” – Helyi termékek árusítása és Mézeskalács-díszítés Vértes Ildikóval",
+    "date": "2026-12-05",
+    "endDate": "2026-12-05",
+    "end_date": "2026-12-05",
+    "time": "14:00-20:00",
+    "location": "Írottkő Natúrpark, Fő tér 2. („A TÉR”)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "Adventi helyi termékek és mézeskalács-díszítés „A TÉR” közösségi térben! 🍪🎄\n\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🕑 Időpont: 2026. december 5. (szombat) • 14:00–20:00\n\n• 14:00–20:00 – Helyi termékek árusítása\n• 14:00–18:00 – Mézeskalács-díszítés Vértes Ildikóval",
+    "tags": [
+      "advent",
+      "mézeskalács",
+      "helyi termékek",
+      "a tér",
+      "írottkő natúrpark",
+      "családi"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "csim_adventi_jotekonysagi_tarlat_20261205",
+    "name": "CSIM Adventi Jótékonysági Tárlat és Árverés",
+    "date": "2026-12-05",
+    "endDate": "2026-12-05",
+    "end_date": "2026-12-05",
+    "time": "16:00",
+    "location": "Írottkő Hotel",
+    "coords": {
+      "lat": 47.38818699780327,
+      "lng": 16.54257481347287
+    },
+    "description": "CSIM Adventi Jótékonysági Tárlat és Árverés az Írottkő Hotelben! 🎨✨\n\n📍 Helyszín: Írottkő Hotel (Kőszeg, Fő tér 4.)\n🕓 Időpont: 2026. december 5. (szombat) • 16:00\n\nA Csók István Művészkör hagyományos adventi jótékonysági kiállítása és művészeti árverése.",
+    "tags": [
+      "csim",
+      "csók istván művészkör",
+      "tárlat",
+      "árverés",
+      "jótékonyság",
+      "írottkő hotel",
+      "advent"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "mindenki_mikulasa_20261205",
+    "name": "Mindenki Mikulása a Jurisics várban",
+    "date": "2026-12-05",
+    "endDate": "2026-12-05",
+    "end_date": "2026-12-05",
+    "time": "16:30",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Mindenki Mikulása a Jurisics várban! 🎅🎁✨\n\n📍 Helyszín: Jurisics vár\n🕟 Időpont: 2026. december 5. (szombat) • 16:30\n\nÜnnepi Mikulás-váró családi program a Jurisics várban.\n\n★ A rendezvény ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "mikulás",
+      "mindenki mikulása",
+      "gyerekprogram",
+      "családi",
+      "jurisics vár",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎅 MINDENKI MIKULÁSA",
+    "isVarszinhaz": true
+  },
+  {
     "name": "Boxing Show & Party",
     "date": "2026-12-05",
     "time": "17:00",
@@ -905,7 +1248,7 @@
   },
   {
     "id": "sons_left_behind_irottko_20261205",
-    "name": "Sons Left Behind koncert – Írottkő Hotel Drink Bár",
+    "name": "Sons Left Behind Akusztik koncert – Írottkő Hotel Drink Bár",
     "date": "2026-12-05",
     "endDate": "2026-12-05",
     "end_date": "2026-12-05",
@@ -915,9 +1258,10 @@
       "lat": 47.38818699780327,
       "lng": 16.54257481347287
     },
-    "description": "Meghívunk egy szuper zenés estre szállodánk hangulatos drink bárjába!\nDecember 5-én a Sons Left Behind veszi birtokba a helyet, hogy egy igazán ütős koncerttel töltse meg az estét! 🤘\nHa szereted az élő zenét, a jó hangulatot és az igazi koncertélményt, itt a helyed!\n\n📅 Időpont: 2026. december 5. (szombat)\n🕖 Kezdés: 19:00\n📍 Helyszín: Írottkő Hotel – Drink Bár\n\nHívd a barátaidat, hangolódjatok rá az estére, és találkozzunk egy közös zenei élményre!\n\n🎉 Mit kínálunk?\n• Élő zene, ami garantáltan magával ragad\n• Italakciók, hogy még jobb legyen az este\n• Egyedi hangulat, amit nem érdemes kihagyni!\n\n💺 Foglalj előre!\nHa nem akarsz lemaradni vagy biztos helyet szeretnél a barátaidnak, foglald le asztalodat még ma!\nEz az este nem csak a szállóvendégeinknek szól – bárki csatlakozhat, aki szeretne egy különleges, zenével fűszerezett estét eltölteni!\n\n📞 Foglalás és további információ:\n+36 30 843 0331\n\nOtt találkozunk! 🤘🎶",
+    "description": "Meghívunk egy szuper zenés estre szállodánk hangulatos drink bárjába!\nDecember 5-én a Sons Left Behind Akusztik felállásban veszi birtokba a helyet, hogy egy igazán ütős koncerttel töltse meg az estét! 🤘\nHa szereted az élő zenét, a jó hangulatot és az igazi koncertélményt, itt a helyed!\n\n📅 Időpont: 2026. december 5. (szombat)\n🕖 Kezdés: 19:00\n📍 Helyszín: Írottkő Hotel – Drink Bár\n\nHívd a barátaidat, hangolódjatok rá az estére, és találkozzunk egy közös zenei élményre!\n\n🎉 Mit kínálunk?\n• Élő zene, ami garantáltan magával ragad\n• Italakciók, hogy még jobb legyen az este\n• Egyedi hangulat, amit nem érdemes kihagyni!\n\n💺 Foglalj előre!\nHa nem akarsz lemaradni vagy biztos helyet szeretnél a barátaidnak, foglald le asztalodat még ma!\nEz az este nem csak a szállóvendégeinknek szól – bárki csatlakozhat, aki szeretne egy különleges, zenével fűszerezett estét eltölteni!\n\n📞 Foglalás és további információ:\n+36 30 843 0331\n\nOtt találkozunk! 🤘🎶",
     "tags": [
       "sons left behind",
+      "akusztik",
       "koncert",
       "élőzene",
       "írottkő hotel",
@@ -931,8 +1275,63 @@
     "isVarszinhaz": false
   },
   {
+    "id": "a_ter_gyermekdelutan_20261206",
+    "name": "„A TÉR” – Gyermekdélután: mesehallgatás, társasjátékok, kakaó",
+    "date": "2026-12-06",
+    "endDate": "2026-12-06",
+    "end_date": "2026-12-06",
+    "time": "14:00-17:00",
+    "location": "Írottkő Natúrpark, Fő tér 2. („A TÉR”)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "Hangulatos adventi gyermekdélután „A TÉR” közösségi térben! ☕🎲📖\n\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🕑 Időpont: 2026. december 6. (vasárnap) • 14:00–17:00\n\nProgramok gyerekeknek és családoknak:\n• Mesehallgatás\n• Társasjátékok\n• Forró kakaó",
+    "tags": [
+      "advent",
+      "gyermekdélután",
+      "mese",
+      "társasjáték",
+      "a tér",
+      "írottkő natúrpark",
+      "családi"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "adventi_gyertyagyujtas_2_20261206",
+    "name": "II. Adventi gyertyagyújtás a Jurisics téren",
+    "date": "2026-12-06",
+    "endDate": "2026-12-06",
+    "end_date": "2026-12-06",
+    "time": "17:30",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38922,
+      "lng": 16.54112
+    },
+    "description": "Ünnepi második adventi gyertyagyújtás Kőszegen, a Jurisics téren! 🕯️🕯️✨\n\n📍 Helyszín: Jurisics tér\n🕠 Időpont: 2026. december 6. (vasárnap) • 17:30\n\n🎶 Közreműködik a Református Egyházközség és Kőszeg Város Fúvószenekarának tagjai.\n\n★ A rendezvény ingyenesen látogatható! ★",
+    "tags": [
+      "advent",
+      "gyertyagyújtás",
+      "jurisics tér",
+      "fúvószenekar",
+      "református egyházközség",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🕯️ II. ADVENTI GYERTYAGYÚJTÁS",
+    "isVarszinhaz": false
+  },
+  {
     "id": "csiki_istvan_szent_korona_koszegen_2026",
-    "name": "Csiki István: A Szent Korona Kőszegen",
+    "name": "Levéltári Estek – Csiki István: A Szent Korona Kőszegen",
     "date": "2026-12-08",
     "endDate": "2026-12-08",
     "end_date": "2026-12-08",
@@ -955,7 +1354,8 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
-    "isVarszinhaz": false
+    "isVarszinhaz": false,
+    "image": "koszegi_advent_2026.jpg"
   },
   {
     "id": "bringadvent_biego_2026",
@@ -1011,7 +1411,93 @@
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
+    "isVarszinhaz": false,
+    "image": "koszegi_advent_2026.jpg"
+  },
+  {
+    "id": "i_koszegi_adventum_karacsonyi_vasar_2026",
+    "name": "I. Kőszegi Adventum – Karácsonyi Vásár (Szulák Andrea, Szabi a pék)",
+    "date": "2026-12-12",
+    "endDate": "2026-12-13",
+    "end_date": "2026-12-13",
+    "time": "14:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.38815,
+      "lng": 16.54185
+    },
+    "description": "I. KŐSZEGI ADVENTUM – KARÁCSONYI VÁSÁR A FŐ TÉREN! 🎄✨🎶\n\nHelyi termelőkkel és szolgáltatókkal, ünnepi ízekkel és zenés programokkal vár mindenkit az I. Kőszegi Adventum a Kőszegi Turisztikai Szövetség szervezésében!\n\n📍 Helyszín: Kőszeg, Fő tér\n🗓 Időpont: 2026. december 12–13. (szombat–vasárnap)\n\n🌟 Kiemelt vendégek és programok:\n• 🎤 Fellép: SZULÁK ANDREA\n• 🍕 SZABI, A PÉK pizzaworkshopot tart!\n• 🎁 Helyi termelők, kézművesek és ünnepi gasztronómia\n\nℹ️ Szervező: Kőszegi Turisztikai Szövetség (KTSZE)",
+    "tags": [
+      "adventum",
+      "karácsonyi vásár",
+      "szulák andrea",
+      "szabi a pék",
+      "fő tér",
+      "ktsze",
+      "advent",
+      "koncert",
+      "gasztronómia"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎄 I. KŐSZEGI ADVENTUM – DEC. 12–13.",
     "isVarszinhaz": false
+  },
+  {
+    "id": "csok_zsur_20261212",
+    "name": "Csók Zsúr – a Csók István Művészkör zenés délutánja",
+    "date": "2026-12-12",
+    "endDate": "2026-12-12",
+    "end_date": "2026-12-12",
+    "time": "16:00-19:00",
+    "location": "Fő tér",
+    "coords": {
+      "lat": 47.38815,
+      "lng": 16.54185
+    },
+    "description": "CSÓK ZSÚR – a Csók István Művészkör zenés délutánja a Fő téren! 🎨🎶\n\n📍 Helyszín: Kőszeg, Fő tér\n🕓 Időpont: 2026. december 12. (szombat) • 16:00–19:00\n\nHangulatos adventi zenés délután a Csók István Művészkör közreműködésével.",
+    "tags": [
+      "csók zsúr",
+      "csók istván művészkör",
+      "zene",
+      "fő tér",
+      "advent",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "koszegi_vonosok_adventi_koncertje_20261212",
+    "name": "A Kőszegi Vonósok adventi koncertje",
+    "date": "2026-12-12",
+    "endDate": "2026-12-12",
+    "end_date": "2026-12-12",
+    "time": "19:00",
+    "location": "Jurisics vár, lovagterem",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "A Kőszegi Vonósok ünnepi adventi koncertje a Jurisics-vár lovagtermében! 🎻✨\n\n📍 Helyszín: Jurisics vár, lovagterem\n🕖 Időpont: 2026. december 12. (szombat) • 19:00\n\nℹ️ Információ: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "kőszegi vonósok",
+      "adventi koncert",
+      "komolyzene",
+      "lovagterem",
+      "jurisics vár",
+      "advent",
+      "várszínház"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎻 KŐSZEGI VONÓSOK ADVENT",
+    "isVarszinhaz": true
   },
   {
     "id": "burger_madness_panci_20261213",
@@ -1041,18 +1527,71 @@
     "isVarszinhaz": false
   },
   {
+    "id": "adventi_gyertyagyujtas_3_20261213",
+    "name": "III. Adventi gyertyagyújtás – A betlehemi láng érkezése",
+    "date": "2026-12-13",
+    "endDate": "2026-12-13",
+    "end_date": "2026-12-13",
+    "time": "17:30",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38922,
+      "lng": 16.54112
+    },
+    "description": "Ünnepi harmadik adventi gyertyagyújtás és a betlehemi békeláng érkezése a Jurisics téren! 🕯️🕯️🕯️✨\n\n📍 Helyszín: Jurisics tér\n🕠 Időpont: 2026. december 13. (vasárnap) • 17:30\n\n🎶 Közreműködik a Római Katolikus Egyházközség és Kőszeg Város Fúvószenekarának tagjai.\n\n★ A rendezvény ingyenesen látogatható! ★",
+    "tags": [
+      "advent",
+      "gyertyagyújtás",
+      "betlehemi láng",
+      "jurisics tér",
+      "fúvószenekar",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🕯️ III. ADVENTI GYERTYAGYÚJTÁS",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "adventi_zenes_ahitat_20261215",
+    "name": "Adventi zenés áhítat az Evangélikus Templomban",
+    "date": "2026-12-15",
+    "endDate": "2026-12-15",
+    "end_date": "2026-12-15",
+    "time": "18:00",
+    "location": "Evangélikus Templom",
+    "coords": {
+      "lat": 47.38765,
+      "lng": 16.54325
+    },
+    "description": "Adventi zenés áhítat a kőszegi Evangélikus Templomban! 🎶🕯️\n\n📍 Helyszín: Evangélikus Templom (Kőszeg)\n🕕 Időpont: 2026. december 15. (kedd) • 18:00\n\nMeghitt, ünnepi zenés elcsendesedés az adventi időszakban.",
+    "tags": [
+      "advent",
+      "zenés áhítat",
+      "evangélikus templom",
+      "koncert",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
     "id": "karacsonyi_musor_2026",
-    "name": "Karácsonyi műsor",
-    "date": "2026-12-18",
-    "endDate": "2026-12-18",
-    "end_date": "2026-12-18",
+    "name": "És megnyílik az ég, mindenkinek – Karácsonyi műsor",
+    "date": "2026-12-17",
+    "endDate": "2026-12-17",
+    "end_date": "2026-12-17",
     "time": "17:00",
-    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)",
+    "location": "Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvényterme (Jurisics tér 6.)",
     "coords": {
       "lat": 47.388831,
       "lng": 16.54079
     },
-    "description": "Ünnepi Karácsonyi műsor a Kőszegi Városi Múzeumban!\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár (Jurisics tér 6.)\n🗓 Időpont: 2026. december 18. (péntek) • 17:00\n\nKözös karácsonyi ráhangolódás, zenés és irodalmi ünnepi műsor a szeretet ünnepe alkalmából.\n\n★ A műsor ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
+    "description": "„És megnyílik az ég, mindenkinek” című ünnepi karácsonyi műsor a Vasi Múzeumbarát Egylet versmondó körének közreműködésével a Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvénytermében!\n\n📍 Helyszín: Kőszegi Városi Múzeum, Könyvtár és Levéltár rendezvényterme (Jurisics tér 6.)\n🗓 Időpont: 2026. december 17. (csütörtök) • 17:00\n\n★ A műsor ingyenesen látogatható! ★\n\nℹ️ Szervező: Kőszegi Városi Múzeum, Könyvtár és Levéltár",
     "tags": [
       "karácsony",
       "ünnepi műsor",
@@ -1062,6 +1601,115 @@
       "ingyenes",
       "családi"
     ],
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false,
+    "image": "koszegi_advent_2026.jpg"
+  },
+  {
+    "id": "karacsonyi_diafilmvetites_kezmuves_20261219",
+    "name": "Karácsonyi diafilmvetítés és kézműves foglalkozás",
+    "date": "2026-12-19",
+    "endDate": "2026-12-19",
+    "end_date": "2026-12-19",
+    "time": "09:30-11:45",
+    "location": "Chernel Kálmán Városi Könyvtár gyermekrészlege",
+    "coords": {
+      "lat": 47.388831,
+      "lng": 16.54079
+    },
+    "description": "Karácsonyi diafilmvetítés és ünnepi kézműves foglalkozás a könyvtár gyermekrészlegén! 🎞️🎨🎄\n\n📍 Helyszín: Chernel Kálmán Városi Könyvtár gyermekrészlege\n🗓 Időpont: 2026. december 19. (szombat)\n\n• 09:30–10:15 – Karácsonyi diafilmvetítés\n• 10:30–11:45 – Kézműves foglalkozás",
+    "tags": [
+      "diafilm",
+      "kézműves foglalkozás",
+      "könyvtár",
+      "gyerekprogram",
+      "családi",
+      "karácsony",
+      "advent"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "adventi_kezmuves_foglalkozas_var_20261219",
+    "name": "Adventi kézműves foglalkozás a Jurisics várban",
+    "date": "2026-12-19",
+    "endDate": "2026-12-19",
+    "end_date": "2026-12-19",
+    "time": "10:00-16:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Adventi kézműves foglalkozás a Jurisics várban! 🎨🏰🎄\n\n📍 Helyszín: Jurisics vár\n🕙 Időpont: 2026. december 19. (szombat) • 10:00–16:00\n\nÜnnepi ajándék- és díszkészítés családoknak és gyerekeknek a várban.\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "advent",
+      "kézműves foglalkozás",
+      "jurisics vár",
+      "családi",
+      "gyerekprogram",
+      "várszínház"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": true
+  },
+  {
+    "id": "karacsonyfa_makrame_workshop_20261219",
+    "name": "Karácsonyfakészítő makramé workshop",
+    "date": "2026-12-19",
+    "endDate": "2026-12-19",
+    "end_date": "2026-12-19",
+    "time": "14:00-16:00",
+    "location": "Hotel Írottkő",
+    "coords": {
+      "lat": 47.38818699780327,
+      "lng": 16.54257481347287
+    },
+    "description": "Karácsonyfakészítő makramé workshop a Hotel Írottkőben! 🧶🎄✨\n\n📍 Helyszín: Hotel Írottkő (Kőszeg, Fő tér 4.)\n🕑 Időpont: 2026. december 19. (szombat) • 14:00–16:00\n\nKészítsd el saját, egyedi makramé karácsonyfádat és ünnepi díszeidet!",
+    "tags": [
+      "makramé",
+      "workshop",
+      "karácsonyfa",
+      "írottkő hotel",
+      "advent",
+      "kézműves"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "a_ter_helyi_termekek_20261219",
+    "name": "„A TÉR” – Helyi termékek árusítása",
+    "date": "2026-12-19",
+    "endDate": "2026-12-19",
+    "end_date": "2026-12-19",
+    "time": "14:00-20:00",
+    "location": "Írottkő Natúrpark, Fő tér 2. („A TÉR”)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "Adventi helyi termékek árusítása „A TÉR” közösségi térben! 🎁🎄\n\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🕑 Időpont: 2026. december 19. (szombat) • 14:00–20:00\n\nHelyi kézműves és termelői finomságok, karácsonyi ajándékok.",
+    "tags": [
+      "advent",
+      "helyi termékek",
+      "a tér",
+      "írottkő natúrpark",
+      "vásár"
+    ],
+    "image": "koszegi_advent_2026.jpg",
     "createdBy": "admin",
     "highlight": false,
     "highlightLabel": "",
@@ -1094,7 +1742,172 @@
     "createdBy": "admin",
     "highlight": true,
     "highlightLabel": "🎶 STELLATUS ADVENT",
+    "isVarszinhaz": true,
+    "image": "koszegi_advent_2026.jpg"
+  },
+  {
+    "id": "a_ter_pontfesto_workshop_20261220",
+    "name": "„A TÉR” – Helyi termékek árusítása és Karácsonyi pontfestő workshop",
+    "date": "2026-12-20",
+    "endDate": "2026-12-20",
+    "end_date": "2026-12-20",
+    "time": "09:00-14:00",
+    "location": "Írottkő Natúrpark, Fő tér 2. („A TÉR”)",
+    "coords": {
+      "lat": 47.38797988039796,
+      "lng": 16.5419381127829
+    },
+    "description": "Helyi termékek vására és karácsonyi pontfestő workshop „A TÉR” közösségi térben! 🎨🎄\n\n📍 Helyszín: Írottkő Natúrpark, Kőszeg, Fő tér 2.\n🗓 Időpont: 2026. december 20. (vasárnap)\n\n• 09:00–14:00 – Helyi termékek árusítása\n• 10:00–13:00 – Karácsonyi pontfestő workshop, karácsonyfa készítés",
+    "tags": [
+      "pontfestő",
+      "workshop",
+      "helyi termékek",
+      "a tér",
+      "írottkő natúrpark",
+      "advent"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "adventi_gyertyagyujtas_4_20261220",
+    "name": "IV. Ökumenikus adventi gyertyagyújtás a Jurisics téren",
+    "date": "2026-12-20",
+    "endDate": "2026-12-20",
+    "end_date": "2026-12-20",
+    "time": "17:30",
+    "location": "Jurisics tér",
+    "coords": {
+      "lat": 47.38922,
+      "lng": 16.54112
+    },
+    "description": "Ünnepi negyedik, ökumenikus adventi gyertyagyújtás Kőszegen, a Jurisics téren! 🕯️🕯️🕯️🕯️✨\n\n📍 Helyszín: Jurisics tér\n🕠 Időpont: 2026. december 20. (vasárnap) • 17:30\n\n🎶 Az Evangélikus Gyülekezet vezetésével, közreműködnek a Kőszegi Tornyosok.\n\n★ A rendezvény ingyenesen látogatható! ★",
+    "tags": [
+      "advent",
+      "gyertyagyújtás",
+      "ökumenikus",
+      "jurisics tér",
+      "kőszegi tornyosok",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🕯️ IV. ADVENTI GYERTYAGYÚJTÁS",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "concordia_karacsonyi_hangverseny_20261220",
+    "name": "Concordia-Barátság Énekegyesület Karácsonyi Hangversenye: Legyen Karácsony!",
+    "date": "2026-12-20",
+    "endDate": "2026-12-20",
+    "end_date": "2026-12-20",
+    "time": "19:00",
+    "location": "Jézus Szíve Templom",
+    "coords": {
+      "lat": 47.38845,
+      "lng": 16.54155
+    },
+    "description": "CONCORDIA-BARÁTSÁG ÉNEKEGYESÜLET KARÁCSONYI HANGVERSENYE: „Legyen Karácsony!” 🎶🎄✨\n\n📍 Helyszín: Jézus Szíve Templom (Kőszeg, Fő tér)\n🕖 Időpont: 2026. december 20. (vasárnap) • 19:00\n\nÜnnepi kóruskoncert a Jézus Szíve Plébániatemplomban.",
+    "tags": [
+      "concordia",
+      "kórus",
+      "hangverseny",
+      "karácsonyi koncert",
+      "jézus szíve templom",
+      "advent"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🎶 CONCORDIA KARÁCSONYI KONCERT",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "hajnalcsillag_karacsonyi_musora_20261221",
+    "name": "A Hajnalcsillag Néptáncegyüttes karácsonyi műsora: „Menjünk mi is Betlehembe”",
+    "date": "2026-12-21",
+    "endDate": "2026-12-21",
+    "end_date": "2026-12-21",
+    "time": "17:00",
+    "location": "Árpád-házi iskola díszterme",
+    "coords": {
+      "lat": 47.390545007358845,
+      "lng": 16.542711057201704
+    },
+    "description": "A Hajnalcsillag Néptáncegyüttes ünnepi karácsonyi műsora: „Menjünk mi is Betlehembe”! 💃🎄✨\n\n📍 Helyszín: Árpád-házi Szent Margit Iskola díszterme\n🕔 Időpont: 2026. december 21. (hétfő) • 17:00",
+    "tags": [
+      "hajnalcsillag",
+      "néptánc",
+      "karácsonyi műsor",
+      "betlehem",
+      "advent",
+      "családi"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
+  },
+  {
+    "id": "karacsonyi_jezuskavaro_filmvetites_20261224",
+    "name": "Karácsonyi Jézuskaváró ingyenes filmvetítés",
+    "date": "2026-12-24",
+    "endDate": "2026-12-24",
+    "end_date": "2026-12-24",
+    "time": "14:00",
+    "location": "Jurisics vár",
+    "coords": {
+      "lat": 47.389692,
+      "lng": 16.538482
+    },
+    "description": "Hagyományos Karácsonyi Jézuskaváró ingyenes filmvetítés a Jurisics várban! 🎬🎄✨\n\n📍 Helyszín: Jurisics vár\n🕑 Időpont: 2026. december 24. (csütörtök) • 14:00\n\n★ A vetítés ingyenesen látogatható! ★\n\nℹ️ Szervező: Jurisics-vár Művelődési Központ és Várszínház (tel: 94/360-113, jurisics@koszeg.hu)",
+    "tags": [
+      "jézuskaváró",
+      "filmvetítés",
+      "karácsony",
+      "szenteste",
+      "gyerekprogram",
+      "jurisics vár",
+      "ingyenes",
+      "várszínház"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
     "isVarszinhaz": true
+  },
+  {
+    "id": "jezuska_varas_20261224",
+    "name": "Jézuska várás a Jézus Szíve Plébániatemplomban",
+    "date": "2026-12-24",
+    "endDate": "2026-12-24",
+    "end_date": "2026-12-24",
+    "time": "16:00",
+    "location": "Jézus Szíve Plébániatemplom",
+    "coords": {
+      "lat": 47.38845,
+      "lng": 16.54155
+    },
+    "description": "Ünnepi Jézuska várás szenteste délutánján a Jézus Szíve Plébániatemplomban! 🌟🎄🙏\n\n📍 Helyszín: Jézus Szíve Plébániatemplom (Kőszeg, Fő tér)\n🕓 Időpont: 2026. december 24. (csütörtök) • 16:00",
+    "tags": [
+      "jézuska várás",
+      "karácsony",
+      "szenteste",
+      "jézus szíve templom",
+      "családi",
+      "ingyenes"
+    ],
+    "image": "koszegi_advent_2026.jpg",
+    "createdBy": "admin",
+    "highlight": false,
+    "highlightLabel": "",
+    "isVarszinhaz": false
   },
   {
     "name": "Szilveszter az Írottkő Hotelben",

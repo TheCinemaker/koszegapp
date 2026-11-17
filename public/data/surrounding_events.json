@@ -57,5 +57,37 @@
     "highlight": true,
     "highlightLabel": "🚴 KERÉKPÁRTÚRA",
     "isVarszinhaz": false
+  },
+  {
+    "id": "surrounding-event-bozsok-cocacola-20261206",
+    "name": "Coca-Cola Magángyűjtemény Bozsok – Karácsonyi Megnyitó",
+    "settlement": "Bozsok",
+    "date": "2026-12-06",
+    "endDate": "2026-12-06",
+    "end_date": "2026-12-06",
+    "time": "14:30",
+    "location": "9727 Bozsok, Rákóczi utca 51.",
+    "coords": {
+      "lat": 47.3245,
+      "lng": 16.4892
+    },
+    "description": "Coca-Cola Magángyűjtemény Bozsok – Ünnepélyes megnyitó és karácsonyi hangolódás! 🎅🚚🎄\n\nTarts velünk, utazz vissza az időben a világ legismertebb márkájának emlékeivel, ritkaságaival és limitált kiadású kincseivel!\n\n📍 Helyszín: 9727 Bozsok, Rákóczi utca 51.\n📅 Időpont: 2026. december 6. (vasárnap) • 14:30\n🎟️ A program ingyenes, de részvételedet kérjük előre jelezd!\n\n✨ Mi vár rád ezen a délutánon?\n• Ünnepélyes megnyitó 14:30-kor\n• Édes Coca-Cola finomságok a készlet erejéig\n• Nosztalgia és ritkaságok\n• Beköszönt a Coca-Cola karácsony\n• Fotósarok\n• Ajándék a Coca-Cola-s öltözékben érkezőknek!\n\nℹ️ Független, magántulajdonú Coca-Cola-emléktárgy-gyűjtemény. Az oldal és a kiállítás nem a The Coca-Cola Company hivatalos kezdeményezése, és nem áll annak támogatása alatt.",
+    "tags": [
+      "bozsok",
+      "coca-cola",
+      "magángyűjtemény",
+      "kiállítás",
+      "karácsony",
+      "mikulás",
+      "nosztalgia",
+      "családi",
+      "ingyenes",
+      "hegyalja"
+    ],
+    "image": "coca_cola_magangyujtemeny_bozsok_20261206.jpg",
+    "createdBy": "admin",
+    "highlight": true,
+    "highlightLabel": "🚚 COCA-COLA GYŰJTEMÉNY – BOZSOK",
+    "isVarszinhaz": false
   }
 ]
